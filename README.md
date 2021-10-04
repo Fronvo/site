@@ -1,4 +1,4 @@
-## <p align='center'><a href='https://fronvo.github.io/fronvo'><img src='https://i.ibb.co/yB3QM89/fronvo-icon.png' alt='Fronvo icon'><a/></p>
+## <p align='center'><a href='https://fronvo.herokuapp.com'><img src='https://i.ibb.co/yB3QM89/fronvo-icon.png' alt='Fronvo icon'><a/></p>
 
 ![GitHub](https://img.shields.io/github/license/Shadofer/fronvo) ![GitHub Repo stars](https://img.shields.io/github/stars/Shadofer/fronvo?style=social) ![GitHub forks](https://img.shields.io/github/forks/Shadofer/fronvo?style=social) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Shadofer/fronvo) ![Lines of code](https://img.shields.io/tokei/lines/github/Shadofer/fronvo)
 

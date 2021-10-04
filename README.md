@@ -12,8 +12,8 @@
 
 **Well, this is the time.**
 
-**You can now chat with your Discord buddies while meeting new people on Fronvo, seamlessly.**
 
+**You can now chat with your Discord buddies while meeting new people on Fronvo, seamlessly.**
 ## Features
 
 - **Discord integration!**
@@ -37,6 +37,4 @@
 
 - **Follow each adapter's steps and them to ```svelte.config.js```**
 
-- **```npm run build```**
-
-- **In the case of Fronvo's static adapter, host the ```build``` folder generated on github pages.**
+- **In the case of Fronvo's [node adapter](https://github.com/sveltejs/kit/tree/master/packages/adapter-node), enable automatic github builds on [heroku](https://heroku.com) for this repository with the preconfigured command.**

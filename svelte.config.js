@@ -1,12 +1,14 @@
 /** @type {import('@sveltejs/kit').Config} */
-import adapter from '@sveltejs/adapter-static';
+import adapter from '@sveltejs/adapter-node';
 
 const config = {
 	kit: {
 		target: '#fronvo',
 		adapter: adapter({
-					pages: 'build/assets/pages',
-					fallback: null
+					out: 'build',
+					env: {
+						host: process.env.PORT || 5000
+					}
 		})
 	}
 };

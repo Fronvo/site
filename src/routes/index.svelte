@@ -5,9 +5,6 @@
 <script>
 	// Animations
 	import {fade} from 'svelte/transition';
-
-	// Svelte-routing
-	import {navigate} from 'svelte-routing';
 </script>
 
 <div in:fade>

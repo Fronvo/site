@@ -8,5 +8,5 @@
 </script>
 
 <div in:fade>
-	<img class='adaptive' src='../../images/fronvo-img.png' alt='Fronvo icon'/>
+	<img class='adaptive' src='../../images/fronvo-icon.webp' alt='Fronvo icon'/>
 </div>

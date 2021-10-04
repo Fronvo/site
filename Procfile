@@ -1,1 +1,1 @@
-web npm run autohost
+web npm i && npm run autohost

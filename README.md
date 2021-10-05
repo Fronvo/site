@@ -1,4 +1,4 @@
-## <p align='center'><a href='https://fronvo.herokuapp.com'><img src='https://i.ibb.co/yB3QM89/fronvo-icon.png' alt='Fronvo icon'><a/></p>
+<p align='center'><a href='https://fronvo.herokuapp.com'><img src='https://i.ibb.co/w7MVzsL/fronvo-icon-readme.webp' alt='Fronvo icon'><a/></p>
 
 ![GitHub](https://img.shields.io/github/license/Shadofer/fronvo) ![GitHub Repo stars](https://img.shields.io/github/stars/Shadofer/fronvo?style=social) ![GitHub forks](https://img.shields.io/github/forks/Shadofer/fronvo?style=social) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Shadofer/fronvo) ![Lines of code](https://img.shields.io/tokei/lines/github/Shadofer/fronvo)
 
@@ -35,6 +35,4 @@
 
 - **Install a svelte-kit [adapter](https://kit.svelte.dev/docs#adapters).**
 
-- **Follow each adapter's steps and them to ```svelte.config.js```**
-
-- **In the case of Fronvo's [node adapter](https://github.com/sveltejs/kit/tree/master/packages/adapter-node), enable automatic github builds on [heroku](https://heroku.com) for this repository with the preconfigured command.**
+- **In the case of Fronvo's [node adapter](https://github.com/sveltejs/kit/tree/master/packages/adapter-node), enable automatic github builds on [heroku](https://heroku.com) for this repository with the [preconfigured command](https://github.com/Fronvo/fronvo/blob/master/Procfile).**

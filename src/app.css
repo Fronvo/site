@@ -1,81 +1,20 @@
-/* General */
 body {
-    animation-name: bg-anim;
-    animation-duration: 10s;
+    animation-name: gradient-bg;
+    animation-duration: 15s;
     animation-iteration-count: infinite;
     animation-direction: alternate;
-    padding: 0px;
-    margin: 10px;
+    margin: 0;
 }
 
-h1 {
+.center-div {
     color: white;
-    font-family: Recursive;
-}
-
-a {
-    color: white;
-    text-decoration: none;
-    display: inline-block;
-    position: relative;
-}
-
-a::after {
-    content: '';
-    display: block;
-    height: 3px;
-    width: 0px;
-    transition: width .7s ease, background-color .7s ease;
-}
-a:hover::after {
-    width: 100%;
-    background: white;
-}
-
-button {
-    border-radius: 5px;
-    cursor: pointer;
-    color: #fff;
-    font-family: Alata;
-    font-size: 5vmin;
-}
-
-.top {
-    display: inline-block;
-    cursor: pointer;
-}
-
-.logo {
-    margin-top: 0;
-    margin-bottom: 10px;
-    font-family: Acme;
-    font-size: 5vh;
-}
-
-.content {
+    font-family: Ubuntu;
     text-align: center;
-    align-items: center;
-    justify-content: center;
+    padding: 35vh 0 0;
 }
 
-/* Buttons */
-.glow {
-    background-color: transparent;
-    border: 0px solid rgb(0, 0, 0);
-    box-shadow: 0 0 60px 50px rgb(23, 176, 187) inset;
-    transition: all 300ms;
-    height: fit-content;
-    padding: 20px;
-    margin: 20px;
-}
-
-.glow:hover {
-    box-shadow: 0 0 10px 0 rgb(24, 174, 211) inset, 0 0 15px 0 rgb(0, 225, 255);
-}
-
-/* Animations */
-@keyframes bg-anim {
-    0% { background: rgb(10, 39, 43); }
-
-    100% { background: rgb(19, 54, 66); }
+@keyframes gradient-bg {
+    0% { background: rgb(64, 18, 107); }
+    50% { background: rgb(96, 12, 175); }
+    100% { background: rgb(64, 18, 107); }
 }

@@ -1,6 +1,6 @@
 <p align='center'><a href='https://fronvo.herokuapp.com'><img src='https://i.ibb.co/G00y0t1/fronvo-icon-readme.webp' alt='Fronvo icon'><a/></p>
 
-![GitHub](https://img.shields.io/github/license/Fronvo/fronvo-site) ![GitHub Repo stars](https://img.shields.io/github/stars/Fronvo/fronvo?style=social) ![GitHub forks](https://img.shields.io/github/forks/Fronvo/fronvo?style=social) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Fronvo/fronvo) ![Lines of code](https://img.shields.io/tokei/lines/github/Fronvo/fronvo)
+![GitHub](https://img.shields.io/github/license/Fronvo/fronvo-site) ![GitHub Repo stars](https://img.shields.io/github/stars/Fronvo/fronvo-site?style=social) ![GitHub forks](https://img.shields.io/github/forks/Fronvo/fronvo-site?style=social) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Fronvo/fronvo-site) ![Lines of code](https://img.shields.io/tokei/lines/github/Fronvo/fronvo-site)
 
 ## The open-source convo app.
 

@@ -1,6 +1,6 @@
 <p align='center'><a href='https://fronvo.herokuapp.com'><img src='https://i.ibb.co/G00y0t1/fronvo-icon-readme.webp' alt='Fronvo icon'><a/></p>
 
-![GitHub](https://img.shields.io/github/license/Shadofer/fronvo) ![GitHub Repo stars](https://img.shields.io/github/stars/Shadofer/fronvo?style=social) ![GitHub forks](https://img.shields.io/github/forks/Shadofer/fronvo?style=social) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Shadofer/fronvo) ![Lines of code](https://img.shields.io/tokei/lines/github/Shadofer/fronvo)
+![GitHub](https://img.shields.io/github/license/Fronvo/fronvo-site) ![GitHub Repo stars](https://img.shields.io/github/stars/Fronvo/fronvo?style=social) ![GitHub forks](https://img.shields.io/github/forks/Fronvo/fronvo?style=social) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Fronvo/fronvo) ![Lines of code](https://img.shields.io/tokei/lines/github/Fronvo/fronvo)
 
 ## The open-source convo app.
 
@@ -28,11 +28,11 @@
 
 **```npm run dev -- --open```**
 
-**The server should be running locally at port 3000 while also listening for css/svelte file changes.**
+**The site should be hosted locally at port 3000 while also listening for file changes.**
 
 
 ## Hosting
 
-- **Install a svelte-kit [adapter](https://kit.svelte.dev/docs#adapters).**
+- **Install a svelte-kit [adapter](https://kit.svelte.dev/docs#adapters) and follow each step.**
 
 - **In the case of Fronvo's [node adapter](https://github.com/sveltejs/kit/tree/master/packages/adapter-node), enable automatic github builds on [heroku](https://heroku.com) for this repository with the [preconfigured command](https://github.com/Fronvo/fronvo/blob/master/Procfile).**

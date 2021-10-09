@@ -4,14 +4,14 @@
   "description": "The site of the open-source free-convo chat app.",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Fronvo/Fronvo.git"
+    "url": "git+https://github.com/Fronvo/fronvo-site.git"
   },
   "author": "Shadofer#6681",
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/Fronvo/Fronvo/issues"
+    "url": "https://github.com/Fronvo/fronvo-site/issues"
   },
-  "homepage": "https://github.com/Fronvo/Fronvo#readme",
+  "homepage": "https://github.com/Fronvo/fronvo-site#readme",
   "private": true,
   "scripts": {
     "host": "node build/index.js",

@@ -30,13 +30,14 @@
     let isMount = true;
 
     function attemptRedirect() {
-        isLoggedIn()
-        .then(() => goto('app'))
-        .catch(() => {
-            attemptType(socket, 'login', localStorage.getItem('email'), localStorage.getItem('password'))
-            .then(() => goto('app'))
-            .catch(() => setupUI());
-        });
+        const email = localStorage.getItem('email');
+        const password = localStorage.getItem('password');
+
+        if(email && password) {
+            goto('app');
+        } else {
+            setupUI();
+        }
     }
 
     function setupUI() {

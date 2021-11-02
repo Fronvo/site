@@ -1,20 +1,217 @@
-body {
-    animation-name: gradient-bg;
-    animation-duration: 15s;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-    margin: 0;
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
-.center-div {
+a {
+    color: rgb(242, 255, 125);
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+}
+
+a::after {
+    content: '';
+    display: block;
+    height: 2px;
+    width: 0px;
+    transition: width 1s ease, background-color 1s ease;
+}
+
+a:hover::after {
+    width: 100%;
+    background: white;
+}
+
+a:focus {
+    outline-color: white;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    transition: .5s;
+}
+
+button {
+    background: rgb(168, 8, 212);
+    box-shadow: 1px 1px 7px black;
+    border-radius: 10px;
+    color: white;
+    border: 0;
+    padding: 10px;
+    font-family: Ubuntu;
+    font-size: 40px;
+    cursor: pointer;
+    transition: .4s;
+    transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+button:hover {
+    background: rgb(150, 0, 192);
+}
+
+button:focus {
+    outline-offset: 3px;
+}
+
+input {
+    border: 2px solid rgb(174, 0, 255);
+    border-radius: 5px;
+    background: rgb(81, 27, 105);
+    box-shadow: 1px 1px 7px black;
+    color: white;
+    margin: 5px;
+    text-align: center;
+    font-size: 30px;
+    font-family: Ubuntu;
+    width: 400px;
+    transition: .5s;
+}
+
+input:hover {
+    border: 2px solid rgb(133, 24, 184);
+}
+
+input:focus {
+    outline: 1px;
+    border: 2px solid rgb(226, 162, 255);
+}
+
+::placeholder {
+    color: rgb(153, 82, 219);
+}
+
+/* ?????????????????????????????? */
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+input:-webkit-autofill::first-line {
+  font-size: 30px;
+  font-family: Ubuntu;
+  box-shadow: 0 0 0px 1000px rgb(81, 27, 105) inset;
+  -webkit-box-shadow: 0 0 0px 1000px rgb(81, 27, 105) inset;
+  -webkit-text-fill-color: white;
+}
+
+::-webkit-scrollbar {
+    width: 10px;   
+}
+
+::-webkit-scrollbar-track {
+    background: rgb(112, 16, 201);
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgb(145, 26, 214);
+}
+
+svg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.fronvo-top {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
     color: white;
     font-family: Ubuntu;
-    text-align: center;
-    padding: 35vh 0 0;
 }
 
-@keyframes gradient-bg {
-    0% { background: rgb(64, 18, 107); }
-    50% { background: rgb(96, 12, 175); }
-    100% { background: rgb(64, 18, 107); }
+.fronvo-top h1 {
+    font-size: 60px;
+    margin: auto;
+    text-align: center;
+    max-width: min-content;
+    text-shadow: 0px 0px 15px black;
+}
+
+.fronvo-top h2 {
+    margin: 0;
+    font-size: 30px;
+    text-align: center;
+    text-shadow: 0 0 5px black;
+}
+
+.center {
+    height: fit-content;
+    margin: auto;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    text-align: center;
+}
+
+.center h1 {
+    color: white;
+    font-family: Ubuntu;
+    font-size: 30px;
+    text-shadow: 1px 3px 15px black;
+}
+
+.footer {
+    border: 2px solid white;
+    border-radius: 5px;
+    box-shadow: 0 -2px 20px black;
+    color: white;
+    background: rgb(162, 0, 255);
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    padding: 15px;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: max-content;
+}
+
+.footer h1 {
+    padding: 0;
+    margin: 0;
+    font-size: 30px;
+    font-family: Ubuntu;
+    font-weight: normal;
+    text-align: center;
+}
+
+@media screen and (max-width: 650px), (max-height: 600px) {
+    button {
+        font-size: 30px;
+    }
+
+    input {
+        width: 300px;
+        font-size: 20px;
+    }
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover, 
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill::first-line {
+        font-size: 20px;
+    }
+
+    .fronvo-top h1 {
+        font-size: 40px;
+    }
+
+    .fronvo-top h2 {
+        font-size: 20px;
+    }
+
+    .center h1 {
+        font-size: 25px;
+    }
+
+    .footer h1 {
+        font-size: 20px;
+    }
 }

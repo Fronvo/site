@@ -1,6 +1,8 @@
-<p align='center'><a href='https://fronvo.herokuapp.com'><img src='https://i.ibb.co/G00y0t1/fronvo-icon-readme.webp' alt='Fronvo icon'><a/></p>
+<p align='center'><a href='https://fronvo.herokuapp.com'><img src='https://i.ibb.co/1q07v7b/fronvo-icon-large.webp' alt='Fronvo icon'><a/></p>
 
-![GitHub](https://img.shields.io/github/license/Fronvo/fronvo-site) ![GitHub Repo stars](https://img.shields.io/github/stars/Fronvo/fronvo-site?style=social) ![GitHub forks](https://img.shields.io/github/forks/Fronvo/fronvo-site?style=social) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Fronvo/fronvo-site) ![Lines of code](https://img.shields.io/tokei/lines/github/Fronvo/fronvo-site)
+<h1 style='text-align: center;'>
+
+![GitHub](https://img.shields.io/github/license/Fronvo/fronvo-site) ![GitHub Repo stars](https://img.shields.io/github/stars/Fronvo/fronvo-site?style=social) ![GitHub forks](https://img.shields.io/github/forks/Fronvo/fronvo-site?style=social) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Fronvo/fronvo-site) ![Lines of code](https://img.shields.io/tokei/lines/github/Fronvo/fronvo-site)</h1>
 
 ## The open-source convo app.
 
@@ -29,7 +31,6 @@
 **```npm run dev -- --open```**
 
 **The site should be hosted locally at port 3000 while also listening for file changes.**
-
 
 ## Hosting
 

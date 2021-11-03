@@ -11,7 +11,7 @@
     import { goto } from '$app/navigation';
     import { onMount } from 'svelte';
     import { sockt } from '../stores';
-    import { attemptType, timeoutRedirect, resetCredentials, isLoggedIn, animateFadeIn } from '../utilities';
+    import { timeoutRedirect, isLoggedIn, animateFadeIn } from '../utilities';
 
     const socket = $sockt;
 
@@ -27,9 +27,10 @@
         isLoggedIn(socket)
         .then(() => setupUI())
         .catch(() => {
-            attemptType(socket, 'login', localStorage.getItem('email'), localStorage.getItem('password'))
-            .then(() => setupUI())
-            .catch(() => { resetCredentials(); goto('account'); });
+            socket.emit('loginToken', {token: localStorage.getItem('token')}, (err) => {
+                if(err) { localStorage.removeItem('token'); goto('account'); }
+                else setupUI();
+            });
         });
     }
 

@@ -11,7 +11,7 @@
     import { fade } from 'svelte/transition';
     import { onMount } from 'svelte';
     import { sockt } from '../stores';
-    import { timeoutRedirect, attemptType, isLoggedIn, animateFadeIn } from '../utilities';
+    import { timeoutRedirect, attemptType, animateFadeIn } from '../utilities';
 
     const socket = $sockt;
 
@@ -30,10 +30,7 @@
     let isMount = true;
 
     function attemptRedirect() {
-        const email = localStorage.getItem('email');
-        const password = localStorage.getItem('password');
-
-        if(email && password) {
+        if(localStorage.getItem('token')) {
             goto('app');
         } else {
             setupUI();
@@ -84,9 +81,8 @@
         emailInput.style.borderColor = defaultBorder;
         passwordInput.style.borderColor = defaultBorder;
 
-        attemptType(socket, type, email, password).then(() => {
-            localStorage.setItem('email', email);
-            localStorage.setItem('password', password);
+        attemptType(socket, type, email, password).then((token) => {
+            localStorage.setItem('token', token);
 
             goto('app');
         }).catch((err) => {

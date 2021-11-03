@@ -14,16 +14,11 @@ export function attemptType(socket, type, email, password) {
         socket.emit(type, {
             email: email,
             password: password
-        }, (err) => {
+        }, (err, token) => {
             if(err) reject(err);
-            else resolve();
+            else resolve(token);
         });
     });
-}
-
-export function resetCredentials() {
-    localStorage.removeItem('email');
-    localStorage.removeItem('password');
 }
 
 export function isLoggedIn(socket) {

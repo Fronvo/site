@@ -34,19 +34,11 @@
 		if(socket.connected) {
 			redirectBtn.disabled = true;
 
-			// very bad practice, i dont have the mental capacity rn to add tokens
-			isLoggedIn()
+			isLoggedIn(socket)
 			.then(() => goto('app'))
 			.catch(() => {
-				const email = localStorage.getItem('email');
-				const password = localStorage.getItem('password');
-
-				if(email && password) {
-					// dont care, app will validate
-					goto('app');
-				} else {
-					goto('account');
-				}
+				if(localStorage.getItem('token')) goto('app');
+				else goto('account');
 			});
 		} else {
 			// show if not visible already

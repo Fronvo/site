@@ -12,17 +12,16 @@
 	import { scale, fade, fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
 	import { sockt } from '../stores';
-	import { isLoggedIn, animateFadeIn } from '../utilities';
+	import { animateFadeIn } from '../utilities';
 
 	const socket = $sockt;
 
 	socket.removeAllListeners();
 
-	let main, redirectBtn, errMsg;
+	let main, errMsg;
 
 	onMount(() => {
 		main = document.getElementById('rootMain');
-		redirectBtn = document.getElementById('redirectBtn');
 		errMsg = document.getElementById('errMsg');
 
 		animateFadeIn(main);
@@ -32,14 +31,7 @@
 
 	function attemptRedirect() {
 		if(socket.connected) {
-			redirectBtn.disabled = true;
-
-			isLoggedIn(socket)
-			.then(() => goto('app'))
-			.catch(() => {
-				if(localStorage.getItem('token')) goto('app');
-				else goto('account');
-			});
+			goto('app');
 		} else {
 			// show if not visible already
 			if(errMsg.style.display === 'none') {
@@ -62,7 +54,7 @@
 
 		<div></div>
 
-		<button id='redirectBtn' on:click='{() => attemptRedirect()}' style='margin-top: 10px;'>Try it online</button>
+		<button on:click='{() => attemptRedirect()}' style='margin-top: 10px;'>Try it online</button>
 
 		<h1>or</h1>
 

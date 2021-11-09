@@ -8,7 +8,7 @@
 
 <script>
     import { goto } from '$app/navigation';
-    import { fade } from 'svelte/transition';
+    import { fly } from 'svelte/transition';
     import { onMount } from 'svelte';
     import { sockt } from '../stores';
     import { timeoutRedirect, attemptType, animateFadeIn } from '../utilities';
@@ -114,7 +114,7 @@
     }
 </script>
 
-<div transition:fade={{delay: 200}} id='accountMain' class='center' style='display: none;'>
+<div in:fly={{y: -50}} out:fly={{y: 50}} id='accountMain' class='center' style='display: none;'>
     <h1 id='topError' style='color: red; display: none;'>Error</h1>
 
     <h1 id='emailText' style='margin-bottom: 0;'>Email</h1>

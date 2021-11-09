@@ -4,14 +4,12 @@
 
 <script context='module'>
     export const prerender = true;
-    export const hydrate = false;
     export const ssr = false;
 </script>
 
 <script>
-import { onMount } from 'svelte';
-
-    import { fade } from 'svelte/transition';
+    import { onMount } from 'svelte';
+    import { fly } from 'svelte/transition';
     import { animateFadeIn } from '../utilities';
 
     let main;
@@ -29,6 +27,8 @@ import { onMount } from 'svelte';
     });
 </script>
 
-<div id='downloadsMain' out:fade={{delay: 200}} class='center'>
-    <h1 in:fade={{delay: 200}}>Coming soon...</h1>
+<div id='downloadsMain' out:fly={{y: 200}} class='center' style='display: none;'>
+    <div in:fly={{y: -200}}>
+        <h1>Coming soon...</h1>
+    </div>
 </div>

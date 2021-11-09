@@ -35,6 +35,8 @@
 		} else {
 			// show if not visible already
 			if(errMsg.style.display === 'none') {
+				animateFadeIn(errMsg);
+				
 				errMsg.style.display = 'initial';
 			}
 
@@ -44,12 +46,12 @@
 </script>
 
 <div id='rootMain' out:fade style='display: none;'>
-	<div in:fly class='fronvo-top'>
+	<div transition:fly={{duration: 500, y: -100}} class='fronvo-top'>
 		<h1>Fronvo</h1>
 		<h2>The cross platform app you have been waiting for!</h2>
 	</div>
 
-	<div in:scale={{delay: 300, duration: 250}} out:scale class='center'>
+	<div in:scale={{delay: 300, duration: 600}} out:scale={{duration: 600}} class='center'>
 		<h1 id='errMsg' style='color: red; display: none;'>Error</h1>
 
 		<div></div>
@@ -61,7 +63,7 @@
 		<button on:click='{() => goto('downloads')}'>Download</button>
 	</div>
 
-	<div class="footer">
+	<div in:scale={{duration: 500, start: 2}} out:fly={{y: 100, duration: 500}} class='footer'>
 		<h1>Fronvo is now on <a href='https://github.com/fronvo' style='color: black;'>Github</a>!</h1>
 	</div>
 </div>

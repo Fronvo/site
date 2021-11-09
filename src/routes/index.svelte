@@ -14,10 +14,6 @@
 	import { sockt } from '../stores';
 	import { animateFadeIn } from '../utilities';
 
-	const socket = $sockt;
-
-	socket.removeAllListeners();
-
 	let main, errMsg;
 
 	onMount(() => {
@@ -30,8 +26,10 @@
 	});
 
 	function attemptRedirect() {
-		if(socket.connected) {
-			goto('app');
+		if($sockt.connected) {
+			// dont redirect to app directly, despite its checks, breaks transitions
+			if(localStorage.getItem('token')) goto('app')
+			else goto('account')
 		} else {
 			// show if not visible already
 			if(errMsg.style.display === 'none') {

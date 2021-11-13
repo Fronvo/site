@@ -1,18 +1,22 @@
-import { readable } from 'svelte/store';
-
+import { writable } from 'svelte/store';
 import { io } from 'socket.io-client';
 
+// upon page reload
+export const customFadeDuration = 500;
+
+// manual connection timeoutd
+export const connectionTimeout = 5000;
+
+// use 'socket' var name in other files, dont reserve
+export const sockt = writable();
+
 // replace with ws://localhost:3001 if hosting locally
-const socket = io('wss://fronvosrv.herokuapp.com', {
+const tempSocket = io('wss://fronvosrv.herokuapp.com', {
     // only websocket transport, no http polling
     transports: ['websocket'],
     path: '/fronvo'
 });
 
-// DO NOT attach listeners, they are reset within each page
-
-// use 'socket' var name in other files, dont reserve
-export const sockt = readable(socket);
-
-export const timeoutDelay = 2000;
-export const customFadeDuration = 500;
+tempSocket.on('connect', () => {
+    sockt.set(tempSocket);
+});

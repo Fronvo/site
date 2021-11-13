@@ -18,8 +18,6 @@
         main = document.getElementById('downloadsMain');
 
         animateFadeIn(main);
-
-        main.style.display = 'initial';
     }
 
     onMount(() => {
@@ -28,5 +26,5 @@
 </script>
 
 <div id='downloadsMain' in:fly={{y: -200}} out:fly={{y: 200}} class='center' style='display: none;'>
-        <h1>Coming soon...</h1>
+    <h1>Coming soon...</h1>
 </div>

@@ -21,24 +21,17 @@
 		errMsg = document.getElementById('errMsg');
 
 		animateFadeIn(main);
-
-		main.style.display = 'initial';
 	});
 
 	function attemptRedirect() {
-		if($sockt.connected) {
+		if($sockt) {
 			// dont redirect to app directly, despite its checks, breaks transitions
 			if(localStorage.getItem('token')) goto('app')
 			else goto('account')
 		} else {
-			// show if not visible already
-			if(errMsg.style.display === 'none') {
-				animateFadeIn(errMsg);
-				
-				errMsg.style.display = 'initial';
-			}
-
 			errMsg.textContent = 'Server unreachable, try again later.';
+			
+			animateFadeIn(errMsg);
 		}
 	}
 </script>

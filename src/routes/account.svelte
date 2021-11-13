@@ -7,17 +7,11 @@
 </script>
 
 <script>
-    import { goto } from '$app/navigation';
     import { fly } from 'svelte/transition';
+    import { goto } from '$app/navigation';
     import { onMount } from 'svelte';
     import { sockt } from '../stores';
-    import { timeoutRedirect, attemptType, animateFadeIn } from '../utilities';
-
-    const socket = $sockt;
-
-    socket.removeAllListeners();
-
-    timeoutRedirect(socket);
+    import { animateFadeIn, send } from '../utilities';
 
     let main, topError, registerBtn,
     loginBtn, emailInput, passwordInput,
@@ -26,16 +20,6 @@
     let defaultBorder = '#ae00ff', errorBorder = '#d80000', whiteColor = '#ffffff';
 
     let email, password, hasRetried = false;
-
-    let isMount = true;
-
-    function attemptRedirect() {
-        if(localStorage.getItem('token')) {
-            goto('app');
-        } else {
-            setupUI();
-        }
-    }
 
     function setupUI() {
         main = document.getElementById('accountMain');
@@ -47,29 +31,24 @@
         emailText = document.getElementById('emailText');
         passwordText = document.getElementById('passwordText');
 
-        if(!isMount) animateFadeIn(main);
-
-        main.style.display = 'initial';
+        animateFadeIn(main);
     }
 
-    socket.on('connect', () => {
-        isMount = false;
-
-        attemptRedirect();
-    });
-
     onMount(() => {
-        if(socket.connected) {
-            attemptRedirect();
-        }
-    });
-
-    socket.on('disconnect', () => {
-        goto('/');
+        if(localStorage.getItem('token')) goto('app');
+        else setupUI();
     });
 
     function attemptAccountAction(type) {
         if(!(type === 'register' || type === 'login')) return;
+
+        if(!$sockt) {
+            topError.textContent = 'Server is unreachable.'
+
+            animateFadeIn(topError);
+
+            return;
+        }
 
         registerBtn.disabled = true;
         loginBtn.disabled = true;
@@ -81,18 +60,23 @@
         emailInput.style.borderColor = defaultBorder;
         passwordInput.style.borderColor = defaultBorder;
 
-        attemptType(socket, type, email, password).then((token) => {
-            localStorage.setItem('token', token);
+        send(type, {
+            email: email,
+            password: password
+        }, (err, token) => {
+            if(token) {
+                localStorage.setItem('token', token);
+                goto('app');
+                return;
+            }
 
-            goto('app');
-        }).catch((err) => {
             // delay sequential attempts
             let funcTimeout = hasRetried ? 300 : 0;
 
             // show error msg
-            topError.style.display = 'initial';
-
             topError.textContent = err.msg;
+
+            animateFadeIn(topError);
 
             setTimeout(() => {
                 if(err.extras) {

@@ -1,40 +1,55 @@
-import { goto } from '$app/navigation';
-import { timeoutDelay, customFadeDuration } from './stores';
+import { customFadeDuration, sockt } from './stores';
 
-export function timeoutRedirect(socket) {
-    setTimeout(() => {
-        if(!socket.connected) goto('/');
-    }, timeoutDelay);
+// socket-ception
+let socket;
+
+sockt.subscribe((val) => {
+    socket = val;
+});
+
+function animateView(view, options, callback) {
+    view.animate(options, customFadeDuration);
+
+    // very callback, much responsive
+    if(callback) setTimeout(() => callback(), customFadeDuration);
 }
 
-export function attemptType(socket, type, email, password) {
-    return new Promise((resolve, reject) => {
-        if(!socket || !type) { reject(); return; }
-        
-        socket.emit(type, {
-            email: email,
-            password: password
-        }, (err, token) => {
-            if(err) reject(err);
-            else resolve(token);
-        });
-    });
-}
-
-export function isLoggedIn(socket) {
-    return new Promise((resolve, reject) => {
-        if(!socket) { reject(); return; }
-
-        socket.emit('isLoggedIn', (state) => {
-            if(state) resolve();
-            else reject();
-        });
-    });
-}
-
-export function animateFadeIn(view) {
-    view.animate([
+export function animateFadeIn(view, callback) {
+    animateView(view, [
         { opacity: 0 },
         { opacity: 1 }
-    ], customFadeDuration);
+    ], callback);
+
+    if(view.style.display === 'block') return;
+    else view.style.display = 'block';
+}
+
+export function animateFadeOut(view, callback) {
+    animateView(view, [
+        { opacity: 1 },
+        { opacity: 0 }
+    ], callback);
+
+    setTimeout(() => {
+        view.style.display = 'none';
+    }, customFadeDuration - 50);
+}
+
+export function send(event, sendData, callback) {
+    if(socket) {
+        if(sendData) {
+            socket.emit(event, sendData, callback);
+        } else {
+            socket.emit(event, callback);
+        }
+    }
+}
+
+export function isLoggedIn() {
+    return new Promise((resolve, reject) => {
+        send('isLoggedIn', null, (state) => {
+            if(state) resolve();
+            else reject();
+        })
+    });
 }

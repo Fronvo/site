@@ -15,13 +15,14 @@ function animateView(view, options, callback) {
 }
 
 export function animateFadeIn(view, callback) {
+    if(view.style.display === 'block') return;
+
+    view.style.display = 'block';
+
     animateView(view, [
         { opacity: 0 },
         { opacity: 1 }
     ], callback);
-
-    if(view.style.display === 'block') return;
-    else view.style.display = 'block';
 }
 
 export function animateFadeOut(view, callback) {

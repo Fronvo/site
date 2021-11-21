@@ -14,6 +14,7 @@
     import { goto } from '$app/navigation'
 
     let main, preLogin, preLoginError, statusText, postLogin;
+    let isInPreLoginError = false;
 
     onMount(() => {
         setupUI();
@@ -26,47 +27,48 @@
         statusText = document.getElementById('appStatusText');
         postLogin = document.getElementById('appPostLogin');
 
-        attemptSocketInit();
+        attemptFronvoConnection();
     }
 
-    function attemptSocketInit() {
+    function attemptFronvoConnection() {
+        preLogin.style.display = 'block';
+        
         animateFadeIn(main, () => {
             setTimeout(() => {
-                if(!$sockt) postConnectionTimeout();
+                if(!$sockt) {
+                    isInPreLoginError = true;
+                    postConnectionTimeout();
+                }
             }, connectionTimeout);
 
             function attemptSocketLogin() {
                 isLoggedIn()
                 .then(() => postLoginSetup())
                 .catch(() => {
-                    statusText.textContent = 'Logging in...';
+                    const token = localStorage.getItem('token');
 
-                    setTimeout(() => {
-                        const token = localStorage.getItem('token');
-
-                        if(token) {
-                            send('loginToken', {
-                                token: token
-                            }, (err) => {
-                                if(!err) postLoginSetup();
-                                else {
-                                    localStorage.removeItem('token');
-                                    goto('/account');
-                                }
-                            });
-                        } else goto('account');
-                    }, 500);
+                    if(token) {
+                        send('loginToken', {
+                            token: token
+                        }, (err) => {
+                            if(!err) postLoginSetup();
+                            else {
+                                localStorage.removeItem('token');
+                                goto('/account');
+                            }
+                        });
+                    } else goto('account');
                 });
             }
 
-            if(!sockt) {
+            if(!$sockt) {
                 sockt.subscribe((socket) => {
-                    if(!socket) return;
+                    if(!socket || isInPreLoginError) return;
 
                     attemptSocketLogin();
                 });
             } else attemptSocketLogin();
-        });
+        }, true);
     }
 
     function postLoginSetup() {
@@ -83,10 +85,7 @@
 
     function attemptSocketReinit() {
         animateFadeOut(preLoginError, () => {
-            // animated by main
-            preLogin.style.display = 'block';
-
-            attemptSocketInit();
+            attemptFronvoConnection();
         });
     }
 </script>

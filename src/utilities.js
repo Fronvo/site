@@ -14,10 +14,9 @@ function animateView(view, options, callback) {
     if(callback) setTimeout(() => callback(), customFadeDuration);
 }
 
-export function animateFadeIn(view, callback) {
-    if(view.style.display === 'block') return;
-
-    view.style.display = 'block';
+export function animateFadeIn(view, callback, forceFade) {
+    if(!(view.style.display === 'block')) view.style.display = 'block';
+    else if(!forceFade) return;
 
     animateView(view, [
         { opacity: 0 },

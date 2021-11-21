@@ -39,17 +39,7 @@
         else setupUI();
     });
 
-    function attemptAccountAction(type) {
-        if(!(type === 'register' || type === 'login')) return;
-
-        if(!$sockt) {
-            topError.textContent = 'Server is unreachable.'
-
-            animateFadeIn(topError);
-
-            return;
-        }
-
+    function disableUI() {
         registerBtn.disabled = true;
         loginBtn.disabled = true;
         emailInput.disabled = true;
@@ -59,6 +49,37 @@
         passwordText.style.color = whiteColor;
         emailInput.style.borderColor = defaultBorder;
         passwordInput.style.borderColor = defaultBorder;
+    }
+
+    function enableUI() {
+        registerBtn.disabled = false;
+        loginBtn.disabled = false;
+        emailInput.disabled = false;
+        passwordInput.disabled = false;
+    }
+
+    function attemptAccountAction(type) {
+        if(!(type === 'register' || type === 'login')) return;
+
+        if(!$sockt) {
+            topError.textContent = 'Server is unreachable.'
+            animateFadeIn(topError);
+
+            return;
+        } else if(!email || !password) {
+            disableUI();
+
+            topError.textContent = !email ? 'The email is required.' : 'The password is required.';
+            animateFadeIn(topError);
+            
+            !email ? emailInput.style.borderColor = errorBorder: passwordInput.style.borderColor = errorBorder;
+            
+            enableUI();
+
+            return;
+        }
+
+        disableUI();
 
         send(type, {
             email: email,
@@ -70,13 +91,10 @@
                 return;
             }
 
+            topError.textContent = err.msg;
+            
             // delay sequential attempts
             let funcTimeout = hasRetried ? 300 : 0;
-
-            // show error msg
-            topError.textContent = err.msg;
-
-            animateFadeIn(topError);
 
             setTimeout(() => {
                 if(err.extras) {
@@ -87,10 +105,9 @@
                     }
                 }
 
-                registerBtn.disabled = false;
-                loginBtn.disabled = false;
-                emailInput.disabled = false;
-                passwordInput.disabled = false;
+                animateFadeIn(topError);
+
+                enableUI();
             }, funcTimeout);
 
             if(!hasRetried) hasRetried = true;

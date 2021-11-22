@@ -24,15 +24,9 @@
 	});
 
 	function attemptRedirect() {
-		if($sockt) {
-			// dont redirect to app directly, despite its checks, breaks transitions
-			if(localStorage.getItem('token')) goto('app')
-			else goto('account')
-		} else {
-			errMsg.textContent = 'Server unreachable, try again later.';
-			
-			animateFadeIn(errMsg);
-		}
+		// dont redirect to app directly, despite its checks, breaks transitions
+		if(localStorage.getItem('token')) goto('app')
+		else goto('account')
 	}
 </script>
 

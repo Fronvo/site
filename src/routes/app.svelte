@@ -33,42 +33,42 @@
     function attemptFronvoConnection() {
         preLogin.style.display = 'block';
         
-        animateFadeIn(main);
+        animateFadeIn(main, () => {
+            setTimeout(() => {
+                if(!$sockt) {
+                    isInPreLoginError = true;
+                    postConnectionTimeout();
+                }
+            }, connectionTimeout);
 
-        setTimeout(() => {
-            if(!$sockt) {
-                isInPreLoginError = true;
-                postConnectionTimeout();
+            function attemptSocketLogin() {
+                isLoggedIn()
+                .then(() => postLoginSetup())
+                .catch(() => {
+                    const token = localStorage.getItem('token');
+
+                    if(token) {
+                        send('loginToken', {
+                            token: token
+                        }, (err) => {
+                            if(!err) postLoginSetup();
+                            else {
+                                localStorage.removeItem('token');
+                                goto('/account');
+                            }
+                        });
+                    } else goto('account');
+                });
             }
-        }, connectionTimeout);
 
-        function attemptSocketLogin() {
-            isLoggedIn()
-            .then(() => postLoginSetup())
-            .catch(() => {
-                const token = localStorage.getItem('token');
+            if(!$sockt) {
+                sockt.subscribe((socket) => {
+                    if(!socket || isInPreLoginError) return;
 
-                if(token) {
-                    send('loginToken', {
-                        token: token
-                    }, (err) => {
-                        if(!err) postLoginSetup();
-                        else {
-                            localStorage.removeItem('token');
-                            goto('/account');
-                        }
-                    });
-                } else goto('account');
-            });
-        }
-
-        if(!$sockt) {
-            sockt.subscribe((socket) => {
-                if(!socket || isInPreLoginError) return;
-
-                attemptSocketLogin();
-            });
-        } else attemptSocketLogin();
+                    attemptSocketLogin();
+                });
+            } else attemptSocketLogin();
+        });
     }
 
     function postLoginSetup() {

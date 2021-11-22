@@ -11,14 +11,12 @@
 	import { goto } from '$app/navigation';
 	import { scale, fade, fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
-	import { sockt } from '../stores';
 	import { animateFadeIn } from '../utilities';
 
-	let main, errMsg;
+	let main;
 
 	onMount(() => {
 		main = document.getElementById('rootMain');
-		errMsg = document.getElementById('errMsg');
 
 		animateFadeIn(main);
 	});
@@ -37,10 +35,6 @@
 	</div>
 
 	<div in:scale={{delay: 300, duration: 600}} out:scale={{duration: 600}} class='center'>
-		<h1 id='errMsg' style='color: red; display: none;'>Error</h1>
-
-		<div></div>
-
 		<button on:click='{() => attemptRedirect()}' style='margin-top: 10px;'>Try it online</button>
 
 		<h1>or</h1>

@@ -1,5 +1,6 @@
 import { writable } from 'svelte/store';
 import { io } from 'socket.io-client';
+import parser from 'socket.io-msgpack-parser';
 
 // upon page reload
 export const customFadeDuration = 500;
@@ -14,7 +15,8 @@ export const sockt = writable();
 const tempSocket = io('wss://fronvosrv.herokuapp.com', {
     // only websocket transport, no http polling
     transports: ['websocket'],
-    path: '/fronvo'
+    path: '/fronvo',
+    parser: parser
 });
 
 tempSocket.on('connect', () => {

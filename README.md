@@ -2,27 +2,32 @@
 
 <h1 style='text-align: center;'>
 
-![GitHub](https://img.shields.io/github/license/Fronvo/fronvo-site) ![GitHub Repo stars](https://img.shields.io/github/stars/Fronvo/fronvo-site?style=social) ![GitHub forks](https://img.shields.io/github/forks/Fronvo/fronvo-site?style=social) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/Fronvo/fronvo-site) ![Lines of code](https://img.shields.io/tokei/lines/github/Fronvo/fronvo-site)</h1>
+![Website](https://img.shields.io/website?down_message=down&label=status&style=for-the-badge&up_message=up&url=https%3A%2F%2Ffronvo.herokuapp.com)
+![GitHub](https://img.shields.io/github/license/fronvo/fronvo-site?style=for-the-badge) ![GitHub Repo stars](https://img.shields.io/github/stars/fronvo/fronvo-site?style=for-the-badge) ![GitHub forks](https://img.shields.io/github/forks/fronvo/fronvo-site?style=for-the-badge) ![Lines of code](https://img.shields.io/tokei/lines/github/fronvo/fronvo-site?style=for-the-badge) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/fronvo/fronvo-site?style=for-the-badge)</h1>
 
 ## The open-source convo app.
 
-**Host it, test it, modify it, all yours.**
+**Host it, test it, modify it, all yours.** ***ZERO*** **tracking.**
 
 ## What's this about?
 
 **Have you ever cherished that all your friends move to one single platform?**
 
-**Well, this is the time.**
+**Or.. let's say that you wanted to get rid of big tech data mining..?**
 
+**Either way, you can now.**
 
-**You can now chat with your Discord buddies while meeting new people on Fronvo, seamlessly.**
+**How, you ask?**
+
 ## Features
 
-- **Discord integration!**
+- **Front-facing servers. Want to advertise an organisation server, on the app, for free? You got it. Discovery View.**
 
-- **Chat lobbies, chat with everyone on Fronvo!**
+- **Voice your opinion! (and let others have a take on their own, too). All of that with the ability to share Personal Posts.**
 
-- **Save data while also using multiple social platforms!**
+- **Finding the app theme, let's say, a little boring..? Make your own or use shared ones from the Theme Marketplace.**
+
+- **Want to feel even more secure? Self-host this site AND [the Fronvo server](https://github.com/fronvo/fronvo) to invite your friends, securely.**
 
 ## Running locally
 

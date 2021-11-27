@@ -32,5 +32,11 @@
   "engines": {
     "node": "16.x",
     "npm": "8.x"
+  },
+  "devDependencies": {
+    "@tsconfig/svelte": "^2.0.1",
+    "svelte-check": "^2.2.10",
+    "svelte-preprocess": "^4.9.8",
+    "typescript": "^4.5.2"
   }
 }

@@ -5,6 +5,9 @@ import parser from 'socket.io-msgpack-parser';
 // upon page reload
 export const customFadeDuration = 500;
 
+// to show up error messages if it takes this long to connect
+export const connectionTimeoutDuration = 1000;
+
 // use 'socket' var name in other files, dont reserve
 export const sockt = writable();
 

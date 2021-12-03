@@ -8,74 +8,67 @@
 
 <script>
     import { fade } from 'svelte/transition';
-    import { sockt } from '../stores';
-    import { animateFadeIn, animateFadeOut, isLoggedIn, send } from '../utilities';
+    import { sockt, connectionTimeoutDuration } from '../stores';
+    import { animateFadeIn, isLoggedIn, send } from '../utilities';
     import { onMount } from 'svelte';
     import { goto } from '$app/navigation'
 
-    let main, preLogin, postLogin;
+    let postLogin, connectionError;
 
     onMount(() => {
         setupUI();
     });
 
     function setupUI() {
-        main = document.getElementById('appMain')
-        preLogin = document.getElementById('appPreLogin');
+        connectionError = document.getElementById('appConnectionError');
         postLogin = document.getElementById('appPostLogin');
 
         attemptFronvoConnection();
     }
 
     function attemptFronvoConnection() {
-        preLogin.style.display = 'block';
-        
-        animateFadeIn(main, () => {
-            function attemptSocketLogin() {
-                isLoggedIn()
-                .then(() => postLoginSetup())
-                .catch(() => {
-                    const token = localStorage.getItem('token');
+        setTimeout(() => {
+            if(!$sockt) animateFadeIn(connectionError);
+        }, connectionTimeoutDuration)
 
-                    if(token) {
-                        send('loginToken', {
-                            token: token
-                        }, (err) => {
-                            if(!err) postLoginSetup();
-                            else {
-                                localStorage.removeItem('token');
-                                goto('/account');
-                            }
-                        });
-                    } else goto('account');
-                });
-            }
+        function attemptSocketLogin() {
+            isLoggedIn()
+            .then(() => animateFadeIn(postLogin))
+            .catch(() => {
+                const token = localStorage.getItem('token');
 
-            if(!$sockt) {
-                sockt.subscribe((socket) => {
-                    if(!socket) return;
+                if(token) {
+                    send('loginToken', {
+                        token: token
+                    }, (err) => {
+                        if(!err) {
+                            animateFadeIn(postLogin);
+                        } else {
+                            localStorage.removeItem('token');
+                            goto('/account');
+                        }
+                    });
+                } else goto('account');
+            });
+        }
 
-                    attemptSocketLogin();
-                });
-            } else attemptSocketLogin();
-        });
-    }
+        if(!$sockt) {
+            sockt.subscribe((socket) => {
+                if(!socket) return;
 
-    function postLoginSetup() {
-        animateFadeOut(preLogin, () => {
-            animateFadeIn(postLogin)
-        });
+                attemptSocketLogin();
+            });
+        } else attemptSocketLogin();
     }
 </script>
 
-<div id='appMain' transition:fade class='center' style='display: none;'>
-    <div id='appPreLogin'>
-        <h1 id='appStatusText'>Connecting to Fronvo...</h1>
+<div id='appMain' transition:fade class='center'>
+    <div id='appConnectionError' style='display: none'>
+        <h1 style='color: red;'>Error connecting to Fronvo.</h1>
     </div>
 
     <div id='appPostLogin' style='display: none;'>
-        <h1>Congrats, you logged in!</h1>
-        <h1>Now what?</h1>
-        <button><a style='color: white' href='https://github.com/fronvo/fronvo-site'>Visit the repository</a></button>
+        <h1>Fronvo is still in the works...</h1>
+        <h1><a href='https://github.com/fronvo'>View the source?</a></h1>
     </div>
 </div>

@@ -4,6 +4,11 @@
     box-sizing: border-box;
 }
 
+html, body {
+    height: 100%;
+    margin: 0;
+}
+
 a {
     color: rgb(242, 255, 125);
     text-decoration: none;
@@ -161,9 +166,8 @@ svg {
 .panel-1 {
     margin-left: .75vw;
     width: 60%;
-    min-height: 400px;
-    height: 60vh;
-    max-height: 700px;
+    min-height: 450px;
+    height: 90%;
 }
 
 .panel-1 h1 {
@@ -261,6 +265,12 @@ svg {
     text-align: center;
 }
 
+@media screen and (max-height: 450px) {
+    .fronvo-panel {
+        margin-bottom: 5px;
+    }
+}
+
 @media screen and (max-width: 650px), (max-height: 600px) {
     button {
         font-size: 30px;
@@ -327,10 +337,22 @@ svg {
 
     .panel-1 {
         width: 98%;
-        height: 80vh;
+        height: 93%;
     }
 
     .panel-2 {
         display: none;
+    }
+}
+
+@media screen and (max-height: 860px) {
+    .panel-1 {
+        height: 88%;
+    }
+}
+
+@media screen and (max-height: 650px) {
+    .panel-1 {
+        height: 85%;
     }
 }

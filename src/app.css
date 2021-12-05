@@ -102,7 +102,8 @@ select:-webkit-autofill::first-line {
 }
 
 ::-webkit-scrollbar {
-    width: 10px;   
+    width: 5px;
+    height: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -114,6 +115,10 @@ select:-webkit-autofill::first-line {
 }
 
 svg {
+    position:absolute
+}
+
+.bg-svg {
     position: fixed;
     top: 0;
     left: 0;
@@ -146,6 +151,64 @@ svg {
     text-shadow: 0 0 5px black;
 }
 
+.fronvo-panel {
+    display: inline-block;
+    border-width: 1px;
+    border-radius: 10px;
+    box-shadow: 0 0 5px rgb(200, 95, 245);
+}
+
+.panel-1 {
+    margin-left: .75vw;
+    width: 60%;
+    min-height: 400px;
+    height: 60vh;
+    max-height: 700px;
+}
+
+.panel-1 h1 {
+    color: white;
+    font-size: 40px;
+    margin: 5px 0 0 50px;
+    font-family: Ubuntu;
+    text-shadow: 0 0 5px rgb(53, 53, 53);
+}
+
+.panel-2 {
+    margin-left: 5px;
+    width: 38%;
+    min-height: 300px;
+    height: 60vh;
+    max-height: 700px;
+}
+
+.panel-2 h1 {
+    color: white;
+    font-size: 40px;
+    margin: 5px 0 0 50px;
+    font-family: Ubuntu;
+    text-shadow: 0 0 5px rgb(53, 53, 53);
+}
+
+.fronvo-top-panel {
+    margin-left: 10px;
+    border: white;
+}
+
+.fronvo-top-panel h1 {
+    font-family: Ubuntu;
+    color: white;
+    text-shadow: 1px 3px 15px black;
+    text-align: center;
+    font-size: 40px;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
+
+.fronvo-top-panel #svg-menu {
+    display: none;
+}
+
 .center {
     height: fit-content;
     margin: auto;
@@ -162,6 +225,14 @@ svg {
     font-family: Ubuntu;
     font-size: 30px;
     text-shadow: 1px 3px 15px black;
+}
+
+.full {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
 }
 
 .footer {
@@ -234,5 +305,32 @@ svg {
 
     .footer h1 {
         font-size: 20px;
+    }
+}
+
+@media screen and (max-width: 1100px) {
+    div {
+        transition: .5s;
+    }
+
+    .fronvo-top-panel h1 {
+        font-size: 30px;
+    }
+
+    .fronvo-top-panel #svg-menu {
+        display: block;
+    }
+
+    .fronvo-panel h1 {
+        font-size: 35px;
+    }
+
+    .panel-1 {
+        width: 98%;
+        height: 80vh;
+    }
+
+    .panel-2 {
+        display: none;
     }
 }

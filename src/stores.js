@@ -6,7 +6,7 @@ import parser from 'socket.io-msgpack-parser';
 export const customFadeDuration = 500;
 
 // to show up error messages if it takes this long to connect
-export const connectionTimeoutDuration = 1000;
+export const connectionTimeoutDuration = 2000;
 
 // use 'socket' var name in other files, dont reserve
 export const sockt = writable();
@@ -21,4 +21,8 @@ const tempSocket = io('wss://fronvosrv.herokuapp.com', {
 
 tempSocket.on('connect', () => {
     sockt.set(tempSocket);
+});
+
+tempSocket.on('disconnect', () => {
+    sockt.set(null);
 });

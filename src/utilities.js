@@ -25,6 +25,8 @@ export function animateFadeIn(view, callback, forceFade) {
 }
 
 export function animateFadeOut(view, callback) {
+    if(!(view.style.display === 'block')) return;
+
     animateView(view, [
         { opacity: 1 },
         { opacity: 0 }

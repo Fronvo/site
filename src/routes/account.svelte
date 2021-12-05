@@ -35,7 +35,7 @@
     }
 
     onMount(() => {
-        if(localStorage.getItem('token')) goto('app');
+        if(localStorage.getItem('token')) goto('app', true);
         else setupUI();
     });
 
@@ -87,7 +87,7 @@
         }, (err, token) => {
             if(token) {
                 localStorage.setItem('token', token);
-                goto('app');
+                goto('app', true);
                 return;
             }
 

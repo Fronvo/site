@@ -119,10 +119,6 @@ select:-webkit-autofill::first-line {
     background: rgb(145, 26, 214);
 }
 
-svg {
-    position:absolute
-}
-
 .bg-svg {
     position: fixed;
     top: 0;
@@ -173,7 +169,7 @@ svg {
 .panel-1 h1 {
     color: white;
     font-size: 40px;
-    margin: 5px 0 0 50px;
+    margin: 5px 5px;
     font-family: Ubuntu;
     text-shadow: 0 0 5px rgb(53, 53, 53);
 }
@@ -189,24 +185,37 @@ svg {
 .panel-2 h1 {
     color: white;
     font-size: 40px;
-    margin: 5px 0 0 50px;
+    margin: 5px 5px;
     font-family: Ubuntu;
     text-shadow: 0 0 5px rgb(53, 53, 53);
 }
 
+.panel-top {
+    display: flex;
+    align-items: center;
+}
+
 .fronvo-top-panel {
-    margin-left: 10px;
-    border: white;
+    display: flex;
+    margin-left: 5px;
+    margin-bottom: 10px;
+    margin-top: 5px;
+    align-items: center;
+}
+
+.fronvo-top-panel #center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 .fronvo-top-panel h1 {
-    font-family: Ubuntu;
     color: white;
-    text-shadow: 1px 3px 15px black;
-    text-align: center;
-    font-size: 40px;
-    margin-top: 10px;
-    margin-bottom: 15px;
+    font-family: Ubuntu;
+    font-size: 50px;
+    margin: 0;
+    text-shadow: 0 5px 0 purple;
 }
 
 .fronvo-top-panel #svg-menu {
@@ -323,8 +332,12 @@ svg {
         transition: .5s;
     }
 
+    .fronvo-top-panel #center {
+        width: 85%;
+    }
+
     .fronvo-top-panel h1 {
-        font-size: 30px;
+        font-size: 40px;
     }
 
     .fronvo-top-panel #svg-menu {
@@ -337,7 +350,7 @@ svg {
 
     .panel-1 {
         width: 98%;
-        height: 93%;
+        height: 92%;
     }
 
     .panel-2 {
@@ -345,13 +358,7 @@ svg {
     }
 }
 
-@media screen and (max-height: 860px) {
-    .panel-1 {
-        height: 88%;
-    }
-}
-
-@media screen and (max-height: 650px) {
+@media screen and (max-width: 900px), (max-height: 870px) {
     .panel-1 {
         height: 85%;
     }

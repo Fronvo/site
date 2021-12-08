@@ -133,10 +133,10 @@
                 <svg version="1.2" baseProfile="tiny-ps" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
                     <defs>
                         <image  width="48" height="48" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwAQMAAABtzGvEAAAAAXNSR0IB2cksfwAAAANQTFRFAAAAp3o92gAAAAF0Uk5TAEDm2GYAAAANSURBVHicY2AYBdQEAAFQAAHr5ijJAAAAAElFTkSuQmCC"/>
-                        <linearGradient id="grd9" gradientUnits="userSpaceOnUse"  x1="4.241" y1="47" x2="44.759" y2="2">
+                        <linearGradient id="grd9" gradientUnits="userSpaceOnUse"  x1="2" y1="45.482" x2="47" y2="3.518">
                             <stop offset="0" stop-color="#ac08dd"  />
-                            <stop offset="0" stop-color="#bc00e8"  />
-                            <stop offset="1" stop-color="#d914dd"  />
+                            <stop offset="0" stop-color="#bf00eb"  />
+                            <stop offset="1" stop-color="#ff00dd"  />
                         </linearGradient>
                     </defs>
                     <style>

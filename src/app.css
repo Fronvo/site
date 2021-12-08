@@ -193,6 +193,7 @@ select:-webkit-autofill::first-line {
 .panel-top {
     display: flex;
     align-items: center;
+    margin-left: 5px;
 }
 
 .fronvo-top-panel {

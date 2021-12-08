@@ -108,7 +108,7 @@
         </div>
 
         <!-- Chat -->
-        <div transition:scale={{start: .95, duration: 500}} class='fronvo-panel panel-1'>
+        <div transition:scale={{start: .95, duration: 500}} class='fronvo-panel'>
             <div class='panel-top'>
                 <svg version="1.2" baseProfile="tiny-ps" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
                     <defs>
@@ -128,7 +128,8 @@
         </div>
         
         <!-- Friends -->
-        <div transition:scale={{start: .95, duration: 500}} class='fronvo-panel panel-2'>
+
+        <!-- <div transition:scale={{start: .95, duration: 500}} class='fronvo-panel panel-2'>
             <div class='panel-top'>
                 <svg version="1.2" baseProfile="tiny-ps" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
                     <defs>
@@ -147,7 +148,7 @@
                 </svg>
                 <h1>Friends</h1>
             </div>
-        </div>
+        </div> -->
 
     </div>
 </div>

@@ -157,32 +157,13 @@ select:-webkit-autofill::first-line {
     border-width: 1px;
     border-radius: 10px;
     box-shadow: 0 0 5px rgb(200, 95, 245);
-}
-
-.panel-1 {
     margin-left: .75vw;
-    width: 60%;
+    width: 98%;
     min-height: 450px;
     height: 90%;
 }
 
-.panel-1 h1 {
-    color: white;
-    font-size: 40px;
-    margin: 5px 5px;
-    font-family: Ubuntu;
-    text-shadow: 0 0 5px rgb(53, 53, 53);
-}
-
-.panel-2 {
-    margin-left: 5px;
-    width: 38%;
-    min-height: 300px;
-    height: 60vh;
-    max-height: 700px;
-}
-
-.panel-2 h1 {
+.fronvo-panel h1 {
     color: white;
     font-size: 40px;
     margin: 5px 5px;
@@ -345,22 +326,18 @@ select:-webkit-autofill::first-line {
         display: block;
     }
 
-    .fronvo-panel h1 {
-        font-size: 35px;
-    }
-
-    .panel-1 {
+    .fronvo-panel {
         width: 98%;
         height: 92%;
     }
 
-    .panel-2 {
-        display: none;
+    .fronvo-panel h1 {
+        font-size: 35px;
     }
 }
 
 @media screen and (max-width: 900px), (max-height: 870px) {
-    .panel-1 {
+    .fronvo-panel {
         height: 85%;
     }
 }

@@ -2,9 +2,6 @@ import { writable } from 'svelte/store';
 import { io } from 'socket.io-client';
 import parser from 'socket.io-msgpack-parser';
 
-// upon page reload
-export const customFadeDuration = 500;
-
 // to show up error messages if it takes this long to connect
 export const connectionTimeoutDuration = 2000;
 

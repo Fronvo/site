@@ -3,27 +3,25 @@
 </svelte:head>
 
 <script context='module'>
-    export const ssr = false;
+	export const prerender = true;
+	export const ssr = false;
 </script>
 
 <script>
-    import { fly } from 'svelte/transition';
+    import { scale, fade } from 'svelte/transition';
     import { goto } from '$app/navigation';
     import { onMount } from 'svelte';
     import { sockt } from '../stores';
-    import { animateFadeIn, send } from '../utilities';
+    import { send } from '../utilities';
 
-    let main, topError, registerBtn,
-    loginBtn, emailInput, passwordInput,
+    let registerBtn, loginBtn, emailInput, passwordInput,
     emailText, passwordText;
 
-    let defaultBorder = '#ae00ff', errorBorder = '#d80000', whiteColor = '#ffffff';
+    let defaultBorder = '#ea00ff', errorBorder = '#d80000', whiteColor = '#ffffff';
 
-    let email, password, hasRetried = false;
+    let email, password, hasRetried = false, mountReady = false, errorVisible = false;
 
     function setupUI() {
-        main = document.getElementById('accountMain');
-        topError = document.getElementById('topError');
         registerBtn = document.getElementById('registerBtn');
         loginBtn = document.getElementById('loginBtn');
         emailInput = document.getElementById('emailInput');
@@ -31,12 +29,17 @@
         emailText = document.getElementById('emailText');
         passwordText = document.getElementById('passwordText');
 
-        animateFadeIn(main);
+        console.log('setupui', registerBtn)
     }
 
     onMount(() => {
-        if(localStorage.getItem('token')) goto('app', true);
-        else setupUI();
+        if(localStorage.getItem('token')) goto('/', true);
+        else {
+            mountReady = true;
+
+            // why wont it work on its own??
+            setTimeout(() => setupUI());
+        }
     });
 
     function disableUI() {
@@ -58,19 +61,22 @@
         passwordInput.disabled = false;
     }
 
+    function setError(errorText) {
+        if(!errorVisible) errorVisible = true;
+        setTimeout(() => document.getElementById('topError').textContent = errorText);
+    }
+
     function attemptAccountAction(type) {
         if(!(type === 'register' || type === 'login')) return;
 
         if(!$sockt) {
-            topError.textContent = 'Server is unreachable.'
-            animateFadeIn(topError);
-
+            setError('Server is unreachable.');
             return;
+
         } else if(!email || !password) {
             disableUI();
 
-            topError.textContent = !email ? 'The email is required.' : 'The password is required.';
-            animateFadeIn(topError);
+            setError(!email ? 'The email is required.' : 'The password is required.');
             
             !email ? emailInput.style.borderColor = errorBorder: passwordInput.style.borderColor = errorBorder;
             
@@ -91,7 +97,8 @@
                 return;
             }
 
-            topError.textContent = err.msg;
+            if(errorVisible)
+                setError(err.msg);
             
             // delay sequential attempts
             let funcTimeout = hasRetried ? 300 : 0;
@@ -105,7 +112,7 @@
                     }
                 }
 
-                animateFadeIn(topError);
+                setError(err.msg);
 
                 enableUI();
             }, funcTimeout);
@@ -113,24 +120,30 @@
             if(!hasRetried) hasRetried = true;
         });
     }
+
 </script>
 
-<div in:fly={{y: -50}} out:fly={{y: 50}} id='accountMain' class='center' style='display: none;'>
-    <h1 id='topError' style='color: red; display: none;'>Error</h1>
+{#if mountReady}
+    <div in:scale={{start: .9, delay: 150, duration: 500}} out:scale={{start: .95, duration: 500}} class='center'>
 
-    <h1 id='emailText' style='margin-bottom: 0;'>Email</h1>
-    <input id="emailInput" bind:value="{email}"/>
+        {#if errorVisible}
+            <h1 in:fade={{duration: 300}} id='topError' style='color: red;'>Error</h1>
+        {/if}
 
-    <div></div>
+        <h1 id='emailText' style='margin-bottom: 0;'>Email</h1>
+        <input id='emailInput' bind:value={email}/>
 
-    <h1 id='passwordText' style='margin-bottom: 0;'>Password</h1>
-    <input style='margin-bottom: 50px;' id="passwordInput" bind:value="{password}" type="password"/>
+        <div></div>
 
-    <div></div>
+        <h1 id='passwordText' style='margin-bottom: 0;'>Password</h1>
+        <input style='margin-bottom: 50px;' id='passwordInput' bind:value={password} type='password'/>
 
-    <div style='margin-bottom: 20px;'>
-        <button id='registerBtn' style='margin-right: 25px;' class='glow' on:click="{() => attemptAccountAction('login')}">Login</button>
+        <div></div>
 
-        <button id='loginBtn' style='margin-left: 25px;' class='glow' on:click="{() => attemptAccountAction('register')}">Register</button>
+        <div style='margin-bottom: 20px;'>
+            <button id='registerBtn' style='margin-right: 25px;' on:click={() => attemptAccountAction('login')}>Login</button>
+
+            <button id='loginBtn' style='margin-left: 25px;' on:click={() => attemptAccountAction('register')}>Register</button>
+        </div>
     </div>
-</div>
+{/if}

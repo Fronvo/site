@@ -1,4 +1,4 @@
-import { customFadeDuration, sockt } from './stores';
+import { sockt } from './stores';
 
 // socket-ception
 let socket;
@@ -6,36 +6,6 @@ let socket;
 sockt.subscribe((val) => {
     socket = val;
 });
-
-function animateView(view, options, callback) {
-    view.animate(options, customFadeDuration);
-
-    // very callback, much responsive
-    if(callback) setTimeout(() => callback(), customFadeDuration);
-}
-
-export function animateFadeIn(view, callback, forceFade) {
-    if(!(view.style.display === 'block')) view.style.display = 'block';
-    else if(!forceFade) return;
-
-    animateView(view, [
-        { opacity: 0 },
-        { opacity: 1 }
-    ], callback);
-}
-
-export function animateFadeOut(view, callback) {
-    if(!(view.style.display === 'block')) return;
-
-    animateView(view, [
-        { opacity: 1 },
-        { opacity: 0 }
-    ], callback);
-
-    setTimeout(() => {
-        view.style.display = 'none';
-    }, customFadeDuration - 50);
-}
 
 export function send(event, sendData, callback) {
     if(socket) {

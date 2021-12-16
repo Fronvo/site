@@ -21,7 +21,7 @@ a::after {
     display: block;
     height: 2px;
     width: 0px;
-    transition: width 1s ease, background-color 1s ease;
+    transition: width .75s, background-color .75s;
 }
 
 a:hover::after {
@@ -37,22 +37,27 @@ h1, h2, h3, h4, h5, h6 {
     transition: .5s;
 }
 
+div {
+    transition: .5s;
+}
+
 button {
-    background: rgb(168, 8, 212);
+    background: rgb(188, 7, 233);
     box-shadow: 1px 1px 7px black;
     border-radius: 10px;
     color: white;
     border: 0;
     padding: 10px;
     font-family: Ubuntu;
-    font-size: 40px;
+    font-size: 42px;
     cursor: pointer;
-    transition: .4s;
-    transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+    transition: .25s;
 }
 
 button:hover {
-    background: rgb(150, 0, 192);
+    background: rgb(165, 7, 204);
+    box-shadow: 1px 1px 7px rgb(0, 0, 0, .80);
+    border-radius: 15px;
 }
 
 button:focus {
@@ -60,12 +65,12 @@ button:focus {
 }
 
 input {
-    border: 2px solid rgb(174, 0, 255);
+    border: 3px solid rgb(234, 0, 255);
     border-radius: 5px;
-    background: rgb(81, 27, 105);
-    box-shadow: 1px 1px 7px black;
+    background: rgb(92, 27, 105);
+    box-shadow: 0 0 10px black;
     color: white;
-    margin: 5px;
+    margin: 5px 0 15px 0;
     text-align: center;
     font-size: 30px;
     font-family: Ubuntu;
@@ -74,12 +79,12 @@ input {
 }
 
 input:hover {
-    border: 2px solid rgb(133, 24, 184);
+    border: 3px solid rgb(185, 12, 201);
 }
 
 input:focus {
     outline: 1px;
-    border: 2px solid rgb(226, 162, 255);
+    border: 3px solid rgb(243, 126, 253);
 }
 
 ::placeholder {
@@ -154,13 +159,14 @@ select:-webkit-autofill::first-line {
 
 .fronvo-panel {
     display: inline-block;
-    border-width: 1px;
-    border-radius: 10px;
-    box-shadow: 0 0 5px rgb(200, 95, 245);
+    position: absolute;
+    border: 2px solid white;
+    border-radius: 15px;
+    box-shadow: 0 0 5px black;
     margin-left: .75vw;
     width: 98%;
     min-height: 450px;
-    height: 90%;
+    height: 83vh;
 }
 
 .fronvo-panel h1 {
@@ -179,9 +185,7 @@ select:-webkit-autofill::first-line {
 
 .fronvo-top-panel {
     display: flex;
-    margin-left: 5px;
-    margin-bottom: 10px;
-    margin-top: 5px;
+    margin: 5px 0 10px 10px;
     align-items: center;
 }
 
@@ -231,17 +235,11 @@ select:-webkit-autofill::first-line {
 }
 
 .footer {
-    border: 2px solid white;
-    border-radius: 5px;
-    box-shadow: 0 -2px 20px black;
     color: white;
-    background: rgb(162, 0, 255);
     position: fixed;
     bottom: 0;
     right: 0;
     left: 0;
-    padding: 15px;
-    margin-bottom: 20px;
     margin-left: auto;
     margin-right: auto;
     max-width: max-content;
@@ -256,6 +254,33 @@ select:-webkit-autofill::first-line {
     text-align: center;
 }
 
+.bottom-news {
+    border: 2px solid white;
+    border-radius: 10px;
+    box-shadow: 0 -2px 20px black;
+    background: rgb(183, 0, 255);
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.bottom-bar {
+    display: flex;
+    border: 3px solid white;
+    box-shadow: 0 0 15px black;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom: 0;
+}
+
+.bottom-bar div {
+    padding: 8px;
+    transition: .25s;
+}
+
+.bottom-bar div:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
 @media screen and (max-height: 450px) {
     .fronvo-panel {
         margin-bottom: 5px;
@@ -264,7 +289,7 @@ select:-webkit-autofill::first-line {
 
 @media screen and (max-width: 650px), (max-height: 600px) {
     button {
-        font-size: 30px;
+        font-size: 32px;
     }
 
     input {
@@ -309,11 +334,19 @@ select:-webkit-autofill::first-line {
     }
 }
 
-@media screen and (max-width: 1100px) {
-    div {
-        transition: .5s;
+@media screen and (max-height: 890px) {
+    .fronvo-panel {
+        height: 79vh;
     }
+}
 
+@media screen and (max-height: 750px) {
+    .fronvo-panel {
+        height: 75vh;
+    }
+}
+
+@media screen and (max-width: 300px), (max-height: 800px) {
     .fronvo-top-panel #center {
         width: 85%;
     }
@@ -322,22 +355,20 @@ select:-webkit-autofill::first-line {
         font-size: 40px;
     }
 
+    .bottom-bar {
+        display: none;
+    }
+
     .fronvo-top-panel #svg-menu {
         display: block;
     }
 
     .fronvo-panel {
         width: 98%;
-        height: 92%;
+        height: 88%;
     }
 
     .fronvo-panel h1 {
         font-size: 35px;
-    }
-}
-
-@media screen and (max-width: 900px), (max-height: 870px) {
-    .fronvo-panel {
-        height: 85%;
     }
 }

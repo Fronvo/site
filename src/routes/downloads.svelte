@@ -3,28 +3,24 @@
 </svelte:head>
 
 <script context='module'>
-    export const prerender = true;
-    export const ssr = false;
+	export const prerender = true;
+	export const ssr = false;
 </script>
 
 <script>
     import { onMount } from 'svelte';
-    import { fly } from 'svelte/transition';
-    import { animateFadeIn } from '../utilities';
+    import { scale } from 'svelte/transition';
 
-    let main;
-
-    function setupUI() {
-        main = document.getElementById('downloadsMain');
-
-        animateFadeIn(main);
-    }
+    let mountReady = false;
 
     onMount(() => {
-        setupUI();
+        mountReady = true;
     });
+
 </script>
 
-<div id='downloadsMain' in:fly={{y: -100}} out:fly={{y: 100}} class='center' style='display: none;'>
-    <h1>Coming soon...</h1>
-</div>
+{#if mountReady}
+    <div in:scale={{start: .9, delay: 150}} out:scale={{start: .9}} class='center'>
+        <h1>Coming soon...</h1>
+    </div>
+{/if}

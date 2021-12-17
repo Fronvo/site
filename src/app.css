@@ -38,7 +38,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 div {
-    transition: .5s;
+    transition: .25s;
 }
 
 button {
@@ -163,10 +163,11 @@ select:-webkit-autofill::first-line {
     border: 2px solid white;
     border-radius: 15px;
     box-shadow: 0 0 5px black;
-    margin-left: .75vw;
+    margin-left: 1vw;
     width: 98%;
     min-height: 450px;
     height: 83vh;
+    background: rgba(0, 0, 0, 10%);
 }
 
 .fronvo-panel h1 {
@@ -180,7 +181,11 @@ select:-webkit-autofill::first-line {
 .panel-top {
     display: flex;
     align-items: center;
-    margin-left: 5px;
+    justify-content: center;
+}
+
+.panel-top #options {
+    margin-left: 10px;
 }
 
 .fronvo-top-panel {

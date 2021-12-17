@@ -60,6 +60,13 @@
         } else attemptSocketLogin();
     }
 
+    function retryFronvoconnection() {
+        connTimedOut = false;
+        connSuccessful = false;
+
+        attemptFronvoConnection();
+    }
+
     function setActiveItem(newItemId) {
         if (activeItemId == newItemId) return;
 
@@ -71,8 +78,9 @@
 </script>
 
 {#if connTimedOut}
-    <div class='center'>
+    <div transition:scale={{start: .9, duration: 500}} class='center'>
         <h1 style='color: red;'>Error connecting to Fronvo.</h1>
+        <button on:click={() => retryFronvoconnection()}>Retry</button>
     </div>
 {/if}
 
@@ -137,8 +145,33 @@
         
         {/if}
 
-        <!-- Friends -->
+        <!-- Posts -->
         {#if activeItemId == 1}
+
+            <div transition:scale={{start: 0.98, duration: 500}} class='fronvo-panel'>
+                <div class='panel-top'>
+                    <svg version="1.2" baseProfile="tiny-ps" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+                        <defs>
+                            <linearGradient id="grd10" gradientUnits="userSpaceOnUse"  x1="5.3" y1="22.9" x2="44.3" y2="23.6">
+                                <stop offset="0" stop-color="#bf00eb"  />
+                                <stop offset="1" stop-color="#ff00dd"  />
+                            </linearGradient>
+                        </defs>
+                        <style>
+                            tspan { white-space:pre }
+                            .shp10 { fill: url(#grd10) } 
+                        </style>
+                        <path class="shp10" d="m41.64 11.83c1.74 2.49 2.61 5.21 2.61 8.16c0 2.94-0.87 5.66-2.61 8.16c-1.74 2.49-4.11 4.46-7.09 5.91c-2.99 1.45-6.25 2.17-9.79 2.17c-1.02 0-2.07-0.07-3.16-0.2c-2.87 2.96-6.21 5.01-10.01 6.14c-0.71 0.24-1.54 0.42-2.48 0.56c-0.25 0.03-0.47-0.04-0.66-0.23c-0.2-0.19-0.32-0.43-0.38-0.74v-0.03c-0.04-0.07-0.05-0.17-0.01-0.3c0.04-0.14 0.05-0.22 0.04-0.25c-0.01-0.03 0.03-0.11 0.1-0.24c0.07-0.13 0.12-0.2 0.13-0.23c0.01-0.03 0.07-0.1 0.15-0.22c0.09-0.12 0.14-0.19 0.17-0.23c0.1-0.14 0.33-0.43 0.67-0.88c0.35-0.45 0.6-0.77 0.75-0.96c0.15-0.19 0.38-0.53 0.67-1c0.3-0.47 0.53-0.9 0.71-1.29c0.17-0.39 0.37-0.89 0.59-1.5c0.22-0.61 0.41-1.25 0.57-1.93c-2.28-1.51-4.07-3.37-5.39-5.58c-1.31-2.22-1.97-4.59-1.97-7.13c0-2.2 0.51-4.3 1.55-6.3c1.03-2 2.42-3.73 4.16-5.19c1.74-1.45 3.82-2.61 6.22-3.46c2.41-0.85 4.93-1.28 7.57-1.28c3.54 0 6.8 0.72 9.79 2.17c2.99 1.45 5.35 3.42 7.09 5.91z" />
+                    </svg>
+
+                    <h1>Posts</h1>
+                </div>
+            </div>
+
+        {/if}
+
+        <!-- Friends -->
+        {#if activeItemId == 2}
 
             <div transition:scale={{start: 0.98, duration: 500}} class='fronvo-panel'>
                 <div class='panel-top'>
@@ -158,6 +191,28 @@
                     </svg>
 
                     <h1>Friends</h1>
+
+                    <div id='options'>
+                        <svg version="1.2" baseProfile="tiny-ps" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+                            <defs>
+                                <linearGradient id="grd7" gradientUnits="userSpaceOnUse"  x1="3.8" y1="24" x2="44.3" y2="24">
+                                    <stop offset="0" stop-color="#bf00eb"  />
+                                    <stop offset="1" stop-color="#ff00dd"  />
+                                </linearGradient>
+                                <linearGradient id="grd8" gradientUnits="userSpaceOnUse"  x1="9.8" y1="23.6" x2="39" y2="23.6">
+                                    <stop offset="0" stop-color="#ff00dd"  />
+                                    <stop offset="1" stop-color="#bf00eb"  />
+                                </linearGradient>
+                            </defs>
+                            <style>
+                                tspan { white-space:pre }
+                                .shp7 { fill: url(#grd7) } 
+                                .shp8 { fill: url(#grd8);stroke: #ffffff;stroke-width: 1.5 } 
+                            </style>
+                            <path class="shp7" d="m24 44.25c-11.2 0-20.25-9.05-20.25-20.25c0-11.2 9.05-20.25 20.25-20.25c11.2 0 20.25 9.05 20.25 20.25c0 11.2-9.05 20.25-20.25 20.25z" />
+                            <path class="shp8" d="m39 21.63v3.99c0 0.55-0.19 1.03-0.58 1.41c-0.39 0.39-0.86 0.58-1.41 0.58h-8.64v8.64c0 0.55-0.19 1.03-0.58 1.41c-0.39 0.39-0.86 0.58-1.41 0.58h-3.99c-0.55 0-1.03-0.19-1.41-0.58c-0.39-0.39-0.58-0.86-0.58-1.41v-8.64h-8.64c-0.55 0-1.03-0.19-1.41-0.58c-0.39-0.39-0.58-0.86-0.58-1.41v-3.99c0-0.55 0.19-1.02 0.58-1.41c0.39-0.39 0.86-0.58 1.41-0.58h8.64v-8.64c0-0.55 0.19-1.02 0.58-1.41c0.39-0.39 0.86-0.58 1.41-0.58h3.99c0.55 0 1.02 0.19 1.41 0.58c0.39 0.39 0.58 0.86 0.58 1.41v8.64h8.64c0.55 0 1.02 0.19 1.41 0.58c0.39 0.39 0.58 0.86 0.58 1.41z" />
+                        </svg>
+                    </div>
                 </div>
             </div>
 
@@ -183,8 +238,25 @@
                 </svg>
             </div>
 
+            <!-- Posts -->
+            <div id='bottom-item-posts' on:click={() => setActiveItem(1)}>
+                <svg version="1.2" baseProfile="tiny-ps" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 54 54" width="54" height="54">
+                    <defs>
+                        <linearGradient id="grd9" gradientUnits="userSpaceOnUse"  x1="5.9" y1="25.8" x2="49.8" y2="26.5">
+                            <stop offset="0" stop-color="#bf00eb"  />
+                            <stop offset="1" stop-color="#ff00dd"  />
+                        </linearGradient>
+                    </defs>
+                    <style>
+                        tspan { white-space:pre }
+                        .shp9 { fill: url(#grd9) } 
+                    </style>
+                    <path class="shp9" d="m46.84 13.31c1.96 2.81 2.94 5.86 2.94 9.18c0 3.31-0.98 6.37-2.94 9.18c-1.96 2.81-4.62 5.02-7.98 6.65c-3.36 1.63-7.04 2.44-11.02 2.44c-1.14 0-2.33-0.08-3.55-0.23c-3.23 3.33-6.99 5.63-11.26 6.91c-0.8 0.27-1.73 0.48-2.79 0.63c-0.28 0.04-0.53-0.05-0.75-0.26c-0.22-0.21-0.36-0.49-0.43-0.83v-0.03c-0.05-0.08-0.05-0.19-0.01-0.34c0.04-0.15 0.06-0.25 0.05-0.29c-0.01-0.04 0.03-0.13 0.11-0.27c0.08-0.14 0.13-0.23 0.15-0.26c0.02-0.03 0.07-0.11 0.17-0.24c0.1-0.13 0.16-0.22 0.2-0.26c0.11-0.15 0.37-0.48 0.76-0.98c0.39-0.5 0.67-0.87 0.84-1.08c0.17-0.22 0.42-0.59 0.76-1.13c0.33-0.53 0.6-1.02 0.8-1.46c0.2-0.44 0.42-1 0.66-1.68c0.24-0.68 0.46-1.41 0.64-2.17c-2.56-1.69-4.58-3.79-6.06-6.28c-1.48-2.49-2.22-5.17-2.22-8.02c0-2.47 0.58-4.84 1.74-7.09c1.16-2.25 2.72-4.2 4.68-5.84c1.96-1.64 4.29-2.93 7-3.9c2.71-0.96 5.55-1.44 8.52-1.44c3.98 0 7.66 0.81 11.02 2.44c3.36 1.63 6.02 3.84 7.98 6.65z" />
+                </svg>
+            </div>
+
             <!-- Friends -->
-            <div id='bottom-item-friends' on:click={() => setActiveItem(1)}>
+            <div id='bottom-item-friends' on:click={() => setActiveItem(2)}>
                 <svg version='1.2' baseProfile='tiny-ps' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 54 54' width='54' height='54'>
                     <defs>
                         <linearGradient id='grd6' gradientUnits='userSpaceOnUse'  x1='2.2' y1='51.2' x2='52.9' y2='4'>
@@ -200,7 +272,7 @@
                     <path class='shp6' d='m52.87 44.34c0 2.64-0.88 4.72-2.62 6.25c-1.75 1.53-4.08 2.29-6.98 2.29h-31.42c-2.9 0-5.23-0.76-6.98-2.29c-1.75-1.53-2.62-3.61-2.62-6.25c0-1.16 0.04-2.3 0.13-3.41c0.08-1.11 0.25-2.31 0.5-3.59c0.25-1.29 0.57-2.48 0.95-3.58c0.38-1.1 0.9-2.17 1.55-3.21c0.65-1.04 1.39-1.93 2.23-2.67c0.84-0.74 1.86-1.32 3.07-1.76c1.21-0.44 2.55-0.66 4.01-0.66c0.22 0 0.72 0.24 1.51 0.71c0.79 0.47 1.68 1 2.68 1.58c0.99 0.58 2.29 1.11 3.88 1.58c1.59 0.47 3.19 0.71 4.8 0.71c1.61 0 3.21-0.24 4.8-0.71c1.59-0.47 2.89-1 3.88-1.58c0.99-0.58 1.89-1.11 2.68-1.58c0.79-0.47 1.29-0.71 1.51-0.71c1.46 0 2.8 0.22 4.01 0.66c1.21 0.44 2.23 1.03 3.07 1.76c0.84 0.74 1.58 1.63 2.23 2.67c0.65 1.04 1.16 2.12 1.55 3.21c0.38 1.1 0.7 2.29 0.95 3.58c0.25 1.29 0.42 2.48 0.5 3.59c0.08 1.11 0.13 2.25 0.13 3.41zm-25.31-42.09c-3.81 0-7.07 1.24-9.76 3.71c-2.7 2.47-4.04 5.45-4.04 8.95c0 3.49 1.35 6.48 4.04 8.95c2.7 2.47 5.95 3.71 9.76 3.71c3.81 0 7.07-1.24 9.76-3.71c2.7-2.47 4.04-5.45 4.04-8.95c0-3.49-1.35-6.48-4.04-8.95c-2.7-2.47-5.95-3.71-9.76-3.71z' />
                 </svg>
             </div>
-            
+
         </div>
     </div>
 {/if}

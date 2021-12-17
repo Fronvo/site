@@ -12,6 +12,9 @@
 	import { scale, fly } from 'svelte/transition';
 	import { onMount } from 'svelte';
 
+	// force socket.io connection beforehand, less delay
+	import { sockt } from '../stores';
+
 	let mountReady = false;
 
 	onMount(() => {

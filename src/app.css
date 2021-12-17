@@ -184,10 +184,6 @@ select:-webkit-autofill::first-line {
     justify-content: center;
 }
 
-.panel-top #options {
-    margin-left: 10px;
-}
-
 .fronvo-top-panel {
     display: flex;
     margin: 5px 0 10px 10px;

@@ -191,28 +191,6 @@
                     </svg>
 
                     <h1>Friends</h1>
-
-                    <div id='options'>
-                        <svg version="1.2" baseProfile="tiny-ps" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
-                            <defs>
-                                <linearGradient id="grd7" gradientUnits="userSpaceOnUse"  x1="3.8" y1="24" x2="44.3" y2="24">
-                                    <stop offset="0" stop-color="#bf00eb"  />
-                                    <stop offset="1" stop-color="#ff00dd"  />
-                                </linearGradient>
-                                <linearGradient id="grd8" gradientUnits="userSpaceOnUse"  x1="9.8" y1="23.6" x2="39" y2="23.6">
-                                    <stop offset="0" stop-color="#ff00dd"  />
-                                    <stop offset="1" stop-color="#bf00eb"  />
-                                </linearGradient>
-                            </defs>
-                            <style>
-                                tspan { white-space:pre }
-                                .shp7 { fill: url(#grd7) } 
-                                .shp8 { fill: url(#grd8);stroke: #ffffff;stroke-width: 1.5 } 
-                            </style>
-                            <path class="shp7" d="m24 44.25c-11.2 0-20.25-9.05-20.25-20.25c0-11.2 9.05-20.25 20.25-20.25c11.2 0 20.25 9.05 20.25 20.25c0 11.2-9.05 20.25-20.25 20.25z" />
-                            <path class="shp8" d="m39 21.63v3.99c0 0.55-0.19 1.03-0.58 1.41c-0.39 0.39-0.86 0.58-1.41 0.58h-8.64v8.64c0 0.55-0.19 1.03-0.58 1.41c-0.39 0.39-0.86 0.58-1.41 0.58h-3.99c-0.55 0-1.03-0.19-1.41-0.58c-0.39-0.39-0.58-0.86-0.58-1.41v-8.64h-8.64c-0.55 0-1.03-0.19-1.41-0.58c-0.39-0.39-0.58-0.86-0.58-1.41v-3.99c0-0.55 0.19-1.02 0.58-1.41c0.39-0.39 0.86-0.58 1.41-0.58h8.64v-8.64c0-0.55 0.19-1.02 0.58-1.41c0.39-0.39 0.86-0.58 1.41-0.58h3.99c0.55 0 1.02 0.19 1.41 0.58c0.39 0.39 0.58 0.86 0.58 1.41v8.64h8.64c0.55 0 1.02 0.19 1.41 0.58c0.39 0.39 0.58 0.86 0.58 1.41z" />
-                        </svg>
-                    </div>
                 </div>
             </div>
 

@@ -288,7 +288,7 @@ select:-webkit-autofill::first-line {
     }
 }
 
-@media screen and (max-width: 650px), (max-height: 600px) {
+@media screen and (max-width: 700px), (max-height: 650px) {
     button {
         font-size: 32px;
     }
@@ -319,11 +319,11 @@ select:-webkit-autofill::first-line {
     }
 
     .fronvo-top h1 {
-        font-size: 40px;
+        font-size: 45px;
     }
 
     .fronvo-top h2 {
-        font-size: 20px;
+        font-size: 22px;
     }
 
     .center h1 {
@@ -347,7 +347,7 @@ select:-webkit-autofill::first-line {
     }
 }
 
-@media screen and (max-width: 300px), (max-height: 800px) {
+@media screen and (max-width: 300px), (max-height: 600px) {
     .fronvo-top-panel #center {
         width: 85%;
     }

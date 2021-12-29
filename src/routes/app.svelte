@@ -13,10 +13,11 @@
     import { onMount } from 'svelte';
     import { goto } from '$app/navigation';
 
-    let connSuccessful = false, connTimedOut = false;
+    let mountReady = false, connSuccessful = false, connTimedOut = false;
     let activeItemId = sessionStorage.getItem('lastActiveItemId') || 0;
 
     onMount(() => {
+        mountReady = true;
         attemptFronvoConnection();
     });
 
@@ -41,6 +42,7 @@
                             if (!err) {
                                 connTimedOut = false;
                                 connSuccessful = true;
+
                             } else {
                                 localStorage.removeItem('token');
                                 goto('account', true);
@@ -76,6 +78,14 @@
     }
 
 </script>
+
+{#if mountReady && !connTimedOut && !connSuccessful}
+
+    <div in:scale={{start: .9, duration: 250, delay: 200}} out:scale={{start: .8, duration: 1000}} class='center'>
+        <h1>Fronvo</h1>
+    </div>
+
+{/if}
 
 {#if connTimedOut}
     <div transition:scale={{start: .9, duration: 500}} class='center'>

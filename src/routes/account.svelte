@@ -28,8 +28,6 @@
         passwordInput = document.getElementById('passwordInput')
         emailText = document.getElementById('emailText');
         passwordText = document.getElementById('passwordText');
-
-        console.log('setupui', registerBtn)
     }
 
     onMount(() => {

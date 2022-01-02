@@ -211,6 +211,7 @@ select:-webkit-autofill::first-line {
 
 .center {
     height: fit-content;
+    width: max-content;
     margin: auto;
     position: absolute;
     left: 0;

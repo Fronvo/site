@@ -3,7 +3,7 @@ import { io } from 'socket.io-client';
 import parser from 'socket.io-msgpack-parser';
 
 // to show up error messages if it takes this long to connect
-export const connectionTimeoutDuration = 2000;
+export const connectionTimeoutDuration = 5000;
 
 // use 'socket' var name in other files, dont reserve
 export const sockt = writable();

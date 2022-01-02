@@ -26,7 +26,8 @@
     "npm-run-all": "^4.1.5",
     "socket.io-client": "^4.2.0",
     "socket.io-msgpack-parser": "^3.0.1",
-    "svelte": "^3.43.1"
+    "svelte": "^3.43.1",
+    "svelte-loading-spinners": "^0.1.7"
   },
   "type": "module",
   "engines": {

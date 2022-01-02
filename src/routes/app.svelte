@@ -12,6 +12,7 @@
     import { isLoggedIn, send } from '../utilities';
     import { onMount } from 'svelte';
     import { goto } from '$app/navigation';
+    import { Shadow } from 'svelte-loading-spinners';
 
     let mountReady = false, connSuccessful = false, connTimedOut = false;
     let activeItemId = sessionStorage.getItem('lastActiveItemId') || 0;
@@ -28,10 +29,7 @@
 
         function attemptSocketLogin() {
             isLoggedIn()
-            .then(() => {
-                connTimedOut = false;
-                connSuccessful = true;
-            })
+            .then(() => { postLogin(); })
             .catch(() => {
                 const token = localStorage.getItem('token');
 
@@ -40,8 +38,7 @@
                         token: token
                     }, (err) => {
                             if (!err) {
-                                connTimedOut = false;
-                                connSuccessful = true;
+                                postLogin();
 
                             } else {
                                 localStorage.removeItem('token');
@@ -50,6 +47,17 @@
                         }
                     );
                 } else goto('account', true);
+            });
+        }
+
+        function postLogin() {
+            connTimedOut = false;
+            connSuccessful = true;
+
+            $sockt.on('disconnect', () => {
+                connSuccessful = false;
+
+                attemptFronvoConnection();
             });
         }
 
@@ -81,8 +89,8 @@
 
 {#if mountReady && !connTimedOut && !connSuccessful}
 
-    <div in:scale={{start: .9, duration: 250, delay: 200}} out:scale={{start: .8, duration: 1000}} class='center'>
-        <h1>Fronvo</h1>
+    <div out:scale={{start: .8, duration: 500}} class='center'>
+        <Shadow color='#e700fc' duration='1.2s' />
     </div>
 
 {/if}

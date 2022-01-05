@@ -32,8 +32,8 @@
 {#if mountReady}
 	<div>
 		<div transition:fly={{duration: 600, y: -100}} class='fronvo-top'>
-			<h1>Fronvo</h1>
-			<h2>The cross platform app you have been waiting for!</h2>
+			<h1 id='logo'>Fronvo</h1>
+			<h2 id='description'>The cross platform app you have been waiting for!</h2>
 		</div>
 
 		<div in:scale={{duration: 600, delay: 200}} out:scale={{duration: 600}} class='center'>

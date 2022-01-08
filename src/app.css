@@ -358,4 +358,11 @@ select:-webkit-autofill::first-line {
     .fronvo-panel {
         height: 88%;
     }
+
+    /* menu margin, remain above .fronvo-panel */
+    @media screen and (min-width: 800px) {
+        .fronvo-top-panel {
+            margin-left: 1vw;
+        }
+    }
 }

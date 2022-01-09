@@ -37,11 +37,11 @@
 		</div>
 
 		<div in:scale={{duration: 600, delay: 200}} out:scale={{duration: 600}} class='center'>
-			<button on:click='{() => attemptRedirect()}' style='margin-top: 10px;'>Try it online</button>
+			<button on:click={() => attemptRedirect()} style='margin-top: 10px;'>Try it online</button>
 
 			<h1>or</h1>
 
-			<button on:click='{() => goto('downloads')}'>Download</button>
+			<button on:click={() => goto('downloads')}>Download</button>
 		</div>
 
 		<div in:scale={{duration: 600, start: 1.5}} out:fly={{y: 100, duration: 600}} class='footer bottom-news'>

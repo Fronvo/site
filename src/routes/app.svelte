@@ -9,7 +9,7 @@
 <script>
     import { scale, fly } from 'svelte/transition';
     import { sockt, connectionTimeoutDuration } from '../stores';
-    import { isLoggedIn, send } from '../utilities';
+    import { isLoggedIn, send, gatherInitData } from '../utilities';
     import { onMount } from 'svelte';
     import { goto } from '$app/navigation';
     import { Shadow } from 'svelte-loading-spinners';
@@ -50,7 +50,9 @@
             });
         }
 
-        function postLogin() {
+        async function postLogin() {
+            await gatherInitData();
+
             connTimedOut = false;
             connSuccessful = true;
 

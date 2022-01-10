@@ -23,3 +23,10 @@ tempSocket.on('connect', () => {
 tempSocket.on('disconnect', () => {
     sockt.set(null);
 });
+
+// Profile
+export let profileDict = writable({
+    username: null,
+    email: null,
+    creationDate: null
+});

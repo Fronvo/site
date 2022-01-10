@@ -17,6 +17,8 @@ const tempSocket = io('wss://fronvosrv.herokuapp.com', {
 });
 
 tempSocket.on('connect', () => {
+    // no offline packets, may overflow after reconnection
+    tempSocket.sendBuffer = [];
     sockt.set(tempSocket);
 });
 

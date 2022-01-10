@@ -27,7 +27,7 @@ tempSocket.on('disconnect', () => {
 });
 
 // Profile
-export let profileDict = writable({
+export let selfDict = writable({
     username: null,
     email: null,
     creationDate: null

@@ -1,4 +1,4 @@
-import { sockt, profileDict } from './stores';
+import { sockt, selfDict } from './stores';
 
 // socket-ception
 let socket;
@@ -26,18 +26,10 @@ export function isLoggedIn() {
     });
 }
 
-export function gatherInitData() {
+export function gatherLoginData() {
     return new Promise(async (resolve, reject) => {
-        await gatherProfileData();
-
-        resolve();
-    });
-}
-
-async function gatherProfileData() {
-    return new Promise((resolve, reject) => {
-        send('fetchProfileData', null, (profileDataDict) => {
-            profileDict.set({...profileDataDict});
+        send('fetchSelfData', null, (selfDataDict) => {
+            selfDict.set({...selfDataDict});
             resolve();
         });
     });

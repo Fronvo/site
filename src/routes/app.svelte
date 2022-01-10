@@ -196,8 +196,8 @@
         <!-- Bottom Bar -->
         <div transition:fly={{y: 100, duration: 500}} class='footer bottom-bar'>
 
-            <!-- Chat -->
-            <div id='bottom-item-chat' on:click={() => setActiveItem(0)}>
+            <!-- Community -->
+            <div on:click={() => setActiveItem(0)}>
                 <svg version='1.2' baseProfile='tiny-ps' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 54 54' width='54' height='54'>
                     <defs>
                         <linearGradient id='grd5' gradientUnits='userSpaceOnUse'  x1='17.6' y1='39.1' x2='34.6' y2='20.2'>
@@ -214,7 +214,7 @@
             </div>
 
             <!-- Friends -->
-            <div id='bottom-item-friends' on:click={() => setActiveItem(1)}>
+            <div on:click={() => setActiveItem(1)}>
                 <svg version='1.2' baseProfile='tiny-ps' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 54 54' width='54' height='54'>
                     <defs>
                         <linearGradient id='grd6' gradientUnits='userSpaceOnUse'  x1='2.2' y1='51.2' x2='52.9' y2='4'>

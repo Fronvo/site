@@ -6,6 +6,8 @@
 
 ## The open-source convo app.
 
+**Powered by blazing fast technologies.**
+
 **Host it, test it, modify it, all yours.** ***ZERO*** **tracking.**
 
 ## What's this about?

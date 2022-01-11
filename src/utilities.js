@@ -26,11 +26,21 @@ export function isLoggedIn() {
     });
 }
 
+// TODO: Convert to getProfileData once friends functionality is implemented
 export function gatherLoginData() {
     return new Promise(async (resolve, reject) => {
-        send('fetchSelfData', null, (selfDataDict) => {
-            selfDict.set({...selfDataDict});
-            resolve();
+        send('fetchProfileId', null, (profileId) => {
+            send('fetchProfileData', {
+                profileId: profileId
+            }, (err, profileDataDict) => {
+                if(err) {
+                    reject();
+                    return;
+                }
+
+                selfDict.set({...profileDataDict});
+                resolve();
+            });
         });
     });
 }

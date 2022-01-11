@@ -43,3 +43,11 @@
 - **Install a svelte-kit [adapter](https://kit.svelte.dev/docs#adapters) and follow each step.**
 
 - **In the case of Fronvo's [node adapter](https://github.com/sveltejs/kit/tree/master/packages/adapter-node), enable automatic github builds on [heroku](https://heroku.com) for this repository with the [preconfigured command](https://github.com/Fronvo/fronvo/blob/master/Procfile).**
+
+## Tools Used
+
+**[svelte](https://svelte.dev/) for blazing-fast performance and ease of developing.**
+
+**[sveltekit](https://kit.svelte.dev/) for more advanced features and rapid development.**
+
+**[socket.io](https://socket.io/) for ease of cummunication and cross-platform ability.**

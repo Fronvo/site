@@ -2,7 +2,6 @@
 
 <h1 style='text-align: center;'>
 
-![Website](https://img.shields.io/website?down_message=down&label=status&style=for-the-badge&up_message=up&url=https%3A%2F%2Ffronvo.herokuapp.com)
 ![GitHub](https://img.shields.io/github/license/fronvo/fronvo-site?style=for-the-badge) ![GitHub Repo stars](https://img.shields.io/github/stars/fronvo/fronvo-site?style=for-the-badge) ![GitHub forks](https://img.shields.io/github/forks/fronvo/fronvo-site?style=for-the-badge) ![Lines of code](https://img.shields.io/tokei/lines/github/fronvo/fronvo-site?style=for-the-badge) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/fronvo/fronvo-site?style=for-the-badge)</h1>
 
 ## The open-source convo app.

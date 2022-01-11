@@ -35,6 +35,8 @@
 
 **```npm run dev -- --open```**
 
+**Important note: When hosting this site from the ```dev``` branch, remember to locally host [the in-development Fronvo server](https://github.com/Fronvo/fronvo/tree/dev), too, in order to ensure full functionality.**
+
 **The site should be hosted locally at port 3000 while also listening for file changes.**
 
 ## Hosting

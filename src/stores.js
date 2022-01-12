@@ -8,7 +8,10 @@ export const connectionTimeoutDuration = 5000;
 // use 'socket' var name in other files, dont reserve
 export const sockt = writable();
 
-// replace with ws://localhost:3001 if hosting locally
+// for __layout changes
+export let hasToken = writable(false);
+
+// Change to ws://localhost:3001 if you are hosting the dev branch of the site.
 const tempSocket = io('wss://fronvosrv.herokuapp.com', {
     // only websocket transport, no http polling
     transports: ['websocket'],

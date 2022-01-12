@@ -1,35 +1,27 @@
 <svelte:head>
-	<title>Fronvo</title>
+    <title>Fronvo</title>
 </svelte:head>
 
 <script context='module'>
-	export const prerender = true;
-	export const ssr = false;
+    export const ssr = false;
 </script>
 
 <script>
+    import { onMount } from 'svelte';
+    import { fly, scale } from 'svelte/transition';
+    import { hasToken } from '../stores';
 	import { goto } from '$app/navigation';
-	import { scale, fly } from 'svelte/transition';
-	import { onMount } from 'svelte';
 
-	// force socket.io connection beforehand, less delay
-	import { sockt } from '../stores';
+    let mountReady = false;
 
-	let mountReady = false;
-
-	onMount(() => {
+    onMount(() => {
+        if(localStorage.getItem('token')) $hasToken = true;
+        
 		mountReady = true;
-	});
-
-	function attemptRedirect() {
-		// dont redirect to app directly, despite its checks, breaks transitions
-		if(localStorage.getItem('token')) goto('app')
-		else goto('account')
-	}
-	
+    });
 </script>
 
-{#if mountReady}
+{#if mountReady && !$hasToken}
 	<div>
 		<div transition:fly={{duration: 600, y: -100}} class='fronvo-top'>
 			<h1 id='logo'>Fronvo</h1>
@@ -37,7 +29,7 @@
 		</div>
 
 		<div in:scale={{duration: 600, delay: 200}} out:scale={{duration: 600}} class='center'>
-			<button on:click={() => attemptRedirect()} style='margin-top: 10px;'>Try it online</button>
+			<button on:click={() => goto('account')} style='margin-top: 10px;'>Try it online</button>
 
 			<h1>or</h1>
 

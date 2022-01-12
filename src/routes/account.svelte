@@ -91,7 +91,7 @@
         }, (err, token) => {
             if(token) {
                 localStorage.setItem('token', token);
-                goto('app', true);
+                goto('/', true);
                 return;
             }
 

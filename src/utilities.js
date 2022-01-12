@@ -28,7 +28,7 @@ export function isLoggedIn() {
 
 // TODO: Convert to getProfileData once friends functionality is implemented
 export function gatherLoginData() {
-    return new Promise(async (resolve, reject) => {
+    return new Promise((resolve, reject) => {
         send('fetchProfileId', null, (profileId) => {
             send('fetchProfileData', {
                 profileId: profileId

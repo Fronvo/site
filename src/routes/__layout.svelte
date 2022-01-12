@@ -57,7 +57,7 @@
             gatherLoginData().then(() => {
                 isConnected = true;
 
-				setActiveItem(sessionStorage.getItem('activePanelId') || 0);
+				setActivePanel(sessionStorage.getItem('activePanelId') || 0);
 
                 $sockt.on('disconnect', () => {
                     isConnected = false;
@@ -86,13 +86,12 @@
         attemptFronvoConnection();
     }
 
-	// TODO: Refactor to setActivePanel
-	function setActiveItem(newItemId) {
-        if (panels.indexOf(activePanel) == newItemId) return;
+	function setActivePanel(newPanelId) {
+        if (panels.indexOf(activePanel) == newPanelId) return;
 
-		activePanel = panels[newItemId];
+		activePanel = panels[newPanelId];
 		
-        sessionStorage.setItem('activePanelId', newItemId);
+        sessionStorage.setItem('activePanelId', newPanelId);
     }
 </script>
 
@@ -188,7 +187,7 @@
 			<div transition:fly={{y: 100, duration: 500}} class='footer bottom-bar'>
 
 				<!-- Community -->
-				<div on:click={() => setActiveItem(0)}>
+				<div on:click={() => setActivePanel(0)}>
 					<svg version='1.2' baseProfile='tiny-ps' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 54 54' width='54' height='54'>
 						<defs>
 							<linearGradient id='grd5' gradientUnits='userSpaceOnUse'  x1='17.6' y1='39.1' x2='34.6' y2='20.2'>
@@ -205,7 +204,7 @@
 				</div>
 
 				<!-- Friends -->
-				<div on:click={() => setActiveItem(1)}>
+				<div on:click={() => setActivePanel(1)}>
 					<svg version='1.2' baseProfile='tiny-ps' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 54 54' width='54' height='54'>
 						<defs>
 							<linearGradient id='grd6' gradientUnits='userSpaceOnUse'  x1='2.2' y1='51.2' x2='52.9' y2='4'>

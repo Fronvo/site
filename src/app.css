@@ -132,32 +132,21 @@ select:-webkit-autofill::first-line {
     height: 100%;
 }
 
-/* Homepage */
-.fronvo-top {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    color: white;
-    font-family: Ubuntu;
-    text-align: center;
-}
-
-.fronvo-top #logo {
-    font-size: 60px;
-    margin: auto;
-    max-width: min-content;
-    text-shadow: 0px 0px 20px black;
-}
-
-.fronvo-top #description {
-    margin: 0;
-    font-size: 30px;
-    text-shadow: 0 0 10px black;
+/* Non-registered root page */
+.homepage-panels-container {
+    background: rgba(0, 0, 0, 20%);
+    height: 80vh;
+    min-height: 350px;
+    margin: 15px 10px 10px 10px;
+    border: 2px solid white;
+    border-radius: 5px;
+    border-left: 0;
+    border-right: 0;
 }
 
 /* Panels */
+
+/* TODO: Same way as .homepage-panels-container, no percentage */
 .fronvo-panel {
     display: inline-block;
     position: fixed;
@@ -196,24 +185,7 @@ select:-webkit-autofill::first-line {
     padding: 5px 10px 0 10px;
 }
 
-.fronvo-top-panel {
-    margin: 5px 0 0 0;
-    text-align: center;
-}
-
-.fronvo-top-panel #menu {
-    display: none;
-}
-
-.fronvo-top-panel #logo-title {
-    color: white;
-    font-family: Ubuntu;
-    font-size: 45px;
-    margin: 0;
-    text-shadow: 0 0 10px black;
-}
-
-/* Helper classes */
+/* Reusable helper classes */
 .center {
     height: fit-content;
     width: max-content;
@@ -239,6 +211,49 @@ select:-webkit-autofill::first-line {
     right: 0;
     top: 0;
     bottom: 0;
+}
+
+.fronvo-top {
+    margin: 5px 0 0 0;
+    text-align: center;
+}
+
+.fronvo-top #menu {
+    display: none;
+}
+
+.fronvo-top #logo-title {
+    color: white;
+    font-family: Ubuntu;
+    font-size: 45px;
+    margin: 0;
+    text-shadow: 0 0 10px black;
+}
+
+.rounded-center {
+    display: flex;
+    align-items: center;
+    padding: 5px 20px 5px 20px;
+    margin: auto;
+    margin-top: 10px;
+    width: min-content;
+    background: rgba(0, 0, 0, 20%);
+    border: 2px solid white;
+    border-radius: 5px;
+    box-shadow: 0 0 10px black;
+}
+
+.rounded-center #logo-title {
+    margin: 0;
+    font-family: Ubuntu;
+    color: white;
+    font-size: 40px;
+    text-shadow: 0 0 5px black;
+}
+
+.rounded-center #svg-icon {
+    margin-left: 10px;
+    cursor: pointer;
 }
 
 .footer {
@@ -339,27 +354,40 @@ select:-webkit-autofill::first-line {
     .fronvo-panel {
         height: 79vh;
     }
+
+    .homepage-panels-container {
+        height: 76vh;
+    }
 }
 
 @media screen and (max-height: 750px) {
     .fronvo-panel {
         height: 75vh;
     }
+
+    .homepage-panels-container {
+        height: 67vh;
+    }
 }
 
 @media screen and (max-width: 300px), (max-height: 600px) {
-    .fronvo-top-panel {
+    .fronvo-top {
         display: flex;
         margin: 5px 0 5px 0;
         align-items: center;
     }
 
-    .fronvo-top-panel #menu {
+    .fronvo-top #menu {
         display: block;
     }
 
-    .fronvo-top-panel #logo-title {
+    .fronvo-top #logo-title {
         font-size: 40px;
+    }
+
+    .rounded-center {
+        margin: auto;
+        margin-top: 10px;
     }
 
     .bottom-bar {
@@ -368,6 +396,10 @@ select:-webkit-autofill::first-line {
 
     .fronvo-panel {
         height: 88%;
+    }
+
+    .homepage-panels-container {
+        height: 82%;
     }
 
     /* menu margin, remain above .fronvo-panel */

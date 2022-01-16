@@ -148,7 +148,7 @@
 		<div class='full'>
 			
 			<!-- Top Div -->
-			<div transition:fly={{y: -50,  duration: 500}} class='fronvo-top-panel'>
+			<div transition:fly={{y: -50,  duration: 500}} class='fronvo-top'>
 
 				<!-- Mobile-only menu -->
 				<svg id='menu' version='1.2' baseProfile='tiny-ps' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44' width='44' height='44'>

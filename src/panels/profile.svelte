@@ -23,4 +23,6 @@
             <h1 id='title'>Profile</h1>
         </div>
     </div>
+
+    <h1>Coming soon...</h1>
 </div>

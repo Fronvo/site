@@ -34,17 +34,13 @@ a:focus {
     outline-color: white;
 }
 
-h1, h2, h3, h4, h5, h6 {
-    transition: .5s;
-}
-
 div {
     transition: .25s;
 }
 
 button {
-    background: rgb(188, 7, 233);
-    box-shadow: 1px 1px 7px black;
+    background: rgb(153, 0, 255);
+    box-shadow: 1px 1px 5px black;
     border-radius: 10px;
     color: white;
     border: 0;
@@ -52,13 +48,13 @@ button {
     font-family: Ubuntu;
     font-size: 42px;
     cursor: pointer;
-    transition: .25s;
+    transition: .3s;
 }
 
 button:hover {
-    background: rgb(165, 7, 204);
-    box-shadow: 1px 1px 7px rgb(0, 0, 0, .80);
-    border-radius: 15px;
+    background: rgb(153, 0, 255);
+    box-shadow: 2px 2px 0 rgb(153, 0, 255),
+                3px 4px 5px black;
 }
 
 button:focus {
@@ -66,10 +62,10 @@ button:focus {
 }
 
 input {
-    border: 3px solid rgb(234, 0, 255);
+    border: 3px solid rgb(140, 0, 255);
     border-radius: 5px;
-    background: rgb(92, 27, 105);
-    box-shadow: 0 0 10px black;
+    background: rgb(80, 25, 90);
+    box-shadow: 0px 0px 5px rgb(170, 0, 255);
     color: white;
     margin: 5px 0 15px 0;
     text-align: center;
@@ -80,12 +76,12 @@ input {
 }
 
 input:hover {
-    border: 3px solid rgb(185, 12, 201);
+    box-shadow: 0 0 10px rgb(140, 0, 255);
 }
 
 input:focus {
     outline: 1px;
-    border: 3px solid rgb(243, 126, 253);
+    box-shadow: 0 0 15px rgb(132, 0, 255);
 }
 
 ::placeholder {
@@ -134,6 +130,9 @@ select:-webkit-autofill::first-line {
 
 /* Non-registered root page */
 .homepage-panels-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: rgba(0, 0, 0, 20%);
     height: 80vh;
     min-height: 350px;
@@ -142,11 +141,59 @@ select:-webkit-autofill::first-line {
     border-radius: 5px;
     border-left: 0;
     border-right: 0;
+    box-shadow: 0 0 10px black;
+    text-align: center;
+}
+
+.homepage-panel .header-section {
+    transition: 0;
+    color: white;
+    font-family: Ubuntu;
+    font-size: 45px;
+    text-shadow: 4px 4px 0 rgb(0, 0, 0),
+                0 -1px 0 rgb(204, 0, 255);
+    margin: 0;
+}
+
+.homepage-panel .header-descriptor {
+    color: white;
+    font-family: Ubuntu;
+    font-size: 28px;
+    text-shadow: 5px 0 5px black;
+    margin: 0;
+    margin-bottom: 50px;
+}
+
+.homepage-join-panel #top-error {
+    color: red;
+    font-family: Ubuntu;
+    font-size: 30px;
+    text-shadow: 0 0 5px black;
+}
+
+.homepage-join-panel #email-text {
+    color: white;
+    font-family: Ubuntu;
+    text-shadow: 0 0 15px black;
+    margin-bottom: 0;
+}
+
+.homepage-join-panel #password-text {
+    color: white;
+    font-family: Ubuntu;
+    text-shadow: 0 0 15px black;
+    margin-bottom: 0;
+}
+
+.homepage-join-panel #password-input {
+    margin-bottom: 30px;
+}
+
+.homepage-join-panel #register-btn {
+    margin-right: 25px;
 }
 
 /* Panels */
-
-/* TODO: Same way as .homepage-panels-container, no percentage */
 .fronvo-panel {
     display: inline-block;
     position: fixed;
@@ -159,8 +206,18 @@ select:-webkit-autofill::first-line {
     width: 98%;
     height: 83vh;
     background: rgba(0, 0, 0, 20%);
+    text-align: center;
 }
 
+/* TODO: Placeholder till i find time */
+.fronvo-panel h1 {
+    color: white;
+    font-family: Ubuntu;
+    font-size: 40px;
+    text-shadow: 0 5px 20px black;
+}
+
+/* TODO: Switch everything feasible to classes */
 .fronvo-panel #title {
     color: white;
     font-size: 40px;
@@ -333,12 +390,44 @@ select:-webkit-autofill::first-line {
     font-size: 20px;
     }
 
-    .fronvo-top #logo {
-        font-size: 45px;
+    .homepage-panel .header-section {
+        font-size: 30px;
+    }
+
+    .homepage-panel .header-descriptor {
+        font-size: 22px;
+    }
+
+    .homepage-join-panel #top-error {
+        font-size: 23px;
+    }
+
+    .homepage-join-panel #email-text {
+        font-size: 22px;
+    }
+
+    .homepage-join-panel #password-text {
+        font-size: 22px;
+    }
+
+    .fronvo-panel h1 {
+        font-size: 30px;
+    }
+
+    .fronvo-panel #title {
+        font-size: 30px;
+    }
+
+    .fronvo-top #logo-title {
+        font-size: 35px;
     }
 
     .fronvo-top #description {
         font-size: 22px;
+    }
+
+    .panel-top #content {
+        margin-bottom: 0;
     }
     
     .center h1 {
@@ -362,7 +451,7 @@ select:-webkit-autofill::first-line {
 
 @media screen and (max-height: 750px) {
     .fronvo-panel {
-        height: 75vh;
+        height: 73vh;
     }
 
     .homepage-panels-container {

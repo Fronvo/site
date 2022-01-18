@@ -86,6 +86,7 @@
         attemptFronvoConnection();
     }
 
+	// TODO: Imitate index functionality for panel switching.
 	function setActivePanel(newPanelId) {
         if (panels.indexOf(activePanel) == newPanelId) return;
 

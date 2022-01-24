@@ -304,8 +304,9 @@ select:-webkit-autofill::first-line {
     margin: 0;
     font-family: Ubuntu;
     color: white;
-    font-size: 40px;
-    text-shadow: 0 0 5px black;
+    font-size: 45px;
+    text-shadow: 0 0 5px black,
+                -2px -2px 0 rgb(255, 0, 255);
 }
 
 .rounded-center #svg-icon {

@@ -22,7 +22,7 @@
     let activePanel;
 
     // textShadow sensitivity
-    const animationSensitivityX = -0.002;
+    const animationSensitivityX = -0.0025;
     const animationSensitivityY = -0.004;
 
     // when switching between panels

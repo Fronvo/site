@@ -11,7 +11,6 @@ html, body {
 }
 
 a {
-    color: rgb(242, 255, 125);
     text-decoration: none;
     display: inline-block;
     position: relative;
@@ -34,27 +33,22 @@ a:focus {
     outline-color: white;
 }
 
-div {
-    transition: .25s;
-}
-
 button {
-    background: rgb(153, 0, 255);
-    box-shadow: 1px 1px 5px black;
+    background: rgb(153, 29, 255);
+    border: 3px solid rgb(153, 0, 255);
+    box-shadow: 0 0 5px black;
     border-radius: 10px;
     color: white;
-    border: 0;
-    padding: 10px;
-    font-family: Ubuntu;
-    font-size: 42px;
+    padding: 7px;
+    font-family: 'Secular One';
+    font-size: 2.5rem;
     cursor: pointer;
     transition: .3s;
 }
 
 button:hover {
-    background: rgb(153, 0, 255);
-    box-shadow: 2px 2px 0 rgb(153, 0, 255),
-                3px 4px 5px black;
+    background: white;
+    color: rgb(153, 29, 255);
 }
 
 button:focus {
@@ -69,7 +63,7 @@ input {
     color: white;
     margin: 5px 0 15px 0;
     text-align: center;
-    font-size: 30px;
+    font-size: 2rem;
     font-family: Ubuntu;
     width: 400px;
     transition: .5s;
@@ -103,8 +97,6 @@ select:-webkit-autofill::first-line {
   box-shadow: 0 0 0px 1000px rgb(81, 27, 105) inset;
   -webkit-box-shadow: 0 0 0px 1000px rgb(81, 27, 105) inset;
   -webkit-text-fill-color: white;
-  /* fix this one day? */
-  font-size: 30px;
 }
 
 ::-webkit-scrollbar {
@@ -118,128 +110,6 @@ select:-webkit-autofill::first-line {
 
 ::-webkit-scrollbar-thumb {
     background: rgb(145, 26, 214);
-}
-
-.bg-svg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-/* Non-registered root page */
-.homepage-panels-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 20%);
-    height: 80vh;
-    min-height: 350px;
-    margin: 15px 10px 10px 10px;
-    border: 2px solid white;
-    border-radius: 5px;
-    border-left: 0;
-    border-right: 0;
-    box-shadow: 0 0 10px black;
-    text-align: center;
-}
-
-.homepage-panel .header-section {
-    transition: 0;
-    color: white;
-    font-family: Ubuntu;
-    font-size: 45px;
-    text-shadow: 4px 4px 0 rgb(0, 0, 0),
-                0 -1px 0 rgb(204, 0, 255);
-    margin: 0;
-}
-
-.homepage-panel .header-descriptor {
-    color: white;
-    font-family: Ubuntu;
-    font-size: 28px;
-    text-shadow: 5px 0 5px black;
-    margin: 0;
-    margin-bottom: 50px;
-}
-
-.homepage-join-panel #top-error {
-    color: red;
-    font-family: Ubuntu;
-    font-size: 30px;
-    text-shadow: 0 0 5px black;
-}
-
-.homepage-join-panel #email-text {
-    color: white;
-    font-family: Ubuntu;
-    text-shadow: 0 0 15px black;
-    margin-bottom: 0;
-}
-
-.homepage-join-panel #password-text {
-    color: white;
-    font-family: Ubuntu;
-    text-shadow: 0 0 15px black;
-    margin-bottom: 0;
-}
-
-.homepage-join-panel #password-input {
-    margin-bottom: 30px;
-}
-
-.homepage-join-panel #register-btn {
-    margin-right: 25px;
-}
-
-/* Panels */
-.fronvo-panel {
-    display: inline-block;
-    position: fixed;
-    left: 0;
-    right: 0;
-    margin: auto;
-    border: 2px solid white;
-    border-radius: 5px;
-    min-height: 450px;
-    width: 98%;
-    height: 83vh;
-    background: rgba(0, 0, 0, 20%);
-    text-align: center;
-}
-
-/* TODO: Placeholder till i find time */
-.fronvo-panel h1 {
-    color: white;
-    font-family: Ubuntu;
-    font-size: 40px;
-    text-shadow: 0 5px 20px black;
-}
-
-/* TODO: Switch everything feasible to classes */
-.fronvo-panel #title {
-    color: white;
-    font-size: 40px;
-    margin: 3px 3px;
-    font-family: Ubuntu;
-    text-shadow: 0 0 5px rgb(53, 53, 53);
-}
-
-.panel-top {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.panel-top #content {
-    display: flex;
-    border: 2px solid white;
-    border-top: 0;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    margin-bottom: 10px;
-    padding: 5px 10px 0 10px;
 }
 
 /* Reusable helper classes */
@@ -257,119 +127,66 @@ select:-webkit-autofill::first-line {
 
 .center h1 {
     color: white;
-    font-family: Ubuntu;
-    font-size: 30px;
-    text-shadow: 0 0 15px black;
+    font-family: 'Secular One';
+    font-size: 2.2rem;
+    margin: 0;
 }
 
-.full {
-    position: fixed;
-    left: 0;
-    right: 0;
+.waves h1 {
+    margin: 0;
+    font-size: 5rem;
+    font-family: 'Secular One';
+    font-weight: 900;
+    color: rgb(153, 29, 255);
+}
+
+.waves p {
+    color: rgb(153, 29, 255);
+    margin: 0;
+    margin-bottom: 1rem;
+    font-size: 1.7rem;
+    font-family: 'Secular One';
+    font-weight: 900;
+}
+
+.waves #content {
+    position: absolute;
     top: 0;
     bottom: 0;
-}
-
-.fronvo-top {
-    margin: 5px 0 0 0;
-    text-align: center;
-}
-
-.fronvo-top #menu {
-    display: none;
-}
-
-.fronvo-top #logo-title {
-    color: white;
-    font-family: Ubuntu;
-    font-size: 45px;
-    margin: 0;
-    text-shadow: 0 0 10px black;
-}
-
-.rounded-center {
-    display: flex;
-    align-items: center;
-    padding: 5px 20px 5px 20px;
-    margin: auto;
-    margin-top: 10px;
-    width: min-content;
-    background: rgba(0, 0, 0, 20%);
-    border: 2px solid white;
-    border-radius: 5px;
-    box-shadow: 0 0 10px black;
-}
-
-.rounded-center #logo-title {
-    margin: 0;
-    font-family: Ubuntu;
-    color: white;
-    font-size: 45px;
-    text-shadow: 0 0 5px black,
-                -2px -2px 0 rgb(255, 0, 255);
-}
-
-.rounded-center #svg-icon {
-    margin-left: 10px;
-    cursor: pointer;
-}
-
-.footer {
-    color: white;
-    position: fixed;
-    bottom: 0;
-    right: 0;
     left: 0;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: max-content;
-}
-
-.footer h1 {
-    padding: 0;
-    margin: 0;
-    font-size: 30px;
-    font-family: Ubuntu;
-    font-weight: normal;
+    right: 0;
+    margin: auto;
+    height: fit-content;
     text-align: center;
 }
 
-.bottom-news {
-    border: 2px solid white;
-    border-radius: 10px;
-    box-shadow: 0 -2px 20px black;
-    background: rgb(183, 0, 255);
-    padding: 15px;
-    margin-bottom: 20px;
+.waves #top-wave {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
-.bottom-bar {
-    display: flex;
-    border: 3px solid white;
-    box-shadow: 0 0 5px white;
-    border-radius: 10px;
-    margin-bottom: 10px;
+.waves #bottom-wave-desktop,
+.waves #bottom-wave-mobile {
+    position: absolute;
+    bottom: 0;
 }
 
-.bottom-bar div {
-    padding: 10px;
-    transition: .3s;
-}
-
-.bottom-bar div:hover {
-    background: rgba(255, 255, 255, 1);
-    box-shadow: 0 0 30px rgba(255, 255, 255, .9);
+.waves #bottom-wave-mobile {
+    display: none;
 }
 
 /* Responsive design */
 @media screen and (max-width: 700px), (max-height: 650px) {
     button {
-        font-size: 32px;
+        font-size: 1.5rem;
     }
 
     input {
+        font-size: 1.5rem;
         width: 300px;
-        font-size: 20px;
     }
 
     input:-webkit-autofill,
@@ -384,118 +201,30 @@ select:-webkit-autofill::first-line {
     select:-webkit-autofill:hover,
     select:-webkit-autofill:focus,
     select:-webkit-autofill::first-line {
-    box-shadow: 0 0 0px 1000px rgb(81, 27, 105) inset;
-    -webkit-box-shadow: 0 0 0px 1000px rgb(81, 27, 105) inset;
-    -webkit-text-fill-color: white;
-    /* fix this one day? */
-    font-size: 20px;
+        box-shadow: 0 0 0px 1000px rgb(81, 27, 105) inset;
+        -webkit-box-shadow: 0 0 0px 1000px rgb(81, 27, 105) inset;
+        -webkit-text-fill-color: white;
     }
 
-    .homepage-panel .header-section {
-        font-size: 30px;
-    }
-
-    .homepage-panel .header-descriptor {
-        font-size: 22px;
-    }
-
-    .homepage-join-panel #top-error {
-        font-size: 23px;
-    }
-
-    .homepage-join-panel #email-text {
-        font-size: 22px;
-    }
-
-    .homepage-join-panel #password-text {
-        font-size: 22px;
-    }
-
-    .fronvo-panel h1 {
-        font-size: 30px;
-    }
-
-    .fronvo-panel #title {
-        font-size: 30px;
-    }
-
-    .fronvo-top #logo-title {
-        font-size: 35px;
-    }
-
-    .fronvo-top #description {
-        font-size: 22px;
-    }
-
-    .panel-top #content {
-        margin-bottom: 0;
-    }
-    
     .center h1 {
-        font-size: 25px;
+        font-size: 1.5rem;
     }
 
-    .footer h1 {
-        font-size: 20px;
-    }
-}
-
-@media screen and (max-height: 890px) {
-    .fronvo-panel {
-        height: 79vh;
+    .waves h1 {
+        font-size: 4rem
     }
 
-    .homepage-panels-container {
-        height: 76vh;
+    .waves p {
+        font-size: 1.4rem;
     }
 }
 
-@media screen and (max-height: 750px) {
-    .fronvo-panel {
-        height: 73vh;
-    }
-
-    .homepage-panels-container {
-        height: 67vh;
-    }
-}
-
-@media screen and (max-width: 300px), (max-height: 600px) {
-    .fronvo-top {
-        display: flex;
-        margin: 5px 0 5px 0;
-        align-items: center;
-    }
-
-    .fronvo-top #menu {
+@media screen and (max-width: 500px), (max-height: 600px) {
+    .waves #bottom-wave-mobile {
         display: block;
     }
 
-    .fronvo-top #logo-title {
-        font-size: 40px;
-    }
-
-    .rounded-center {
-        margin: auto;
-        margin-top: 10px;
-    }
-
-    .bottom-bar {
+    .waves #bottom-wave-desktop {
         display: none;
-    }
-
-    .fronvo-panel {
-        height: 88%;
-    }
-
-    .homepage-panels-container {
-        height: 82%;
-    }
-
-    /* menu margin, remain above .fronvo-panel */
-    @media screen and (min-width: 800px) {
-        .fronvo-top-panel {
-            margin-left: 1vw;
-        }
     }
 }

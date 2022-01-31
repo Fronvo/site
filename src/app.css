@@ -8,6 +8,7 @@
 html, body {
     height: 100%;
     margin: 0;
+    overflow: hidden;
 }
 
 a {
@@ -151,31 +152,20 @@ select:-webkit-autofill::first-line {
 
 .waves #content {
     position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
     height: fit-content;
-    text-align: center;
-}
-
-.waves #top-wave {
-    position: absolute;
-    top: 0;
-    bottom: 0;
     left: 0;
     right: 0;
-}
-
-.waves #bottom-wave-desktop,
-.waves #bottom-wave-mobile {
-    position: absolute;
     bottom: 0;
+    top: 0;
+    margin: auto;
+    text-align: center;
+    z-index: 1;
 }
 
-.waves #bottom-wave-mobile {
-    display: none;
+.waves #bottom-wave {
+    position: absolute;
+    left: 0;
+    bottom: 0;
 }
 
 /* Responsive design */
@@ -219,12 +209,12 @@ select:-webkit-autofill::first-line {
     }
 }
 
-@media screen and (max-width: 500px), (max-height: 600px) {
-    .waves #bottom-wave-mobile {
-        display: block;
+@media screen and (max-height: 600px) {
+    .waves #content {
+        position: initial;
     }
 
-    .waves #bottom-wave-desktop {
-        display: none;
+    .waves #bottom-wave {
+        position: initial;
     }
 }

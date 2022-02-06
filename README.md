@@ -1,4 +1,4 @@
-<p align='center'><a href='https://fronvo.herokuapp.com'><img src='https://i.ibb.co/1q07v7b/fronvo-icon-large.webp' alt='Fronvo icon'><a/></p>
+<p align='center'><a href='https://fronvo.herokuapp.com'><img src='https://i.ibb.co/Bs9YW3c/fronvo-favicon.png' alt='Fronvo icon'><a/></p>
 
 <h1 style='text-align: center;'>
 

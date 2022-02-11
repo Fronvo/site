@@ -1,4 +1,4 @@
-import { sockt, selfDict } from './stores';
+import { sockt, selfDict, animationSensitivityX, animationSensitivityY } from './stores';
 
 // socket-ception
 let socket;
@@ -43,4 +43,23 @@ export function gatherLoginData() {
             });
         });
     });
+}
+
+
+// UI-related
+export function updateTextShadows(event) {
+    if(!event) return;
+
+    const newShadowX = (event.clientX * animationSensitivityX) - 3;
+    const newShadowY = (event.clientY * animationSensitivityY) - 5;
+
+    const newTextShadow = newShadowX + 'px ' + newShadowY + 'px 0 rgb(0, 0, 0)';
+
+    const elementsToAnimate = document.getElementsByClassName('shadow-animated');
+
+    for(let element in elementsToAnimate) {
+        try {
+            elementsToAnimate[element].style.textShadow = newTextShadow;
+        } catch(e) {}
+    }
 }

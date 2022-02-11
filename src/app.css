@@ -6,9 +6,8 @@
 }
 
 html, body {
-    height: 100%;
     margin: 0;
-    overflow: hidden;
+    height: 100%;
 }
 
 a {
@@ -34,10 +33,27 @@ a:focus {
     outline-color: white;
 }
 
+h1 {
+    margin: 0;
+    font-size: 5rem;
+    font-family: 'Secular One';
+    font-weight: 900;
+    color: rgb(153, 29, 255);
+}
+
+p {
+    color: rgb(153, 29, 255);
+    margin: 0;
+    margin-bottom: 1rem;
+    font-size: 1.7rem;
+    font-family: 'Secular One';
+    font-weight: 900;
+}
+
 button {
     background: rgb(153, 29, 255);
     border: 3px solid rgb(153, 0, 255);
-    box-shadow: 0 0 5px black;
+    box-shadow: 0 0 3px black;
     border-radius: 10px;
     color: white;
     padding: 7px;
@@ -79,6 +95,11 @@ input:focus {
     box-shadow: 0 0 15px rgb(132, 0, 255);
 }
 
+hr {
+    width: 75%;
+    border: 1px solid rgb(153, 0, 255);
+}
+
 ::placeholder {
     color: rgb(153, 82, 219);
 }
@@ -101,16 +122,17 @@ select:-webkit-autofill::first-line {
 }
 
 ::-webkit-scrollbar {
-    width: 5px;
-    height: 8px;
+    width: 7px;
 }
 
 ::-webkit-scrollbar-track {
-    background: rgb(112, 16, 201);
+    background: rgb(250, 244, 255);
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgb(145, 26, 214);
+    background: rgb(229, 196, 255);
+    border: 1px solid rgb(223, 182, 255);
+    border-radius: 10px;
 }
 
 /* Reusable helper classes */
@@ -126,50 +148,98 @@ select:-webkit-autofill::first-line {
     text-align: center;
 }
 
-.center h1 {
-    color: white;
-    font-family: 'Secular One';
-    font-size: 2.2rem;
-    margin: 0;
-}
-
-.waves h1 {
-    margin: 0;
-    font-size: 5rem;
-    font-family: 'Secular One';
-    font-weight: 900;
+.feather-icon {
     color: rgb(153, 29, 255);
+    cursor: pointer;
 }
 
-.waves p {
-    color: rgb(153, 29, 255);
-    margin: 0;
-    margin-bottom: 1rem;
-    font-size: 1.7rem;
-    font-family: 'Secular One';
-    font-weight: 900;
-}
-
-.waves #content {
-    position: absolute;
-    height: fit-content;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
-    margin: auto;
+/* Homepage */
+.homepage #top-container {
     text-align: center;
-    z-index: 1;
+    margin-bottom: 100px;
 }
 
-.waves #bottom-wave {
-    position: absolute;
-    left: 0;
-    bottom: 0;
+.homepage #top-container #logo-title {
+    font-size: 7rem;
+}
+
+.homepage #top-container #logo-descriptor {
+    font-size: 2rem;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.homepage #top-container #down-arrow-container {
+    width: max-content;
+    margin: auto;
+}
+
+.homepage #top-container #down-arrow-container svg {
+    animation: float;
+    animation-duration: 1250ms;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-delay: 2500ms;
+}
+
+.homepage #saos-content #colored {
+    background: rgb(250, 244, 255);
+}
+
+.homepage #saos-content .container {
+    padding-top: 175px;
+    padding-bottom: 175px;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.homepage #saos-content .container h1 {
+    font-size: 3.5rem;
+    text-align: center;
+}
+
+.homepage #saos-content .container #content {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    padding-top: 25px;
+}
+
+.homepage #saos-content .container #content h1 {
+    color: rgb(166, 99, 253);
+    font-size: 2.5rem;
+}
+
+.homepage #footer {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.homepage #footer #content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(119, 0, 255);
+    text-align: center;
+}
+
+.homepage #footer #content h1 {
+    color: white;
+    font-size: 3.5rem;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.homepage #footer #content svg {
+    cursor: pointer;
 }
 
 /* Responsive design */
-@media screen and (max-width: 700px), (max-height: 650px) {
+@media screen and (max-width: 700px) {
     button {
         font-size: 1.5rem;
     }
@@ -200,21 +270,56 @@ select:-webkit-autofill::first-line {
         font-size: 1.5rem;
     }
 
-    .waves h1 {
+    h1 {
         font-size: 4rem
     }
 
-    .waves p {
+    p {
         font-size: 1.4rem;
+    }
+
+    /* Homepage */
+    .homepage #top-container {
+        margin-bottom: 50px;
+    }
+
+    .homepage #top-container #logo-title {
+        font-size: 5rem;
+    }
+
+    .homepage #top-container #logo-descriptor {
+        font-size: 1.7rem;
+    }
+
+    .homepage #saos-content .container {
+        padding-top: 87.5px;
+        padding-bottom: 87.5px;
+    }
+
+    .homepage #saos-content .container h1 {
+        font-size: 2.5rem;
+    }
+
+    .homepage #saos-content .container #content {
+        padding-top: 12.5px;
+    }
+
+    .homepage #saos-content .container #content h1 {
+        font-size: 1.7rem;
+    }
+
+    .homepage #footer #content h1 {
+        font-size: 2.7rem;
     }
 }
 
-@media screen and (max-height: 600px) {
-    .waves #content {
-        position: initial;
+/* Animations */
+@keyframes float {
+    0% {
+        transform: translateY(0);
     }
 
-    .waves #bottom-wave {
-        position: initial;
+    100% {
+        transform: translateY(10px);
     }
 }

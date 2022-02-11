@@ -11,6 +11,13 @@ export const sockt = writable();
 // for __layout changes
 export let hasToken = writable(false);
 
+// text shadow sensitivities
+export const animationSensitivityX = 0.0025;
+export const animationSensitivityY = 0.005;
+
+// scrolling
+export const customScrollDuration = 750;
+
 // Change to ws://localhost:3001 if you are hosting the dev branch of the site.
 const tempSocket = io('wss://fronvosrv.herokuapp.com', {
     // only websocket transport, no http polling

@@ -42,7 +42,7 @@
 
     @keyframes -global-slide-top {
         0% {
-            transform: translateY(50px);
+            transform: translateY(75px);
         }
 
         100% {

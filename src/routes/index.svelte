@@ -115,10 +115,6 @@
 
                     <div id='content'>
                         <button>Try Fronvo online</button>
-
-                        <h1>or</h1>
-
-                        <button>Download Fronvo</button>
                     </div>
                 </Saos>
             </div>

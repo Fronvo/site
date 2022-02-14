@@ -24,10 +24,8 @@
 
     onMount(() => {
         mountReady = true;
+        setTimeout(() => SAOSReady = true, delayForSAOS);
     });
-
-    // SAOS delay
-    setTimeout(() => SAOSReady = true, delayForSAOS);
 
     // global scroll options for svelte-scrolling
     setGlobalOptions({

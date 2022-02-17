@@ -1,4 +1,4 @@
-/* General */
+/* Global CSS */
 * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -100,10 +100,6 @@ hr {
     border: 1px solid rgb(153, 0, 255);
 }
 
-::placeholder {
-    color: rgb(153, 82, 219);
-}
-
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus
@@ -136,105 +132,8 @@ select:-webkit-autofill::first-line {
 }
 
 /* Reusable helper classes */
-.center {
-    height: fit-content;
-    width: max-content;
-    margin: auto;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    text-align: center;
-}
-
 .feather-icon {
     color: rgb(153, 29, 255);
-    cursor: pointer;
-}
-
-/* Homepage */
-.homepage #top-container {
-    text-align: center;
-    margin-bottom: 100px;
-}
-
-.homepage #top-container #logo-title {
-    font-size: 7rem;
-}
-
-.homepage #top-container #logo-descriptor {
-    font-size: 2rem;
-    padding-left: 2px;
-    padding-right: 2px;
-}
-
-.homepage #top-container #down-arrow-container {
-    width: max-content;
-    margin: auto;
-}
-
-.homepage #top-container #down-arrow-container svg {
-    animation: float;
-    animation-duration: 1250ms;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-    animation-delay: 2500ms;
-}
-
-.homepage #saos-content #colored {
-    background: rgb(250, 244, 255);
-}
-
-.homepage #saos-content .container {
-    padding-top: 175px;
-    padding-bottom: 175px;
-    padding-right: 5px;
-    padding-left: 5px;
-}
-
-.homepage #saos-content .container h1 {
-    font-size: 3.5rem;
-    text-align: center;
-}
-
-.homepage #saos-content .container #content {
-    display: flex;
-    flex-direction: column;
-    width: fit-content;
-    margin: auto;
-    justify-content: center;
-    align-items: center;
-    padding-top: 25px;
-}
-
-.homepage #saos-content .container #content h1 {
-    color: rgb(166, 99, 253);
-    font-size: 2.5rem;
-}
-
-.homepage #footer {
-    display: flex;
-    flex-direction: column;
-
-}
-
-.homepage #footer #content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: rgb(119, 0, 255);
-    text-align: center;
-}
-
-.homepage #footer #content h1 {
-    color: white;
-    font-size: 3.5rem;
-    padding-left: 10px;
-    padding-right: 10px;
-}
-
-.homepage #footer #content svg {
     cursor: pointer;
 }
 
@@ -266,60 +165,11 @@ select:-webkit-autofill::first-line {
         -webkit-text-fill-color: white;
     }
 
-    .center h1 {
-        font-size: 1.5rem;
-    }
-
     h1 {
         font-size: 4rem
     }
 
     p {
         font-size: 1.4rem;
-    }
-
-    /* Homepage */
-    .homepage #top-container {
-        margin-bottom: 50px;
-    }
-
-    .homepage #top-container #logo-title {
-        font-size: 5rem;
-    }
-
-    .homepage #top-container #logo-descriptor {
-        font-size: 1.7rem;
-    }
-
-    .homepage #saos-content .container {
-        padding-top: 87.5px;
-        padding-bottom: 87.5px;
-    }
-
-    .homepage #saos-content .container h1 {
-        font-size: 2.5rem;
-    }
-
-    .homepage #saos-content .container #content {
-        padding-top: 12.5px;
-    }
-
-    .homepage #saos-content .container #content h1 {
-        font-size: 1.7rem;
-    }
-
-    .homepage #footer #content h1 {
-        font-size: 2.7rem;
-    }
-}
-
-/* Animations */
-@keyframes float {
-    0% {
-        transform: translateY(0);
-    }
-
-    100% {
-        transform: translateY(10px);
     }
 }

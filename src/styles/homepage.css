@@ -1,0 +1,130 @@
+.top-container {
+    text-align: center;
+    margin-bottom: 100px;
+}
+
+.top-container #logo-title {
+    font-size: 7rem;
+}
+
+.top-container #logo-descriptor {
+    font-size: 2rem;
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.top-container #down-arrow-container {
+    width: max-content;
+    margin: auto;
+}
+
+.top-container #down-arrow-container svg {
+    animation: float;
+    animation-duration: 1250ms;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-delay: 2500ms;
+}
+
+.saos-content #colored {
+    background: rgb(250, 244, 255);
+}
+
+.saos-content .container {
+    padding-top: 175px;
+    padding-bottom: 175px;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+
+.saos-content .container h1 {
+    font-size: 3.5rem;
+    text-align: center;
+}
+
+.saos-content .container #content {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    padding-top: 25px;
+}
+
+.saos-content .container #content h1 {
+    color: rgb(166, 99, 253);
+    font-size: 2.5rem;
+}
+
+.footer {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.footer #content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgb(119, 0, 255);
+    text-align: center;
+}
+
+.footer #content h1 {
+    color: white;
+    font-size: 3.5rem;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.footer #content svg {
+    cursor: pointer;
+}
+
+/* Responsive design */
+@media screen and (max-width: 700px) {
+    .top-container {
+        margin-bottom: 50px;
+    }
+
+    .top-container #logo-title {
+        font-size: 5rem;
+    }
+
+    .top-container #logo-descriptor {
+        font-size: 1.7rem;
+    }
+
+    .saos-content .container {
+        padding-top: 87.5px;
+        padding-bottom: 87.5px;
+    }
+
+    .saos-content .container h1 {
+        font-size: 2.5rem;
+    }
+
+    .saos-content .container #content {
+        padding-top: 12.5px;
+    }
+
+    .saos-content .container #content h1 {
+        font-size: 1.7rem;
+    }
+
+    .footer #content h1 {
+        font-size: 2.7rem;
+    }
+}
+
+/* Animations */
+@keyframes float {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(10px);
+    }
+}

@@ -68,7 +68,6 @@
 
         <button in:fly={{duration: 600, y: 25, delay: 1400, easing: cubicOut}} style='margin-bottom: 20px;'>Try it online</button>
 
-        <!-- TODO: Keyframes animation to go up and down in intervals -->
         <div id='down-arrow-container' use:scrollTo={'fronvo-safe'} in:fly={{duration: 300, y: 10, delay: 1900, easing: cubicOut}}>
             <ChevronDownIcon size='48' strokeWidth='2' class='feather-icon' />
         </div>

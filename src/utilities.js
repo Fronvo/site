@@ -1,3 +1,7 @@
+// ******************** //
+// Reusable functions for all kinds of files.
+// ******************** //
+
 import { animationSensitivityX, animationSensitivityY } from './stores';
 
 export function updateTextShadows(event) {

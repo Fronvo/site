@@ -1,8 +1,8 @@
-<script context="module">
+<script context='module'>
 	export function load({error, status}) {
 		return {
 			props: {
-                status: `${status}`,
+                status,
                 err: `${error.message}`
 			}
 		};

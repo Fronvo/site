@@ -1,6 +1,6 @@
 {
   "name": "fronvo-site",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "The site of the open-source free-convo chat app.",
   "repository": {
     "type": "git",

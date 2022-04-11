@@ -8,16 +8,17 @@
 </script>
 
 <script>
+    // Custom css module
     import '../styles/homepage.css';
-
-    import { onMount } from 'svelte';
-    import { updateTextShadows } from '../utilities';
-    import { customScrollDuration } from '../stores';
-    import { fly, fade } from 'svelte/transition';
-    import { ChevronDownIcon } from 'svelte-feather-icons';
-    import { cubicOut, sineInOut } from 'svelte/easing';
-    import { scrollTo, scrollRef, setGlobalOptions } from 'svelte-scrolling';
+    
     import Saos from 'saos';
+    import { onMount } from 'svelte';
+    import { ChevronDownIcon } from 'svelte-feather-icons';
+    import { scrollRef, scrollTo, setGlobalOptions } from 'svelte-scrolling';
+    import { cubicOut, sineInOut } from 'svelte/easing';
+    import { fade, fly } from 'svelte/transition';
+    import { customScrollDuration } from '../stores';
+    import { updateTextShadows } from '../utilities';
 
     let mountReady = false, SAOSReady = false;
 

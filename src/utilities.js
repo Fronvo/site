@@ -1,52 +1,10 @@
-import { sockt, selfDict, animationSensitivityX, animationSensitivityY } from './stores';
+// ******************** //
+// Reusable functions for all kinds of files.
+// ******************** //
 
-// socket-ception
-let socket;
+import { animationSensitivityX, animationSensitivityY } from './stores';
 
-sockt.subscribe((val) => {
-    socket = val;
-});
-
-export function send(event, sendData, callback) {
-    if(socket) {
-        if(sendData) {
-            socket.emit(event, sendData, callback);
-        } else {
-            socket.emit(event, callback);
-        }
-    }
-}
-
-export function isLoggedIn() {
-    return new Promise((resolve, reject) => {
-        send('isLoggedIn', null, (state) => {
-            if(state) resolve();
-            else reject();
-        })
-    });
-}
-
-// TODO: Convert to getProfileData once friends functionality is implemented
-export function gatherLoginData() {
-    return new Promise((resolve, reject) => {
-        send('fetchProfileId', null, (profileId) => {
-            send('fetchProfileData', {
-                profileId: profileId
-            }, (err, profileDataDict) => {
-                if(err) {
-                    reject();
-                    return;
-                }
-
-                selfDict.set({...profileDataDict});
-                resolve();
-            });
-        });
-    });
-}
-
-
-// UI-related
+// For the 'shadow-animated' class elements
 export function updateTextShadows(event) {
     if(!event) return;
 

@@ -1,4 +1,5 @@
 import preprocess from 'svelte-preprocess';
+import { resolve } from 'path';
 
 /** @type {import('@sveltejs/kit').Config} */
 import adapter from '@sveltejs/adapter-node';
@@ -8,11 +9,22 @@ const config = {
 		target: '#fronvo',
 		adapter: adapter({
 					out: 'build'
-		})
+		}),
+		vite: {
+			resolve: {
+				alias: {
+					$src: resolve('./src'),
+					$styles: resolve('./src/styles')
+				}
+			}
+		}
 	},
 
 	preprocess: preprocess({
-		postcss: true
+		postcss: true,
+		typescript: {
+			tsconfigFile: true
+		}
 	})
 };
 

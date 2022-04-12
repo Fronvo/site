@@ -1,19 +1,20 @@
-<script context='module'>
-	export function load({error, status}) {
+<script context='module' lang='ts'>
+	import { ErrorLoadParams, ErrorLoadResult } from 'src/interfaces/global';
+
+	export function load({ status, error }: ErrorLoadParams): ErrorLoadResult {
 		return {
 			props: {
-                status,
-                err: error.message
+				status,
+				error: error.message
 			}
-		};
+		}
 	}
 </script>
 
-<script>
-    export let status, err;
+<script lang='ts'>
+    export let status: number;
 </script>
 
 <div class='center'>
 	<h1 class='err-msg'>{status}</h1>
-	<h1>{err}</h1>
 </div>

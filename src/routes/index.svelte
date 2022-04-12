@@ -7,17 +7,17 @@
     export const prerender = true;
 </script>
 
-<script>
-    import '../styles/homepage.css';
+<script lang='ts'>
+    import 'styles/homepage.css';
 
     import Saos from 'saos';
     import { onMount } from 'svelte';
     import { ChevronDownIcon } from 'svelte-feather-icons';
-    import { scrollRef,scrollTo,setGlobalOptions } from 'svelte-scrolling';
-    import { cubicOut,sineInOut } from 'svelte/easing';
-    import { fade,fly } from 'svelte/transition';
-    import { customScrollDuration } from '../stores';
-    import { updateTextShadows } from '../utilities';
+    import { scrollRef, scrollTo, setGlobalOptions } from 'svelte-scrolling';
+    import { cubicOut, sineInOut } from 'svelte/easing';
+    import { fade, fly } from 'svelte/transition';
+    import { customScrollDuration } from 'src/stores';
+    import { updateTextShadows } from 'src/utilities';
 
     let mountReady = false, SAOSReady = false;
 
@@ -32,7 +32,8 @@
     // Global scroll options for svelte-scrolling
     setGlobalOptions({
         duration: customScrollDuration,
-        easing: sineInOut
+        easing: sineInOut,
+        offset: 0
     });
 
     document.onmousemove = (event) => updateTextShadows(event);
@@ -69,7 +70,7 @@
         <button in:fly={{duration: 600, y: 25, delay: 1400, easing: cubicOut}} on:click={() => location.href = 'https://github.com/fronvo/fronvo-site'} style='margin-bottom: 20px;'>Try it online</button>
 
         <div id='down-arrow-container' use:scrollTo={'fronvo-safe'} in:fly={{duration: 300, y: 10, delay: 1900, easing: cubicOut}}>
-            <ChevronDownIcon size='48' strokeWidth='2' class='feather-icon' />
+            <ChevronDownIcon size='48' strokeWidth={2} class='feather-icon' />
         </div>
 
     </div>

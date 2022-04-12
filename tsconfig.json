@@ -2,8 +2,9 @@
     "compilerOptions": {
         "baseUrl": ".",
         "paths": {
-            "$src/*": ["src/*"],
-            "$styles/*": ["src/styles/*"]
+            "src/*": ["src/*"],
+            "styles/*": ["src/styles/*"],
+            "interfaces/*": ["src/interfaces/*"]
         },
         "pretty": true
     },

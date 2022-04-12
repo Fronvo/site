@@ -13,8 +13,9 @@ const config = {
 		vite: {
 			resolve: {
 				alias: {
-					$src: resolve('./src'),
-					$styles: resolve('./src/styles')
+					src: resolve('./src'),
+					styles: resolve('./src/styles'),
+					interfaces: resolve('./src/interfaces')
 				}
 			}
 		}

@@ -4,7 +4,8 @@
 
 import { animationSensitivityX, animationSensitivityY } from './stores';
 
-export function updateTextShadows(event) {
+// TODO: Remove after typescript support has been established
+export function updateTextShadows(event: MouseEvent): void {
     if(!event) return;
 
     const newShadowX = (event.clientX * animationSensitivityX) - 3;
@@ -16,6 +17,7 @@ export function updateTextShadows(event) {
 
     for(let element in elementsToAnimate) {
         try {
+            // @ts-ignore
             elementsToAnimate[element].style.textShadow = newTextShadow;
         } catch(e) {}
     }

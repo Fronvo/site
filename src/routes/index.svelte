@@ -109,7 +109,7 @@
                 </Saos>
             </div>
 
-            <div class='container' style='padding-bottom: 0;' use:scrollRef={'fronvo-join'} in:fade={{duration: 500}}>
+            <div class='container last-container' use:scrollRef={'fronvo-join'} in:fade={{duration: 500}}>
                 <Saos once={true} animation={'slide-top 1.5s cubic-bezier(0.230, 1.000, 0.320, 1.000) both'}>
                     <h1>Join the Fronvo Community</h1>
 

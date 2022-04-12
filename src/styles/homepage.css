@@ -57,6 +57,10 @@
     font-size: 2.5rem;
 }
 
+.saos-content .last-container {
+    padding-bottom: 0;
+}
+
 .footer {
     display: flex;
     flex-direction: column;
@@ -111,6 +115,10 @@
 
     .saos-content .container #content h1 {
         font-size: 1.7rem;
+    }
+
+    .saos-content .last-container {
+        padding-bottom: auto
     }
 
     .footer #content h1 {

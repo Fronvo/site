@@ -1,6 +1,6 @@
-<p align='center'><a href='https://fronvo.herokuapp.com'><img src='https://i.ibb.co/Bs9YW3c/fronvo-favicon.png' alt='Fronvo icon'><a/></p>
+<p align='center'><a href='https://fronvo.herokuapp.com'><img src='https://raw.githubusercontent.com/Fronvo/site/.github/assets/logo.png' alt='Fronvo logo'><a/></p>
 
-<h1 style='text-align: center;'>
+<h1 align='center'>
 
 ![GitHub](https://img.shields.io/github/license/fronvo/fronvo-site?style=for-the-badge) ![GitHub Repo stars](https://img.shields.io/github/stars/fronvo/fronvo-site?style=for-the-badge) ![GitHub forks](https://img.shields.io/github/forks/fronvo/fronvo-site?style=for-the-badge) ![Lines of code](https://img.shields.io/tokei/lines/github/fronvo/fronvo-site?style=for-the-badge) ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/fronvo/fronvo-site?style=for-the-badge)</h1>
 

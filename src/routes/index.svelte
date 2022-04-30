@@ -67,7 +67,7 @@
 
         <p id='logo-descriptor' in:fly={{duration: 600, y: 25, delay: 750, easing: cubicOut}}>The next-generation social media app, tailored for you.</p>
 
-        <button in:fly={{duration: 600, y: 25, delay: 1400, easing: cubicOut}} on:click={() => location.href = 'https://github.com/fronvo/fronvo-site'} style='margin-bottom: 20px;'>Try it online</button>
+        <button in:fly={{duration: 600, y: 25, delay: 1400, easing: cubicOut}} on:click={() => location.href = 'https://github.com/Fronvo/site'} style='margin-bottom: 20px;'>Try it online</button>
 
         <div id='down-arrow-container' use:scrollTo={'fronvo-safe'} in:fly={{duration: 300, y: 10, delay: 1900, easing: cubicOut}}>
             <ChevronDownIcon size='48' strokeWidth={2} class='feather-icon' />
@@ -114,7 +114,7 @@
                     <h1>Join the Fronvo Community</h1>
 
                     <div id='content'>
-                        <button on:click={() => location.href = 'https://github.com/fronvo/fronvo-site'}>Try Fronvo online</button>
+                        <button on:click={() => location.href = 'https://github.com/Fronvo/site'}>Try Fronvo online</button>
                     </div>
                 </Saos>
             </div>

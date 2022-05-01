@@ -23,4 +23,3 @@
 - **Finding the app theme, let's say, a little boring..? Make your own or use shared ones from the Theme Marketplace.**
 
 - **Want to feel even more secure? Self-host this site AND [the Fronvo server](https://github.com/Fronvo/server) to invite your friends, securely.**
-- 

@@ -64,14 +64,13 @@
 .footer {
     display: flex;
     flex-direction: column;
-
 }
 
 .footer #content {
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #861BFF;
+    background: #861bff;
     text-align: center;
 }
 
@@ -118,7 +117,7 @@
     }
 
     .saos-content .last-container {
-        padding-bottom: auto
+        padding-bottom: auto;
     }
 
     .footer #content h1 {

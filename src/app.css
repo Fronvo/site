@@ -4,7 +4,8 @@
     box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
     margin: 0;
     height: 100%;
 }
@@ -20,7 +21,7 @@ a::after {
     display: block;
     height: 2px;
     width: 0px;
-    transition: width .75s, background-color .75s;
+    transition: width 0.75s, background-color 0.75s;
 }
 
 a:hover::after {
@@ -59,7 +60,7 @@ button {
     font-family: 'Secular One';
     font-size: 2.5rem;
     cursor: pointer;
-    transition: .3s;
+    transition: 0.3s;
 }
 
 button:hover {
@@ -82,7 +83,7 @@ input {
     font-size: 2rem;
     font-family: Ubuntu;
     width: 400px;
-    transition: .5s;
+    transition: 0.5s;
 }
 
 input:hover {
@@ -101,19 +102,17 @@ hr {
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
-input:-webkit-autofill:focus
-input:-webkit-autofill::first-line,
+input:-webkit-autofill:focus input:-webkit-autofill::first-line,
 textarea:-webkit-autofill,
 textarea:-webkit-autofill:hover,
-textarea:-webkit-autofill:focus
-textarea:-webkit-autofill::first-line,
+textarea:-webkit-autofill:focus textarea:-webkit-autofill::first-line,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus,
 select:-webkit-autofill::first-line {
-  box-shadow: 0 0 0px 1000px rgb(81, 27, 105) inset;
-  -webkit-box-shadow: 0 0 0px 1000px rgb(81, 27, 105) inset;
-  -webkit-text-fill-color: white;
+    box-shadow: 0 0 0px 1000px rgb(81, 27, 105) inset;
+    -webkit-box-shadow: 0 0 0px 1000px rgb(81, 27, 105) inset;
+    -webkit-text-fill-color: white;
 }
 
 ::-webkit-scrollbar {
@@ -149,12 +148,10 @@ select:-webkit-autofill::first-line {
 
     input:-webkit-autofill,
     input:-webkit-autofill:hover,
-    input:-webkit-autofill:focus
-    input:-webkit-autofill::first-line,
+    input:-webkit-autofill:focus input:-webkit-autofill::first-line,
     textarea:-webkit-autofill,
     textarea:-webkit-autofill:hover,
-    textarea:-webkit-autofill:focus
-    textarea:-webkit-autofill::first-line,
+    textarea:-webkit-autofill:focus textarea:-webkit-autofill::first-line,
     select:-webkit-autofill,
     select:-webkit-autofill:hover,
     select:-webkit-autofill:focus,
@@ -165,7 +162,7 @@ select:-webkit-autofill::first-line {
     }
 
     h1 {
-        font-size: 4rem
+        font-size: 4rem;
     }
 
     p {

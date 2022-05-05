@@ -11,5 +11,5 @@ export interface ErrorLoadResult {
     props: {
         status: number;
         error: string;
-    }
+    };
 }

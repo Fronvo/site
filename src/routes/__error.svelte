@@ -1,5 +1,5 @@
 <script context='module' lang='ts'>
-	import { ErrorLoadParams, ErrorLoadResult } from 'src/interfaces/global';
+	import type { ErrorLoadParams, ErrorLoadResult } from 'src/interfaces/global';
 
 	export function load({ status, error }: ErrorLoadParams): ErrorLoadResult {
 		return {

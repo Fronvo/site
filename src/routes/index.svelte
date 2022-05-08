@@ -6,12 +6,11 @@
     import 'styles/homepage.css';
 
     import Saos from 'saos';
+    import { customScrollDuration } from 'src/stores';
     import { onMount } from 'svelte';
-    import { ChevronDownIcon } from 'svelte-feather-icons';
     import { scrollRef, scrollTo, setGlobalOptions } from 'svelte-scrolling';
     import { cubicOut, sineInOut } from 'svelte/easing';
     import { fade, fly } from 'svelte/transition';
-    import { customScrollDuration } from 'src/stores';
 
     let mountReady = false,
         SAOSReady = false;
@@ -75,11 +74,19 @@
                 use:scrollTo={'fronvo-safe'}
                 in:fly={{ duration: 300, y: 10, delay: 1900, easing: cubicOut }}
             >
-                <ChevronDownIcon
-                    size="48"
-                    strokeWidth={2}
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width={'48px'}
+                    height={'48px'}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    stroke-width={2}
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
                     class="feather-icon"
-                />
+                    ><polyline points="6 9 12 15 18 9" /></svg
+                >
             </div>
         </div>
 

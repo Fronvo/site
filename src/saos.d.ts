@@ -1,5 +1,6 @@
 /// <reference types="svelte" />
 
+// TODO: Remove when the TypeScript PR gets merged
 declare module 'saos' {
     import type { SvelteComponentTyped } from 'svelte';
 

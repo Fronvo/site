@@ -14,7 +14,8 @@ const config = {
 				alias: {
 					src: resolve('./src'),
 					styles: resolve('./src/styles'),
-					interfaces: resolve('./src/interfaces')
+					interfaces: resolve('./src/interfaces'),
+					lib: resolve('./src/lib')
 				}
 			}
 		}

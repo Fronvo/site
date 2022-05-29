@@ -47,6 +47,7 @@
     "prettier": "^2.6.2",
     "prettier-plugin-svelte": "^2.7.0",
     "svelte-check": "^2.7.1",
+    "svelte-typewriter": "^3.0.0-alpha.11",
     "typescript": "^4.7.2"
   }
 }

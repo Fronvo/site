@@ -4,9 +4,8 @@
         ErrorLoadParams,
         ErrorLoadResult,
     } from 'src/interfaces/global';
-    import 'styles/__error.css';
+    import Text from 'src/lib/__error/Text.svelte';
     import { onMount } from 'svelte';
-    import TypeWriter from 'svelte-typewriter';
     import { slide } from 'svelte/transition';
 
     export function load({ status, error }: ErrorLoadParams): ErrorLoadResult {
@@ -34,13 +33,9 @@
     <div class="error-container">
         <h1 in:slide id="status-code">{status}</h1>
 
-        <TypeWriter delay={3000} interval={60} cursor={'#f0f0f0'}>
-            <h1>How did you get here, friend?</h1>
-        </TypeWriter>
+        <Text text="How did you get here, friend?" delay={3000} />
 
-        <TypeWriter delay={6000} interval={60} cursor={'#f0f0f0'}>
-            <h1>Let's get you back to safety!</h1>
-        </TypeWriter>
+        <Text text="Let's get you back to safety!" delay={6000} />
 
         <button
             in:slide={{ delay: 9000, duration: 500 }}
@@ -48,3 +43,36 @@
         >
     </div>
 {/if}
+
+<style>
+    .error-container {
+        position: absolute;
+        margin: auto;
+        height: fit-content;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        text-align: center;
+    }
+
+    .error-container #status-code {
+        font-size: 5rem;
+        margin-bottom: 10px;
+    }
+
+    .error-container button {
+        font-size: 2.2rem;
+        margin-top: 10px;
+    }
+
+    @media screen and (max-width: 800px) {
+        .error-container #status-code {
+            font-size: 3rem;
+        }
+
+        .error-container button {
+            font-size: 1.2rem;
+        }
+    }
+</style>

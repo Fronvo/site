@@ -34,8 +34,6 @@ a:focus {
 }
 
 h1 {
-    margin: 0;
-    font-size: 5rem;
     font-family: 'Secular One';
     font-weight: 900;
     color: rgb(170, 65, 255);
@@ -43,9 +41,6 @@ h1 {
 
 p {
     color: rgb(170, 65, 255);
-    margin: 0;
-    margin-bottom: 1rem;
-    font-size: 1.7rem;
     font-family: 'Secular One';
     font-weight: 900;
 }
@@ -58,7 +53,6 @@ button {
     color: white;
     padding: 7px;
     font-family: 'Secular One';
-    font-size: 2.5rem;
     cursor: pointer;
     transition: 0.3s;
 }
@@ -80,9 +74,7 @@ input {
     color: white;
     margin: 5px 0 15px 0;
     text-align: center;
-    font-size: 2rem;
     font-family: Ubuntu;
-    width: 400px;
     transition: 0.5s;
 }
 
@@ -131,23 +123,8 @@ select:-webkit-autofill::first-line {
     box-shadow: 0 0 10px black;
 }
 
-/* Reusable helper classes */
-.feather-icon {
-    color: rgb(153, 29, 255);
-    cursor: pointer;
-}
-
 /* Responsive design */
 @media screen and (max-width: 700px) {
-    button {
-        font-size: 1.5rem;
-    }
-
-    input {
-        font-size: 1.5rem;
-        width: 300px;
-    }
-
     input:-webkit-autofill,
     input:-webkit-autofill:hover,
     input:-webkit-autofill:focus input:-webkit-autofill::first-line,
@@ -161,13 +138,5 @@ select:-webkit-autofill::first-line {
         box-shadow: 0 0 0px 1000px rgb(81, 27, 105) inset;
         -webkit-box-shadow: 0 0 0px 1000px rgb(81, 27, 105) inset;
         -webkit-text-fill-color: white;
-    }
-
-    h1 {
-        font-size: 4rem;
-    }
-
-    p {
-        font-size: 1.4rem;
     }
 }

@@ -1,6 +1,9 @@
 <script lang="ts">
+    import { draw } from 'svelte/transition';
+
     export let width = '48px';
     export let height = '48px';
+    export let drawDelay = 0;
 </script>
 
 <svg
@@ -13,5 +16,12 @@
     stroke-width={2}
     stroke-linecap="round"
     stroke-linejoin="round"
-    class="feather-icon"><polyline points="6 9 12 15 18 9" /></svg
+    class="feather-icon"
+    ><polyline in:draw={{ delay: drawDelay }} points="6 9 12 15 18 9" /></svg
 >
+
+<style>
+    .feather-icon {
+        color: rgb(153, 29, 255);
+    }
+</style>

@@ -13,10 +13,10 @@
 
 ### Get started
 
-**[Introduction](https://github.com/Fronvo/site/blob/master/INTRODUCTION.md)**
+**[Introduction](https://github.com/Fronvo/site/blob/master/.github/markdown/INTRODUCTION.md)**
 
-**[Running](https://github.com/Fronvo/site/blob/master/RUNNING.md)**
+**[Running](https://github.com/Fronvo/site/blob/master/.github/markdown/RUNNING.md)**
 
-**[Hosting](https://github.com/Fronvo/site/blob/master/HOSTING.md)**
+**[Hosting](https://github.com/Fronvo/site/blob/master/.github/markdown/HOSTING.md)**
 
-**[Tools used](https://github.com/Fronvo/site/blob/master/TOOLS.md)**
+**[Tools used](https://github.com/Fronvo/site/blob/master/.github/markdown/TOOLS.md)**

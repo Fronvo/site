@@ -2,7 +2,7 @@
 <p align='center'><b>The site of Fronvo</b></p>
 <p align='center'><b>Built with Svelte for undisputed performance</b></p>
 
-<h2 align='center'>  
+<h2 align='center'>
 
 [![forthebadge](https://forthebadge.com/images/badges/uses-html.svg)](https://forthebadge.com)
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)

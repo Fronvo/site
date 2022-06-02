@@ -5,27 +5,27 @@ import { resolve } from 'path';
 import adapter from '@sveltejs/adapter-node';
 
 const config = {
-	kit: {
-		adapter: adapter({
-					out: 'build'
-		}),
-		vite: {
-			resolve: {
-				alias: {
-					src: resolve('./src'),
-					interfaces: resolve('./src/interfaces'),
-					lib: resolve('./src/lib')
-				}
-			}
-		}
-	},
+    kit: {
+        adapter: adapter({
+            out: 'build',
+        }),
+        vite: {
+            resolve: {
+                alias: {
+                    src: resolve('./src'),
+                    interfaces: resolve('./src/interfaces'),
+                    lib: resolve('./src/lib'),
+                },
+            },
+        },
+    },
 
-	preprocess: preprocess({
-		postcss: true,
-		typescript: {
-			tsconfigFile: true
-		}
-	})
+    preprocess: preprocess({
+        postcss: true,
+        typescript: {
+            tsconfigFile: true,
+        },
+    }),
 };
 
 export default config;

@@ -4,8 +4,8 @@
         "paths": {
             "src/*": ["src/*"],
             "interfaces/*": ["src/interfaces/*"],
-            "$lib":["src/lib"],
-            "$lib/*":["src/lib/*"]
+            "$lib": ["src/lib"],
+            "$lib/*": ["src/lib/*"]
         },
         "pretty": true
     }

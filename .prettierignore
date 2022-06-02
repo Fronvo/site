@@ -1,6 +1,12 @@
+# Node
 node_modules/
 .DS_Store
-generated/
-.pnpm-debug.log
+package-lock.json
+package.json
+
+# Github
+.github/assets
+
+# SvelteKit
 .svelte-kit/
 build/

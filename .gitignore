@@ -1,6 +1,7 @@
+# Node
 node_modules/
 .DS_Store
-generated/
-.pnpm-debug.log
+
+# SvelteKit
 .svelte-kit/
 build/

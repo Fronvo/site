@@ -4,6 +4,7 @@
         ErrorLoadParams,
         ErrorLoadResult,
     } from 'src/interfaces/global';
+    import GenericBackground from 'src/lib/svgs/GenericBackground.svelte';
     import Text from 'src/lib/__error/Text.svelte';
     import { onMount } from 'svelte';
     import { slide } from 'svelte/transition';
@@ -28,7 +29,7 @@
 </script>
 
 {#if mountReady}
-    <!-- TODO: Error svg, full screen 1920x1080 -->
+    <GenericBackground />
 
     <div class="error-container">
         <h1 in:slide id="status-code">{status}</h1>
@@ -57,13 +58,14 @@
     }
 
     .error-container #status-code {
-        font-size: 5rem;
+        color: rgb(255, 109, 255);
+        font-size: 6rem;
         margin-bottom: 10px;
     }
 
     .error-container button {
         font-size: 2.2rem;
-        margin-top: 10px;
+        margin-top: 20px;
     }
 
     @media screen and (max-width: 800px) {

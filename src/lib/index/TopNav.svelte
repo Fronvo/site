@@ -1,19 +1,34 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import type { ThemeContext } from 'src/interfaces/global';
+    import { logoDurationExit, logoVisible } from 'src/stores';
     import { getContext } from 'svelte';
+    import { scrollTop } from 'svelte-scrolling';
     import Switch from 'svelte-switch';
     import { fly } from 'svelte/transition';
 
     let { toggle, current }: ThemeContext = getContext('theme');
+
+    $logoVisible = true;
+
+    function moveToMain(): void {
+        scrollTop();
+
+        $logoVisible = false;
+
+        setTimeout(() => {
+            goto('app');
+        }, $logoDurationExit);
+    }
 </script>
 
 <div
-    in:fly={{ y: -100, duration: 750, opacity: 0.5 }}
+    transition:fly={{ y: -100, duration: 750, opacity: 0.5 }}
     class="top-nav-container"
 >
     <h1 id="logo">Fronvo</h1>
 
-    <button id="try-1">Try it online</button>
+    <button id="try-1" on:click={moveToMain}>Try it online</button>
 
     <Switch
         checked={$current == 'dark'}
@@ -55,7 +70,7 @@
         >
     </Switch>
 
-    <button id="try-2">Try it online</button>
+    <button id="try-2" on:click={moveToMain}>Try it online</button>
 </div>
 
 <style>

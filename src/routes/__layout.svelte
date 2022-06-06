@@ -1,13 +1,22 @@
 <script>
     import 'src/app.css';
     import { onMount } from 'svelte';
+    import { setGlobalOptions } from 'svelte-scrolling';
     import { ThemeWrapper } from 'svelte-themer';
+    import { sineInOut } from 'svelte/easing';
     import themes from '../themes';
 
     let mountReady = false;
 
     onMount(() => {
         mountReady = true;
+    });
+
+    // svelte-scrolling globals
+    setGlobalOptions({
+        duration: 750,
+        easing: sineInOut,
+        offset: 0,
     });
 </script>
 

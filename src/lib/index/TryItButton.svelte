@@ -1,12 +1,25 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import Saos from 'saos';
+    import { logoDurationExit, logoVisible } from 'src/stores';
+    import { scrollTop } from 'svelte-scrolling';
+
+    function moveToMain(): void {
+        scrollTop();
+
+        $logoVisible = false;
+
+        setTimeout(() => {
+            goto('app');
+        }, $logoDurationExit);
+    }
 </script>
 
 <Saos
     animation={'fade-in-scale .5s cubic-bezier(0.230, 1.000, 0.320, 1.000) both'}
 >
     <div class="try-container">
-        <button id="try">Try Fronvo NOW</button>
+        <button id="try" on:click={moveToMain}>Try Fronvo NOW</button>
     </div>
 </Saos>
 

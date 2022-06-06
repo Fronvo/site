@@ -6,6 +6,7 @@
     import Containers from 'src/lib/index/Containers.svelte';
     import Footer from 'src/lib/index/Footer.svelte';
     import Top from 'src/lib/index/Top.svelte';
+    import TopNav from 'src/lib/index/TopNav.svelte';
     import TryItButton from 'src/lib/index/TryItButton.svelte';
     import { onMount } from 'svelte';
 
@@ -21,6 +22,8 @@
 </svelte:head>
 
 {#if mountReady}
+    <TopNav />
+
     <Top />
 
     <Containers />

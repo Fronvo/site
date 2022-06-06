@@ -1,6 +1,6 @@
 <script lang="ts">
     import Saos from 'saos';
-    import type { FronvoContainer } from 'src/interfaces/index/SaosContent';
+    import type { FronvoContainer } from 'interfaces/index/SaosContent';
     import { scrollRef } from 'svelte-scrolling';
     import { fade } from 'svelte/transition';
 

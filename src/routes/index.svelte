@@ -6,17 +6,13 @@
     import Containers from 'src/lib/index/Containers.svelte';
     import Footer from 'src/lib/index/Footer.svelte';
     import Top from 'src/lib/index/Top.svelte';
+    import TryItButton from 'src/lib/index/TryItButton.svelte';
     import { onMount } from 'svelte';
 
     let mountReady = false;
-    let revealContent = false;
 
     onMount(() => {
         mountReady = true;
-
-        setTimeout(() => {
-            revealContent = true;
-        }, 2400);
     });
 </script>
 
@@ -27,9 +23,9 @@
 {#if mountReady}
     <Top />
 
-    {#if revealContent}
-        <Containers />
+    <Containers />
 
-        <Footer />
-    {/if}
+    <TryItButton />
+
+    <Footer />
 {/if}

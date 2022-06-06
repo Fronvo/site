@@ -1,15 +1,21 @@
 <script>
     import 'src/app.css';
-    import { setGlobalOptions } from 'svelte-scrolling';
-    import { sineInOut } from 'svelte/easing';
+    import TopNav from 'src/lib/__layout/TopNav.svelte';
+    import { onMount } from 'svelte';
+    import { ThemeWrapper } from 'svelte-themer';
+    import themes from '../themes';
 
-    // svelte-scrolling globals
-    setGlobalOptions({
-        duration: 750,
-        easing: sineInOut,
-        offset: 0,
+    let mountReady = false;
+
+    onMount(() => {
+        mountReady = true;
     });
 </script>
 
-<!-- TODO: Theme wrapper -->
-<slot />
+<ThemeWrapper mode="dark" {themes}>
+    {#if mountReady}
+        <TopNav />
+
+        <slot />
+    {/if}
+</ThemeWrapper>

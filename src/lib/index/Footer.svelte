@@ -33,6 +33,7 @@
         font-size: 3.5rem;
         padding-right: 10px;
         margin: 0;
+        font-weight: 900;
     }
 
     @media screen and (max-width: 700px) {

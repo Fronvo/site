@@ -1,7 +1,6 @@
 <script lang="ts" context="module">
     import { goto } from '$app/navigation';
     import type { ErrorLoadParams, ErrorLoadResult } from 'interfaces/global';
-    import GenericBackground from 'src/lib/svgs/GenericBackground.svelte';
     import Text from 'src/lib/__error/Text.svelte';
     import { onMount } from 'svelte';
     import { slide } from 'svelte/transition';
@@ -26,8 +25,6 @@
 </script>
 
 {#if mountReady}
-    <GenericBackground />
-
     <div class="error-container">
         <h1 in:slide id="status-code">{status}</h1>
 

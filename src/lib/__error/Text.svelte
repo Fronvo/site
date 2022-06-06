@@ -11,7 +11,6 @@
 
 <style>
     h1 {
-        color: white;
         font-size: 2.7rem;
         margin: 0;
         transition: 500ms all;

@@ -110,19 +110,22 @@ select:-webkit-autofill::first-line {
 }
 
 ::-webkit-scrollbar {
-    width: 7px;
+    width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-    background: rgb(250, 244, 255);
+    background: rgb(226, 194, 255);
     border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgb(229, 196, 255);
-    border: 1px solid rgb(223, 182, 255);
+    background: rgb(162, 0, 255);
     border-radius: 10px;
-    box-shadow: 0 0 10px black;
+    box-shadow: 0 0 10px rgb(153, 0, 255);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(185, 0, 255);
 }
 
 /* Responsive design */

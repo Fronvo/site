@@ -8,9 +8,14 @@
     import Top from '$lib/index/Top.svelte';
     import TopNav from '$lib/index/TopNav.svelte';
     import TryItButton from '$lib/index/TryItButton.svelte';
+    import { indexAnimDuration, indexVisible } from 'src/stores';
     import { onMount } from 'svelte';
+    import { blur } from 'svelte/transition';
 
     let mountReady = false;
+
+    // Default when accessed
+    $indexVisible = true;
 
     onMount(() => {
         mountReady = true;
@@ -24,11 +29,15 @@
 {#if mountReady}
     <TopNav />
 
-    <Top />
+    {#if $indexVisible}
+        <div out:blur={{ duration: indexAnimDuration, amount: 25 }}>
+            <Top />
 
-    <Containers />
+            <Containers />
 
-    <TryItButton />
+            <TryItButton />
 
-    <Footer />
+            <Footer />
+        </div>
+    {/if}
 {/if}

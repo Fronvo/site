@@ -18,6 +18,6 @@ export interface ErrorLoadResult {
 
 export interface ThemeContext {
     toggle: Function;
-    current: Writable<string>;
+    current: Writable<'dark' | 'light'>;
     theme: Writable<string>;
 }

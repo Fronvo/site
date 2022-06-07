@@ -4,6 +4,8 @@
         "paths": {
             "src/*": ["src/*"],
             "interfaces/*": ["src/interfaces/*"],
+            "stores/*": ["src/stores/*"],
+            "utilities/*": ["src/utilities/*"],
             "$lib": ["src/lib"],
             "$lib/*": ["src/lib/*"]
         },

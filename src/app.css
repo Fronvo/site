@@ -4,11 +4,13 @@
     box-sizing: border-box;
 }
 
-html,
-body {
-    margin: 0;
+html {
     background: var(--theme-bg_color);
     transition: 500ms background;
+}
+
+body {
+    margin: 0;
 }
 
 a {

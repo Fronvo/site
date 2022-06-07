@@ -2,7 +2,7 @@ export default {
     // Priority
     dark: {
         // Background color
-        bg_color: 'rgba(20, 20, 20, 0.85)',
+        bg_color: 'rgba(30, 30, 30, 1)',
 
         // General text color
         text_color: 'rgb(169, 64, 255)',
@@ -17,10 +17,7 @@ export default {
         nav_bg_color: 'rgba(20, 20, 20, 0.7)',
 
         // Top nav shadow color
-        nav_shadow_color: 'rgba(255, 255, 255, 0.1)',
-
-        // Index logo color
-        logo_stroke: 'rgba(130, 0, 255)',
+        nav_shadow_color: 'black',
     },
 
     light: {
@@ -38,8 +35,5 @@ export default {
 
         // Top nav shadow color
         nav_shadow_color: 'rgba(40, 40, 40, 0.15)',
-
-        // Index logo color
-        logo_stroke: 'rgba(130, 0, 255)',
     },
 };

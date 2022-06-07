@@ -36,7 +36,7 @@
 
     .top-container #logo {
         fill: none;
-        stroke: var(--theme-logo_stroke);
+        stroke: rgb(130, 0, 255);
         stroke-width: 6px;
     }
 

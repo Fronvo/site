@@ -37,14 +37,14 @@ a:focus {
 }
 
 h1 {
-    font-family: 'Secular One';
+    font-family: 'DM Sans';
     font-weight: 500;
     color: var(--theme-text_color);
 }
 
 p {
     color: rgb(170, 65, 255);
-    font-family: 'Secular One';
+    font-family: 'DM Sans';
     font-weight: 500;
 }
 
@@ -55,7 +55,7 @@ button {
     border-radius: 10px;
     color: var(--theme-btn_text_color);
     padding: 7px;
-    font-family: 'Secular One';
+    font-family: 'DM Sans';
     font-weight: 500;
     cursor: pointer;
     transition: 0.3s;

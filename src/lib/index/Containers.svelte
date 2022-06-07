@@ -58,7 +58,7 @@
     }
 
     .container #title {
-        font-size: 3.5rem;
+        font-size: 4rem;
         text-align: center;
         margin: 0;
     }

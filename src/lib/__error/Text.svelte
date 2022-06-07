@@ -14,6 +14,7 @@
         font-size: 2.7rem;
         margin: 0;
         transition: 500ms all;
+        color: rgb(255, 109, 255);
     }
 
     @media screen and (max-width: 800px) {

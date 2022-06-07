@@ -16,7 +16,7 @@
     >
         <h1 id="logo">Fronvo</h1>
 
-        <button id="try-1" on:click={redirectApp}>Try it online</button>
+        <button id="try-1" on:click={redirectApp}>Try Fronvo online</button>
 
         <Switch
             checked={$current == 'dark'}
@@ -71,7 +71,7 @@
         display: flex;
         border-bottom-left-radius: 10px;
         border-bottom-right-radius: 10px;
-        padding: 10px;
+        padding: 20px;
         justify-content: center;
         align-items: center;
         z-index: 1;

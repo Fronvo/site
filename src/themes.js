@@ -27,6 +27,9 @@ export default {
         // General text color
         text_color: 'rgb(169, 64, 255)',
 
+        // Button text color
+        btn_text_color: 'white',
+
         // General text color on hover
         text_color_hover: 'rgba(169, 64, 255, 0.5)',
 

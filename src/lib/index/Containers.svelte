@@ -59,15 +59,20 @@
 
     .container #title {
         font-size: 4rem;
+        font-weight: 900;
         text-align: center;
         margin: 0;
+        animation: rainbow-header;
+        animation-duration: 10000ms;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
     }
 
     .container .svg {
         border-radius: 15px;
         transition: 300ms all;
-        animation: rainbow;
-        animation-duration: 5000ms;
+        animation: rainbow-btn;
+        animation-duration: 10000ms;
         animation-iteration-count: infinite;
         animation-direction: alternate;
     }
@@ -78,7 +83,7 @@
 
     @media screen and (max-width: 700px) {
         .container #title {
-            font-size: 1.9rem;
+            font-size: 3rem;
             margin-bottom: 10px;
         }
 
@@ -94,6 +99,10 @@
     }
 
     @media screen and (max-width: 520px) {
+        .container #title {
+            font-size: 2.5rem;
+        }
+
         .container .svg {
             width: 175px;
             height: 175px;
@@ -118,30 +127,34 @@
         }
     }
 
-    @keyframes rainbow {
+    @keyframes rainbow-header {
         0% {
-            border: 3px solid rgb(0, 132, 255);
-            box-shadow: 0 0 10px rgb(0, 132, 255);
-        }
-
-        25% {
-            border: 3px solid rgb(255, 108, 108);
-            box-shadow: 0 0 10px rgb(255, 108, 108);
+            text-shadow: 0 4px 0 rgb(121, 255, 121);
         }
 
         50% {
+            text-shadow: 0 4px 0 rgb(63, 63, 255);
+        }
+
+        100% {
+            text-shadow: 0 4px 0 rgb(255, 252, 48);
+        }
+    }
+
+    @keyframes rainbow-btn {
+        0% {
             border: 3px solid rgb(121, 255, 121);
             box-shadow: 0 0 10px rgb(121, 255, 121);
         }
 
-        75% {
-            border: 3px solid rgb(114, 114, 255);
-            box-shadow: 0 0 10px rgb(114, 114, 255);
+        50% {
+            border: 3px solid rgb(63, 63, 255);
+            box-shadow: 0 0 10px rgb(63, 63, 255);
         }
 
         100% {
-            border: 3px solid rgb(211, 37, 255);
-            box-shadow: 0 0 10px rgb(211, 37, 255);
+            border: 3px solid rgb(255, 252, 48);
+            box-shadow: 0 0 10px rgb(255, 252, 48);
         }
     }
 </style>

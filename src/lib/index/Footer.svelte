@@ -1,6 +1,6 @@
 <script lang="ts">
-    import Github from '../svgs/Github.svelte';
-    import Wave from '../svgs/Wave.svelte';
+    import Github from '$lib/svgs/Github.svelte';
+    import Wave from '$lib/svgs/Wave.svelte';
 </script>
 
 <div class="footer">

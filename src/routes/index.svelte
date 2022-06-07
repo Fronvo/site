@@ -3,11 +3,11 @@
 </script>
 
 <script lang="ts">
-    import Containers from 'src/lib/index/Containers.svelte';
-    import Footer from 'src/lib/index/Footer.svelte';
-    import Top from 'src/lib/index/Top.svelte';
-    import TopNav from 'src/lib/index/TopNav.svelte';
-    import TryItButton from 'src/lib/index/TryItButton.svelte';
+    import Containers from '$lib/index/Containers.svelte';
+    import Footer from '$lib/index/Footer.svelte';
+    import Top from '$lib/index/Top.svelte';
+    import TopNav from '$lib/index/TopNav.svelte';
+    import TryItButton from '$lib/index/TryItButton.svelte';
     import { onMount } from 'svelte';
 
     let mountReady = false;

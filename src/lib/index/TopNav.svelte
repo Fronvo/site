@@ -1,6 +1,6 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
-    import type { ThemeContext } from 'src/interfaces/global';
+    import type { ThemeContext } from 'interfaces/global';
     import { getContext } from 'svelte';
     import Switch from 'svelte-switch';
     import { fly } from 'svelte/transition';

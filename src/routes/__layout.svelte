@@ -1,10 +1,10 @@
 <script>
     import 'src/app.css';
+    import themes from 'src/themes';
     import { onMount } from 'svelte';
     import { setGlobalOptions } from 'svelte-scrolling';
     import { ThemeWrapper } from 'svelte-themer';
     import { sineInOut } from 'svelte/easing';
-    import themes from '../themes';
 
     let mountReady = false;
 

@@ -1,7 +1,7 @@
 <script lang="ts" context="module">
     import { goto } from '$app/navigation';
+    import Text from '$lib/__error/Text.svelte';
     import type { ErrorLoadParams, ErrorLoadResult } from 'interfaces/global';
-    import Text from 'src/lib/__error/Text.svelte';
     import { onMount } from 'svelte';
     import { slide } from 'svelte/transition';
 

@@ -75,6 +75,7 @@
         background: var(--theme-nav_bg_color);
         box-shadow: 0 0 15px var(--theme-nav_shadow_color);
         transition: 300ms background;
+        backdrop-filter: blur(5px);
     }
 
     .top-nav-container #logo {

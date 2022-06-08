@@ -65,16 +65,17 @@
         text-align: center;
         margin: 0;
         animation: rainbow-header;
-        animation-duration: 10000ms;
+        animation-duration: 7500ms;
         animation-iteration-count: infinite;
         animation-direction: alternate;
+        transition: 300ms all;
     }
 
     .container .svg {
         border-radius: 15px;
         transition: 300ms all;
         animation: rainbow-btn;
-        animation-duration: 10000ms;
+        animation-duration: 7500ms;
         animation-iteration-count: infinite;
         animation-direction: alternate;
     }
@@ -131,32 +132,32 @@
 
     @keyframes rainbow-header {
         0% {
-            text-shadow: 0 4px 0 rgb(121, 255, 121);
+            text-shadow: 0 4px 0 rgb(225, 0, 255);
         }
 
         50% {
-            text-shadow: 0 4px 0 rgb(63, 63, 255);
+            text-shadow: 0 4px 0 rgb(121, 255, 121);
         }
 
         100% {
-            text-shadow: 0 4px 0 rgb(255, 252, 48);
+            text-shadow: 0 4px 0 rgb(255, 161, 53);
         }
     }
 
     @keyframes rainbow-btn {
         0% {
+            border: 3px solid rgb(225, 0, 255);
+            box-shadow: 0 0 10px rgb(225, 0, 255);
+        }
+
+        50% {
             border: 3px solid rgb(121, 255, 121);
             box-shadow: 0 0 10px rgb(121, 255, 121);
         }
 
-        50% {
-            border: 3px solid rgb(63, 63, 255);
-            box-shadow: 0 0 10px rgb(63, 63, 255);
-        }
-
         100% {
-            border: 3px solid rgb(255, 252, 48);
-            box-shadow: 0 0 10px rgb(255, 252, 48);
+            border: 3px solid rgb(255, 161, 53);
+            box-shadow: 0 0 10px rgb(255, 161, 53);
         }
     }
 </style>

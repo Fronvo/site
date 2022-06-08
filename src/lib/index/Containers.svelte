@@ -91,13 +91,11 @@
         }
 
         .container .svg {
-            width: 250px;
-            height: 250px;
+            height: 230px;
         }
 
         .container .svg-extra {
-            width: 400px;
-            height: 241px;
+            height: 250px;
         }
     }
 
@@ -107,13 +105,11 @@
         }
 
         .container .svg {
-            width: 175px;
-            height: 175px;
+            height: 180px;
         }
 
         .container .svg-extra {
-            width: 289px;
-            height: 175px;
+            height: 180px;
         }
     }
 

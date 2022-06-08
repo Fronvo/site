@@ -36,8 +36,10 @@
 
     .top-container #logo {
         fill: none;
-        stroke: rgb(130, 0, 255);
-        stroke-width: 6px;
+        animation-name: animated-stroke;
+        animation-duration: 5000ms;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
     }
 
     /* Responsive design */
@@ -46,6 +48,18 @@
             display: none;
             height: 10vh;
             padding-top: 20px;
+        }
+    }
+
+    @keyframes animated-stroke {
+        0% {
+            stroke: rgb(111, 0, 255);
+            stroke-width: 6px;
+        }
+
+        100% {
+            stroke: rgb(212, 0, 255);
+            stroke-width: 6px;
         }
     }
 

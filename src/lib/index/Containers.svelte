@@ -7,7 +7,6 @@
         {
             title: 'Packed with features',
             svg: 'many-features',
-            extraSized: true,
         },
 
         {
@@ -22,7 +21,7 @@
     ];
 </script>
 
-{#each fronvoContainer as { title, svg, extraSized }, index}
+{#each fronvoContainer as { title, svg }, index}
     <div
         class={`container ${
             index == fronvoContainer.length - 1 ? 'last-container' : ''
@@ -41,7 +40,7 @@
             animation={'slide-top 3s cubic-bezier(0.230, 1.000, 0.320, 1.000) both'}
         >
             <img
-                class={`svg ${extraSized ? 'svg-extra' : ''}`}
+                class="svg"
                 src={`svgs/${svg}.svg`}
                 alt={`${svg} icon`}
                 draggable={false}
@@ -97,10 +96,6 @@
         .container .svg {
             height: 230px;
         }
-
-        .container .svg-extra {
-            height: 250px;
-        }
     }
 
     @media screen and (max-width: 520px) {
@@ -109,10 +104,6 @@
         }
 
         .container .svg {
-            height: 180px;
-        }
-
-        .container .svg-extra {
             height: 180px;
         }
     }

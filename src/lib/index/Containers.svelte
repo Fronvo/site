@@ -69,6 +69,8 @@
         animation-iteration-count: infinite;
         animation-direction: alternate;
         transition: 300ms all;
+        margin-left: 10px;
+        margin-right: 10px;
     }
 
     .container .svg {
@@ -88,6 +90,8 @@
         .container #title {
             font-size: 3rem;
             margin-bottom: 10px;
+            margin-right: 5px;
+            margin-left: 5px;
         }
 
         .container .svg {

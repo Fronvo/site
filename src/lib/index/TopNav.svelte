@@ -111,7 +111,7 @@
         color: var(--theme-text_color_hover);
     }
 
-    @media screen and (max-width: 800px) {
+    @media screen and (max-width: 700px) {
         .top-nav-container h1 {
             font-size: 1.5rem;
         }

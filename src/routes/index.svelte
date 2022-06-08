@@ -7,7 +7,6 @@
     import Footer from '$lib/index/Footer.svelte';
     import Top from '$lib/index/Top.svelte';
     import TopNav from '$lib/index/TopNav.svelte';
-    import TryItButton from '$lib/index/TryItButton.svelte';
     import { indexAnimDuration, indexVisible } from 'src/stores';
     import { onMount } from 'svelte';
     import { blur } from 'svelte/transition';
@@ -34,8 +33,6 @@
             <Top />
 
             <Containers />
-
-            <TryItButton />
 
             <Footer />
         </div>

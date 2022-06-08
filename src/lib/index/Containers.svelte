@@ -30,12 +30,14 @@
         in:fade={{ duration: 500 }}
     >
         <Saos
+            once
             animation={'slide-top 1.5s cubic-bezier(0.230, 1.000, 0.320, 1.000) both'}
         >
             <h1 id="title">{title}</h1>
         </Saos>
 
         <Saos
+            once
             animation={'slide-top 3s cubic-bezier(0.230, 1.000, 0.320, 1.000) both'}
         >
             <img

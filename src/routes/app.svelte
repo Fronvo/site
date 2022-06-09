@@ -37,6 +37,10 @@
     }, socketTimeout);
 </script>
 
+<svelte:head>
+    <title>Fronvo</title>
+</svelte:head>
+
 {#if $appVisible}
     <div transition:fade={{ duration: 300 }}>
         {#if !$socketConnected}

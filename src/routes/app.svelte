@@ -44,6 +44,8 @@
                     <FailedToConnect />
                 </div>
             {/if}
+
+            <!-- TODO: Check account, attempt to login if it exists -->
         {:else if $mainVisible}
             <div transition:fade={{ duration: 300 }}>
                 <Main />

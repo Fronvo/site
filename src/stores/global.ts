@@ -12,7 +12,10 @@ export const socketConnected = writable(false);
 
 export let socket: Socket<ServerToClientEvents, ClientToServerEvents>;
 
-export function initSocket() {
+export function initSocket(): void {
+    // Only init once
+    if (socket) return;
+
     socket = io('wss://fronvosrv.herokuapp.com', {
         transports: ['websocket'],
         path: '/fronvo',
@@ -24,3 +27,14 @@ export function initSocket() {
         socketConnected.set(true);
     });
 }
+
+export function resetSocket(): void {
+    // ONly reset once
+    if (!socket) return;
+
+    socket.disconnect();
+
+    socket = undefined;
+}
+
+export const socketTimeout = 5000;

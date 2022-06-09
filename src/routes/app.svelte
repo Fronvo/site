@@ -27,7 +27,10 @@
 
     // Set connection timeout
     setTimeout(() => {
+        if ($socketConnected) return;
+
         socketFailed = true;
+
         resetSocket();
     }, socketTimeout);
 </script>

@@ -49,9 +49,9 @@ p {
 }
 
 button {
-    background: rgb(169, 64, 255);
-    border: 3px solid rgb(169, 64, 255);
-    box-shadow: 0 0 3px black;
+    background: rgb(140, 0, 255);
+    border: 3px solid rgb(255, 255, 255);
+    box-shadow: 0 0 5px black;
     border-radius: 10px;
     color: var(--theme-btn_text_color);
     padding: 7px;
@@ -62,8 +62,12 @@ button {
 }
 
 button:hover {
-    background: transparent;
-    color: rgb(169, 64, 255);
+    color: rgb(140, 0, 255);
+    background: white;
+}
+
+button:disabled {
+    color: rgba(255, 255, 255, 30%);
 }
 
 button:focus {
@@ -71,24 +75,20 @@ button:focus {
 }
 
 input {
-    border: 3px solid rgb(140, 0, 255);
+    border: none;
     border-radius: 5px;
-    background: rgb(80, 25, 90);
-    box-shadow: 0px 0px 5px rgb(170, 0, 255);
-    color: var(--theme-text_color);
-    margin: 5px 0 15px 0;
-    text-align: center;
-    font-family: 'Secular One';
+    font-family: 'DM Sans';
     transition: 0.5s;
+    color: var(--theme-text_color);
+    padding: 5px 10px 5px 10px;
 }
 
-input:hover {
-    box-shadow: 0 0 10px rgb(140, 0, 255);
+input:disabled {
+    background: rgba(255, 255, 255, 85%);
 }
 
 input:focus {
-    outline: 1px;
-    box-shadow: 0 0 15px rgb(132, 0, 255);
+    outline: none;
 }
 
 hr {
@@ -106,8 +106,6 @@ select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus,
 select:-webkit-autofill::first-line {
-    box-shadow: 0 0 0px 1000px rgb(81, 27, 105) inset;
-    -webkit-box-shadow: 0 0 0px 1000px rgb(81, 27, 105) inset;
     -webkit-text-fill-color: var(--theme-text_color);
 }
 
@@ -128,22 +126,4 @@ select:-webkit-autofill::first-line {
 
 ::-webkit-scrollbar-thumb:hover {
     background: rgb(185, 0, 255);
-}
-
-/* Responsive design */
-@media screen and (max-width: 700px) {
-    input:-webkit-autofill,
-    input:-webkit-autofill:hover,
-    input:-webkit-autofill:focus input:-webkit-autofill::first-line,
-    textarea:-webkit-autofill,
-    textarea:-webkit-autofill:hover,
-    textarea:-webkit-autofill:focus textarea:-webkit-autofill::first-line,
-    select:-webkit-autofill,
-    select:-webkit-autofill:hover,
-    select:-webkit-autofill:focus,
-    select:-webkit-autofill::first-line {
-        box-shadow: 0 0 0px 1000px rgb(81, 27, 105) inset;
-        -webkit-box-shadow: 0 0 0px 1000px rgb(81, 27, 105) inset;
-        -webkit-text-fill-color: var(--theme-text_color);
-    }
 }

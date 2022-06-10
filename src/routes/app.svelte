@@ -1,21 +1,24 @@
 <script lang="ts">
     import Account from '$lib/app/account/Account.svelte';
-    import FailedToConnect from 'src/lib/app/FailedToConnect.svelte';
-    import Loading from 'src/lib/app/Loading.svelte';
-    import Main from 'src/lib/app/main/Main.svelte';
-    import { accountVisible } from 'src/stores/app/account';
-    import { appVisible } from 'src/stores/app/global';
-    import { mainVisible } from 'src/stores/app/main';
+    import FailedToConnect from '$lib/app/FailedToConnect.svelte';
+    import Loading from '$lib/app/Loading.svelte';
+    import Main from '$lib/app/main/Main.svelte';
+    import { accountRegisterTab } from 'src/stores/app/account';
+    import { appVisible, hasLoggedIn, tokenInvalid } from 'stores/app/global';
     import {
         initSocket,
         resetSocket,
         socketConnected,
         socketTimeout,
-    } from 'src/stores/global';
+    } from 'stores/global';
     import { onDestroy } from 'svelte';
     import { fade } from 'svelte/transition';
+    import { getKey } from 'utilities/global';
 
     $appVisible = true;
+
+    // Reset tab
+    $accountRegisterTab = true;
     let socketFailed = false;
 
     initSocket();
@@ -37,10 +40,6 @@
     }, socketTimeout);
 </script>
 
-<svelte:head>
-    <title>Fronvo</title>
-</svelte:head>
-
 {#if $appVisible}
     <div transition:fade={{ duration: 300 }}>
         {#if !$socketConnected}
@@ -53,14 +52,13 @@
                     <FailedToConnect />
                 </div>
             {/if}
-
-            <!-- TODO: Check account, attempt to login if it exists -->
-        {:else if $mainVisible}
-            <div transition:fade={{ duration: 300 }}>
+        {:else if (getKey('token') || $hasLoggedIn) && !$tokenInvalid}
+            <!-- Login with loading -->
+            <div in:fade={{ duration: 300, delay: 300 }}>
                 <Main />
             </div>
-        {:else if $accountVisible}
-            <div transition:fade={{ duration: 300 }}>
+        {:else}
+            <div in:fade={{ duration: 300, delay: 300 }}>
                 <Account />
             </div>
         {/if}

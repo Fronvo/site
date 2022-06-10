@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { ThemeContext } from 'interfaces/global';
-    import { indexVisible } from 'src/stores';
-    import { redirectApp } from 'src/utilities';
+    import { indexVisible } from 'stores/index';
+    import { redirectApp } from 'utilities/index';
     import { getContext } from 'svelte';
     import Switch from 'svelte-switch';
     import { fly } from 'svelte/transition';

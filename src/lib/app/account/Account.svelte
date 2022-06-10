@@ -10,17 +10,15 @@
 </script>
 
 {#if $accountRegisterTab}
-    <div transition:fade={{ duration: 300 }}>
-        {#if $accountRegisterVerifyTab}
-            <div transition:fade={{ duration: 300 }}>
-                <RegisterVerify />
-            </div>
-        {:else}
-            <div transition:fade={{ duration: 300 }}>
-                <Register />
-            </div>
-        {/if}
-    </div>
+    {#if $accountRegisterVerifyTab}
+        <div transition:fade={{ duration: 300 }}>
+            <RegisterVerify />
+        </div>
+    {:else}
+        <div transition:fade={{ duration: 300 }}>
+            <Register />
+        </div>
+    {/if}
 {:else}
     <div transition:fade={{ duration: 300 }}>
         <Login />

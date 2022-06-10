@@ -1,7 +1,6 @@
 <script lang="ts">
     import Account from '$lib/app/account/Account.svelte';
     import FailedToConnect from '$lib/app/FailedToConnect.svelte';
-    import Loading from '$lib/app/Loading.svelte';
     import Main from '$lib/app/main/Main.svelte';
     import { accountRegisterTab } from 'src/stores/app/account';
     import { appVisible, hasLoggedIn, tokenInvalid } from 'stores/app/global';
@@ -12,7 +11,6 @@
         socketTimeout,
     } from 'stores/global';
     import { onDestroy } from 'svelte';
-    import { fade } from 'svelte/transition';
     import { getKey } from 'utilities/global';
 
     $appVisible = true;
@@ -41,26 +39,16 @@
 </script>
 
 {#if $appVisible}
-    <div transition:fade={{ duration: 300 }}>
+    <div>
         {#if !$socketConnected}
-            {#if !socketFailed}
-                <div transition:fade={{ duration: 300 }}>
-                    <Loading text="Connecting to Fronvo" />
-                </div>
-            {:else}
-                <div transition:fade={{ duration: 300 }}>
-                    <FailedToConnect />
-                </div>
+            {#if socketFailed}
+                <FailedToConnect />
             {/if}
         {:else if (getKey('token') || $hasLoggedIn) && !$tokenInvalid}
             <!-- Login with loading -->
-            <div in:fade={{ duration: 300, delay: 300 }}>
-                <Main />
-            </div>
+            <Main />
         {:else}
-            <div in:fade={{ duration: 300, delay: 300 }}>
-                <Account />
-            </div>
+            <Account />
         {/if}
     </div>
 {/if}

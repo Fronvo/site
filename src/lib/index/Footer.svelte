@@ -25,7 +25,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background: #861bff;
+        background: rgb(100, 0, 255);
     }
 
     .footer .content h1 {

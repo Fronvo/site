@@ -110,7 +110,7 @@
 <style>
     .account-container {
         border-radius: 10px;
-        background: rgb(140, 0, 255);
+        background: rgb(100, 0, 255);
         padding: 15px 30px 15px 30px;
         box-shadow: 0 0 5px black;
         text-align: center;

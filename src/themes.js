@@ -5,7 +5,7 @@ export default {
         bg_color: 'rgba(30, 30, 30, 1)',
 
         // General text color
-        text_color: 'rgb(169, 64, 255)',
+        text_color: 'rgb(130, 64, 255)',
 
         // Button text color
         btn_text_color: 'white',
@@ -25,7 +25,7 @@ export default {
         bg_color: 'rgba(250, 250, 250, 1)',
 
         // General text color
-        text_color: 'rgb(169, 64, 255)',
+        text_color: 'rgb(130, 64, 255)',
 
         // Button text color
         btn_text_color: 'white',

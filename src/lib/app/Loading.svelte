@@ -8,7 +8,7 @@
 <Center>
     <div class="loading-container">
         <h1 id="text">{text}</h1>
-        <Shadow color="rgb(169, 64, 255)" size="48" duration="1s" />
+        <Shadow color="rgb(130, 64, 255)" size="48" duration="1s" />
     </div>
 </Center>
 

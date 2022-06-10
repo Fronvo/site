@@ -1,5 +1,5 @@
 <script lang="ts">
-    export let waveColor = '#861BFF';
+    export let waveColor = 'rgb(100, 0, 255)';
     export let inverse = false;
 </script>
 

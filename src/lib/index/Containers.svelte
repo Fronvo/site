@@ -74,7 +74,7 @@
 
     .container .svg {
         border-radius: 15px;
-        transition: 300ms all;
+        transition: 400ms all;
         animation: rainbow-btn;
         animation-duration: 7500ms;
         animation-iteration-count: infinite;
@@ -123,7 +123,7 @@
 
     @keyframes rainbow-header {
         0% {
-            text-shadow: 0 4px 0 rgb(225, 0, 255);
+            text-shadow: 0 4px 0 rgb(121, 255, 121);
         }
 
         50% {
@@ -137,8 +137,8 @@
 
     @keyframes rainbow-btn {
         0% {
-            border: 3px solid rgb(225, 0, 255);
-            box-shadow: 0 0 10px rgb(225, 0, 255);
+            border: 3px solid rgb(121, 255, 121);
+            box-shadow: 0 0 10px rgb(121, 255, 121);
         }
 
         50% {

@@ -53,12 +53,12 @@
 
     @keyframes animated-stroke {
         0% {
-            stroke: rgb(111, 0, 255);
+            stroke: rgb(100, 0, 255);
             stroke-width: 6px;
         }
 
         100% {
-            stroke: rgb(212, 0, 255);
+            stroke: rgb(150, 0, 255);
             stroke-width: 6px;
         }
     }

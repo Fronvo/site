@@ -3,7 +3,7 @@
     import { accountRegisterTab } from 'src/stores/app/account';
     import { hasLoggedIn, tokenInvalid } from 'src/stores/app/global';
     import { socket } from 'src/stores/global';
-    import { setKey } from 'src/utilities/global';
+    import { setEnterHandle, setKey } from 'src/utilities/global';
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
     import Center from '../Center.svelte';
@@ -25,6 +25,9 @@
         loginButton = document.getElementById(
             'login-button'
         ) as HTMLButtonElement;
+
+        setEnterHandle(emailInput, loginButton);
+        setEnterHandle(passwordInput, loginButton);
     });
 
     function login(): void {

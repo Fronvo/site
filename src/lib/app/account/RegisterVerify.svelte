@@ -5,7 +5,7 @@
     import { socket } from 'stores/global';
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
-    import { setKey } from 'utilities/global';
+    import { setEnterHandle, setKey } from 'utilities/global';
 
     let code: string;
     let isErrorVisible = false;
@@ -18,6 +18,8 @@
         submitButton = document.getElementById(
             'submit-button'
         ) as HTMLButtonElement;
+
+        setEnterHandle(codeInput, submitButton);
     });
 
     function verify(): void {

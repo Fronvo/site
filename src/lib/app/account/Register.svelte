@@ -1,6 +1,7 @@
 <script lang="ts">
     import Center from '$lib/app/Center.svelte';
     import type { FronvoError } from 'interfaces/socket/all';
+    import { setEnterHandle } from 'src/utilities/global';
     import {
         accountRegisterTab,
         accountRegisterVerifyTab,
@@ -26,6 +27,9 @@
         registerButton = document.getElementById(
             'register-button'
         ) as HTMLButtonElement;
+
+        setEnterHandle(emailInput, registerButton),
+            setEnterHandle(passwordInput, registerButton);
     });
 
     function register(): void {

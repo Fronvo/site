@@ -2,9 +2,9 @@
 // Reusable functions for all kinds of files.
 // ******************** //
 
-import type { LocalKeys } from "types/global";
+import type { LocalKeys } from 'types/global';
 
-export function getKey(key: LocalKeys, fallback?: any): any {    
+export function getKey(key: LocalKeys, fallback?: any): any {
     return localStorage.getItem(`fronvo_${key}`) || fallback;
 }
 

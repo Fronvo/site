@@ -7,7 +7,7 @@
     import Footer from '$lib/index/Footer.svelte';
     import Top from '$lib/index/Top.svelte';
     import TopNav from '$lib/index/TopNav.svelte';
-    import { indexAnimDuration, indexVisible } from 'src/stores';
+    import { indexAnimDuration, indexVisible } from 'stores/index';
     import { onMount } from 'svelte';
     import { blur } from 'svelte/transition';
 

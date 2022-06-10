@@ -159,6 +159,12 @@
         margin-bottom: 0;
         transition: 250ms color;
         font-size: 2rem;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
 
     .account-container #login-redirect:hover {

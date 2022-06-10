@@ -57,6 +57,11 @@
             stroke-width: 6px;
         }
 
+        50% {
+            stroke: rgb(100, 0, 255);
+            stroke-width: 6px;
+        }
+
         100% {
             stroke: rgb(150, 0, 255);
             stroke-width: 6px;

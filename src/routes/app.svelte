@@ -27,8 +27,6 @@
     let socketFailed = false;
     let showLoading = false;
 
-    initSocket();
-
     // If the connection failed, stop retrying in the background
     onDestroy(() => {
         if ($socketConnected) return;

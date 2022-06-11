@@ -13,6 +13,7 @@
     import {
         initSocket,
         resetSocket,
+        socket,
         socketConnected,
         socketTimeout,
     } from 'stores/global';
@@ -26,6 +27,11 @@
     $accountRegisterTab = true;
     let socketFailed = false;
     let showLoading = false;
+
+    // Only init socket if the /app route is accessed riectly, no index to preinit
+    if (!socket) {
+        initSocket();
+    }
 
     // If the connection failed, stop retrying in the background
     onDestroy(() => {

@@ -6,21 +6,14 @@
         accountRegisterTab,
         accountRegisterVerifyTab,
     } from 'stores/app/account';
-    import { fade } from 'svelte/transition';
 </script>
 
 {#if $accountRegisterTab}
     {#if $accountRegisterVerifyTab}
-        <div transition:fade={{ duration: 500 }}>
-            <RegisterVerify />
-        </div>
+        <RegisterVerify />
     {:else}
-        <div transition:fade={{ duration: 500 }}>
-            <Register />
-        </div>
+        <Register />
     {/if}
 {:else}
-    <div transition:fade={{ duration: 500 }}>
-        <Login />
-    </div>
+    <Login />
 {/if}

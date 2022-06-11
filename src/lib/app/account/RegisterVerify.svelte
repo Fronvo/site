@@ -1,11 +1,11 @@
 <script lang="ts">
-    import Center from '$lib/app/Center.svelte';
     import type { FronvoError } from 'interfaces/socket/all';
     import { hasLoggedIn, tokenInvalid } from 'stores/app/global';
     import { socket } from 'stores/global';
     import { onMount } from 'svelte';
-    import { fade } from 'svelte/transition';
+    import { fade, scale } from 'svelte/transition';
     import { setEnterHandle, setKey } from 'utilities/global';
+    import Center from '../Center.svelte';
 
     let code: string;
     let isErrorVisible = false;
@@ -56,8 +56,12 @@
     <title>Fronvo | Verify</title>
 </svelte:head>
 
-<Center>
-    <div class="verify-container">
+<Center absolute>
+    <div
+        class="verify-container"
+        in:scale={{ duration: 750, start: 0.9, delay: 300 }}
+        out:scale={{ duration: 400, start: 0.9 }}
+    >
         <h1 id="header">Register Verification</h1>
 
         <h1 id="info">

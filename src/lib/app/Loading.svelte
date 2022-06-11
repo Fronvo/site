@@ -5,7 +5,7 @@
     export let text: string;
 </script>
 
-<Center>
+<Center absolute>
     <div class="loading-container">
         <h1 id="text">{text}</h1>
         <Shadow color="rgb(130, 64, 255)" size="48" duration="1s" />

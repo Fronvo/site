@@ -1,5 +1,4 @@
 <script lang="ts">
-    import Center from '$lib/app/Center.svelte';
     import type { FronvoError } from 'interfaces/socket/all';
     import { setEnterHandle } from 'src/utilities/global';
     import {
@@ -8,7 +7,8 @@
     } from 'stores/app/account';
     import { socket } from 'stores/global';
     import { onMount } from 'svelte';
-    import { fade } from 'svelte/transition';
+    import { fade, scale } from 'svelte/transition';
+    import Center from '../Center.svelte';
 
     let email: string;
     let password: string;
@@ -81,8 +81,12 @@
     <title>Fronvo | Register</title>
 </svelte:head>
 
-<Center>
-    <div class="account-container">
+<Center absolute>
+    <div
+        class="account-container"
+        in:scale={{ duration: 750, start: 0.9, delay: 300 }}
+        out:scale={{ duration: 400, start: 0.9 }}
+    >
         <h1 id="header">Create an account</h1>
 
         {#if isErrorVisible}

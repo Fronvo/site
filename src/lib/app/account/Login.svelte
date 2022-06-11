@@ -5,7 +5,7 @@
     import { socket } from 'src/stores/global';
     import { setEnterHandle, setKey } from 'src/utilities/global';
     import { onMount } from 'svelte';
-    import { fade } from 'svelte/transition';
+    import { fade, scale } from 'svelte/transition';
     import Center from '../Center.svelte';
 
     let email: string;
@@ -81,8 +81,12 @@
     <title>Fronvo | Login</title>
 </svelte:head>
 
-<Center>
-    <div class="account-container">
+<Center absolute>
+    <div
+        class="account-container"
+        in:scale={{ duration: 750, start: 0.9, delay: 300 }}
+        out:scale={{ duration: 400, start: 0.9 }}
+    >
         <h1 id="header">Login to account</h1>
 
         {#if isErrorVisible}

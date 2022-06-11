@@ -136,7 +136,6 @@
         font-size: 2rem;
         margin: 0;
         width: 100%;
-        word-wrap: break-word;
     }
 
     .account-container #input-header {
@@ -172,6 +171,7 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+        width: 100%;
     }
 
     .account-container #register-redirect:hover {

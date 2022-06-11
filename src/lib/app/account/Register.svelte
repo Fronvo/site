@@ -138,7 +138,6 @@
         font-size: 2rem;
         margin: 0;
         width: 100%;
-        word-wrap: break-word;
     }
 
     .account-container #input-header {

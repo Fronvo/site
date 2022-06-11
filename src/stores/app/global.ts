@@ -9,3 +9,5 @@ export const appVisible = writable(false);
 export const hasLoggedIn = writable(false);
 
 export const tokenInvalid = writable(false);
+
+export const showLoadingDelay = 750;

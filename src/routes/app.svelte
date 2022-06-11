@@ -2,8 +2,14 @@
     import Account from '$lib/app/account/Account.svelte';
     import FailedToConnect from '$lib/app/FailedToConnect.svelte';
     import Main from '$lib/app/main/Main.svelte';
+    import Loading from 'src/lib/app/Loading.svelte';
     import { accountRegisterTab } from 'src/stores/app/account';
-    import { appVisible, hasLoggedIn, tokenInvalid } from 'stores/app/global';
+    import {
+        appVisible,
+        hasLoggedIn,
+        showLoadingDelay,
+        tokenInvalid,
+    } from 'stores/app/global';
     import {
         initSocket,
         resetSocket,
@@ -11,6 +17,7 @@
         socketTimeout,
     } from 'stores/global';
     import { onDestroy } from 'svelte';
+    import { fade } from 'svelte/transition';
     import { getKey } from 'utilities/global';
 
     $appVisible = true;
@@ -18,6 +25,7 @@
     // Reset tab
     $accountRegisterTab = true;
     let socketFailed = false;
+    let showLoading = false;
 
     initSocket();
 
@@ -36,13 +44,24 @@
 
         resetSocket();
     }, socketTimeout);
+
+    // Show loading after delay
+    setTimeout(() => {
+        showLoading = true;
+    }, showLoadingDelay);
 </script>
 
 {#if $appVisible}
-    <div>
+    <div in:fade={{ duration: 500 }} out:fade>
         {#if !$socketConnected}
-            {#if socketFailed}
-                <FailedToConnect />
+            {#if showLoading && !socketFailed}
+                <div transition:fade>
+                    <Loading text="Connecting to Fronvo" />
+                </div>
+            {:else if socketFailed}
+                <div transition:fade>
+                    <FailedToConnect />
+                </div>
             {/if}
         {:else if (getKey('token') || $hasLoggedIn) && !$tokenInvalid}
             <!-- Login with loading -->

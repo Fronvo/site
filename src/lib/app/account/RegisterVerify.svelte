@@ -82,7 +82,7 @@
     .verify-container {
         border-radius: 10px;
         background: rgb(100, 0, 255);
-        padding: 15px 30px 15px 30px;
+        padding: 20px 30px 20px 30px;
         box-shadow: 0 0 5px black;
         text-align: center;
         width: 550px;
@@ -92,7 +92,7 @@
         color: white;
         text-align: center;
         font-size: 3rem;
-        margin: 10px 10px 20px 10px;
+        margin: 10px 10px 30px 10px;
     }
 
     .verify-container #info {
@@ -103,9 +103,7 @@
     .verify-container #error-header {
         color: red;
         font-size: 2rem;
-        margin-bottom: 20px;
         width: 100%;
-        word-wrap: break-word;
     }
 
     .verify-container input {
@@ -113,6 +111,7 @@
         width: 40%;
         height: 50px;
         text-align: center;
+        margin-top: 20px;
     }
 
     .verify-container button {

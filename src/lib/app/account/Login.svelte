@@ -114,7 +114,7 @@
     .account-container {
         border-radius: 10px;
         background: rgb(100, 0, 255);
-        padding: 15px 30px 15px 30px;
+        padding: 20px 30px 20px 30px;
         box-shadow: 0 0 5px black;
         text-align: center;
         width: 550px;
@@ -124,7 +124,7 @@
         color: white;
         text-align: center;
         font-size: 3rem;
-        margin: 10px 10px 20px 10px;
+        margin: 10px 10px 40px 10px;
     }
 
     .account-container #error-header {
@@ -138,26 +138,27 @@
     .account-container #input-header {
         color: white;
         margin: 0;
+        margin-bottom: 5px;
         font-size: 2.1rem;
         text-align: start;
     }
 
     .account-container input {
         font-size: 2rem;
-        margin: 0 5px 10px 5px;
+        margin: 0 5px 20px 5px;
         width: 95%;
     }
 
     .account-container button {
         font-size: 2.5rem;
-        margin-top: 20px;
+        margin-top: 25px;
         width: 90%;
     }
 
     .account-container #register-redirect {
         color: white;
         cursor: pointer;
-        margin-top: 25px;
+        margin-top: 40px;
         margin-bottom: 0;
         transition: 250ms color;
         font-size: 2rem;

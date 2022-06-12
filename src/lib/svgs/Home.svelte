@@ -46,8 +46,22 @@
         stroke: var(--theme-text_color);
         stroke-width: 2px;
         cursor: pointer;
-        transition: 500ms all;
+        transition: 100ms all;
         margin-right: 20px;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    svg:hover {
+        opacity: 0.8;
+    }
+
+    svg:active {
+        transform: scale(0.9);
     }
 
     @media screen and (max-width: 520px) {

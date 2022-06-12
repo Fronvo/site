@@ -8,24 +8,24 @@
     import Center from '../Center.svelte';
 
     let code: string;
-    let emailInput: HTMLInputElement;
-    let resetButton: HTMLButtonElement;
+    let codeInput: HTMLInputElement;
+    let submitButton: HTMLButtonElement;
     let isErrorVisible = false;
     let errorMessage: string;
 
     onMount(() => {
-        emailInput = document.getElementById('email-input') as HTMLInputElement;
-        resetButton = document.getElementById(
-            'reset-button'
+        codeInput = document.getElementById('code-input') as HTMLInputElement;
+        submitButton = document.getElementById(
+            'submit-button'
         ) as HTMLButtonElement;
 
-        setEnterHandle(emailInput, resetButton);
+        setEnterHandle(codeInput, submitButton);
     });
 
     function reset(): void {
         function toggleUI(state: boolean): void {
-            emailInput.disabled = !state;
-            resetButton.disabled = !state;
+            codeInput.disabled = !state;
+            submitButton.disabled = !state;
         }
 
         function setError(error: FronvoError): void {
@@ -76,11 +76,11 @@
             </h1>
         {/if}
 
-        <input id="code-input" bind:value={code} maxlength={60} />
+        <input id="code-input" bind:value={code} maxlength={6} />
 
         <br />
 
-        <button id="reset-button" on:click={reset}>Submit</button>
+        <button id="submit-button" on:click={reset}>Submit</button>
     </div>
 </Center>
 

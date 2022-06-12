@@ -11,24 +11,26 @@
     import Center from '../Center.svelte';
 
     let newPassword: string;
-    let emailInput: HTMLInputElement;
-    let resetButton: HTMLButtonElement;
+    let passwordInput: HTMLInputElement;
+    let updateButton: HTMLButtonElement;
     let isErrorVisible = false;
     let errorMessage: string;
 
     onMount(() => {
-        emailInput = document.getElementById('email-input') as HTMLInputElement;
-        resetButton = document.getElementById(
-            'reset-button'
+        passwordInput = document.getElementById(
+            'password-input'
+        ) as HTMLInputElement;
+        updateButton = document.getElementById(
+            'update-button'
         ) as HTMLButtonElement;
 
-        setEnterHandle(emailInput, resetButton);
+        setEnterHandle(passwordInput, updateButton);
     });
 
     function reset(): void {
         function toggleUI(state: boolean): void {
-            emailInput.disabled = !state;
-            resetButton.disabled = !state;
+            passwordInput.disabled = !state;
+            updateButton.disabled = !state;
         }
 
         function setError(error: FronvoError): void {
@@ -77,11 +79,11 @@
         {/if}
 
         <h1 id="input-header">New password</h1>
-        <input id="email-input" bind:value={newPassword} maxlength={60} />
+        <input id="password-input" bind:value={newPassword} maxlength={30} />
 
         <br />
 
-        <button id="reset-button" on:click={reset}>Update password</button>
+        <button id="update-button" on:click={reset}>Update password</button>
     </div>
 </Center>
 

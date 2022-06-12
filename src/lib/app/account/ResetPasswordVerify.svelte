@@ -114,10 +114,10 @@
 
     .reset-container input {
         font-size: 3rem;
-        width: 40%;
-        height: 50px;
+        width: 50%;
         text-align: center;
         margin-top: 20px;
+        padding: 0;
     }
 
     .reset-container button {
@@ -144,7 +144,7 @@
         }
 
         .reset-container input {
-            font-size: 1.7rem;
+            font-size: 2.5rem;
         }
 
         .reset-container button {
@@ -170,7 +170,7 @@
         }
 
         .reset-container input {
-            font-size: 1.4rem;
+            font-size: 1.8rem;
         }
 
         .reset-container button {

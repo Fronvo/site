@@ -2,46 +2,38 @@
     import type { FronvoError } from 'src/interfaces/socket/all';
     import {
         accountResetPasswordTab,
-        accountRegisterTab,
+        accountResetPasswordVerifyTab,
     } from 'src/stores/app/account';
-    import { hasLoggedIn, tokenInvalid } from 'src/stores/app/global';
     import { socket } from 'src/stores/global';
-    import { setEnterHandle, setKey } from 'src/utilities/global';
+    import { setEnterHandle } from 'src/utilities/global';
     import { onMount } from 'svelte';
     import { fade, scale } from 'svelte/transition';
     import Center from '../Center.svelte';
 
     let email: string;
-    let password: string;
     let emailInput: HTMLInputElement;
-    let passwordInput: HTMLInputElement;
-    let loginButton: HTMLButtonElement;
-    let isLoggingIn = false;
+    let resetButton: HTMLButtonElement;
+    let isResetting = false;
     let isErrorVisible = false;
     let errorMessage: string;
 
     onMount(() => {
         emailInput = document.getElementById('email-input') as HTMLInputElement;
-        passwordInput = document.getElementById(
-            'password-input'
-        ) as HTMLInputElement;
-        loginButton = document.getElementById(
-            'login-button'
+        resetButton = document.getElementById(
+            'reset-button'
         ) as HTMLButtonElement;
 
-        setEnterHandle(emailInput, loginButton);
-        setEnterHandle(passwordInput, loginButton);
+        setEnterHandle(emailInput, resetButton);
     });
 
-    function login(): void {
-        isLoggingIn = true;
+    function reset(): void {
+        isResetting = true;
 
         function toggleUI(state: boolean): void {
             emailInput.disabled = !state;
-            passwordInput.disabled = !state;
-            loginButton.disabled = !state;
+            resetButton.disabled = !state;
 
-            isLoggingIn = !state;
+            isResetting = !state;
         }
 
         function setError(error: FronvoError): void {
@@ -49,47 +41,44 @@
             errorMessage = error.err.msg;
         }
 
-        function attemptLogin(): void {
-            socket.emit('login', { email, password }, ({ err, token }) => {
+        function attemptReset(): void {
+            // Little hack to recieve required field messages
+            socket.emit('resetPassword', { email }, ({ err }) => {
+                console.log(err);
+
                 if (err) {
                     setError({ err });
                     toggleUI(true);
                 } else {
-                    setKey('token', token);
-                    // Incase it occured before
-                    $tokenInvalid = false;
-                    $hasLoggedIn = true;
+                    // Move on to verification
+                    $accountResetPasswordVerifyTab = true;
                 }
             });
         }
 
         toggleUI(false);
 
-        attemptLogin();
+        attemptReset();
     }
 
-    function changeTab(): void {
-        if (isLoggingIn) return;
+    function loginTab(): void {
+        if (isResetting) return;
 
-        $accountRegisterTab = true;
-    }
-
-    function resetPasswordTab(): void {
-        $accountResetPasswordTab = true;
+        $accountResetPasswordTab = false;
     }
 </script>
 
 <svelte:head>
-    <title>Fronvo | Login</title>
+    <title>Fronvo | Reset password</title>
 </svelte:head>
 
 <Center absolute>
     <div
-        class="account-container"
+        class="reset-container"
         in:scale={{ duration: 750, start: 0.9, delay: 300 }}
         out:scale={{ duration: 400, start: 0.9 }}
     >
-        <h1 id="header">Login to account</h1>
+        <h1 id="header">Reset password</h1>
 
         {#if isErrorVisible}
             <h1 id="error-header" in:fade={{ duration: 500 }}>
@@ -100,26 +89,16 @@
         <h1 id="input-header">Email</h1>
         <input id="email-input" bind:value={email} maxlength={60} />
 
-        <h1 id="input-header">Password</h1>
-        <input
-            id="password-input"
-            bind:value={password}
-            type="password"
-            maxlength={30}
-        />
-
-        <h1 id="reset-redirect" on:click={resetPasswordTab}>Reset password</h1>
-
         <br />
 
-        <button id="login-button" on:click={login}>Login</button>
+        <button id="reset-button" on:click={reset}>Send reset email</button>
 
-        <h1 id="register-redirect" on:click={changeTab}>New to Fronvo?</h1>
+        <h1 id="login-redirect" on:click={loginTab}>Back to login</h1>
     </div>
 </Center>
 
 <style>
-    .account-container {
+    .reset-container {
         border-radius: 10px;
         background: rgb(100, 0, 255);
         padding: 20px 30px 20px 30px;
@@ -128,21 +107,21 @@
         width: 550px;
     }
 
-    .account-container #header {
+    .reset-container #header {
         color: white;
         text-align: center;
         font-size: 3rem;
         margin: 10px 10px 40px 10px;
     }
 
-    .account-container #error-header {
+    .reset-container #error-header {
         color: red;
         font-size: 2rem;
         margin: 0;
         width: 100%;
     }
 
-    .account-container #input-header {
+    .reset-container #input-header {
         color: white;
         margin: 0;
         margin-bottom: 5px;
@@ -150,38 +129,19 @@
         text-align: start;
     }
 
-    .account-container input {
+    .reset-container input {
         font-size: 2rem;
         margin: 0 5px 20px 5px;
         width: 95%;
     }
 
-    .account-container #reset-redirect {
-        color: white;
-        cursor: pointer;
-        margin: 0;
-        transition: 250ms color;
-        font-size: 2rem;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        width: max-content;
-    }
-
-    .account-container #reset-redirect:hover {
-        color: rgb(233, 206, 255);
-    }
-
-    .account-container button {
+    .reset-container button {
         font-size: 2.5rem;
         margin-top: 25px;
         width: 90%;
     }
 
-    .account-container #register-redirect {
+    .reset-container #login-redirect {
         color: white;
         cursor: pointer;
         margin-top: 40px;
@@ -196,73 +156,66 @@
         user-select: none;
     }
 
-    .account-container #register-redirect:hover {
+    .reset-container #login-redirect:hover {
         color: rgb(233, 206, 255);
     }
 
     @media screen and (max-width: 700px) {
-        .account-container {
+        .reset-container {
             width: 450px;
         }
 
-        .account-container #header {
+        .reset-container #header {
             font-size: 2.5rem;
         }
 
-        .account-container #error-header {
+        .reset-container #error-header {
             font-size: 1.7rem;
         }
 
-        .account-container #input-header {
+        .reset-container #input-header {
             font-size: 1.7rem;
         }
 
-        .account-container input {
+        .reset-container input {
             font-size: 1.7rem;
         }
 
-        .account-container #reset-redirect {
-            font-size: 1.7rem;
-        }
-        .account-container button {
+        .reset-container button {
             font-size: 2.2rem;
         }
 
-        .account-container #register-redirect {
+        .reset-container #login-redirect {
             font-size: 1.7rem;
         }
     }
 
     @media screen and (max-width: 520px) {
-        .account-container {
+        .reset-container {
             width: 350px;
         }
 
-        .account-container #header {
+        .reset-container #header {
             font-size: 1.8rem;
         }
 
-        .account-container #error-header {
+        .reset-container #error-header {
             font-size: 1.4rem;
         }
 
-        .account-container #input-header {
+        .reset-container #input-header {
             font-size: 1.4rem;
         }
 
-        .account-container input {
+        .reset-container input {
             font-size: 1.4rem;
         }
 
-        .account-container #reset-redirect {
-            font-size: 1.4rem;
-        }
-
-        .account-container button {
+        .reset-container button {
             font-size: 1.7rem;
         }
 
-        .account-container #register-redirect {
+        .reset-container #login-redirect {
             font-size: 1.4rem;
         }
     }

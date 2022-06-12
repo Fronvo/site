@@ -49,20 +49,15 @@
         }
 
         function attemptRegister(): void {
-            // Little hack to recieve required field messages
-            socket.emit(
-                'register',
-                { email: email || '', password: password || '' },
-                ({ err }) => {
-                    if (err) {
-                        setError({ err });
-                        toggleUI(true);
-                    } else {
-                        // Move on to verification
-                        $accountRegisterVerifyTab = true;
-                    }
+            socket.emit('register', { email, password }, ({ err }) => {
+                if (err) {
+                    setError({ err });
+                    toggleUI(true);
+                } else {
+                    // Move on to verification
+                    $accountRegisterVerifyTab = true;
                 }
-            );
+            });
         }
 
         toggleUI(false);

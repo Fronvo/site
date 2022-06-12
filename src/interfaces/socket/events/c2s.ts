@@ -25,6 +25,18 @@ import type {
     RegisterVerifyParams,
     RegisterVerifyResult,
 } from 'interfaces/socket/noAccount/registerVerify';
+import type {
+    ResetPasswordParams,
+    ResetPasswordResult,
+} from 'interfaces/socket/noAccount/resetPassword';
+import type {
+    ResetPasswordFinalParams,
+    ResetPasswordFinalResult,
+} from 'interfaces/socket/noAccount/resetPasswordFinal';
+import type {
+    ResetPasswordVerifyParams,
+    ResetPasswordVerifyResult,
+} from 'interfaces/socket/noAccount/resetPasswordVerify';
 
 export interface ClientToServerEvents {
     register: (
@@ -47,4 +59,17 @@ export interface ClientToServerEvents {
         callback?: ({}: FetchProfileDataResult) => void
     ) => void;
     logout: (callback?: ({}: LogoutResult) => void) => void;
+    resetPassword: (
+        {}: ResetPasswordParams,
+        callback?: ({}: ResetPasswordResult) => void
+    ) => void;
+    resetPasswordVerify: (
+        {}: ResetPasswordVerifyParams,
+        callback?: ({}: ResetPasswordVerifyResult) => void
+    ) => void;
+
+    resetPasswordFinal: (
+        {}: ResetPasswordFinalParams,
+        callback?: ({}: ResetPasswordFinalResult) => void
+    ) => void;
 }

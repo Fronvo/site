@@ -5,15 +5,27 @@
     import {
         accountRegisterTab,
         accountRegisterVerifyTab,
+        accountResetPasswordFinalTab,
+        accountResetPasswordTab,
+        accountResetPasswordVerifyTab,
     } from 'stores/app/account';
+    import ResetPassword from './ResetPassword.svelte';
+    import ResetPasswordFinal from './ResetPasswordFinal.svelte';
+    import ResetPasswordVerify from './ResetPasswordVerify.svelte';
 </script>
 
-{#if $accountRegisterTab}
-    {#if $accountRegisterVerifyTab}
-        <RegisterVerify />
+{#if $accountRegisterVerifyTab}
+    <RegisterVerify />
+{:else if $accountResetPasswordTab}
+    {#if $accountResetPasswordFinalTab}
+        <ResetPasswordFinal />
+    {:else if $accountResetPasswordVerifyTab}
+        <ResetPasswordVerify />
     {:else}
-        <Register />
+        <ResetPassword />
     {/if}
+{:else if $accountRegisterTab}
+    <Register />
 {:else}
     <Login />
 {/if}

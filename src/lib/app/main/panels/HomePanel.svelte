@@ -1,7 +1,8 @@
 <script lang="ts">
+    import { fade } from 'svelte/transition';
 </script>
 
-<div class="home-container">
+<div class="home-container" transition:fade={{ duration: 750 }}>
     <h1>Fronvo is under construction!</h1>
 </div>
 

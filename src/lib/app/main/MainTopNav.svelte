@@ -1,4 +1,5 @@
 <script lang="ts">
+    import Friends from 'src/lib/svgs/Friends.svelte';
     import Home from 'src/lib/svgs/Home.svelte';
     import { fly } from 'svelte/transition';
 </script>
@@ -10,6 +11,8 @@
     <h1 id="logo">Fronvo</h1>
 
     <Home />
+
+    <Friends />
 </div>
 
 <style>
@@ -37,7 +40,7 @@
         padding: 0;
         display: block;
         cursor: default;
-        width: 48%;
+        width: 47%;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;

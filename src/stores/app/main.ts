@@ -3,6 +3,7 @@
 // ******************** //
 
 import type { FronvoAccount } from 'src/interfaces/app/main';
+import FriendsPanel from 'src/lib/app/main/panels/FriendsPanel.svelte';
 import HomePanel from 'src/lib/app/main/panels/HomePanel.svelte';
 import { writable, type Writable } from 'svelte/store';
 
@@ -14,7 +15,7 @@ export const loginSucceeded = writable(false);
 export const userData: Writable<FronvoAccount> = writable();
 
 // Panel switching
-export const panels = [HomePanel];
+export const panels = [HomePanel, FriendsPanel];
 
 // Default to Home
 export const currentPanelId = writable(0);

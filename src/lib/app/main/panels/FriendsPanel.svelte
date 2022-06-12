@@ -3,21 +3,21 @@
 </script>
 
 <div
-    class="home-container"
+    class="friends-container"
     in:fade={{ duration: 200, delay: 300 }}
     out:fade={{ duration: 100 }}
 >
-    <h1>Fronvo is under construction!</h1>
+    <h1>Coming soon!</h1>
 </div>
 
 <style>
-    .home-container h1 {
+    .friends-container h1 {
         text-align: center;
         font-size: 2rem;
     }
 
     @media screen and (max-width: 520px) {
-        .home-container h1 {
+        .friends-container h1 {
             font-size: 1.7rem;
         }
     }

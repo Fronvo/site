@@ -42,10 +42,16 @@ export function fillUserData(): void {
 }
 
 export function switchPanel(newPanel: PanelTypes): void {
+    // TODO: Just a targetId variable, too repetitive
     switch (newPanel) {
         case 'Home':
             setKey('panelId', 0);
             currentPanelId.set(0);
+            break;
+
+        case 'Friends':
+            setKey('panelId', 1);
+            currentPanelId.set(1);
             break;
 
         default:

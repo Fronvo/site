@@ -12,4 +12,4 @@ export const tokenInvalid = writable(false);
 
 export const showLoadingDelay = 750;
 
-export const showHomeLoadingDelay = 300;
+export const showHomeLoadingDelay = 750;

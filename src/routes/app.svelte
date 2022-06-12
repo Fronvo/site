@@ -68,7 +68,6 @@
                 </div>
             {/if}
         {:else if (getKey('token') || $hasLoggedIn) && !$tokenInvalid}
-            <!-- Login with loading -->
             <Main />
         {:else}
             <Account />

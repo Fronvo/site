@@ -14,10 +14,3 @@ export interface FronvoError {
         };
     };
 }
-
-export interface FronvoAccount {
-    username: string;
-    email: string;
-    password: string;
-    creationDate: Date;
-}

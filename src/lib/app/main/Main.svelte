@@ -1,72 +1,38 @@
 <script lang="ts">
-    import Center from '$lib/app/Center.svelte';
-    import { tokenInvalid } from 'stores/app/global';
-    import { socket } from 'stores/global';
+    import Loading from '$lib/app/Loading.svelte';
+    import MainTopNav from '$lib/app/main/MainTopNav.svelte';
+    import { getKey } from 'src/utilities/global';
+    import { showHomeLoadingDelay } from 'stores/app/global';
+    import { currentPanelId, loginSucceeded, panels } from 'stores/app/main';
     import { onMount } from 'svelte';
-    import { getKey, removeKey } from 'utilities/global';
+    import { performLogin } from 'utilities/app/main';
 
-    let username: string;
+    let showLoading = false;
 
     onMount(() => {
-        socket.emit('isLoggedIn', ({ loggedIn }) => {
-            if (!loggedIn) {
-                socket.emit(
-                    'loginToken',
-                    { token: getKey('token') },
-                    ({ err }) => {
-                        if (err) {
-                            removeKey('token');
-                            $tokenInvalid = true;
-                        } else {
-                            postLogin();
-                        }
-                    }
-                );
-            } else {
-                postLogin();
-            }
-        });
+        performLogin();
+
+        // Get latest panel id / Home
+        $currentPanelId = getKey('panelId', 0);
     });
 
-    function postLogin(): void {
-        socket.emit('fetchProfileId', ({ profileId }) => {
-            socket.emit(
-                'fetchProfileData',
-                { profileId },
-                ({ profileData }) => {
-                    username = profileData.username;
-                }
-            );
-        });
-    }
+    // Show loading after delay
+    setTimeout(() => {
+        showLoading = true;
+    }, showHomeLoadingDelay);
 </script>
 
 <svelte:head>
     <title>Fronvo</title>
 </svelte:head>
 
-<Center>
-    <div class="main-container">
-        {#if username}
-            <h1 id="username-header">Username: {username}</h1>
-        {/if}
-    </div>
-</Center>
+{#if !$loginSucceeded}
+    {#if showLoading}
+        <Loading text="Loading Fronvo..." />
+    {/if}
+{:else}
+    <MainTopNav />
 
-<style>
-    .main-container #username-header {
-        font-size: 2rem;
-    }
-
-    @media screen and (max-width: 700px) {
-        .main-container #username-header {
-            font-size: 1.8rem;
-        }
-    }
-
-    @media screen and (max-width: 520px) {
-        .main-container #username-header {
-            font-size: 1.5rem;
-        }
-    }
-</style>
+    <!-- Reactive panel switching -->
+    <svelte:component this={panels[$currentPanelId]} />
+{/if}

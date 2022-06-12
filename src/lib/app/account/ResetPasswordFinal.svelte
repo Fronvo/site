@@ -59,7 +59,7 @@
 </script>
 
 <svelte:head>
-    <title>Fronvo | Reset password</title>
+    <title>Fronvo | Set new password</title>
 </svelte:head>
 
 <Center absolute>

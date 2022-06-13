@@ -1,9 +1,9 @@
 <script lang="ts">
     import Account from '$lib/app/account/Account.svelte';
     import FailedToConnect from '$lib/app/FailedToConnect.svelte';
+    import Loading from '$lib/app/Loading.svelte';
     import Main from '$lib/app/main/Main.svelte';
-    import Loading from 'src/lib/app/Loading.svelte';
-    import { accountRegisterTab } from 'src/stores/app/account';
+    import { accountRegisterTab } from 'stores/app/account';
     import {
         appVisible,
         hasLoggedIn,

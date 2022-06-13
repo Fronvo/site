@@ -2,11 +2,11 @@
 // Shared variables for the app route, after login.
 // ******************** //
 
-import type { FronvoAccount } from 'src/interfaces/app/main';
-import CommunitiesPanel from 'src/lib/app/main/panels/CommunitiesPanel.svelte';
-import FriendsPanel from 'src/lib/app/main/panels/FriendsPanel.svelte';
-import HomePanel from 'src/lib/app/main/panels/HomePanel.svelte';
-import MarketplacePanel from 'src/lib/app/main/panels/MarketplacePanel.svelte';
+import CommunitiesPanel from '$lib/app/main/panels/CommunitiesPanel.svelte';
+import FriendsPanel from '$lib/app/main/panels/FriendsPanel.svelte';
+import HomePanel from '$lib/app/main/panels/HomePanel.svelte';
+import MarketplacePanel from '$lib/app/main/panels/MarketplacePanel.svelte';
+import type { FronvoAccount } from 'interfaces/app/main';
 import { writable, type Writable } from 'svelte/store';
 
 export const mainVisible = writable(false);

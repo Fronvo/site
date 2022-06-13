@@ -2,10 +2,10 @@
 // Reusable functions for the app route, after login.
 // ******************** //
 
-import { currentPanelId, loginSucceeded, userData } from 'src/stores/app/main';
-import type { PanelTypes } from 'src/types/app/main';
 import { tokenInvalid } from 'stores/app/global';
+import { currentPanelId, loginSucceeded, userData } from 'stores/app/main';
 import { socket } from 'stores/global';
+import type { PanelTypes } from 'types/app/main';
 import { getKey, removeKey, setKey } from 'utilities/global';
 
 export function performLogin(): void {

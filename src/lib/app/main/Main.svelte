@@ -1,11 +1,11 @@
 <script lang="ts">
     import Loading from '$lib/app/Loading.svelte';
-    import MainSideNav from 'src/lib/app/main/MainSideNav.svelte';
-    import { getKey } from 'src/utilities/global';
+    import MainSideNav from '$lib/app/main/MainSideNav.svelte';
     import { showHomeLoadingDelay } from 'stores/app/global';
     import { currentPanelId, loginSucceeded, panels } from 'stores/app/main';
     import { onMount } from 'svelte';
     import { performLogin } from 'utilities/app/main';
+    import { getKey } from 'utilities/global';
 
     let showLoading = false;
 

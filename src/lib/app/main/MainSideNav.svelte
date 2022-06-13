@@ -1,8 +1,8 @@
 <script lang="ts">
-    import Communities from 'src/lib/svgs/Communities.svelte';
-    import Friends from 'src/lib/svgs/Friends.svelte';
-    import Home from 'src/lib/svgs/Home.svelte';
-    import Marketplace from 'src/lib/svgs/Marketplace.svelte';
+    import Communities from '$lib/svgs/Communities.svelte';
+    import Friends from '$lib/svgs/Friends.svelte';
+    import Home from '$lib/svgs/Home.svelte';
+    import Marketplace from '$lib/svgs/Marketplace.svelte';
     import { fly } from 'svelte/transition';
 </script>
 

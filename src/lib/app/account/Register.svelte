@@ -1,6 +1,6 @@
 <script lang="ts">
+    import Center from '$lib/app/Center.svelte';
     import type { FronvoError } from 'interfaces/socket/all';
-    import { setEnterHandle } from 'src/utilities/global';
     import {
         accountRegisterTab,
         accountRegisterVerifyTab,
@@ -8,7 +8,7 @@
     import { socket } from 'stores/global';
     import { onMount } from 'svelte';
     import { fade, scale } from 'svelte/transition';
-    import Center from '../Center.svelte';
+    import { setEnterHandle } from 'utilities/global';
 
     let email: string;
     let password: string;

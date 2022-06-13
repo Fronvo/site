@@ -1,11 +1,11 @@
 <script lang="ts">
-    import type { FronvoError } from 'src/interfaces/socket/all';
-    import { accountResetPasswordFinalTab } from 'src/stores/app/account';
-    import { socket } from 'src/stores/global';
-    import { setEnterHandle } from 'src/utilities/global';
+    import Center from '$lib/app/Center.svelte';
+    import type { FronvoError } from 'interfaces/socket/all';
+    import { accountResetPasswordFinalTab } from 'stores/app/account';
+    import { socket } from 'stores/global';
     import { onMount } from 'svelte';
     import { fade, scale } from 'svelte/transition';
-    import Center from '../Center.svelte';
+    import { setEnterHandle } from 'utilities/global';
 
     let code: string;
     let codeInput: HTMLInputElement;

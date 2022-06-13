@@ -1,15 +1,15 @@
 <script lang="ts">
-    import type { FronvoError } from 'src/interfaces/socket/all';
+    import Center from '$lib/app/Center.svelte';
+    import type { FronvoError } from 'interfaces/socket/all';
     import {
-        accountResetPasswordTab,
         accountRegisterTab,
-    } from 'src/stores/app/account';
-    import { hasLoggedIn, tokenInvalid } from 'src/stores/app/global';
-    import { socket } from 'src/stores/global';
-    import { setEnterHandle, setKey } from 'src/utilities/global';
+        accountResetPasswordTab,
+    } from 'stores/app/account';
+    import { hasLoggedIn, tokenInvalid } from 'stores/app/global';
+    import { socket } from 'stores/global';
     import { onMount } from 'svelte';
     import { fade, scale } from 'svelte/transition';
-    import Center from '../Center.svelte';
+    import { setEnterHandle, setKey } from 'utilities/global';
 
     let email: string;
     let password: string;

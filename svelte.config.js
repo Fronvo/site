@@ -20,6 +20,12 @@ const config = {
                 },
             },
         },
+
+        csp: {
+            directives: {
+                'script-src': ['self'],
+            },
+        },
     },
 
     preprocess: preprocess({

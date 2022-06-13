@@ -48,6 +48,7 @@
             padding: 15px;
             border-top-right-radius: 0;
             border-bottom-left-radius: 25px;
+            margin-right: 0;
         }
 
         hr {

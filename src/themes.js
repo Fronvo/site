@@ -18,6 +18,9 @@ export default {
 
         // Top nav shadow color
         nav_shadow_color: 'black',
+
+        // SVG strokes
+        svg_stroke: 'rgb(130, 64, 255)',
     },
 
     light: {
@@ -38,5 +41,8 @@ export default {
 
         // Top nav shadow color
         nav_shadow_color: 'rgba(40, 40, 40, 0.15)',
+
+        // SVG strokes
+        svg_stroke: 'rgb(130, 64, 255)',
     },
 };

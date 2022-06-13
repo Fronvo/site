@@ -42,19 +42,29 @@ export function fillUserData(): void {
 }
 
 export function switchPanel(newPanel: PanelTypes): void {
-    // TODO: Just a targetId variable, too repetitive
+    let targetPanel: number;
+
     switch (newPanel) {
         case 'Home':
-            setKey('panelId', 0);
-            currentPanelId.set(0);
+            targetPanel = 0;
             break;
 
         case 'Friends':
-            setKey('panelId', 1);
-            currentPanelId.set(1);
+            targetPanel = 1;
             break;
 
-        default:
-            return;
+        case 'Communities':
+            targetPanel = 2;
+            break;
+
+        case 'Marketplace':
+            targetPanel = 3;
+            break;
     }
+
+    // Prevent panel spam hogging performance
+    if (getKey('panelId') == targetPanel) return;
+
+    setKey('panelId', targetPanel);
+    currentPanelId.set(targetPanel);
 }

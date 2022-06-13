@@ -11,17 +11,15 @@
     viewBox="0 0 48 48"
     width="48"
     height="48"
-    on:click={() => switchPanel('Friends')}
+    on:click={() => switchPanel('Marketplace')}
     ><defs
-        ><image
-            width="48"
-            height="48"
-            id="img1"
-            href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwAQMAAABtzGvEAAAAAXNSR0IB2cksfwAAAANQTFRFAAAAp3o92gAAAAF0Uk5TAEDm2GYAAAANSURBVHicY2AYBdQEAAFQAAHr5ijJAAAAAElFTkSuQmCC"
-        /><linearGradient
-            id="P"
-            gradientUnits="userSpaceOnUse"
-        /><linearGradient id="g1" x1="3" y1="19.5" x2="45" y2="28.5" href="#P"
+        ><linearGradient id="P" gradientUnits="userSpaceOnUse" /><linearGradient
+            id="g1"
+            x1="2"
+            y1="24.3"
+            x2="46"
+            y2="24.3"
+            href="#P"
             ><stop stop-color="#7319fa" /><stop
                 offset=".5"
                 stop-color="#893ff7"
@@ -30,13 +28,11 @@
     ><style>
         .a {
             fill: url(#g1);
-            stroke: #fff;
-            stroke-width: 0;
         }
-    </style><use href="#img1" x="0" y="0" /><path
+    </style><path
         in:draw={{ duration: 1000, easing: quadIn }}
-        class={$currentPanelId == 1 ? 'a' : ''}
-        d="m45 37.9q0 3.3-2.2 5.2-2.2 1.9-5.8 1.9h-26q-3.6 0-5.8-1.9-2.2-1.9-2.2-5.2 0-1.4 0.1-2.8 0.1-1.4 0.4-3 0.3-1.6 0.8-3 0.5-1.3 1.3-2.6 0.8-1.3 1.8-2.2 1.1-1 2.6-1.5 1.5-0.5 3.3-0.5 0.3 0 1.3 0.5 1 0.6 2.2 1.4 1.2 0.7 3.2 1.3 2 0.6 4 0.6 2 0 4-0.6 2-0.6 3.2-1.3 1.2-0.8 2.2-1.4 1-0.5 1.3-0.5 1.8 0 3.3 0.5 1.5 0.5 2.6 1.5 1 0.9 1.8 2.2 0.8 1.3 1.3 2.6 0.5 1.4 0.8 3 0.3 1.6 0.4 3 0.1 1.4 0.1 2.8zm-21-34.9q-4.7 0-8.1 3.1-3.4 3.1-3.4 7.4 0 4.3 3.4 7.4 3.4 3.1 8.1 3.1 4.7 0 8.1-3.1 3.4-3.1 3.4-7.4 0-4.3-3.4-7.4-3.4-3.1-8.1-3.1z"
+        class={$currentPanelId == 3 ? 'a' : ''}
+        d="m27.4 24.3h-6.8q-0.7 0-1.2-0.5-0.5-0.5-0.5-1.2 0-0.7 0.5-1.2 0.5-0.5 1.2-0.5h6.8q0.7 0 1.2 0.5 0.5 0.5 0.5 1.2 0 0.7-0.5 1.2-0.5 0.5-1.2 0.5zm16.4-8q-0.5-0.5-1.2-0.5h-37.2q-0.7 0-1.2 0.5-0.5 0.6-0.5 1.2v25.4q0 0.7 0.5 1.2 0.5 0.5 1.2 0.5h37.2q0.7 0 1.2-0.5 0.5-0.5 0.5-1.2v-25.4q0-0.6-0.5-1.2zm1.7-11.8q-0.5-0.5-1.2-0.5h-40.6q-0.7 0-1.2 0.5-0.5 0.5-0.5 1.2v6.8q0 0.6 0.5 1.2 0.5 0.5 1.2 0.5h40.6q0.7 0 1.2-0.5 0.5-0.6 0.5-1.2v-6.8q0-0.7-0.5-1.2z"
     /></svg
 >
 
@@ -53,8 +49,6 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        margin-top: 10px;
-        margin-bottom: 15px;
     }
 
     svg:hover {
@@ -69,7 +63,6 @@
         svg {
             margin-bottom: 0;
             margin-top: 0;
-            margin-right: 20px;
             cursor: default;
         }
     }
@@ -78,7 +71,6 @@
         svg {
             width: 40px;
             height: 40px;
-            margin-right: 10px;
         }
     }
 </style>

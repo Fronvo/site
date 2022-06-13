@@ -2,15 +2,15 @@
     import { fade } from 'svelte/transition';
 </script>
 
-<div
-    class="home-container"
-    in:fade={{ duration: 200, delay: 300 }}
-    out:fade={{ duration: 100 }}
->
+<div class="home-container" in:fade={{ duration: 200, delay: 200 }}>
     <h1>Fronvo is under construction!</h1>
 </div>
 
 <style>
+    .home-container {
+        width: 100%;
+    }
+
     .home-container h1 {
         text-align: center;
         font-size: 2rem;

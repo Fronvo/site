@@ -92,8 +92,7 @@ input:focus {
 }
 
 hr {
-    width: 75%;
-    border: 1px solid rgb(153, 0, 255);
+    border: 1px solid var(--theme-text_color);
 }
 
 input:-webkit-autofill,

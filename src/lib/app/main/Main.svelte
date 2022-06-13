@@ -1,6 +1,6 @@
 <script lang="ts">
     import Loading from '$lib/app/Loading.svelte';
-    import MainTopNav from '$lib/app/main/MainTopNav.svelte';
+    import MainSideNav from 'src/lib/app/main/MainSideNav.svelte';
     import { getKey } from 'src/utilities/global';
     import { showHomeLoadingDelay } from 'stores/app/global';
     import { currentPanelId, loginSucceeded, panels } from 'stores/app/main';
@@ -31,8 +31,25 @@
         <Loading text="Loading Fronvo..." />
     {/if}
 {:else}
-    <MainTopNav />
+    <div class="main-container">
+        <MainSideNav />
 
-    <!-- Reactive panel switching -->
-    <svelte:component this={panels[$currentPanelId]} />
+        <!-- Reactive panel switching -->
+        <svelte:component this={panels[$currentPanelId]} />
+    </div>
 {/if}
+
+<style>
+    .main-container {
+        position: absolute;
+        display: flex;
+        height: 100%;
+        width: 100%;
+    }
+
+    @media screen and (max-width: 700px) {
+        .main-container {
+            display: block;
+        }
+    }
+</style>

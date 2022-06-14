@@ -3,6 +3,7 @@
     import Friends from '$lib/svgs/Friends.svelte';
     import Home from '$lib/svgs/Home.svelte';
     import Marketplace from '$lib/svgs/Marketplace.svelte';
+    import Settings from '$lib/svgs/Settings.svelte';
     import { fly } from 'svelte/transition';
 </script>
 
@@ -23,6 +24,10 @@
     <br />
 
     <Marketplace />
+
+    <br />
+
+    <Settings />
 </div>
 
 <style>

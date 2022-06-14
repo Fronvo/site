@@ -60,6 +60,10 @@ export function switchPanel(newPanel: PanelTypes): void {
         case 'Marketplace':
             targetPanel = 3;
             break;
+
+        case 'Settings':
+            targetPanel = 4;
+            break;
     }
 
     // Prevent panel spam hogging performance

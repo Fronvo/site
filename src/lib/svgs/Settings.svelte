@@ -1,0 +1,78 @@
+<script lang="ts">
+    import { currentPanelId } from 'stores/app/main';
+    import { quadIn } from 'svelte/easing';
+    import { draw } from 'svelte/transition';
+    import { switchPanel } from 'utilities/app/main';
+</script>
+
+<svg
+    version="1.2"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 48 48"
+    width="48"
+    height="48"
+    on:click={() => switchPanel('Settings')}
+    ><defs
+        ><image
+            width="48"
+            height="48"
+            id="img1"
+            href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwAQMAAABtzGvEAAAAAXNSR0IB2cksfwAAAANQTFRFAAAAp3o92gAAAAF0Uk5TAEDm2GYAAAANSURBVHicY2AYBdQEAAFQAAHr5ijJAAAAAElFTkSuQmCC"
+        /><linearGradient
+            id="P"
+            gradientUnits="userSpaceOnUse"
+        /><linearGradient id="g1" x1="3" y1="24" x2="45" y2="24" href="#P"
+            ><stop stop-color="#7319fa" /><stop
+                offset=".5"
+                stop-color="#893ff7"
+            /><stop offset="1" stop-color="#7319fa" /></linearGradient
+        ></defs
+    ><style>
+        .a {
+            fill: url(#g1);
+        }
+    </style><use href="#img1" x="0" y="0" /><path
+        in:draw={{ duration: 1000, easing: quadIn }}
+        class={$currentPanelId == 4 ? 'a' : ''}
+        d="m24 31q-2.9 0-4.9-2.1-2.1-2-2.1-4.9 0-2.9 2.1-4.9 2-2.1 4.9-2.1 2.9 0 4.9 2.1 2.1 2 2.1 4.9 0 2.9-2.1 4.9-2 2.1-4.9 2.1zm20.8-10.6q-0.2-0.3-0.6-0.4l-5-0.7q-0.4-1.3-1.1-2.7 0.5-0.7 1.5-1.9 0.9-1.3 1.4-1.9 0.2-0.3 0.2-0.6 0-0.4-0.2-0.6-1-1.4-4.5-4.6-0.4-0.3-0.7-0.3-0.4 0-0.7 0.2l-3.9 3q-1.1-0.6-2.4-1l-0.8-5.1q0-0.3-0.3-0.6-0.3-0.2-0.7-0.2h-6q-0.8 0-1 0.8-0.4 1.3-0.8 5.1-1.3 0.4-2.5 1l-3.8-2.9q-0.3-0.3-0.7-0.3-0.6 0-2.6 1.9-2 2-2.7 3-0.2 0.3-0.2 0.6 0 0.3 0.3 0.7 1.8 2.2 2.9 3.7-0.7 1.3-1.1 2.6l-5.1 0.7q-0.3 0.1-0.5 0.4-0.2 0.3-0.2 0.6v6.1q0 0.3 0.2 0.6 0.2 0.3 0.6 0.4l5 0.7q0.4 1.3 1.1 2.7-0.5 0.7-1.5 1.9-0.9 1.3-1.4 1.9-0.2 0.3-0.2 0.6 0 0.3 0.2 0.6 1.1 1.5 4.5 4.6 0.3 0.3 0.7 0.3 0.4 0 0.7-0.2l3.9-3q1.1 0.6 2.4 1l0.8 5.1q0 0.3 0.3 0.6 0.3 0.2 0.7 0.2h6q0.8 0 1-0.8 0.4-1.3 0.8-5.1 1.3-0.4 2.5-1l3.8 3q0.4 0.2 0.7 0.2 0.6 0 2.6-1.9 1.9-2 2.7-3 0.2-0.3 0.2-0.6 0-0.4-0.3-0.7-1.9-2.4-2.9-3.8 0.6-1 1.1-2.5l5-0.7q0.4-0.1 0.6-0.4 0.2-0.3 0.2-0.6v-6.1q0-0.3-0.2-0.6z"
+    /></svg
+>
+
+<style>
+    svg {
+        fill: none;
+        stroke: var(--theme-svg_stroke);
+        stroke-width: 2px;
+        cursor: pointer;
+        transition: 100ms all;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    svg:hover {
+        opacity: 0.8;
+    }
+
+    svg:active {
+        transform: scale(0.9);
+    }
+
+    @media screen and (max-width: 700px) {
+        svg {
+            margin-bottom: 0;
+            margin-top: 0;
+            cursor: default;
+        }
+    }
+
+    @media screen and (max-width: 520px) {
+        svg {
+            width: 40px;
+            height: 40px;
+        }
+    }
+</style>

@@ -49,6 +49,7 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+        margin-bottom: 10px;
     }
 
     svg:hover {
@@ -63,6 +64,7 @@
         svg {
             margin-bottom: 0;
             margin-top: 0;
+            margin-right: 20px;
             cursor: default;
         }
     }
@@ -71,6 +73,7 @@
         svg {
             width: 40px;
             height: 40px;
+            margin-right: 10px;
         }
     }
 </style>

@@ -1,5 +1,10 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import { fade } from 'svelte/transition';
+
+    goto('marketplace', {
+        replaceState: true,
+    });
 </script>
 
 <div class="marketplace-container" in:fade={{ duration: 200, delay: 200 }}>

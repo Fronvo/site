@@ -22,10 +22,6 @@
     }, showHomeLoadingDelay);
 </script>
 
-<svelte:head>
-    <title>Fronvo</title>
-</svelte:head>
-
 {#if !$loginSucceeded}
     {#if showLoading}
         <Loading text="Loading Fronvo..." />

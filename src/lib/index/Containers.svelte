@@ -41,7 +41,7 @@
         >
             <img
                 class="svg"
-                src={`svgs/${svg}.svg`}
+                src={`svgs/containers/${svg}.svg`}
                 alt={`${svg} icon`}
                 draggable={false}
             />

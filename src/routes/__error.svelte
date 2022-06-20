@@ -1,5 +1,4 @@
 <script lang="ts" context="module">
-    import { goto } from '$app/navigation';
     import Text from '$lib/__error/Text.svelte';
     import type { ErrorLoadParams, ErrorLoadResult } from 'interfaces/global';
     import { onMount } from 'svelte';
@@ -29,13 +28,6 @@
         <h1 in:slide id="status-code">{status}</h1>
 
         <Text text="How did you get here, friend?" delay={3000} />
-
-        <Text text="Let's get you back to safety!" delay={6000} />
-
-        <button
-            in:slide={{ delay: 9000, duration: 500 }}
-            on:click={() => goto('/')}>Go back to safety</button
-        >
     </div>
 {/if}
 
@@ -52,6 +44,7 @@
     }
 
     .error-container #status-code {
+        margin: 0;
         color: rgb(255, 109, 255);
         font-size: 6rem;
         margin-bottom: 10px;

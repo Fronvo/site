@@ -1,9 +1,10 @@
 <script lang="ts">
     import Github from '$lib/svgs/Github.svelte';
     import Wave from '$lib/svgs/Wave.svelte';
+    import { fade } from 'svelte/transition';
 </script>
 
-<div class="footer">
+<div class="footer" in:fade={{ duration: 500 }}>
     <Wave inverse />
 
     <div class="content">

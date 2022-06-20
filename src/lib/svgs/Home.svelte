@@ -49,7 +49,6 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        margin-bottom: 10px;
     }
 
     svg:hover {

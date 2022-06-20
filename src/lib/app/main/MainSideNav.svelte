@@ -13,7 +13,7 @@
 >
     <Home />
 
-    <hr />
+    <br />
 
     <Friends />
 
@@ -25,7 +25,7 @@
 
     <Marketplace />
 
-    <br />
+    <hr />
 
     <Settings />
 </div>

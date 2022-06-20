@@ -2,9 +2,4 @@
 // Shared types for the app route, after login.
 // ******************** //
 
-export type PanelTypes =
-    | 'Home'
-    | 'Friends'
-    | 'Communities'
-    | 'Marketplace'
-    | 'Settings';
+export type PanelTypes = 'Home' | 'Friends' | 'Communities' | 'Marketplace';

@@ -10,6 +10,7 @@
     import { showLayout } from 'stores/global';
     import { indexAnimDuration, indexVisible } from 'stores/index';
     import { onMount } from 'svelte';
+    import { sineOut } from 'svelte/easing';
     import { blur } from 'svelte/transition';
 
     let mountReady = false;
@@ -33,7 +34,13 @@
     <TopNav />
 
     {#if $indexVisible}
-        <div out:blur={{ duration: indexAnimDuration, amount: 25 }}>
+        <div
+            out:blur={{
+                duration: indexAnimDuration,
+                amount: 10,
+                easing: sineOut,
+            }}
+        >
             <Top />
 
             <Containers />

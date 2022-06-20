@@ -79,7 +79,12 @@
         {/if}
 
         <h1 id="input-header">New password</h1>
-        <input id="password-input" bind:value={newPassword} maxlength={30} />
+        <input
+            id="password-input"
+            bind:value={newPassword}
+            type="password"
+            maxlength={30}
+        />
 
         <br />
 

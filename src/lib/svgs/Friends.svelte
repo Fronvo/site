@@ -53,7 +53,6 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        margin-top: 10px;
         margin-bottom: 15px;
     }
 

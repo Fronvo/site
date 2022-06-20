@@ -50,18 +50,9 @@
         margin-bottom: 10px;
     }
 
-    .error-container button {
-        font-size: 2.2rem;
-        margin-top: 20px;
-    }
-
     @media screen and (max-width: 800px) {
         .error-container #status-code {
             font-size: 3rem;
-        }
-
-        .error-container button {
-            font-size: 1.2rem;
         }
     }
 </style>

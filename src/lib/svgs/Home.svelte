@@ -58,10 +58,6 @@
 
     svg:hover {
         opacity: 0.8;
-        animation-name: rgb-stroke;
-        animation-duration: 2000ms;
-        animation-iteration-count: infinite;
-        animation-direction: alternate;
     }
 
     svg:active {
@@ -82,17 +78,6 @@
             width: 40px;
             height: 40px;
             margin-right: 10px;
-        }
-    }
-
-    /* TODO: Remove */
-    @keyframes rgb-stroke {
-        0% {
-            stroke: rgb(130, 64, 255);
-        }
-
-        100% {
-            stroke: rgb(156, 36, 255);
         }
     }
 </style>

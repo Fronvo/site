@@ -8,6 +8,7 @@ import HomePanel from '$lib/app/main/panels/HomePanel.svelte';
 import MarketplacePanel from '$lib/app/main/panels/MarketplacePanel.svelte';
 import type { FronvoAccount } from 'interfaces/app/main';
 import { writable, type Writable } from 'svelte/store';
+import type { ModalTypes } from 'types/app/main';
 
 export const mainVisible = writable(false);
 
@@ -26,3 +27,7 @@ export const panels = [
 
 // Default to Home
 export const currentPanelId = writable(0);
+
+// Modal settings
+export const modalVisible = writable(false);
+export const currentModal: Writable<ModalTypes> = writable();

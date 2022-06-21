@@ -3,3 +3,5 @@
 // ******************** //
 
 export type PanelTypes = 'Home' | 'Friends' | 'Communities' | 'Marketplace';
+
+export type ModalTypes = 'Settings';

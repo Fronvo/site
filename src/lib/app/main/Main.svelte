@@ -1,6 +1,7 @@
 <script lang="ts">
     import Loading from '$lib/app/Loading.svelte';
     import MainSideNav from '$lib/app/main/MainSideNav.svelte';
+    import Modal from '$lib/app/main/Modal.svelte';
     import { showHomeLoadingDelay } from 'stores/app/global';
     import { currentPanelId, loginSucceeded, panels } from 'stores/app/main';
     import { onMount } from 'svelte';
@@ -27,6 +28,9 @@
         <Loading text="Loading Fronvo..." />
     {/if}
 {:else}
+    <!-- Smoothity-smooth modal auto-switching -->
+    <Modal />
+
     <div class="main-container">
         <MainSideNav />
 

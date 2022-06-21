@@ -13,29 +13,29 @@
     height="48"
     on:click={() => switchPanel('Communities')}
     ><defs
-        ><image
-            width="48"
-            height="48"
-            id="img1"
-            href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwAQMAAABtzGvEAAAAAXNSR0IB2cksfwAAAANQTFRFAAAAp3o92gAAAAF0Uk5TAEDm2GYAAAANSURBVHicY2AYBdQEAAFQAAHr5ijJAAAAAElFTkSuQmCC"
-        /><linearGradient
-            id="P"
+        ><linearGradient
+            id="COMMUNITIES"
             gradientUnits="userSpaceOnUse"
-        /><linearGradient id="g1" x1="1" y1="19.4" x2="47.5" y2="29.3" href="#P"
-            ><stop stop-color="#7319fa" /><stop
-                offset=".5"
-                stop-color="#893ff7"
-            /><stop offset="1" stop-color="#7319fa" /></linearGradient
+        /><linearGradient
+            id="communities"
+            x1="47"
+            y1="9.6"
+            x2="1"
+            y2="38.4"
+            href="#COMMUNITIES"
+            ><stop stop-color="#b98bff" /><stop
+                offset="1"
+                stop-color="#710fff"
+            /></linearGradient
         ></defs
     ><style>
-        .a {
-            fill: url(#g1);
-            stroke: #fff;
+        .communities {
+            fill: url(#communities);
             stroke-width: 0;
         }
-    </style><use href="#img1" x="0" y="0" /><path
+    </style><path
         in:draw={{ duration: 1000, easing: quadIn }}
-        class={$currentPanelId == 2 ? 'a' : ''}
+        class={$currentPanelId == 2 ? 'communities' : ''}
         d="m40.8 27.1q0 0.1 0 0.2v14.5q0 0.8-0.5 1.4-0.6 0.6-1.3 0.6h-11.1v-11.6h-7.4v11.6h-11q-0.8 0-1.3-0.6-0.6-0.6-0.6-1.4v-14.5q0 0 0-0.1 0.1 0 0.1-0.1l16.5-14.3 16.6 14.3zm6.7-2.6q-0.1-0.4-0.3-0.6l-6.4-5.5v-12.3q0-0.5-0.2-0.7-0.3-0.3-0.7-0.3h-5.5q-0.4 0-0.7 0.3-0.2 0.2-0.2 0.7v5.8l-7.1-6.1q-0.9-0.8-2.2-0.8-1.2 0-2.2 0.8l-20.7 18.1q-0.3 0.2-0.3 0.6 0 0.4 0.2 0.7l1.8 2.3q0.2 0.2 0.6 0.3 0.3 0 0.7-0.2l19.9-17.4 20 17.4q0.2 0.2 0.6 0.2h0.1q0.4-0.1 0.6-0.3l1.8-2.3q0.2-0.3 0.2-0.7z"
     /></svg
 >

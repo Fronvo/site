@@ -13,25 +13,29 @@
     height="48"
     on:click={() => switchPanel('Marketplace')}
     ><defs
-        ><linearGradient id="P" gradientUnits="userSpaceOnUse" /><linearGradient
-            id="g1"
-            x1="2"
-            y1="24.3"
-            x2="46"
-            y2="24.3"
-            href="#P"
-            ><stop stop-color="#7319fa" /><stop
-                offset=".5"
-                stop-color="#893ff7"
-            /><stop offset="1" stop-color="#7319fa" /></linearGradient
+        ><linearGradient
+            id="MARKETPLACE"
+            gradientUnits="userSpaceOnUse"
+        /><linearGradient
+            id="marketplace"
+            x1="47"
+            y1="9.6"
+            x2="1"
+            y2="38.4"
+            href="#MARKETPLACE"
+            ><stop stop-color="#b98bff" /><stop
+                offset="1"
+                stop-color="#710fff"
+            /></linearGradient
         ></defs
     ><style>
-        .a {
-            fill: url(#g1);
+        .marketplace {
+            fill: url(#marketplace);
+            stroke-width: 0;
         }
     </style><path
         in:draw={{ duration: 1000, easing: quadIn }}
-        class={$currentPanelId == 3 ? 'a' : ''}
+        class={$currentPanelId == 3 ? 'marketplace' : ''}
         d="m27.4 24.3h-6.8q-0.7 0-1.2-0.5-0.5-0.5-0.5-1.2 0-0.7 0.5-1.2 0.5-0.5 1.2-0.5h6.8q0.7 0 1.2 0.5 0.5 0.5 0.5 1.2 0 0.7-0.5 1.2-0.5 0.5-1.2 0.5zm16.4-8q-0.5-0.5-1.2-0.5h-37.2q-0.7 0-1.2 0.5-0.5 0.6-0.5 1.2v25.4q0 0.7 0.5 1.2 0.5 0.5 1.2 0.5h37.2q0.7 0 1.2-0.5 0.5-0.5 0.5-1.2v-25.4q0-0.6-0.5-1.2zm1.7-11.8q-0.5-0.5-1.2-0.5h-40.6q-0.7 0-1.2 0.5-0.5 0.5-0.5 1.2v6.8q0 0.6 0.5 1.2 0.5 0.5 1.2 0.5h40.6q0.7 0 1.2-0.5 0.5-0.6 0.5-1.2v-6.8q0-0.7-0.5-1.2z"
     /></svg
 >

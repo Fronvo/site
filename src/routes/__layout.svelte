@@ -3,8 +3,6 @@
     import FailedToConnect from '$lib/app/FailedToConnect.svelte';
     import Loading from '$lib/app/Loading.svelte';
     import Main from '$lib/app/main/Main.svelte';
-    import 'src/app.css';
-    import themes from 'src/themes';
     import {
         hasLoggedIn,
         showLoadingDelay,
@@ -24,6 +22,8 @@
     import { sineInOut } from 'svelte/easing';
     import { fade } from 'svelte/transition';
     import { getKey } from 'utilities/global';
+    import '../app.css';
+    import themes from '../themes';
 
     let mountReady = false;
 

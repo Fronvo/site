@@ -3,9 +3,15 @@
 // ******************** //
 
 import { tokenInvalid } from 'stores/app/global';
-import { currentPanelId, loginSucceeded, userData } from 'stores/app/main';
+import {
+    currentModal,
+    currentPanelId,
+    loginSucceeded,
+    modalVisible,
+    userData,
+} from 'stores/app/main';
 import { socket } from 'stores/global';
-import type { PanelTypes } from 'types/app/main';
+import type { ModalTypes, PanelTypes } from 'types/app/main';
 import { getKey, removeKey, setKey } from 'utilities/global';
 
 export function performLogin(): void {
@@ -67,4 +73,9 @@ export function switchPanel(newPanel: PanelTypes): void {
 
     setKey('panelId', targetPanel);
     currentPanelId.set(targetPanel);
+}
+
+export function showModal(modalName: ModalTypes): void {
+    currentModal.set(modalName);
+    modalVisible.set(true);
 }

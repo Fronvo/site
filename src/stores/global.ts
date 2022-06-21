@@ -27,7 +27,7 @@ export function initSocket(callback?: Function): void {
 }
 
 export function resetSocket(): void {
-    // ONly reset once
+    // Only reset once
     if (!socket) return;
 
     socket.disconnect();

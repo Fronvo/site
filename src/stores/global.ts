@@ -8,8 +8,6 @@ import { io, Socket } from 'socket.io-client';
 import binaryParser from 'socket.io-msgpack-parser';
 import { writable } from 'svelte/store';
 
-export const socketConnected = writable(false);
-
 export let socket: Socket<ServerToClientEvents, ClientToServerEvents>;
 
 export function initSocket(callback?: Function): void {
@@ -24,9 +22,6 @@ export function initSocket(callback?: Function): void {
     });
 
     socket.on('connect', () => {
-        // TODO: Remove
-        socketConnected.set(true);
-
         callback();
     });
 }

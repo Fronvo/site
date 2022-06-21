@@ -1,5 +1,5 @@
 <script>
-    import { modalVisible } from 'src/stores/app/main';
+    import { modalVisible } from 'stores/app/main';
 </script>
 
 <svg

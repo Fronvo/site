@@ -1,6 +1,6 @@
 <script>
     import ThemeSwitch from '$lib/all/ThemeSwitch.svelte';
-    import Close from 'src/lib/svgs/Close.svelte';
+    import Close from '$lib/svgs/Close.svelte';
 </script>
 
 <div class="header-container">

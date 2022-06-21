@@ -1,17 +1,15 @@
 {
     "extends": "./.svelte-kit/tsconfig.json",
     "compilerOptions": {
-        "baseUrl": "src/",
         "paths": {
-            "interfaces": ["interfaces/*"],
-            "stores/*": ["stores/*"],
-            "utilities/*": ["utilities/*"],
-            "types/*": ["types/*"],
-            "variables/*": ["variables/*"],
-
-            // SvelteKit may complain, but we have the baseUrl set sooooo we'll see
-            "$lib": ["lib"],
-            "$lib/*": ["lib/*"]
+            "src/*": ["src/*"],
+            "interfaces/*": ["src/interfaces/*"],
+            "stores/*": ["src/stores/*"],
+            "utilities/*": ["src/utilities/*"],
+            "types/*": ["src/types/*"],
+            "variables/*": ["src/variables/*"],
+            "$lib": ["src/lib"],
+            "$lib/*": ["src/lib/*"]
         },
         "pretty": true
     }

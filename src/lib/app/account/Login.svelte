@@ -9,6 +9,7 @@
     import { socket } from 'stores/global';
     import { onMount } from 'svelte';
     import { fade, scale } from 'svelte/transition';
+    import { fillUserData } from 'utilities/app/main';
     import { setEnterHandle, setKey } from 'utilities/global';
 
     let email: string;
@@ -59,6 +60,8 @@
                     // Incase it occured before
                     $tokenInvalid = false;
                     $hasLoggedIn = true;
+
+                    fillUserData();
                 }
             });
         }

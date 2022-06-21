@@ -4,6 +4,7 @@
     import { socket } from 'stores/global';
     import { onMount } from 'svelte';
     import { fade, scale } from 'svelte/transition';
+    import { fillUserData } from 'utilities/app/main';
     import { setEnterHandle, setKey } from 'utilities/global';
     import Center from '../Center.svelte';
 
@@ -42,6 +43,8 @@
                     setKey('token', token);
                     $tokenInvalid = false;
                     $hasLoggedIn = true;
+
+                    fillUserData();
                 }
             });
         }

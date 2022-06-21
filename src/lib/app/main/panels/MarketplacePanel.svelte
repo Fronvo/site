@@ -14,6 +14,12 @@
 <style>
     .marketplace-container {
         width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-right: 10px;
+        flex: 1;
     }
 
     .marketplace-container h1 {
@@ -21,9 +27,20 @@
         font-size: 2rem;
     }
 
-    @media screen and (max-width: 520px) {
+    @media screen and (max-width: 700px) {
+        .marketplace-container {
+            margin: 0;
+            margin-bottom: 100px;
+        }
+
         .marketplace-container h1 {
             font-size: 1.7rem;
+        }
+    }
+
+    @media screen and (max-width: 520px) {
+        .marketplace-container h1 {
+            font-size: 1.5rem;
         }
     }
 </style>

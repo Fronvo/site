@@ -40,13 +40,14 @@
     .main-container {
         position: absolute;
         display: flex;
+        flex-direction: row;
         height: 100%;
         width: 100%;
     }
 
     @media screen and (max-width: 700px) {
         .main-container {
-            display: block;
+            flex-direction: column;
         }
     }
 </style>

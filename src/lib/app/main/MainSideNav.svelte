@@ -33,7 +33,7 @@
 <style>
     .side-nav-container {
         margin: auto;
-        margin-right: 5px;
+        margin-right: 10px;
         padding: 20px;
         background: var(--theme-nav_bg_color);
         backdrop-filter: blur(5px);
@@ -50,14 +50,16 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 15px;
             border-top-right-radius: 0;
             border-bottom-left-radius: 25px;
-            margin-right: 0;
+            border-bottom-right-radius: 25px;
+            padding: 15px;
+            margin: 0;
         }
 
         hr {
-            display: none;
+            height: 100%;
+            margin: 0;
         }
     }
 

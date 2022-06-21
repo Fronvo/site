@@ -1,26 +1,14 @@
 <script lang="ts">
     import Account from '$lib/app/account/Account.svelte';
-    import FailedToConnect from '$lib/app/FailedToConnect.svelte';
-    import Loading from '$lib/app/Loading.svelte';
     import Main from '$lib/app/main/Main.svelte';
-    import {
-        hasLoggedIn,
-        showLoadingDelay,
-        tokenInvalid,
-    } from 'stores/app/global';
-    import {
-        initSocket,
-        resetSocket,
-        showLayout,
-        socket,
-        socketConnected,
-        socketTimeout,
-    } from 'stores/global';
-    import { onDestroy, onMount } from 'svelte';
+    import { hasLoggedIn, tokenInvalid } from 'stores/app/global';
+    import { initSocket, showLayout } from 'stores/global';
+    import { onMount } from 'svelte';
     import { setGlobalOptions } from 'svelte-scrolling';
     import { ThemeWrapper } from 'svelte-themer';
     import { sineInOut } from 'svelte/easing';
     import { fade } from 'svelte/transition';
+    import { performLogin } from 'utilities/app/main';
     import { getKey } from 'utilities/global';
     import '../app.css';
     import themes from '../themes';
@@ -38,51 +26,20 @@
         offset: 0,
     });
 
-    let socketFailed = false;
-    let showLoading = false;
-
-    // Only init socket if the /app route is accessed riectly, no index to preinit
-    if (!socket) {
-        initSocket();
-    }
-
-    // If the connection failed, stop retrying in the background
-    onDestroy(() => {
-        if ($socketConnected) return;
-
-        resetSocket();
+    // When layout is visible, perform socket actions
+    showLayout.subscribe((state) => {
+        if (state) {
+            // Init, login (will return if already called from index, only placed for direct route access)
+            initSocket(performLogin);
+        }
     });
-
-    // Set connection timeout
-    setTimeout(() => {
-        if ($socketConnected) return;
-
-        socketFailed = true;
-
-        resetSocket();
-    }, socketTimeout);
-
-    // Show loading after delay
-    setTimeout(() => {
-        showLoading = true;
-    }, showLoadingDelay);
 </script>
 
 <ThemeWrapper mode="dark" {themes}>
     {#if mountReady}
         {#if $showLayout}
             <div in:fade={{ duration: 500 }} out:fade>
-                {#if !$socketConnected}
-                    {#if showLoading && !socketFailed}
-                        <div transition:fade>
-                            <Loading text="Connecting to Fronvo" />
-                        </div>
-                    {:else if socketFailed}
-                        <div transition:fade>
-                            <FailedToConnect />
-                        </div>
-                    {/if}
-                {:else if (getKey('token') || $hasLoggedIn) && !$tokenInvalid}
+                {#if (getKey('token') || $hasLoggedIn) && !$tokenInvalid}
                     <Main />
                 {:else}
                     <Account />

@@ -12,8 +12,8 @@ export const socketConnected = writable(false);
 
 export let socket: Socket<ServerToClientEvents, ClientToServerEvents>;
 
-export function initSocket(): void {
-    // Only init once
+export function initSocket(callback?: Function): void {
+    // Only init once, callback discarded
     if (socket) return;
 
     socket = io('wss://fronvosrv.herokuapp.com', {
@@ -24,7 +24,10 @@ export function initSocket(): void {
     });
 
     socket.on('connect', () => {
+        // TODO: Remove
         socketConnected.set(true);
+
+        callback();
     });
 }
 

@@ -5,10 +5,11 @@
 import { goto } from '$app/navigation';
 import { initSocket } from 'stores/global';
 import { indexAnimDuration, indexVisible } from 'stores/index';
+import { performLogin } from 'utilities/app/main';
 
 export function redirectApp(): void {
-    // Preload socket, less delay
-    initSocket();
+    // Preload socket and login immediately, no delay afterwards
+    initSocket(performLogin);
 
     indexVisible.set(false);
 

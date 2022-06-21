@@ -5,14 +5,11 @@
     import { showHomeLoadingDelay } from 'stores/app/global';
     import { currentPanelId, loginSucceeded, panels } from 'stores/app/main';
     import { onMount } from 'svelte';
-    import { performLogin } from 'utilities/app/main';
     import { getKey } from 'utilities/global';
 
     let showLoading = false;
 
     onMount(() => {
-        performLogin();
-
         // Get latest panel id / Home
         $currentPanelId = getKey('panelId', 0);
     });

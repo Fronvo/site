@@ -1,16 +1,17 @@
 <script lang="ts">
-    import Github from '$lib/svgs/Github.svelte';
-    import Wave from '$lib/svgs/Wave.svelte';
     import { fade } from 'svelte/transition';
 </script>
 
 <div class="footer" in:fade={{ duration: 500 }}>
-    <Wave inverse />
+    <img src="svgs/other/wave.svg" draggable={false} alt="Wave" />
 
     <div class="content">
         <h1>Fronvo</h1>
 
-        <Github
+        <img
+            src="svgs/other/github.svg"
+            draggable={false}
+            alt="Github"
             on:click={() => (location.href = 'https://github.com/fronvo/site')}
         />
     </div>
@@ -37,9 +38,17 @@
         font-weight: 900;
     }
 
+    .footer .content img {
+        cursor: pointer;
+    }
+
     @media screen and (max-width: 700px) {
         .footer .content h1 {
             font-size: 2.5rem;
+        }
+
+        .footer .content img {
+            cursor: default;
         }
     }
 </style>

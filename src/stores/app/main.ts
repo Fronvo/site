@@ -10,8 +10,6 @@ import type { FronvoAccount } from 'interfaces/app/main';
 import { writable, type Writable } from 'svelte/store';
 import type { ModalTypes } from 'types/app/main';
 
-export const mainVisible = writable(false);
-
 export const loginSucceeded = writable(false);
 
 // Filled in after login

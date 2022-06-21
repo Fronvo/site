@@ -35,6 +35,4 @@ export function resetSocket(): void {
     socket = undefined;
 }
 
-export const socketTimeout = 5000;
-
 export const showLayout = writable(false);

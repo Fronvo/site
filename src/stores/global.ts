@@ -21,9 +21,7 @@ export function initSocket(callback?: Function): void {
         onlyBinaryUpgrades: true,
     });
 
-    socket.on('connect', () => {
-        callback();
-    });
+    socket.on('connect', callback);
 }
 
 export function resetSocket(): void {

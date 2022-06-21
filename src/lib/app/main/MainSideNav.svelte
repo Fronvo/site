@@ -8,7 +8,7 @@
 </script>
 
 <div
-    transition:fly={{ x: -100, duration: 750, opacity: 0.5 }}
+    in:fly={{ x: -100, duration: 750, opacity: 0.5 }}
     class="side-nav-container"
 >
     <Home />

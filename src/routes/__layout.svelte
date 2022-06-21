@@ -38,7 +38,7 @@
 <ThemeWrapper mode="dark" {themes}>
     {#if mountReady}
         {#if $showLayout}
-            <div in:fade={{ duration: 500 }} out:fade>
+            <div in:fade={{ duration: 500 }}>
                 {#if (getKey('token') || $hasLoggedIn) && !$tokenInvalid}
                     <Main />
                 {:else}

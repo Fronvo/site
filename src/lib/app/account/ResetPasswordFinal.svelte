@@ -3,7 +3,9 @@
     import type { FronvoError } from 'interfaces/socket/all';
     import {
         accountRegisterTab,
+        accountResetPasswordFinalTab,
         accountResetPasswordTab,
+        accountResetPasswordVerifyTab,
     } from 'stores/app/account';
     import { socket } from 'stores/global';
     import { onMount } from 'svelte';
@@ -49,6 +51,8 @@
                 } else {
                     // Complete action, redirect to login
                     $accountResetPasswordTab = false;
+                    $accountResetPasswordVerifyTab = false;
+                    $accountResetPasswordFinalTab = false;
                     $accountRegisterTab = false;
                 }
             });

@@ -10,7 +10,7 @@ import { writable } from 'svelte/store';
 
 export let socket: Socket<ServerToClientEvents, ClientToServerEvents>;
 
-export function initSocket(callback?: Function): void {
+export function initSocket(callback?: () => void): void {
     // Only init once, callback discarded
     if (socket) return;
 

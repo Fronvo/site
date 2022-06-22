@@ -5,13 +5,13 @@
 
     const fronvoContainer: FronvoContainer[] = [
         {
-            title: 'Packed with features',
-            svg: 'many-features',
+            title: 'Truly private social media',
+            svg: 'free-convos',
         },
 
         {
-            title: 'Truly private social media',
-            svg: 'free-convos',
+            title: 'Packed with features',
+            svg: 'many-features',
         },
     ];
 </script>

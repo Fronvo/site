@@ -13,11 +13,6 @@
             title: 'Truly private social media',
             svg: 'free-convos',
         },
-
-        {
-            title: 'Only the latest technologies',
-            svg: 'latest-tech',
-        },
     ];
 </script>
 

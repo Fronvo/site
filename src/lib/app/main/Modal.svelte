@@ -27,7 +27,8 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        background: rgba(0, 0, 0, 30%);
+        background: var(--theme-modal_bg_color);
+        transition: 250ms all;
         z-index: 1;
         -webkit-touch-callout: none;
         -webkit-user-select: none;

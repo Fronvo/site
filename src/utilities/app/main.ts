@@ -26,12 +26,12 @@ export function performLogin(): void {
                     tokenInvalid.set(true);
                 } else {
                     // Login succeeded, advance
-                    fillUserData();
+                    loginSucceeded.set(true);
                 }
             });
         } else {
             // Already logged in, skip manual login
-            fillUserData();
+            loginSucceeded.set(true);
         }
     });
 }
@@ -40,9 +40,6 @@ export function fillUserData(): void {
     socket.emit('fetchProfileId', ({ profileId }) => {
         socket.emit('fetchProfileData', { profileId }, ({ profileData }) => {
             userData.set(profileData);
-
-            // Finish login procedure
-            loginSucceeded.set(true);
         });
     });
 }

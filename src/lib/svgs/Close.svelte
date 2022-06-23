@@ -47,7 +47,7 @@
     }
 
     svg:active {
-        transform: scale(0.9);
+        transform: scale(0.95);
     }
 
     @media screen and (max-width: 700px) {

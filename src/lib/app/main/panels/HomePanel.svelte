@@ -33,13 +33,12 @@
 
 <style>
     .home-container {
-        width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        margin-right: 10px;
-        margin-bottom: 50px;
+        margin-right: 6vw;
+        margin-bottom: 6vh;
         flex: 1;
     }
 
@@ -63,8 +62,8 @@
 
     @media screen and (max-width: 700px) {
         .home-container {
-            margin: 0;
-            margin-bottom: 100px;
+            margin-right: 0;
+            margin-bottom: 9vh;
         }
 
         .top-content #username {

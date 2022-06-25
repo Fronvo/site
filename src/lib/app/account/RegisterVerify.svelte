@@ -1,6 +1,7 @@
 <script lang="ts">
     import type { FronvoError } from 'interfaces/socket/all';
-    import { hasLoggedIn, tokenInvalid } from 'stores/app/global';
+    import { loginSucceeded } from 'src/stores/app/main';
+    import { tokenInvalid } from 'stores/app/global';
     import { socket } from 'stores/global';
     import { onMount } from 'svelte';
     import { fade, scale } from 'svelte/transition';
@@ -42,7 +43,7 @@
                 } else {
                     setKey('token', token);
                     $tokenInvalid = false;
-                    $hasLoggedIn = true;
+                    $loginSucceeded = true;
 
                     fillUserData();
                 }

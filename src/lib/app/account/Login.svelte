@@ -1,15 +1,15 @@
 <script lang="ts">
     import Center from '$lib/app/Center.svelte';
     import type { FronvoError } from 'interfaces/socket/all';
+    import { loginSucceeded } from 'src/stores/app/main';
     import {
         accountRegisterTab,
         accountResetPasswordTab,
     } from 'stores/app/account';
-    import { hasLoggedIn, tokenInvalid } from 'stores/app/global';
+    import { tokenInvalid } from 'stores/app/global';
     import { socket } from 'stores/global';
     import { onMount } from 'svelte';
     import { fade, scale } from 'svelte/transition';
-    import { fillUserData } from 'utilities/app/main';
     import { setEnterHandle, setKey } from 'utilities/global';
 
     let email: string;
@@ -59,9 +59,7 @@
                     setKey('token', token);
                     // Incase it occured before
                     $tokenInvalid = false;
-                    $hasLoggedIn = true;
-
-                    fillUserData();
+                    $loginSucceeded = true;
                 }
             });
         }

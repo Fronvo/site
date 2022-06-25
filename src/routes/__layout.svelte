@@ -1,7 +1,8 @@
 <script lang="ts">
     import Account from '$lib/app/account/Account.svelte';
     import Main from '$lib/app/main/Main.svelte';
-    import { hasLoggedIn, tokenInvalid } from 'stores/app/global';
+    import { loginSucceeded } from 'src/stores/app/main';
+    import { tokenInvalid } from 'stores/app/global';
     import { initSocket, showLayout } from 'stores/global';
     import { onMount } from 'svelte';
     import { setGlobalOptions } from 'svelte-scrolling';
@@ -39,7 +40,7 @@
     {#if mountReady}
         {#if $showLayout}
             <div in:fade={{ duration: 500 }}>
-                {#if (getKey('token') || $hasLoggedIn) && !$tokenInvalid}
+                {#if (getKey('token') || $loginSucceeded) && !$tokenInvalid}
                     <Main />
                 {:else}
                     <Account />

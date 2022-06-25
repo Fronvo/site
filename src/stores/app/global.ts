@@ -4,8 +4,6 @@
 
 import { writable } from 'svelte/store';
 
-export const hasLoggedIn = writable(false);
-
 export const tokenInvalid = writable(false);
 
 export const showHomeLoadingDelay = 750;

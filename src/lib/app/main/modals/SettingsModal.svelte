@@ -1,6 +1,25 @@
-<script>
+<script lang="ts">
+    import { goto } from '$app/navigation';
     import ThemeSwitch from '$lib/all/ThemeSwitch.svelte';
     import Close from '$lib/svgs/Close.svelte';
+    import {
+        loginSucceeded,
+        modalAnimDuration,
+        modalVisible,
+    } from 'stores/app/main';
+    import { socket } from 'stores/global';
+    import { removeKey } from 'utilities/global';
+
+    function logout(): void {
+        $modalVisible = false;
+
+        setTimeout(() => {
+            socket.emit('logout');
+
+            removeKey('token');
+            $loginSucceeded = false;
+        }, modalAnimDuration);
+    }
 </script>
 
 <div class="header-container">
@@ -14,6 +33,10 @@
     <div>
         <h1>Theme</h1>
         <ThemeSwitch />
+    </div>
+
+    <div>
+        <button on:click={logout}>Logout</button>
     </div>
 </div>
 
@@ -49,6 +72,10 @@
         font-size: 2.2rem;
     }
 
+    .options-container div button {
+        font-size: 2rem;
+    }
+
     @media screen and (max-width: 700px) {
         .header-container #header {
             font-size: 2.5rem;
@@ -56,6 +83,10 @@
 
         .options-container div h1 {
             font-size: 1.8rem;
+        }
+
+        .options-container div button {
+            font-size: 1.6rem;
         }
     }
 
@@ -66,6 +97,10 @@
 
         .options-container div h1 {
             font-size: 1.6rem;
+        }
+
+        .options-container div button {
+            font-size: 1.4rem;
         }
     }
 </style>

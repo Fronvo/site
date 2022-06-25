@@ -1,6 +1,10 @@
 <script lang="ts">
     import SettingsModal from '$lib/app/main/modals/SettingsModal.svelte';
-    import { currentModal, modalVisible } from 'stores/app/main';
+    import {
+        currentModal,
+        modalAnimDuration,
+        modalVisible,
+    } from 'stores/app/main';
     import { circInOut } from 'svelte/easing';
     import { slide } from 'svelte/transition';
 </script>
@@ -8,7 +12,7 @@
 {#if $modalVisible}
     <div
         class="modal-container"
-        transition:slide={{ duration: 400, easing: circInOut }}
+        transition:slide={{ duration: modalAnimDuration, easing: circInOut }}
     >
         {#if $currentModal == 'Settings'}
             <SettingsModal />

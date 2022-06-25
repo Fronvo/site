@@ -28,4 +28,5 @@ export const currentPanelId = writable(0);
 
 // Modal settings
 export const modalVisible = writable(false);
+export const modalAnimDuration = 400;
 export const currentModal: Writable<ModalTypes> = writable();

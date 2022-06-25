@@ -53,7 +53,7 @@
     }
 
     .header-container #header {
-        font-size: 2.7rem;
+        font-size: 3rem;
         margin: 0;
         padding-right: 40px;
     }
@@ -69,16 +69,30 @@
     .options-container div h1 {
         margin: 0;
         margin-right: 15px;
-        font-size: 2.2rem;
+        font-size: 2.4rem;
     }
 
     .options-container div button {
-        font-size: 2rem;
+        font-size: 2.2rem;
     }
 
     @media screen and (max-width: 700px) {
         .header-container #header {
-            font-size: 2.5rem;
+            font-size: 2.7rem;
+        }
+
+        .options-container div h1 {
+            font-size: 2.1rem;
+        }
+
+        .options-container div button {
+            font-size: 1.8rem;
+        }
+    }
+
+    @media screen and (max-width: 520px) {
+        .header-container #header {
+            font-size: 2.3rem;
         }
 
         .options-container div h1 {
@@ -87,20 +101,6 @@
 
         .options-container div button {
             font-size: 1.6rem;
-        }
-    }
-
-    @media screen and (max-width: 520px) {
-        .header-container #header {
-            font-size: 2.2rem;
-        }
-
-        .options-container div h1 {
-            font-size: 1.6rem;
-        }
-
-        .options-container div button {
-            font-size: 1.4rem;
         }
     }
 </style>

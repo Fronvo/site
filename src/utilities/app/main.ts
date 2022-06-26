@@ -8,7 +8,6 @@ import {
     currentPanelId,
     loginSucceeded,
     modalVisible,
-    userData,
 } from 'stores/app/main';
 import { socket } from 'stores/global';
 import type { ModalTypes, PanelTypes } from 'types/app/main';
@@ -33,14 +32,6 @@ export function performLogin(): void {
             // Already logged in, skip manual login
             loginSucceeded.set(true);
         }
-    });
-}
-
-export function fillUserData(): void {
-    socket.emit('fetchProfileId', ({ profileId }) => {
-        socket.emit('fetchProfileData', { profileId }, ({ profileData }) => {
-            userData.set(profileData);
-        });
     });
 }
 

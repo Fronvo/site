@@ -3,13 +3,13 @@
     import { userData } from 'stores/app/main';
     import { quadIn } from 'svelte/easing';
     import { fade } from 'svelte/transition';
-    import { fillUserData } from 'utilities/app/main';
+    import { loadHomePanel } from 'utilities/app/home';
 
     goto('home', {
         replaceState: true,
     });
 
-    $: fillUserData();
+    $: loadHomePanel();
 </script>
 
 <!-- Placeholder for hot updates -->

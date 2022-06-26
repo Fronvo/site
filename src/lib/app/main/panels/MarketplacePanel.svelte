@@ -1,10 +1,13 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
     import { fade } from 'svelte/transition';
+    import { loadMarketplacePanel } from 'utilities/app/marketplace';
 
     goto('marketplace', {
         replaceState: true,
     });
+
+    $: loadMarketplacePanel();
 </script>
 
 <div class="marketplace-container" in:fade={{ duration: 200, delay: 200 }}>

@@ -1,10 +1,13 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
     import { fade } from 'svelte/transition';
+    import { loadCommunitiesPanel } from 'utilities/app/communities';
 
     goto('communities', {
         replaceState: true,
     });
+
+    $: loadCommunitiesPanel();
 </script>
 
 <div class="communities-container" in:fade={{ duration: 200, delay: 200 }}>

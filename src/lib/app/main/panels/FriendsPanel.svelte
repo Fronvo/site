@@ -1,10 +1,13 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
     import { fade } from 'svelte/transition';
+    import { loadFriendsPanel } from 'utilities/app/friend';
 
     goto('friends', {
         replaceState: true,
     });
+
+    $: loadFriendsPanel();
 </script>
 
 <div class="friends-container" in:fade={{ duration: 200, delay: 200 }}>

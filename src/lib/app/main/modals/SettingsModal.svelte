@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
     import ThemeSwitch from '$lib/all/ThemeSwitch.svelte';
     import Close from '$lib/svgs/Close.svelte';
     import {

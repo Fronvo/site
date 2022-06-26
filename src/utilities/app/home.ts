@@ -9,7 +9,7 @@ export function loadHomePanel(): void {
     fillUserData();
 }
 
-export function fillUserData(): void {
+function fillUserData(): void {
     socket.emit('fetchProfileId', ({ profileId }) => {
         socket.emit('fetchProfileData', { profileId }, ({ profileData }) => {
             userData.set(profileData);

@@ -37,14 +37,12 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        margin-right: 6vw;
-        margin-bottom: 6vh;
         flex: 1;
+        margin-top: 20px;
     }
 
     .top-content {
         display: flex;
-        flex-direction: column;
         justify-content: center;
         align-items: center;
     }
@@ -56,29 +54,20 @@
     }
 
     .top-content #avatar {
-        width: 128px;
-        height: 128px;
+        width: 64px;
+        height: 64px;
+        margin-right: 10px;
+        cursor: pointer;
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 720px) {
         .home-container {
             margin-right: 0;
             margin-bottom: 9vh;
         }
 
-        .top-content #username {
-            font-size: 2.5rem;
-        }
-    }
-
-    @media screen and (max-width: 520px) {
-        .top-content #username {
-            font-size: 2.1rem;
-        }
-
-        .top-content #avatar {
-            width: 100px;
-            height: 100px;
+        .top-content {
+            display: none;
         }
     }
 </style>

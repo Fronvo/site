@@ -11,6 +11,13 @@
     in:fly={{ x: -100, duration: 750, opacity: 0.5 }}
     class="side-nav-container"
 >
+    <img
+        id="avatar"
+        src="svgs/home/avatar.svg"
+        draggable={false}
+        alt="Fronvo avatar"
+    />
+
     <Home />
 
     <br />
@@ -32,8 +39,13 @@
 
 <style>
     .side-nav-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
         margin: auto;
-        margin-right: 10px;
+        width: max-content;
+        height: fit-content;
         padding: 20px;
         background: var(--theme-nav_bg_color);
         backdrop-filter: blur(5px);
@@ -45,8 +57,14 @@
         transition: 500ms all;
     }
 
-    @media screen and (max-width: 700px) {
+    .side-nav-container #avatar {
+        display: none;
+    }
+
+    @media screen and (max-width: 720px) {
         .side-nav-container {
+            position: relative;
+            width: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -55,6 +73,13 @@
             border-bottom-right-radius: 25px;
             padding: 15px;
             margin: 0;
+        }
+
+        .side-nav-container #avatar {
+            display: initial;
+            width: 64px;
+            height: 64px;
+            margin-right: 20px;
         }
 
         hr {
@@ -66,6 +91,11 @@
     @media screen and (max-width: 520px) {
         .side-nav-container {
             padding: 10px;
+        }
+
+        .side-nav-container #avatar {
+            width: 48px;
+            height: 48px;
         }
     }
 </style>

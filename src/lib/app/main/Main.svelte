@@ -16,6 +16,9 @@
     <Modal />
 
     <div class="main-container">
+        <!-- TODO: Fronvo logo on desktop -->
+
+        <!-- Side nav which transforms into a Top nav on mobile -->
         <MainSideNav />
 
         <!-- Reactive panel switching -->
@@ -24,17 +27,11 @@
 {/if}
 
 <style>
-    .main-container {
-        position: absolute;
-        display: flex;
-        flex-direction: row;
-        height: 100%;
-        width: 100%;
-    }
-
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 720px) {
         .main-container {
+            display: flex;
             flex-direction: column;
+            height: 100vh;
         }
     }
 </style>

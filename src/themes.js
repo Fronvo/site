@@ -23,7 +23,7 @@ export default {
         svg_stroke: 'rgb(130, 64, 255)',
 
         // Modal background
-        modal_bg_color: 'rgba(10, 10, 10, 70%)',
+        modal_bg_color: 'rgba(10, 10, 10, 80%)',
     },
 
     light: {
@@ -49,6 +49,6 @@ export default {
         svg_stroke: 'rgb(130, 64, 255)',
 
         // Modal background
-        modal_bg_color: 'rgba(230, 230, 230, 70%)',
+        modal_bg_color: 'rgba(230, 230, 230, 80%)',
     },
 };

@@ -40,5 +40,12 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+        backdrop-filter: blur(2px);
+    }
+
+    @media screen and (max-width: 700px) {
+        .modal-container {
+            backdrop-filter: none;
+        }
     }
 </style>

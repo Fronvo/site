@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { FronvoError } from 'interfaces/socket/all';
-    import { loginSucceeded } from 'src/stores/app/main';
     import { tokenInvalid } from 'stores/app/global';
+    import { loginSucceeded } from 'stores/app/main';
     import { socket } from 'stores/global';
     import { onMount } from 'svelte';
     import { fade, scale } from 'svelte/transition';

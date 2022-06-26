@@ -1,8 +1,8 @@
 <script lang="ts">
     import Account from '$lib/app/account/Account.svelte';
     import Main from '$lib/app/main/Main.svelte';
-    import { loginSucceeded } from 'src/stores/app/main';
     import { tokenInvalid } from 'stores/app/global';
+    import { loginSucceeded } from 'stores/app/main';
     import { initSocket, showLayout } from 'stores/global';
     import { onMount } from 'svelte';
     import { setGlobalOptions } from 'svelte-scrolling';

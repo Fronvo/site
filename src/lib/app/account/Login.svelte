@@ -1,12 +1,12 @@
 <script lang="ts">
     import Center from '$lib/app/Center.svelte';
     import type { FronvoError } from 'interfaces/socket/all';
-    import { loginSucceeded } from 'src/stores/app/main';
     import {
         accountRegisterTab,
         accountResetPasswordTab,
     } from 'stores/app/account';
     import { tokenInvalid } from 'stores/app/global';
+    import { loginSucceeded } from 'stores/app/main';
     import { socket } from 'stores/global';
     import { onMount } from 'svelte';
     import { fade, scale } from 'svelte/transition';

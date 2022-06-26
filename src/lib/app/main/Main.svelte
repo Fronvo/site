@@ -19,6 +19,7 @@
         <!-- TODO: Fronvo logo on desktop -->
 
         <!-- Side nav which transforms into a Top nav on mobile -->
+        <!-- TODO: Convert to BottomNav -->
         <MainSideNav />
 
         <!-- Reactive panel switching -->

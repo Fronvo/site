@@ -81,7 +81,7 @@
         transform: scale(1.1, 1.1);
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 720px) {
         .container #title {
             font-size: 3rem;
             margin-bottom: 10px;

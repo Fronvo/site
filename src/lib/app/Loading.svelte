@@ -25,7 +25,7 @@
         font-size: 3rem;
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 720px) {
         #text {
             font-size: 2.5rem;
         }

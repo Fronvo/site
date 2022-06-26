@@ -160,7 +160,7 @@
         color: rgb(233, 206, 255);
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 720px) {
         .reset-container {
             width: 450px;
         }

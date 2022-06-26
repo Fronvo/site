@@ -30,7 +30,7 @@
         font-size: 2rem;
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 720px) {
         .communities-container {
             margin: 0;
             margin-bottom: 100px;

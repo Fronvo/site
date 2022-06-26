@@ -50,7 +50,7 @@
         transform: scale(0.95);
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 720px) {
         svg {
             cursor: default;
             width: 35px;

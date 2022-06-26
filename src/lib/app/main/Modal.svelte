@@ -43,7 +43,7 @@
         backdrop-filter: blur(2px);
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 720px) {
         .modal-container {
             backdrop-filter: none;
         }

@@ -19,6 +19,7 @@
             class="top-content"
             in:fade={{ duration: 200, delay: 200, easing: quadIn }}
         >
+            <!-- TODO: Show user actions modal (logout, switch account) -->
             <img
                 id="avatar"
                 src="svgs/home/avatar.svg"

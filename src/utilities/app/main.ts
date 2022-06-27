@@ -4,7 +4,7 @@
 
 import { tokenInvalid } from 'stores/app/global';
 import {
-    currentModal,
+    currentModalId,
     currentPanelId,
     loginSucceeded,
     modalVisible,
@@ -63,7 +63,15 @@ export function switchPanel(newPanel: PanelTypes): void {
     currentPanelId.set(targetPanel);
 }
 
-export function showModal(modalName: ModalTypes): void {
-    currentModal.set(modalName);
+export function showModal(newModal: ModalTypes): void {
+    let targetModal: number;
+
+    switch (newModal) {
+        case 'Settings':
+            targetModal = 0;
+            break;
+    }
+
+    currentModalId.set(targetModal);
     modalVisible.set(true);
 }

@@ -2,20 +2,20 @@
 // Shared variables for the app route, after login.
 // ******************** //
 
+import SettingsModal from '$lib/app/main/modals/SettingsModal.svelte';
 import CommunitiesPanel from '$lib/app/main/panels/CommunitiesPanel.svelte';
 import FriendsPanel from '$lib/app/main/panels/FriendsPanel.svelte';
 import HomePanel from '$lib/app/main/panels/HomePanel.svelte';
 import MarketplacePanel from '$lib/app/main/panels/MarketplacePanel.svelte';
 import type { FronvoAccount } from 'interfaces/app/main';
 import { writable, type Writable } from 'svelte/store';
-import type { ModalTypes } from 'types/app/main';
 
 export const loginSucceeded = writable(false);
 
 // Filled in after login
 export const userData: Writable<FronvoAccount> = writable();
 
-// Panel switching
+// Panel settings
 export const panels = [
     HomePanel,
     FriendsPanel,
@@ -23,10 +23,11 @@ export const panels = [
     MarketplacePanel,
 ];
 
-// Default to Home
 export const currentPanelId = writable(0);
 
 // Modal settings
+export const modals = [SettingsModal];
+
+export const currentModalId = writable(0);
 export const modalVisible = writable(false);
 export const modalAnimDuration = 400;
-export const currentModal: Writable<ModalTypes> = writable();

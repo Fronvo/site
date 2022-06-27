@@ -124,6 +124,7 @@
         font-size: 2.3rem;
         margin-top: 20px;
         width: 50%;
+        cursor: default;
     }
 
     @media screen and (max-width: 720px) {

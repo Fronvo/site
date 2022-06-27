@@ -224,13 +224,16 @@
 
         .account-container #reset-redirect {
             font-size: 1.7rem;
+            cursor: default;
         }
         .account-container button {
             font-size: 2.2rem;
+            cursor: default;
         }
 
         .account-container #register-redirect {
             font-size: 1.7rem;
+            cursor: default;
         }
     }
 

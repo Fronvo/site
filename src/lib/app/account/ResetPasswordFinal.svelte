@@ -138,6 +138,7 @@
         font-size: 2.5rem;
         margin-top: 25px;
         width: 90%;
+        cursor: default;
     }
 
     @media screen and (max-width: 720px) {

@@ -111,6 +111,7 @@
             display: initial;
             font-size: 1.2rem;
             margin-left: 5px;
+            cursor: default;
         }
     }
 </style>

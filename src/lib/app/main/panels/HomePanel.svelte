@@ -19,14 +19,6 @@
             class="top-content"
             in:fade={{ duration: 200, delay: 200, easing: quadIn }}
         >
-            <!-- TODO: Show user actions modal (logout, switch account) -->
-            <img
-                id="avatar"
-                src="svgs/home/avatar.svg"
-                draggable={false}
-                alt="Fronvo avatar"
-            />
-
             <h1 id="username">{$userData.username}</h1>
         </div>
     {/if}

@@ -58,7 +58,6 @@
         width: 64px;
         height: 64px;
         margin-right: 10px;
-        cursor: pointer;
     }
 
     @media screen and (max-width: 720px) {
@@ -67,8 +66,19 @@
             margin-bottom: 9vh;
         }
 
-        .top-content {
-            display: none;
+        .top-content #username {
+            font-size: 2.5rem;
+        }
+    }
+
+    @media screen and (max-width: 520px) {
+        .top-content #username {
+            font-size: 2.2rem;
+        }
+
+        .top-content #avatar {
+            width: 48px;
+            height: 48px;
         }
     }
 </style>

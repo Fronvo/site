@@ -46,12 +46,6 @@
         margin: 0;
     }
 
-    .top-content #avatar {
-        width: 64px;
-        height: 64px;
-        margin-right: 10px;
-    }
-
     @media screen and (max-width: 720px) {
         .home-container {
             margin-right: 0;
@@ -66,11 +60,6 @@
     @media screen and (max-width: 520px) {
         .top-content #username {
             font-size: 2.2rem;
-        }
-
-        .top-content #avatar {
-            width: 48px;
-            height: 48px;
         }
     }
 </style>

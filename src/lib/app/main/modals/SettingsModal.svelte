@@ -13,10 +13,12 @@
         $modalVisible = false;
 
         setTimeout(() => {
-            socket.emit('logout');
+            socket.emit('logout', ({ err }) => {
+                if (err) return;
 
-            removeKey('token');
-            $loginSucceeded = false;
+                removeKey('token');
+                $loginSucceeded = false;
+            });
         }, modalAnimDuration);
     }
 </script>

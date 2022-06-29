@@ -83,6 +83,11 @@
             cursor: default;
             margin-left: 10px;
         }
+
+        svg:hover,
+        img:hover {
+            opacity: 1;
+        }
     }
 
     @media screen and (max-width: 520px) {

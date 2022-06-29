@@ -56,6 +56,10 @@
             width: 35px;
             height: 35px;
         }
+
+        svg:hover {
+            opacity: 1;
+        }
     }
 
     @media screen and (max-width: 520px) {

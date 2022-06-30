@@ -3,6 +3,7 @@
     export let url: string = undefined;
 </script>
 
+<!-- TODO: Default to svg fronvo avatar, on the site hosted -->
 {#if !url}
     <svg
         version="1.2"
@@ -43,9 +44,6 @@
 <style>
     svg,
     img {
-        fill: none;
-        stroke: var(--theme-svg_stroke);
-        stroke-width: 2px;
         cursor: pointer;
         transition: 100ms all;
         -webkit-touch-callout: none;
@@ -54,8 +52,17 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+    }
+
+    svg {
         margin-bottom: 15px;
         margin-top: 10px;
+    }
+
+    img {
+        width: 60px;
+        height: 60px;
+        border-radius: 10px;
     }
 
     svg:hover,
@@ -68,20 +75,19 @@
         transform: scale(0.95);
     }
 
-    svg,
-    img {
-        width: 48px;
-        height: 48px;
-    }
-
     @media screen and (max-width: 720px) {
-        svg,
-        img {
+        svg {
             margin-bottom: 0;
             margin-top: 0;
             margin-right: 20px;
             cursor: default;
             margin-left: 10px;
+        }
+
+        img {
+            width: 48px;
+            height: 48px;
+            cursor: default;
         }
 
         svg:hover,
@@ -91,12 +97,16 @@
     }
 
     @media screen and (max-width: 520px) {
-        svg,
-        img {
+        svg {
             width: 40px;
             height: 40px;
             margin-right: 10px;
             margin-left: 5px;
+        }
+
+        img {
+            width: 40px;
+            height: 40px;
         }
     }
 </style>

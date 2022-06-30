@@ -30,7 +30,6 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        flex: 1;
         margin-top: 20px;
     }
 
@@ -50,8 +49,8 @@
         .home-container {
             margin-right: 0;
             margin-bottom: 9vh;
+            margin-top: 0;
         }
-
         .top-content #username {
             font-size: 2.5rem;
         }

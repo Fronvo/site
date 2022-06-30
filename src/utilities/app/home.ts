@@ -2,11 +2,12 @@
 // Reusable functions for the app home panel.
 // ******************** //
 
-import { userData } from 'stores/app/main';
+import { homeUpdates, userData } from 'stores/app/main';
 import { socket } from 'stores/global';
 
 export function loadHomePanel(): void {
     fillUserData();
+    fillHomeUpdates();
 }
 
 function fillUserData(): void {
@@ -15,4 +16,9 @@ function fillUserData(): void {
             userData.set(profileData);
         });
     });
+}
+
+function fillHomeUpdates(): void {
+    // TODO: Fetch from server
+    homeUpdates.set([]);
 }

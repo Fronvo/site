@@ -3,19 +3,15 @@
 // ******************** //
 
 import { homeUpdates, userData } from 'stores/app/main';
-import { socket } from 'stores/global';
+import { fetchUser } from 'utilities/app/main';
 
 export function loadHomePanel(): void {
     fillUserData();
     fillHomeUpdates();
 }
 
-function fillUserData(): void {
-    socket.emit('fetchProfileId', ({ profileId }) => {
-        socket.emit('fetchProfileData', { profileId }, ({ profileData }) => {
-            userData.set(profileData);
-        });
-    });
+async function fillUserData(): Promise<void> {
+    userData.set(await fetchUser());
 }
 
 function fillHomeUpdates(): void {

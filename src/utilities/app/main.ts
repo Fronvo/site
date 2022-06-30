@@ -2,6 +2,7 @@
 // Reusable functions for the app route, after login.
 // ******************** //
 
+import type { FronvoAccount } from 'interfaces/app/main';
 import { tokenInvalid } from 'stores/app/global';
 import {
     currentModalId,
@@ -31,6 +32,36 @@ export function performLogin(): void {
         } else {
             // Already logged in, skip manual login
             loginSucceeded.set(true);
+        }
+    });
+}
+
+export async function fetchUser(id?: string): Promise<FronvoAccount> {
+    // If no id, fetch self
+    return new Promise(async (resolve, reject) => {
+        if (!id) {
+            // Fetch our id first
+            socket.emit('fetchProfileId', async ({ profileId, err }) => {
+                err && reject(err);
+
+                resolve(await fetchData(profileId));
+            });
+        } else {
+            resolve(await fetchData(id));
+        }
+
+        async function fetchData(id: string): Promise<FronvoAccount> {
+            return new Promise((resolve, reject) => {
+                socket.emit(
+                    'fetchProfileData',
+                    { profileId: id },
+                    ({ profileData, err }) => {
+                        err && reject(err);
+
+                        resolve(profileData);
+                    }
+                );
+            });
         }
     });
 }

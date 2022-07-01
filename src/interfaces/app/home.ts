@@ -3,5 +3,5 @@
 // ******************** //
 
 export interface HomeUpdates {
-    url: string;
+    avatar: string;
 }

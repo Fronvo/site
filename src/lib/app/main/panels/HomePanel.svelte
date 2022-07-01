@@ -1,6 +1,6 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
-    import { userData } from 'stores/app/main';
+    import { userData } from 'stores/app/home';
     import { quadIn } from 'svelte/easing';
     import { fade } from 'svelte/transition';
     import { loadHomePanel } from 'utilities/app/home';

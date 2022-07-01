@@ -2,7 +2,7 @@
 // Reusable functions for the app home panel.
 // ******************** //
 
-import { homeUpdates, userData } from 'stores/app/main';
+import { homeUpdates, userData } from 'stores/app/home';
 import { fetchUser } from 'utilities/app/main';
 
 export function loadHomePanel(): void {

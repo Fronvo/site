@@ -8,10 +8,7 @@
     import { fly } from 'svelte/transition';
 </script>
 
-<div
-    in:fly={{ x: -100, duration: 750, opacity: 0.5 }}
-    class="side-nav-container"
->
+<div in:fly={{ y: 25, duration: 750, opacity: 0 }} class="side-nav-container">
     <Home />
 
     <br />
@@ -38,7 +35,7 @@
 
 <style>
     .side-nav-container {
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 0;
         bottom: 0;
@@ -47,13 +44,14 @@
         height: fit-content;
         padding: 20px;
         background: var(--theme-nav_bg_color);
-        backdrop-filter: blur(5px);
         box-shadow: 0 0 10px var(--theme-nav_shadow_color);
+        backdrop-filter: blur(3px);
         transition: 300ms background;
         text-align: center;
         border-top-right-radius: 25px;
         border-bottom-right-radius: 25px;
         transition: 500ms all;
+        z-index: 1;
     }
 
     @media screen and (max-width: 720px) {

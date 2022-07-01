@@ -20,7 +20,7 @@
 
 <style>
     .modal-container {
-        position: absolute;
+        position: fixed;
         top: 0;
         right: 0;
         left: 0;
@@ -31,7 +31,7 @@
         align-items: center;
         background: var(--theme-modal_bg_color);
         transition: 250ms all;
-        z-index: 1;
+        z-index: 2;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;

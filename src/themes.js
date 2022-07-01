@@ -14,7 +14,7 @@ export default {
         text_color_hover: 'rgba(169, 64, 255, 0.5)',
 
         // Top nav background color
-        nav_bg_color: 'rgba(20, 20, 20, 0.7)',
+        nav_bg_color: 'rgba(20, 20, 20, 0.75)',
 
         // Top nav shadow color
         nav_shadow_color: 'black',
@@ -40,7 +40,7 @@ export default {
         text_color_hover: 'rgba(169, 64, 255, 0.5)',
 
         // Top nav background color
-        nav_bg_color: 'rgba(255, 255, 255, 0.7)',
+        nav_bg_color: 'rgba(255, 255, 255, 0.75)',
 
         // Top nav shadow color
         nav_shadow_color: 'rgba(40, 40, 40, 0.15)',

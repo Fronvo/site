@@ -113,7 +113,7 @@ select:-webkit-autofill::first-line {
 }
 
 ::-webkit-scrollbar-track {
-    background: rgb(225, 192, 255);
+    background: rgb(177, 125, 255);
     border-radius: 10px;
 }
 

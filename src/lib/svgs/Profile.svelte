@@ -11,31 +11,31 @@
     viewBox="0 0 48 48"
     width="48"
     height="48"
-    on:click={() => switchPanel('Friends')}
+    on:click={() => switchPanel('Profile')}
     ><defs
         ><linearGradient
-            id="FRIENDS"
+            id="PROFILE"
             gradientUnits="userSpaceOnUse"
         /><linearGradient
-            id="friends"
+            id="profile"
             x1="47"
             y1="9.6"
             x2="1"
             y2="38.4"
-            href="#FRIENDS"
+            href="#PROFILE"
             ><stop stop-color="#b98bff" /><stop
                 offset="1"
                 stop-color="#710fff"
             /></linearGradient
         ></defs
     ><style>
-        .friends {
-            fill: url(#friends);
+        .profile {
+            fill: url(#profile);
             stroke-width: 0;
         }
     </style><path
         in:draw={{ duration: 1000, easing: quadIn }}
-        class={$currentPanelId == 1 ? 'friends' : ''}
+        class={$currentPanelId == 1 ? 'profile' : ''}
         d="m45 37.9q0 3.3-2.2 5.2-2.2 1.9-5.8 1.9h-26q-3.6 0-5.8-1.9-2.2-1.9-2.2-5.2 0-1.4 0.1-2.8 0.1-1.4 0.4-3 0.3-1.6 0.8-3 0.5-1.3 1.3-2.6 0.8-1.3 1.8-2.2 1.1-1 2.6-1.5 1.5-0.5 3.3-0.5 0.3 0 1.3 0.5 1 0.6 2.2 1.4 1.2 0.7 3.2 1.3 2 0.6 4 0.6 2 0 4-0.6 2-0.6 3.2-1.3 1.2-0.8 2.2-1.4 1-0.5 1.3-0.5 1.8 0 3.3 0.5 1.5 0.5 2.6 1.5 1 0.9 1.8 2.2 0.8 1.3 1.3 2.6 0.5 1.4 0.8 3 0.3 1.6 0.4 3 0.1 1.4 0.1 2.8zm-21-34.9q-4.7 0-8.1 3.1-3.4 3.1-3.4 7.4 0 4.3 3.4 7.4 3.4 3.1 8.1 3.1 4.7 0 8.1-3.1 3.4-3.1 3.4-7.4 0-4.3-3.4-7.4-3.4-3.1-8.1-3.1z"
     /></svg
 >

@@ -74,7 +74,7 @@ export function switchPanel(newPanel: PanelTypes): void {
             targetPanel = 0;
             break;
 
-        case 'Friends':
+        case 'Profile':
             targetPanel = 1;
             break;
 

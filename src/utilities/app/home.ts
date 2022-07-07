@@ -2,19 +2,13 @@
 // Reusable functions for the app home panel.
 // ******************** //
 
-import { homeUpdates, userData } from 'stores/app/home';
-import { fetchUser } from 'utilities/app/main';
+import { homeUpdates } from 'stores/app/home';
 
 export function loadHomePanel(): void {
-    fillUserData();
-    fillHomeUpdates();
+    loadHomeUpdates();
 }
 
-async function fillUserData(): Promise<void> {
-    userData.set(await fetchUser());
-}
-
-function fillHomeUpdates(): void {
+function loadHomeUpdates(): void {
     // TODO: Fetch from server
     homeUpdates.set([]);
 }

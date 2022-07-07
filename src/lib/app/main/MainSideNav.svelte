@@ -1,9 +1,9 @@
 <script lang="ts">
     import Avatar from '$lib/svgs/Avatar.svelte';
     import Communities from '$lib/svgs/Communities.svelte';
-    import Friends from '$lib/svgs/Friends.svelte';
     import Home from '$lib/svgs/Home.svelte';
     import Marketplace from '$lib/svgs/Marketplace.svelte';
+    import Profile from '$lib/svgs/Profile.svelte';
     import Settings from '$lib/svgs/Settings.svelte';
     import { fly } from 'svelte/transition';
 </script>
@@ -13,7 +13,7 @@
 
     <br />
 
-    <Friends />
+    <Profile />
 
     <br />
 

@@ -10,7 +10,6 @@
     import Center from '../Center.svelte';
 
     let code: string;
-    let codeDesktop: string;
     let isErrorVisible = false;
     let errorMessage: string;
     let submitButton: HTMLButtonElement;
@@ -32,20 +31,16 @@
         }
 
         function attemptVerify(): void {
-            socket.emit(
-                'registerVerify',
-                { code: code ? code : codeDesktop },
-                ({ err, token }) => {
-                    if (err) {
-                        setError({ err });
-                        toggleUI(true);
-                    } else {
-                        setKey('token', token);
-                        $tokenInvalid = false;
-                        $loginSucceeded = true;
-                    }
+            socket.emit('registerVerify', { code }, ({ err, token }) => {
+                if (err) {
+                    setError({ err });
+                    toggleUI(true);
+                } else {
+                    setKey('token', token);
+                    $tokenInvalid = false;
+                    $loginSucceeded = true;
                 }
-            );
+            });
         }
 
         toggleUI(false);
@@ -78,7 +73,7 @@
 
         <div id="desktop-code">
             <SvelteSegmentedInput
-                bind:value={codeDesktop}
+                bind:value={code}
                 length={6}
                 style={{
                     fontSize: '2.2rem',

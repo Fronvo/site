@@ -8,7 +8,6 @@
     import { fade, scale } from 'svelte/transition';
 
     let code: string;
-    let codeDesktop: string;
     let submitButton: HTMLButtonElement;
     let isErrorVisible = false;
     let errorMessage: string;
@@ -31,19 +30,15 @@
 
         function attemptReset(): void {
             // Little hack to recieve required field messages
-            socket.emit(
-                'resetPasswordVerify',
-                { code: code ? code : codeDesktop },
-                ({ err }) => {
-                    if (err) {
-                        setError({ err });
-                        toggleUI(true);
-                    } else {
-                        // Move on to verification
-                        $accountResetPasswordFinalTab = true;
-                    }
+            socket.emit('resetPasswordVerify', { code }, ({ err }) => {
+                if (err) {
+                    setError({ err });
+                    toggleUI(true);
+                } else {
+                    // Move on to verification
+                    $accountResetPasswordFinalTab = true;
                 }
-            );
+            });
         }
 
         toggleUI(false);
@@ -76,7 +71,7 @@
 
         <div id="desktop-code">
             <SvelteSegmentedInput
-                bind:value={codeDesktop}
+                bind:value={code}
                 length={6}
                 style={{
                     fontSize: '2.2rem',

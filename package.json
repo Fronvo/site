@@ -39,6 +39,7 @@
     "svelte-loading-spinners": "^0.1.7",
     "svelte-preprocess": "^4.10.6",
     "svelte-scrolling": "^1.2.1",
+    "svelte-segmented-input": "^1.4.2",
     "svelte-switch": "^0.0.5",
     "svelte-themer": "^0.5.5",
     "svelte-typewriter": "^3.0.0-alpha.11"

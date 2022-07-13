@@ -4,28 +4,25 @@
     import { loginSucceeded } from 'stores/app/main';
     import { socket } from 'stores/global';
     import { onMount } from 'svelte';
+    import SvelteSegmentedInput from 'svelte-segmented-input';
     import { fade, scale } from 'svelte/transition';
-    import { setEnterHandle, setKey } from 'utilities/global';
+    import { setKey } from 'utilities/global';
     import Center from '../Center.svelte';
 
     let code: string;
+    let codeDesktop: string;
     let isErrorVisible = false;
     let errorMessage: string;
-    let codeInput: HTMLInputElement;
     let submitButton: HTMLButtonElement;
 
     onMount(() => {
-        codeInput = document.getElementById('code-input') as HTMLInputElement;
         submitButton = document.getElementById(
             'submit-button'
         ) as HTMLButtonElement;
-
-        setEnterHandle(codeInput, submitButton);
     });
 
     function verify(): void {
         function toggleUI(state: boolean): void {
-            codeInput.disabled = !state;
             submitButton.disabled = !state;
         }
 
@@ -35,16 +32,20 @@
         }
 
         function attemptVerify(): void {
-            socket.emit('registerVerify', { code }, ({ err, token }) => {
-                if (err) {
-                    setError({ err });
-                    toggleUI(true);
-                } else {
-                    setKey('token', token);
-                    $tokenInvalid = false;
-                    $loginSucceeded = true;
+            socket.emit(
+                'registerVerify',
+                { code: code ? code : codeDesktop },
+                ({ err, token }) => {
+                    if (err) {
+                        setError({ err });
+                        toggleUI(true);
+                    } else {
+                        setKey('token', token);
+                        $tokenInvalid = false;
+                        $loginSucceeded = true;
+                    }
                 }
-            });
+            );
         }
 
         toggleUI(false);
@@ -75,7 +76,23 @@
             </h1>
         {/if}
 
-        <input id="code-input" bind:value={code} maxlength={6} />
+        <div id="desktop-code">
+            <SvelteSegmentedInput
+                bind:value={codeDesktop}
+                length={6}
+                style={{
+                    fontSize: '2.2rem',
+                    borderRadius: '10px',
+                    borderWidth: '3px',
+                    borderColorActive: 'rgb(255, 255, 255)',
+                    textColor: 'white',
+                    inputWidth: '100%',
+                    padding: '10px 10px 10px 15px',
+                }}
+            />
+        </div>
+
+        <input id="mobile-code" bind:value={code} maxlength={6} />
 
         <br />
 
@@ -126,6 +143,10 @@
         cursor: default;
     }
 
+    .verify-container #mobile-code {
+        display: none;
+    }
+
     @media screen and (max-width: 720px) {
         .verify-container {
             width: 450px;
@@ -141,10 +162,6 @@
 
         .verify-container #error-header {
             font-size: 1.7rem;
-        }
-
-        .verify-container input {
-            font-size: 2.5rem;
         }
 
         .verify-container button {
@@ -169,8 +186,13 @@
             font-size: 1.4rem;
         }
 
-        .verify-container input {
+        .verify-container #desktop-code {
+            display: none;
+        }
+
+        .verify-container #mobile-code {
             font-size: 1.8rem;
+            display: initial;
         }
 
         .verify-container button {

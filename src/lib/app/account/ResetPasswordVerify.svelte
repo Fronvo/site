@@ -4,27 +4,23 @@
     import { accountResetPasswordFinalTab } from 'stores/app/account';
     import { socket } from 'stores/global';
     import { onMount } from 'svelte';
+    import SvelteSegmentedInput from 'svelte-segmented-input';
     import { fade, scale } from 'svelte/transition';
-    import { setEnterHandle } from 'utilities/global';
 
     let code: string;
-    let codeInput: HTMLInputElement;
+    let codeDesktop: string;
     let submitButton: HTMLButtonElement;
     let isErrorVisible = false;
     let errorMessage: string;
 
     onMount(() => {
-        codeInput = document.getElementById('code-input') as HTMLInputElement;
         submitButton = document.getElementById(
             'submit-button'
         ) as HTMLButtonElement;
-
-        setEnterHandle(codeInput, submitButton);
     });
 
     function reset(): void {
         function toggleUI(state: boolean): void {
-            codeInput.disabled = !state;
             submitButton.disabled = !state;
         }
 
@@ -35,17 +31,19 @@
 
         function attemptReset(): void {
             // Little hack to recieve required field messages
-            socket.emit('resetPasswordVerify', { code }, ({ err }) => {
-                console.log(err);
-
-                if (err) {
-                    setError({ err });
-                    toggleUI(true);
-                } else {
-                    // Move on to verification
-                    $accountResetPasswordFinalTab = true;
+            socket.emit(
+                'resetPasswordVerify',
+                { code: code ? code : codeDesktop },
+                ({ err }) => {
+                    if (err) {
+                        setError({ err });
+                        toggleUI(true);
+                    } else {
+                        // Move on to verification
+                        $accountResetPasswordFinalTab = true;
+                    }
                 }
-            });
+            );
         }
 
         toggleUI(false);
@@ -76,7 +74,23 @@
             </h1>
         {/if}
 
-        <input id="code-input" bind:value={code} maxlength={6} />
+        <div id="desktop-code">
+            <SvelteSegmentedInput
+                bind:value={codeDesktop}
+                length={6}
+                style={{
+                    fontSize: '2.2rem',
+                    borderRadius: '10px',
+                    borderWidth: '3px',
+                    borderColorActive: 'rgb(255, 255, 255)',
+                    textColor: 'white',
+                    inputWidth: '100%',
+                    padding: '10px 10px 10px 15px',
+                }}
+            />
+        </div>
+
+        <input id="mobile-code" bind:value={code} maxlength={6} />
 
         <br />
 
@@ -127,6 +141,10 @@
         cursor: default;
     }
 
+    .reset-container #mobile-code {
+        display: none;
+    }
+
     @media screen and (max-width: 720px) {
         .reset-container {
             width: 450px;
@@ -142,10 +160,6 @@
 
         .reset-container #error-header {
             font-size: 1.7rem;
-        }
-
-        .reset-container input {
-            font-size: 2.5rem;
         }
 
         .reset-container button {
@@ -170,8 +184,13 @@
             font-size: 1.4rem;
         }
 
-        .reset-container input {
+        .reset-container #desktop-code {
+            display: none;
+        }
+
+        .reset-container #mobile-code {
             font-size: 1.8rem;
+            display: initial;
         }
 
         .reset-container button {

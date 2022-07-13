@@ -3,26 +3,14 @@
     import type { FronvoError } from 'interfaces/socket/all';
     import { accountResetPasswordFinalTab } from 'stores/app/account';
     import { socket } from 'stores/global';
-    import { onMount } from 'svelte';
     import SvelteSegmentedInput from 'svelte-segmented-input';
     import { fade, scale } from 'svelte/transition';
 
     let code: string;
-    let submitButton: HTMLButtonElement;
     let isErrorVisible = false;
     let errorMessage: string;
 
-    onMount(() => {
-        submitButton = document.getElementById(
-            'submit-button'
-        ) as HTMLButtonElement;
-    });
-
     function reset(): void {
-        function toggleUI(state: boolean): void {
-            submitButton.disabled = !state;
-        }
-
         function setError(error: FronvoError): void {
             isErrorVisible = true;
             errorMessage = error.err.msg;
@@ -33,15 +21,12 @@
             socket.emit('resetPasswordVerify', { code }, ({ err }) => {
                 if (err) {
                     setError({ err });
-                    toggleUI(true);
                 } else {
                     // Move on to verification
                     $accountResetPasswordFinalTab = true;
                 }
             });
         }
-
-        toggleUI(false);
 
         attemptReset();
     }
@@ -72,6 +57,7 @@
         <div id="desktop-code">
             <SvelteSegmentedInput
                 bind:value={code}
+                on:valueEntered={reset}
                 length={6}
                 style={{
                     fontSize: '2.2rem',
@@ -129,6 +115,10 @@
         padding: 0;
     }
 
+    .reset-container #mobile-code {
+        display: none;
+    }
+
     .reset-container button {
         font-size: 2.3rem;
         margin-top: 20px;
@@ -136,7 +126,7 @@
         cursor: default;
     }
 
-    .reset-container #mobile-code {
+    .reset-container #submit-button {
         display: none;
     }
 
@@ -190,6 +180,10 @@
 
         .reset-container button {
             font-size: 1.7rem;
+        }
+
+        .reset-container #submit-button {
+            display: initial;
         }
     }
 </style>

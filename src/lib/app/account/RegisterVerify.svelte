@@ -3,7 +3,6 @@
     import { tokenInvalid } from 'stores/app/global';
     import { loginSucceeded } from 'stores/app/main';
     import { socket } from 'stores/global';
-    import { onMount } from 'svelte';
     import SvelteSegmentedInput from 'svelte-segmented-input';
     import { fade, scale } from 'svelte/transition';
     import { setKey } from 'utilities/global';
@@ -12,19 +11,8 @@
     let code: string;
     let isErrorVisible = false;
     let errorMessage: string;
-    let submitButton: HTMLButtonElement;
-
-    onMount(() => {
-        submitButton = document.getElementById(
-            'submit-button'
-        ) as HTMLButtonElement;
-    });
 
     function verify(): void {
-        function toggleUI(state: boolean): void {
-            submitButton.disabled = !state;
-        }
-
         function setError(error: FronvoError): void {
             isErrorVisible = true;
             errorMessage = error.err.msg;
@@ -34,7 +22,6 @@
             socket.emit('registerVerify', { code }, ({ err, token }) => {
                 if (err) {
                     setError({ err });
-                    toggleUI(true);
                 } else {
                     setKey('token', token);
                     $tokenInvalid = false;
@@ -42,8 +29,6 @@
                 }
             });
         }
-
-        toggleUI(false);
 
         attemptVerify();
     }
@@ -74,6 +59,7 @@
         <div id="desktop-code">
             <SvelteSegmentedInput
                 bind:value={code}
+                on:valueEntered={verify}
                 length={6}
                 style={{
                     fontSize: '2.2rem',
@@ -142,6 +128,10 @@
         display: none;
     }
 
+    .verify-container #submit-button {
+        display: none;
+    }
+
     @media screen and (max-width: 720px) {
         .verify-container {
             width: 450px;
@@ -192,6 +182,10 @@
 
         .verify-container button {
             font-size: 1.7rem;
+        }
+
+        .verify-container #submit-button {
+            display: initial;
         }
     }
 </style>

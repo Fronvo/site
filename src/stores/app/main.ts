@@ -4,9 +4,9 @@
 
 import SettingsModal from '$lib/app/main/modals/SettingsModal.svelte';
 import CommunitiesPanel from '$lib/app/main/panels/CommunitiesPanel.svelte';
-import ProfilePanel from '$lib/app/main/panels/Profile.svelte';
 import HomePanel from '$lib/app/main/panels/HomePanel.svelte';
 import MarketplacePanel from '$lib/app/main/panels/MarketplacePanel.svelte';
+import ProfilePanel from '$lib/app/main/panels/ProfilePanel.svelte';
 import { writable } from 'svelte/store';
 
 export const loginSucceeded = writable(false);

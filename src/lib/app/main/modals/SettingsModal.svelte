@@ -1,6 +1,7 @@
 <script lang="ts">
     import ThemeSwitch from '$lib/all/ThemeSwitch.svelte';
     import Close from '$lib/svgs/Close.svelte';
+    import { accountRegisterVerifyTab } from 'stores/app/account';
     import {
         loginSucceeded,
         modalAnimDuration,
@@ -17,6 +18,7 @@
                 if (err) return;
 
                 removeKey('token');
+                $accountRegisterVerifyTab = false;
                 $loginSucceeded = false;
             });
         }, modalAnimDuration);

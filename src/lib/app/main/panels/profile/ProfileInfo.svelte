@@ -1,0 +1,128 @@
+<script lang="ts">
+    import type { FronvoAccount } from 'interfaces/app/main';
+    import { fade } from 'svelte/transition';
+
+    export let info: FronvoAccount;
+</script>
+
+{#if info}
+    <div class="info-container">
+        <!-- Avatar, username -->
+
+        <!-- TODO: Pfp url check once implemented server-side -->
+        <img
+            id="avatar"
+            src="svgs/profile/default.svg"
+            alt={`${info.username}\'s avatar`}
+            draggable={false}
+        />
+
+        <h1 in:fade={{ duration: 300, delay: 200 }} id="username">
+            {info.username}
+        </h1>
+
+        <!-- TODO: Bio?, status? -->
+
+        <!-- Follow info -->
+        <div class="follow-container">
+            <h1 in:fade={{ duration: 400, delay: 300 }}>
+                <span>0</span> following
+            </h1>
+
+            <h1 in:fade={{ duration: 400, delay: 400 }}>
+                <span>0</span> followers
+            </h1>
+        </div>
+    </div>
+{/if}
+
+<style>
+    .info-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .info-container #avatar {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        width: 128px;
+        height: 128px;
+        /* TODO: Customise border etc */
+    }
+
+    .info-container #username {
+        font-size: 3rem;
+        margin: 0;
+        margin-left: 10px;
+        color: var(--theme-profile_info_color);
+    }
+
+    .follow-container {
+        display: flex;
+        flex-wrap: nowrap;
+        margin-top: 10px;
+    }
+
+    .follow-container h1 {
+        cursor: pointer;
+        font-size: 2.1rem;
+        margin: 0;
+    }
+
+    .follow-container h1:first-child {
+        margin-right: 20px;
+    }
+
+    .follow-container h1 span {
+        color: var(--theme-profile_info_color);
+    }
+
+    @media screen and (max-width: 720px) {
+        .info-container #avatar {
+            width: 120px;
+            height: 120px;
+        }
+
+        .info-container #username {
+            font-size: 2.5rem;
+        }
+
+        .follow-container {
+            margin-top: 5px;
+        }
+
+        .follow-container h1 {
+            font-size: 1.8rem;
+            cursor: default;
+        }
+
+        .follow-container h1:first-child {
+            margin-right: 15px;
+        }
+    }
+
+    @media screen and (max-width: 520px) {
+        .info-container #avatar {
+            width: 100px;
+            height: 100px;
+        }
+
+        .info-container #username {
+            font-size: 2rem;
+        }
+
+        .follow-container h1 {
+            font-size: 1.5rem;
+        }
+
+        .follow-container h1:first-child {
+            margin-right: 10px;
+        }
+    }
+</style>

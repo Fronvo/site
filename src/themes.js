@@ -25,8 +25,8 @@ export default {
         // Modal background
         modal_bg_color: 'rgba(10, 10, 10, 80%)',
 
-        // Follow info
-        follow_text_color: 'rgb(255, 255, 255)',
+        // Profile info
+        profile_info_color: 'rgb(255, 255, 255)',
     },
 
     light: {
@@ -54,7 +54,7 @@ export default {
         // Modal background
         modal_bg_color: 'rgba(230, 230, 230, 80%)',
 
-        // Follow info
-        follow_text_color: 'rgb(50, 50, 50)',
+        // Profile info
+        profile_info_color: 'rgb(50, 50, 50)',
     },
 };

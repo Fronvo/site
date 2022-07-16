@@ -44,6 +44,7 @@
         stroke: var(--theme-svg_stroke);
         stroke-width: 2px;
         cursor: pointer;
+        margin-top: 10px;
         transition: 100ms all;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -65,6 +66,7 @@
         svg {
             margin-bottom: 0;
             margin-top: 0;
+            margin-left: 10px;
             cursor: default;
         }
 
@@ -77,6 +79,7 @@
         svg {
             width: 40px;
             height: 40px;
+            margin-left: 5px;
         }
     }
 </style>

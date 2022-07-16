@@ -1,5 +1,4 @@
 <script lang="ts">
-    import Avatar from '$lib/svgs/Avatar.svelte';
     import Communities from '$lib/svgs/Communities.svelte';
     import Home from '$lib/svgs/Home.svelte';
     import Marketplace from '$lib/svgs/Marketplace.svelte';
@@ -24,11 +23,6 @@
     <Marketplace />
 
     <hr />
-
-    <!-- TODO: Show user actions modal (logout, switch account) -->
-    <Avatar />
-
-    <br />
 
     <Settings />
 </div>

@@ -1,6 +1,5 @@
 <script lang="ts">
     import Center from '$lib/app/Center.svelte';
-    import Avatar from '$lib/svgs/Avatar.svelte';
     import { friendsAdded } from 'stores/app/profile';
     import { fade } from 'svelte/transition';
     import { fetchUser } from 'utilities/app/main';
@@ -18,7 +17,8 @@
         {#each $friendsAdded as { id }, i}
             {#await fetchUser(id) then { username }}
                 <div in:fade={{ duration: 500, delay: (i + 1) * 50 }}>
-                    <Avatar />
+                    <!-- TODO: img -->
+                    <!-- <Avatar /> -->
                     <h1>{username}</h1>
                 </div>
             {/await}

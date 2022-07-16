@@ -1,5 +1,4 @@
 <script lang="ts">
-    import Avatar from '$lib/svgs/Avatar.svelte';
     import type { HomeUpdates } from 'interfaces/app/home';
     import { fade, fly } from 'svelte/transition';
 
@@ -10,7 +9,8 @@
     <div class="updates-container" in:fly={{ duration: 1000, y: 50 }}>
         {#each homeUpdates as { avatar }, i}
             <div in:fade={{ duration: 500, delay: (i + 1) * 80 }}>
-                <Avatar url={avatar} />
+                <!-- TODO: img -->
+                <!-- <Avatar url={avatar} /> -->
             </div>
         {/each}
     </div>

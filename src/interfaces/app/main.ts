@@ -6,5 +6,14 @@ export interface FronvoAccount {
     id: string;
     username: string;
     email: string;
-    creationDate: Date;
+    creationDate: string;
+    following: String[];
+    followers: String[];
+    posts: AccountPost[];
+}
+
+interface AccountPost {
+    title: string;
+    message: string;
+    creationDate: string;
 }

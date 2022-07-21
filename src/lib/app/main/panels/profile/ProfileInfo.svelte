@@ -26,11 +26,11 @@
         <!-- Follow info -->
         <div class="follow-container">
             <h1 in:fade={{ duration: 400, delay: 300 }}>
-                <span>0</span> following
+                <span>{info.following.length}</span> following
             </h1>
 
             <h1 in:fade={{ duration: 400, delay: 400 }}>
-                <span>0</span> followers
+                <span>{info.followers.length}</span> followers
             </h1>
         </div>
     </div>
@@ -53,7 +53,7 @@
         user-select: none;
         width: 128px;
         height: 128px;
-        /* TODO: Customise border etc */
+        border-radius: 10px;
     }
 
     .info-container #username {
@@ -71,8 +71,14 @@
 
     .follow-container h1 {
         cursor: pointer;
-        font-size: 2.1rem;
+        font-size: 2.2rem;
         margin: 0;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
 
     .follow-container h1:first-child {
@@ -90,7 +96,7 @@
         }
 
         .info-container #username {
-            font-size: 2.5rem;
+            font-size: 2.6rem;
         }
 
         .follow-container {
@@ -98,7 +104,7 @@
         }
 
         .follow-container h1 {
-            font-size: 1.8rem;
+            font-size: 1.9rem;
             cursor: default;
         }
 
@@ -114,11 +120,11 @@
         }
 
         .info-container #username {
-            font-size: 2rem;
+            font-size: 2.1rem;
         }
 
         .follow-container h1 {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
         }
 
         .follow-container h1:first-child {

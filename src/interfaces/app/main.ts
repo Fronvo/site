@@ -7,8 +7,8 @@ export interface FronvoAccount {
     username: string;
     email: string;
     creationDate: string;
-    following: String[];
-    followers: String[];
+    following: string[];
+    followers: string[];
     posts: AccountPost[];
 }
 

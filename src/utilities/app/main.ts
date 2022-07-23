@@ -101,6 +101,14 @@ export function showModal(newModal: ModalTypes): void {
         case 'Settings':
             targetModal = 0;
             break;
+
+        case 'Following':
+            targetModal = 1;
+            break;
+
+        case 'Followers':
+            targetModal = 2;
+            break;
     }
 
     currentModalId.set(targetModal);

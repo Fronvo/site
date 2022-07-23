@@ -20,9 +20,9 @@
 </script>
 
 {#if info}
-    <div class="posts-container" in:fade={{ delay: 900 }}>
+    <div class="posts-container" in:fade={{ delay: 1300 }}>
         {#if info.posts.length == 0}
-            <h1 in:fade={{ duration: 500, delay: 1000 }} id="empty-text">
+            <h1 in:fade={{ duration: 500, delay: 700 }} id="empty-text">
                 No posts, yet
             </h1>
         {:else}

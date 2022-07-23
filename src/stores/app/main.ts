@@ -2,6 +2,8 @@
 // Shared variables for the app route, after login.
 // ******************** //
 
+import FollowersModal from '$lib/app/main/modals/FollowersModal.svelte';
+import FollowingModal from '$lib/app/main/modals/FollowingModal.svelte';
 import SettingsModal from '$lib/app/main/modals/SettingsModal.svelte';
 import CommunitiesPanel from '$lib/app/main/panels/CommunitiesPanel.svelte';
 import HomePanel from '$lib/app/main/panels/HomePanel.svelte';
@@ -22,8 +24,10 @@ export const panels = [
 export const currentPanelId = writable(0);
 
 // Modal settings
-export const modals = [SettingsModal];
+export const modals = [SettingsModal, FollowingModal, FollowersModal];
 
 export const currentModalId = writable(0);
 export const modalVisible = writable(false);
 export const modalAnimDuration = 400;
+export const followingModalInfo = writable([]);
+export const followersModalInfo = writable([]);

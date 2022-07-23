@@ -18,7 +18,7 @@
     {#if $userData}
         <ProfileInfo info={$userData} />
 
-        <hr in:fade={{ duration: 250, delay: 700 }} />
+        <hr in:fade={{ duration: 250, delay: 900 }} />
 
         <ProfilePosts info={$userData} />
     {/if}

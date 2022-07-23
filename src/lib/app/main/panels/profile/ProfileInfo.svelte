@@ -1,8 +1,20 @@
 <script lang="ts">
     import type { FronvoAccount } from 'interfaces/app/main';
+    import { followersModalInfo, followingModalInfo } from 'stores/app/main';
     import { fade } from 'svelte/transition';
+    import { showModal } from 'utilities/app/main';
 
     export let info: FronvoAccount;
+
+    function showFollowing(): void {
+        $followingModalInfo = info.following;
+        showModal('Following');
+    }
+
+    function showFollowers(): void {
+        $followersModalInfo = info.followers;
+        showModal('Followers');
+    }
 </script>
 
 {#if info}
@@ -17,7 +29,7 @@
             draggable={false}
         />
 
-        <h1 in:fade={{ duration: 300, delay: 200 }} id="username">
+        <h1 in:fade={{ duration: 300, delay: 400 }} id="username">
             {info.username}
         </h1>
 
@@ -25,11 +37,19 @@
 
         <!-- Follow info -->
         <div class="follow-container">
-            <h1 in:fade={{ duration: 400, delay: 300 }}>
+            <h1
+                on:click={showFollowing}
+                in:fade={{ duration: 400, delay: 400 }}
+            >
+                <!-- TODO: Format to k, m, leave as is for modals -->
                 <span>{info.following.length}</span> following
             </h1>
 
-            <h1 in:fade={{ duration: 400, delay: 400 }}>
+            <h1
+                on:click={showFollowers}
+                in:fade={{ duration: 400, delay: 400 }}
+            >
+                <!-- TODO: Format to k, m, leave as is for modals -->
                 <span>{info.followers.length}</span> followers
             </h1>
         </div>

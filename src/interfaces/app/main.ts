@@ -6,6 +6,7 @@ export interface FronvoAccount {
     id: string;
     username: string;
     email: string;
+    avatar: string;
     creationDate: string;
     following: string[];
     followers: string[];

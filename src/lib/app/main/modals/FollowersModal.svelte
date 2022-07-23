@@ -51,11 +51,11 @@
             </Center>
         {:else}
             <div class="followers-items-container">
-                {#each followers as { username, following, followers }}
+                {#each followers as { username, following, followers, avatar }}
                     <div>
                         <img
                             id="avatar"
-                            src="svgs/profile/default.svg"
+                            src={avatar ? avatar : 'svgs/profile/default.svg'}
                             alt={`${username}'s avatar`}
                             draggable={false}
                         />

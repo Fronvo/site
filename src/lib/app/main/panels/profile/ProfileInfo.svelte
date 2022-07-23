@@ -21,10 +21,9 @@
     <div class="info-container">
         <!-- Avatar, username -->
 
-        <!-- TODO: Pfp url check once implemented server-side -->
         <img
             id="avatar"
-            src="svgs/profile/default.svg"
+            src={info.avatar ? info.avatar : 'svgs/profile/default.svg'}
             alt={`${info.username}\'s avatar`}
             draggable={false}
         />

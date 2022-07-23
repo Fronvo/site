@@ -7,11 +7,8 @@
 
     // Update panel
     switchPanel('Profile');
-
-    // TODO: Subscribe to friend requests
 </script>
 
-<!-- TODO: Fronvo | Friends (number of friend requests) -->
 <svelte:head>
     <title>Fronvo | Profile</title>
 </svelte:head>

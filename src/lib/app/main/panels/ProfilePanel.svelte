@@ -13,7 +13,7 @@
     $: loadProfilePanel();
 </script>
 
-<div class="profile-container" in:fade={{ duration: 300, delay: 100 }}>
+<div class="profile-container" in:fade={{ duration: 300, delay: 200 }}>
     <!-- Hot updates in dev -->
     {#if $userData}
         <ProfileInfo info={$userData} />

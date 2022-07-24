@@ -92,7 +92,7 @@
             <h1 id="input-header" class="avatar-info">Avatar</h1>
         </div>
 
-        <input id="avatar-input" bind:value={$avatar} />
+        <input id="avatar-input" bind:value={$avatar} maxlength={512} />
     </div>
 
     <div class="options-container">

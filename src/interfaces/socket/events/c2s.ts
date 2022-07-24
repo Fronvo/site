@@ -8,6 +8,10 @@ import type {
 } from 'interfaces/socket/account/fetchProfileData';
 import type { FetchProfileIdResult } from 'interfaces/socket/account/fetchProfileId';
 import type { LogoutResult } from 'interfaces/socket/account/logout';
+import type {
+    UpdateProfileDataParams,
+    UpdateProfileDataResult,
+} from 'interfaces/socket/account/updateProfileData';
 import type { IsLoggedInResult } from 'interfaces/socket/general/isLoggedIn';
 import type {
     LoginParams,
@@ -71,5 +75,9 @@ export interface ClientToServerEvents {
     resetPasswordFinal: (
         {}: ResetPasswordFinalParams,
         callback?: ({}: ResetPasswordFinalResult) => void
+    ) => void;
+    updateProfileData: (
+        {}: UpdateProfileDataParams,
+        callback?: ({}: UpdateProfileDataResult) => void
     ) => void;
 }

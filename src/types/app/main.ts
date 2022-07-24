@@ -4,4 +4,4 @@
 
 export type PanelTypes = 'Home' | 'Profile' | 'Communities' | 'Marketplace';
 
-export type ModalTypes = 'Settings' | 'Following' | 'Followers';
+export type ModalTypes = 'Settings' | 'Following' | 'Followers' | 'EditProfile';

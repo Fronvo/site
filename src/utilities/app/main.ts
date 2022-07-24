@@ -109,6 +109,10 @@ export function showModal(newModal: ModalTypes): void {
         case 'Followers':
             targetModal = 2;
             break;
+
+        case 'EditProfile':
+            targetModal = 3;
+            break;
     }
 
     currentModalId.set(targetModal);

@@ -15,6 +15,10 @@
         $followersModalInfo = info.followers;
         showModal('Followers');
     }
+
+    function showEditProfile(): void {
+        showModal('EditProfile');
+    }
 </script>
 
 {#if info}
@@ -52,6 +56,12 @@
                 <span>{info.followers.length}</span> followers
             </h1>
         </div>
+
+        <button
+            id="edit"
+            on:click={showEditProfile}
+            in:fade={{ duration: 600, delay: 700 }}>Edit profile</button
+        >
     </div>
 {/if}
 
@@ -80,6 +90,7 @@
         margin: 0;
         margin-left: 10px;
         color: var(--theme-profile_info_color);
+        text-align: center;
     }
 
     .follow-container {
@@ -108,6 +119,11 @@
         color: var(--theme-profile_info_color);
     }
 
+    #edit {
+        font-size: 1.8rem;
+        margin-top: 10px;
+    }
+
     @media screen and (max-width: 720px) {
         .info-container #avatar {
             width: 120px;
@@ -130,6 +146,11 @@
         .follow-container h1:first-child {
             margin-right: 15px;
         }
+
+        #edit {
+            font-size: 1.6rem;
+            cursor: default;
+        }
     }
 
     @media screen and (max-width: 520px) {
@@ -148,6 +169,10 @@
 
         .follow-container h1:first-child {
             margin-right: 10px;
+        }
+
+        #edit {
+            font-size: 1.4rem;
         }
     }
 </style>

@@ -43,6 +43,7 @@
                 }
 
                 // Update userData
+                // TODO: Update with updatedProfileData once implemented, modified server side
                 $userData.username = username;
                 $userData.avatar = $avatar;
 

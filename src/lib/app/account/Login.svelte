@@ -180,6 +180,8 @@
         font-size: 2.5rem;
         margin-top: 25px;
         width: 90%;
+        border: 3px solid white;
+        padding: 7px;
     }
 
     .account-container #register-redirect {
@@ -226,6 +228,7 @@
             font-size: 1.7rem;
             cursor: default;
         }
+
         .account-container button {
             font-size: 2.2rem;
             cursor: default;

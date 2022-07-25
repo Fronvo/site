@@ -139,6 +139,8 @@
         margin-top: 25px;
         width: 90%;
         cursor: default;
+        border: 3px solid white;
+        padding: 7px;
     }
 
     @media screen and (max-width: 720px) {

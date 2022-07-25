@@ -5,14 +5,18 @@
         modals,
         modalVisible,
     } from 'stores/app/main';
-    import { circInOut } from 'svelte/easing';
-    import { slide } from 'svelte/transition';
+    import { quadInOut } from 'svelte/easing';
+    import { scale } from 'svelte/transition';
 </script>
 
 {#if $modalVisible}
     <div
         class="modal-container"
-        transition:slide={{ duration: modalAnimDuration, easing: circInOut }}
+        transition:scale={{
+            duration: modalAnimDuration,
+            start: 0.96,
+            easing: quadInOut,
+        }}
     >
         <svelte:component this={modals[$currentModalId]} />
     </div>
@@ -29,7 +33,6 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        background: var(--theme-modal_bg_color);
         transition: 250ms all;
         z-index: 2;
         -webkit-touch-callout: none;
@@ -38,12 +41,6 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        backdrop-filter: blur(2px);
-    }
-
-    @media screen and (max-width: 720px) {
-        .modal-container {
-            backdrop-filter: none;
-        }
+        backdrop-filter: blur(5px) brightness(90%);
     }
 </style>

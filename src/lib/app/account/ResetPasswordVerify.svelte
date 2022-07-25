@@ -54,28 +54,20 @@
             </h1>
         {/if}
 
-        <div id="desktop-code">
-            <SvelteSegmentedInput
-                bind:value={code}
-                on:valueEntered={reset}
-                length={6}
-                style={{
-                    fontSize: '2.2rem',
-                    borderRadius: '10px',
-                    borderWidth: '3px',
-                    borderColorActive: 'rgb(255, 255, 255)',
-                    textColor: 'white',
-                    inputWidth: '100%',
-                    padding: '10px 10px 10px 15px',
-                }}
-            />
-        </div>
-
-        <input id="mobile-code" bind:value={code} maxlength={6} />
-
-        <br />
-
-        <button id="submit-button" on:click={reset}>Submit</button>
+        <SvelteSegmentedInput
+            bind:value={code}
+            on:valueEntered={reset}
+            length={6}
+            style={{
+                fontSize: '2rem',
+                borderRadius: '10px',
+                borderWidth: '2px',
+                borderColorActive: 'rgb(255, 255, 255)',
+                textColor: 'white',
+                inputWidth: '100%',
+                padding: '10px 10px 10px 10px',
+            }}
+        />
     </div>
 </Center>
 
@@ -107,29 +99,6 @@
         width: 100%;
     }
 
-    .reset-container input {
-        font-size: 3rem;
-        width: 50%;
-        text-align: center;
-        margin-top: 20px;
-        padding: 0;
-    }
-
-    .reset-container #mobile-code {
-        display: none;
-    }
-
-    .reset-container button {
-        font-size: 2.3rem;
-        margin-top: 20px;
-        width: 50%;
-        cursor: default;
-    }
-
-    .reset-container #submit-button {
-        display: none;
-    }
-
     @media screen and (max-width: 720px) {
         .reset-container {
             width: 450px;
@@ -145,10 +114,6 @@
 
         .reset-container #error-header {
             font-size: 1.7rem;
-        }
-
-        .reset-container button {
-            font-size: 2.2rem;
         }
     }
 
@@ -167,23 +132,6 @@
 
         .reset-container #error-header {
             font-size: 1.4rem;
-        }
-
-        .reset-container #desktop-code {
-            display: none;
-        }
-
-        .reset-container #mobile-code {
-            font-size: 1.8rem;
-            display: initial;
-        }
-
-        .reset-container button {
-            font-size: 1.7rem;
-        }
-
-        .reset-container #submit-button {
-            display: initial;
         }
     }
 </style>

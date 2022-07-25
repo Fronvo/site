@@ -56,28 +56,20 @@
             </h1>
         {/if}
 
-        <div id="desktop-code">
-            <SvelteSegmentedInput
-                bind:value={code}
-                on:valueEntered={verify}
-                length={6}
-                style={{
-                    fontSize: '2.2rem',
-                    borderRadius: '10px',
-                    borderWidth: '3px',
-                    borderColorActive: 'rgb(255, 255, 255)',
-                    textColor: 'white',
-                    inputWidth: '100%',
-                    padding: '10px 10px 10px 15px',
-                }}
-            />
-        </div>
-
-        <input id="mobile-code" bind:value={code} maxlength={6} />
-
-        <br />
-
-        <button id="submit-button" on:click={verify}>Submit</button>
+        <SvelteSegmentedInput
+            bind:value={code}
+            on:valueEntered={verify}
+            length={6}
+            style={{
+                fontSize: '2rem',
+                borderRadius: '10px',
+                borderWidth: '2px',
+                borderColorActive: 'rgb(255, 255, 255)',
+                textColor: 'white',
+                inputWidth: '100%',
+                padding: '10px 10px 10px 10px',
+            }}
+        />
     </div>
 </Center>
 
@@ -109,29 +101,6 @@
         width: 100%;
     }
 
-    .verify-container input {
-        font-size: 3rem;
-        width: 50%;
-        text-align: center;
-        margin-top: 20px;
-        padding: 0;
-    }
-
-    .verify-container button {
-        font-size: 2.3rem;
-        margin-top: 20px;
-        width: 50%;
-        cursor: default;
-    }
-
-    .verify-container #mobile-code {
-        display: none;
-    }
-
-    .verify-container #submit-button {
-        display: none;
-    }
-
     @media screen and (max-width: 720px) {
         .verify-container {
             width: 450px;
@@ -147,10 +116,6 @@
 
         .verify-container #error-header {
             font-size: 1.7rem;
-        }
-
-        .verify-container button {
-            font-size: 2.2rem;
         }
     }
 
@@ -169,23 +134,6 @@
 
         .verify-container #error-header {
             font-size: 1.4rem;
-        }
-
-        .verify-container #desktop-code {
-            display: none;
-        }
-
-        .verify-container #mobile-code {
-            font-size: 1.8rem;
-            display: initial;
-        }
-
-        .verify-container button {
-            font-size: 1.7rem;
-        }
-
-        .verify-container #submit-button {
-            display: initial;
         }
     }
 </style>

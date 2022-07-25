@@ -153,6 +153,8 @@
         font-size: 2.5rem;
         margin-top: 25px;
         width: 90%;
+        border: 3px solid white;
+        padding: 7px;
     }
 
     .account-container #login-redirect {

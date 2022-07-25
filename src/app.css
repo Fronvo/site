@@ -42,19 +42,13 @@ h1 {
     color: var(--theme-text_color);
 }
 
-p {
-    color: rgb(170, 65, 255);
-    font-family: 'DM Sans';
-    font-weight: 500;
-}
-
 button {
     background: rgb(100, 0, 255);
-    border: 3px solid rgb(255, 255, 255);
+    border: none;
     box-shadow: 0 0 5px black;
     border-radius: 10px;
-    color: var(--theme-btn_text_color);
-    padding: 7px;
+    color: white;
+    padding: 10px;
     font-family: 'DM Sans';
     font-weight: 500;
     cursor: pointer;
@@ -80,7 +74,7 @@ input {
     font-family: 'DM Sans';
     transition: 0.5s;
     color: var(--theme-text_color);
-    padding: 5px 10px 5px 10px;
+    padding: 5px;
 }
 
 input:disabled {

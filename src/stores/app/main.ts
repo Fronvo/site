@@ -34,6 +34,6 @@ export const modals = [
 
 export const currentModalId = writable(0);
 export const modalVisible = writable(false);
-export const modalAnimDuration = 400;
+export const modalAnimDuration = 200;
 export const followingModalInfo = writable([]);
 export const followersModalInfo = writable([]);

@@ -87,7 +87,7 @@
             id="password-input"
             bind:value={newPassword}
             type="password"
-            maxlength={30}
+            maxlength={90}
         />
 
         <br />

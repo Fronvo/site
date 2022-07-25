@@ -91,14 +91,14 @@
         {/if}
 
         <h1 id="input-header">Email</h1>
-        <input id="email-input" bind:value={email} maxlength={60} />
+        <input id="email-input" bind:value={email} maxlength={120} />
 
         <h1 id="input-header">Password</h1>
         <input
             id="password-input"
             bind:value={password}
             type="password"
-            maxlength={30}
+            maxlength={90}
         />
 
         <br />

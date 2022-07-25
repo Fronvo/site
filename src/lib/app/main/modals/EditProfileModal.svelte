@@ -44,8 +44,12 @@
 
                 // Update userData
                 // TODO: Update with updatedProfileData once implemented, modified server side
-                $userData.username = username ? username : $userData.username;
-                $userData.avatar = $avatar ? $avatar : '';
+                $userData.username =
+                    username.trim().length > 0
+                        ? username.trim()
+                        : $userData.username;
+                $userData.avatar =
+                    $avatar.trim().length > 0 ? $avatar.trim() : '';
 
                 $modalVisible = false;
             }

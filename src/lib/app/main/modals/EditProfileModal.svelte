@@ -17,6 +17,11 @@
             'avatar-preview'
         ) as HTMLImageElement;
         avatarPreview.onerror = () => {
+            const avatarText =
+                document.getElementsByClassName('avatar-info')[0];
+            avatarText.textContent = 'Avatar - Invalid URL';
+
+            canUpload = false;
             avatarPreview.src = 'svgs/profile/default.svg';
         };
     });

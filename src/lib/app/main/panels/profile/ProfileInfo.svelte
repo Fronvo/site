@@ -37,10 +37,14 @@
             {info.username}
         </h1>
 
-        <!-- TODO: Bio?, status? -->
+        <h1 id="bio" in:fade={{ duration: 500 }}>
+            {info.bio}
+        </h1>
+
+        <!-- TODO: Status if not private -->
 
         <!-- Follow info -->
-        <div class="follow-container" in:fade={{ duration: 300, delay: 400 }}>
+        <div class="follow-container" in:fade={{ duration: 300, delay: 450 }}>
             <h1 on:click={showFollowing}>
                 <!-- TODO: Format to k, m, leave as is for modals -->
                 <span>{info.following.length}</span> following
@@ -55,7 +59,7 @@
         <button
             id="edit"
             on:click={showEditProfile}
-            in:fade={{ duration: 300, delay: 400 }}>Edit profile</button
+            in:fade={{ duration: 300, delay: 450 }}>Edit profile</button
         >
     </div>
 {/if}
@@ -83,7 +87,17 @@
     .info-container #username {
         font-size: 3rem;
         margin: 0;
+        margin-right: 10px;
         margin-left: 10px;
+        color: var(--theme-profile_info_color);
+        text-align: center;
+    }
+
+    .info-container #bio {
+        font-size: 1.8em;
+        margin: 0;
+        margin-left: 10px;
+        margin-right: 10px;
         color: var(--theme-profile_info_color);
         text-align: center;
     }
@@ -129,6 +143,10 @@
             font-size: 2.6rem;
         }
 
+        .info-container #bio {
+            font-size: 1.7rem;
+        }
+
         .follow-container {
             margin-top: 5px;
         }
@@ -156,6 +174,10 @@
 
         .info-container #username {
             font-size: 2.1rem;
+        }
+
+        .info-container #bio {
+            font-size: 1.4rem;
         }
 
         .follow-container h1 {

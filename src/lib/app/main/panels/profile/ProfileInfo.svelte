@@ -30,28 +30,23 @@
             src={info.avatar ? info.avatar : 'svgs/profile/default.svg'}
             alt={`${info.username}\'s avatar`}
             draggable={false}
+            in:fade={{ duration: 500 }}
         />
 
-        <h1 in:fade={{ duration: 300, delay: 400 }} id="username">
+        <h1 id="username" in:fade={{ duration: 500 }}>
             {info.username}
         </h1>
 
         <!-- TODO: Bio?, status? -->
 
         <!-- Follow info -->
-        <div class="follow-container">
-            <h1
-                on:click={showFollowing}
-                in:fade={{ duration: 400, delay: 400 }}
-            >
+        <div class="follow-container" in:fade={{ duration: 300, delay: 400 }}>
+            <h1 on:click={showFollowing}>
                 <!-- TODO: Format to k, m, leave as is for modals -->
                 <span>{info.following.length}</span> following
             </h1>
 
-            <h1
-                on:click={showFollowers}
-                in:fade={{ duration: 400, delay: 400 }}
-            >
+            <h1 on:click={showFollowers}>
                 <!-- TODO: Format to k, m, leave as is for modals -->
                 <span>{info.followers.length}</span> followers
             </h1>
@@ -60,7 +55,7 @@
         <button
             id="edit"
             on:click={showEditProfile}
-            in:fade={{ duration: 600, delay: 700 }}>Edit profile</button
+            in:fade={{ duration: 300, delay: 400 }}>Edit profile</button
         >
     </div>
 {/if}

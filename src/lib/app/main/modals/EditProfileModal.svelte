@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { userData } from 'src/stores/app/profile';
-    import { socket } from 'src/stores/global';
     import { modalVisible } from 'stores/app/main';
+    import { userData } from 'stores/app/profile';
+    import { socket } from 'stores/global';
     import { onMount } from 'svelte';
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
@@ -44,30 +44,41 @@
 
                 // Update userData
                 // TODO: Update with updatedProfileData once implemented, modified server side
-                $userData.username = username;
-                $userData.avatar = $avatar;
+                $userData.username = username ? username : $userData.username;
+                $userData.avatar = $avatar ? $avatar : '';
 
                 $modalVisible = false;
             }
         );
     }
 
-    avatar.subscribe((newAvatar) => {
-        if (!newAvatar) return;
+    onMount(() => {
+        avatar.subscribe((newAvatar) => {
+            if (newAvatar == undefined) return;
 
-        const avatarText = document.getElementsByClassName('avatar-info')[0];
+            const avatarText =
+                document.getElementsByClassName('avatar-info')[0];
 
-        // Check for avatar https, perform some client side validation on our own
-        if (!newAvatar.match(/^(https:\/\/).+$/)) {
-            avatarText.textContent = 'Avatar - Invalid URL';
+            // Allow empty avatar url, reset it
+            if (newAvatar == '') {
+                // Reset state
+                avatarText.textContent = 'Avatar';
 
-            canUpload = false;
-        } else if (!canUpload) {
-            // Reset state
-            avatarText.textContent = 'Avatar';
+                canUpload = true;
+            }
 
-            canUpload = true;
-        }
+            // Check for avatar https, perform some client side validation on our own
+            else if (!newAvatar.match(/^(https:\/\/).+$/)) {
+                avatarText.textContent = 'Avatar - Invalid URL';
+
+                canUpload = false;
+            } else if (!canUpload) {
+                // Reset state
+                avatarText.textContent = 'Avatar';
+
+                canUpload = true;
+            }
+        });
     });
 </script>
 
@@ -91,7 +102,7 @@
         <div>
             <img
                 id="avatar-preview"
-                src={$avatar}
+                src={$avatar ? $avatar : 'svgs/profile/default.svg'}
                 alt="New avatar"
                 draggable={false}
             />

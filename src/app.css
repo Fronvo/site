@@ -68,7 +68,8 @@ button:focus {
     outline-offset: 3px;
 }
 
-input {
+input,
+textarea {
     border: none;
     border-radius: 5px;
     font-family: 'DM Sans';
@@ -77,11 +78,17 @@ input {
     padding: 5px;
 }
 
-input:disabled {
+textarea {
+    resize: none;
+}
+
+input:disabled,
+textarea:disabled {
     background: rgba(255, 255, 255, 85%);
 }
 
-input:focus {
+input:focus,
+textarea:focus {
     outline: none;
 }
 

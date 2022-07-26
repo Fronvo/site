@@ -10,6 +10,7 @@
     let bio = $userData.bio;
     let avatar: Writable<string> = writable($userData.avatar);
     let canUpload = true;
+    let isUploading = false;
     let errorMessage: string;
 
     onMount(() => {
@@ -28,7 +29,9 @@
     });
 
     function uploadData(): void {
-        if (!canUpload) return;
+        if (!canUpload || isUploading) return;
+
+        isUploading = true;
 
         socket.emit(
             'updateProfileData',
@@ -40,6 +43,7 @@
             ({ err }) => {
                 if (err) {
                     errorMessage = err.msg;
+                    isUploading = false;
 
                     return;
                 }
@@ -106,10 +110,10 @@
         {/if}
 
         <h1 id="input-header">Username</h1>
-        <input id="username-input" bind:value={username} maxlength={30} />
+        <input bind:value={username} maxlength={30} />
 
         <h1 id="input-header">Bio</h1>
-        <input id="username-input" bind:value={bio} maxlength={128} />
+        <input bind:value={bio} maxlength={128} />
 
         <div>
             <img
@@ -121,16 +125,20 @@
             <h1 id="input-header" class="avatar-info">Avatar</h1>
         </div>
 
-        <input id="avatar-input" bind:value={$avatar} maxlength={512} />
+        <textarea
+            id="avatar-input"
+            bind:value={$avatar}
+            maxlength={512}
+            rows={4}
+        />
     </div>
 
     <div class="options-container">
-        <button id="save" on:click={uploadData}>Save</button>
+        <button on:click={uploadData}>Save</button>
 
         <button
-            id="discard"
             on:click={() => {
-                $modalVisible = false;
+                if (!isUploading) $modalVisible = false;
             }}>Discard</button
         >
     </div>
@@ -145,6 +153,7 @@
         display: flex;
         flex-direction: column;
         height: 100%;
+        width: 100%;
         align-items: center;
     }
 
@@ -165,7 +174,8 @@
         flex-direction: column;
         flex: 1;
         justify-content: center;
-        width: 450px;
+        width: 40%;
+        min-width: 450px;
     }
 
     .data-container #error-header {
@@ -196,11 +206,16 @@
         font-size: 2.2rem;
     }
 
-    .data-container input {
+    .data-container input,
+    .data-container textarea {
         font-size: 2rem;
         margin: 0 5px 20px 5px;
         width: 95%;
         background: var(--theme-modal_input_bg_color);
+    }
+
+    .data-container #avatar-input {
+        font-size: 1.7rem;
     }
 
     .options-container {
@@ -221,6 +236,7 @@
 
         .data-container {
             width: 350px;
+            min-width: auto;
         }
 
         .data-container #error-header {
@@ -238,6 +254,10 @@
 
         .data-container input {
             font-size: 1.7rem;
+        }
+
+        .data-container #avatar-input {
+            font-size: 1.5rem;
         }
 
         .options-container button {
@@ -265,6 +285,10 @@
 
         .data-container input {
             font-size: 1.4rem;
+        }
+
+        .data-container #avatar-input {
+            font-size: 1.3rem;
         }
 
         .options-container button {

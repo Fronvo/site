@@ -42,6 +42,6 @@
         -ms-user-select: none;
         user-select: none;
         backdrop-filter: blur(3px);
-        background: rgba(0, 0, 0, 25%);
+        background: var(--theme-modal_bg_color);
     }
 </style>

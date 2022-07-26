@@ -42,6 +42,7 @@
     "svelte-segmented-input": "^1.5.0",
     "svelte-switch": "^0.0.5",
     "svelte-themer": "^0.5.5",
+    "svelte-time": "^0.7.1",
     "svelte-typewriter": "^3.0.0-alpha.11"
   },
   "type": "module",
@@ -54,7 +55,6 @@
     "prettier": "^2.6.2",
     "prettier-plugin-svelte": "^2.7.0",
     "svelte-check": "^2.7.1",
-    "svelte-time": "^0.7.1",
     "typescript": "^4.7.2"
   }
 }

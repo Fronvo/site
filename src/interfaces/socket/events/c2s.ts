@@ -3,6 +3,10 @@
 // ******************** //
 
 import type {
+    CreatePostParams,
+    CreatePostResult,
+} from 'interfaces/socket/account/createPost';
+import type {
     FetchProfileDataParams,
     FetchProfileDataResult,
 } from 'interfaces/socket/account/fetchProfileData';
@@ -79,5 +83,9 @@ export interface ClientToServerEvents {
     updateProfileData: (
         {}: UpdateProfileDataParams,
         callback?: ({}: UpdateProfileDataResult) => void
+    ) => void;
+    createPost: (
+        {}: CreatePostParams,
+        callback?: ({}: CreatePostResult) => void
     ) => void;
 }

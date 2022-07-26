@@ -20,7 +20,7 @@
 
         <hr in:fade={{ duration: 250, delay: 600 }} />
 
-        <ProfilePosts info={$userData} />
+        <ProfilePosts posts={$userData.posts.reverse()} />
     {/if}
 </div>
 

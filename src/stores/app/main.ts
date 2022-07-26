@@ -2,6 +2,7 @@
 // Shared variables for the app route, after login.
 // ******************** //
 
+import CreatePostModal from '$lib/app/main/modals/CreatePostModal.svelte';
 import EditProfileModal from '$lib/app/main/modals/EditProfileModal.svelte';
 import FollowersModal from '$lib/app/main/modals/FollowersModal.svelte';
 import FollowingModal from '$lib/app/main/modals/FollowingModal.svelte';
@@ -30,6 +31,7 @@ export const modals = [
     FollowingModal,
     FollowersModal,
     EditProfileModal,
+    CreatePostModal,
 ];
 
 export const currentModalId = writable(0);

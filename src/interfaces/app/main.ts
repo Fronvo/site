@@ -14,8 +14,8 @@ export interface FronvoAccount {
     posts: AccountPost[];
 }
 
-interface AccountPost {
+export interface AccountPost {
     title: string;
-    message: string;
+    content: string;
     creationDate: string;
 }

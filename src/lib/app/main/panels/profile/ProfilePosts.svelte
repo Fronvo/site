@@ -1,48 +1,60 @@
 <script lang="ts">
-    import type { FronvoAccount } from 'interfaces/app/main';
+    import type { AccountPost } from 'interfaces/app/main';
+    import Time from 'svelte-time';
     import { fade } from 'svelte/transition';
 
-    export let info: FronvoAccount;
+    export let posts: AccountPost[];
+    let mountTransitionsDone = false;
 
-    function formatPostDate(postDate?: string): string {
-        return new Date(postDate ? postDate : Date.now()).toLocaleDateString(
-            undefined,
-            {
-                day: '2-digit',
-                month: 'short',
-                year: 'numeric',
-                hour: 'numeric',
-                minute: 'numeric',
-                hour12: false,
-            }
-        );
-    }
+    setTimeout(() => {
+        mountTransitionsDone = true;
+
+        // Up to 6 posts to fade, more wont be visible probably
+    }, 500 + ((posts.length < 6 ? posts.length : 6 - 1) + 5) * 100);
 </script>
 
-{#if info}
-    <div class="posts-container" in:fade={{ delay: 1000 }}>
-        {#if info.posts.length == 0}
-            <h1 in:fade={{ duration: 500, delay: 700 }} id="empty-text">
-                No posts, yet
-            </h1>
-        {:else}
-            {#each info.posts as { title, message, creationDate }, i}
-                <!-- TODO: Saos fade in, same delay -->
-                <div in:fade={{ duration: 500, delay: 500 + (i + 5) * 100 }}>
-                    <h1 id="title">{title}</h1>
-                    <h1 id="message">{message}</h1>
-                    <h1 id="creation-date">{formatPostDate(creationDate)}</h1>
+<div class="posts-container" in:fade={{ delay: 900 }}>
+    {#if posts.length == 0}
+        <h1 in:fade={{ duration: 500, delay: 700 }} id="empty-text">
+            No posts, yet
+        </h1>
+    {:else}
+        <!-- TODO: Sort by likes / oldest / newest -->
 
-                    <!-- TODO: Action layout for likes, sharing, comments -->
-                </div>
-            {/each}
-        {/if}
-    </div>
-{/if}
+        {#each posts as { title, content, creationDate }, i}
+            <!-- TODO: Saos fade in, same delay -->
+            <div
+                in:fade={{
+                    duration: 500,
+                    delay: !mountTransitionsDone
+                        ? 500 + (posts.length - (i + 1) + 5) * 100
+                        : 0,
+                }}
+            >
+                <h1 id="title">{title}</h1>
+                <h1 id="message">{content}</h1>
+                <h1 id="creation-date">
+                    <!-- Updates every 15 seconds -->
+                    <Time
+                        relative
+                        format={'dddd HH:mm · MMMM D YYYY'}
+                        live={15000}
+                        timestamp={creationDate}
+                    />
+                </h1>
+
+                <!-- TODO: Action layout for likes, sharing, comments -->
+            </div>
+        {/each}
+    {/if}
+</div>
 
 <style>
     .posts-container {
         margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        flex-flow: column-reverse;
     }
 
     .posts-container div {
@@ -117,11 +129,11 @@
         }
 
         .posts-container div #title {
-            font-size: 2rem;
+            font-size: 1.7rem;
         }
 
         .posts-container div #message {
-            font-size: 1.7rem;
+            font-size: 1.4rem;
             -webkit-line-clamp: 4;
         }
 
@@ -141,11 +153,11 @@
         }
 
         .posts-container div #title {
-            font-size: 1.7rem;
+            font-size: 1.5rem;
         }
 
         .posts-container div #message {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             -webkit-line-clamp: 3;
         }
 

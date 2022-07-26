@@ -113,6 +113,10 @@ export function showModal(newModal: ModalTypes): void {
         case 'EditProfile':
             targetModal = 3;
             break;
+
+        case 'CreatePost':
+            targetModal = 4;
+            break;
     }
 
     currentModalId.set(targetModal);

@@ -5,6 +5,7 @@
     import { onMount } from 'svelte';
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
+    import { loadProfilePanel } from 'utilities/app/profile';
 
     let username = $userData.username;
     let bio = $userData.bio;
@@ -48,17 +49,8 @@
                     return;
                 }
 
-                // Update userData
-                // TODO: Update with updatedProfileData once implemented, modified server side
-                username = username.trim();
-                bio = bio.trim();
-                $avatar = $avatar.trim();
-
-                $userData.username =
-                    username.length > 0 ? username : $userData.username;
-
-                $userData.bio = bio;
-                $userData.avatar = $avatar;
+                // Update, new account details
+                loadProfilePanel();
 
                 $modalVisible = false;
             }

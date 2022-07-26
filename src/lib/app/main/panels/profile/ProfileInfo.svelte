@@ -19,6 +19,10 @@
     function showEditProfile(): void {
         showModal('EditProfile');
     }
+
+    function showCreatePost(): void {
+        showModal('CreatePost');
+    }
 </script>
 
 {#if info}
@@ -44,7 +48,7 @@
         <!-- TODO: Status if not private -->
 
         <!-- Follow info -->
-        <div class="follow-container" in:fade={{ duration: 300, delay: 450 }}>
+        <div class="follow-container" in:fade={{ duration: 300, delay: 300 }}>
             <h1 on:click={showFollowing}>
                 <!-- TODO: Format to k, m, leave as is for modals -->
                 <span>{info.following.length}</span> following
@@ -56,11 +60,11 @@
             </h1>
         </div>
 
-        <button
-            id="edit"
-            on:click={showEditProfile}
-            in:fade={{ duration: 300, delay: 450 }}>Edit profile</button
-        >
+        <div class="options-container" in:fade={{ duration: 300, delay: 250 }}>
+            <button on:click={showEditProfile}>Edit profile</button>
+
+            <button on:click={showCreatePost}>Create post</button>
+        </div>
     </div>
 {/if}
 
@@ -128,9 +132,16 @@
         color: var(--theme-profile_info_color);
     }
 
-    #edit {
-        font-size: 1.7rem;
+    .options-container {
         margin-top: 10px;
+    }
+
+    .options-container button {
+        font-size: 1.7rem;
+    }
+
+    .options-container button:first-child {
+        margin-right: 10px;
     }
 
     @media screen and (max-width: 720px) {
@@ -160,7 +171,7 @@
             margin-right: 15px;
         }
 
-        #edit {
+        .options-container button {
             font-size: 1.6rem;
             cursor: default;
         }
@@ -188,8 +199,9 @@
             margin-right: 10px;
         }
 
-        #edit {
+        .options-container button {
             font-size: 1.2rem;
+            cursor: default;
         }
     }
 </style>

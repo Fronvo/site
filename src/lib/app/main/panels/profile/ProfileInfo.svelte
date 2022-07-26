@@ -107,7 +107,7 @@
         white-space: pre-wrap;
         display: -webkit-box;
         overflow: hidden;
-        -webkit-line-clamp: 4;
+        -webkit-line-clamp: 6;
         -webkit-box-orient: vertical;
     }
 

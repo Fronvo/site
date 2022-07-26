@@ -104,6 +104,11 @@
         margin-right: 10px;
         color: var(--theme-profile_info_color);
         text-align: center;
+        white-space: pre-wrap;
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
     }
 
     .follow-container {

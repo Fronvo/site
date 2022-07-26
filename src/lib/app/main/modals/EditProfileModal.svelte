@@ -105,7 +105,7 @@
         <input bind:value={username} maxlength={30} />
 
         <h1 id="input-header">Bio</h1>
-        <input bind:value={bio} maxlength={128} />
+        <textarea id="bio-input" bind:value={bio} maxlength={128} rows={4} />
 
         <div>
             <img
@@ -117,12 +117,7 @@
             <h1 id="input-header" class="avatar-info">Avatar</h1>
         </div>
 
-        <textarea
-            id="avatar-input"
-            bind:value={$avatar}
-            maxlength={512}
-            rows={4}
-        />
+        <input maxlength={512} bind:value={$avatar} />
     </div>
 
     <div class="options-container">
@@ -206,7 +201,7 @@
         background: var(--theme-modal_input_bg_color);
     }
 
-    .data-container #avatar-input {
+    .data-container #bio-input {
         font-size: 1.7rem;
     }
 
@@ -248,7 +243,7 @@
             font-size: 1.7rem;
         }
 
-        .data-container #avatar-input {
+        .data-container #bio-input {
             font-size: 1.5rem;
         }
 
@@ -279,7 +274,7 @@
             font-size: 1.4rem;
         }
 
-        .data-container #avatar-input {
+        .data-container #bio-input {
             font-size: 1.3rem;
         }
 

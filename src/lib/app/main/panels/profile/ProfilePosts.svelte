@@ -104,6 +104,7 @@
         font-size: 1.8rem;
         color: var(--theme-profile_info_color);
         flex: 1;
+        white-space: pre-wrap;
     }
 
     .posts-container div #creation-date {

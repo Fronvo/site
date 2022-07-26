@@ -41,6 +41,7 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        backdrop-filter: blur(5px) brightness(90%);
+        backdrop-filter: blur(3px);
+        background: rgba(0, 0, 0, 25%);
     }
 </style>

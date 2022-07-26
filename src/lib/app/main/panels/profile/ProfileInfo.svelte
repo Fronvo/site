@@ -94,7 +94,7 @@
     }
 
     .info-container #bio {
-        font-size: 1.8em;
+        font-size: 1.7rem;
         margin: 0;
         margin-left: 10px;
         margin-right: 10px;
@@ -110,7 +110,7 @@
 
     .follow-container h1 {
         cursor: pointer;
-        font-size: 2.2rem;
+        font-size: 1.9rem;
         margin: 0;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -129,7 +129,7 @@
     }
 
     #edit {
-        font-size: 1.8rem;
+        font-size: 1.7rem;
         margin-top: 10px;
     }
 
@@ -144,7 +144,7 @@
         }
 
         .info-container #bio {
-            font-size: 1.7rem;
+            font-size: 1.5rem;
         }
 
         .follow-container {
@@ -152,7 +152,7 @@
         }
 
         .follow-container h1 {
-            font-size: 1.9rem;
+            font-size: 1.6rem;
             cursor: default;
         }
 
@@ -177,11 +177,11 @@
         }
 
         .info-container #bio {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
         }
 
         .follow-container h1 {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
         }
 
         .follow-container h1:first-child {
@@ -189,7 +189,7 @@
         }
 
         #edit {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
         }
     }
 </style>

@@ -102,19 +102,7 @@
 
     .posts-container #empty-text {
         margin: 0;
-        font-size: 2.2rem;
-    }
-
-    @media screen and (max-width: 720px) {
-        .posts-container #empty-text {
-            font-size: 2rem;
-        }
-    }
-
-    @media screen and (max-width: 520px) {
-        .posts-container #empty-text {
-            font-size: 1.7rem;
-        }
+        font-size: 2rem;
     }
 
     @media screen and (max-width: 720px) {
@@ -140,6 +128,10 @@
         .posts-container div #creation-date {
             font-size: 1.2rem;
         }
+
+        .posts-container #empty-text {
+            font-size: 1.8rem;
+        }
     }
 
     @media screen and (max-width: 520px) {
@@ -159,6 +151,10 @@
 
         .posts-container div #creation-date {
             font-size: 1.1rem;
+        }
+
+        .posts-container #empty-text {
+            font-size: 1.6rem;
         }
     }
 </style>

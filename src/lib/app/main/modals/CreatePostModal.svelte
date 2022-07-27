@@ -1,16 +1,20 @@
 <script lang="ts">
     import { modalVisible } from 'stores/app/main';
     import { socket } from 'stores/global';
+    import { onMount } from 'svelte';
+    import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
     import { loadProfilePanel } from 'utilities/app/profile';
 
     let title: string;
     let content: string;
+    let attachment: Writable<string> = writable('');
     let isSharing = false;
+    let canShare = true;
     let errorMessage: string;
 
     function sharePost(): void {
-        if (isSharing) return;
+        if (!canShare || isSharing) return;
 
         isSharing = true;
 
@@ -19,6 +23,7 @@
             {
                 title,
                 content,
+                attachment: $attachment,
             },
             ({ err }) => {
                 if (err) {
@@ -35,6 +40,51 @@
             }
         );
     }
+
+    onMount(() => {
+        const attachmentPreview: HTMLImageElement = document.getElementById(
+            'attachment-preview'
+        ) as HTMLImageElement;
+
+        attachmentPreview.onerror = () => {
+            if ($attachment == '') return;
+
+            const attachmentText =
+                document.getElementsByClassName('attachment-info')[0];
+
+            attachmentText.textContent = 'Attachment - Invalid URL';
+
+            canShare = false;
+            attachmentPreview.src = 'svgs/profile/default.svg';
+        };
+
+        attachment.subscribe((newAttachment) => {
+            if (newAttachment == undefined) return;
+
+            const attachmentText =
+                document.getElementsByClassName('attachment-info')[0];
+
+            // Allow empty avatar url, reset it
+            if (newAttachment == '') {
+                // Reset state
+                attachmentText.textContent = 'Attachment';
+
+                canShare = true;
+            }
+
+            // Check for avatar https, perform some client side validation on our own
+            else if (!newAttachment.match(/^(https:\/\/).+$/)) {
+                attachmentText.textContent = 'Attachment - Invalid URL';
+
+                canShare = false;
+            } else if (!canShare) {
+                // Reset state
+                attachmentText.textContent = 'Attachment';
+
+                canShare = true;
+            }
+        });
+    });
 </script>
 
 <div class="edit-container">
@@ -56,6 +106,16 @@
 
         <h1 id="input-header">Content</h1>
         <textarea bind:value={content} maxlength={256} rows={6} />
+
+        <!-- Just for attachment checking, no preview -->
+        <img
+            id="attachment-preview"
+            src={$attachment ? $attachment : ''}
+            alt="Post attachment"
+            draggable={false}
+        />
+        <h1 id="input-header" class="attachment-info">Attachment</h1>
+        <input bind:value={$attachment} maxlength={512} />
     </div>
 
     <div class="options-container">
@@ -124,6 +184,10 @@
         margin: 0 5px 20px 5px;
         width: 95%;
         background: var(--theme-modal_input_bg_color);
+    }
+
+    .data-container #attachment-preview {
+        display: none;
     }
 
     .options-container {

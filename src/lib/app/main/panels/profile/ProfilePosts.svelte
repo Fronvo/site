@@ -21,7 +21,7 @@
     {:else}
         <!-- TODO: Sort by likes / oldest / newest -->
 
-        {#each posts as { title, content, creationDate }, i}
+        {#each posts as { title, content, attachment, creationDate }, i}
             <!-- TODO: Saos fade in, same delay -->
             <div
                 in:fade={{
@@ -33,6 +33,16 @@
             >
                 <h1 id="title">{title}</h1>
                 <h1 id="message">{content}</h1>
+
+                {#if attachment}
+                    <img
+                        id="attachment"
+                        src={attachment}
+                        alt={`'${title}' attachment`}
+                        draggable={false}
+                    />
+                {/if}
+
                 <h1 id="creation-date">
                     <!-- Updates every 15 seconds -->
                     <Time
@@ -68,7 +78,7 @@
         padding-bottom: 5px;
         margin-bottom: 30px;
         width: 550px;
-        max-height: 300px;
+        max-height: 600px;
         border-radius: 10px;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -78,6 +88,7 @@
         user-select: none;
         transition: 150ms box-shadow;
         cursor: pointer;
+        align-items: center;
     }
 
     .posts-container div:hover {
@@ -107,6 +118,13 @@
         white-space: pre-wrap;
     }
 
+    .posts-container div #attachment {
+        max-width: 100%;
+        max-height: 100%;
+        margin-top: 10px;
+        border-radius: 10px;
+    }
+
     .posts-container div #creation-date {
         font-size: 1.3rem;
         margin: 0;
@@ -121,7 +139,7 @@
     @media screen and (max-width: 720px) {
         .posts-container div {
             max-width: 400px;
-            max-height: 250px;
+            max-height: 450px;
             cursor: default;
         }
 
@@ -150,7 +168,7 @@
     @media screen and (max-width: 520px) {
         .posts-container div {
             max-width: 300px;
-            max-height: 200px;
+            max-height: 400px;
         }
 
         .posts-container div #title {

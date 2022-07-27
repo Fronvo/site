@@ -17,5 +17,6 @@ export interface FronvoAccount {
 export interface AccountPost {
     title: string;
     content: string;
+    attachment?: string;
     creationDate: string;
 }

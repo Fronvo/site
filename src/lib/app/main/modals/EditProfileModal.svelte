@@ -14,21 +14,6 @@
     let isUploading = false;
     let errorMessage: string;
 
-    onMount(() => {
-        // Provided 404 backup image
-        const avatarPreview: HTMLImageElement = document.getElementById(
-            'avatar-preview'
-        ) as HTMLImageElement;
-        avatarPreview.onerror = () => {
-            const avatarText =
-                document.getElementsByClassName('avatar-info')[0];
-            avatarText.textContent = 'Avatar - Invalid URL';
-
-            canUpload = false;
-            avatarPreview.src = 'svgs/profile/default.svg';
-        };
-    });
-
     function uploadData(): void {
         if (!canUpload || isUploading) return;
 
@@ -58,6 +43,20 @@
     }
 
     onMount(() => {
+        // Provided 404 backup image
+        const avatarPreview: HTMLImageElement = document.getElementById(
+            'avatar-preview'
+        ) as HTMLImageElement;
+
+        avatarPreview.onerror = () => {
+            const avatarText =
+                document.getElementsByClassName('avatar-info')[0];
+
+            avatarText.textContent = 'Avatar - Invalid URL';
+
+            canUpload = false;
+            avatarPreview.src = 'svgs/profile/default.svg';
+        };
         avatar.subscribe((newAvatar) => {
             if (newAvatar == undefined) return;
 

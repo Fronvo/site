@@ -104,6 +104,12 @@
         font-size: 3rem;
         margin: 0;
         padding-right: 20px;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
 
     .header-container #header span {
@@ -169,6 +175,12 @@
 
     #no-followers {
         font-size: 2.3rem;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
 
     #close {

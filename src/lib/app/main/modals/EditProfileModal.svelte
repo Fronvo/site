@@ -190,6 +190,12 @@
         color: var(--theme-profile_info_color);
         margin: 0;
         font-size: 2.2rem;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
 
     .data-container input,

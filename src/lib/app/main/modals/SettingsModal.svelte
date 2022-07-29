@@ -63,6 +63,12 @@
         font-size: 3rem;
         margin: 0;
         padding-right: 40px;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
 
     .options-container div {
@@ -77,6 +83,12 @@
         margin: 0;
         margin-right: 15px;
         font-size: 2.4rem;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
 
     .options-container div button {

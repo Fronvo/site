@@ -35,12 +35,6 @@
         align-items: center;
         transition: 250ms all;
         z-index: 2;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
         backdrop-filter: blur(3px) saturate(125%);
         background: var(--theme-modal_bg_color);
     }

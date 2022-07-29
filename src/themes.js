@@ -17,7 +17,7 @@ export default {
         svg_stroke: 'rgb(130, 64, 255)',
 
         // Modal background color
-        modal_bg_color: 'rgba(0, 0, 0, 30%)',
+        modal_bg_color: 'rgba(20, 20, 20, 50%)',
 
         // Modal input background color
         modal_input_bg_color: 'rgba(40, 40, 40, 0.5)',
@@ -43,7 +43,7 @@ export default {
         svg_stroke: 'rgb(130, 64, 255)',
 
         // Modal background color
-        modal_bg_color: 'rgba(200, 200, 200, 30%)',
+        modal_bg_color: 'rgba(230, 230, 230, 60%)',
 
         // Modal input background color
         modal_input_bg_color: 'rgba(255, 255, 255, 0.5)',

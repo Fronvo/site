@@ -146,12 +146,11 @@
     .options-container {
         display: flex;
         margin-bottom: 15px;
-        margin-top: 50px;
+        margin-top: 10px;
     }
 
     .options-container button {
         font-size: 2.2rem;
-        margin-right: 20px;
     }
 
     @media screen and (max-width: 720px) {

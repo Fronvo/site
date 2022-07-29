@@ -118,8 +118,8 @@
     }
 
     .data-container #attachment {
-        max-width: 100%;
-        max-height: 100%;
+        max-width: 60%;
+        max-height: 60%;
         margin-top: 10px;
         border-radius: 10px;
         -webkit-touch-callout: none;
@@ -169,6 +169,11 @@
 
         .data-container #content {
             font-size: 1.5rem;
+        }
+
+        .data-container #attachment {
+            max-width: 100%;
+            max-height: 100%;
         }
 
         .data-container #creation-date {

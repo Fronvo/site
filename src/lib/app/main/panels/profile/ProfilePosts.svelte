@@ -1,7 +1,10 @@
 <script lang="ts">
     import type { AccountPost } from 'interfaces/app/main';
+    import { viewPostModalInfo } from 'stores/app/main';
+    import { userData } from 'stores/app/profile';
     import Time from 'svelte-time';
     import { fade } from 'svelte/transition';
+    import { showModal } from 'utilities/app/main';
 
     export let posts: AccountPost[];
     let mountTransitionsDone = false;
@@ -11,6 +14,11 @@
 
         // Up to 6 posts to fade, more wont be visible probably
     }, 500 + ((posts.length < 6 ? posts.length : 6 - 1) + 5) * 100);
+
+    function showViewPost(postIndex: number): void {
+        $viewPostModalInfo = $userData.posts[postIndex];
+        showModal('ViewPost');
+    }
 </script>
 
 <div class="posts-container" in:fade={{ delay: 900 }}>
@@ -24,6 +32,7 @@
         {#each posts as { title, content, attachment, creationDate }, i}
             <!-- TODO: Saos fade in, same delay -->
             <div
+                on:click={() => showViewPost(i)}
                 in:fade={{
                     duration: 500,
                     delay: !mountTransitionsDone
@@ -32,7 +41,7 @@
                 }}
             >
                 <h1 id="title">{title}</h1>
-                <h1 id="message">{content}</h1>
+                <h1 id="content">{content}</h1>
 
                 {#if attachment}
                     <img
@@ -105,7 +114,7 @@
         font-size: 2.1rem;
     }
 
-    .posts-container div #message {
+    .posts-container div #content {
         display: -webkit-box;
         overflow: hidden;
         -webkit-line-clamp: 5;
@@ -151,7 +160,7 @@
             font-size: 1.7rem;
         }
 
-        .posts-container div #message {
+        .posts-container div #content {
             font-size: 1.4rem;
             -webkit-line-clamp: 4;
         }
@@ -175,7 +184,7 @@
             font-size: 1.5rem;
         }
 
-        .posts-container div #message {
+        .posts-container div #content {
             font-size: 1.2rem;
             -webkit-line-clamp: 3;
         }

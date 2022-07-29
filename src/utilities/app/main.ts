@@ -117,6 +117,10 @@ export function showModal(newModal: ModalTypes): void {
         case 'CreatePost':
             targetModal = 4;
             break;
+
+        case 'ViewPost':
+            targetModal = 5;
+            break;
     }
 
     currentModalId.set(targetModal);

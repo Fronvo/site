@@ -41,7 +41,7 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        backdrop-filter: blur(3px);
+        backdrop-filter: blur(3px) saturate(125%);
         background: var(--theme-modal_bg_color);
     }
 </style>

@@ -39,7 +39,7 @@
         padding: 20px;
         background: var(--theme-nav_bg_color);
         box-shadow: 0 0 10px var(--theme-nav_shadow_color);
-        backdrop-filter: blur(3px);
+        backdrop-filter: blur(3px) saturate(125%);
         transition: 300ms background;
         text-align: center;
         border-top-right-radius: 25px;

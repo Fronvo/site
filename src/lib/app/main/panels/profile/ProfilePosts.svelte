@@ -129,7 +129,7 @@
 
     .posts-container div #attachment {
         max-width: 100%;
-        max-height: 100%;
+        max-height: 275px;
         margin-top: 10px;
         border-radius: 10px;
     }
@@ -165,6 +165,10 @@
             -webkit-line-clamp: 4;
         }
 
+        .posts-container div #attachment {
+            max-height: 225px;
+        }
+
         .posts-container div #creation-date {
             font-size: 1.2rem;
         }
@@ -187,6 +191,10 @@
         .posts-container div #content {
             font-size: 1.2rem;
             -webkit-line-clamp: 3;
+        }
+
+        .posts-container div #attachment {
+            max-height: 200px;
         }
 
         .posts-container div #creation-date {

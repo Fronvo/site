@@ -2,7 +2,7 @@
     import { goto } from '$app/navigation';
     import ProfileInfo from '$lib/app/main/panels/profile/ProfileInfo.svelte';
     import ProfilePosts from '$lib/app/main/panels/profile/ProfilePosts.svelte';
-    import { userData } from 'stores/app/profile';
+    import { targetProfile, userData } from 'stores/app/profile';
     import { fade } from 'svelte/transition';
     import { loadProfilePanel } from 'utilities/app/profile';
 
@@ -10,7 +10,7 @@
         replaceState: true,
     });
 
-    $: loadProfilePanel();
+    $: loadProfilePanel($targetProfile);
 </script>
 
 <div class="profile-container" in:fade={{ duration: 300, delay: 200 }}>

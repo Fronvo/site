@@ -5,10 +5,6 @@
 import { userData } from 'stores/app/profile';
 import { fetchUser } from 'utilities/app/main';
 
-export function loadProfilePanel(): void {
-    loadUserData();
-}
-
-async function loadUserData(): Promise<void> {
-    userData.set(await fetchUser());
+export async function loadProfilePanel(targetProfile: string): Promise<void> {
+    userData.set(await fetchUser(targetProfile));
 }

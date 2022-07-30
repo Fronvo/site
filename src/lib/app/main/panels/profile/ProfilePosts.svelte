@@ -125,6 +125,7 @@
         color: var(--theme-profile_info_color);
         flex: 1;
         white-space: pre-wrap;
+        text-align: center;
     }
 
     .posts-container div #attachment {

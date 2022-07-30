@@ -5,19 +5,19 @@
 </script>
 
 <div class="view-container">
-    <div class="data-container">
-        <div class="by-container">
-            <h1 id="author">By {$userData.username}</h1>
-            <img
-                id="avatar"
-                src={$userData.avatar
-                    ? $userData.avatar
-                    : 'svgs/profile/default.svg'}
-                draggable={false}
-                alt={`${$userData.username}'s avatar`}
-            />
-        </div>
+    <div class="by-container">
+        <h1 id="author">By {$userData.username}</h1>
+        <img
+            id="avatar"
+            src={$userData.avatar
+                ? $userData.avatar
+                : 'svgs/profile/default.svg'}
+            draggable={false}
+            alt={`${$userData.username}'s avatar`}
+        />
+    </div>
 
+    <div class="data-container">
         <h1 id="title">{$viewPostModalInfo.title}</h1>
 
         <h1 id="content">{$viewPostModalInfo.content}</h1>
@@ -41,7 +41,6 @@
         </h1>
 
         <!-- TODO: Action layout for likes, sharing, comments -->
-        <hr />
     </div>
 
     <div class="options-container">
@@ -54,10 +53,6 @@
 </div>
 
 <style>
-    hr {
-        width: 200px;
-    }
-
     .view-container {
         display: flex;
         flex-direction: column;
@@ -69,6 +64,7 @@
     .data-container {
         display: flex;
         flex-direction: column;
+        justify-content: center;
         align-items: center;
         width: 75%;
         min-width: 500px;
@@ -110,16 +106,16 @@
 
     .data-container #content {
         margin: 0;
-        margin-top: 10px;
         font-size: 2rem;
         color: var(--theme-profile_info_color);
         white-space: pre-wrap;
         text-align: center;
+        max-width: 65%;
     }
 
     .data-container #attachment {
-        max-width: 60%;
-        max-height: 60%;
+        max-width: 70%;
+        max-height: 70%;
         margin-top: 10px;
         border-radius: 10px;
         -webkit-touch-callout: none;
@@ -140,13 +136,11 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        margin-bottom: 10px;
     }
 
     .options-container {
         display: flex;
         margin-bottom: 15px;
-        margin-top: 10px;
     }
 
     .options-container button {
@@ -169,11 +163,12 @@
 
         .data-container #content {
             font-size: 1.5rem;
+            max-width: none;
         }
 
         .data-container #attachment {
             max-width: 100%;
-            max-height: 100%;
+            max-height: 512px;
         }
 
         .data-container #creation-date {
@@ -219,7 +214,6 @@
 
         .options-container button {
             font-size: 1.5rem;
-            margin-top: 5px;
         }
     }
 </style>

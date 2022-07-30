@@ -16,8 +16,6 @@
     <Modal />
 
     <div class="main-container">
-        <!-- TODO: Fronvo logo on desktop -->
-
         <!-- Side nav which transforms into a Top nav on mobile -->
         <MainSideNav />
 

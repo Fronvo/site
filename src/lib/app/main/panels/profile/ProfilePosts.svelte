@@ -27,10 +27,7 @@
             No posts, yet
         </h1>
     {:else}
-        <!-- TODO: Sort by likes / oldest / newest -->
-
         {#each posts as { title, content, attachment, creationDate }, i}
-            <!-- TODO: Saos fade in, same delay -->
             <div
                 on:click={() => showViewPost(i)}
                 in:fade={{
@@ -61,8 +58,6 @@
                         timestamp={creationDate}
                     />
                 </h1>
-
-                <!-- TODO: Action layout for likes, sharing, comments -->
             </div>
         {/each}
     {/if}

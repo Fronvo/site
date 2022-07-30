@@ -102,10 +102,10 @@
         {/if}
 
         <h1 id="input-header">Title</h1>
-        <input bind:value={title} maxlength={50} />
+        <input bind:value={title} maxlength={30} />
 
         <h1 id="input-header">Content</h1>
-        <textarea bind:value={content} maxlength={256} rows={6} />
+        <textarea bind:value={content} maxlength={128} rows={6} />
 
         <!-- Just for attachment checking, no preview -->
         <img
@@ -115,7 +115,7 @@
             draggable={false}
         />
         <h1 id="input-header" class="attachment-info">Attachment</h1>
-        <input bind:value={$attachment} maxlength={512} />
+        <input bind:value={$attachment} maxlength={256} />
     </div>
 
     <div class="options-container">

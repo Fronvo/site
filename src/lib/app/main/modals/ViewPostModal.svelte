@@ -39,8 +39,6 @@
                 timestamp={$viewPostModalInfo.creationDate}
             />
         </h1>
-
-        <!-- TODO: Action layout for likes, sharing, comments -->
     </div>
 
     <div class="options-container">

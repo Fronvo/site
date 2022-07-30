@@ -23,6 +23,16 @@
     function showCreatePost(): void {
         showModal('CreatePost');
     }
+
+    function formatFollowInfo(followInfo: number): string {
+        if (followInfo / 1000000 >= 1) {
+            return `${Math.floor(followInfo / 1000000)}m`;
+        } else if (followInfo / 1000 >= 1) {
+            return `${Math.floor(followInfo / 1000)}k`;
+        } else {
+            return `${followInfo}`;
+        }
+    }
 </script>
 
 {#if info}
@@ -50,13 +60,11 @@
         <!-- Follow info -->
         <div class="follow-container" in:fade={{ duration: 300, delay: 300 }}>
             <h1 on:click={showFollowing}>
-                <!-- TODO: Format to k, m, leave as is for modals -->
-                <span>{info.following.length}</span> following
+                <span>{formatFollowInfo(info.following.length)}</span> following
             </h1>
 
             <h1 on:click={showFollowers}>
-                <!-- TODO: Format to k, m, leave as is for modals -->
-                <span>{info.followers.length}</span> followers
+                <span>{formatFollowInfo(info.followers.length)}</span> followers
             </h1>
         </div>
 

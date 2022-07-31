@@ -1,25 +1,8 @@
 <script lang="ts">
-    import Delete from '$lib/svgs/Delete.svelte';
     import { modalVisible, viewHomePostModalInfo } from 'stores/app/main';
-    import { socket } from 'stores/global';
     import Time from 'svelte-time';
-    import { loadHomePosts } from 'utilities/app/home';
 
     const info = $viewHomePostModalInfo;
-
-    function deletePost(): void {
-        $modalVisible = false;
-
-        socket.emit(
-            'deletePost',
-            { postId: info.post.postId },
-            async ({ err }) => {
-                if (!err) {
-                    loadHomePosts();
-                }
-            }
-        );
-    }
 </script>
 
 <div class="view-container">

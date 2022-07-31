@@ -15,6 +15,7 @@ export interface FronvoAccount {
 }
 
 export interface AccountPost {
+    postId: string;
     author: string;
     title: string;
     content: string;

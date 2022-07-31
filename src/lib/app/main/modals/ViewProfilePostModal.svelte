@@ -100,6 +100,7 @@
         min-width: 500px;
         flex: 1;
         overflow-y: auto;
+        margin-bottom: 10px;
     }
 
     .by-container {

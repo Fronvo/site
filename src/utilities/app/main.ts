@@ -2,7 +2,7 @@
 // Reusable functions for the app route, after login.
 // ******************** //
 
-import type { FronvoAccount } from 'interfaces/app/main';
+import type { AccountPost, FronvoAccount } from 'interfaces/app/main';
 import { tokenInvalid } from 'stores/app/global';
 import {
     currentModalId,
@@ -10,6 +10,7 @@ import {
     loginSucceeded,
     modalVisible,
 } from 'stores/app/main';
+import { ourId } from 'stores/app/profile';
 import { socket } from 'stores/global';
 import type { ModalTypes, PanelTypes } from 'types/app/main';
 import { getKey, removeKey, setKey } from 'utilities/global';
@@ -44,6 +45,8 @@ export async function fetchUser(id?: string): Promise<FronvoAccount> {
             socket.emit('fetchProfileId', async ({ profileId, err }) => {
                 err && reject(err);
 
+                ourId.set(profileId);
+
                 resolve(await fetchData(profileId));
             });
         } else {
@@ -63,6 +66,24 @@ export async function fetchUser(id?: string): Promise<FronvoAccount> {
                 );
             });
         }
+    });
+}
+
+export async function fetchPosts(
+    profileId: string,
+    from: string,
+    to: string
+): Promise<AccountPost[]> {
+    return new Promise(async (resolve, reject) => {
+        socket.emit(
+            'fetchProfilePosts',
+            { profileId, from, to },
+            ({ err, profilePosts }) => {
+                err && reject(err);
+
+                resolve(profilePosts);
+            }
+        );
     });
 }
 

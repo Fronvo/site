@@ -1,39 +1,39 @@
 <script lang="ts">
-    import type { AccountPost } from 'interfaces/app/main';
     import { viewPostModalInfo } from 'stores/app/main';
-    import { userData } from 'stores/app/profile';
+    import { userPosts } from 'stores/app/profile';
     import Time from 'svelte-time';
     import { fade } from 'svelte/transition';
     import { showModal } from 'utilities/app/main';
 
-    export let posts: AccountPost[];
+    const posts = userPosts;
+
     let mountTransitionsDone = false;
 
     setTimeout(() => {
         mountTransitionsDone = true;
 
         // Up to 6 posts to fade, more wont be visible probably
-    }, 500 + ((posts.length < 6 ? posts.length : 6 - 1) + 5) * 100);
+    }, 500 + (($posts.length < 6 ? $posts.length : 6 - 1) + 5) * 100);
 
     function showViewPost(postIndex: number): void {
-        $viewPostModalInfo = $userData.posts[postIndex];
+        $viewPostModalInfo = $userPosts[postIndex];
         showModal('ViewPost');
     }
 </script>
 
 <div class="posts-container" in:fade={{ delay: 900 }}>
-    {#if posts.length == 0}
+    {#if $posts.length == 0}
         <h1 in:fade={{ duration: 500, delay: 700 }} id="empty-text">
             No posts, yet
         </h1>
     {:else}
-        {#each posts as { title, content, attachment, creationDate }, i}
+        {#each $posts as { title, content, attachment, creationDate }, i}
             <div
                 on:click={() => showViewPost(i)}
                 in:fade={{
                     duration: 500,
                     delay: !mountTransitionsDone
-                        ? 500 + (posts.length - (i + 1) + 5) * 100
+                        ? 500 + ($posts.length - (i + 1) + 5) * 100
                         : 0,
                 }}
             >

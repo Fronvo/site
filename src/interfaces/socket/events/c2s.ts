@@ -11,6 +11,10 @@ import type {
     FetchProfileDataResult,
 } from 'interfaces/socket/account/fetchProfileData';
 import type { FetchProfileIdResult } from 'interfaces/socket/account/fetchProfileId';
+import type {
+    FetchProfilePostsParams,
+    FetchProfilePostsResult,
+} from 'interfaces/socket/account/fetchProfilePosts';
 import type { LogoutResult } from 'interfaces/socket/account/logout';
 import type {
     UpdateProfileDataParams,
@@ -87,5 +91,9 @@ export interface ClientToServerEvents {
     createPost: (
         {}: CreatePostParams,
         callback?: ({}: CreatePostResult) => void
+    ) => void;
+    fetchProfilePosts: (
+        {}: FetchProfilePostsParams,
+        callback?: ({}: FetchProfilePostsResult) => void
     ) => void;
 }

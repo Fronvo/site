@@ -3,18 +3,19 @@
 // ******************** //
 
 export interface FronvoAccount {
-    id: string;
+    profileId: string;
     username: string;
     bio: string;
-    email: string;
+    email?: string;
     avatar: string;
     creationDate: string;
     following: string[];
     followers: string[];
-    posts: AccountPost[];
+    isSelf: boolean;
 }
 
 export interface AccountPost {
+    author: string;
     title: string;
     content: string;
     attachment?: string;

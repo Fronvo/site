@@ -1,10 +1,11 @@
 <script lang="ts">
     import { modalVisible } from 'stores/app/main';
+    import { ourId, targetProfile } from 'stores/app/profile';
     import { socket } from 'stores/global';
     import { onMount } from 'svelte';
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
-    import { loadProfilePanel } from 'utilities/app/profile';
+    import { loadProfilePosts } from 'utilities/app/profile';
 
     let title: string;
     let content: string;
@@ -34,7 +35,7 @@
                 }
 
                 // Update, new posts
-                loadProfilePanel();
+                loadProfilePosts($targetProfile || $ourId);
 
                 $modalVisible = false;
             }

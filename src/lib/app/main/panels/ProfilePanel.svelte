@@ -2,25 +2,34 @@
     import { goto } from '$app/navigation';
     import ProfileInfo from '$lib/app/main/panels/profile/ProfileInfo.svelte';
     import ProfilePosts from '$lib/app/main/panels/profile/ProfilePosts.svelte';
-    import { targetProfile, userData } from 'stores/app/profile';
+    import {
+        ourId,
+        targetProfile,
+        userData,
+        userPosts,
+    } from 'stores/app/profile';
+    import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
-    import { loadProfilePanel } from 'utilities/app/profile';
+    import { loadProfileData, loadProfilePosts } from 'utilities/app/profile';
 
     goto('profile', {
         replaceState: true,
     });
 
-    $: loadProfilePanel($targetProfile);
+    onMount(async () => {
+        await loadProfileData($targetProfile);
+        await loadProfilePosts($targetProfile || $ourId);
+    });
 </script>
 
 <div class="profile-container" in:fade={{ duration: 300, delay: 200 }}>
     <!-- Hot updates in dev -->
-    {#if $userData}
+    {#if $userData && $userPosts}
         <ProfileInfo info={$userData} />
 
         <hr in:fade={{ duration: 250, delay: 600 }} />
 
-        <ProfilePosts posts={$userData.posts.reverse()} />
+        <ProfilePosts />
     {/if}
 </div>
 

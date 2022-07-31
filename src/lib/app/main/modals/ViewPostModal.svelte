@@ -1,7 +1,24 @@
 <script lang="ts">
+    import Delete from '$lib/svgs/Delete.svelte';
     import { modalVisible, viewPostModalInfo } from 'stores/app/main';
-    import { userData } from 'stores/app/profile';
+    import { ourId, userData } from 'stores/app/profile';
+    import { socket } from 'stores/global';
     import Time from 'svelte-time';
+    import { loadProfilePosts } from 'utilities/app/profile';
+
+    function deletePost(): void {
+        $modalVisible = false;
+
+        socket.emit(
+            'deletePost',
+            { postId: $viewPostModalInfo.postId },
+            async ({ err }) => {
+                if (!err) {
+                    loadProfilePosts($ourId);
+                }
+            }
+        );
+    }
 </script>
 
 <div class="view-container">
@@ -39,6 +56,17 @@
                 timestamp={$viewPostModalInfo.creationDate}
             />
         </h1>
+
+        {#if $userData.isSelf}
+            <hr />
+
+            <div class="actions-container">
+                <div on:click={deletePost}>
+                    <Delete />
+                    <h1>Delete</h1>
+                </div>
+            </div>
+        {/if}
     </div>
 
     <div class="options-container">
@@ -51,6 +79,10 @@
 </div>
 
 <style>
+    hr {
+        width: 200px;
+    }
+
     .view-container {
         display: flex;
         flex-direction: column;
@@ -136,6 +168,28 @@
         user-select: none;
     }
 
+    .actions-container {
+        margin-top: 10px;
+    }
+
+    .actions-container div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        border-radius: 20px;
+        transition: 250ms background;
+        padding: 10px;
+        border: 2px solid var(--theme-profile_info_color);
+    }
+
+    .actions-container div h1 {
+        margin: 0;
+        margin-left: 10px;
+        color: var(--theme-profile_info_color);
+        font-size: 2rem;
+    }
+
     .options-container {
         display: flex;
         margin-bottom: 15px;
@@ -173,6 +227,14 @@
             font-size: 1.5rem;
         }
 
+        .actions-container div {
+            cursor: default;
+        }
+
+        .actions-container div h1 {
+            font-size: 1.8rem;
+        }
+
         .options-container button {
             font-size: 1.8rem;
             cursor: default;
@@ -208,6 +270,10 @@
 
         .data-container #creation-date {
             font-size: 1.2rem;
+        }
+
+        .actions-container div h1 {
+            font-size: 1.5rem;
         }
 
         .options-container button {

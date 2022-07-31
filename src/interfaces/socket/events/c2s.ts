@@ -49,6 +49,10 @@ import type {
     ResetPasswordVerifyParams,
     ResetPasswordVerifyResult,
 } from 'interfaces/socket/noAccount/resetPasswordVerify';
+import type {
+    DeletePostParams,
+    DeletePostResult,
+} from 'interfaces/socket/account/deletePost';
 
 export interface ClientToServerEvents {
     register: (
@@ -95,5 +99,9 @@ export interface ClientToServerEvents {
     fetchProfilePosts: (
         {}: FetchProfilePostsParams,
         callback?: ({}: FetchProfilePostsResult) => void
+    ) => void;
+    deletePost: (
+        {}: DeletePostParams,
+        callback?: ({}: DeletePostResult) => void
     ) => void;
 }

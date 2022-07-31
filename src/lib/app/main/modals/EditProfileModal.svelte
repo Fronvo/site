@@ -1,11 +1,10 @@
 <script lang="ts">
     import { modalVisible } from 'stores/app/main';
-    import { ourId, targetProfile, userData } from 'stores/app/profile';
+    import { userData } from 'stores/app/profile';
     import { socket } from 'stores/global';
     import { onMount } from 'svelte';
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
-    import { loadProfileData } from 'utilities/app/profile';
 
     let username = $userData.username;
     let bio = $userData.bio;
@@ -26,7 +25,7 @@
                 bio,
                 avatar: $avatar,
             },
-            ({ err }) => {
+            ({ err, profileData }) => {
                 if (err) {
                     errorMessage = err.msg;
                     isUploading = false;
@@ -34,8 +33,7 @@
                     return;
                 }
 
-                // Update, new account details
-                loadProfileData($targetProfile || $ourId);
+                $userData = { ...$userData, ...profileData };
 
                 $modalVisible = false;
             }

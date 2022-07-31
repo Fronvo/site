@@ -177,10 +177,14 @@
         justify-content: center;
         align-items: center;
         cursor: pointer;
-        border-radius: 20px;
-        transition: 250ms background;
+        border-radius: 10px;
+        transition: 250ms border-radius;
         padding: 10px;
         border: 2px solid var(--theme-profile_info_color);
+    }
+
+    .actions-container div:hover {
+        border-radius: 20px;
     }
 
     .actions-container div h1 {

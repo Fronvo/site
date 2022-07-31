@@ -11,5 +11,5 @@ export async function loadProfileData(targetProfile: string): Promise<void> {
 
 export async function loadProfilePosts(targetProfile: string): Promise<void> {
     // Initial to 20 posts loaded
-    userPosts.set(await fetchPosts(targetProfile, '0', '20'));
+    userPosts.set((await fetchPosts(targetProfile, '0', '20')).reverse());
 }

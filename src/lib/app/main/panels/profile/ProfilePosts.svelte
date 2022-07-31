@@ -11,9 +11,7 @@
 
     setTimeout(() => {
         mountTransitionsDone = true;
-
-        // Up to 6 posts to fade, more wont be visible probably
-    }, 500 + (($posts.length < 6 ? $posts.length : 6 - 1) + 5) * 100);
+    }, 500);
 
     function showViewPost(postIndex: number): void {
         $viewPostModalInfo = $userPosts[postIndex];
@@ -33,9 +31,7 @@
                 on:click={() => showViewPost(i)}
                 in:fade={{
                     duration: 500,
-                    delay: !mountTransitionsDone
-                        ? 500 + ($posts.length - (i + 1) + 5) * 100
-                        : 0,
+                    delay: !mountTransitionsDone ? 500 : 0,
                 }}
             >
                 <h1 id="title">{title}</h1>
@@ -69,7 +65,6 @@
         margin-top: 20px;
         display: flex;
         flex-direction: column;
-        flex-flow: column-reverse;
     }
 
     .post-container {

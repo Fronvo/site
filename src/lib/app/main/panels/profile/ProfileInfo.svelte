@@ -1,5 +1,6 @@
 <script lang="ts">
     import type { FronvoAccount } from 'interfaces/app/main';
+    import { userData } from 'stores/app/profile';
     import { followersModalInfo, followingModalInfo } from 'stores/app/main';
     import { fade } from 'svelte/transition';
     import { showModal } from 'utilities/app/main';
@@ -68,11 +69,16 @@
             </h1>
         </div>
 
-        <div class="options-container" in:fade={{ duration: 300, delay: 250 }}>
-            <button on:click={showEditProfile}>Edit profile</button>
+        {#if $userData.isSelf}
+            <div
+                class="options-container"
+                in:fade={{ duration: 300, delay: 250 }}
+            >
+                <button on:click={showEditProfile}>Edit profile</button>
 
-            <button on:click={showCreatePost}>Create post</button>
-        </div>
+                <button on:click={showCreatePost}>Create post</button>
+            </div>
+        {/if}
     </div>
 {/if}
 

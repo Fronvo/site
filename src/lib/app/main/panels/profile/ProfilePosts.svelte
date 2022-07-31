@@ -29,6 +29,7 @@
     {:else}
         {#each $posts as { title, content, attachment, creationDate }, i}
             <div
+                class="post-container"
                 on:click={() => showViewPost(i)}
                 in:fade={{
                     duration: 500,
@@ -71,7 +72,7 @@
         flex-flow: column-reverse;
     }
 
-    .posts-container div {
+    .post-container {
         display: flex;
         flex-direction: column;
         background: var(--theme-nav_bg_color);
@@ -95,11 +96,11 @@
         align-items: center;
     }
 
-    .posts-container div:hover {
+    .post-container:hover {
         box-shadow: 0 0 20px var(--theme-nav_shadow_color);
     }
 
-    .posts-container div #title {
+    .post-container #title {
         display: -webkit-box;
         overflow: hidden;
         -webkit-line-clamp: 1;
@@ -109,7 +110,7 @@
         font-size: 2.1rem;
     }
 
-    .posts-container div #content {
+    .post-container #content {
         display: -webkit-box;
         overflow: hidden;
         -webkit-line-clamp: 5;
@@ -123,14 +124,14 @@
         text-align: center;
     }
 
-    .posts-container div #attachment {
+    .post-container #attachment {
         max-width: 100%;
         max-height: 275px;
         margin-top: 10px;
         border-radius: 10px;
     }
 
-    .posts-container div #creation-date {
+    .post-container #creation-date {
         font-size: 1.3rem;
         margin: 0;
         margin-top: 20px;
@@ -142,30 +143,30 @@
     }
 
     @media screen and (max-width: 720px) {
-        .posts-container div {
+        .post-container {
             max-width: 400px;
             max-height: 450px;
             cursor: default;
         }
 
-        .posts-container div:hover {
+        .post-container:hover {
             box-shadow: 0 0 10px var(--theme-nav_shadow_color);
         }
 
-        .posts-container div #title {
+        .post-container #title {
             font-size: 1.7rem;
         }
 
-        .posts-container div #content {
+        .post-container #content {
             font-size: 1.4rem;
             -webkit-line-clamp: 4;
         }
 
-        .posts-container div #attachment {
+        .post-container #attachment {
             max-height: 225px;
         }
 
-        .posts-container div #creation-date {
+        .post-container #creation-date {
             font-size: 1.2rem;
         }
 
@@ -175,25 +176,25 @@
     }
 
     @media screen and (max-width: 520px) {
-        .posts-container div {
+        .post-container {
             max-width: 300px;
             max-height: 400px;
         }
 
-        .posts-container div #title {
+        .post-container #title {
             font-size: 1.5rem;
         }
 
-        .posts-container div #content {
+        .post-container #content {
             font-size: 1.2rem;
             -webkit-line-clamp: 3;
         }
 
-        .posts-container div #attachment {
+        .post-container #attachment {
             max-height: 200px;
         }
 
-        .posts-container div #creation-date {
+        .post-container #creation-date {
             font-size: 1.1rem;
         }
 

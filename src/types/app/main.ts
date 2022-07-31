@@ -10,4 +10,5 @@ export type ModalTypes =
     | 'Followers'
     | 'EditProfile'
     | 'CreatePost'
-    | 'ViewPost';
+    | 'ViewHomePost'
+    | 'ViewProfilePost';

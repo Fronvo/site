@@ -1,47 +1,53 @@
 <script lang="ts">
-    import { viewProfilePostModalInfo } from 'stores/app/main';
-    import { userPosts } from 'stores/app/profile';
+    import { homePosts } from 'stores/app/home';
+    import { viewHomePostModalInfo } from 'stores/app/main';
     import Time from 'svelte-time';
     import { fade } from 'svelte/transition';
     import { showModal } from 'utilities/app/main';
 
-    const posts = userPosts;
+    const posts = homePosts;
 
-    let mountTransitionsDone = false;
-
-    setTimeout(() => {
-        mountTransitionsDone = true;
-    }, 500);
-
-    function showViewPost(postIndex: number): void {
-        $viewProfilePostModalInfo = $userPosts[postIndex];
-        showModal('ViewProfilePost');
+    function viewPost(postIndex: number): void {
+        $viewHomePostModalInfo = $homePosts[postIndex];
+        showModal('ViewHomePost');
     }
 </script>
 
-<div class="posts-container" in:fade={{ delay: 900 }}>
+<div class="posts-container" in:fade={{ delay: 700 }}>
     {#if $posts.length == 0}
         <h1 in:fade={{ duration: 500, delay: 700 }} id="empty-text">
             No posts, yet
         </h1>
     {:else}
-        {#each $posts as { title, content, attachment, creationDate }, i}
+        {#each $posts as { post, profileData }, i}
             <div
+                on:click={() => viewPost(i)}
                 class="post-container"
-                on:click={() => showViewPost(i)}
                 in:fade={{
                     duration: 500,
-                    delay: !mountTransitionsDone ? 500 : 0,
+                    delay: 500,
                 }}
             >
-                <h1 id="title">{title}</h1>
-                <h1 id="content">{content}</h1>
+                <div class="author-container">
+                    <img
+                        id="avatar"
+                        src={profileData.avatar
+                            ? profileData.avatar
+                            : 'svgs/profile/default.svg'}
+                        draggable={false}
+                        alt={`${profileData.username}'s avatar`}
+                    />
+                    <h1 id="author">{profileData.username}</h1>
+                </div>
 
-                {#if attachment}
+                <h1 id="title">{post.title}</h1>
+                <h1 id="content">{post.content}</h1>
+
+                {#if post.attachment}
                     <img
                         id="attachment"
-                        src={attachment}
-                        alt={`'${title}' attachment`}
+                        src={post.attachment}
+                        alt={`'${post.title}' attachment`}
                         draggable={false}
                     />
                 {/if}
@@ -52,7 +58,7 @@
                         relative
                         format={'dddd HH:mm · MMMM D YYYY'}
                         live={15000}
-                        timestamp={creationDate}
+                        timestamp={post.creationDate}
                     />
                 </h1>
             </div>
@@ -78,7 +84,7 @@
         padding-bottom: 5px;
         margin-bottom: 30px;
         width: 550px;
-        max-height: 600px;
+        max-height: 650px;
         border-radius: 10px;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -93,6 +99,24 @@
 
     .post-container:hover {
         box-shadow: 0 0 20px var(--theme-nav_shadow_color);
+    }
+
+    .author-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .author-container #avatar {
+        width: 75px;
+        height: 75px;
+    }
+
+    .author-container #author {
+        color: var(--theme-profile_info_color);
+        font-size: 2.8rem;
+        margin: 0;
     }
 
     .post-container #title {
@@ -140,12 +164,25 @@
     @media screen and (max-width: 720px) {
         .post-container {
             max-width: 400px;
-            max-height: 450px;
+            max-height: 500px;
             cursor: default;
         }
 
         .post-container:hover {
             box-shadow: 0 0 10px var(--theme-nav_shadow_color);
+        }
+
+        .author-container {
+            margin-bottom: 5px;
+        }
+
+        .author-container #avatar {
+            width: 64px;
+            height: 64px;
+        }
+
+        .author-container #author {
+            font-size: 2.5rem;
         }
 
         .post-container #title {
@@ -173,7 +210,16 @@
     @media screen and (max-width: 520px) {
         .post-container {
             max-width: 300px;
-            max-height: 400px;
+            max-height: 450px;
+        }
+
+        .author-container #avatar {
+            width: 48px;
+            height: 48px;
+        }
+
+        .author-container #author {
+            font-size: 2.2rem;
         }
 
         .post-container #title {

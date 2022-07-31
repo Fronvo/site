@@ -1,20 +1,21 @@
 <script lang="ts">
     import Delete from '$lib/svgs/Delete.svelte';
-    import { modalVisible, viewPostModalInfo } from 'stores/app/main';
-    import { ourId, userData } from 'stores/app/profile';
+    import { modalVisible, viewHomePostModalInfo } from 'stores/app/main';
     import { socket } from 'stores/global';
     import Time from 'svelte-time';
-    import { loadProfilePosts } from 'utilities/app/profile';
+    import { loadHomePosts } from 'utilities/app/home';
+
+    const info = $viewHomePostModalInfo;
 
     function deletePost(): void {
         $modalVisible = false;
 
         socket.emit(
             'deletePost',
-            { postId: $viewPostModalInfo.postId },
+            { postId: info.post.postId },
             async ({ err }) => {
                 if (!err) {
-                    loadProfilePosts($ourId);
+                    loadHomePosts();
                 }
             }
         );
@@ -23,27 +24,27 @@
 
 <div class="view-container">
     <div class="by-container">
-        <h1 id="author">By {$userData.username}</h1>
+        <h1 id="author">By {info.profileData.username}</h1>
         <img
             id="avatar"
-            src={$userData.avatar
-                ? $userData.avatar
+            src={info.profileData.avatar
+                ? info.profileData.avatar
                 : 'svgs/profile/default.svg'}
             draggable={false}
-            alt={`${$userData.username}'s avatar`}
+            alt={`${info.profileData.username}'s avatar`}
         />
     </div>
 
     <div class="data-container">
-        <h1 id="title">{$viewPostModalInfo.title}</h1>
+        <h1 id="title">{info.post.title}</h1>
 
-        <h1 id="content">{$viewPostModalInfo.content}</h1>
+        <h1 id="content">{info.post.content}</h1>
 
-        {#if $viewPostModalInfo.attachment}
+        {#if info.post.attachment}
             <img
                 id="attachment"
-                src={$viewPostModalInfo.attachment}
-                alt={`'${$viewPostModalInfo.title}' attachment`}
+                src={info.post.attachment}
+                alt={`'${info.post.title}' attachment`}
                 draggable={false}
             />
         {/if}
@@ -53,11 +54,11 @@
             <Time
                 format={'dddd HH:mm · MMMM D YYYY'}
                 live={15000}
-                timestamp={$viewPostModalInfo.creationDate}
+                timestamp={info.post.creationDate}
             />
         </h1>
 
-        {#if $userData.isSelf}
+        {#if info.profileData.isSelf}
             <hr />
 
             <div class="actions-container">

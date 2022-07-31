@@ -2,7 +2,7 @@
 // Shared variables for the app home panel, after login.
 // ******************** //
 
-import type { HomeUpdates } from 'interfaces/app/home';
+import type { HomePost } from 'interfaces/app/home';
 import { writable, type Writable } from 'svelte/store';
 
-export const homeUpdates: Writable<HomeUpdates[]> = writable();
+export const homePosts: Writable<HomePost[]> = writable();

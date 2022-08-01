@@ -6,6 +6,7 @@
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
 
+    let profileId = $userData.profileId;
     let username = $userData.username;
     let bio = $userData.bio;
     let avatar: Writable<string> = writable($userData.avatar);
@@ -18,13 +19,27 @@
 
         isUploading = true;
 
+        const updatedData = {};
+
+        if ($userData.profileId != profileId) {
+            updatedData['profileId'] = profileId;
+        }
+
+        if ($userData.username != username) {
+            updatedData['username'] = username;
+        }
+
+        if ($userData.bio != bio) {
+            updatedData['bio'] = bio;
+        }
+
+        if ($userData.avatar != $avatar) {
+            updatedData['avatar'] = $avatar;
+        }
+
         socket.emit(
             'updateProfileData',
-            {
-                username,
-                bio,
-                avatar: $avatar,
-            },
+            updatedData,
             ({ err, profileData }) => {
                 if (err) {
                     errorMessage = err.msg;
@@ -98,6 +113,9 @@
                 {errorMessage}
             </h1>
         {/if}
+
+        <h1 id="input-header">Profile ID</h1>
+        <input bind:value={profileId} maxlength={30} />
 
         <h1 id="input-header">Username</h1>
         <input bind:value={username} maxlength={30} />

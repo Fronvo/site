@@ -7,7 +7,7 @@
         modalAnimDuration,
         modalVisible,
     } from 'stores/app/main';
-    import { userData } from 'stores/app/profile';
+    import { targetProfile, userData } from 'stores/app/profile';
     import { socket } from 'stores/global';
     import { removeKey } from 'utilities/global';
 
@@ -24,6 +24,7 @@
 
                 // Also reset userData, update smoothly on re-login
                 $userData = undefined;
+                $targetProfile = undefined;
             });
         }, modalAnimDuration);
     }

@@ -1,7 +1,7 @@
 <script lang="ts">
     import Delete from '$lib/svgs/Delete.svelte';
     import { modalVisible, viewProfilePostModalInfo } from 'stores/app/main';
-    import { ourId, userData } from 'stores/app/profile';
+    import { targetProfile, userData } from 'stores/app/profile';
     import { socket } from 'stores/global';
     import Time from 'svelte-time';
     import { loadProfilePosts } from 'utilities/app/profile';
@@ -14,7 +14,7 @@
             { postId: $viewProfilePostModalInfo.postId },
             async ({ err }) => {
                 if (!err) {
-                    loadProfilePosts($ourId);
+                    loadProfilePosts($targetProfile);
                 }
             }
         );
@@ -28,7 +28,7 @@
             id="avatar"
             src={$userData.avatar
                 ? $userData.avatar
-                : 'svgs/profile/default.svg'}
+                : 'https://fronvo.herokuapp.com/svgs/profile/default.svg'}
             draggable={false}
             alt={`${$userData.username}'s avatar`}
         />

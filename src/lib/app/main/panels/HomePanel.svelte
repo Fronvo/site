@@ -7,7 +7,7 @@
     import { fade } from 'svelte/transition';
     import { loadHomePosts } from 'utilities/app/home';
 
-    goto('home', {
+    goto('/home', {
         replaceState: true,
     });
 

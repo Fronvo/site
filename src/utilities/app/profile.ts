@@ -2,12 +2,8 @@
 // Reusable functions for the app profile panel.
 // ******************** //
 
-import { userData, userPosts } from 'stores/app/profile';
-import { fetchPosts, fetchUser } from 'utilities/app/main';
-
-export async function loadProfileData(targetProfile: string): Promise<void> {
-    userData.set(await fetchUser(targetProfile));
-}
+import { userPosts } from 'stores/app/profile';
+import { fetchPosts } from 'utilities/app/main';
 
 export async function loadProfilePosts(targetProfile: string): Promise<void> {
     // Initial to 5 posts loaded

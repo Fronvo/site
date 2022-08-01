@@ -2,25 +2,46 @@
     import { goto } from '$app/navigation';
     import ProfileInfo from '$lib/app/main/panels/profile/ProfileInfo.svelte';
     import ProfilePosts from '$lib/app/main/panels/profile/ProfilePosts.svelte';
-    import {
-        ourId,
-        targetProfile,
-        userData,
-        userPosts,
-    } from 'stores/app/profile';
-    import { onMount } from 'svelte';
+    import { targetProfile, userData, userPosts } from 'stores/app/profile';
+    import { onDestroy, onMount } from 'svelte';
     import { fade } from 'svelte/transition';
-    import { loadProfileData, loadProfilePosts } from 'utilities/app/profile';
+    import { fetchUser } from 'utilities/app/main';
+    import { loadProfilePosts } from 'utilities/app/profile';
 
-    goto('profile', {
+    goto('/profile', {
         replaceState: true,
     });
 
     onMount(async () => {
-        await loadProfileData($targetProfile);
-        await loadProfilePosts($targetProfile || $ourId);
+        fetchUser($targetProfile)
+            .then(async (profileData) => {
+                goto(`/profile/${profileData.profileId}`, {
+                    replaceState: true,
+                });
+
+                !$targetProfile && targetProfile.set(profileData.profileId);
+                $userData = profileData;
+
+                await loadProfilePosts(profileData.profileId);
+            })
+            .catch(() => {
+                $targetProfile = undefined;
+
+                goto('/home', {
+                    replaceState: true,
+                });
+            });
+    });
+
+    // Reset active profile
+    onDestroy(() => {
+        $targetProfile = undefined;
     });
 </script>
+
+<svelte:head>
+    <title>Fronvo | Profile</title>
+</svelte:head>
 
 <div class="profile-container" in:fade={{ duration: 300, delay: 200 }}>
     <!-- Hot updates in dev -->

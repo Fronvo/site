@@ -10,7 +10,6 @@ import {
     loginSucceeded,
     modalVisible,
 } from 'stores/app/main';
-import { ourId } from 'stores/app/profile';
 import { socket } from 'stores/global';
 import type { ModalTypes, PanelTypes } from 'types/app/main';
 import { getKey, removeKey, setKey } from 'utilities/global';
@@ -45,16 +44,14 @@ export async function fetchUser(id?: string): Promise<FronvoAccount> {
             socket.emit('fetchProfileId', async ({ profileId, err }) => {
                 err && reject(err);
 
-                ourId.set(profileId);
-
-                resolve(await fetchData(profileId));
+                await fetchData(profileId);
             });
         } else {
-            resolve(await fetchData(id));
+            await fetchData(id);
         }
 
         async function fetchData(id: string): Promise<FronvoAccount> {
-            return new Promise((resolve, reject) => {
+            return new Promise(() => {
                 socket.emit(
                     'fetchProfileData',
                     { profileId: id },

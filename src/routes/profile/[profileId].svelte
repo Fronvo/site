@@ -1,12 +1,16 @@
 <script lang="ts">
+    import { page } from '$app/stores';
     import { targetProfile } from 'stores/app/profile';
     import { showLayout } from 'stores/global';
     import { switchPanel } from 'utilities/app/main';
 
-    // Force layout to be shown, if coming to this route directly
+    $targetProfile = $page.params.profileId;
     $showLayout = true;
-    $targetProfile = '';
 
     // Update panel
     switchPanel('Profile');
 </script>
+
+<svelte:head>
+    <title>Fronvo | {$page.params.profileId}</title>
+</svelte:head>

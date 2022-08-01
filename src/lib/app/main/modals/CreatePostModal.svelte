@@ -1,6 +1,6 @@
 <script lang="ts">
     import { modalVisible } from 'stores/app/main';
-    import { ourId, targetProfile } from 'stores/app/profile';
+    import { targetProfile } from 'stores/app/profile';
     import { socket } from 'stores/global';
     import { onMount } from 'svelte';
     import { writable, type Writable } from 'svelte/store';
@@ -35,7 +35,7 @@
                 }
 
                 // Update, new posts
-                loadProfilePosts($targetProfile || $ourId);
+                loadProfilePosts($targetProfile);
 
                 $modalVisible = false;
             }
@@ -56,7 +56,8 @@
             attachmentText.textContent = 'Attachment - Invalid URL';
 
             canShare = false;
-            attachmentPreview.src = 'svgs/profile/default.svg';
+            attachmentPreview.src =
+                'https://fronvo.herokuapp.com/svgs/profile/default.svg';
         };
 
         attachment.subscribe((newAttachment) => {

@@ -3,7 +3,7 @@
     import { fade } from 'svelte/transition';
     import { loadMarketplacePanel } from 'utilities/app/marketplace';
 
-    goto('marketplace', {
+    goto('/marketplace', {
         replaceState: true,
     });
 

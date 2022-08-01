@@ -3,7 +3,7 @@
     import { fade } from 'svelte/transition';
     import { loadCommunitiesPanel } from 'utilities/app/communities';
 
-    goto('communities', {
+    goto('/communities', {
         replaceState: true,
     });
 

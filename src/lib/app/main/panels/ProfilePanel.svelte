@@ -39,12 +39,9 @@
     // Reset active profile
     onDestroy(() => {
         $targetProfile = undefined;
+        $userData = undefined;
     });
 </script>
-
-<svelte:head>
-    <title>Fronvo | Profile</title>
-</svelte:head>
 
 <div class="profile-container" in:fade={{ duration: 300, delay: 200 }}>
     <!-- Hot updates in dev -->

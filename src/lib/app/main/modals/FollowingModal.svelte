@@ -142,6 +142,7 @@
         padding: 15px;
         overflow-y: auto;
         flex-wrap: wrap;
+        flex: 1;
     }
 
     .following-items-container div {
@@ -151,15 +152,16 @@
         background: var(--theme-nav_bg_color);
         box-shadow: 0 0 10px var(--theme-nav_shadow_color);
         width: 350px;
+        height: min-content;
         border-radius: 10px;
         padding: 10px;
         margin-right: 25px;
         margin-bottom: 20px;
-        transition: 300ms transform;
+        transition: 150ms transform;
     }
 
     .following-items-container div:hover {
-        transform: scale(1.02);
+        transform: scale(0.98);
     }
 
     .following-items-container div h1 {
@@ -218,6 +220,11 @@
     @media screen and (max-width: 720px) {
         .header-container #header {
             font-size: 2.4rem;
+        }
+
+        .following-items-container {
+            flex-direction: column;
+            justify-content: start;
         }
 
         .following-items-container div {

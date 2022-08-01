@@ -1,11 +1,30 @@
 <script lang="ts">
     import type { FronvoAccount } from 'interfaces/app/main';
-    import { userData } from 'stores/app/profile';
+    import { targetProfile, userData } from 'stores/app/profile';
     import { followersModalInfo, followingModalInfo } from 'stores/app/main';
     import { fade } from 'svelte/transition';
-    import { showModal } from 'utilities/app/main';
+    import { fetchUser, showModal } from 'utilities/app/main';
+    import { socket } from 'stores/global';
+    import { onMount } from 'svelte';
 
     export let info: FronvoAccount;
+    let isInFollowing: boolean;
+    let isRequesting = false;
+
+    onMount(async () => {
+        if (!info.isSelf) {
+            const profileData = await fetchUser();
+
+            isInFollowing = profileData.following.includes(info.profileId);
+        }
+
+        targetProfile.subscribe(async (newProfile) => {
+            if (!newProfile) return;
+
+            $userData = await fetchUser(newProfile);
+            info = $userData;
+        });
+    });
 
     function showFollowing(): void {
         $followingModalInfo = info.following;
@@ -33,6 +52,45 @@
         } else {
             return `${followInfo}`;
         }
+    }
+
+    function handleFollowProfile(): void {
+        if (isRequesting) return;
+
+        // Block adjacent requests
+        isRequesting = true;
+
+        if (!isInFollowing) {
+            socket.emit(
+                'followProfile',
+                { profileId: info.profileId },
+                ({ err }) => {
+                    if (!err) {
+                        reloadProfile();
+                    }
+                }
+            );
+        } else {
+            socket.emit(
+                'unfollowProfile',
+                { profileId: info.profileId },
+                ({ err }) => {
+                    if (!err) {
+                        reloadProfile();
+                    }
+                }
+            );
+        }
+
+        async function reloadProfile(): Promise<void> {
+            $userData = await fetchUser(info.profileId);
+            info = $userData;
+
+            isRequesting = false;
+        }
+
+        // Illusion of no delay
+        isInFollowing = !isInFollowing;
     }
 </script>
 
@@ -71,16 +129,19 @@
             </h1>
         </div>
 
-        {#if $userData.isSelf}
-            <div
-                class="options-container"
-                in:fade={{ duration: 300, delay: 250 }}
-            >
+        <div class="options-container" in:fade={{ duration: 300, delay: 250 }}>
+            {#if $userData.isSelf}
                 <button on:click={showEditProfile}>Edit profile</button>
 
                 <button on:click={showCreatePost}>Create post</button>
-            </div>
-        {/if}
+            {/if}
+
+            {#if !$userData.isSelf}
+                <button on:click={handleFollowProfile}
+                    >{isInFollowing ? 'Unfollow' : 'Follow'}</button
+                >
+            {/if}
+        </div>
     </div>
 {/if}
 

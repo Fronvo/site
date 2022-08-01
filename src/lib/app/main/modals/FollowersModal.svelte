@@ -1,10 +1,12 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import Center from '$lib/app/Center.svelte';
     import Loading from '$lib/app/Loading.svelte';
     import type { FronvoAccount } from 'interfaces/app/main';
+    import { targetProfile } from 'stores/app/profile';
     import {
         followersModalInfo,
-        followingModalInfo,
+        modalAnimDuration,
         modalVisible,
     } from 'stores/app/main';
     import { fetchUser } from 'utilities/app/main';
@@ -16,7 +18,7 @@
         // Fetch all followers, notify UI once finished
 
         // Sanity check for new accounts, new UI will be displayed
-        if ($followingModalInfo.length == 0) {
+        if ($followersModalInfo.length == 0) {
             loadingFinished = true;
             return;
         }
@@ -32,6 +34,20 @@
                 }
             });
         }
+    }
+
+    function viewProfile(accountIndex: number): void {
+        $modalVisible = false;
+
+        setTimeout(() => {
+            const newProfile = followers[accountIndex].profileId;
+
+            $targetProfile = newProfile;
+
+            goto(`/profile/${newProfile}`, {
+                replaceState: true,
+            });
+        }, modalAnimDuration);
     }
 
     $: loadFollowers();
@@ -51,8 +67,8 @@
             </Center>
         {:else}
             <div class="followers-items-container">
-                {#each followers as { username, following, followers, avatar }}
-                    <div>
+                {#each followers as { username, following, followers, avatar }, i}
+                    <div on:click={() => viewProfile(i)}>
                         <img
                             id="avatar"
                             src={avatar
@@ -161,6 +177,12 @@
     .followers-items-container div #following,
     .followers-items-container div #followers {
         font-size: 2.1rem;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
 
     .followers-items-container div #avatar {

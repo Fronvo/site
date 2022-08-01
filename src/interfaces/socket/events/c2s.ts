@@ -7,6 +7,10 @@ import type {
     CreatePostResult,
 } from 'interfaces/socket/account/createPost';
 import type {
+    DeletePostParams,
+    DeletePostResult,
+} from 'interfaces/socket/account/deletePost';
+import type {
     FetchProfileDataParams,
     FetchProfileDataResult,
 } from 'interfaces/socket/account/fetchProfileData';
@@ -15,7 +19,15 @@ import type {
     FetchProfilePostsParams,
     FetchProfilePostsResult,
 } from 'interfaces/socket/account/fetchProfilePosts';
+import type {
+    FollowProfileParams,
+    FollowProfileResult,
+} from 'interfaces/socket/account/followProfile';
 import type { LogoutResult } from 'interfaces/socket/account/logout';
+import type {
+    UnfollowProfileParams,
+    UnfollowProfileResult,
+} from 'interfaces/socket/account/unfollowProfile';
 import type {
     UpdateProfileDataParams,
     UpdateProfileDataResult,
@@ -49,10 +61,6 @@ import type {
     ResetPasswordVerifyParams,
     ResetPasswordVerifyResult,
 } from 'interfaces/socket/noAccount/resetPasswordVerify';
-import type {
-    DeletePostParams,
-    DeletePostResult,
-} from 'interfaces/socket/account/deletePost';
 
 export interface ClientToServerEvents {
     register: (
@@ -103,5 +111,13 @@ export interface ClientToServerEvents {
     deletePost: (
         {}: DeletePostParams,
         callback?: ({}: DeletePostResult) => void
+    ) => void;
+    followProfile: (
+        {}: FollowProfileParams,
+        callback?: ({}: FollowProfileResult) => void
+    ) => void;
+    unfollowProfile: (
+        {}: UnfollowProfileParams,
+        callback?: ({}: UnfollowProfileResult) => void
     ) => void;
 }

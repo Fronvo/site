@@ -1,8 +1,14 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import Center from '$lib/app/Center.svelte';
     import Loading from '$lib/app/Loading.svelte';
     import type { FronvoAccount } from 'interfaces/app/main';
-    import { followingModalInfo, modalVisible } from 'stores/app/main';
+    import {
+        followingModalInfo,
+        modalAnimDuration,
+        modalVisible,
+    } from 'stores/app/main';
+    import { targetProfile } from 'stores/app/profile';
     import { fetchUser } from 'utilities/app/main';
 
     let following: FronvoAccount[] = [];
@@ -32,6 +38,20 @@
         }
     }
 
+    function viewProfile(accountIndex: number): void {
+        $modalVisible = false;
+
+        setTimeout(() => {
+            const newProfile = following[accountIndex].profileId;
+
+            $targetProfile = newProfile;
+
+            goto(`/profile/${newProfile}`, {
+                replaceState: true,
+            });
+        }, modalAnimDuration);
+    }
+
     $: loadFollowing();
 </script>
 
@@ -49,8 +69,8 @@
             </Center>
         {:else}
             <div class="following-items-container">
-                {#each following as { username, following, followers, avatar }}
-                    <div>
+                {#each following as { username, following, followers, avatar }, i}
+                    <div on:click={() => viewProfile(i)}>
                         <img
                             id="avatar"
                             src={avatar
@@ -159,6 +179,12 @@
     .following-items-container div #following,
     .following-items-container div #followers {
         font-size: 2.1rem;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
 
     .following-items-container div #avatar {

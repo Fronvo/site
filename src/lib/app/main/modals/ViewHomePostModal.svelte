@@ -1,12 +1,21 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import { modalVisible, viewHomePostModalInfo } from 'stores/app/main';
     import Time from 'svelte-time';
 
     const info = $viewHomePostModalInfo;
+
+    function viewProfile(): void {
+        $modalVisible = false;
+
+        goto(`/profile/${info.profileData.profileId}`, {
+            replaceState: true,
+        });
+    }
 </script>
 
 <div class="view-container">
-    <div class="by-container">
+    <div class="by-container" on:click={viewProfile}>
         <h1 id="author">By {info.profileData.username}</h1>
         <img
             id="avatar"
@@ -82,6 +91,7 @@
         -ms-user-select: none;
         user-select: none;
         border-radius: 10px;
+        cursor: pointer;
     }
 
     .by-container #author {
@@ -151,6 +161,10 @@
         .data-container {
             width: 400px;
             min-width: auto;
+        }
+
+        .by-container {
+            cursor: default;
         }
 
         .by-container #author {

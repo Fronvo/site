@@ -33,7 +33,7 @@
                         id="avatar"
                         src={profileData.avatar
                             ? profileData.avatar
-                            : 'svgs/profile/default.svg'}
+                            : 'https://fronvo.herokuapp.com/svgs/profile/default.svg'}
                         draggable={false}
                         alt={`${profileData.username}'s avatar`}
                     />

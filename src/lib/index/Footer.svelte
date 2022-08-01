@@ -3,13 +3,17 @@
 </script>
 
 <div class="footer" in:fade={{ duration: 500 }}>
-    <img src="svgs/other/wave.svg" draggable={false} alt="Wave" />
+    <img
+        src="https://fronvo.herokuapp.com/svgs/other/wave.svg"
+        draggable={false}
+        alt="Wave"
+    />
 
     <div class="content">
         <h1>Fronvo</h1>
 
         <img
-            src="svgs/other/github.svg"
+            src="https://fronvo.herokuapp.com/svgs/other/github.svg"
             draggable={false}
             alt="Github"
             on:click={() => (location.href = 'https://github.com/fronvo/site')}

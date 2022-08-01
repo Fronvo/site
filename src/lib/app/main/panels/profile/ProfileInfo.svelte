@@ -42,7 +42,9 @@
 
         <img
             id="avatar"
-            src={info.avatar ? info.avatar : 'svgs/profile/default.svg'}
+            src={info.avatar
+                ? info.avatar
+                : 'https://fronvo.herokuapp.com/svgs/profile/default.svg'}
             alt={`${info.username}\'s avatar`}
             draggable={false}
             in:fade={{ duration: 500 }}

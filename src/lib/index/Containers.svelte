@@ -36,7 +36,7 @@
         >
             <img
                 class="svg"
-                src={`svgs/containers/${svg}.svg`}
+                src={`https://fronvo.herokuapp.com/svgs/containers/${svg}.svg`}
                 alt={`${svg} icon`}
                 draggable={false}
             />

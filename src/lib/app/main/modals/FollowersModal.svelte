@@ -55,7 +55,9 @@
                     <div>
                         <img
                             id="avatar"
-                            src={avatar ? avatar : 'svgs/profile/default.svg'}
+                            src={avatar
+                                ? avatar
+                                : 'https://fronvo.herokuapp.com/svgs/profile/default.svg'}
                             alt={`${username}'s avatar`}
                             draggable={false}
                         />

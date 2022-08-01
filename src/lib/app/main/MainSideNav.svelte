@@ -59,6 +59,7 @@
             height: 90px;
             border-bottom-right-radius: 0;
             border-top-left-radius: 25px;
+            backdrop-filter: none;
         }
 
         hr {

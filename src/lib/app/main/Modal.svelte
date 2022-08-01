@@ -38,4 +38,10 @@
         backdrop-filter: blur(3px) saturate(125%);
         background: var(--theme-modal_bg_color);
     }
+
+    @media screen and (max-width: 720px) {
+        .modal-container {
+            backdrop-filter: none;
+        }
+    }
 </style>

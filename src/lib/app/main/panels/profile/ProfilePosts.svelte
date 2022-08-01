@@ -72,7 +72,6 @@
         flex-direction: column;
         background: var(--theme-nav_bg_color);
         box-shadow: 0 0 10px var(--theme-nav_shadow_color);
-        backdrop-filter: blur(3px);
         padding: 10px;
         padding-top: 5px;
         padding-bottom: 5px;

@@ -67,6 +67,10 @@
     }
 
     @media screen and (max-width: 720px) {
+        .top-nav-container {
+            backdrop-filter: none;
+        }
+
         .top-nav-container h1 {
             font-size: 1.5rem;
         }

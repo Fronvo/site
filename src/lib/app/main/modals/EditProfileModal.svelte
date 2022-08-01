@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import { modalVisible } from 'stores/app/main';
     import { userData } from 'stores/app/profile';
     import { socket } from 'stores/global';
@@ -46,6 +47,13 @@
                     isUploading = false;
 
                     return;
+                }
+
+                // Redirect to new profile
+                if ($userData.profileId != profileId) {
+                    goto(`/profile/${profileId}`, {
+                        replaceState: true,
+                    });
                 }
 
                 $userData = { ...$userData, ...profileData };

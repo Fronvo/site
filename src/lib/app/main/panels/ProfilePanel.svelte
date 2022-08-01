@@ -8,18 +8,21 @@
     import { fetchUser } from 'utilities/app/main';
     import { loadProfilePosts } from 'utilities/app/profile';
 
-    goto('/profile', {
+    goto(`/profile/${$targetProfile ? $targetProfile : ''}`, {
         replaceState: true,
     });
 
     onMount(async () => {
         fetchUser($targetProfile)
             .then(async (profileData) => {
-                goto(`/profile/${profileData.profileId}`, {
-                    replaceState: true,
-                });
+                if (!$targetProfile) {
+                    targetProfile.set(profileData.profileId);
 
-                !$targetProfile && targetProfile.set(profileData.profileId);
+                    goto(`/profile/${profileData.profileId}`, {
+                        replaceState: true,
+                    });
+                }
+
                 $userData = profileData;
 
                 await loadProfilePosts(profileData.profileId);

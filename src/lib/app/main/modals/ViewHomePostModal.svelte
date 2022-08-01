@@ -176,7 +176,7 @@
         }
 
         .data-container #content {
-            font-size: 1.5rem;
+            font-size: 1.7rem;
             max-width: none;
         }
 
@@ -210,11 +210,11 @@
         }
 
         .data-container #title {
-            font-size: 1.7rem;
+            font-size: 2rem;
         }
 
         .data-container #content {
-            font-size: 1.3rem;
+            font-size: 1.6rem;
         }
 
         .data-container #attachment {

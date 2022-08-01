@@ -44,8 +44,6 @@
         function attemptReset(): void {
             // Little hack to recieve required field messages
             socket.emit('resetPassword', { email }, ({ err }) => {
-                console.log(err);
-
                 if (err) {
                     setError({ err });
                     toggleUI(true);

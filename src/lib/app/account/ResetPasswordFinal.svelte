@@ -43,8 +43,6 @@
         function attemptReset(): void {
             // Little hack to recieve required field messages
             socket.emit('resetPasswordFinal', { newPassword }, ({ err }) => {
-                console.log(err);
-
                 if (err) {
                     setError({ err });
                     toggleUI(true);

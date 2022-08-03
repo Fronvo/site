@@ -5,8 +5,6 @@
     import { fade } from 'svelte/transition';
     import { showModal } from 'utilities/app/main';
 
-    const posts = userPosts;
-
     let mountTransitionsDone = false;
 
     setTimeout(() => {
@@ -19,46 +17,48 @@
     }
 </script>
 
-<div class="posts-container" in:fade={{ delay: 900 }}>
-    {#if $posts.length == 0}
-        <h1 in:fade={{ duration: 500, delay: 700 }} id="empty-text">
-            No posts, yet
-        </h1>
-    {:else}
-        {#each $posts as { title, content, attachment, creationDate }, i}
-            <div
-                class="post-container"
-                on:click={() => showViewPost(i)}
-                in:fade={{
-                    duration: 500,
-                    delay: !mountTransitionsDone ? 500 : 0,
-                }}
-            >
-                <h1 id="title">{title}</h1>
-                <h1 id="content">{content}</h1>
+{#if $userPosts}
+    <div class="posts-container" in:fade={{ delay: 900 }}>
+        {#if $userPosts.length == 0}
+            <h1 in:fade={{ duration: 500, delay: 700 }} id="empty-text">
+                No posts, yet
+            </h1>
+        {:else}
+            {#each $userPosts as { title, content, attachment, creationDate }, i}
+                <div
+                    class="post-container"
+                    on:click={() => showViewPost(i)}
+                    in:fade={{
+                        duration: 500,
+                        delay: !mountTransitionsDone ? 500 : 0,
+                    }}
+                >
+                    <h1 id="title">{title}</h1>
+                    <h1 id="content">{content}</h1>
 
-                {#if attachment}
-                    <img
-                        id="attachment"
-                        src={attachment}
-                        alt={`'${title}' attachment`}
-                        draggable={false}
-                    />
-                {/if}
+                    {#if attachment}
+                        <img
+                            id="attachment"
+                            src={attachment}
+                            alt={`'${title}' attachment`}
+                            draggable={false}
+                        />
+                    {/if}
 
-                <h1 id="creation-date">
-                    <!-- Updates every 15 seconds -->
-                    <Time
-                        relative
-                        format={'dddd HH:mm · MMMM D YYYY'}
-                        live={15000}
-                        timestamp={creationDate}
-                    />
-                </h1>
-            </div>
-        {/each}
-    {/if}
-</div>
+                    <h1 id="creation-date">
+                        <!-- Updates every 15 seconds -->
+                        <Time
+                            relative
+                            format={'dddd HH:mm · MMMM D YYYY'}
+                            live={15000}
+                            timestamp={creationDate}
+                        />
+                    </h1>
+                </div>
+            {/each}
+        {/if}
+    </div>
+{/if}
 
 <style>
     .posts-container {

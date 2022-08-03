@@ -1,50 +1,59 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
+
     import Center from '$lib/app/Center.svelte';
     import Loading from '$lib/app/Loading.svelte';
     import type { FronvoAccount } from 'interfaces/app/main';
+    import { loadProfilePosts } from 'src/utilities/app/profile';
     import {
-        followingModalInfo,
+        followModalForFollowing,
+        followModalInfo,
         modalAnimDuration,
         modalVisible,
     } from 'stores/app/main';
-    import { targetProfile } from 'stores/app/profile';
+    import { targetProfile, userData, userPosts } from 'stores/app/profile';
     import { fetchUser } from 'utilities/app/main';
 
-    let following: FronvoAccount[] = [];
+    let followInfo: FronvoAccount[] = [];
     let loadingFinished = false;
 
     async function loadFollowing() {
         // Fetch all followed users, notify UI once finished
 
         // Sanity check for new accounts, new UI will be displayed
-        if ($followingModalInfo.length == 0) {
+        if ($followModalInfo.length == 0) {
             loadingFinished = true;
             return;
         }
 
         // Some followed users exist, fetch them
-        for (const followingIndex in $followingModalInfo) {
-            fetchUser($followingModalInfo[followingIndex]).then(
-                (followingUser) => {
-                    following.push(followingUser);
+        for (const followIndex in $followModalInfo) {
+            fetchUser($followModalInfo[followIndex]).then((user) => {
+                followInfo.push(user);
 
-                    // Finish loading
-                    if (following.length == $followingModalInfo.length) {
-                        loadingFinished = true;
-                    }
+                // Finish loading
+                if (followInfo.length == $followModalInfo.length) {
+                    loadingFinished = true;
                 }
-            );
+            });
         }
     }
 
     function viewProfile(accountIndex: number): void {
         $modalVisible = false;
 
-        setTimeout(() => {
-            const newProfile = following[accountIndex].profileId;
+        // Reset everything for cool transitions
+        userData.set(undefined);
+        userPosts.set(undefined);
+
+        setTimeout(async () => {
+            const newProfile = followInfo[accountIndex].profileId;
 
             $targetProfile = newProfile;
+
+            // Update profile panel
+            $userData = await fetchUser(newProfile);
+            loadProfilePosts(newProfile);
 
             goto(`/profile/${newProfile}`, {
                 replaceState: true,
@@ -57,19 +66,26 @@
 
 <div class="following-container">
     <div class="header-container">
-        <h1 id="header"><span>{$followingModalInfo.length}</span> Following</h1>
+        <h1 id="header">
+            <span>{$followModalInfo.length}</span>
+            {$followModalForFollowing ? 'Following' : 'Followers'}
+        </h1>
     </div>
 
     <hr />
 
     {#if loadingFinished}
-        {#if following.length == 0}
+        {#if followInfo.length == 0}
             <Center>
-                <h1 id="no-followed">No followed users</h1>
+                <h1 id="no-follow">
+                    No {$followModalForFollowing
+                        ? 'followed users'
+                        : 'followers'}
+                </h1>
             </Center>
         {:else}
             <div class="following-items-container">
-                {#each following as { username, following, followers, avatar }, i}
+                {#each followInfo as { username, following, followers, avatar }, i}
                     <div on:click={() => viewProfile(i)}>
                         <img
                             id="avatar"
@@ -158,6 +174,7 @@
         margin-right: 25px;
         margin-bottom: 20px;
         transition: 150ms transform;
+        cursor: pointer;
     }
 
     .following-items-container div:hover {
@@ -175,7 +192,6 @@
     .following-items-container div #username {
         font-size: 2.5rem;
         color: var(--theme-profile_info_color);
-        cursor: pointer;
     }
 
     .following-items-container div #following,
@@ -201,7 +217,7 @@
         border-radius: 10px;
     }
 
-    #no-followed {
+    #no-follow {
         font-size: 2.3rem;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -235,6 +251,7 @@
             padding: 5px;
             margin-right: 10px;
             margin-bottom: 10px;
+            cursor: default;
         }
 
         .following-items-container div:first-child {
@@ -266,7 +283,7 @@
             margin-right: 5px;
         }
 
-        #no-followed {
+        #no-follow {
             font-size: 2rem;
         }
 
@@ -297,7 +314,7 @@
             font-size: 1.7rem;
         }
 
-        #no-followed {
+        #no-follow {
             font-size: 1.7rem;
         }
 

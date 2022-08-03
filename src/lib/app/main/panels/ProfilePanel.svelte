@@ -16,8 +16,6 @@
         fetchUser($targetProfile)
             .then(async (profileData) => {
                 if (!$targetProfile) {
-                    targetProfile.set(profileData.profileId);
-
                     goto(`/profile/${profileData.profileId}`, {
                         replaceState: true,
                     });
@@ -46,7 +44,7 @@
 <div class="profile-container" in:fade={{ duration: 300, delay: 200 }}>
     <!-- Hot updates in dev -->
     {#if $userData && $userPosts}
-        <ProfileInfo info={$userData} />
+        <ProfileInfo />
 
         <hr in:fade={{ duration: 250, delay: 600 }} />
 

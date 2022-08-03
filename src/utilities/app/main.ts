@@ -120,28 +120,24 @@ export function showModal(newModal: ModalTypes): void {
             targetModal = 0;
             break;
 
-        case 'Following':
+        case 'FollowInfo':
             targetModal = 1;
             break;
 
-        case 'Followers':
+        case 'EditProfile':
             targetModal = 2;
             break;
 
-        case 'EditProfile':
+        case 'CreatePost':
             targetModal = 3;
             break;
 
-        case 'CreatePost':
+        case 'ViewHomePost':
             targetModal = 4;
             break;
 
-        case 'ViewHomePost':
-            targetModal = 5;
-            break;
-
         case 'ViewProfilePost':
-            targetModal = 6;
+            targetModal = 5;
             break;
     }
 

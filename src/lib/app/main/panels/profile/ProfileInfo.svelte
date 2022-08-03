@@ -1,39 +1,34 @@
 <script lang="ts">
-    import type { FronvoAccount } from 'interfaces/app/main';
-    import { targetProfile, userData } from 'stores/app/profile';
-    import { followersModalInfo, followingModalInfo } from 'stores/app/main';
+    import { followModalForFollowing, followModalInfo } from 'stores/app/main';
+    import { userData } from 'stores/app/profile';
+    import { socket } from 'stores/global';
+    import { onDestroy } from 'svelte';
     import { fade } from 'svelte/transition';
     import { fetchUser, showModal } from 'utilities/app/main';
-    import { socket } from 'stores/global';
-    import { onMount } from 'svelte';
 
-    export let info: FronvoAccount;
-    let isInFollowing: boolean;
+    let isInFollowing = false;
     let isRequesting = false;
 
-    onMount(async () => {
-        if (!info.isSelf) {
-            const profileData = await fetchUser();
+    // Once targetProfile changes to visit a new profile from this panel directly
+    // update UI
+    const unsubscribe = userData.subscribe(async (newProfile) => {
+        if (!newProfile || newProfile.isSelf) return;
 
-            isInFollowing = profileData.following.includes(info.profileId);
-        }
-
-        targetProfile.subscribe(async (newProfile) => {
-            if (!newProfile) return;
-
-            $userData = await fetchUser(newProfile);
-            info = $userData;
-        });
+        // Update UI follow indicator and function
+        isInFollowing = (await fetchUser()).following.includes(
+            newProfile.profileId
+        );
     });
 
-    function showFollowing(): void {
-        $followingModalInfo = info.following;
-        showModal('Following');
-    }
+    onDestroy(() => {
+        // Prevent memory leak
+        unsubscribe();
+    });
 
-    function showFollowers(): void {
-        $followersModalInfo = info.followers;
-        showModal('Followers');
+    function showFollowInfo(followInfo: string[], forFollowing: boolean): void {
+        $followModalInfo = followInfo;
+        $followModalForFollowing = forFollowing;
+        showModal('FollowInfo');
     }
 
     function showEditProfile(): void {
@@ -45,6 +40,11 @@
     }
 
     function formatFollowInfo(followInfo: number): string {
+        // 100 -> 100
+        // 1000 -> 1k
+        // 1100 -> 1k
+        // 1000000 -> 1m
+
         if (followInfo / 1000000 >= 1) {
             return `${Math.floor(followInfo / 1000000)}m`;
         } else if (followInfo / 1000 >= 1) {
@@ -63,7 +63,7 @@
         if (!isInFollowing) {
             socket.emit(
                 'followProfile',
-                { profileId: info.profileId },
+                { profileId: $userData.profileId },
                 ({ err }) => {
                     if (!err) {
                         reloadProfile();
@@ -73,7 +73,7 @@
         } else {
             socket.emit(
                 'unfollowProfile',
-                { profileId: info.profileId },
+                { profileId: $userData.profileId },
                 ({ err }) => {
                     if (!err) {
                         reloadProfile();
@@ -83,8 +83,8 @@
         }
 
         async function reloadProfile(): Promise<void> {
-            $userData = await fetchUser(info.profileId);
-            info = $userData;
+            // Update follow counts
+            $userData = await fetchUser($userData.profileId);
 
             isRequesting = false;
         }
@@ -94,38 +94,38 @@
     }
 </script>
 
-{#if info}
+{#if $userData}
     <div class="info-container">
         <!-- Avatar, username -->
 
         <img
             id="avatar"
-            src={info.avatar
-                ? info.avatar
+            src={$userData.avatar
+                ? $userData.avatar
                 : 'https://fronvo.herokuapp.com/svgs/profile/default.svg'}
-            alt={`${info.username}\'s avatar`}
+            alt={`${$userData.username}\'s avatar`}
             draggable={false}
             in:fade={{ duration: 500 }}
         />
 
         <h1 id="username" in:fade={{ duration: 500 }}>
-            {info.username}
+            {$userData.username}
         </h1>
 
         <h1 id="bio" in:fade={{ duration: 500 }}>
-            {info.bio}
+            {$userData.bio}
         </h1>
 
         <!-- TODO: Status if not private -->
 
-        <!-- Follow info -->
+        <!-- Follow $userData -->
         <div class="follow-container" in:fade={{ duration: 300, delay: 300 }}>
-            <h1 on:click={showFollowing}>
-                <span>{formatFollowInfo(info.following.length)}</span> following
+            <h1 on:click={() => showFollowInfo($userData.following, true)}>
+                <span>{formatFollowInfo($userData.following.length)}</span> following
             </h1>
 
-            <h1 on:click={showFollowers}>
-                <span>{formatFollowInfo(info.followers.length)}</span> followers
+            <h1 on:click={() => showFollowInfo($userData.followers, false)}>
+                <span>{formatFollowInfo($userData.followers.length)}</span> followers
             </h1>
         </div>
 

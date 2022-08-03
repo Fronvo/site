@@ -6,8 +6,7 @@ export type PanelTypes = 'Home' | 'Profile' | 'Communities' | 'Marketplace';
 
 export type ModalTypes =
     | 'Settings'
-    | 'Following'
-    | 'Followers'
+    | 'FollowInfo'
     | 'EditProfile'
     | 'CreatePost'
     | 'ViewHomePost'

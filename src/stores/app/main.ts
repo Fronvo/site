@@ -4,8 +4,7 @@
 
 import CreatePostModal from '$lib/app/main/modals/CreatePostModal.svelte';
 import EditProfileModal from '$lib/app/main/modals/EditProfileModal.svelte';
-import FollowersModal from '$lib/app/main/modals/FollowersModal.svelte';
-import FollowingModal from '$lib/app/main/modals/FollowingModal.svelte';
+import FollowInfoModal from '$lib/app/main/modals/FollowInfoModal.svelte';
 import SettingsModal from '$lib/app/main/modals/SettingsModal.svelte';
 import ViewHomePostModal from '$lib/app/main/modals/ViewHomePostModal.svelte';
 import ViewProfilePostModal from '$lib/app/main/modals/ViewProfilePostModal.svelte';
@@ -32,8 +31,7 @@ export const currentPanelId = writable(0);
 // Modal settings
 export const modals = [
     SettingsModal,
-    FollowingModal,
-    FollowersModal,
+    FollowInfoModal,
     EditProfileModal,
     CreatePostModal,
     ViewHomePostModal,
@@ -43,7 +41,7 @@ export const modals = [
 export const currentModalId = writable(0);
 export const modalVisible = writable(false);
 export const modalAnimDuration = 200;
-export const followingModalInfo = writable([]);
-export const followersModalInfo = writable([]);
+export const followModalInfo: Writable<string[]> = writable();
+export const followModalForFollowing: Writable<boolean> = writable();
 export const viewHomePostModalInfo: Writable<HomePost> = writable();
 export const viewProfilePostModalInfo: Writable<AccountPost> = writable();

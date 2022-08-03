@@ -37,7 +37,6 @@
         width: max-content;
         box-shadow: 0 0 10px rgb(80, 80, 80, 20%);
         transition: 300ms background;
-        backdrop-filter: blur(5px);
     }
 
     .top-nav-container #logo {
@@ -67,10 +66,6 @@
     }
 
     @media screen and (max-width: 720px) {
-        .top-nav-container {
-            backdrop-filter: none;
-        }
-
         .top-nav-container h1 {
             font-size: 1.5rem;
         }

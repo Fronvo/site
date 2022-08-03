@@ -258,11 +258,6 @@
             padding-top: 0;
         }
 
-        .following-items-container div:last-child {
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-
         .following-items-container div:hover {
             transform: scale(1);
         }

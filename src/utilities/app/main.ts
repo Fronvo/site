@@ -132,12 +132,8 @@ export function showModal(newModal: ModalTypes): void {
             targetModal = 3;
             break;
 
-        case 'ViewHomePost':
+        case 'ViewPost':
             targetModal = 4;
-            break;
-
-        case 'ViewProfilePost':
-            targetModal = 5;
             break;
     }
 

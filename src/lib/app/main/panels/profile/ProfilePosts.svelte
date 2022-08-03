@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { viewProfilePostModalInfo } from 'stores/app/main';
+    import { postModalInfo, postModalForHome } from 'stores/app/main';
     import { userPosts } from 'stores/app/profile';
     import Time from 'svelte-time';
     import { fade } from 'svelte/transition';
@@ -12,8 +12,9 @@
     }, 500);
 
     function showViewPost(postIndex: number): void {
-        $viewProfilePostModalInfo = $userPosts[postIndex];
-        showModal('ViewProfilePost');
+        $postModalInfo = $userPosts[postIndex];
+        $postModalForHome = false;
+        showModal('ViewPost');
     }
 </script>
 

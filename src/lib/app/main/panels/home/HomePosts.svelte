@@ -1,6 +1,6 @@
 <script lang="ts">
     import { homePosts } from 'stores/app/home';
-    import { viewHomePostModalInfo } from 'stores/app/main';
+    import { postModalForHome, postModalInfo } from 'stores/app/main';
     import Time from 'svelte-time';
     import { fade } from 'svelte/transition';
     import { showModal } from 'utilities/app/main';
@@ -8,8 +8,9 @@
     const posts = homePosts;
 
     function viewPost(postIndex: number): void {
-        $viewHomePostModalInfo = $homePosts[postIndex];
-        showModal('ViewHomePost');
+        $postModalInfo = $homePosts[postIndex];
+        $postModalForHome = true;
+        showModal('ViewPost');
     }
 </script>
 

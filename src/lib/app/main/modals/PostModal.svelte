@@ -1,6 +1,13 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import Delete from '$lib/svgs/Delete.svelte';
-    import { modalVisible, viewProfilePostModalInfo } from 'stores/app/main';
+    import type { HomePost } from 'interfaces/app/home';
+    import type { AccountPost, FronvoAccount } from 'interfaces/app/main';
+    import {
+        modalVisible,
+        postModalInfo,
+        postModalForHome,
+    } from 'stores/app/main';
     import { targetProfile, userData } from 'stores/app/profile';
     import { socket } from 'stores/global';
     import Time from 'svelte-time';
@@ -11,7 +18,7 @@
 
         socket.emit(
             'deletePost',
-            { postId: $viewProfilePostModalInfo.postId },
+            { postId: ($postModalInfo as AccountPost).postId },
             async ({ err }) => {
                 if (!err) {
                     loadProfilePosts($targetProfile);
@@ -19,31 +26,56 @@
             }
         );
     }
+
+    function viewProfile(): void {
+        // No need to revisit from the profile panel
+        if (!$postModalForHome) return;
+
+        $modalVisible = false;
+
+        goto(`/profile/${($postModalInfo as HomePost).profileData.profileId}`, {
+            replaceState: true,
+        });
+    }
+
+    function getPostData(): AccountPost {
+        if ($postModalForHome) {
+            return ($postModalInfo as HomePost).post;
+        }
+        return $postModalInfo as AccountPost;
+    }
+
+    function getUserData(): FronvoAccount {
+        if ($postModalForHome) {
+            return ($postModalInfo as HomePost).profileData;
+        }
+        return $userData;
+    }
 </script>
 
 <div class="view-container">
-    <div class="by-container">
-        <h1 id="author">By {$userData.username}</h1>
+    <div class="by-container" on:click={viewProfile}>
+        <h1 id="author">By {getUserData().username}</h1>
         <img
             id="avatar"
-            src={$userData.avatar
-                ? $userData.avatar
+            src={getUserData().avatar
+                ? getUserData().avatar
                 : 'https://fronvo.herokuapp.com/svgs/profile/default.svg'}
             draggable={false}
-            alt={`${$userData.username}'s avatar`}
+            alt={`${getUserData().username}'s avatar`}
         />
     </div>
 
     <div class="data-container">
-        <h1 id="title">{$viewProfilePostModalInfo.title}</h1>
+        <h1 id="title">{getPostData().title}</h1>
 
-        <h1 id="content">{$viewProfilePostModalInfo.content}</h1>
+        <h1 id="content">{getPostData().content}</h1>
 
-        {#if $viewProfilePostModalInfo.attachment}
+        {#if getPostData().attachment}
             <img
                 id="attachment"
-                src={$viewProfilePostModalInfo.attachment}
-                alt={`'${$viewProfilePostModalInfo.title}' attachment`}
+                src={getPostData().attachment}
+                alt={`'${getPostData().title}' attachment`}
                 draggable={false}
             />
         {/if}
@@ -53,11 +85,12 @@
             <Time
                 format={'dddd HH:mm · MMMM D YYYY'}
                 live={15000}
-                timestamp={$viewProfilePostModalInfo.creationDate}
+                timestamp={getPostData().creationDate}
             />
         </h1>
 
-        {#if $userData.isSelf}
+        <!-- Hide if HomePost -->
+        {#if getUserData().isSelf && !$postModalForHome}
             <hr />
 
             <div class="actions-container">

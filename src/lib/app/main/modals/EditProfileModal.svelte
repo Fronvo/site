@@ -1,12 +1,15 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
+    import type { ThemeContext } from 'interfaces/global';
     import { modalVisible } from 'stores/app/main';
     import { userData } from 'stores/app/profile';
     import { socket } from 'stores/global';
-    import { onMount } from 'svelte';
+    import { getContext, onMount } from 'svelte';
+    import Checkbox from 'svelte-checkbox';
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
-    import Checkbox from 'svelte-checkbox';
+
+    let { current }: ThemeContext = getContext('theme');
 
     let profileId = $userData.profileId;
     let username = $userData.username;
@@ -159,7 +162,9 @@
                 class="private-checkbox"
                 size="2.7rem"
                 primaryColor="rgb(130, 64, 255)"
-                secondaryColor="white"
+                secondaryColor={`${
+                    $current == 'dark' ? 'white' : 'rgb(170, 170, 170)'
+                }`}
             />
         </div>
     </div>

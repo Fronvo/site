@@ -173,10 +173,10 @@
 
     .following-items-container {
         display: flex;
+        flex-direction: row;
         justify-content: center;
-        padding: 15px;
-        overflow-y: auto;
         flex-wrap: wrap;
+        overflow-y: auto;
         flex: 1;
     }
 
@@ -260,6 +260,7 @@
         .following-items-container {
             flex-direction: column;
             justify-content: start;
+            flex-wrap: nowrap;
         }
 
         .following-items-container div {

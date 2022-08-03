@@ -12,6 +12,8 @@ export interface FronvoAccount {
     following: string[];
     followers: string[];
     isSelf: boolean;
+    isPrivate: boolean;
+    isFollower: boolean;
 }
 
 export interface AccountPost {

@@ -10,6 +10,7 @@ export interface UpdateProfileDataParams {
     username?: string;
     bio?: string;
     avatar?: string;
+    isPrivate?: boolean;
 }
 
 export interface UpdateProfileDataResult extends FronvoError {

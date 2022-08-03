@@ -10,6 +10,7 @@ import {
     loginSucceeded,
     modalVisible,
 } from 'stores/app/main';
+import { userPosts } from 'stores/app/profile';
 import { socket } from 'stores/global';
 import type { ModalTypes, PanelTypes } from 'types/app/main';
 import { getKey, removeKey, setKey } from 'utilities/global';
@@ -71,12 +72,12 @@ export async function fetchPosts(
     from: string,
     to: string
 ): Promise<AccountPost[]> {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
         socket.emit(
             'fetchProfilePosts',
             { profileId, from, to },
             ({ err, profilePosts }) => {
-                err && reject(err);
+                err && userPosts.set([]);
 
                 resolve(profilePosts);
             }

@@ -53,7 +53,17 @@
 
             // Update profile panel
             $userData = await fetchUser(newProfile);
-            loadProfilePosts(newProfile);
+
+            const isAccessible =
+                $userData.isFollower ||
+                $userData.isSelf ||
+                !$userData.isPrivate;
+
+            if (isAccessible) {
+                await loadProfilePosts(newProfile);
+            } else {
+                userPosts.set([]);
+            }
 
             goto(`/profile/${newProfile}`, {
                 replaceState: true,
@@ -85,7 +95,7 @@
             </Center>
         {:else}
             <div class="following-items-container">
-                {#each followInfo as { username, following, followers, avatar }, i}
+                {#each followInfo as { username, following, followers, avatar, isFollower, isPrivate, isSelf }, i}
                     <div on:click={() => viewProfile(i)}>
                         <img
                             id="avatar"
@@ -96,11 +106,20 @@
                             draggable={false}
                         />
                         <h1 id="username">{username}</h1>
+
                         <h1 id="following">
-                            <span>{following.length}</span> following
+                            <span
+                                >{isFollower || isSelf || !isPrivate
+                                    ? following.length
+                                    : '?'}</span
+                            > following
                         </h1>
                         <h1 id="followers">
-                            <span>{followers.length}</span> followers
+                            <span
+                                >{isFollower || isSelf || !isPrivate
+                                    ? followers.length
+                                    : '?'}</span
+                            > followers
                         </h1>
                     </div>
                 {/each}

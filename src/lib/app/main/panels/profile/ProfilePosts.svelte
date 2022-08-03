@@ -1,6 +1,6 @@
 <script lang="ts">
     import { postModalInfo, postModalForHome } from 'stores/app/main';
-    import { userPosts } from 'stores/app/profile';
+    import { userData, userPosts } from 'stores/app/profile';
     import Time from 'svelte-time';
     import { fade } from 'svelte/transition';
     import { showModal } from 'utilities/app/main';
@@ -22,7 +22,11 @@
     <div class="posts-container" in:fade={{ delay: 900 }}>
         {#if $userPosts.length == 0}
             <h1 in:fade={{ duration: 500, delay: 700 }} id="empty-text">
-                No posts, yet
+                {$userData.isFollower ||
+                $userData.isSelf ||
+                !$userData.isPrivate
+                    ? 'No posts, yet'
+                    : 'This profile is private'}
             </h1>
         {:else}
             {#each $userPosts as { title, content, attachment, creationDate }, i}

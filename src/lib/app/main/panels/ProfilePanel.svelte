@@ -23,7 +23,16 @@
 
                 $userData = profileData;
 
-                await loadProfilePosts(profileData.profileId);
+                const isAccessible =
+                    profileData.isFollower ||
+                    profileData.isSelf ||
+                    !profileData.isPrivate;
+
+                if (isAccessible) {
+                    await loadProfilePosts(profileData.profileId);
+                } else {
+                    $userPosts = [];
+                }
             })
             .catch(() => {
                 $targetProfile = undefined;

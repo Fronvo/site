@@ -6,11 +6,14 @@
     import { onMount } from 'svelte';
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
+    import Checkbox from 'svelte-checkbox';
 
     let profileId = $userData.profileId;
     let username = $userData.username;
     let bio = $userData.bio;
     let avatar: Writable<string> = writable($userData.avatar);
+    let isPrivate = $userData.isPrivate;
+
     let canUpload = true;
     let isUploading = false;
     let errorMessage: string;
@@ -36,6 +39,10 @@
 
         if ($userData.avatar != $avatar) {
             updatedData['avatar'] = $avatar;
+        }
+
+        if ($userData.isPrivate != isPrivate) {
+            updatedData['isPrivate'] = isPrivate;
         }
 
         socket.emit(
@@ -144,6 +151,17 @@
         </div>
 
         <input maxlength={512} bind:value={$avatar} />
+
+        <div class="centered-container">
+            <h1 id="input-header">Private account</h1>
+            <Checkbox
+                bind:checked={isPrivate}
+                class="private-checkbox"
+                size="2.7rem"
+                primaryColor="rgb(130, 64, 255)"
+                secondaryColor="white"
+            />
+        </div>
     </div>
 
     <div class="options-container">
@@ -189,6 +207,7 @@
         justify-content: center;
         width: 40%;
         min-width: 450px;
+        overflow-y: auto;
     }
 
     .data-container #error-header {
@@ -211,6 +230,16 @@
         height: 64px;
         border-radius: 10px;
         margin-right: 10px;
+    }
+
+    .data-container .centered-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    :global(.data-container div .private-checkbox) {
+        margin-left: 20px;
     }
 
     .data-container #input-header {
@@ -265,6 +294,11 @@
         .data-container div #avatar-preview {
             width: 48px;
             height: 48px;
+        }
+
+        :global(.data-container div .private-checkbox) {
+            margin-left: 10px;
+            padding: 0;
         }
 
         .data-container #input-header {

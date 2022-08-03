@@ -8,6 +8,8 @@
 
     let isInFollowing = false;
     let isRequesting = false;
+    const isAccessible =
+        $userData.isFollower || $userData.isSelf || !$userData.isPrivate;
 
     // Once targetProfile changes to visit a new profile from this panel directly
     // update UI
@@ -26,6 +28,8 @@
     });
 
     function showFollowInfo(followInfo: string[], forFollowing: boolean): void {
+        if (!isAccessible) return;
+
         $followModalInfo = followInfo;
         $followModalForFollowing = forFollowing;
         showModal('FollowInfo');
@@ -44,6 +48,8 @@
         // 1000 -> 1k
         // 1100 -> 1k
         // 1000000 -> 1m
+
+        if (!isAccessible) return '?';
 
         if (followInfo / 1000000 >= 1) {
             return `${Math.floor(followInfo / 1000000)}m`;
@@ -113,10 +119,8 @@
         </h1>
 
         <h1 id="bio" in:fade={{ duration: 500 }}>
-            {$userData.bio}
+            {isAccessible ? $userData.bio : ''}
         </h1>
-
-        <!-- TODO: Status if not private -->
 
         <!-- Follow $userData -->
         <div class="follow-container" in:fade={{ duration: 300, delay: 300 }}>

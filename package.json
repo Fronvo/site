@@ -36,6 +36,7 @@
     "socket.io-client": "^4.5.1",
     "socket.io-msgpack-parser": "^3.0.1",
     "svelte": "^3.49.0",
+    "svelte-checkbox": "^1.0.1",
     "svelte-loading-spinners": "^0.1.7",
     "svelte-preprocess": "^4.10.6",
     "svelte-scrolling": "^1.2.1",

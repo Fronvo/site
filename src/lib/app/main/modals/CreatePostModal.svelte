@@ -89,7 +89,7 @@
     });
 </script>
 
-<div class="edit-container">
+<div class="create-container">
     <div class="header-container">
         <h1 id="header">Create Post</h1>
     </div>
@@ -136,7 +136,7 @@
         width: 100px;
     }
 
-    .edit-container {
+    .create-container {
         display: flex;
         flex-direction: column;
         height: 100%;

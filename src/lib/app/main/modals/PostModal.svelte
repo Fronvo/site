@@ -122,6 +122,7 @@
         height: 100%;
         width: 100%;
         align-items: center;
+        background: var(--theme-modal_bg_color_full);
     }
 
     .data-container {

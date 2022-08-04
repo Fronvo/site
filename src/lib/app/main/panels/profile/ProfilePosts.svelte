@@ -112,6 +112,7 @@
     .post-container #content {
         display: -webkit-box;
         overflow: hidden;
+        max-width: 100%;
         -webkit-line-clamp: 5;
         -webkit-box-orient: vertical;
         margin: 0;

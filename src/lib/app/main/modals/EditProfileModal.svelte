@@ -267,6 +267,10 @@
         background: var(--theme-modal_input_bg_color);
     }
 
+    .data-container textarea {
+        min-height: 100px;
+    }
+
     .data-container #bio-input {
         font-size: 1.7rem;
     }

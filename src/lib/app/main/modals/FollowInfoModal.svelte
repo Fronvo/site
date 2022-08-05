@@ -191,12 +191,12 @@
         padding: 10px;
         margin-right: 25px;
         margin-bottom: 20px;
-        transition: 150ms transform;
+        transition: 300ms opacity;
         cursor: pointer;
     }
 
     .following-items-container div:hover {
-        transform: scale(0.98);
+        opacity: 0.6;
     }
 
     .following-items-container div h1 {
@@ -278,7 +278,7 @@
         }
 
         .following-items-container div:hover {
-            transform: scale(1);
+            opacity: 1;
         }
 
         .following-items-container div #username {

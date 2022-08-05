@@ -119,10 +119,11 @@
     .view-container {
         display: flex;
         flex-direction: column;
-        height: 100%;
         width: 100%;
+        height: 100%;
         align-items: center;
         background: var(--theme-modal_bg_color_full);
+        overflow-y: auto;
     }
 
     .data-container {
@@ -133,7 +134,6 @@
         width: 75%;
         min-width: 500px;
         flex: 1;
-        overflow-y: auto;
         margin-bottom: 10px;
     }
 

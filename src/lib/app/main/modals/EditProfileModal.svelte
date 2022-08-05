@@ -188,9 +188,10 @@
     .edit-container {
         display: flex;
         flex-direction: column;
-        height: 100%;
         width: 100%;
+        height: 100%;
         align-items: center;
+        overflow-y: auto;
     }
 
     .header-container {
@@ -212,7 +213,6 @@
         justify-content: center;
         width: 40%;
         min-width: 450px;
-        overflow-y: auto;
     }
 
     .data-container #error-header {
@@ -278,7 +278,7 @@
     .options-container {
         display: flex;
         margin-bottom: 15px;
-        margin-top: 50px;
+        margin-top: 10px;
     }
 
     .options-container button {

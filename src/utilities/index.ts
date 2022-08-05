@@ -14,6 +14,6 @@ export function redirectApp(): void {
     indexVisible.set(false);
 
     setTimeout(() => {
-        goto('app');
+        goto('/app');
     }, indexAnimDuration);
 }

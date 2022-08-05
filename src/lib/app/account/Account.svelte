@@ -15,7 +15,7 @@
     import ResetPasswordVerify from './ResetPasswordVerify.svelte';
 
     // Move to /app route, /home etc wont be available without an account
-    goto('app', {
+    goto('/app', {
         replaceState: true,
     });
 </script>

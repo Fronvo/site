@@ -39,36 +39,35 @@
         }
     }
 
-    function viewProfile(accountIndex: number): void {
+    async function viewProfile(accountIndex: number): Promise<void> {
         $modalVisible = false;
+
+        setTimeout(() => {
+            goto(`/profile/${newProfile}`, {
+                replaceState: true,
+            });
+        }, modalAnimDuration);
 
         // Reset everything for cool transitions
         userData.set(undefined);
         userPosts.set(undefined);
 
-        setTimeout(async () => {
-            const newProfile = followInfo[accountIndex].profileId;
+        // Start loading the new profile
+        const newProfile = followInfo[accountIndex].profileId;
 
-            $targetProfile = newProfile;
+        $targetProfile = newProfile;
 
-            // Update profile panel
-            $userData = await fetchUser(newProfile);
+        // Update profile panel
+        $userData = await fetchUser(newProfile);
 
-            const isAccessible =
-                $userData.isFollower ||
-                $userData.isSelf ||
-                !$userData.isPrivate;
+        const isAccessible =
+            $userData.isFollower || $userData.isSelf || !$userData.isPrivate;
 
-            if (isAccessible) {
-                await loadProfilePosts(newProfile);
-            } else {
-                userPosts.set([]);
-            }
-
-            goto(`/profile/${newProfile}`, {
-                replaceState: true,
-            });
-        }, modalAnimDuration);
+        if (isAccessible) {
+            await loadProfilePosts(newProfile);
+        } else {
+            userPosts.set([]);
+        }
     }
 
     $: loadFollowing();

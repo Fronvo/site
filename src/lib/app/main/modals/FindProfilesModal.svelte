@@ -206,6 +206,7 @@
         font-size: 3rem;
         margin: 0;
         padding-right: 20px;
+        text-align: center;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;

@@ -223,6 +223,11 @@
     }
 
     .options-container {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        flex-direction: row;
+        flex-wrap: wrap;
         margin-top: 10px;
     }
 

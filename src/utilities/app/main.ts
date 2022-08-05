@@ -136,6 +136,10 @@ export function showModal(newModal: ModalTypes): void {
         case 'ViewPost':
             targetModal = 4;
             break;
+
+        case 'FindProfiles':
+            targetModal = 5;
+            break;
     }
 
     currentModalId.set(targetModal);

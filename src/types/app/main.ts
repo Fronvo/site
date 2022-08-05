@@ -9,4 +9,5 @@ export type ModalTypes =
     | 'FollowInfo'
     | 'EditProfile'
     | 'CreatePost'
-    | 'ViewPost';
+    | 'ViewPost'
+    | 'FindProfiles';

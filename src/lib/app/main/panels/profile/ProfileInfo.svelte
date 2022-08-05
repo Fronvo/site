@@ -43,6 +43,10 @@
         showModal('CreatePost');
     }
 
+    function showFindProfiles(): void {
+        showModal('FindProfiles');
+    }
+
     function formatFollowInfo(followInfo: number): string {
         // 100 -> 100
         // 1000 -> 1k
@@ -138,9 +142,9 @@
                 <button on:click={showEditProfile}>Edit profile</button>
 
                 <button on:click={showCreatePost}>Create post</button>
-            {/if}
 
-            {#if !$userData.isSelf}
+                <button on:click={showFindProfiles}>Find profiles</button>
+            {:else}
                 <button on:click={handleFollowProfile}
                     >{isInFollowing ? 'Unfollow' : 'Follow'}</button
                 >
@@ -224,10 +228,11 @@
 
     .options-container button {
         font-size: 1.7rem;
+        margin-right: 10px;
     }
 
-    .options-container button:first-child {
-        margin-right: 10px;
+    .options-container button:nth-last-child(1) {
+        margin-right: 0;
     }
 
     @media screen and (max-width: 720px) {

@@ -20,6 +20,10 @@ import type {
     FetchProfilePostsResult,
 } from 'interfaces/socket/account/fetchProfilePosts';
 import type {
+    FindProfilesParams,
+    FindProfilesResult,
+} from 'interfaces/socket/account/findProfiles';
+import type {
     FollowProfileParams,
     FollowProfileResult,
 } from 'interfaces/socket/account/followProfile';
@@ -119,5 +123,9 @@ export interface ClientToServerEvents {
     unfollowProfile: (
         {}: UnfollowProfileParams,
         callback?: ({}: UnfollowProfileResult) => void
+    ) => void;
+    findProfiles: (
+        {}: FindProfilesParams,
+        callback?: ({}: FindProfilesResult) => void
     ) => void;
 }

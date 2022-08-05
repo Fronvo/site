@@ -104,7 +104,8 @@
         {/if}
 
         <h1 id="input-header">Title</h1>
-        <input bind:value={title} maxlength={30} />
+        <!-- svelte-ignore a11y-autofocus -->
+        <input autofocus bind:value={title} maxlength={30} />
 
         <h1 id="input-header">Content</h1>
         <textarea bind:value={content} maxlength={128} rows={6} />

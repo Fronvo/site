@@ -12,7 +12,7 @@
     import { indexAnimDuration, indexVisible } from 'stores/index';
     import { onMount } from 'svelte';
     import { sineOut } from 'svelte/easing';
-    import { fade } from 'svelte/transition';
+    import { fade, scale } from 'svelte/transition';
 
     let mountReady = false;
 
@@ -34,8 +34,12 @@
     <title>Fronvo | Your Gateway to Free Conversations</title>
 </svelte:head>
 
-<div class="scrolling-bg">
-    {#if mountReady}
+{#if mountReady && $indexVisible}
+    <div
+        class="scrolling-bg"
+        in:scale={{ start: 0.95, duration: 500, opacity: 0.9 }}
+        out:fade={{ duration: indexAnimDuration }}
+    >
         <TopNav />
 
         {#if $indexVisible}
@@ -52,8 +56,8 @@
                 <Footer />
             </div>
         {/if}
-    {/if}
-</div>
+    </div>
+{/if}
 
 <style>
     .scrolling-bg {

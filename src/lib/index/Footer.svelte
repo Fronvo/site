@@ -3,12 +3,6 @@
 </script>
 
 <div class="footer" in:fade={{ duration: 500 }}>
-    <img
-        src="https://fronvo.herokuapp.com/svgs/other/wave.svg"
-        draggable={false}
-        alt="Wave"
-    />
-
     <div class="content">
         <h1>Fronvo</h1>
 
@@ -23,15 +17,20 @@
 
 <style>
     .footer {
+        background: rgba(255, 255, 255, 10%);
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        padding: 10px;
         display: flex;
         flex-direction: column;
+        margin-right: 25px;
+        margin-left: 25px;
     }
 
     .footer .content {
         display: flex;
         justify-content: center;
         align-items: center;
-        background: rgb(100, 0, 255);
     }
 
     .footer .content h1 {
@@ -48,7 +47,7 @@
 
     @media screen and (max-width: 720px) {
         .footer .content h1 {
-            font-size: 2.5rem;
+            font-size: 2.3rem;
         }
 
         .footer .content img {

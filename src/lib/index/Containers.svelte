@@ -66,6 +66,7 @@
         margin-left: 10px;
         margin-right: 10px;
         margin-bottom: 10px;
+        color: white;
     }
 
     .container .svg {
@@ -119,11 +120,11 @@
 
     @keyframes rainbow-header {
         0% {
-            text-shadow: 0 4px 0 rgb(121, 255, 121);
+            text-shadow: 0 4px 0 rgb(28, 255, 28);
         }
 
         50% {
-            text-shadow: 0 4px 0 rgb(121, 255, 121);
+            text-shadow: 0 4px 0 rgb(34, 255, 226);
         }
 
         100% {
@@ -133,13 +134,13 @@
 
     @keyframes rainbow-btn {
         0% {
-            border: 3px solid rgb(121, 255, 121);
-            box-shadow: 0 0 10px rgb(121, 255, 121);
+            border: 3px solid rgb(28, 255, 28);
+            box-shadow: 0 0 10px rgb(28, 255, 28);
         }
 
         50% {
-            border: 3px solid rgb(121, 255, 121);
-            box-shadow: 0 0 10px rgb(121, 255, 121);
+            border: 3px solid rgb(34, 255, 226);
+            box-shadow: 0 0 10px rgb(34, 255, 226);
         }
 
         100% {

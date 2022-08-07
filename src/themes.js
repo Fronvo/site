@@ -5,7 +5,7 @@ export default {
         bg_color: 'rgb(30, 30, 30)',
 
         // Header text color (accent)
-        text_color: 'rgb(130, 64, 255)',
+        text_color: 'rgb(150, 64, 255)',
 
         // SideNav background color (accent 2)
         nav_bg_color: 'rgba(20, 20, 20, 0.75)',
@@ -34,7 +34,7 @@ export default {
         bg_color: 'rgb(250, 250, 250)',
 
         // Header text color (accent)
-        text_color: 'rgb(130, 64, 255)',
+        text_color: 'rgb(150, 64, 255)',
 
         // SideNav background color (accent 2)
         nav_bg_color: 'rgba(255, 255, 255, 0.75)',

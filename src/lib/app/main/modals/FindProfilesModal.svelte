@@ -252,12 +252,19 @@
         padding: 10px;
         margin-right: 25px;
         margin-bottom: 20px;
-        transition: 300ms opacity;
+        transition: 250ms background;
         cursor: pointer;
+        background-size: 200% auto;
+        background-image: linear-gradient(
+            to right,
+            rgba(0, 0, 0, 1%) 0%,
+            rgba(146, 73, 255, 20%) 51%,
+            rgba(0, 0, 0, 1%) 100%
+        );
     }
 
     .find-items-container div:hover {
-        opacity: 0.6;
+        background-position: right center;
     }
 
     .find-items-container div h1 {
@@ -344,10 +351,6 @@
 
         .find-items-container div:first-child {
             padding-top: 0;
-        }
-
-        .find-items-container div:hover {
-            opacity: 1;
         }
 
         .find-items-container div #profileId {

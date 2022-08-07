@@ -34,21 +34,48 @@
     <title>Fronvo | Your Gateway to Free Conversations</title>
 </svelte:head>
 
-{#if mountReady}
-    <TopNav />
+<div class="scrolling-bg">
+    {#if mountReady}
+        <TopNav />
 
-    {#if $indexVisible}
-        <div
-            out:fade={{
-                duration: indexAnimDuration,
-                easing: sineOut,
-            }}
-        >
-            <Top />
+        {#if $indexVisible}
+            <div
+                out:fade={{
+                    duration: indexAnimDuration,
+                    easing: sineOut,
+                }}
+            >
+                <Top />
 
-            <Containers />
+                <Containers />
 
-            <Footer />
-        </div>
+                <Footer />
+            </div>
+        {/if}
     {/if}
-{/if}
+</div>
+
+<style>
+    .scrolling-bg {
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        margin: auto;
+        width: 100%;
+        height: fit-content;
+        z-index: 1;
+        background: url(/images/fronvo-landing-scroll-bg.svg) no-repeat center
+            center scroll;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+</style>

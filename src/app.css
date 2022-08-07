@@ -45,19 +45,24 @@ h1 {
 button {
     background: rgb(100, 0, 255);
     border: none;
-    box-shadow: 0 0 5px black;
-    border-radius: 10px;
+    border-radius: 12px;
     color: white;
     padding: 10px;
     font-family: 'DM Sans';
     font-weight: 500;
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.5s;
+    background-size: 200% auto;
+    background-image: linear-gradient(
+        to right,
+        rgb(100, 0, 255) 0%,
+        rgb(146, 73, 255) 51%,
+        rgb(100, 0, 255) 100%
+    );
 }
 
 button:hover {
-    color: rgb(100, 0, 255);
-    background: white;
+    background-position: right center;
 }
 
 button:disabled {

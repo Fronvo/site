@@ -161,7 +161,7 @@
                 bind:checked={isPrivate}
                 class="private-checkbox"
                 size="2.7rem"
-                primaryColor="rgb(130, 64, 255)"
+                primaryColor="rgb(180, 120, 255)"
                 secondaryColor={`${
                     $current == 'dark' ? 'white' : 'rgb(170, 170, 170)'
                 }`}

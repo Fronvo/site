@@ -55,9 +55,9 @@ button {
     background-size: 200% auto;
     background-image: linear-gradient(
         to right,
-        rgb(100, 0, 255) 0%,
+        rgb(102, 0, 255) 0%,
         rgb(146, 73, 255) 51%,
-        rgb(100, 0, 255) 100%
+        rgb(102, 0, 255) 100%
     );
 }
 

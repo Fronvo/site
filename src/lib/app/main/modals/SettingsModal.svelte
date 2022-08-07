@@ -39,11 +39,6 @@
 
 <div class="options-container">
     <div>
-        <h1>Theme</h1>
-        <ThemeSwitch />
-    </div>
-
-    <div>
         <button on:click={logout}>Logout</button>
     </div>
 </div>

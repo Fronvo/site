@@ -278,6 +278,12 @@
     .find-items-container div #profileId {
         font-size: 2.5rem;
         color: var(--theme-profile_info_color);
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
 
     .find-items-container div #following,

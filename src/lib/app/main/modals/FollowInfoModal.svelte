@@ -217,6 +217,12 @@
     .following-items-container div #username {
         font-size: 2.5rem;
         color: var(--theme-profile_info_color);
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
 
     .following-items-container div #following,

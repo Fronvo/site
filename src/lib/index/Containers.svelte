@@ -8,7 +8,14 @@
             title: 'Truly private social media',
             svg: 'free-convos',
         },
-
+        {
+            title: 'Beat your addictions',
+            svg: 'beat-addictions',
+        },
+        {
+            title: "Focus on what's important",
+            svg: 'focus-important',
+        },
         {
             title: 'Packed with features',
             svg: 'many-features',

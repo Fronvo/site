@@ -76,7 +76,7 @@
 <style>
     .verify-container {
         border-radius: 10px;
-        background: rgb(100, 0, 255);
+        background: rgb(111, 28, 236);
         padding: 20px 30px 20px 30px;
         box-shadow: 0 0 5px black;
         text-align: center;

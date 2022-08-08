@@ -17,7 +17,7 @@
 
 <style>
     .footer {
-        background: rgba(255, 255, 255, 10%);
+        background: rgba(255, 255, 255, 5%);
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
         padding: 10px;

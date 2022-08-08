@@ -9,16 +9,20 @@
             svg: 'free-convos',
         },
         {
+            title: 'Packed with features',
+            svg: 'many-features',
+        },
+        {
+            title: 'Unleash your creativity',
+            svg: 'creativity-bots',
+        },
+        {
             title: 'Beat your addictions',
             svg: 'beat-addictions',
         },
         {
             title: "Focus on what's important",
             svg: 'focus-important',
-        },
-        {
-            title: 'Packed with features',
-            svg: 'many-features',
         },
     ];
 </script>

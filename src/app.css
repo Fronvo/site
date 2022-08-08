@@ -5,8 +5,7 @@
 }
 
 html {
-    background: var(--theme-bg_color);
-    transition: 500ms background;
+    overflow: hidden;
 }
 
 body {
@@ -39,7 +38,7 @@ a:focus {
 h1 {
     font-family: 'DM Sans';
     font-weight: 500;
-    color: var(--theme-text_color);
+    color: var(--text_color);
 }
 
 button {
@@ -78,7 +77,7 @@ textarea {
     border-radius: 5px;
     font-family: 'DM Sans';
     transition: 0.5s;
-    color: var(--theme-text_color);
+    color: var(--text_color);
     padding: 5px;
 }
 
@@ -97,7 +96,7 @@ textarea:focus {
 }
 
 hr {
-    border: 1px solid var(--theme-text_color);
+    border: 1px solid var(--text_color);
 }
 
 input:-webkit-autofill,
@@ -110,7 +109,7 @@ select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus,
 select:-webkit-autofill::first-line {
-    -webkit-text-fill-color: var(--theme-text_color);
+    -webkit-text-fill-color: var(--text_color);
 }
 
 ::-webkit-scrollbar {

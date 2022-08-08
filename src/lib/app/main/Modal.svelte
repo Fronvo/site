@@ -35,6 +35,6 @@
         align-items: center;
         transition: 250ms all;
         z-index: 2;
-        background: var(--theme-modal_bg_color);
+        background: var(--modal_bg_color);
     }
 </style>

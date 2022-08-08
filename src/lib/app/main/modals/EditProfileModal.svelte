@@ -4,12 +4,10 @@
     import { modalVisible } from 'stores/app/main';
     import { userData } from 'stores/app/profile';
     import { socket } from 'stores/global';
-    import { getContext, onMount } from 'svelte';
+    import { onMount } from 'svelte';
     import Checkbox from 'svelte-checkbox';
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
-
-    let { current }: ThemeContext = getContext('theme');
 
     let profileId = $userData.profileId;
     let username = $userData.username;
@@ -162,9 +160,7 @@
                 class="private-checkbox"
                 size="2.7rem"
                 primaryColor="rgb(180, 120, 255)"
-                secondaryColor={`${
-                    $current == 'dark' ? 'white' : 'rgb(170, 170, 170)'
-                }`}
+                secondaryColor="white"
             />
         </div>
     </div>
@@ -248,7 +244,7 @@
     }
 
     .data-container #input-header {
-        color: var(--theme-profile_info_color);
+        color: var(--profile_info_color);
         margin: 0;
         font-size: 2.2rem;
         -webkit-touch-callout: none;
@@ -264,7 +260,7 @@
         font-size: 2rem;
         margin: 0 5px 20px 5px;
         width: 95%;
-        background: var(--theme-modal_input_bg_color);
+        background: var(--modal_input_bg_color);
     }
 
     .data-container textarea {

@@ -37,8 +37,8 @@
         width: max-content;
         height: fit-content;
         padding: 20px;
-        background: var(--theme-nav_bg_color);
-        box-shadow: 0 0 10px var(--theme-nav_shadow_color);
+        background: var(--nav_bg_color);
+        box-shadow: 0 0 10px var(--nav_shadow_color);
         transition: 300ms background;
         text-align: center;
         border-top-right-radius: 25px;

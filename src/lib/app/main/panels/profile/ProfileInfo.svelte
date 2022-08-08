@@ -178,7 +178,7 @@
         margin: 0;
         margin-right: 10px;
         margin-left: 10px;
-        color: var(--theme-profile_info_color);
+        color: var(--profile_info_color);
         text-align: center;
     }
 
@@ -187,7 +187,7 @@
         margin: 0;
         margin-left: 10px;
         margin-right: 10px;
-        color: var(--theme-profile_info_color);
+        color: var(--profile_info_color);
         text-align: center;
         white-space: pre-wrap;
         display: -webkit-box;
@@ -219,7 +219,7 @@
     }
 
     .follow-container h1 span {
-        color: var(--theme-profile_info_color);
+        color: var(--profile_info_color);
     }
 
     .options-container {

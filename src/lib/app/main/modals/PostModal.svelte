@@ -122,7 +122,7 @@
         width: 100%;
         height: 100%;
         align-items: center;
-        background: var(--theme-modal_bg_color_full);
+        background: var(--modal_bg_color_full);
         overflow-y: auto;
     }
 
@@ -150,7 +150,7 @@
     }
 
     .by-container #author {
-        color: var(--theme-profile_info_color);
+        color: var(--profile_info_color);
         margin: 0;
         font-size: 2.5rem;
         padding: 5px;
@@ -172,7 +172,7 @@
     .data-container #content {
         margin: 0;
         font-size: 2rem;
-        color: var(--theme-profile_info_color);
+        color: var(--profile_info_color);
         white-space: pre-wrap;
         text-align: center;
         max-width: 65%;
@@ -215,7 +215,7 @@
         border-radius: 10px;
         transition: 250ms border-radius;
         padding: 10px;
-        border: 2px solid var(--theme-profile_info_color);
+        border: 2px solid var(--profile_info_color);
     }
 
     .actions-container div:hover {
@@ -225,7 +225,7 @@
     .actions-container div h1 {
         margin: 0;
         margin-left: 10px;
-        color: var(--theme-profile_info_color);
+        color: var(--profile_info_color);
         font-size: 2rem;
     }
 

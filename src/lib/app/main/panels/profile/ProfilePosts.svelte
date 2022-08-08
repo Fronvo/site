@@ -75,8 +75,8 @@
     .post-container {
         display: flex;
         flex-direction: column;
-        background: var(--theme-nav_bg_color);
-        box-shadow: 0 0 10px var(--theme-nav_shadow_color);
+        background: var(--nav_bg_color);
+        box-shadow: 0 0 10px var(--nav_shadow_color);
         padding: 10px;
         padding-top: 5px;
         padding-bottom: 5px;
@@ -96,7 +96,7 @@
     }
 
     .post-container:hover {
-        box-shadow: 0 0 20px var(--theme-nav_shadow_color);
+        box-shadow: 0 0 20px var(--nav_shadow_color);
     }
 
     .post-container #title {
@@ -118,7 +118,7 @@
         margin: 0;
         margin-top: 10px;
         font-size: 1.8rem;
-        color: var(--theme-profile_info_color);
+        color: var(--profile_info_color);
         flex: 1;
         white-space: pre-wrap;
         text-align: center;
@@ -150,7 +150,7 @@
         }
 
         .post-container:hover {
-            box-shadow: 0 0 10px var(--theme-nav_shadow_color);
+            box-shadow: 0 0 10px var(--nav_shadow_color);
         }
 
         .post-container #title {

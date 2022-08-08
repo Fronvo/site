@@ -167,7 +167,7 @@
     }
 
     .header-container #header span {
-        color: var(--theme-profile_info_color);
+        color: var(--profile_info_color);
     }
 
     .following-items-container {
@@ -183,8 +183,8 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        background: var(--theme-nav_bg_color);
-        box-shadow: 0 0 10px var(--theme-nav_shadow_color);
+        background: var(--nav_bg_color);
+        box-shadow: 0 0 10px var(--nav_shadow_color);
         width: 350px;
         height: min-content;
         border-radius: 10px;
@@ -211,12 +211,12 @@
     }
 
     .following-items-container div h1 span {
-        color: var(--theme-profile_info_color);
+        color: var(--profile_info_color);
     }
 
     .following-items-container div #username {
         font-size: 2.5rem;
-        color: var(--theme-profile_info_color);
+        color: var(--profile_info_color);
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;

@@ -183,7 +183,7 @@
     }
 
     .data-container #input-header {
-        color: var(--theme-profile_info_color);
+        color: var(--profile_info_color);
         margin: 0;
         font-size: 2.2rem;
         -webkit-touch-callout: none;
@@ -199,7 +199,7 @@
         font-size: 2rem;
         margin: 0 5px 20px 5px;
         width: 95%;
-        background: var(--theme-modal_input_bg_color);
+        background: var(--modal_input_bg_color);
     }
 
     .data-container #attachment-preview {

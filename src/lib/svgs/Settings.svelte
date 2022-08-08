@@ -41,7 +41,7 @@
 <style>
     svg {
         fill: none;
-        stroke: var(--theme-svg_stroke);
+        stroke: var(--svg_stroke);
         stroke-width: 2px;
         cursor: pointer;
         margin-top: 10px;

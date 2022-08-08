@@ -5,6 +5,8 @@
 }
 
 html {
+    /* Save the user's eyes before onMount */
+    background: rgb(30, 30, 30);
     overflow: hidden;
 }
 

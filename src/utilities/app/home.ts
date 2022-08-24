@@ -9,7 +9,7 @@ import { fetchPosts, fetchUser } from 'utilities/app/main';
 export async function loadHomePosts(): Promise<void> {
     const finalPosts: HomePost[] = [];
 
-    const fronvoPosts = (await fetchPosts('fronvo', '0', '5')).reverse();
+    const fronvoPosts = (await fetchPosts('fronvo', '0', '10')).reverse();
     const fronvoAccount = await fetchUser('fronvo');
 
     for (const postIndex in fronvoPosts) {

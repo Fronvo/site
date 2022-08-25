@@ -51,7 +51,7 @@ button {
     font-family: 'DM Sans';
     font-weight: 500;
     cursor: pointer;
-    transition: 0.5s;
+    transition: 0.25s;
     background-size: 200% auto;
     background-image: linear-gradient(
         to right,
@@ -62,7 +62,7 @@ button {
 }
 
 button:hover {
-    background-position: right center;
+    background-position: bottom center;
 }
 
 button:disabled {

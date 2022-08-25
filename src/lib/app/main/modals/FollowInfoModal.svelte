@@ -197,7 +197,7 @@
         padding: 10px;
         margin-right: 25px;
         margin-bottom: 20px;
-        transition: 250ms background;
+        transition: 400ms background;
         cursor: pointer;
         background-size: 200% auto;
         background-image: linear-gradient(

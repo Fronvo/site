@@ -9,7 +9,7 @@
 <Center absolute>
     <div class="loading-container" transition:fade>
         <h1 id="text">{text}</h1>
-        <Shadow color="rgb(130, 64, 255)" size="48" duration="1s" />
+        <Shadow color="rgb(180, 120, 255)" size="48" duration="1s" />
     </div>
 </Center>
 

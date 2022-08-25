@@ -1,6 +1,6 @@
 <script lang="ts">
     import { followModalForFollowing, followModalInfo } from 'stores/app/main';
-    import { userData } from 'stores/app/profile';
+    import { profileLoadingFinished, userData } from 'stores/app/profile';
     import { socket } from 'stores/global';
     import { onDestroy } from 'svelte';
     import { fade } from 'svelte/transition';
@@ -14,12 +14,16 @@
     // Once targetProfile changes to visit a new profile from this panel directly
     // update UI
     const unsubscribe = userData.subscribe(async (newProfile) => {
-        if (!newProfile || newProfile.isSelf) return;
+        if (!newProfile) return;
 
-        // Update UI follow indicator and function
-        isInFollowing = (await fetchUser()).following.includes(
-            newProfile.profileId
-        );
+        if (!newProfile.isSelf) {
+            // Update UI follow indicator and function
+            isInFollowing = (await fetchUser()).following.includes(
+                newProfile.profileId
+            );
+        }
+
+        $profileLoadingFinished = true;
     });
 
     onDestroy(() => {
@@ -104,7 +108,7 @@
     }
 </script>
 
-{#if $userData}
+{#if $profileLoadingFinished}
     <div class="info-container">
         <!-- Avatar, username -->
 

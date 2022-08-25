@@ -2,7 +2,12 @@
     import { goto } from '$app/navigation';
     import ProfileInfo from '$lib/app/main/panels/profile/ProfileInfo.svelte';
     import ProfilePosts from '$lib/app/main/panels/profile/ProfilePosts.svelte';
-    import { targetProfile, userData, userPosts } from 'stores/app/profile';
+    import {
+        profileLoadingFinished,
+        targetProfile,
+        userData,
+        userPosts,
+    } from 'stores/app/profile';
     import { onDestroy, onMount } from 'svelte';
     import { fade } from 'svelte/transition';
     import { fetchUser } from 'utilities/app/main';
@@ -47,6 +52,8 @@
     onDestroy(() => {
         $targetProfile = undefined;
         $userData = undefined;
+        $userPosts = undefined;
+        $profileLoadingFinished = false;
     });
 </script>
 

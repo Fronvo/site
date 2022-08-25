@@ -11,13 +11,18 @@
         modalAnimDuration,
         modalVisible,
     } from 'stores/app/main';
-    import { targetProfile, userData, userPosts } from 'stores/app/profile';
+    import {
+        profileLoadingFinished,
+        targetProfile,
+        userData,
+        userPosts,
+    } from 'stores/app/profile';
     import { fetchUser } from 'utilities/app/main';
 
     let followInfo: FronvoAccount[] = [];
     let loadingFinished = false;
 
-    async function loadFollowing() {
+    async function loadFollowInfo() {
         // Fetch all followed users, notify UI once finished
 
         // Sanity check for new accounts, new UI will be displayed
@@ -49,8 +54,9 @@
         }, modalAnimDuration);
 
         // Reset everything for cool transitions
-        userData.set(undefined);
-        userPosts.set(undefined);
+        $userData = undefined;
+        $userPosts = undefined;
+        $profileLoadingFinished = false;
 
         // Start loading the new profile
         const newProfile = followInfo[accountIndex].profileId;
@@ -70,7 +76,7 @@
         }
     }
 
-    $: loadFollowing();
+    $: loadFollowInfo();
 </script>
 
 <div class="following-container">

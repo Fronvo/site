@@ -1,6 +1,10 @@
 <script lang="ts">
     import { postModalInfo, postModalForHome } from 'stores/app/main';
-    import { userData, userPosts } from 'stores/app/profile';
+    import {
+        profileLoadingFinished,
+        userData,
+        userPosts,
+    } from 'stores/app/profile';
     import Time from 'svelte-time';
     import { fade } from 'svelte/transition';
     import { showModal } from 'utilities/app/main';
@@ -18,7 +22,7 @@
     }
 </script>
 
-{#if $userPosts}
+{#if $profileLoadingFinished}
     <div class="posts-container" in:fade={{ delay: 900 }}>
         {#if $userPosts.length == 0}
             <h1 in:fade={{ duration: 500, delay: 700 }} id="empty-text">

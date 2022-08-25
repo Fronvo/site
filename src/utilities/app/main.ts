@@ -144,6 +144,10 @@ export function showModal(newModal: ModalTypes): void {
         case 'ControlCenter':
             targetModal = 6;
             break;
+
+        case 'MaxOnlineTime':
+            targetModal = 7;
+            break;
     }
 
     currentModalId.set(targetModal);

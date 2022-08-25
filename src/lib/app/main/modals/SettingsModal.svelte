@@ -1,30 +1,43 @@
 <script lang="ts">
-    import { accountRegisterVerifyTab } from 'stores/app/account';
+    import { getKey, removeKey, setKey } from 'utilities/global';
+    import { modalVisible } from 'stores/app/main';
     import {
-        loginSucceeded,
-        modalAnimDuration,
-        modalVisible,
-    } from 'stores/app/main';
-    import { targetProfile, userData } from 'stores/app/profile';
-    import { socket } from 'stores/global';
-    import { removeKey } from 'utilities/global';
+        sessionTime,
+        sessionTimeEnabled,
+        sessionWarningShown,
+    } from 'stores/global';
 
-    function logout(): void {
+    let maxOnlineTime = getKey('maxOnlineTime') / 60 || 0;
+
+    function validateMaxOnlineTime(): undefined | number {
+        if (!maxOnlineTime) return;
+
+        const onlineTime = Number(maxOnlineTime);
+
+        if (onlineTime != NaN && onlineTime > 0) {
+            return onlineTime;
+        }
+    }
+
+    function saveSettings(): void {
+        const onlineTime = validateMaxOnlineTime() * 60;
+
+        // Only if not the same value
+        if (onlineTime != Number(getKey('maxOnlineTime'))) {
+            if (onlineTime) {
+                // In minutes
+                setKey('maxOnlineTime', onlineTime);
+                // Reset session stats
+                $sessionTime = 0;
+                $sessionWarningShown = false;
+                $sessionTimeEnabled = true;
+            } else {
+                removeKey('maxOnlineTime');
+                $sessionTimeEnabled = false;
+            }
+        }
+
         $modalVisible = false;
-
-        setTimeout(() => {
-            socket.emit('logout', ({ err }) => {
-                if (err) return;
-
-                removeKey('token');
-                $accountRegisterVerifyTab = false;
-                $loginSucceeded = false;
-
-                // Also reset userData, update smoothly on re-login
-                $userData = undefined;
-                $targetProfile = undefined;
-            });
-        }, modalAnimDuration);
     }
 </script>
 
@@ -37,12 +50,12 @@
 
     <div class="data-container">
         <div>
-            <h1>Exit your account</h1>
-            <button on:click={logout}>Logout</button>
+            <h1>Max online minutes</h1>
+            <input bind:value={maxOnlineTime} maxlength={4} />
         </div>
     </div>
 
-    <button id="close" on:click={() => ($modalVisible = false)}>Close</button>
+    <button id="close" on:click={saveSettings}>Save</button>
 </div>
 
 <style>
@@ -96,6 +109,20 @@
         flex-wrap: wrap;
     }
 
+    .data-container input {
+        text-align: center;
+        font-size: 2rem;
+        margin: 0 5px 20px 5px;
+        width: 18%;
+        min-width: 100px;
+        background: var(--modal_input_bg_color);
+    }
+
+    .data-container input::-webkit-outer-spin-button,
+    .data-container input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+    }
+
     .data-container div h1 {
         margin: 0;
         margin-right: 15px;
@@ -127,6 +154,10 @@
             min-width: auto;
         }
 
+        .data-container input {
+            font-size: 1.7rem;
+        }
+
         .data-container div h1 {
             font-size: 2.1rem;
         }
@@ -149,6 +180,10 @@
 
         .data-container {
             width: 300px;
+        }
+
+        .data-container input {
+            font-size: 1.4rem;
         }
 
         .data-container div h1 {

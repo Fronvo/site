@@ -7,6 +7,7 @@ import CreatePostModal from '$lib/app/main/modals/CreatePostModal.svelte';
 import EditProfileModal from '$lib/app/main/modals/EditProfileModal.svelte';
 import FindProfilesModal from '$lib/app/main/modals/FindProfilesModal.svelte';
 import FollowInfoModal from '$lib/app/main/modals/FollowInfoModal.svelte';
+import MaxOnlineTimeModal from '$lib/app/main/modals/MaxOnlineTimeModal.svelte';
 import PostModal from '$lib/app/main/modals/PostModal.svelte';
 import SettingsModal from '$lib/app/main/modals/SettingsModal.svelte';
 import CommunitiesPanel from '$lib/app/main/panels/CommunitiesPanel.svelte';
@@ -38,6 +39,7 @@ export const modals = [
     PostModal,
     FindProfilesModal,
     ControlCentreModal,
+    MaxOnlineTimeModal,
 ];
 
 // General Modal settings

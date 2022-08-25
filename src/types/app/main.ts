@@ -11,4 +11,5 @@ export type ModalTypes =
     | 'CreatePost'
     | 'ViewPost'
     | 'FindProfiles'
-    | 'ControlCenter';
+    | 'ControlCenter'
+    | 'MaxOnlineTime';

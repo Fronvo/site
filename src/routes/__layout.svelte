@@ -2,14 +2,25 @@
     import Account from '$lib/app/account/Account.svelte';
     import Main from '$lib/app/main/Main.svelte';
     import { tokenInvalid } from 'stores/app/global';
-    import { loginSucceeded } from 'stores/app/main';
-    import { initSocket, showLayout } from 'stores/global';
+    import {
+        loginSucceeded,
+        modalAnimDuration,
+        modalVisible,
+    } from 'stores/app/main';
+    import {
+        initSocket,
+        sessionAttached,
+        sessionTime,
+        sessionTimeEnabled,
+        sessionWarningShown,
+        showLayout,
+    } from 'stores/global';
     import { onMount } from 'svelte';
     import themingVariables from 'svelte-css-vars';
     import { setGlobalOptions } from 'svelte-scrolling';
     import { sineInOut } from 'svelte/easing';
     import { fade } from 'svelte/transition';
-    import { performLogin } from 'utilities/app/main';
+    import { performLogin, showModal } from 'utilities/app/main';
     import { getKey } from 'utilities/global';
     import '../app.css';
     import { currentTheme } from '../themes';
@@ -18,6 +29,68 @@
 
     onMount(() => {
         mountReady = true;
+
+        function startSessionTime(): void {
+            // Also start the max online time counter
+            // Session time
+            if ($sessionAttached) return;
+
+            $sessionAttached = true;
+
+            if (getKey('maxOnlineTime') && $showLayout) {
+                setInterval(() => {
+                    if (!$showLayout || !$sessionTimeEnabled) {
+                        $sessionTime = 0;
+                        return;
+                    }
+
+                    $sessionTime += 1;
+
+                    // Observer, check state again
+                    if (getKey('maxOnlineTime')) {
+                        if (
+                            $sessionTime >= getKey('maxOnlineTime') &&
+                            !$sessionWarningShown
+                        ) {
+                            // Set stats info
+                            $sessionWarningShown = true;
+
+                            // Close opened modal
+                            if ($modalVisible) {
+                                $modalVisible = false;
+
+                                setTimeout(() => {
+                                    showModal('MaxOnlineTime');
+                                }, modalAnimDuration + 15);
+                            } else {
+                                showModal('MaxOnlineTime');
+                            }
+                        }
+                    }
+                }, 1000);
+            }
+        }
+
+        // When layout is visible, perform socket actions
+        showLayout.subscribe((state) => {
+            if (state) {
+                // Init, login (will return if already called from index, only placed for direct route access)
+                initSocket(performLogin);
+
+                if (getKey('maxOnlineTime')) {
+                    $sessionTimeEnabled = true;
+                }
+            } else {
+                // Reset session warning
+                $sessionWarningShown = false;
+            }
+        });
+
+        sessionTimeEnabled.subscribe((state) => {
+            if (!state) return;
+
+            startSessionTime();
+        });
     });
 
     // svelte-scrolling globals
@@ -25,14 +98,6 @@
         duration: 750,
         easing: sineInOut,
         offset: 0,
-    });
-
-    // When layout is visible, perform socket actions
-    showLayout.subscribe((state) => {
-        if (state) {
-            // Init, login (will return if already called from index, only placed for direct route access)
-            initSocket(performLogin);
-        }
     });
 </script>
 

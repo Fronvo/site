@@ -36,3 +36,8 @@ export function resetSocket(): void {
 }
 
 export const showLayout = writable(false);
+
+export const sessionTimeEnabled = writable(false);
+export const sessionTime = writable(0);
+export const sessionWarningShown = writable(false);
+export const sessionAttached = writable(false);

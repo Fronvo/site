@@ -12,7 +12,8 @@
     });
 
     onMount(async () => {
-        await loadHomePosts();
+        // Don't reload posts
+        !$homePosts && (await loadHomePosts());
     });
 </script>
 

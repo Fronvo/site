@@ -39,16 +39,8 @@
         showModal('FollowInfo');
     }
 
-    function showEditProfile(): void {
-        showModal('EditProfile');
-    }
-
-    function showCreatePost(): void {
-        showModal('CreatePost');
-    }
-
-    function showFindProfiles(): void {
-        showModal('FindProfiles');
+    function showControlCentre(): void {
+        showModal('ControlCenter');
     }
 
     function formatFollowInfo(followInfo: number): string {
@@ -143,11 +135,7 @@
 
         <div class="options-container" in:fade={{ duration: 300, delay: 250 }}>
             {#if $userData.isSelf}
-                <button on:click={showEditProfile}>Edit profile</button>
-
-                <button on:click={showCreatePost}>Create post</button>
-
-                <button on:click={showFindProfiles}>Find profiles</button>
+                <button on:click={showControlCentre}>Control center</button>
             {:else}
                 <button on:click={handleFollowProfile}
                     >{isInFollowing ? 'Unfollow' : 'Follow'}</button

@@ -140,6 +140,10 @@ export function showModal(newModal: ModalTypes): void {
         case 'FindProfiles':
             targetModal = 5;
             break;
+
+        case 'ControlCenter':
+            targetModal = 6;
+            break;
     }
 
     currentModalId.set(targetModal);

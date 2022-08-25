@@ -2,6 +2,7 @@
 // Shared variables for the app route, after login.
 // ******************** //
 
+import ControlCentreModal from '$lib/app/main/modals/ControlCenterModal.svelte';
 import CreatePostModal from '$lib/app/main/modals/CreatePostModal.svelte';
 import EditProfileModal from '$lib/app/main/modals/EditProfileModal.svelte';
 import FindProfilesModal from '$lib/app/main/modals/FindProfilesModal.svelte';
@@ -36,6 +37,7 @@ export const modals = [
     CreatePostModal,
     PostModal,
     FindProfilesModal,
+    ControlCentreModal,
 ];
 
 // General Modal settings

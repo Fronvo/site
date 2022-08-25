@@ -10,4 +10,5 @@ export type ModalTypes =
     | 'EditProfile'
     | 'CreatePost'
     | 'ViewPost'
-    | 'FindProfiles';
+    | 'FindProfiles'
+    | 'ControlCenter';

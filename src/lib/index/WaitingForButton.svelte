@@ -25,14 +25,15 @@
 
     @media screen and (max-width: 720px) {
         .waiting-container button {
-            font-size: 2.1rem;
+            font-size: 1.9rem;
             margin-bottom: 100px;
+            cursor: default;
         }
     }
 
     @media screen and (max-width: 520px) {
         .waiting-container button {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             margin-bottom: 75px;
         }
     }

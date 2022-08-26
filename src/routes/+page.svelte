@@ -1,7 +1,3 @@
-<script context="module">
-    export const prerender = true;
-</script>
-
 <script lang="ts">
     import Containers from '$lib/index/Containers.svelte';
     import Footer from '$lib/index/Footer.svelte';

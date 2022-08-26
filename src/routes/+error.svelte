@@ -1,22 +1,10 @@
-<script lang="ts" context="module">
+<script lang="ts">
     import Text from '$lib/__error/Text.svelte';
-    import type { ErrorLoadParams, ErrorLoadResult } from 'interfaces/global';
     import { onMount } from 'svelte';
     import { slide } from 'svelte/transition';
+    import { page } from '$app/stores';
 
-    export function load({ status, error }: ErrorLoadParams): ErrorLoadResult {
-        return {
-            props: {
-                status,
-                error: error.message,
-            },
-        };
-    }
-</script>
-
-<script lang="ts">
     let mountReady = false;
-    export let status: number;
 
     onMount(() => {
         mountReady = true;
@@ -25,7 +13,7 @@
 
 {#if mountReady}
     <div class="error-container">
-        <h1 in:slide id="status-code">{status}</h1>
+        <h1 in:slide id="status-code">{$page.status}</h1>
 
         <Text text="How did you get here, friend?" delay={3000} />
     </div>

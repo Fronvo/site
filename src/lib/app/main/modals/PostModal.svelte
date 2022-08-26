@@ -60,7 +60,7 @@
             id="avatar"
             src={getUserData().avatar
                 ? getUserData().avatar
-                : 'https://fronvo.vercel.app/svgs/profile/default.svg'}
+                : 'svgs/profile/default.svg'}
             draggable={false}
             alt={`${getUserData().username}'s avatar`}
         />

@@ -7,7 +7,7 @@
         <h1>Fronvo</h1>
 
         <img
-            src="https://fronvo.vercel.app/svgs/other/github.svg"
+            src="svgs/other/github.svg"
             draggable={false}
             alt="Github"
             on:click={() => (location.href = 'https://github.com/fronvo/site')}

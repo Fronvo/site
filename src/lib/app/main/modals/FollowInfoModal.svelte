@@ -104,9 +104,7 @@
                     <div on:click={() => viewProfile(i)}>
                         <img
                             id="avatar"
-                            src={avatar
-                                ? avatar
-                                : 'https://fronvo.vercel.app/svgs/profile/default.svg'}
+                            src={avatar ? avatar : 'svgs/profile/default.svg'}
                             alt={`${username}'s avatar`}
                             draggable={false}
                         />

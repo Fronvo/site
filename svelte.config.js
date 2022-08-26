@@ -6,11 +6,7 @@ import vercel from '@sveltejs/adapter-vercel';
 
 const config = {
     kit: {
-        adapter: vercel({
-            edge: false,
-            external: [],
-            split: false,
-        }),
+        adapter: vercel(),
         vite: {
             resolve: {
                 alias: {

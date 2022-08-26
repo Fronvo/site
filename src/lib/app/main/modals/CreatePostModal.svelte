@@ -56,8 +56,7 @@
             attachmentText.textContent = 'Attachment - Invalid URL';
 
             canShare = false;
-            attachmentPreview.src =
-                'https://fronvo.vercel.app/svgs/profile/default.svg';
+            attachmentPreview.src = 'svgs/profile/default.svg';
         };
 
         attachment.subscribe((newAttachment) => {

@@ -47,7 +47,7 @@
         >
             <img
                 class="svg"
-                src={`https://fronvo.vercel.app/svgs/containers/${svg}.svg`}
+                src={`svgs/containers/${svg}.svg`}
                 alt={`${svg} icon`}
                 draggable={false}
             />

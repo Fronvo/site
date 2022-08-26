@@ -148,7 +148,7 @@
                             id="avatar"
                             src={avatar
                                 ? avatar
-                                : 'https://fronvo.herokuapp.com/svgs/profile/default.svg'}
+                                : 'https://fronvo.vercel.app/svgs/profile/default.svg'}
                             alt={`${profileId}'s avatar`}
                             draggable={false}
                         />

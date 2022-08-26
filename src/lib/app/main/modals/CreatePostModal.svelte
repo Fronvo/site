@@ -57,7 +57,7 @@
 
             canShare = false;
             attachmentPreview.src =
-                'https://fronvo.herokuapp.com/svgs/profile/default.svg';
+                'https://fronvo.vercel.app/svgs/profile/default.svg';
         };
 
         attachment.subscribe((newAttachment) => {

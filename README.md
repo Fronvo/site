@@ -1,4 +1,4 @@
-<p align='center'><a href='https://fronvo.herokuapp.com'><img src='https://raw.githubusercontent.com/Fronvo/site/master/.github/assets/logo.svg' alt='Fronvo logo'><a/></p>
+<p align='center'><a href='https://fronvo.vercel.app'><img src='https://raw.githubusercontent.com/Fronvo/site/master/.github/assets/logo.svg' alt='Fronvo logo'><a/></p>
 <p align='center'><b>The site of Fronvo</b></p>
 <p align='center'><b>Built with Svelte for undisputed performance</b></p>
 

@@ -85,7 +85,7 @@
 
             canUpload = false;
             avatarPreview.src =
-                'https://fronvo.herokuapp.com/svgs/profile/default.svg';
+                'https://fronvo.vercel.app/svgs/profile/default.svg';
         };
         avatar.subscribe((newAvatar) => {
             if (newAvatar == undefined) return;
@@ -144,7 +144,7 @@
                 id="avatar-preview"
                 src={$avatar
                     ? $avatar
-                    : 'https://fronvo.herokuapp.com/svgs/profile/default.svg'}
+                    : 'https://fronvo.vercel.app/svgs/profile/default.svg'}
                 alt="New avatar"
                 draggable={false}
             />

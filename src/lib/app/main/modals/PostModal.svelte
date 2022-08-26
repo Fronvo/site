@@ -60,7 +60,7 @@
             id="avatar"
             src={getUserData().avatar
                 ? getUserData().avatar
-                : 'svgs/profile/default.svg'}
+                : '/svgs/profile/default.svg'}
             draggable={false}
             alt={`${getUserData().username}'s avatar`}
         />

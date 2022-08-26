@@ -84,7 +84,7 @@
             avatarText.textContent = 'Avatar - Invalid URL';
 
             canUpload = false;
-            avatarPreview.src = 'svgs/profile/default.svg';
+            avatarPreview.src = '/svgs/profile/default.svg';
         };
         avatar.subscribe((newAvatar) => {
             if (newAvatar == undefined) return;
@@ -141,7 +141,7 @@
         <div>
             <img
                 id="avatar-preview"
-                src={$avatar ? $avatar : 'svgs/profile/default.svg'}
+                src={$avatar ? $avatar : '/svgs/profile/default.svg'}
                 alt="New avatar"
                 draggable={false}
             />

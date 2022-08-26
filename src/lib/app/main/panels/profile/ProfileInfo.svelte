@@ -108,7 +108,7 @@
             id="avatar"
             src={$userData.avatar
                 ? $userData.avatar
-                : 'svgs/profile/default.svg'}
+                : '/svgs/profile/default.svg'}
             alt={`${$userData.username}\'s avatar`}
             draggable={false}
             in:fade={{ duration: 500 }}

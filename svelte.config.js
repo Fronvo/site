@@ -2,12 +2,14 @@ import preprocess from 'svelte-preprocess';
 import { resolve } from 'path';
 
 /** @type {import('@sveltejs/kit').Config} */
-import adapter from '@sveltejs/adapter-node';
+import vercel from '@sveltejs/adapter-vercel';
 
 const config = {
     kit: {
-        adapter: adapter({
-            out: 'build',
+        adapter: vercel({
+            edge: false,
+            external: [],
+            split: false,
         }),
         vite: {
             resolve: {

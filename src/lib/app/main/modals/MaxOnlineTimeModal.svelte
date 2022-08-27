@@ -1,13 +1,13 @@
 <script lang="ts">
-    import { modalVisible } from 'stores/app/main';
     import { sessionTime, sessionWarningShown } from 'stores/global';
+    import { dismissModal } from 'utilities/app/main';
     import { getKey } from 'utilities/global';
 
     function resetSession(): void {
         $sessionTime = 0;
         $sessionWarningShown = false;
 
-        $modalVisible = false;
+        dismissModal();
     }
 </script>
 

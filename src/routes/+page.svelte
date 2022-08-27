@@ -3,12 +3,12 @@
     import Footer from '$lib/index/Footer.svelte';
     import Top from '$lib/index/Top.svelte';
     import TopNav from '$lib/index/TopNav.svelte';
-    import { modalVisible } from 'stores/app/main';
     import { showLayout } from 'stores/global';
     import { indexAnimDuration, indexVisible } from 'stores/index';
     import { onMount } from 'svelte';
     import { sineOut } from 'svelte/easing';
     import { fade, scale } from 'svelte/transition';
+    import { dismissModal } from 'utilities/app/main';
 
     let mountReady = false;
 
@@ -19,7 +19,7 @@
     $indexVisible = true;
 
     // Remove modals if navigating back
-    $modalVisible = false;
+    dismissModal();
 
     onMount(() => {
         mountReady = true;

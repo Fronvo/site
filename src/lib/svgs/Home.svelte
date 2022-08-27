@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { PanelTypes } from 'types/app/main';
     import { currentPanelId } from 'stores/app/main';
     import { quadIn } from 'svelte/easing';
     import { draw } from 'svelte/transition';
@@ -11,7 +12,7 @@
     viewBox="0 0 48 48"
     width="48"
     height="48"
-    on:click={() => switchPanel('Home')}
+    on:click={() => switchPanel(PanelTypes.Home)}
     ><defs
         ><linearGradient
             id="HOME"

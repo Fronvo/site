@@ -1,10 +1,10 @@
 <script lang="ts">
-    import { modalVisible } from 'stores/app/main';
     import { targetProfile } from 'stores/app/profile';
     import { socket } from 'stores/global';
     import { onMount } from 'svelte';
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
+    import { dismissModal } from 'utilities/app/main';
     import { loadProfilePosts } from 'utilities/app/profile';
 
     let title: string;
@@ -37,7 +37,7 @@
                 // Update, new posts
                 loadProfilePosts($targetProfile);
 
-                $modalVisible = false;
+                dismissModal();
             }
         );
     }
@@ -125,7 +125,7 @@
 
         <button
             on:click={() => {
-                if (!isSharing) $modalVisible = false;
+                if (!isSharing) dismissModal();
             }}>Discard</button
         >
     </div>

@@ -2,6 +2,7 @@
     import { currentPanelId } from 'stores/app/main';
     import { quadIn } from 'svelte/easing';
     import { draw } from 'svelte/transition';
+    import { PanelTypes } from 'types/app/main';
     import { switchPanel } from 'utilities/app/main';
 </script>
 
@@ -11,7 +12,7 @@
     viewBox="0 0 48 48"
     width="48"
     height="48"
-    on:click={() => switchPanel('Communities')}
+    on:click={() => switchPanel(PanelTypes.Communities)}
     ><defs
         ><linearGradient
             id="COMMUNITIES"

@@ -1,7 +1,6 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
-    import type { ThemeContext } from 'interfaces/global';
-    import { modalVisible } from 'stores/app/main';
+    import { dismissModal } from 'utilities/app/main';
     import { userData } from 'stores/app/profile';
     import { socket } from 'stores/global';
     import { onMount } from 'svelte';
@@ -66,7 +65,7 @@
 
                 $userData = { ...$userData, ...profileData };
 
-                $modalVisible = false;
+                dismissModal();
             }
         );
     }
@@ -167,7 +166,7 @@
 
         <button
             on:click={() => {
-                if (!isUploading) $modalVisible = false;
+                if (!isUploading) dismissModal();
             }}>Discard</button
         >
     </div>

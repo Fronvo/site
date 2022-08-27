@@ -1,26 +1,14 @@
 <script lang="ts">
-    import { removeKey } from 'src/utilities/global';
     import { accountRegisterVerifyTab } from 'stores/app/account';
-    import {
-        loginSucceeded,
-        modalAnimDuration,
-        modalVisible,
-    } from 'stores/app/main';
+    import { loginSucceeded, modalAnimDuration } from 'stores/app/main';
     import { targetProfile, userData } from 'stores/app/profile';
     import { socket } from 'stores/global';
-    import type { ModalTypes } from 'types/app/main';
-    import { showModal } from 'utilities/app/main';
-
-    function switchModal(modalName: ModalTypes) {
-        $modalVisible = false;
-
-        setTimeout(() => {
-            showModal(modalName);
-        }, modalAnimDuration + 15);
-    }
+    import { ModalTypes } from 'types/app/main';
+    import { dismissModal, showModal } from 'utilities/app/main';
+    import { removeKey } from 'utilities/global';
 
     function logout(): void {
-        $modalVisible = false;
+        dismissModal();
 
         setTimeout(() => {
             socket.emit('logout', ({ err }) => {
@@ -46,16 +34,19 @@
     <hr />
 
     <div class="data-container">
-        <button on:click={() => switchModal('EditProfile')}>Edit Profile</button
+        <button on:click={() => showModal(ModalTypes.EditProfile)}
+            >Edit Profile</button
         >
-        <button on:click={() => switchModal('CreatePost')}>Create Post</button>
-        <button on:click={() => switchModal('FindProfiles')}
+        <button on:click={() => showModal(ModalTypes.CreatePost)}
+            >Create Post</button
+        >
+        <button on:click={() => showModal(ModalTypes.FindProfiles)}
             >Find Profiles</button
         >
         <button on:click={logout}>Logout</button>
     </div>
 
-    <button id="close" on:click={() => ($modalVisible = false)}>Close</button>
+    <button id="close" on:click={() => dismissModal()}>Close</button>
 </div>
 
 <style>

@@ -4,6 +4,7 @@
     import { socket } from 'stores/global';
     import { onDestroy } from 'svelte';
     import { fade } from 'svelte/transition';
+    import { ModalTypes } from 'types/app/main';
     import { fetchUser, showModal } from 'utilities/app/main';
 
     let isInFollowing = false;
@@ -36,11 +37,11 @@
 
         $followModalInfo = followInfo;
         $followModalForFollowing = forFollowing;
-        showModal('FollowInfo');
+        showModal(ModalTypes.FollowInfo);
     }
 
     function showControlCentre(): void {
-        showModal('ControlCenter');
+        showModal(ModalTypes.ControlCenter);
     }
 
     function formatFollowInfo(followInfo: number): string {

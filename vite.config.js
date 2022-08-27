@@ -11,6 +11,7 @@ const config = {
             stores: resolve('./src/stores'),
             utilities: resolve('./src/utilities'),
             lib: resolve('./src/lib'),
+            types: resolve('./src/types'),
         },
     },
 };

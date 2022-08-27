@@ -1,12 +1,9 @@
 <script lang="ts">
     import Account from '$lib/app/account/Account.svelte';
     import Main from '$lib/app/main/Main.svelte';
+    import { ModalTypes } from 'types/app/main';
     import { tokenInvalid } from 'stores/app/global';
-    import {
-        loginSucceeded,
-        modalAnimDuration,
-        modalVisible,
-    } from 'stores/app/main';
+    import { loginSucceeded } from 'stores/app/main';
     import {
         initSocket,
         sessionAttached,
@@ -55,16 +52,7 @@
                             // Set stats info
                             $sessionWarningShown = true;
 
-                            // Close opened modal
-                            if ($modalVisible) {
-                                $modalVisible = false;
-
-                                setTimeout(() => {
-                                    showModal('MaxOnlineTime');
-                                }, modalAnimDuration + 15);
-                            } else {
-                                showModal('MaxOnlineTime');
-                            }
+                            showModal(ModalTypes.MaxOnlineTime);
                         }
                     }
                 }, 1000);

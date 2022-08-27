@@ -8,12 +8,16 @@ import {
     currentModalId,
     currentPanelId,
     loginSucceeded,
+    modalAnimDuration,
     modalVisible,
 } from 'stores/app/main';
 import { userPosts } from 'stores/app/profile';
 import { socket } from 'stores/global';
 import type { ModalTypes, PanelTypes } from 'types/app/main';
 import { getKey, removeKey, setKey } from 'utilities/global';
+
+// Preserve modal state
+let modalStateVisible: boolean;
 
 export function performLogin(): void {
     // Get current login state
@@ -86,70 +90,49 @@ export async function fetchPosts(
 }
 
 export function switchPanel(newPanel: PanelTypes): void {
-    let targetPanel: number;
-
-    switch (newPanel) {
-        case 'Home':
-            targetPanel = 0;
-            break;
-
-        case 'Profile':
-            targetPanel = 1;
-            break;
-
-        case 'Communities':
-            targetPanel = 2;
-            break;
-
-        case 'Marketplace':
-            targetPanel = 3;
-            break;
-    }
-
     // Prevent panel spam hogging performance
-    if (getKey('panelId') == targetPanel) return;
+    // TODO: Find a workaround to click on profile and reload if not ours
+    if (getKey('panelId') == newPanel) return;
 
-    setKey('panelId', targetPanel);
-    currentPanelId.set(targetPanel);
+    // Update panelId for future page reloads
+    setKey('panelId', newPanel);
+
+    // Set the panel dynamically
+    currentPanelId.set(newPanel);
 }
 
 export function showModal(newModal: ModalTypes): void {
-    let targetModal: number;
+    modalVisible.subscribe((state) => {
+        modalStateVisible = state;
+    });
 
-    switch (newModal) {
-        case 'Settings':
-            targetModal = 0;
-            break;
+    dismissModal(() => {
+        // Set the modal dynamically
+        currentModalId.set(newModal);
 
-        case 'FollowInfo':
-            targetModal = 1;
-            break;
+        // Helpful variable
+        modalVisible.set(true);
+    });
+}
 
-        case 'EditProfile':
-            targetModal = 2;
-            break;
+export function dismissModal(callback?: Function): void {
+    let hasDismissed = false;
 
-        case 'CreatePost':
-            targetModal = 3;
-            break;
+    if (!modalStateVisible) {
+        if (callback) callback();
+    } else {
+        if (hasDismissed) return;
 
-        case 'ViewPost':
-            targetModal = 4;
-            break;
+        hasDismissed = true;
 
-        case 'FindProfiles':
-            targetModal = 5;
-            break;
+        // First, dismiss
+        modalVisible.set(false);
 
-        case 'ControlCenter':
-            targetModal = 6;
-            break;
-
-        case 'MaxOnlineTime':
-            targetModal = 7;
-            break;
+        // Then, set timeout to reset for callback
+        if (callback) {
+            setTimeout(() => {
+                callback();
+            }, modalAnimDuration + 50);
+        }
     }
-
-    currentModalId.set(targetModal);
-    modalVisible.set(true);
 }

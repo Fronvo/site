@@ -5,7 +5,7 @@
     export let delay: number = 0;
 </script>
 
-<Typewriter {delay} interval={60} cursor={'#f0f0f0'}>
+<Typewriter {delay} interval={60}>
     <h1>{text}</h1>
 </Typewriter>
 

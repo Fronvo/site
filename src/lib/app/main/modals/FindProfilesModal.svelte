@@ -1,15 +1,14 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
-
     import Center from '$lib/app/Center.svelte';
     import Loading from '$lib/app/Loading.svelte';
     import type { FronvoAccount } from 'interfaces/app/main';
-    import { modalAnimDuration, modalVisible } from 'stores/app/main';
+    import { modalAnimDuration } from 'stores/app/main';
     import { targetProfile, userData, userPosts } from 'stores/app/profile';
     import { socket } from 'stores/global';
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
-    import { fetchUser } from 'utilities/app/main';
+    import { dismissModal, fetchUser } from 'utilities/app/main';
     import { loadProfilePosts } from 'utilities/app/profile';
 
     let searchValue: Writable<string> = writable('');
@@ -88,7 +87,7 @@
     }
 
     async function viewProfile(accountIndex: number): Promise<void> {
-        $modalVisible = false;
+        dismissModal();
 
         setTimeout(() => {
             goto(`/profile/${newProfile}`, {
@@ -174,7 +173,7 @@
         <button
             id="close"
             on:click={() => {
-                $modalVisible = false;
+                dismissModal();
             }}>Close</button
         >
     {:else}

@@ -3,18 +3,15 @@
     import Delete from '$lib/svgs/Delete.svelte';
     import type { HomePost } from 'interfaces/app/home';
     import type { AccountPost, FronvoAccount } from 'interfaces/app/main';
-    import {
-        modalVisible,
-        postModalInfo,
-        postModalForHome,
-    } from 'stores/app/main';
+    import { dismissModal } from 'utilities/app/main';
+    import { postModalForHome, postModalInfo } from 'stores/app/main';
     import { targetProfile, userData } from 'stores/app/profile';
     import { socket } from 'stores/global';
     import Time from 'svelte-time';
     import { loadProfilePosts } from 'utilities/app/profile';
 
     function deletePost(): void {
-        $modalVisible = false;
+        dismissModal();
 
         socket.emit(
             'deletePost',
@@ -31,7 +28,7 @@
         // No need to revisit from the profile panel
         if (!$postModalForHome) return;
 
-        $modalVisible = false;
+        dismissModal();
 
         goto(`/profile/${($postModalInfo as HomePost).profileData.profileId}`, {
             replaceState: true,
@@ -105,7 +102,7 @@
     <div class="options-container">
         <button
             on:click={() => {
-                $modalVisible = false;
+                dismissModal();
             }}>Close</button
         >
     </div>

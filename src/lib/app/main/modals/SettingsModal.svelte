@@ -1,11 +1,11 @@
 <script lang="ts">
-    import { getKey, removeKey, setKey } from 'utilities/global';
-    import { modalVisible } from 'stores/app/main';
     import {
         sessionTime,
         sessionTimeEnabled,
         sessionWarningShown,
     } from 'stores/global';
+    import { dismissModal } from 'utilities/app/main';
+    import { getKey, removeKey, setKey } from 'utilities/global';
 
     let maxOnlineTime = getKey('maxOnlineTime') / 60 || 0;
 
@@ -37,7 +37,7 @@
             }
         }
 
-        $modalVisible = false;
+        dismissModal();
     }
 </script>
 

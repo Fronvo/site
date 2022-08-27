@@ -3,6 +3,7 @@
     import { postModalForHome, postModalInfo } from 'stores/app/main';
     import Time from 'svelte-time';
     import { fade } from 'svelte/transition';
+    import { ModalTypes } from 'types/app/main';
     import { showModal } from 'utilities/app/main';
 
     const posts = homePosts;
@@ -10,7 +11,7 @@
     function viewPost(postIndex: number): void {
         $postModalInfo = $homePosts[postIndex];
         $postModalForHome = true;
-        showModal('ViewPost');
+        showModal(ModalTypes.ViewPost);
     }
 </script>
 

@@ -42,10 +42,6 @@
         animation-direction: alternate;
     }
 
-    /* Responsive design */
-    @media screen and (max-width: 520px) {
-    }
-
     @keyframes animated-stroke {
         0% {
             stroke: rgb(255, 255, 255);

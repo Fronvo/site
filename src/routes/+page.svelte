@@ -3,7 +3,6 @@
     import Footer from '$lib/index/Footer.svelte';
     import Top from '$lib/index/Top.svelte';
     import TopNav from '$lib/index/TopNav.svelte';
-    import WaitingForButton from '$lib/index/WaitingForButton.svelte';
     import { modalVisible } from 'stores/app/main';
     import { showLayout } from 'stores/global';
     import { indexAnimDuration, indexVisible } from 'stores/index';
@@ -49,8 +48,6 @@
                 <Top />
 
                 <Containers />
-
-                <WaitingForButton />
 
                 <Footer />
             </div>

@@ -65,28 +65,30 @@
     }
 
     .container #title {
-        font-size: 4rem;
+        font-size: 4.5rem;
         font-weight: 900;
         text-align: center;
         margin: 0;
-        animation: rainbow-header;
-        animation-duration: 7500ms;
-        animation-iteration-count: infinite;
-        animation-direction: alternate;
         transition: 300ms all;
         margin-left: 10px;
         margin-right: 10px;
         margin-bottom: 10px;
-        color: white;
+        color: transparent;
+        background: linear-gradient(
+            90deg,
+            #ff81ea 10.42%,
+            #dbc2ff 54.68%,
+            #64c1ff 99.98%
+        );
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
 
     .container .svg {
         border-radius: 15px;
         transition: 400ms all;
-        animation: rainbow-btn;
-        animation-duration: 7500ms;
-        animation-iteration-count: infinite;
-        animation-direction: alternate;
+        border: 3px solid white;
     }
 
     .container .svg:hover {
@@ -126,37 +128,6 @@
         100% {
             opacity: 1;
             transform: translateY(0);
-        }
-    }
-
-    @keyframes rainbow-header {
-        0% {
-            text-shadow: 0 4px 0 rgb(28, 255, 28);
-        }
-
-        50% {
-            text-shadow: 0 4px 0 rgb(34, 255, 226);
-        }
-
-        100% {
-            text-shadow: 0 4px 0 rgb(255, 161, 53);
-        }
-    }
-
-    @keyframes rainbow-btn {
-        0% {
-            border: 3px solid rgb(28, 255, 28);
-            box-shadow: 0 0 10px rgb(28, 255, 28);
-        }
-
-        50% {
-            border: 3px solid rgb(34, 255, 226);
-            box-shadow: 0 0 10px rgb(34, 255, 226);
-        }
-
-        100% {
-            border: 3px solid rgb(255, 161, 53);
-            box-shadow: 0 0 10px rgb(255, 161, 53);
         }
     }
 </style>

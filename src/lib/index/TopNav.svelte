@@ -28,7 +28,7 @@
         z-index: 1;
         width: 90%;
         margin: auto;
-        background: rgba(145, 27, 255, 0.5);
+        background: rgba(133, 40, 255, 0.5);
         transition: 300ms background;
     }
 

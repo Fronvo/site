@@ -1,4 +1,5 @@
 <script>
+    import { ModalTypes } from 'types/app/main';
     import { showModal } from 'utilities/app/main';
 </script>
 
@@ -9,7 +10,7 @@
     width="48"
     height="48"
     on:click={() => {
-        showModal('Settings');
+        showModal(ModalTypes.Settings);
     }}
     ><defs
         ><linearGradient

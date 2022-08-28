@@ -9,17 +9,7 @@
 
     let maxOnlineTime = getKey('maxOnlineTime') / 60 || 0;
 
-    function validateMaxOnlineTime(): undefined | number {
-        if (!maxOnlineTime) return;
-
-        const onlineTime = Number(maxOnlineTime);
-
-        if (onlineTime != NaN && onlineTime > 0) {
-            return onlineTime;
-        }
-    }
-
-    function saveSettings(): void {
+    function saveMaxOnlineTime(): void {
         const onlineTime = validateMaxOnlineTime() * 60;
 
         // Only if not the same value
@@ -36,6 +26,20 @@
                 $sessionTimeEnabled = false;
             }
         }
+
+        function validateMaxOnlineTime(): undefined | number {
+            if (!maxOnlineTime) return;
+
+            const onlineTime = Number(maxOnlineTime);
+
+            if (onlineTime != NaN && onlineTime > 0) {
+                return onlineTime;
+            }
+        }
+    }
+
+    function saveSettings(): void {
+        saveMaxOnlineTime();
 
         dismissModal();
     }

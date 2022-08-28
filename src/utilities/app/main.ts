@@ -102,7 +102,8 @@ export function switchPanel(newPanel: PanelTypes): void {
 }
 
 export function showModal(newModal: ModalTypes): void {
-    modalVisible.subscribe((state) => {
+    // Set it early
+    const unsubscribe = modalVisible.subscribe((state) => {
         modalStateVisible = state;
     });
 
@@ -113,18 +114,14 @@ export function showModal(newModal: ModalTypes): void {
         // Helpful variable
         modalVisible.set(true);
     });
+
+    unsubscribe();
 }
 
 export function dismissModal(callback?: Function): void {
-    let hasDismissed = false;
-
     if (!modalStateVisible) {
         if (callback) callback();
     } else {
-        if (hasDismissed) return;
-
-        hasDismissed = true;
-
         // First, dismiss
         modalVisible.set(false);
 

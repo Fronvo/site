@@ -39,7 +39,7 @@
         }
 
         .grass-container #grass {
-            width: 450px;
+            width: 100%;
             height: 48px;
         }
     }

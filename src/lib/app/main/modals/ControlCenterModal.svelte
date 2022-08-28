@@ -1,5 +1,6 @@
 <script lang="ts">
     import { accountRegisterVerifyTab } from 'stores/app/account';
+    import { homePosts } from 'stores/app/home';
     import { loginSucceeded, modalAnimDuration } from 'stores/app/main';
     import { targetProfile, userData } from 'stores/app/profile';
     import { socket } from 'stores/global';
@@ -21,6 +22,9 @@
                 // Also reset userData, update smoothly on re-login
                 $userData = undefined;
                 $targetProfile = undefined;
+
+                // And home posts
+                $homePosts = undefined;
             });
         }, modalAnimDuration);
     }

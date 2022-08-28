@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { homePosts } from 'stores/app/home';
     import { followModalForFollowing, followModalInfo } from 'stores/app/main';
     import { profileLoadingFinished, userData } from 'stores/app/profile';
     import { socket } from 'stores/global';
@@ -94,6 +95,9 @@
             $userData = await fetchUser($userData.profileId);
 
             isRequesting = false;
+
+            // Reset home posts
+            homePosts.set(undefined);
         }
 
         // Illusion of no delay

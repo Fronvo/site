@@ -10,6 +10,7 @@ import type {
     DeletePostParams,
     DeletePostResult,
 } from 'interfaces/socket/account/deletePost';
+import type { FetchHomePostsResult } from 'interfaces/socket/account/fetchHomePosts';
 import type {
     FetchProfileDataParams,
     FetchProfileDataResult,
@@ -128,4 +129,5 @@ export interface ClientToServerEvents {
         {}: FindProfilesParams,
         callback?: ({}: FindProfilesResult) => void
     ) => void;
+    fetchHomePosts: (callback?: ({}: FetchHomePostsResult) => void) => void;
 }

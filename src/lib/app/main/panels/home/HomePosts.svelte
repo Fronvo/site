@@ -110,13 +110,15 @@
     }
 
     .author-container #avatar {
-        width: 75px;
-        height: 75px;
+        width: 64px;
+        height: 64px;
+        border-radius: 10px;
+        margin-right: 10px;
     }
 
     .author-container #author {
         color: var(--profile_info_color);
-        font-size: 2.8rem;
+        font-size: 2.5rem;
         margin: 0;
     }
 
@@ -133,6 +135,7 @@
     .post-container #content {
         display: -webkit-box;
         overflow: hidden;
+        max-width: 100%;
         -webkit-line-clamp: 5;
         -webkit-box-orient: vertical;
         margin: 0;

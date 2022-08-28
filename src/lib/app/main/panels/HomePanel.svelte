@@ -1,6 +1,7 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
     import Loading from '$lib/app/Loading.svelte';
+    import HomeGrass from '$lib/app/main/panels/home/HomeGrass.svelte';
     import HomePosts from '$lib/app/main/panels/home/HomePosts.svelte';
     import { homePosts } from 'stores/app/home';
     import { onMount } from 'svelte';
@@ -24,6 +25,8 @@
         <hr in:fade={{ duration: 250, delay: 400 }} />
 
         <HomePosts />
+
+        <HomeGrass />
     {:else}
         <Loading text="Loading posts.." />
     {/if}
@@ -37,7 +40,6 @@
         align-items: center;
         margin-left: 100px;
         margin-right: 100px;
-        margin-top: 10px;
     }
 
     .home-container #latest-posts {
@@ -60,7 +62,6 @@
         .home-container {
             margin-left: 0;
             margin-right: 0;
-            margin-bottom: 90px;
         }
 
         .home-container #latest-posts {
@@ -74,10 +75,6 @@
     }
 
     @media screen and (max-width: 520px) {
-        .home-container {
-            margin-bottom: 70px;
-        }
-
         .home-container #latest-posts {
             font-size: 2.3rem;
             margin: 0;

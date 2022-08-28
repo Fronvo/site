@@ -19,6 +19,12 @@ import { getKey, removeKey, setKey } from 'utilities/global';
 // Preserve modal state
 let modalStateVisible: boolean;
 
+setTimeout(() => {
+    modalVisible.subscribe((state) => {
+        modalStateVisible = state;
+    });
+}, 0);
+
 export function performLogin(): void {
     // Get current login state
     socket.emit('isLoggedIn', ({ loggedIn }) => {
@@ -102,11 +108,6 @@ export function switchPanel(newPanel: PanelTypes): void {
 }
 
 export function showModal(newModal: ModalTypes): void {
-    // Set it early
-    const unsubscribe = modalVisible.subscribe((state) => {
-        modalStateVisible = state;
-    });
-
     dismissModal(() => {
         // Set the modal dynamically
         currentModalId.set(newModal);
@@ -114,8 +115,6 @@ export function showModal(newModal: ModalTypes): void {
         // Helpful variable
         modalVisible.set(true);
     });
-
-    unsubscribe();
 }
 
 export function dismissModal(callback?: Function): void {

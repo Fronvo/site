@@ -186,7 +186,7 @@
         }
 
         .author-container #author {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
         }
 
         .post-container #title {
@@ -223,7 +223,7 @@
         }
 
         .author-container #author {
-            font-size: 2.2rem;
+            font-size: 1.9rem;
         }
 
         .post-container #title {

@@ -50,6 +50,7 @@
         display: flex;
         width: 100%;
         justify-content: center;
+        text-align: center;
     }
 
     .header-container #header {

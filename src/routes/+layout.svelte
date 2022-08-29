@@ -3,7 +3,11 @@
     import Main from '$lib/app/main/Main.svelte';
     import { ModalTypes } from 'types/app/main';
     import { tokenInvalid } from 'stores/app/global';
-    import { loginSucceeded } from 'stores/app/main';
+    import {
+        currentModalId,
+        loginSucceeded,
+        modalVisible,
+    } from 'stores/app/main';
     import {
         initSocket,
         sessionAttached,
@@ -41,7 +45,14 @@
                         return;
                     }
 
-                    $sessionTime += 1;
+                    if (
+                        !(
+                            $currentModalId == ModalTypes.Settings &&
+                            $modalVisible
+                        )
+                    ) {
+                        $sessionTime += 1;
+                    }
 
                     // Observer, check state again
                     if (getKey('maxOnlineTime')) {

@@ -45,12 +45,7 @@
                         return;
                     }
 
-                    if (
-                        !(
-                            $currentModalId == ModalTypes.Settings &&
-                            $modalVisible
-                        )
-                    ) {
+                    if (!$modalVisible) {
                         $sessionTime += 1;
                     }
 

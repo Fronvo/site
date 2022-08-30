@@ -1,25 +1,34 @@
 <script lang="ts">
+    import { homeLoadDelay } from 'stores/app/home';
+
+    let showGrass = false;
+
+    setTimeout(() => {
+        showGrass = true;
+    }, homeLoadDelay);
 </script>
 
-<div class="grass-container">
-    <h1>That's all for now</h1>
-    <h1>
-        Time to touch some <span
-            ><a
-                target="_blank"
-                href="https://en.wiktionary.org/wiki/grass#/media/File:Grass-JW.jpg"
-                >grass</a
-            ></span
-        >!
-    </h1>
+{#if showGrass}
+    <div class="grass-container">
+        <h1>That's all for now</h1>
+        <h1>
+            Time to touch some <span
+                ><a
+                    target="_blank"
+                    href="https://en.wiktionary.org/wiki/grass#/media/File:Grass-JW.jpg"
+                    >grass</a
+                ></span
+            >!
+        </h1>
 
-    <img
-        id="grass"
-        src="/images/fronvo-touch-grass.svg"
-        draggable={false}
-        alt="Touch grass icon"
-    />
-</div>
+        <img
+            id="grass"
+            src="/images/fronvo-touch-grass.svg"
+            draggable={false}
+            alt="Touch grass icon"
+        />
+    </div>
+{/if}
 
 <style>
     .grass-container {

@@ -32,6 +32,7 @@
                 class="post-container"
                 in:fade={{
                     duration: 500,
+                    delay: i < 5 ? (i + 1) * 100 : 0,
                 }}
             >
                 <div class="author-container">

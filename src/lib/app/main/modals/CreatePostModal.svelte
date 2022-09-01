@@ -107,7 +107,7 @@
         <input autofocus bind:value={title} maxlength={30} />
 
         <h1 id="input-header">Content</h1>
-        <textarea bind:value={content} maxlength={128} rows={6} />
+        <textarea bind:value={content} maxlength={256} rows={6} />
 
         <!-- Just for attachment checking, no preview -->
         <img

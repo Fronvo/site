@@ -5,3 +5,4 @@ node_modules/
 # SvelteKit
 .svelte-kit/
 .vercel/
+pnpm-lock.yaml

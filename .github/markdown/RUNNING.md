@@ -1,10 +1,10 @@
 # Running locally
 
-**`npm install`**
+`npm install`
 
-**`npm run autohost`**
+`npm run autohost`
 
-**The site should be hosted locally at port 3000.**
+The site should be hosted locally at port 3000.
 
 # Demo
 

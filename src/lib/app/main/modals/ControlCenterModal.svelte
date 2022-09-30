@@ -1,4 +1,12 @@
 <script lang="ts">
+    import {
+        initialCommunityLoadingFinished,
+        joinedCommunity,
+        sendContent,
+        targetCommunity,
+        targetCommunityData,
+        targetCommunityMessages,
+    } from 'src/stores/app/communities';
     import { accountRegisterVerifyTab } from 'stores/app/account';
     import { homePosts } from 'stores/app/home';
     import { loginSucceeded, modalAnimDuration } from 'stores/app/main';
@@ -25,6 +33,14 @@
 
                 // And home posts
                 $homePosts = undefined;
+
+                // And communities
+                $initialCommunityLoadingFinished = undefined;
+                $joinedCommunity = undefined;
+                $targetCommunity = undefined;
+                $targetCommunityData = undefined;
+                $sendContent = '';
+                $targetCommunityMessages = undefined;
             });
         }, modalAnimDuration);
     }

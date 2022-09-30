@@ -1,17 +1,26 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
+
+    import type { Community } from 'interfaces/app/communities';
+    import {
+        joinedCommunity,
+        targetCommunityData,
+    } from 'src/stores/app/communities';
     import { homePosts } from 'stores/app/home';
     import { followModalForFollowing, followModalInfo } from 'stores/app/main';
     import { profileLoadingFinished, userData } from 'stores/app/profile';
     import { socket } from 'stores/global';
     import { onDestroy } from 'svelte';
+    import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
-    import { ModalTypes } from 'types/app/main';
-    import { fetchUser, showModal } from 'utilities/app/main';
+    import { ModalTypes, PanelTypes } from 'types/app/main';
+    import { fetchUser, showModal, switchPanel } from 'utilities/app/main';
 
     let isInFollowing = false;
     let isRequesting = false;
     const isAccessible =
         $userData.isFollower || $userData.isSelf || !$userData.isPrivate;
+    let userCommunity: Writable<Community> = writable();
 
     // Once targetProfile changes to visit a new profile from this panel directly
     // update UI
@@ -103,6 +112,34 @@
         // Illusion of no delay
         isInFollowing = !isInFollowing;
     }
+
+    function loadUserCommunity(): void {
+        if ($userData.isInCommunity) {
+            socket.emit(
+                'fetchCommunityData',
+                { communityId: $userData.communityId },
+                ({ communityData, err }) => {
+                    !err && userCommunity.set(communityData);
+                }
+            );
+        }
+    }
+
+    function visitCommunity(): void {
+        switchPanel(PanelTypes.Communities);
+
+        if (!$joinedCommunity) {
+            $targetCommunityData = $userCommunity;
+
+            setTimeout(() => {
+                goto(`/community/${$userCommunity.communityId}`, {
+                    replaceState: true,
+                });
+            }, 250);
+        }
+    }
+
+    $: loadUserCommunity();
 </script>
 
 {#if $profileLoadingFinished}
@@ -127,8 +164,24 @@
             {isAccessible ? $userData.bio : ''}
         </h1>
 
+        {#if $userCommunity}
+            <div class="community-container" in:fade={{ duration: 500 }}>
+                <img
+                    id="icon"
+                    src={$userCommunity.icon
+                        ? $userCommunity.icon
+                        : '/svgs/profile/default.svg'}
+                    alt={`${$userData.username}'s community`}
+                    draggable={false}
+                />
+                <h1 id="community-name" on:click={visitCommunity}>
+                    {$userCommunity.name}
+                </h1>
+            </div>
+        {/if}
+
         <!-- Follow $userData -->
-        <div class="follow-container" in:fade={{ duration: 300, delay: 300 }}>
+        <div class="follow-container" in:fade={{ delay: 200, duration: 500 }}>
             <h1 on:click={() => showFollowInfo($userData.following, true)}>
                 <span>{formatFollowInfo($userData.following.length)}</span> following
             </h1>
@@ -138,8 +191,9 @@
             </h1>
         </div>
 
-        <div class="options-container" in:fade={{ duration: 300, delay: 250 }}>
+        <div class="options-container" in:fade={{ delay: 300, duration: 500 }}>
             {#if $userData.isSelf}
+                <!-- TODO: Dropdown -->
                 <button on:click={showControlCentre}>Control center</button>
             {:else}
                 <button on:click={handleFollowProfile}
@@ -191,6 +245,40 @@
         overflow: hidden;
         -webkit-line-clamp: 6;
         -webkit-box-orient: vertical;
+    }
+
+    .community-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 15px;
+    }
+
+    .community-container #community-name {
+        font-size: 2.1rem;
+        color: var(--profile_info_color);
+        cursor: pointer;
+        margin: 0;
+        color: white;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    .community-container #icon {
+        width: 42px;
+        height: 42px;
+        margin-right: 5px;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        border-radius: 5px;
     }
 
     .follow-container {
@@ -251,6 +339,15 @@
             font-size: 1.5rem;
         }
 
+        .community-container #icon {
+            width: 40px;
+            height: 40px;
+        }
+
+        .community-container #community-name {
+            font-size: 1.9rem;
+        }
+
         .follow-container {
             margin-top: 5px;
         }
@@ -282,6 +379,19 @@
 
         .info-container #bio {
             font-size: 1.2rem;
+        }
+
+        .community-container {
+            margin-top: 10px;
+        }
+
+        .community-container #icon {
+            width: 32px;
+            height: 32px;
+        }
+
+        .community-container #community-name {
+            font-size: 1.7rem;
         }
 
         .follow-container h1 {

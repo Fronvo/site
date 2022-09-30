@@ -6,6 +6,9 @@ import type {
     RegisterVerifyParams,
     RegisterVerifyResult,
 } from 'interfaces/socket/noAccount/registerVerify';
+import type { ChatRequestUpdatedResult } from '../account/chatRequestUpdated';
+import type { CommunityMessageDeletedResult } from '../account/communityMessageDeleted';
+import type { NewCommunityMessageResult } from '../account/newCommunityMessage';
 import type {
     ResetPasswordFinalParams,
     ResetPasswordFinalResult,
@@ -29,4 +32,8 @@ export interface ServerToClientEvents {
         {}: ResetPasswordFinalParams,
         callback?: ({}: ResetPasswordFinalResult) => void
     ) => void;
+    newCommunityMessage: ({}: NewCommunityMessageResult) => void;
+    communityMessageDeleted: ({}: CommunityMessageDeletedResult) => void;
+    communityDeleted: () => void;
+    chatRequestUpdated: ({}: ChatRequestUpdatedResult) => void;
 }

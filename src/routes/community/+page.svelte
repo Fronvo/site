@@ -9,7 +9,3 @@
     // Update panel
     switchPanel(PanelTypes.Communities);
 </script>
-
-<svelte:head>
-    <title>Fronvo | Communities</title>
-</svelte:head>

@@ -1,10 +1,9 @@
 <script lang="ts">
     import Account from '$lib/app/account/Account.svelte';
     import Main from '$lib/app/main/Main.svelte';
-    import { ModalTypes } from 'types/app/main';
     import { tokenInvalid } from 'stores/app/global';
     import {
-        currentModalId,
+        dropdownPosition,
         loginSucceeded,
         modalVisible,
     } from 'stores/app/main';
@@ -21,6 +20,7 @@
     import { setGlobalOptions } from 'svelte-scrolling';
     import { sineInOut } from 'svelte/easing';
     import { fade } from 'svelte/transition';
+    import { ModalTypes } from 'types/app/main';
     import { performLogin, showModal } from 'utilities/app/main';
     import { getKey } from 'utilities/global';
     import '../app.css';
@@ -84,6 +84,13 @@
             if (!state) return;
 
             startSessionTime();
+        });
+
+        document.addEventListener('mousemove', (ev) => {
+            dropdownPosition.set([
+                Math.min(ev.clientX, window.innerWidth - 150),
+                ev.clientY,
+            ]);
         });
     });
 

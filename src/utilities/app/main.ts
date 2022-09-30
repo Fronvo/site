@@ -5,23 +5,37 @@
 import type { AccountPost, FronvoAccount } from 'interfaces/app/main';
 import { tokenInvalid } from 'stores/app/global';
 import {
+    currentDropdownId,
     currentModalId,
     currentPanelId,
+    dropdownAnimDuration,
+    dropdownVisible,
     loginSucceeded,
     modalAnimDuration,
     modalVisible,
 } from 'stores/app/main';
 import { userPosts } from 'stores/app/profile';
 import { socket } from 'stores/global';
-import type { ModalTypes, PanelTypes } from 'types/app/main';
+import type { DropdownTypes, ModalTypes, PanelTypes } from 'types/app/main';
 import { getKey, removeKey, setKey } from 'utilities/global';
 
 // Preserve modal state
 let modalStateVisible: boolean;
+let dropdownStateVisible: boolean;
 
 setTimeout(() => {
+    if (!modalVisible) return;
+
     modalVisible.subscribe((state) => {
         modalStateVisible = state;
+    });
+}, 0);
+
+setTimeout(() => {
+    if (!dropdownVisible) return;
+
+    dropdownVisible.subscribe((state) => {
+        dropdownStateVisible = state;
     });
 }, 0);
 
@@ -129,6 +143,32 @@ export function dismissModal(callback?: Function): void {
             setTimeout(() => {
                 callback();
             }, modalAnimDuration + 50);
+        }
+    }
+}
+
+export function showDropdown(newPopup: DropdownTypes): void {
+    dismissDropdown(() => {
+        // Set the modal dynamically
+        currentDropdownId.set(newPopup);
+
+        // Helpful variable
+        dropdownVisible.set(true);
+    });
+}
+
+export function dismissDropdown(callback?: Function): void {
+    if (!dropdownStateVisible) {
+        if (callback) callback();
+    } else {
+        // First, dismiss
+        dropdownVisible.set(false);
+
+        // Then, set timeout to reset for callback
+        if (callback) {
+            setTimeout(() => {
+                callback();
+            }, dropdownAnimDuration + 50);
         }
     }
 }

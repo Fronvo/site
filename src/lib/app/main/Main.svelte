@@ -4,6 +4,7 @@
     import { currentPanelId, loginSucceeded, panels } from 'stores/app/main';
     import { onMount } from 'svelte';
     import { getKey } from 'utilities/global';
+    import Dropdown from './Dropdown.svelte';
 
     onMount(() => {
         // Get latest panel id / Home
@@ -14,6 +15,9 @@
 {#if $loginSucceeded}
     <!-- Smoothity-smooth modal auto-switching -->
     <Modal />
+
+    <!-- Smoothity-smooth dropdown auto-switching -->
+    <Dropdown />
 
     <div class="main-container">
         <!-- Side nav which transforms into a Top nav on mobile -->

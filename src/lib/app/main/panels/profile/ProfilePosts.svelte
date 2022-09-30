@@ -24,9 +24,9 @@
 </script>
 
 {#if $profileLoadingFinished}
-    <div class="posts-container" in:fade={{ delay: 900 }}>
+    <div class="posts-container" in:fade={{ delay: 750, duration: 500 }}>
         {#if $userPosts.length == 0}
-            <h1 in:fade={{ duration: 500, delay: 700 }} id="empty-text">
+            <h1 in:fade={{ duration: 500 }} id="empty-text">
                 {$userData.isFollower ||
                 $userData.isSelf ||
                 !$userData.isPrivate

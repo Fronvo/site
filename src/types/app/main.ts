@@ -18,4 +18,15 @@ export enum ModalTypes {
     FindProfiles,
     ControlCenter,
     MaxOnlineTime,
+    CreateCommunity,
+    JoinCommunity,
+    FindCommunities,
+    LeaveCommunity,
+    CommunityMembers,
+    EditCommunity,
+    EditCommunityMember,
+}
+
+export enum DropdownTypes {
+    CommunityInfo,
 }

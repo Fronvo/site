@@ -1,0 +1,99 @@
+<script lang="ts">
+    import OptionsMenu from '$lib/svgs/OptionsMenu.svelte';
+    import { dropdownVisible } from 'src/stores/app/main';
+    import { joinedCommunity, maxChatAnimDelay } from 'stores/app/communities';
+    import { fly } from 'svelte/transition';
+    import { DropdownTypes } from 'types/app/main';
+    import { dismissDropdown, showDropdown } from 'utilities/app/main';
+
+    function showCommunityInfoDropdown(): void {
+        if ($dropdownVisible) {
+            dismissDropdown();
+        } else {
+            showDropdown(DropdownTypes.CommunityInfo);
+        }
+    }
+</script>
+
+<div
+    class="info-container"
+    in:fly={{ y: -150, duration: $maxChatAnimDelay + 200 }}
+>
+    <img
+        id="icon"
+        src={$joinedCommunity.icon
+            ? $joinedCommunity.icon
+            : '/svgs/profile/default.svg'}
+        alt={`${$joinedCommunity.name}'s' icon`}
+        draggable={false}
+    />
+    <h1 id="name">{$joinedCommunity.name}</h1>
+
+    <OptionsMenu callback={showCommunityInfoDropdown} />
+</div>
+
+<style>
+    .info-container {
+        position: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+        padding: 10px;
+        border-radius: 10px;
+        backdrop-filter: blur(5px);
+    }
+
+    .info-container #icon {
+        width: 64px;
+        height: 64px;
+        margin-right: 10px;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        border-radius: 5px;
+    }
+
+    .info-container #name {
+        margin: 0;
+        font-size: 2.7rem;
+        color: white;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        margin-right: 10px;
+    }
+
+    @media screen and (max-width: 720px) {
+        .info-container #icon {
+            width: 53px;
+            height: 53px;
+        }
+
+        .info-container #name {
+            font-size: 2.3rem;
+        }
+    }
+
+    @media screen and (max-width: 520px) {
+        .info-container {
+            width: 90%;
+            justify-content: flex-start;
+        }
+
+        .info-container #icon {
+            width: 48px;
+            height: 48px;
+        }
+
+        .info-container #name {
+            font-size: 1.9rem;
+        }
+    }
+</style>

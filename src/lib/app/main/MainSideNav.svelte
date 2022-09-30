@@ -28,6 +28,15 @@
 </div>
 
 <style>
+    br {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
     .side-nav-container {
         position: fixed;
         top: 0;
@@ -55,7 +64,7 @@
             top: initial;
             right: 0;
             bottom: 0;
-            height: 90px;
+            height: 80px;
             border-bottom-right-radius: 0;
             border-top-left-radius: 25px;
         }

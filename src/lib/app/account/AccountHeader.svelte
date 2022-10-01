@@ -56,4 +56,14 @@
             font-size: 3.5rem;
         }
     }
+
+    @media screen and (max-height: 900px) {
+        #title {
+            display: none;
+        }
+
+        #icon {
+            display: none;
+        }
+    }
 </style>

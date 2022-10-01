@@ -10,7 +10,7 @@
         accountResetPasswordTab,
         accountResetPasswordVerifyTab,
     } from 'stores/app/account';
-    import Header from './Header.svelte';
+    import AccountHeader from './AccountHeader.svelte';
     import ResetPassword from './ResetPassword.svelte';
     import ResetPasswordFinal from './ResetPasswordFinal.svelte';
     import ResetPasswordVerify from './ResetPasswordVerify.svelte';
@@ -21,7 +21,7 @@
     });
 </script>
 
-<Header />
+<AccountHeader />
 
 {#if $accountRegisterVerifyTab}
     <RegisterVerify />

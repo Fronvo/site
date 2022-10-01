@@ -24,7 +24,7 @@
     }
 
     #icon {
-        width: 80px;
+        width: 90px;
         margin-right: 5px;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -36,7 +36,7 @@
     }
 
     #title {
-        font-size: 3.5rem;
+        font-size: 4rem;
         color: var(--profile_info_color);
         margin: 0;
         color: white;
@@ -46,5 +46,14 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+    }
+
+    @media screen and (max-width: 520px) {
+        #icon {
+            width: 70px;
+        }
+        #title {
+            font-size: 3.5rem;
+        }
     }
 </style>

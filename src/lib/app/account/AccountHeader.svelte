@@ -2,28 +2,29 @@
     import { scale } from 'svelte/transition';
 </script>
 
-<header
+<div
+    class="header-container"
     in:scale={{ duration: 750, start: 0.9, delay: 300 }}
     out:scale={{ duration: 400, start: 0.9 }}
 >
     <img
         id="icon"
         src="/svgs/profile/default.svg"
-        alt="Icon"
+        alt="Fronvo logo header"
         draggable={false}
     />
     <h1 id="title">Fronvo</h1>
-</header>
+</div>
 
 <style>
-    header {
+    .header-container {
         display: flex;
         align-items: center;
         justify-content: center;
         margin-top: 2rem;
     }
 
-    #icon {
+    .header-container #icon {
         width: 90px;
         margin-right: 5px;
         -webkit-touch-callout: none;
@@ -35,7 +36,7 @@
         border-radius: 5px;
     }
 
-    #title {
+    .header-container #title {
         font-size: 4rem;
         color: var(--profile_info_color);
         margin: 0;
@@ -49,20 +50,21 @@
     }
 
     @media screen and (max-width: 520px) {
-        #icon {
+        .header-container #icon {
             width: 70px;
         }
-        #title {
+
+        .header-container #title {
             font-size: 3.5rem;
         }
     }
 
     @media screen and (max-height: 900px) {
-        #title {
+        .header-container #title {
             display: none;
         }
 
-        #icon {
+        .header-container #icon {
             display: none;
         }
     }

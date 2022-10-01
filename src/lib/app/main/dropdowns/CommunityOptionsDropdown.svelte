@@ -57,6 +57,7 @@
     @media screen and (max-width: 720px) {
         .options-dropdown button {
             font-size: 1.2rem;
+            cursor: default;
         }
     }
 

@@ -11,9 +11,18 @@ import type {
     CreatePostResult,
 } from 'interfaces/socket/account/createPost';
 import type {
+    DeleteCommunityMessageParams,
+    DeleteCommunityMessageResult,
+} from 'interfaces/socket/account/deleteCommunityMessage';
+import type {
     DeletePostParams,
     DeletePostResult,
 } from 'interfaces/socket/account/deletePost';
+import type {
+    FetchCommunityDataParams,
+    FetchCommunityDataResult,
+} from 'interfaces/socket/account/fetchCommunityData';
+import type { FetchCommunityMessagesResult } from 'interfaces/socket/account/fetchCommunityMessages';
 import type { FetchHomePostsResult } from 'interfaces/socket/account/fetchHomePosts';
 import type {
     FetchProfileDataParams,
@@ -40,11 +49,24 @@ import type {
     JoinCommunityParams,
     JoinCommunityResult,
 } from 'interfaces/socket/account/joinCommunity';
+import type { LeaveCommunityResult } from 'interfaces/socket/account/leaveCommunity';
 import type { LogoutResult } from 'interfaces/socket/account/logout';
+import type {
+    SendCommunityMessageParams,
+    SendCommunityMessageResult,
+} from 'interfaces/socket/account/sendCommunityMessage';
 import type {
     UnfollowProfileParams,
     UnfollowProfileResult,
 } from 'interfaces/socket/account/unfollowProfile';
+import type {
+    UpdateChatRequestParams,
+    UpdateChatRequestResult,
+} from 'interfaces/socket/account/updateChatRequest';
+import type {
+    UpdateCommunityDataParams,
+    UpdateCommunityDataResult,
+} from 'interfaces/socket/account/updateCommunityData';
 import type {
     UpdateProfileDataParams,
     UpdateProfileDataResult,
@@ -78,28 +100,6 @@ import type {
     ResetPasswordVerifyParams,
     ResetPasswordVerifyResult,
 } from 'interfaces/socket/noAccount/resetPasswordVerify';
-import type {
-    DeleteCommunityMessageParams,
-    DeleteCommunityMessageResult,
-} from '../account/deleteCommunityMessage';
-import type {
-    FetchCommunityDataParams,
-    FetchCommunityDataResult,
-} from '../account/fetchCommunityData';
-import type { FetchCommunityMessagesResult } from '../account/fetchCommunityMessages';
-import type { LeaveCommunityResult } from '../account/leaveCommunity';
-import type {
-    SendCommunityMessageParams,
-    SendCommunityMessageResult,
-} from '../account/sendCommunityMessage';
-import type {
-    UpdateChatRequestParams,
-    UpdateChatRequestResult,
-} from '../account/updateChatRequest';
-import type {
-    UpdateCommunityDataParams,
-    UpdateCommunityDataResult,
-} from '../account/updateCommunityData';
 
 export interface ClientToServerEvents {
     register: (

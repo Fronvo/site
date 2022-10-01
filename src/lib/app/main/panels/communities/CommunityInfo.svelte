@@ -1,6 +1,6 @@
 <script lang="ts">
     import OptionsMenu from '$lib/svgs/OptionsMenu.svelte';
-    import { dropdownVisible } from 'src/stores/app/main';
+    import { dropdownVisible } from 'stores/app/main';
     import { joinedCommunity, maxChatAnimDelay } from 'stores/app/communities';
     import { fly } from 'svelte/transition';
     import { DropdownTypes } from 'types/app/main';

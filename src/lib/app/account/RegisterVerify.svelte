@@ -6,7 +6,7 @@
     import SvelteSegmentedInput from 'svelte-segmented-input';
     import { fade, scale } from 'svelte/transition';
     import { setKey } from 'utilities/global';
-    import Center from '../Center.svelte';
+    import Center from '$lib/app/Center.svelte';
 
     let code: string;
     let isErrorVisible = false;

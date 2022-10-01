@@ -5,7 +5,7 @@
     import {
         joinedCommunity,
         targetCommunityData,
-    } from 'src/stores/app/communities';
+    } from 'stores/app/communities';
     import { homePosts } from 'stores/app/home';
     import { followModalForFollowing, followModalInfo } from 'stores/app/main';
     import { profileLoadingFinished, userData } from 'stores/app/profile';

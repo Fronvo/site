@@ -18,10 +18,13 @@
 
 <style>
     .header-container {
+        position: absolute;
+        width: 100%;
+        top: 0;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-top: 2rem;
+        margin-top: 50px;
     }
 
     .header-container #icon {

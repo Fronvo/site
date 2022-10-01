@@ -2,9 +2,9 @@
     import { goto } from '$app/navigation';
     import type { CommunityMessageFinal } from 'interfaces/app/communities';
     import type { FronvoAccount } from 'interfaces/app/main';
-    import DeleteChatOption from 'src/lib/svgs/DeleteChatOption.svelte';
-    import { socket } from 'src/stores/global';
-    import { loadCommunitiesPanel } from 'src/utilities/app/communities';
+    import DeleteChatOption from '$lib/svgs/DeleteChatOption.svelte';
+    import { socket } from 'stores/global';
+    import { loadCommunitiesPanel } from 'utilities/app/communities';
     import {
         chatRequestAccepted,
         initialCommunityLoadingFinished,

@@ -6,7 +6,7 @@
         targetCommunity,
         targetCommunityData,
         targetCommunityMessages,
-    } from 'src/stores/app/communities';
+    } from 'stores/app/communities';
     import { accountRegisterVerifyTab } from 'stores/app/account';
     import { homePosts } from 'stores/app/home';
     import { loginSucceeded, modalAnimDuration } from 'stores/app/main';

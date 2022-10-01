@@ -1,6 +1,6 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
-    import { joinedCommunity } from 'src/stores/app/communities';
+    import { joinedCommunity } from 'stores/app/communities';
 
     import { socket } from 'stores/global';
     import { onMount } from 'svelte';

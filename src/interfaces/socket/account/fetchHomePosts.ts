@@ -3,7 +3,7 @@
 // ******************** //
 
 import type { FronvoError } from 'interfaces/socket/all';
-import type { HomePost } from 'src/interfaces/app/home';
+import type { HomePost } from 'interfaces/app/home';
 
 export interface FetchHomePostsParams {}
 

@@ -5,7 +5,7 @@
     import { onMount } from 'svelte';
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
-    import { joinedCommunity } from 'src/stores/app/communities';
+    import { joinedCommunity } from 'stores/app/communities';
     import Checkbox from 'svelte-checkbox';
 
     let communityId = $joinedCommunity.communityId;

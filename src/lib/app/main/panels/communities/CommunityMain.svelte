@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { socket } from 'src/stores/global';
+    import { socket } from 'stores/global';
     import {
         chatRequestAccepted,
         initialCommunityLoadingFinished,

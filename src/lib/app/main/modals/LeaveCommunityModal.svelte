@@ -9,7 +9,7 @@
     import { socket } from 'stores/global';
     import { loadCommunitiesPanel } from 'utilities/app/communities';
     import { dismissModal } from 'utilities/app/main';
-    import Center from '../../Center.svelte';
+    import Center from '$lib/app/Center.svelte';
 
     let isLeaving = false;
 

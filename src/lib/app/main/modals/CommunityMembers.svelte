@@ -2,11 +2,8 @@
     import { goto } from '$app/navigation';
     import Loading from '$lib/app/Loading.svelte';
     import type { FronvoAccount } from 'interfaces/app/main';
-    import {
-        joinedCommunity,
-        ourProfileData,
-    } from 'src/stores/app/communities';
-    import { ModalTypes } from 'src/types/app/main';
+    import { joinedCommunity, ourProfileData } from 'stores/app/communities';
+    import { ModalTypes } from 'types/app/main';
     import { targetCommunityMember } from 'stores/app/main';
     import {
         profileLoadingFinished,

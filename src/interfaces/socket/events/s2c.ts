@@ -2,21 +2,21 @@
 // Interfaces for the server to client events of Socket.IO
 // ******************** //
 
+import type { ChatRequestUpdatedResult } from 'interfaces/socket/account/chatRequestUpdated';
+import type { CommunityMessageDeletedResult } from 'interfaces/socket/account/communityMessageDeleted';
+import type { NewCommunityMessageResult } from 'interfaces/socket/account/newCommunityMessage';
 import type {
     RegisterVerifyParams,
     RegisterVerifyResult,
 } from 'interfaces/socket/noAccount/registerVerify';
-import type { ChatRequestUpdatedResult } from '../account/chatRequestUpdated';
-import type { CommunityMessageDeletedResult } from '../account/communityMessageDeleted';
-import type { NewCommunityMessageResult } from '../account/newCommunityMessage';
 import type {
     ResetPasswordFinalParams,
     ResetPasswordFinalResult,
-} from '../noAccount/resetPasswordFinal';
+} from 'interfaces/socket/noAccount/resetPasswordFinal';
 import type {
     ResetPasswordVerifyParams,
     ResetPasswordVerifyResult,
-} from '../noAccount/resetPasswordVerify';
+} from 'interfaces/socket/noAccount/resetPasswordVerify';
 
 export interface ServerToClientEvents {
     registerVerify: (

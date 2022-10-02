@@ -3,9 +3,13 @@
     import { ModalTypes } from 'types/app/main';
     import { dismissDropdown, showModal } from 'utilities/app/main';
 
-    const pendingRequests =
-        $joinedCommunity.members.length -
-        $joinedCommunity.acceptedChatRequests.length;
+    let pendingRequests: number;
+
+    if (isOwner()) {
+        pendingRequests =
+            $joinedCommunity.members.length -
+            $joinedCommunity.acceptedChatRequests.length;
+    }
 
     function isOwner(): boolean {
         return $joinedCommunity.ownerId == $ourProfileData.profileId;

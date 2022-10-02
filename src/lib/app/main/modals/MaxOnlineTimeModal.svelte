@@ -79,7 +79,7 @@
     }
 
     .data-container h1 span {
-        color: white;
+        color: var(--profile_info_color);
     }
 
     #reset {

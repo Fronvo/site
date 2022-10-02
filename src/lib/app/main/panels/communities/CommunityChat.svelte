@@ -463,8 +463,11 @@
 
     :global(.message-container #content .link) {
         text-decoration: none;
-        text-decoration-color: white;
         color: var(--text_color);
+    }
+
+    :global(.message-container #content .link:hover::after) {
+        background: var(--profile_info_color);
     }
 
     .message-container #creation-date {

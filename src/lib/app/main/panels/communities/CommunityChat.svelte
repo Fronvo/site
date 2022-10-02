@@ -23,6 +23,7 @@
     import type { Unsubscriber } from 'svelte/store';
     import { fly, scale } from 'svelte/transition';
     import { fetchUser } from 'utilities/app/main';
+    import linkifyHtml from 'linkify-html';
 
     let animationsFinished = false;
 
@@ -239,6 +240,20 @@
         }
     }
 
+    function generateContentLinks(messageId: string, content: string): void {
+        setTimeout(() => {
+            document.getElementsByClassName(messageId)[0].innerHTML =
+                linkifyHtml(content, {
+                    className: 'link',
+                    truncate: 40,
+                    validate: {
+                        url: (value) => /^https?:\/\//.test(value),
+                    },
+                    target: '_blank',
+                });
+        }, 0);
+    }
+
     onMount(() => {
         checkChatRequest();
         loadMessages();
@@ -282,7 +297,7 @@
             Welcome to {$joinedCommunity.name}'s chat room!
         </h1>
     {:else if finalizedMessages}
-        {#each finalizedMessages as { profileData, content, creationDate }, i}
+        {#each finalizedMessages as { messageId, profileData, content, creationDate }, i}
             <div
                 class="message-container"
                 in:fly={{
@@ -318,7 +333,9 @@
                     </div>
                 </div>
 
-                <h1 id="content">{content}</h1>
+                <h1 id="content" class={messageId}>
+                    {generateContentLinks(messageId, content)}
+                </h1>
 
                 <h1 id="creation-date">
                     <!-- Updates every 15 seconds -->
@@ -442,6 +459,12 @@
         margin-bottom: 5px;
         font-size: 1.7rem;
         white-space: pre-wrap;
+    }
+
+    :global(.message-container #content .link) {
+        text-decoration: none;
+        text-decoration-color: white;
+        color: var(--text_color);
     }
 
     .message-container #creation-date {

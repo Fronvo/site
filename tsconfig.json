@@ -11,6 +11,7 @@
             "$lib": ["src/lib"],
             "$lib/*": ["src/lib/*"]
         },
-        "pretty": true
+        "pretty": true,
+        "allowSyntheticDefaultImports": true
     }
 }

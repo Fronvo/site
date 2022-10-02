@@ -43,7 +43,6 @@
         font-size: 4rem;
         color: var(--profile_info_color);
         margin: 0;
-        color: white;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;

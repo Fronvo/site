@@ -50,7 +50,7 @@
     }
 
     svg:hover {
-        background: rgb(255, 255, 255, 0.1);
+        background: var(--nav_bg_color);
     }
 
     @media screen and (max-width: 520px) {

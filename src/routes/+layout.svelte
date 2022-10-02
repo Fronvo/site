@@ -8,6 +8,7 @@
         modalVisible,
     } from 'stores/app/main';
     import {
+        darkTheme,
         initSocket,
         sessionAttached,
         sessionTime,
@@ -16,7 +17,7 @@
         showLayout,
     } from 'stores/global';
     import { onMount } from 'svelte';
-    import themingVariables from 'svelte-css-vars';
+    import themingVars from 'svelte-css-vars';
     import { setGlobalOptions } from 'svelte-scrolling';
     import { sineInOut } from 'svelte/easing';
     import { fade } from 'svelte/transition';
@@ -24,12 +25,23 @@
     import { performLogin, showModal } from 'utilities/app/main';
     import { getKey } from 'utilities/global';
     import '../app.css';
-    import { currentTheme } from '../themes';
+    import { currentTheme, defaultTheme, whiteTheme } from '../themes';
 
     let mountReady = false;
 
     onMount(() => {
         mountReady = true;
+
+        // Try our best to default to dark
+        $darkTheme = !getKey('darkTheme') || getKey('darkTheme') == 'true';
+
+        darkTheme.subscribe((dark) => {
+            if (typeof dark == 'undefined') {
+                return;
+            }
+
+            currentTheme.set(dark ? defaultTheme : whiteTheme);
+        });
 
         function startSessionTime(): void {
             // Also start the max online time counter
@@ -102,7 +114,7 @@
     });
 </script>
 
-<div class="main" use:themingVariables={$currentTheme}>
+<div class="main" use:themingVars={{ ...$currentTheme }}>
     {#if mountReady}
         {#if $showLayout}
             <div in:fade={{ duration: 500 }}>

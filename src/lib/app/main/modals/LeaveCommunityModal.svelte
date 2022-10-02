@@ -112,7 +112,7 @@
     }
 
     #leave-community span {
-        color: white;
+        color: var(--profile_info_color);
     }
 
     .options-container {

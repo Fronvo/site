@@ -259,7 +259,6 @@
         color: var(--profile_info_color);
         cursor: pointer;
         margin: 0;
-        color: white;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;

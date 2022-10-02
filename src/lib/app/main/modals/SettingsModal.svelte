@@ -1,13 +1,16 @@
 <script lang="ts">
     import {
+        darkTheme,
         sessionTime,
         sessionTimeEnabled,
         sessionWarningShown,
     } from 'stores/global';
+    import Checkbox from 'svelte-checkbox';
     import { dismissModal } from 'utilities/app/main';
     import { getKey, removeKey, setKey } from 'utilities/global';
 
     let maxOnlineTime = getKey('maxOnlineTime') / 60 || 0;
+    let tempDarkTheme = $darkTheme;
 
     function saveMaxOnlineTime(): void {
         const onlineTime = validateMaxOnlineTime() * 60;
@@ -38,8 +41,14 @@
         }
     }
 
+    function saveDarkTheme(): void {
+        setKey('darkTheme', tempDarkTheme);
+        $darkTheme = tempDarkTheme;
+    }
+
     function saveSettings(): void {
         saveMaxOnlineTime();
+        saveDarkTheme();
 
         dismissModal();
     }
@@ -56,6 +65,17 @@
         <div>
             <h1>Max online minutes</h1>
             <input bind:value={maxOnlineTime} maxlength={4} />
+        </div>
+
+        <div class="single-line">
+            <h1>Dark theme</h1>
+            <Checkbox
+                bind:checked={tempDarkTheme}
+                class="private-checkbox"
+                size="2.7rem"
+                primaryColor="rgb(180, 120, 255)"
+                secondaryColor="white"
+            />
         </div>
     </div>
 
@@ -106,11 +126,14 @@
     .data-container div {
         display: flex;
         flex-direction: column;
-        flex: 1;
         justify-content: center;
         align-items: center;
         margin-bottom: 25px;
         flex-wrap: wrap;
+    }
+
+    .data-container .single-line {
+        flex-direction: row;
     }
 
     .data-container input {
@@ -137,6 +160,10 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+    }
+
+    .data-container .single-line h1 {
+        margin-right: 0;
     }
 
     .data-container div button {

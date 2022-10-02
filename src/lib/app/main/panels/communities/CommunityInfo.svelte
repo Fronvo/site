@@ -60,7 +60,7 @@
     .info-container #name {
         margin: 0;
         font-size: 2.7rem;
-        color: white;
+        color: var(--profile_info_color);
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;

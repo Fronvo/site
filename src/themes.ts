@@ -1,5 +1,4 @@
 import { writable, type Writable } from 'svelte/store';
-import { getKey } from 'utilities/global';
 
 interface ThemingOptions {
     // Fronvo background color
@@ -50,6 +49,24 @@ export const defaultTheme: ThemingOptions = {
     profile_info_color: 'white',
 };
 
-export const currentTheme: Writable<ThemingOptions> = writable(
-    defaultTheme || getKey('customTheme')
-);
+export const whiteTheme: ThemingOptions = {
+    bg_color: 'rgb(250, 250, 250)',
+
+    text_color: 'rgb(180, 120, 255)',
+
+    nav_bg_color: 'rgba(245, 245, 245, 0.75)',
+
+    nav_shadow_color: 'rgb(220, 220, 220)',
+
+    svg_stroke: 'rgb(130, 64, 255)',
+
+    modal_bg_color: 'rgba(225, 225, 225, 85%)',
+
+    modal_bg_color_full: 'rgb(225, 225, 225, 100%)',
+
+    modal_input_bg_color: 'rgba(200, 200, 200, 0.5)',
+
+    profile_info_color: 'black',
+};
+
+export const currentTheme: Writable<ThemingOptions> = writable(defaultTheme);

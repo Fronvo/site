@@ -2,4 +2,9 @@
 // Shared types for all files.
 // ******************** //
 
-export type LocalKeys = 'token' | 'panelId' | 'customTheme' | 'maxOnlineTime';
+export type LocalKeys =
+    | 'token'
+    | 'panelId'
+    | 'customTheme'
+    | 'maxOnlineTime'
+    | 'darkTheme';

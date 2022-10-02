@@ -36,7 +36,7 @@
     }
 
     .grass-container h1 {
-        color: white;
+        color: var(--profile_info_color);
         font-size: 2.1rem;
         margin-top: 0;
     }

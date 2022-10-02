@@ -414,7 +414,7 @@
     }
 
     .message-info-container #username {
-        color: white;
+        color: var(--profile_info_color);
         margin: 0;
         font-size: 1.9rem;
         -webkit-touch-callout: none;
@@ -436,7 +436,7 @@
     }
 
     .message-container #content {
-        color: white;
+        color: var(--profile_info_color);
         margin: 0;
         margin-top: 5px;
         margin-bottom: 5px;

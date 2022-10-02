@@ -71,7 +71,7 @@
     .send-container textarea {
         background: transparent;
         font-size: 2.1rem;
-        color: white;
+        color: var(--profile_info_color);
         overflow: auto;
     }
 

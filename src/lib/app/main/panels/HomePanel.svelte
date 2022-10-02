@@ -43,16 +43,7 @@
     }
 
     .home-container #latest-posts {
-        color: transparent;
-        background: linear-gradient(
-            90deg,
-            #ff81ea 10.42%,
-            #dbc2ff 54.68%,
-            #64c1ff 99.98%
-        );
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        color: var(--profile_info_color);
         font-size: 3rem;
         margin: 0;
         -webkit-touch-callout: none;

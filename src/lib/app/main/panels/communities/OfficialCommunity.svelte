@@ -89,16 +89,6 @@
         font-size: 2.5rem;
         margin: 0;
         margin-bottom: 15px;
-        color: transparent;
-        background: linear-gradient(
-            90deg,
-            #ff81ea 10.42%,
-            #dbc2ff 54.68%,
-            #64c1ff 99.98%
-        );
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -154,14 +144,14 @@
     }
 
     .community-container #name {
-        color: white;
+        color: var(--profile_info_color);
         font-size: 2.5rem;
         margin: 0;
         text-align: center;
     }
 
     .community-container #description {
-        color: white;
+        color: var(--profile_info_color);
         font-size: 2rem;
         text-align: center;
         flex: 1;
@@ -173,7 +163,7 @@
     }
 
     .community-container #members span {
-        color: white;
+        color: var(--profile_info_color);
     }
 
     .options-container {

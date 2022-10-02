@@ -109,6 +109,7 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+        text-align: center;
     }
 
     #leave-community span {

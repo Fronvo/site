@@ -34,6 +34,10 @@
         user-select: none;
     }
 
+    hr {
+        border: 1px solid var(--text_color);
+    }
+
     .side-nav-container {
         position: fixed;
         top: 0;

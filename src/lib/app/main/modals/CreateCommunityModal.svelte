@@ -1,6 +1,9 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
-    import { joinedCommunity } from 'stores/app/communities';
+    import {
+        chatRequestAccepted,
+        joinedCommunity,
+    } from 'stores/app/communities';
 
     import { socket } from 'stores/global';
     import { onMount } from 'svelte';
@@ -37,6 +40,7 @@
 
                 // Update, new community data
                 $joinedCommunity = communityData;
+                $chatRequestAccepted = true;
 
                 goto(`/community/${communityData.communityId}`, {
                     replaceState: true,

@@ -49,6 +49,7 @@ button {
     color: white;
     padding: 10px;
     font-family: 'DM Sans';
+    box-shadow: 0 0 5px var(--text_color);
     font-weight: 500;
     cursor: pointer;
     transition: 0.25s;
@@ -112,7 +113,7 @@ textarea:focus {
 }
 
 hr {
-    border: 1px solid var(--text_color);
+    border: 1px solid var(--profile_info_color);
 }
 
 input:-webkit-autofill,

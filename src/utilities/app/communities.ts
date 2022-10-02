@@ -3,6 +3,7 @@
 // ******************** //
 
 import {
+    chatRequestAccepted,
     initialCommunityLoadingFinished,
     joinedCommunity,
     officialCommunity,
@@ -17,7 +18,6 @@ export async function loadCommunitiesPanel(
     targetCommunityId?: string
 ): Promise<void> {
     return new Promise(async (resolve) => {
-        joinedCommunity.set(undefined);
         officialCommunity.set(undefined);
         initialCommunityLoadingFinished.set(false);
 
@@ -65,6 +65,12 @@ export async function loadCommunitiesPanel(
                 { communityId: accountData.communityId },
                 ({ communityData, err }) => {
                     !err && joinedCommunity.set(communityData);
+
+                    chatRequestAccepted.set(
+                        communityData.acceptedChatRequests.includes(
+                            accountData.profileId
+                        )
+                    );
 
                     resolve();
                 }

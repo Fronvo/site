@@ -1,10 +1,8 @@
 <script lang="ts">
     import { socket } from 'stores/global';
     import {
-        chatRequestAccepted,
         initialCommunityLoadingFinished,
         joinedCommunity,
-        ourProfileData,
         targetCommunityMessages,
     } from 'stores/app/communities';
     import { onMount } from 'svelte';
@@ -14,10 +12,6 @@
     import CommunitySend from './CommunitySend.svelte';
 
     onMount(() => {
-        $chatRequestAccepted = $joinedCommunity.acceptedChatRequests.includes(
-            $ourProfileData.profileId
-        );
-
         socket.emit('fetchCommunityMessages', ({ communityMessages }) => {
             $targetCommunityMessages = communityMessages;
 

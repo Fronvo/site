@@ -1,6 +1,10 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
-    import { joinedCommunity } from 'stores/app/communities';
+    import {
+        joinedCommunity,
+        targetCommunity,
+        targetCommunityData,
+    } from 'stores/app/communities';
     import { socket } from 'stores/global';
     import { fade } from 'svelte/transition';
     import { dismissModal } from 'utilities/app/main';
@@ -28,7 +32,9 @@
                     return;
                 }
 
-                // Update, new community data
+                // Update community panel
+                $targetCommunity = undefined;
+                $targetCommunityData = undefined;
                 $joinedCommunity = communityData;
 
                 goto(`/community/${$joinedCommunity.communityId}`, {

@@ -3,6 +3,10 @@
     import { ModalTypes } from 'types/app/main';
     import { dismissDropdown, showModal } from 'utilities/app/main';
 
+    const pendingRequests =
+        $joinedCommunity.members.length -
+        $joinedCommunity.acceptedChatRequests.length;
+
     function isOwner(): boolean {
         return $joinedCommunity.ownerId == $ourProfileData.profileId;
     }
@@ -32,7 +36,11 @@
         <button on:click={editCommmunity}>Edit</button>
     {/if}
 
-    <button on:click={viewMembers}>Members</button>
+    <button on:click={viewMembers}
+        >Members {isOwner() && pendingRequests > 0
+            ? `(${pendingRequests})`
+            : ''}</button
+    >
 
     <button on:click={leaveCommunity}>{isOwner() ? 'Delete' : 'Leave'}</button>
 </div>

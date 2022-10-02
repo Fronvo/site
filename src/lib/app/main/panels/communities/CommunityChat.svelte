@@ -72,6 +72,8 @@
                     // Update cache
                     cachedAccountData.push(account);
 
+                    generateContentLinks(message.messageId, message.content);
+
                     checkLoadingDone();
                 });
             } else {
@@ -80,6 +82,8 @@
                     ...message,
                     profileData: cachedAccount,
                 });
+
+                generateContentLinks(message.messageId, message.content);
 
                 checkLoadingDone();
             }
@@ -247,15 +251,18 @@
 
     function generateContentLinks(messageId: string, content: string): void {
         setTimeout(() => {
-            document.getElementsByClassName(messageId)[0].innerHTML =
-                linkifyHtml(content, {
-                    className: 'link',
-                    truncate: 40,
-                    validate: {
-                        url: (value) => /^https?:\/\//.test(value),
-                    },
-                    target: '_blank',
-                });
+            const targetElement = document.getElementsByClassName(messageId)[0];
+
+            if (!targetElement) return;
+
+            targetElement.innerHTML = linkifyHtml(content, {
+                className: 'link',
+                truncate: 40,
+                validate: {
+                    url: (value) => /^https?:\/\//.test(value),
+                },
+                target: '_blank',
+            });
         }, 0);
     }
 
@@ -334,7 +341,7 @@
                 </div>
 
                 <h1 id="content" class={messageId}>
-                    {generateContentLinks(messageId, content)}
+                    {content}
                 </h1>
 
                 <h1 id="creation-date">

@@ -94,6 +94,11 @@
 
                 // Update messages
                 finalizedMessages = tempFinalizedMessages;
+
+                // No delay for new messages
+                setTimeout(() => {
+                    animationsFinished = true;
+                }, $maxChatAnimDelay);
             }
         }
     }
@@ -273,11 +278,6 @@
 
         // Efficient send
         document.addEventListener('keydown', keyDownListener);
-
-        // No delay for new messages
-        setTimeout(() => {
-            animationsFinished = true;
-        }, $maxChatAnimDelay);
     });
 
     onDestroy(() => {

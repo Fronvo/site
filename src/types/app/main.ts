@@ -6,7 +6,6 @@ export enum PanelTypes {
     Home,
     Profile,
     Communities,
-    Marketplace,
 }
 
 export enum ModalTypes {

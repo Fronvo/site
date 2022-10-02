@@ -1,7 +1,6 @@
 <script lang="ts">
     import Communities from '$lib/svgs/Communities.svelte';
     import Home from '$lib/svgs/Home.svelte';
-    import Marketplace from '$lib/svgs/Marketplace.svelte';
     import Profile from '$lib/svgs/Profile.svelte';
     import Settings from '$lib/svgs/Settings.svelte';
     import { fly } from 'svelte/transition';
@@ -19,8 +18,6 @@
     <Communities />
 
     <br />
-
-    <Marketplace />
 
     <hr />
 

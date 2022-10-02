@@ -20,7 +20,6 @@ import PostModal from '$lib/app/main/modals/PostModal.svelte';
 import SettingsModal from '$lib/app/main/modals/SettingsModal.svelte';
 import CommunitiesPanel from '$lib/app/main/panels/CommunitiesPanel.svelte';
 import HomePanel from '$lib/app/main/panels/HomePanel.svelte';
-import MarketplacePanel from '$lib/app/main/panels/MarketplacePanel.svelte';
 import ProfilePanel from '$lib/app/main/panels/ProfilePanel.svelte';
 import type { HomePost } from 'interfaces/app/home';
 import type { AccountPost, FronvoAccount } from 'interfaces/app/main';
@@ -29,12 +28,7 @@ import { writable, type Writable } from 'svelte/store';
 export const loginSucceeded = writable(false);
 
 // Panel settings
-export const panels = [
-    HomePanel,
-    ProfilePanel,
-    CommunitiesPanel,
-    MarketplacePanel,
-];
+export const panels = [HomePanel, ProfilePanel, CommunitiesPanel];
 
 export const currentPanelId = writable(0);
 

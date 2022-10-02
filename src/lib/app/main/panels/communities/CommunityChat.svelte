@@ -466,6 +466,7 @@
         margin-bottom: 5px;
         font-size: 1.7rem;
         white-space: pre-wrap;
+        max-width: 100%;
     }
 
     :global(.message-container #content .link) {

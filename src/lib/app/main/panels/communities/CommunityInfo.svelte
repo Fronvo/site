@@ -71,6 +71,11 @@
     }
 
     @media screen and (max-width: 720px) {
+        .info-container {
+            backdrop-filter: none;
+            background: var(--nav_bg_color);
+        }
+
         .info-container #icon {
             width: 53px;
             height: 53px;

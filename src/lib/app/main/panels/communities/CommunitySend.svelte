@@ -81,6 +81,7 @@
             width: 80%;
             min-width: initial;
             min-height: 55px;
+            backdrop-filter: none;
         }
 
         .send-container textarea {

@@ -13,10 +13,6 @@
             svg: 'many-features',
         },
         {
-            title: 'Unleash your creativity',
-            svg: 'creativity-bots',
-        },
-        {
             title: 'Beat your addictions',
             svg: 'beat-addictions',
         },

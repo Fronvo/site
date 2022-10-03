@@ -17,6 +17,8 @@ import type {
     ResetPasswordVerifyParams,
     ResetPasswordVerifyResult,
 } from 'interfaces/socket/noAccount/resetPasswordVerify';
+import type { MemberJoinedResult } from '../account/memberJoined';
+import type { MemberLeftResult } from '../account/memberLeft';
 
 export interface ServerToClientEvents {
     registerVerify: (
@@ -36,4 +38,6 @@ export interface ServerToClientEvents {
     communityMessageDeleted: ({}: CommunityMessageDeletedResult) => void;
     communityDeleted: () => void;
     chatRequestUpdated: ({}: ChatRequestUpdatedResult) => void;
+    memberJoined: ({}: MemberJoinedResult) => void;
+    memberLeft: ({}: MemberLeftResult) => void;
 }

@@ -17,7 +17,7 @@
     let memberInfo: FronvoAccount[] = [];
 
     // Cap at 20 max loaded
-    const memberInfoCopy = $joinedCommunity.members.slice(0, 5);
+    const memberInfoCopy = $joinedCommunity.members.slice(0, 20);
     let loadingFinished = false;
 
     function isOwner(profileId?: string): boolean {

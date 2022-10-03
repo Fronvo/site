@@ -15,6 +15,9 @@
     import { loadProfilePosts } from 'utilities/app/profile';
 
     let memberInfo: FronvoAccount[] = [];
+
+    // Cap at 20 max loaded
+    const memberInfoCopy = $joinedCommunity.members.slice(0, 5);
     let loadingFinished = false;
 
     function isOwner(profileId?: string): boolean {
@@ -27,12 +30,12 @@
     async function loadFollowInfo() {
         // Fetch all community members, notify UI once finished
 
-        for (const memberIndex in $joinedCommunity.members) {
-            fetchUser($joinedCommunity.members[memberIndex]).then((user) => {
+        for (const memberIndex in memberInfoCopy) {
+            fetchUser(memberInfoCopy[memberIndex]).then((user) => {
                 memberInfo.push(user);
 
                 // Finish loading
-                if (memberInfo.length == $joinedCommunity.members.length) {
+                if (memberInfo.length == memberInfoCopy.length) {
                     loadingFinished = true;
                 }
             });

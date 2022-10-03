@@ -18,24 +18,27 @@
     import { loadProfilePosts } from 'utilities/app/profile';
 
     let followInfo: FronvoAccount[] = [];
+
+    // Cap at 20 max loaded
+    const followInfoCopy = $followModalInfo.slice(0, 10);
     let loadingFinished = false;
 
     async function loadFollowInfo() {
         // Fetch all followed users, notify UI once finished
 
         // Sanity check for new accounts, new UI will be displayed
-        if ($followModalInfo.length == 0) {
+        if (followInfoCopy.length == 0) {
             loadingFinished = true;
             return;
         }
 
         // Some followed users exist, fetch them
-        for (const followIndex in $followModalInfo) {
-            fetchUser($followModalInfo[followIndex]).then((user) => {
+        for (const followIndex in followInfoCopy) {
+            fetchUser(followInfoCopy[followIndex]).then((user) => {
                 followInfo.push(user);
 
                 // Finish loading
-                if (followInfo.length == $followModalInfo.length) {
+                if (followInfo.length == followInfoCopy.length) {
                     loadingFinished = true;
                 }
             });

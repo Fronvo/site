@@ -389,16 +389,6 @@
     }
 
     .chat-container #chat-start {
-        color: transparent;
-        background: linear-gradient(
-            90deg,
-            #ff81ea 10.42%,
-            #dbc2ff 54.68%,
-            #64c1ff 99.98%
-        );
-        background-clip: text;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
         margin: 0;
         -webkit-touch-callout: none;
         -webkit-user-select: none;

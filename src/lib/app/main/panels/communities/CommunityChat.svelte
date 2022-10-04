@@ -272,7 +272,8 @@
                 className: 'link',
                 truncate: 40,
                 validate: {
-                    url: (value) => /^https?:\/\//.test(value),
+                    url: (value) =>
+                        /^https?:\/\/[0-9a-zA-Z-.\/\?=]+/.test(value),
                 },
                 target: '_blank',
             });

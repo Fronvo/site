@@ -18,8 +18,6 @@
     } from 'stores/global';
     import { onMount } from 'svelte';
     import themingVars from 'svelte-css-vars';
-    import { setGlobalOptions } from 'svelte-scrolling';
-    import { sineInOut } from 'svelte/easing';
     import { fade } from 'svelte/transition';
     import { ModalTypes } from 'types/app/main';
     import { performLogin, showModal } from 'utilities/app/main';
@@ -104,13 +102,6 @@
                 ev.clientY,
             ]);
         });
-    });
-
-    // svelte-scrolling globals
-    setGlobalOptions({
-        duration: 750,
-        easing: sineInOut,
-        offset: 0,
     });
 </script>
 

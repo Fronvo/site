@@ -59,9 +59,6 @@
             const cachedAccount = findCachedData(message.ownerId);
 
             if (!cachedAccount) {
-                // TODO: Observe, may cause huge delays but wont work otherwise
-                // Maybe check before this whole loop if theres a certain profile needed
-                // more than once, if so, await otherwise dont block
                 await fetchUser(message.ownerId).then((account) => {
                     // Add profileData
                     tempFinalizedMessages.push({

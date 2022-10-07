@@ -111,7 +111,6 @@ export async function fetchPosts(
 
 export function switchPanel(newPanel: PanelTypes): void {
     // Prevent panel spam hogging performance
-    // TODO: Find a workaround to click on profile and reload if not ours
     if (getKey('panelId') == newPanel) return;
 
     // Update panelId for future page reloads

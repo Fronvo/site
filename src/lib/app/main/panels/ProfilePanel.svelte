@@ -17,7 +17,6 @@
         replaceState: true,
     });
 
-    // TODO: Back history when needed
     onMount(async () => {
         fetchUser($targetProfile)
             .then(async (profileData) => {

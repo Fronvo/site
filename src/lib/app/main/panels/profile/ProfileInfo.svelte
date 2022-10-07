@@ -193,7 +193,6 @@
 
         <div class="options-container" in:fade={{ delay: 300, duration: 500 }}>
             {#if $userData.isSelf}
-                <!-- TODO: Dropdown -->
                 <button on:click={showControlCentre}>Control center</button>
             {:else}
                 <button on:click={handleFollowProfile}

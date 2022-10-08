@@ -16,6 +16,8 @@ export interface FronvoAccount {
     isFollower: boolean;
     isInCommunity: boolean;
     communityId: string;
+    isAdmin: boolean;
+    isDisabled: boolean;
 }
 
 export interface AccountPost {

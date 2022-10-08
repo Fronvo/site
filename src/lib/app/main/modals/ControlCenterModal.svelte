@@ -44,6 +44,22 @@
             });
         }, modalAnimDuration);
     }
+
+    function toggleDisable(): void {
+        dismissModal();
+
+        setTimeout(() => {
+            socket.emit(
+                'toggleDisableAccount',
+                { profileId: $userData.profileId },
+                ({ err }) => {
+                    if (!err) {
+                        $userData.isDisabled = !$userData.isDisabled;
+                    }
+                }
+            );
+        }, modalAnimDuration);
+    }
 </script>
 
 <div class="settings-container">
@@ -54,16 +70,23 @@
     <hr />
 
     <div class="data-container">
-        <button on:click={() => showModal(ModalTypes.EditProfile)}
-            >Edit Profile</button
-        >
-        <button on:click={() => showModal(ModalTypes.CreatePost)}
-            >Create Post</button
-        >
-        <button on:click={() => showModal(ModalTypes.FindProfiles)}
-            >Find Profiles</button
-        >
-        <button on:click={logout}>Logout</button>
+        {#if $userData.isSelf}
+            <button on:click={() => showModal(ModalTypes.EditProfile)}
+                >Edit Profile</button
+            >
+            <button on:click={() => showModal(ModalTypes.CreatePost)}
+                >Create Post</button
+            >
+            <button on:click={() => showModal(ModalTypes.FindProfiles)}
+                >Find Profiles</button
+            >
+
+            <button on:click={logout}>Logout</button>
+        {:else}
+            <button on:click={toggleDisable}
+                >{$userData.isDisabled ? 'Enable' : 'Disable'} profile</button
+            >
+        {/if}
     </div>
 
     <button id="close" on:click={() => dismissModal()}>Close</button>

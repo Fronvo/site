@@ -2,6 +2,7 @@
     import { goto } from '$app/navigation';
     import ProfileInfo from '$lib/app/main/panels/profile/ProfileInfo.svelte';
     import ProfilePosts from '$lib/app/main/panels/profile/ProfilePosts.svelte';
+    import { ourProfileData } from 'src/stores/app/communities';
     import {
         profileLoadingFinished,
         targetProfile,
@@ -32,6 +33,14 @@
                     profileData.isFollower ||
                     profileData.isSelf ||
                     !profileData.isPrivate;
+
+                if (profileData.isSelf) {
+                    $ourProfileData = profileData;
+                } else {
+                    if (!$ourProfileData) {
+                        $ourProfileData = await fetchUser();
+                    }
+                }
 
                 if (isAccessible) {
                     await loadProfilePosts(profileData.profileId);

@@ -4,6 +4,7 @@
     import type { Community } from 'interfaces/app/communities';
     import {
         joinedCommunity,
+        ourProfileData,
         targetCommunityData,
     } from 'stores/app/communities';
     import { homePosts } from 'stores/app/home';
@@ -156,7 +157,10 @@
             in:fade={{ duration: 500 }}
         />
 
-        <h1 id="username" in:fade={{ duration: 500 }}>
+        <h1
+            id={$userData.isAdmin ? 'admin-name' : 'username'}
+            in:fade={{ duration: 500 }}
+        >
             {$userData.username}
         </h1>
 
@@ -192,9 +196,11 @@
         </div>
 
         <div class="options-container" in:fade={{ delay: 300, duration: 500 }}>
-            {#if $userData.isSelf}
+            {#if $userData.isSelf || $ourProfileData.isAdmin}
                 <button on:click={showControlCentre}>Control center</button>
-            {:else}
+            {/if}
+
+            {#if !$userData.isSelf}
                 <button on:click={handleFollowProfile}
                     >{isInFollowing ? 'Unfollow' : 'Follow'}</button
                 >
@@ -229,6 +235,15 @@
         margin-right: 10px;
         margin-left: 10px;
         color: var(--profile_info_color);
+        text-align: center;
+    }
+
+    .info-container #admin-name {
+        font-size: 3rem;
+        margin: 0;
+        margin-right: 10px;
+        margin-left: 10px;
+        color: turquoise;
         text-align: center;
     }
 

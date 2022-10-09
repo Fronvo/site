@@ -71,8 +71,6 @@
     {#if $userData && $userPosts}
         <ProfileInfo />
 
-        <hr in:fade={{ duration: 250, delay: 600 }} />
-
         <ProfilePosts />
     {/if}
 </div>
@@ -88,31 +86,17 @@
         margin-top: 10px;
     }
 
-    hr {
-        width: 300px;
-        margin-top: 20px;
-    }
-
     @media screen and (max-width: 720px) {
         .profile-container {
             margin-left: 0;
             margin-right: 0;
             margin-bottom: 90px;
         }
-
-        hr {
-            width: 250px;
-            margin-top: 15px;
-        }
     }
 
     @media screen and (max-width: 520px) {
         .profile-container {
             margin-bottom: 70px;
-        }
-
-        hr {
-            width: 200px;
         }
     }
 </style>

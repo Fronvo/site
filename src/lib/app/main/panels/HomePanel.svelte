@@ -14,7 +14,9 @@
 
     onMount(async () => {
         // Don't reload posts
-        !$homePosts && (await loadHomePosts());
+        setTimeout(async () => {
+            !$homePosts && (await loadHomePosts());
+        }, 500);
     });
 </script>
 

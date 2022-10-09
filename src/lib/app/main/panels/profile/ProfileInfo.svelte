@@ -110,7 +110,7 @@
             draggable={false}
         />
 
-        <h1 id={$userData.isAdmin ? 'admin-name' : 'username'}>
+        <h1 id="username">
             {$userData.username}
         </h1>
 
@@ -188,15 +188,6 @@
         margin-right: 10px;
         margin-left: 10px;
         color: var(--profile_info_color);
-        text-align: center;
-    }
-
-    .info-container #admin-name {
-        font-size: 3rem;
-        margin: 0;
-        margin-right: 10px;
-        margin-left: 10px;
-        color: turquoise;
         text-align: center;
     }
 

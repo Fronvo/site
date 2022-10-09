@@ -2,12 +2,17 @@
     import { goto } from '$app/navigation';
 
     import type { Community } from 'interfaces/app/communities';
+    import CreatePost from 'src/lib/svgs/CreatePost.svelte';
+    import DisableProfile from 'src/lib/svgs/DisableProfile.svelte';
+    import EditProfile from 'src/lib/svgs/EditProfile.svelte';
+    import FindProfiles from 'src/lib/svgs/FindProfiles.svelte';
+    import Follow from 'src/lib/svgs/Follow.svelte';
+    import Logout from 'src/lib/svgs/Logout.svelte';
     import {
         joinedCommunity,
         ourProfileData,
         targetCommunityData,
     } from 'stores/app/communities';
-    import { homePosts } from 'stores/app/home';
     import { followModalForFollowing, followModalInfo } from 'stores/app/main';
     import { profileLoadingFinished, userData } from 'stores/app/profile';
     import { socket } from 'stores/global';
@@ -15,10 +20,8 @@
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
     import { ModalTypes, PanelTypes } from 'types/app/main';
-    import { fetchUser, showModal, switchPanel } from 'utilities/app/main';
+    import { showModal, switchPanel } from 'utilities/app/main';
 
-    let isInFollowing = false;
-    let isRequesting = false;
     const isAccessible =
         $userData.isFollower || $userData.isSelf || !$userData.isPrivate;
     let userCommunity: Writable<Community> = writable();
@@ -28,12 +31,7 @@
     const unsubscribe = userData.subscribe(async (newProfile) => {
         if (!newProfile) return;
 
-        if (!newProfile.isSelf) {
-            // Update UI follow indicator and function
-            isInFollowing = (await fetchUser()).following.includes(
-                newProfile.profileId
-            );
-        }
+        if (newProfile.isInCommunity) return;
 
         $profileLoadingFinished = true;
     });
@@ -49,10 +47,6 @@
         $followModalInfo = followInfo;
         $followModalForFollowing = forFollowing;
         showModal(ModalTypes.FollowInfo);
-    }
-
-    function showControlCentre(): void {
-        showModal(ModalTypes.ControlCenter);
     }
 
     function formatFollowInfo(followInfo: number): string {
@@ -72,48 +66,6 @@
         }
     }
 
-    function handleFollowProfile(): void {
-        if (isRequesting) return;
-
-        // Block adjacent requests
-        isRequesting = true;
-
-        if (!isInFollowing) {
-            socket.emit(
-                'followProfile',
-                { profileId: $userData.profileId },
-                ({ err }) => {
-                    if (!err) {
-                        reloadProfile();
-                    }
-                }
-            );
-        } else {
-            socket.emit(
-                'unfollowProfile',
-                { profileId: $userData.profileId },
-                ({ err }) => {
-                    if (!err) {
-                        reloadProfile();
-                    }
-                }
-            );
-        }
-
-        async function reloadProfile(): Promise<void> {
-            // Update follow counts
-            $userData = await fetchUser($userData.profileId);
-
-            isRequesting = false;
-
-            // Reset home posts
-            homePosts.set(undefined);
-        }
-
-        // Illusion of no delay
-        isInFollowing = !isInFollowing;
-    }
-
     function loadUserCommunity(): void {
         if ($userData.isInCommunity) {
             socket.emit(
@@ -121,6 +73,8 @@
                 { communityId: $userData.communityId },
                 ({ communityData, err }) => {
                     !err && userCommunity.set(communityData);
+
+                    $profileLoadingFinished = true;
                 }
             );
         }
@@ -144,7 +98,7 @@
 </script>
 
 {#if $profileLoadingFinished}
-    <div class="info-container">
+    <div class="info-container" in:fade={{ duration: 500 }}>
         <!-- Avatar, username -->
 
         <img
@@ -154,22 +108,18 @@
                 : '/svgs/profile/default.svg'}
             alt={`${$userData.username}\'s avatar`}
             draggable={false}
-            in:fade={{ duration: 500 }}
         />
 
-        <h1
-            id={$userData.isAdmin ? 'admin-name' : 'username'}
-            in:fade={{ duration: 500 }}
-        >
+        <h1 id={$userData.isAdmin ? 'admin-name' : 'username'}>
             {$userData.username}
         </h1>
 
-        <h1 id="bio" in:fade={{ duration: 500 }}>
+        <h1 id="bio">
             {isAccessible ? $userData.bio : ''}
         </h1>
 
         {#if $userCommunity}
-            <div class="community-container" in:fade={{ duration: 500 }}>
+            <div class="community-container">
                 <img
                     id="icon"
                     src={$userCommunity.icon
@@ -185,7 +135,7 @@
         {/if}
 
         <!-- Follow $userData -->
-        <div class="follow-container" in:fade={{ delay: 200, duration: 500 }}>
+        <div class="follow-container">
             <h1 on:click={() => showFollowInfo($userData.following, true)}>
                 <span>{formatFollowInfo($userData.following.length)}</span> following
             </h1>
@@ -195,15 +145,18 @@
             </h1>
         </div>
 
-        <div class="options-container" in:fade={{ delay: 300, duration: 500 }}>
-            {#if $userData.isSelf || $ourProfileData.isAdmin}
-                <button on:click={showControlCentre}>Control center</button>
+        <div class="options-container">
+            {#if $userData.isSelf}
+                <EditProfile />
+                <CreatePost />
+                <FindProfiles />
+                <Logout />
+            {:else}
+                <Follow />
             {/if}
 
-            {#if !$userData.isSelf}
-                <button on:click={handleFollowProfile}
-                    >{isInFollowing ? 'Unfollow' : 'Follow'}</button
-                >
+            {#if !$userData.isSelf && $ourProfileData.isAdmin}
+                <DisableProfile />
             {/if}
         </div>
     </div>
@@ -321,21 +274,7 @@
     }
 
     .options-container {
-        display: flex;
-        justify-content: space-evenly;
-        align-items: center;
-        flex-direction: row;
-        flex-wrap: wrap;
         margin-top: 10px;
-    }
-
-    .options-container button {
-        font-size: 1.7rem;
-        margin-right: 10px;
-    }
-
-    .options-container button:nth-last-child(1) {
-        margin-right: 0;
     }
 
     @media screen and (max-width: 720px) {
@@ -373,11 +312,6 @@
         .follow-container h1:first-child {
             margin-right: 15px;
         }
-
-        .options-container button {
-            font-size: 1.6rem;
-            cursor: default;
-        }
     }
 
     @media screen and (max-width: 520px) {
@@ -413,11 +347,6 @@
 
         .follow-container h1:first-child {
             margin-right: 10px;
-        }
-
-        .options-container button {
-            font-size: 1.2rem;
-            cursor: default;
         }
     }
 </style>

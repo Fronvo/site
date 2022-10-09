@@ -1,6 +1,5 @@
 <script lang="ts">
     import { PanelTypes } from 'types/app/main';
-    import { currentPanelId } from 'stores/app/main';
     import { quadIn } from 'svelte/easing';
     import { draw } from 'svelte/transition';
     import { switchPanel } from 'utilities/app/main';

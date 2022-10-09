@@ -15,7 +15,6 @@ export enum ModalTypes {
     CreatePost,
     ViewPost,
     FindProfiles,
-    ControlCenter,
     MaxOnlineTime,
     CreateCommunity,
     JoinCommunity,

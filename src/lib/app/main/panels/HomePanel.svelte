@@ -22,8 +22,6 @@
     {#if $homePosts}
         <h1 id="latest-posts">Latest posts</h1>
 
-        <hr in:fade={{ duration: 250, delay: 400 }} />
-
         <HomePosts />
 
         <HomeGrass />
@@ -54,11 +52,6 @@
         user-select: none;
     }
 
-    hr {
-        width: 150px;
-        margin-top: 15px;
-    }
-
     @media screen and (max-width: 720px) {
         .home-container {
             margin-left: 0;
@@ -69,20 +62,12 @@
             font-size: 2.7rem;
             margin: 0;
         }
-
-        hr {
-            margin-top: 10px;
-        }
     }
 
     @media screen and (max-width: 520px) {
         .home-container #latest-posts {
             font-size: 2.3rem;
             margin: 0;
-        }
-
-        hr {
-            margin-top: 5px;
         }
     }
 </style>

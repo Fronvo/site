@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import { ourProfileData } from 'src/stores/app/communities';
     import { profileLoadingFinished, userData } from 'src/stores/app/profile';
     import { loadProfilePosts } from 'src/utilities/app/profile';
@@ -13,6 +14,10 @@
             $currentPanelId == PanelTypes.Profile &&
             $userData.profileId != $ourProfileData.profileId
         ) {
+            goto(`/profile/${$ourProfileData.profileId}`, {
+                replaceState: true,
+            });
+
             $profileLoadingFinished = false;
 
             $userData = await fetchUser();

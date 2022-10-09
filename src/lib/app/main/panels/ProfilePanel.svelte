@@ -10,7 +10,6 @@
         userPosts,
     } from 'stores/app/profile';
     import { onDestroy, onMount } from 'svelte';
-    import { fade } from 'svelte/transition';
     import { fetchUser } from 'utilities/app/main';
     import { loadProfilePosts } from 'utilities/app/profile';
 
@@ -66,7 +65,7 @@
     });
 </script>
 
-<div class="profile-container" in:fade={{ duration: 300, delay: 200 }}>
+<div class="profile-container">
     <!-- Hot updates in dev -->
     {#if $userData && $userPosts}
         <ProfileInfo />

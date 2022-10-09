@@ -4,7 +4,6 @@
 
 import CommunityOptionsDropdown from '$lib/app/main/dropdowns/CommunityOptionsDropdown.svelte';
 import CommunityMembers from '$lib/app/main/modals/CommunityMembers.svelte';
-import ControlCentreModal from '$lib/app/main/modals/ControlCenterModal.svelte';
 import CreateCommunityModal from '$lib/app/main/modals/CreateCommunityModal.svelte';
 import CreatePostModal from '$lib/app/main/modals/CreatePostModal.svelte';
 import EditCommunityMemberModal from '$lib/app/main/modals/EditCommunityMemberModal.svelte';
@@ -40,7 +39,6 @@ export const modals = [
     CreatePostModal,
     PostModal,
     FindProfilesModal,
-    ControlCentreModal,
     MaxOnlineTimeModal,
     CreateCommunityModal,
     JoinCommunityModal,

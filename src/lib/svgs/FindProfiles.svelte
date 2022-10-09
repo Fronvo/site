@@ -1,8 +1,8 @@
 <script lang="ts">
+    import { ModalTypes } from 'types/app/main';
     import { quadIn } from 'svelte/easing';
     import { draw } from 'svelte/transition';
-    import { PanelTypes } from 'types/app/main';
-    import { switchPanel } from 'utilities/app/main';
+    import { showModal } from 'utilities/app/main';
 </script>
 
 <svg
@@ -11,32 +11,32 @@
     viewBox="0 0 48 48"
     width="48"
     height="48"
-    on:click={() => switchPanel(PanelTypes.Communities)}
+    on:click={() => showModal(ModalTypes.FindProfiles)}
     ><defs
         ><linearGradient
-            id="COMMUNITIES"
+            id="FIND"
             gradientUnits="userSpaceOnUse"
         /><linearGradient
-            id="communities"
+            id="find"
             x1="47"
             y1="9.6"
             x2="1"
             y2="38.4"
-            href="#COMMUNITIES"
+            href="#FIND"
             ><stop stop-color="#b98bff" /><stop
                 offset="1"
                 stop-color="#710fff"
             /></linearGradient
         ></defs
     ><style>
-        .communities {
-            fill: url(#communities);
+        .find {
+            fill: url(#find);
             stroke-width: 0;
         }
     </style><path
         in:draw={{ duration: 1000, easing: quadIn }}
-        class="communities"
-        d="M11.5 42q-3.15 0-5.325-2.175Q4 37.65 4 34.5q0-3.15 2.175-5.325Q8.35 27 11.5 27q3.15 0 5.325 2.175Q19 31.35 19 34.5q0 3.15-2.175 5.325Q14.65 42 11.5 42Zm25.05 0q-3.15 0-5.325-2.175Q29.05 37.65 29.05 34.5q0-3.15 2.175-5.325Q33.4 27 36.55 27q3.15 0 5.325 2.175Q44.05 31.35 44.05 34.5q0 3.15-2.175 5.325Q39.7 42 36.55 42ZM11.5 39q1.85 0 3.175-1.325Q16 36.35 16 34.5q0-1.85-1.325-3.175Q13.35 30 11.5 30q-1.85 0-3.175 1.325Q7 32.65 7 34.5q0 1.85 1.325 3.175Q9.65 39 11.5 39Zm25.05 0q1.85 0 3.175-1.325Q41.05 36.35 41.05 34.5q0-1.85-1.325-3.175Q38.4 30 36.55 30q-1.85 0-3.175 1.325Q32.05 32.65 32.05 34.5q0 1.85 1.325 3.175Q34.7 39 36.55 39Zm-12.5-18.05q-3.15 0-5.325-2.175Q16.55 16.6 16.55 13.45q0-3.15 2.175-5.325Q20.9 5.95 24.05 5.95q3.15 0 5.325 2.175Q31.55 10.3 31.55 13.45q0 3.15-2.175 5.325Q27.2 20.95 24.05 20.95Zm0-3q1.85 0 3.175-1.325Q28.55 15.3 28.55 13.45q0-1.85-1.325-3.175Q25.9 8.95 24.05 8.95q-1.85 0-3.175 1.325Q19.55 11.6 19.55 13.45q0 1.85 1.325 3.175Q22.2 17.95 24.05 17.95Zm0-4.5Zm12.5 21.05Zm-25.05 0Z"
+        class="find"
+        d="M39.8 41.95 26.65 28.8q-1.5 1.3-3.5 2.025-2 .725-4.25.725-5.4 0-9.15-3.75T6 18.75q0-5.3 3.75-9.05 3.75-3.75 9.1-3.75 5.3 0 9.025 3.75 3.725 3.75 3.725 9.05 0 2.15-.7 4.15-.7 2-2.1 3.75L42 39.75Zm-20.95-13.4q4.05 0 6.9-2.875Q28.6 22.8 28.6 18.75t-2.85-6.925Q22.9 8.95 18.85 8.95q-4.1 0-6.975 2.875T9 18.75q0 4.05 2.875 6.925t6.975 2.875Z"
     /></svg
 >
 
@@ -53,7 +53,6 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        margin-bottom: 15px;
     }
 
     svg:hover {

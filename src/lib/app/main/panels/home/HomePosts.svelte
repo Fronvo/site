@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { homeLoadDelay, homePosts } from 'stores/app/home';
+    import { homePosts } from 'stores/app/home';
     import { postModalForHome, postModalInfo } from 'stores/app/main';
     import Time from 'svelte-time';
     import { fade } from 'svelte/transition';
@@ -7,11 +7,6 @@
     import { showModal } from 'utilities/app/main';
 
     const posts = homePosts;
-    let showPosts = false;
-
-    $: setTimeout(() => {
-        showPosts = true;
-    }, homeLoadDelay);
 
     function viewPost(postIndex: number): void {
         $postModalInfo = $homePosts[postIndex];
@@ -20,12 +15,12 @@
     }
 </script>
 
-<div class="posts-container" in:fade={{ delay: 700 }}>
+<div class="posts-container" in:fade={{ delay: 400 }}>
     {#if $posts.length == 0}
-        <h1 in:fade={{ duration: 500, delay: 700 }} id="empty-text">
+        <h1 in:fade={{ duration: 500, delay: 400 }} id="empty-text">
             No posts, yet
         </h1>
-    {:else if showPosts}
+    {:else}
         {#each $posts as { post, profileData }, i}
             <div
                 on:click={() => viewPost(i)}

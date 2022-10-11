@@ -34,7 +34,7 @@
         justify-content: center;
         align-items: center;
         transition: 250ms all;
-        z-index: 2;
+        z-index: 3;
         background: var(--modal_bg_color);
     }
 </style>

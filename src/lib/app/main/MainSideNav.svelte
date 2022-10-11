@@ -35,7 +35,7 @@
     }
 
     hr {
-        border: 1px solid var(--text_color);
+        border: 1px solid var(--svg_stroke);
     }
 
     .side-nav-container {

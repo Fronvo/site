@@ -1,6 +1,4 @@
 <script lang="ts">
-    import { quadIn } from 'svelte/easing';
-    import { draw } from 'svelte/transition';
     import { socket } from 'src/stores/global';
     import { removeKey } from 'src/utilities/global';
     import { accountRegisterVerifyTab } from 'src/stores/app/account';
@@ -71,7 +69,6 @@
             stroke-width: 0;
         }
     </style><path
-        in:draw={{ duration: 1000, easing: quadIn }}
         class="logout"
         d="M9 42q-1.2 0-2.1-.9Q6 40.2 6 39V9q0-1.2.9-2.1Q7.8 6 9 6h14.55v3H9v30h14.55v3Zm24.3-9.25-2.15-2.15 5.1-5.1h-17.5v-3h17.4l-5.1-5.1 2.15-2.15 8.8 8.8Z"
     /></svg
@@ -79,11 +76,8 @@
 
 <style>
     svg {
-        fill: none;
-        stroke: var(--svg_stroke);
-        stroke-width: 2px;
         cursor: pointer;
-        transition: 100ms all;
+        transition: 100ms transform;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -102,9 +96,6 @@
 
     @media screen and (max-width: 720px) {
         svg {
-            margin-bottom: 0;
-            margin-top: 0;
-            margin-right: 20px;
             cursor: default;
         }
 
@@ -117,7 +108,6 @@
         svg {
             width: 40px;
             height: 40px;
-            margin-right: 10px;
         }
     }
 </style>

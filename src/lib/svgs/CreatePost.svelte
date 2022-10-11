@@ -1,7 +1,5 @@
 <script lang="ts">
     import { ModalTypes } from 'types/app/main';
-    import { quadIn } from 'svelte/easing';
-    import { draw } from 'svelte/transition';
     import { showModal } from 'utilities/app/main';
 </script>
 
@@ -31,10 +29,8 @@
     ><style>
         .create {
             fill: url(#create);
-            stroke-width: 0;
         }
     </style><path
-        in:draw={{ duration: 1000, easing: quadIn }}
         class="create"
         d="M25.5 29.1h3v-6.6h6.6v-3h-6.6v-6.6h-3v6.6h-6.6v3h6.6ZM13 38q-1.2 0-2.1-.9-.9-.9-.9-2.1V7q0-1.2.9-2.1.9-.9 2.1-.9h28q1.2 0 2.1.9.9.9.9 2.1v28q0 1.2-.9 2.1-.9.9-2.1.9Zm0-3h28V7H13v28Zm-6 9q-1.2 0-2.1-.9Q4 42.2 4 41V10h3v31h31v3Zm6-37v28V7Z"
     /></svg
@@ -42,11 +38,8 @@
 
 <style>
     svg {
-        fill: none;
-        stroke: var(--svg_stroke);
-        stroke-width: 2px;
         cursor: pointer;
-        transition: 100ms all;
+        transition: 100ms transform;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -65,9 +58,6 @@
 
     @media screen and (max-width: 720px) {
         svg {
-            margin-bottom: 0;
-            margin-top: 0;
-            margin-right: 20px;
             cursor: default;
         }
 
@@ -80,7 +70,6 @@
         svg {
             width: 40px;
             height: 40px;
-            margin-right: 10px;
         }
     }
 </style>

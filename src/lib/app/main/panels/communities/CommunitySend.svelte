@@ -123,11 +123,11 @@
         }
 
         .reply-container #reply-name {
-            font-size: 1.6rem;
+            font-size: 1.7rem;
         }
     }
 
-    @media screen and (max-width: 720px) {
+    @media screen and (max-width: 520px) {
         .send-container {
             bottom: 85px;
             width: 70%;
@@ -139,7 +139,7 @@
         }
 
         .reply-container #reply-name {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
         }
     }
 </style>

@@ -1,6 +1,4 @@
 <script lang="ts">
-    import { quadIn } from 'svelte/easing';
-    import { draw } from 'svelte/transition';
     import { fetchUser } from 'utilities/app/main';
     import { userData } from 'src/stores/app/profile';
     import { socket } from 'src/stores/global';
@@ -82,7 +80,6 @@
             stroke-width: 0;
         }
     </style><path
-        in:draw={{ duration: 1000, easing: quadIn }}
         class="follow"
         d={!isFollowed
             ? 'M36.45 27.9v-6.45H30V18.6h6.45v-6.45h2.9v6.45h6.45v2.85h-6.45v6.45Zm-18.4-3.95q-3.3 0-5.35-2.025T10.65 16.6q0-3.3 2.05-5.35T18 9.2q3.3 0 5.35 2.05t2.05 5.35q0 3.25-2.05 5.3t-5.3 2.05Zm-15.8 15.7V35.1q0-1.7.875-3.1Q4 30.6 5.6 29.95q3.75-1.65 6.6-2.325 2.85-.675 5.8-.675 3 0 5.825.675T30.4 29.9q1.65.75 2.525 2.125t.875 3.125v4.5Zm2.9-2.85h25.8v-1.65q0-.85-.45-1.575T29.3 32.5q-3.55-1.65-5.975-2.175Q20.9 29.8 18.05 29.8q-2.9 0-5.325.525Q10.3 30.85 6.75 32.5q-.75.35-1.175 1.075-.425.725-.425 1.525Zm12.9-15.7q1.95 0 3.225-1.275Q22.55 18.55 22.55 16.6q0-1.95-1.275-3.225Q20 12.1 18.05 12.1q-1.95 0-3.225 1.275Q13.55 14.65 13.55 16.6q0 1.95 1.275 3.225Q16.1 21.1 18.05 21.1Zm0-4.5Zm0 20.2Z'
@@ -92,11 +89,8 @@
 
 <style>
     svg {
-        fill: none;
-        stroke: var(--svg_stroke);
-        stroke-width: 2px;
         cursor: pointer;
-        transition: 100ms all;
+        transition: 100ms transform;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -115,9 +109,6 @@
 
     @media screen and (max-width: 720px) {
         svg {
-            margin-bottom: 0;
-            margin-top: 0;
-            margin-right: 20px;
             cursor: default;
         }
 
@@ -130,7 +121,6 @@
         svg {
             width: 40px;
             height: 40px;
-            margin-right: 10px;
         }
     }
 </style>

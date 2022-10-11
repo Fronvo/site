@@ -1,34 +1,45 @@
 <script lang="ts">
+    import Abort from 'src/lib/svgs/Abort.svelte';
     import {
         maxChatAnimDelay,
+        replyingTo,
+        replyingToId,
         sendContent,
         targetSendHeight,
     } from 'stores/app/communities';
     import { onDestroy, onMount } from 'svelte';
     import type { Unsubscriber } from 'svelte/store';
-    import { fly } from 'svelte/transition';
+    import { fade, fly } from 'svelte/transition';
 
     let unsubscribe: Unsubscriber;
+
+    function abortReply(): void {
+        $replyingTo = undefined;
+        $replyingToId = undefined;
+    }
 
     onMount(() => {
         unsubscribe = sendContent.subscribe((newContent) => {
             // Multiline textarea should have adjustable height
             const contentInput = document.getElementById('textarea-content');
 
-            let targetHeight: string;
+            let targetHeight: number;
 
             // For empty text
             if (
                 !newContent ||
                 (newContent.length < 40 && newContent.indexOf('\n') == -1)
             ) {
-                targetHeight = '55px';
+                targetHeight = $replyingTo ? 70 : 55;
             } else {
-                targetHeight = Math.min(contentInput.scrollHeight, 300) + 'px';
+                targetHeight = Math.min(
+                    contentInput.scrollHeight,
+                    $replyingTo ? 350 : 300
+                );
             }
 
             // Also add margin for the messages to be visible
-            contentInput.style.height = targetHeight;
+            contentInput.style.height = `${targetHeight}px`;
 
             // Share the value
             $targetSendHeight = targetHeight;
@@ -44,6 +55,13 @@
     class="send-container"
     in:fly={{ y: 150, duration: $maxChatAnimDelay + 200 }}
 >
+    {#if $replyingTo}
+        <div class="reply-container" in:fade={{ duration: 300 }}>
+            <Abort callback={abortReply} />
+            <h1 id="reply-name">Replying to <span>{$replyingTo}</span></h1>
+        </div>
+    {/if}
+
     <textarea id="textarea-content" bind:value={$sendContent} maxlength={512} />
 </div>
 
@@ -75,6 +93,22 @@
         overflow: auto;
     }
 
+    .reply-container {
+        display: flex;
+        align-items: center;
+    }
+
+    .reply-container #reply-name {
+        font-size: 1.9rem;
+        margin: 0;
+        padding: 10px;
+        padding-left: 5px;
+    }
+
+    .reply-container #reply-name span {
+        color: var(--profile_info_color);
+    }
+
     @media screen and (max-width: 720px) {
         .send-container {
             bottom: 110px;
@@ -87,6 +121,10 @@
         .send-container textarea {
             font-size: 1.9rem;
         }
+
+        .reply-container #reply-name {
+            font-size: 1.6rem;
+        }
     }
 
     @media screen and (max-width: 720px) {
@@ -98,6 +136,10 @@
         .send-container textarea {
             font-size: 1.4rem;
             min-height: 45px;
+        }
+
+        .reply-container #reply-name {
+            font-size: 1.4rem;
         }
     }
 </style>

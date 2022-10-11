@@ -21,6 +21,8 @@ export interface CommunityMessage {
     ownerId: string;
     content: string;
     creationDate: string;
+    isReply: boolean;
+    replyId: string;
 }
 
 export interface CommunityMessageFinal extends CommunityMessage {

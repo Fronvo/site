@@ -1,6 +1,9 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
-    import type { CommunityMessageFinal } from 'interfaces/app/communities';
+    import type {
+        CommunityMessage,
+        CommunityMessageFinal,
+    } from 'interfaces/app/communities';
     import type { FronvoAccount } from 'interfaces/app/main';
     import DeleteChatOption from '$lib/svgs/DeleteChatOption.svelte';
     import { socket } from 'stores/global';
@@ -11,6 +14,8 @@
         joinedCommunity,
         maxChatAnimDelay,
         ourProfileData,
+        replyingTo,
+        replyingToId,
         sendContent,
         targetCommunity,
         targetCommunityData,
@@ -24,6 +29,7 @@
     import { fly, scale } from 'svelte/transition';
     import { fetchUser } from 'utilities/app/main';
     import linkifyHtml from 'linkify-html';
+    import Reply from 'src/lib/svgs/Reply.svelte';
 
     let animationsFinished = false;
 
@@ -41,6 +47,16 @@
 
             if (targetAccount.profileId == profileId) {
                 return targetAccount;
+            }
+        }
+    }
+
+    function findMessageById(messageId: string): CommunityMessage | undefined {
+        for (const messageIndex in $targetCommunityMessages) {
+            const targetMessage = $targetCommunityMessages[messageIndex];
+
+            if (targetMessage.messageId == messageId) {
+                return targetMessage;
             }
         }
     }
@@ -105,7 +121,14 @@
     }
 
     function sendMessage(): void {
-        socket.emit('sendCommunityMessage', { message: $sendContent });
+        socket.emit('sendCommunityMessage', {
+            message: $sendContent,
+            replyId: $replyingToId,
+        });
+
+        // Reset reply info
+        $replyingTo = undefined;
+        $replyingToId = undefined;
     }
 
     function deleteMessage(messageIndex: number): void {
@@ -128,6 +151,14 @@
         }
 
         loadMessages();
+    }
+
+    function replyMessage(messageIndex: number): void {
+        // Update reply info
+        $replyingTo = findCachedData(
+            finalizedMessages[messageIndex].ownerId
+        ).username;
+        $replyingToId = finalizedMessages[messageIndex].messageId;
     }
 
     function attachNewMessageListener(): void {
@@ -292,7 +323,9 @@
                 'chat-container'
             )[0] as HTMLDivElement;
 
-            chatContainer.style.marginBottom = newHeight;
+            chatContainer.style.marginBottom = `${
+                $replyingTo ? newHeight + 50 : newHeight
+            }px`;
         });
 
         // Efficient send
@@ -318,7 +351,7 @@
             Welcome to {$joinedCommunity.name}'s chat room!
         </h1>
     {:else if finalizedMessages}
-        {#each finalizedMessages as { messageId, profileData, content, creationDate }, i}
+        {#each finalizedMessages as { messageId, profileData, content, creationDate, isReply, replyId }, i}
             <div
                 class="message-container"
                 in:fly={{
@@ -347,12 +380,35 @@
                     <div class="menu-container">
                         <!-- Only the community owner can delete messages -->
                         {#if $joinedCommunity?.ownerId == $ourProfileData.profileId}
+                            <Reply callback={() => replyMessage(i)} />
+
                             <DeleteChatOption
                                 callback={() => deleteMessage(i)}
                             />
                         {/if}
                     </div>
                 </div>
+
+                {#if isReply}
+                    <div class="reply-container">
+                        {#if findMessageById(replyId)}
+                            <h1 id="reply-name">
+                                Replying to <span
+                                    >{findCachedData(
+                                        findMessageById(replyId).ownerId
+                                    ).username}</span
+                                >
+                            </h1>
+                            <h1 id="reply-message">
+                                {findMessageById(replyId).content}
+                            </h1>
+                        {:else}
+                            <h1 id="reply-name">
+                                Replying to <span>a deleted message</span>
+                            </h1>
+                        {/if}
+                    </div>
+                {/if}
 
                 <h1 id="content" class={messageId}>
                     {content}
@@ -459,6 +515,27 @@
         transition: 250ms;
     }
 
+    .reply-container {
+        margin-top: 5px;
+        margin-bottom: 5px;
+    }
+
+    .reply-container #reply-name {
+        font-size: 1.6rem;
+        margin: 0;
+    }
+
+    .reply-container #reply-name span {
+        color: var(--profile_info_color);
+    }
+
+    .reply-container #reply-message {
+        color: var(--profile_info_color);
+        margin: 0;
+        font-size: 1.3rem;
+        margin-left: 10px;
+    }
+
     .message-container:hover .message-info-container .menu-container {
         opacity: 1;
     }
@@ -507,6 +584,14 @@
             font-size: 1.7rem;
         }
 
+        .reply-container #reply-name {
+            font-size: 1.4rem;
+        }
+
+        .reply-container #reply-message {
+            font-size: 1.2rem;
+        }
+
         .message-container #content {
             font-size: 1.5rem;
         }
@@ -532,6 +617,14 @@
 
         .message-container #username {
             font-size: 1.5rem;
+        }
+
+        .reply-container #reply-name {
+            font-size: 1.3rem;
+        }
+
+        .reply-container #reply-message {
+            font-size: 1.1rem;
         }
 
         .message-container #content {

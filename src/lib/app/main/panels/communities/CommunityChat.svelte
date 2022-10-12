@@ -378,10 +378,13 @@
                     <h1 id="username">{profileData.username}</h1>
 
                     <div class="menu-container">
+                        <!-- Anyone can reply, if the chat request is accepted -->
+                        {#if $chatRequestAccepted}
+                            <Reply callback={() => replyMessage(i)} />
+                        {/if}
+
                         <!-- Only the community owner can delete messages -->
                         {#if $joinedCommunity?.ownerId == $ourProfileData.profileId}
-                            <Reply callback={() => replyMessage(i)} />
-
                             <DeleteChatOption
                                 callback={() => deleteMessage(i)}
                             />

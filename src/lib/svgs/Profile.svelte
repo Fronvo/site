@@ -1,13 +1,18 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
     import { ourProfileData } from 'src/stores/app/communities';
-    import { profileLoadingFinished, userData } from 'src/stores/app/profile';
+    import {
+        profileLoadingFinished,
+        userCommunity,
+        userData,
+    } from 'src/stores/app/profile';
+    import { socket } from 'src/stores/global';
     import { loadProfilePosts } from 'src/utilities/app/profile';
     import { currentPanelId } from 'stores/app/main';
     import { quadIn } from 'svelte/easing';
     import { draw } from 'svelte/transition';
     import { PanelTypes } from 'types/app/main';
-    import { fetchUser, switchPanel } from 'utilities/app/main';
+    import { switchPanel } from 'utilities/app/main';
 
     async function decideProfileAction(): Promise<void> {
         if (
@@ -17,13 +22,24 @@
             goto(`/profile/${$ourProfileData.profileId}`, {
                 replaceState: true,
             });
-
             $profileLoadingFinished = false;
+            $userData = $ourProfileData;
 
-            $userData = await fetchUser();
-            await loadProfilePosts($userData.profileId);
+            await loadProfilePosts($ourProfileData.profileId);
 
-            $profileLoadingFinished = true;
+            if ($ourProfileData.isInCommunity) {
+                socket.emit(
+                    'fetchCommunityData',
+                    { communityId: $userData.communityId },
+                    ({ communityData, err }) => {
+                        !err && userCommunity.set(communityData);
+
+                        $profileLoadingFinished = true;
+                    }
+                );
+            } else {
+                $profileLoadingFinished = true;
+            }
         } else {
             switchPanel(PanelTypes.Profile);
         }

@@ -1,7 +1,5 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
-
-    import type { Community } from 'interfaces/app/communities';
     import CreatePost from 'src/lib/svgs/CreatePost.svelte';
     import DisableProfile from 'src/lib/svgs/DisableProfile.svelte';
     import EditProfile from 'src/lib/svgs/EditProfile.svelte';
@@ -14,17 +12,19 @@
         targetCommunityData,
     } from 'stores/app/communities';
     import { followModalForFollowing, followModalInfo } from 'stores/app/main';
-    import { profileLoadingFinished, userData } from 'stores/app/profile';
+    import {
+        profileLoadingFinished,
+        userCommunity,
+        userData,
+    } from 'stores/app/profile';
     import { socket } from 'stores/global';
     import { onDestroy } from 'svelte';
-    import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
     import { ModalTypes, PanelTypes } from 'types/app/main';
     import { showModal, switchPanel } from 'utilities/app/main';
 
     const isAccessible =
         $userData.isFollower || $userData.isSelf || !$userData.isPrivate;
-    let userCommunity: Writable<Community> = writable();
 
     // Once targetProfile changes to visit a new profile from this panel directly
     // update UI
@@ -37,6 +37,8 @@
     });
 
     onDestroy(() => {
+        $userCommunity = undefined;
+
         // Prevent memory leak
         unsubscribe();
     });

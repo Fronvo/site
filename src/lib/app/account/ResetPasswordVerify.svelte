@@ -68,6 +68,8 @@
                 padding: '10px 10px 10px 10px',
             }}
         />
+
+        <button on:click={reset}>Reset password</button>
     </div>
 </Center>
 
@@ -99,6 +101,11 @@
         width: 100%;
     }
 
+    .reset-container button {
+        font-size: 2rem;
+        margin-top: 20px;
+    }
+
     @media screen and (max-width: 720px) {
         .reset-container {
             width: 450px;
@@ -114,6 +121,10 @@
 
         .reset-container #error-header {
             font-size: 1.7rem;
+        }
+
+        .reset-container button {
+            font-size: 1.8rem;
         }
     }
 
@@ -132,6 +143,10 @@
 
         .reset-container #error-header {
             font-size: 1.4rem;
+        }
+
+        .reset-container button {
+            font-size: 1.5rem;
         }
     }
 </style>

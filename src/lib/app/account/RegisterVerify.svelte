@@ -70,6 +70,8 @@
                 padding: '10px 10px 10px 10px',
             }}
         />
+
+        <button on:click={verify}>Verify</button>
     </div>
 </Center>
 
@@ -101,6 +103,11 @@
         width: 100%;
     }
 
+    .verify-container button {
+        font-size: 2rem;
+        margin-top: 20px;
+    }
+
     @media screen and (max-width: 720px) {
         .verify-container {
             width: 450px;
@@ -116,6 +123,10 @@
 
         .verify-container #error-header {
             font-size: 1.7rem;
+        }
+
+        .verify-container button {
+            font-size: 1.8rem;
         }
     }
 
@@ -134,6 +145,10 @@
 
         .verify-container #error-header {
             font-size: 1.4rem;
+        }
+
+        .verify-container button {
+            font-size: 1.5rem;
         }
     }
 </style>

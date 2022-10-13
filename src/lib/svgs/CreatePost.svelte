@@ -39,7 +39,7 @@
 <style>
     svg {
         cursor: pointer;
-        transition: 100ms transform;
+        transition: 250ms all;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;

@@ -1,6 +1,5 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
-    import Delete from '$lib/svgs/Delete.svelte';
     import type { HomePost } from 'interfaces/all';
     import type { AccountPost, FronvoAccount } from 'interfaces/all';
     import { dismissModal } from 'utilities/main';

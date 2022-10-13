@@ -14,28 +14,22 @@
     on:click={() => switchPanel(PanelTypes.Home)}
     ><defs
         ><linearGradient
-            id="HOME"
+            id="SVG"
             gradientUnits="userSpaceOnUse"
-        /><linearGradient
-            id="home"
-            x1="47"
-            y1="9.6"
-            x2="1"
-            y2="38.4"
-            href="#HOME"
+        /><linearGradient id="svg" x1="47" y1="9.6" x2="1" y2="38.4" href="#SVG"
             ><stop stop-color="#b98bff" /><stop
                 offset="1"
                 stop-color="#710fff"
             /></linearGradient
         ></defs
     ><style>
-        .home {
-            fill: url(#home);
+        .svg {
+            fill: url(#svg);
             stroke-width: 0;
         }
     </style><path
         in:draw={{ duration: 1000, easing: quadIn }}
-        class="home"
+        class="svg"
         d="M8 42V21.95l-4.2 3.2-1.8-2.4 6-4.55v-5.7h3v3.4L24 6l22 16.8-1.8 2.35-4.2-3.2V42Zm3-3h11.5v-8h3v8H37V19.65l-13-9.9-13 9.9ZM8 10q0-2.3 1.625-3.9T13.5 4.5q1.05 0 1.775-.75Q16 3 16 2h3q0 2.25-1.6 3.875T13.5 7.5q-1 0-1.75.725T11 10Zm3 29h26-26Z"
     /></svg
 >

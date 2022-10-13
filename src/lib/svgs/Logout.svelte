@@ -47,29 +47,8 @@
     width="48"
     height="48"
     on:click={logout}
-    ><defs
-        ><linearGradient
-            id="LOGOUT"
-            gradientUnits="userSpaceOnUse"
-        /><linearGradient
-            id="logout"
-            x1="47"
-            y1="9.6"
-            x2="1"
-            y2="38.4"
-            href="#LOGOUT"
-            ><stop stop-color="#b98bff" /><stop
-                offset="1"
-                stop-color="#710fff"
-            /></linearGradient
-        ></defs
-    ><style>
-        .logout {
-            fill: url(#logout);
-            stroke-width: 0;
-        }
-    </style><path
-        class="logout"
+    ><path
+        class="svg"
         d="M9 42q-1.2 0-2.1-.9Q6 40.2 6 39V9q0-1.2.9-2.1Q7.8 6 9 6h14.55v3H9v30h14.55v3Zm24.3-9.25-2.15-2.15 5.1-5.1h-17.5v-3h17.4l-5.1-5.1 2.15-2.15 8.8 8.8Z"
     /></svg
 >

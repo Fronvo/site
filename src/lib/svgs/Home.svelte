@@ -16,8 +16,16 @@
         ><linearGradient
             id="SVG"
             gradientUnits="userSpaceOnUse"
-        /><linearGradient id="svg" x1="47" y1="9.6" x2="1" y2="38.4" href="#SVG"
-            ><stop stop-color="#b98bff" /><stop
+        /><linearGradient
+            id="svg"
+            x1="47"
+            y1="9.6"
+            x2="1"
+            y2="38.4"
+            href="#SVG"
+        >
+            <!-- TODO: Change according to theming -->
+            <stop stop-color="#b98bff" /><stop
                 offset="1"
                 stop-color="#710fff"
             /></linearGradient

@@ -6,9 +6,8 @@
         accountRegisterVerifyTab,
     } from 'stores/account';
     import { socket } from 'stores/all';
-    import { onMount } from 'svelte';
+    import { onMount, onDestroy } from 'svelte';
     import { fade, scale } from 'svelte/transition';
-    import { setEnterHandle } from 'utilities/global';
 
     let email: string;
     let password: string;
@@ -19,6 +18,21 @@
     let isErrorVisible = false;
     let errorMessage: string;
 
+    function keyListener(ev: KeyboardEvent): void {
+        if (ev.key == 'Enter') {
+            register();
+        }
+
+        if (ev.ctrlKey || ev.altKey) return;
+
+        if (!email) {
+            emailInput.focus();
+            return;
+        }
+
+        passwordInput.focus();
+    }
+
     onMount(() => {
         emailInput = document.getElementById('email-input') as HTMLInputElement;
         passwordInput = document.getElementById(
@@ -28,8 +42,11 @@
             'register-button'
         ) as HTMLButtonElement;
 
-        setEnterHandle(emailInput, registerButton),
-            setEnterHandle(passwordInput, registerButton);
+        document.addEventListener('keypress', keyListener);
+    });
+
+    onDestroy(() => {
+        document.removeEventListener('keypress', keyListener);
     });
 
     function register(): void {

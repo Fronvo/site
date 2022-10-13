@@ -8,9 +8,9 @@
     import { tokenInvalid } from 'stores/all';
     import { loginSucceeded } from 'stores/main';
     import { socket } from 'stores/all';
-    import { onMount } from 'svelte';
+    import { onMount, onDestroy } from 'svelte';
     import { fade, scale } from 'svelte/transition';
-    import { setEnterHandle, setKey } from 'utilities/global';
+    import { setKey } from 'utilities/global';
 
     let email: string;
     let password: string;
@@ -21,6 +21,21 @@
     let isErrorVisible = false;
     let errorMessage: string;
 
+    function keyListener(ev: KeyboardEvent): void {
+        if (ev.key == 'Enter') {
+            login();
+        }
+
+        if (ev.ctrlKey || ev.altKey) return;
+
+        if (!email) {
+            emailInput.focus();
+            return;
+        }
+
+        passwordInput.focus();
+    }
+
     onMount(() => {
         emailInput = document.getElementById('email-input') as HTMLInputElement;
         passwordInput = document.getElementById(
@@ -30,8 +45,11 @@
             'login-button'
         ) as HTMLButtonElement;
 
-        setEnterHandle(emailInput, loginButton);
-        setEnterHandle(passwordInput, loginButton);
+        document.addEventListener('keypress', keyListener);
+    });
+
+    onDestroy(() => {
+        document.removeEventListener('keypress', keyListener);
     });
 
     function login(): void {

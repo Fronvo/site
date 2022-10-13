@@ -6,9 +6,8 @@
         accountResetPasswordVerifyTab,
     } from 'stores/account';
     import { socket } from 'stores/all';
-    import { onMount } from 'svelte';
+    import { onMount, onDestroy } from 'svelte';
     import { fade, scale } from 'svelte/transition';
-    import { setEnterHandle } from 'utilities/global';
 
     let email: string;
     let emailInput: HTMLInputElement;
@@ -17,13 +16,27 @@
     let isErrorVisible = false;
     let errorMessage: string;
 
+    function keyListener(ev: KeyboardEvent): void {
+        if (ev.key == 'Enter') {
+            reset();
+        }
+
+        if (ev.ctrlKey || ev.altKey) return;
+
+        emailInput.focus();
+    }
+
     onMount(() => {
         emailInput = document.getElementById('email-input') as HTMLInputElement;
         resetButton = document.getElementById(
             'reset-button'
         ) as HTMLButtonElement;
 
-        setEnterHandle(emailInput, resetButton);
+        document.addEventListener('keypress', keyListener);
+    });
+
+    onDestroy(() => {
+        document.removeEventListener('keypress', keyListener);
     });
 
     function reset(): void {

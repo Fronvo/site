@@ -1,11 +1,11 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
-    import { dismissModal } from 'utilities/app/main';
-    import { socket } from 'stores/global';
+    import { dismissModal } from 'utilities/main';
+    import { socket } from 'stores/all';
     import { onMount } from 'svelte';
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
-    import { joinedCommunity } from 'stores/app/communities';
+    import { joinedCommunity } from 'stores/communities';
     import Checkbox from 'svelte-checkbox';
 
     let communityId = $joinedCommunity.communityId;

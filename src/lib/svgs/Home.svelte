@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { PanelTypes } from 'types/app/main';
+    import { PanelTypes } from 'types/main';
     import { quadIn } from 'svelte/easing';
     import { draw } from 'svelte/transition';
-    import { switchPanel } from 'utilities/app/main';
+    import { switchPanel } from 'utilities/main';
 </script>
 
 <svg

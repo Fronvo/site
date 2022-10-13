@@ -5,10 +5,10 @@
         ourProfileData,
         targetCommunity,
         targetCommunityData,
-    } from 'stores/app/communities';
-    import { socket } from 'stores/global';
-    import { loadCommunitiesPanel } from 'utilities/app/communities';
-    import { dismissModal } from 'utilities/app/main';
+    } from 'stores/communities';
+    import { socket } from 'stores/all';
+    import { loadCommunitiesPanel } from 'utilities/communities';
+    import { dismissModal } from 'utilities/main';
     import Center from '$lib/app/Center.svelte';
 
     let isLeaving = false;

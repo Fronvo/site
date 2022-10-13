@@ -2,14 +2,14 @@
     import { goto } from '$app/navigation';
     import Center from '$lib/app/Center.svelte';
     import Loading from '$lib/app/Loading.svelte';
-    import type { FronvoAccount } from 'interfaces/app/main';
-    import { modalAnimDuration } from 'stores/app/main';
-    import { targetProfile, userData, userPosts } from 'stores/app/profile';
-    import { socket } from 'stores/global';
+    import type { FronvoAccount } from 'interfaces/all';
+    import { modalAnimDuration } from 'stores/main';
+    import { targetProfile, userData, userPosts } from 'stores/profile';
+    import { socket } from 'stores/all';
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
-    import { dismissModal, fetchUser } from 'utilities/app/main';
-    import { loadProfilePosts } from 'utilities/app/profile';
+    import { dismissModal, fetchUser } from 'utilities/main';
+    import { loadProfilePosts } from 'utilities/profile';
 
     let searchValue: Writable<string> = writable('');
     let findResults: FronvoAccount[] = [];

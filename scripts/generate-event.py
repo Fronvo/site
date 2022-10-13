@@ -59,21 +59,21 @@ brackets = '{}'
 bracket_l = '{'
 bracket_r = '}'
 
-if(os.path.isfile(f'{src}/interfaces/socket/{event_type_name}/{target_filename}')):
+if(os.path.isfile(f'{src}/interfaces/{event_type_name}/{target_filename}')):
     print('Event already exists.')
     exit()
 
 print(f'Creating *{event_type_name}* event *{event_name}*')
 
 # Create interfaces
-with open(f'{src}/interfaces/socket/{event_type_name}/{target_filename}', 'w') as f:
+with open(f'{src}/interfaces/{event_type_name}/{target_filename}', 'w') as f:
     # Start with header
     f.write('// ******************** //\n')
     f.write(f'// Interfaces for the {event_name} event file.\n')
     f.write('// ******************** //\n\n')
 
     # Continue with imports
-    f.write("import type { FronvoError } from 'interfaces/socket/all'\n\n");
+    f.write("import type { FronvoError } from 'interfaces/all'\n\n");
 
     # Finish with the interface implementations
     f.write(f'export interface {event_name_title}Params {brackets}\n\n')
@@ -82,7 +82,7 @@ with open(f'{src}/interfaces/socket/{event_type_name}/{target_filename}', 'w') a
 
 new_file_contents = ''
 
-with open(f'{src}/interfaces/socket/events/c2s.ts', 'r') as f:
+with open(f'{src}/interfaces/c2s.ts', 'r') as f:
     event_file_contents = f.readlines()
 
     # After the last import
@@ -93,7 +93,7 @@ with open(f'{src}/interfaces/socket/events/c2s.ts', 'r') as f:
 
             else:
                 # After last import, i + 1
-                event_file_contents.insert(i + 4, f"import type {bracket_l} {event_name_title}Params, {event_name_title}Result {bracket_r} from 'interfaces/socket/{event_type_name}/{event_name}';\n")
+                event_file_contents.insert(i + 1, f"import type {bracket_l} {event_name_title}Params, {event_name_title}Result {bracket_r} from './{event_type_name}/{event_name}';\n")
                 break;
 
 
@@ -105,7 +105,7 @@ with open(f'{src}/interfaces/socket/events/c2s.ts', 'r') as f:
     for line in event_file_contents:
         new_file_contents += line
 
-with open(f'{src}/interfaces/socket/events/c2s.ts', 'w') as f:
+with open(f'{src}/interfaces/c2s.ts', 'w') as f:
     f.write((new_file_contents))
 
 print(f'Event *{event_name}* created successfully')

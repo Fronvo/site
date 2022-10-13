@@ -1,10 +1,10 @@
 <script lang="ts">
-    import { socket } from 'stores/global';
+    import { socket } from 'stores/all';
     import {
         initialCommunityLoadingFinished,
         joinedCommunity,
         targetCommunityMessages,
-    } from 'stores/app/communities';
+    } from 'stores/communities';
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
     import CommunityChat from './CommunityChat.svelte';

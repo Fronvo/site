@@ -1,6 +1,6 @@
 <script>
-    import { ModalTypes } from 'types/app/main';
-    import { showModal } from 'utilities/app/main';
+    import { ModalTypes } from 'types/main';
+    import { showModal } from 'utilities/main';
 </script>
 
 <svg

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { FronvoContainer } from 'interfaces/index/SaosContent';
+    import type { FronvoContainer } from 'interfaces/all';
     import Saos from 'saos';
     import { fade } from 'svelte/transition';
 

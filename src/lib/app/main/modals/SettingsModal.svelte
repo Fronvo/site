@@ -4,9 +4,9 @@
         sessionTime,
         sessionTimeEnabled,
         sessionWarningShown,
-    } from 'stores/global';
+    } from 'stores/all';
     import Checkbox from 'svelte-checkbox';
-    import { dismissModal } from 'utilities/app/main';
+    import { dismissModal } from 'utilities/main';
     import { getKey, removeKey, setKey } from 'utilities/global';
 
     let maxOnlineTime = getKey('maxOnlineTime') / 60 || 0;

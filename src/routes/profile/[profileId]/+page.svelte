@@ -1,9 +1,9 @@
 <script lang="ts">
     import { page } from '$app/stores';
-    import { targetProfile } from 'stores/app/profile';
-    import { showLayout } from 'stores/global';
-    import { PanelTypes } from 'types/app/main';
-    import { switchPanel } from 'utilities/app/main';
+    import { targetProfile } from 'stores/profile';
+    import { showLayout } from 'stores/all';
+    import { PanelTypes } from 'types/main';
+    import { switchPanel } from 'utilities/main';
 
     $targetProfile = $page.params.profileId;
     $showLayout = true;

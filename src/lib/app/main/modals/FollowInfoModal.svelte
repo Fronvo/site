@@ -2,20 +2,20 @@
     import { goto } from '$app/navigation';
     import Center from '$lib/app/Center.svelte';
     import Loading from '$lib/app/Loading.svelte';
-    import type { FronvoAccount } from 'interfaces/app/main';
+    import type { FronvoAccount } from 'interfaces/all';
     import {
         followModalForFollowing,
         followModalInfo,
         modalAnimDuration,
-    } from 'stores/app/main';
+    } from 'stores/main';
     import {
         profileLoadingFinished,
         targetProfile,
         userData,
         userPosts,
-    } from 'stores/app/profile';
-    import { dismissModal, fetchUser } from 'utilities/app/main';
-    import { loadProfilePosts } from 'utilities/app/profile';
+    } from 'stores/profile';
+    import { dismissModal, fetchUser } from 'utilities/main';
+    import { loadProfilePosts } from 'utilities/profile';
 
     let followInfo: FronvoAccount[] = [];
 

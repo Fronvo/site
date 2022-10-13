@@ -1,18 +1,18 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
-    import { ourProfileData } from 'src/stores/app/communities';
+    import { ourProfileData } from 'stores/communities';
     import {
         profileLoadingFinished,
         userCommunity,
         userData,
-    } from 'src/stores/app/profile';
-    import { socket } from 'src/stores/global';
-    import { loadProfilePosts } from 'src/utilities/app/profile';
-    import { currentPanelId } from 'stores/app/main';
+    } from 'stores/profile';
+    import { socket } from 'stores/all';
+    import { loadProfilePosts } from 'utilities/profile';
+    import { currentPanelId } from 'stores/main';
     import { quadIn } from 'svelte/easing';
     import { draw } from 'svelte/transition';
-    import { PanelTypes } from 'types/app/main';
-    import { switchPanel } from 'utilities/app/main';
+    import { PanelTypes } from 'types/main';
+    import { switchPanel } from 'utilities/main';
 
     async function decideProfileAction(): Promise<void> {
         if (

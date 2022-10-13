@@ -1,8 +1,8 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
-    import { dismissModal } from 'utilities/app/main';
-    import { userData } from 'stores/app/profile';
-    import { socket } from 'stores/global';
+    import { dismissModal } from 'utilities/main';
+    import { userData } from 'stores/profile';
+    import { socket } from 'stores/all';
     import { onMount } from 'svelte';
     import Checkbox from 'svelte-checkbox';
     import { writable, type Writable } from 'svelte/store';

@@ -1,27 +1,38 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import Containers from '$lib/index/Containers.svelte';
     import Footer from '$lib/index/Footer.svelte';
     import Top from '$lib/index/Top.svelte';
     import TopNav from '$lib/index/TopNav.svelte';
-    import { showLayout } from 'stores/global';
+    import { showLayout } from 'stores/all';
     import { indexAnimDuration, indexVisible } from 'stores/index';
     import { onMount } from 'svelte';
     import { sineOut } from 'svelte/easing';
     import { fade, scale } from 'svelte/transition';
-    import { dismissModal } from 'utilities/app/main';
+    import { dismissModal } from 'utilities/main';
+    import { getKey } from 'utilities/global';
 
     let mountReady = false;
 
-    // Disable __layout in index
-    $showLayout = false;
-
-    // Default when accessed
-    $indexVisible = true;
-
-    // Remove modals if navigating back
-    dismissModal();
-
     onMount(() => {
+        // Remove homepage for registered users
+        if (getKey('token')) {
+            goto('/app', {
+                replaceState: true,
+            });
+            return;
+        }
+
+        // Remove modals if navigating back
+        dismissModal();
+
+        // Disable __layout in index
+        $showLayout = false;
+
+        // Default when accessed
+        $indexVisible = true;
+
+        // Show the index page
         mountReady = true;
     });
 </script>

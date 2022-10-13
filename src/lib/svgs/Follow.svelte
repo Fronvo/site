@@ -1,9 +1,9 @@
 <script lang="ts">
-    import { fetchUser } from 'utilities/app/main';
-    import { userData } from 'src/stores/app/profile';
-    import { socket } from 'src/stores/global';
-    import { homePosts } from 'src/stores/app/home';
-    import { ourProfileData } from 'src/stores/app/communities';
+    import { fetchUser } from 'utilities/main';
+    import { userData } from 'stores/profile';
+    import { socket } from 'stores/all';
+    import { homePosts } from 'stores/home';
+    import { ourProfileData } from 'stores/communities';
 
     let isFollowed = $ourProfileData.following.includes($userData.profileId);
     let isRequesting = false;

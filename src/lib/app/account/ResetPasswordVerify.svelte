@@ -1,8 +1,8 @@
 <script lang="ts">
     import Center from '$lib/app/Center.svelte';
-    import type { FronvoError } from 'interfaces/socket/all';
-    import { accountResetPasswordFinalTab } from 'stores/app/account';
-    import { socket } from 'stores/global';
+    import type { FronvoError } from 'interfaces/all';
+    import { accountResetPasswordFinalTab } from 'stores/account';
+    import { socket } from 'stores/all';
     import SvelteSegmentedInput from 'svelte-segmented-input';
     import { fade, scale } from 'svelte/transition';
 

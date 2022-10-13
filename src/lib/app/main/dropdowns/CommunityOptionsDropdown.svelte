@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { joinedCommunity, ourProfileData } from 'stores/app/communities';
-    import { ModalTypes } from 'types/app/main';
-    import { dismissDropdown, showModal } from 'utilities/app/main';
+    import { joinedCommunity, ourProfileData } from 'stores/communities';
+    import { ModalTypes } from 'types/main';
+    import { dismissDropdown, showModal } from 'utilities/main';
 
     let pendingRequests: number;
 

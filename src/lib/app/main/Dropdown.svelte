@@ -6,12 +6,12 @@
         dropdowns,
         dropdownVisible,
         modalAnimDuration,
-    } from 'stores/app/main';
+    } from 'stores/main';
     import { onDestroy, onMount } from 'svelte';
     import { quadInOut } from 'svelte/easing';
     import type { Unsubscriber } from 'svelte/store';
     import { scale } from 'svelte/transition';
-    import { dismissDropdown } from 'utilities/app/main';
+    import { dismissDropdown } from 'utilities/main';
 
     let dropdownElement: HTMLDivElement;
     let unsubscribe: Unsubscriber;

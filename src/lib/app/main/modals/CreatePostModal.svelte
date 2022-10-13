@@ -1,11 +1,11 @@
 <script lang="ts">
-    import { targetProfile } from 'stores/app/profile';
-    import { socket } from 'stores/global';
+    import { targetProfile } from 'stores/profile';
+    import { socket } from 'stores/all';
     import { onMount } from 'svelte';
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
-    import { dismissModal } from 'utilities/app/main';
-    import { loadProfilePosts } from 'utilities/app/profile';
+    import { dismissModal } from 'utilities/main';
+    import { loadProfilePosts } from 'utilities/profile';
 
     let title: string;
     let content: string;

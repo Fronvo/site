@@ -1,26 +1,26 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
-    import CreatePost from 'src/lib/svgs/CreatePost.svelte';
-    import DisableProfile from 'src/lib/svgs/DisableProfile.svelte';
-    import EditProfile from 'src/lib/svgs/EditProfile.svelte';
-    import Follow from 'src/lib/svgs/Follow.svelte';
-    import Logout from 'src/lib/svgs/Logout.svelte';
+    import CreatePost from '$lib/svgs/CreatePost.svelte';
+    import DisableProfile from '$lib/svgs/DisableProfile.svelte';
+    import EditProfile from '$lib/svgs/EditProfile.svelte';
+    import Follow from '$lib/svgs/Follow.svelte';
+    import Logout from '$lib/svgs/Logout.svelte';
     import {
         joinedCommunity,
         ourProfileData,
         targetCommunityData,
-    } from 'stores/app/communities';
-    import { followModalForFollowing, followModalInfo } from 'stores/app/main';
+    } from 'stores/communities';
+    import { followModalForFollowing, followModalInfo } from 'stores/main';
     import {
         profileLoadingFinished,
         userCommunity,
         userData,
-    } from 'stores/app/profile';
-    import { socket } from 'stores/global';
+    } from 'stores/profile';
+    import { socket } from 'stores/all';
     import { onDestroy } from 'svelte';
     import { fade } from 'svelte/transition';
-    import { ModalTypes, PanelTypes } from 'types/app/main';
-    import { showModal, switchPanel } from 'utilities/app/main';
+    import { ModalTypes, PanelTypes } from 'types/main';
+    import { showModal, switchPanel } from 'utilities/main';
 
     const isAccessible =
         $userData.isFollower || $userData.isSelf || !$userData.isPrivate;

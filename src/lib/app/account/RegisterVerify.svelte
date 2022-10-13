@@ -1,8 +1,8 @@
 <script lang="ts">
-    import type { FronvoError } from 'interfaces/socket/all';
-    import { tokenInvalid } from 'stores/app/global';
-    import { loginSucceeded } from 'stores/app/main';
-    import { socket } from 'stores/global';
+    import type { FronvoError } from 'interfaces/all';
+    import { tokenInvalid } from 'stores/all';
+    import { loginSucceeded } from 'stores/main';
+    import { socket } from 'stores/all';
     import SvelteSegmentedInput from 'svelte-segmented-input';
     import { fade, scale } from 'svelte/transition';
     import { setKey } from 'utilities/global';

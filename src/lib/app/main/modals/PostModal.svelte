@@ -1,14 +1,14 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
     import Delete from '$lib/svgs/Delete.svelte';
-    import type { HomePost } from 'interfaces/app/home';
-    import type { AccountPost, FronvoAccount } from 'interfaces/app/main';
-    import { dismissModal } from 'utilities/app/main';
-    import { postModalForHome, postModalInfo } from 'stores/app/main';
-    import { targetProfile, userData } from 'stores/app/profile';
-    import { socket } from 'stores/global';
+    import type { HomePost } from 'interfaces/all';
+    import type { AccountPost, FronvoAccount } from 'interfaces/all';
+    import { dismissModal } from 'utilities/main';
+    import { postModalForHome, postModalInfo } from 'stores/main';
+    import { targetProfile, userData } from 'stores/profile';
+    import { socket } from 'stores/all';
     import Time from 'svelte-time';
-    import { loadProfilePosts } from 'utilities/app/profile';
+    import { loadProfilePosts } from 'utilities/profile';
 
     function deletePost(): void {
         dismissModal();

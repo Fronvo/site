@@ -3,13 +3,13 @@
 
     import Center from '$lib/app/Center.svelte';
     import Loading from '$lib/app/Loading.svelte';
-    import type { Community } from 'interfaces/app/communities';
-    import { targetCommunityData } from 'stores/app/communities';
-    import { modalAnimDuration } from 'stores/app/main';
-    import { socket } from 'stores/global';
+    import type { Community } from 'interfaces/all';
+    import { targetCommunityData } from 'stores/communities';
+    import { modalAnimDuration } from 'stores/main';
+    import { socket } from 'stores/all';
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
-    import { dismissModal } from 'utilities/app/main';
+    import { dismissModal } from 'utilities/main';
 
     let searchValue: Writable<string> = writable('');
     let findResults: Community[] = [];

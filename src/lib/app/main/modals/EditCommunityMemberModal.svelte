@@ -1,16 +1,16 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
-    import { joinedCommunity } from 'stores/app/communities';
-    import { targetCommunityMember } from 'stores/app/main';
+    import { joinedCommunity } from 'stores/communities';
+    import { targetCommunityMember } from 'stores/main';
     import {
         profileLoadingFinished,
         targetProfile,
         userData,
         userPosts,
-    } from 'stores/app/profile';
-    import { socket } from 'stores/global';
-    import { dismissModal, fetchUser } from 'utilities/app/main';
-    import { loadProfilePosts } from 'utilities/app/profile';
+    } from 'stores/profile';
+    import { socket } from 'stores/all';
+    import { dismissModal, fetchUser } from 'utilities/main';
+    import { loadProfilePosts } from 'utilities/profile';
 
     async function viewProfile(): Promise<void> {
         dismissModal(() => {

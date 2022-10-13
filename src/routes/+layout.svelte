@@ -1,12 +1,12 @@
 <script lang="ts">
     import Account from '$lib/app/account/Account.svelte';
     import Main from '$lib/app/main/Main.svelte';
-    import { tokenInvalid } from 'stores/app/global';
+    import { tokenInvalid } from 'stores/all';
     import {
         dropdownPosition,
         loginSucceeded,
         modalVisible,
-    } from 'stores/app/main';
+    } from 'stores/main';
     import {
         darkTheme,
         initSocket,
@@ -15,12 +15,12 @@
         sessionTimeEnabled,
         sessionWarningShown,
         showLayout,
-    } from 'stores/global';
+    } from 'stores/all';
     import { onMount } from 'svelte';
     import themingVars from 'svelte-css-vars';
     import { fade } from 'svelte/transition';
-    import { ModalTypes } from 'types/app/main';
-    import { performLogin, showModal } from 'utilities/app/main';
+    import { ModalTypes } from 'types/main';
+    import { performLogin, showModal } from 'utilities/main';
     import { getKey } from 'utilities/global';
     import '../app.css';
     import { currentTheme, defaultTheme, whiteTheme } from '../themes';

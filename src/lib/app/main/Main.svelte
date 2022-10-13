@@ -1,7 +1,7 @@
 <script lang="ts">
     import MainSideNav from '$lib/app/main/MainSideNav.svelte';
     import Modal from '$lib/app/main/Modal.svelte';
-    import { currentPanelId, loginSucceeded, panels } from 'stores/app/main';
+    import { currentPanelId, loginSucceeded, panels } from 'stores/main';
     import { onMount } from 'svelte';
     import { getKey } from 'utilities/global';
     import Dropdown from './Dropdown.svelte';

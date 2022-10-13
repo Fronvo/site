@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { socket } from 'src/stores/global';
-    import { userData } from 'src/stores/app/profile';
+    import { socket } from 'stores/all';
+    import { userData } from 'stores/profile';
 
     function toggleDisable(): void {
         socket.emit(

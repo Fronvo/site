@@ -3,10 +3,10 @@
     import Loading from '$lib/app/Loading.svelte';
     import HomeGrass from '$lib/app/main/panels/home/HomeGrass.svelte';
     import HomePosts from '$lib/app/main/panels/home/HomePosts.svelte';
-    import { homePosts } from 'stores/app/home';
+    import { homePosts } from 'stores/home';
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
-    import { loadHomePosts } from 'utilities/app/home';
+    import { loadHomePosts } from 'utilities/home';
 
     goto('/home', {
         replaceState: true,

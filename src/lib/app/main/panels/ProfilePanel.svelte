@@ -2,16 +2,16 @@
     import { goto } from '$app/navigation';
     import ProfileInfo from '$lib/app/main/panels/profile/ProfileInfo.svelte';
     import ProfilePosts from '$lib/app/main/panels/profile/ProfilePosts.svelte';
-    import { ourProfileData } from 'src/stores/app/communities';
+    import { ourProfileData } from 'stores/communities';
     import {
         profileLoadingFinished,
         targetProfile,
         userData,
         userPosts,
-    } from 'stores/app/profile';
+    } from 'stores/profile';
     import { onDestroy, onMount } from 'svelte';
-    import { fetchUser } from 'utilities/app/main';
-    import { loadProfilePosts } from 'utilities/app/profile';
+    import { fetchUser } from 'utilities/main';
+    import { loadProfilePosts } from 'utilities/profile';
 
     goto(`/profile/${$targetProfile ? $targetProfile : ''}`, {
         replaceState: true,

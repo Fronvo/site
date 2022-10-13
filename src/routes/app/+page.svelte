@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { showLayout } from 'stores/global';
+    import { showLayout } from 'stores/all';
 
     $showLayout = true;
 </script>

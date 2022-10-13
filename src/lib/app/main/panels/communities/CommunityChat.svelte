@@ -3,11 +3,11 @@
     import type {
         CommunityMessage,
         CommunityMessageFinal,
-    } from 'interfaces/app/communities';
-    import type { FronvoAccount } from 'interfaces/app/main';
+    } from 'interfaces/all';
+    import type { FronvoAccount } from 'interfaces/all';
     import DeleteChatOption from '$lib/svgs/DeleteChatOption.svelte';
-    import { socket } from 'stores/global';
-    import { loadCommunitiesPanel } from 'utilities/app/communities';
+    import { socket } from 'stores/all';
+    import { loadCommunitiesPanel } from 'utilities/communities';
     import {
         chatRequestAccepted,
         initialCommunityLoadingFinished,
@@ -21,15 +21,15 @@
         targetCommunityData,
         targetCommunityMessages,
         targetSendHeight,
-    } from 'stores/app/communities';
-    import { modalVisible } from 'stores/app/main';
+    } from 'stores/communities';
+    import { modalVisible } from 'stores/main';
     import { onDestroy, onMount } from 'svelte';
     import Time from 'svelte-time';
     import type { Unsubscriber } from 'svelte/store';
     import { fly, scale } from 'svelte/transition';
-    import { fetchUser } from 'utilities/app/main';
+    import { fetchUser } from 'utilities/main';
     import linkifyHtml from 'linkify-html';
-    import Reply from 'src/lib/svgs/Reply.svelte';
+    import Reply from '$lib/svgs/Reply.svelte';
 
     let animationsFinished = false;
 

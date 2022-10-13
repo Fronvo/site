@@ -1,12 +1,12 @@
 <script lang="ts">
-    import Abort from 'src/lib/svgs/Abort.svelte';
+    import Abort from '$lib/svgs/Abort.svelte';
     import {
         maxChatAnimDelay,
         replyingTo,
         replyingToId,
         sendContent,
         targetSendHeight,
-    } from 'stores/app/communities';
+    } from 'stores/communities';
     import { onDestroy, onMount } from 'svelte';
     import type { Unsubscriber } from 'svelte/store';
     import { fade, fly } from 'svelte/transition';

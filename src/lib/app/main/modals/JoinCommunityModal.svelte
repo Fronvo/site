@@ -4,10 +4,10 @@
         joinedCommunity,
         targetCommunity,
         targetCommunityData,
-    } from 'stores/app/communities';
-    import { socket } from 'stores/global';
+    } from 'stores/communities';
+    import { socket } from 'stores/all';
     import { fade } from 'svelte/transition';
-    import { dismissModal } from 'utilities/app/main';
+    import { dismissModal } from 'utilities/main';
 
     let inviteCode: string;
     let isJoining = false;

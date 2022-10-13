@@ -4,10 +4,10 @@
         joinedCommunity,
         targetCommunity,
         targetCommunityData,
-    } from 'stores/app/communities';
+    } from 'stores/communities';
     import { onDestroy, onMount } from 'svelte';
     import { fade } from 'svelte/transition';
-    import { loadCommunitiesPanel } from 'utilities/app/communities';
+    import { loadCommunitiesPanel } from 'utilities/communities';
     import CommunityInvite from './communities/CommunityInvite.svelte';
     import CommunityMain from './communities/CommunityMain.svelte';
     import OfficialCommunity from './communities/OfficialCommunity.svelte';

@@ -1,13 +1,13 @@
 <script lang="ts">
     import Center from '$lib/app/Center.svelte';
-    import type { FronvoError } from 'interfaces/socket/all';
+    import type { FronvoError } from 'interfaces/all';
     import {
         accountRegisterTab,
         accountResetPasswordTab,
-    } from 'stores/app/account';
-    import { tokenInvalid } from 'stores/app/global';
-    import { loginSucceeded } from 'stores/app/main';
-    import { socket } from 'stores/global';
+    } from 'stores/account';
+    import { tokenInvalid } from 'stores/all';
+    import { loginSucceeded } from 'stores/main';
+    import { socket } from 'stores/all';
     import { onMount } from 'svelte';
     import { fade, scale } from 'svelte/transition';
     import { setEnterHandle, setKey } from 'utilities/global';

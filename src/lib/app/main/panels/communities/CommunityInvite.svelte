@@ -4,10 +4,10 @@
         joinedCommunity,
         targetCommunity,
         targetCommunityData,
-    } from 'stores/app/communities';
-    import { socket } from 'stores/global';
+    } from 'stores/communities';
+    import { socket } from 'stores/all';
     import { fade } from 'svelte/transition';
-    import { loadCommunitiesPanel } from 'utilities/app/communities';
+    import { loadCommunitiesPanel } from 'utilities/communities';
 
     let isJoining = false;
 

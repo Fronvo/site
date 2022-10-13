@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { socket } from 'src/stores/global';
-    import { removeKey } from 'src/utilities/global';
-    import { accountRegisterVerifyTab } from 'src/stores/app/account';
+    import { socket } from 'stores/all';
+    import { removeKey } from 'utilities/global';
+    import { accountRegisterVerifyTab } from 'stores/account';
     import {
         initialCommunityLoadingFinished,
         joinedCommunity,
@@ -9,10 +9,10 @@
         targetCommunity,
         targetCommunityData,
         targetCommunityMessages,
-    } from 'src/stores/app/communities';
-    import { homePosts } from 'src/stores/app/home';
-    import { targetProfile, userData } from 'src/stores/app/profile';
-    import { loginSucceeded } from 'src/stores/app/main';
+    } from 'stores/communities';
+    import { homePosts } from 'stores/home';
+    import { targetProfile, userData } from 'stores/profile';
+    import { loginSucceeded } from 'stores/main';
 
     function logout(): void {
         socket.emit('logout', ({ err }) => {

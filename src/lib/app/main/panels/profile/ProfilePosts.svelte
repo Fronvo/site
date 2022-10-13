@@ -1,14 +1,14 @@
 <script lang="ts">
-    import { postModalForHome, postModalInfo } from 'stores/app/main';
+    import { postModalForHome, postModalInfo } from 'stores/main';
     import {
         profileLoadingFinished,
         userData,
         userPosts,
-    } from 'stores/app/profile';
+    } from 'stores/profile';
     import Time from 'svelte-time';
     import { fade } from 'svelte/transition';
-    import { ModalTypes } from 'types/app/main';
-    import { showModal } from 'utilities/app/main';
+    import { ModalTypes } from 'types/main';
+    import { showModal } from 'utilities/main';
 
     let mountTransitionsDone = false;
 

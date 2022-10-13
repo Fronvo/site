@@ -1,11 +1,11 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
-    import { officialCommunity } from 'stores/app/communities';
-    import { socket } from 'stores/global';
+    import { officialCommunity } from 'stores/communities';
+    import { socket } from 'stores/all';
     import { fade } from 'svelte/transition';
-    import { ModalTypes } from 'types/app/main';
-    import { loadCommunitiesPanel } from 'utilities/app/communities';
-    import { showModal } from 'utilities/app/main';
+    import { ModalTypes } from 'types/main';
+    import { loadCommunitiesPanel } from 'utilities/communities';
+    import { showModal } from 'utilities/main';
 
     function joinOfficialCommunity(): void {
         // Join without invite info

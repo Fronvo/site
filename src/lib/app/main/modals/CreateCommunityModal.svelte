@@ -1,15 +1,12 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
-    import {
-        chatRequestAccepted,
-        joinedCommunity,
-    } from 'stores/app/communities';
+    import { chatRequestAccepted, joinedCommunity } from 'stores/communities';
 
-    import { socket } from 'stores/global';
+    import { socket } from 'stores/all';
     import { onMount } from 'svelte';
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
-    import { dismissModal } from 'utilities/app/main';
+    import { dismissModal } from 'utilities/main';
 
     let name: string;
     let description: string;

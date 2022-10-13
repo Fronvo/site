@@ -1,9 +1,9 @@
 <script lang="ts">
     import { page } from '$app/stores';
-    import { targetCommunity } from 'stores/app/communities';
-    import { showLayout } from 'stores/global';
-    import { PanelTypes } from 'types/app/main';
-    import { switchPanel } from 'utilities/app/main';
+    import { targetCommunity } from 'stores/communities';
+    import { showLayout } from 'stores/all';
+    import { PanelTypes } from 'types/main';
+    import { switchPanel } from 'utilities/main';
 
     $targetCommunity = $page.params.communityId;
     $showLayout = true;

@@ -1,18 +1,18 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
     import Loading from '$lib/app/Loading.svelte';
-    import type { FronvoAccount } from 'interfaces/app/main';
-    import { joinedCommunity, ourProfileData } from 'stores/app/communities';
-    import { ModalTypes } from 'types/app/main';
-    import { targetCommunityMember } from 'stores/app/main';
+    import type { FronvoAccount } from 'interfaces/all';
+    import { joinedCommunity, ourProfileData } from 'stores/communities';
+    import { ModalTypes } from 'types/main';
+    import { targetCommunityMember } from 'stores/main';
     import {
         profileLoadingFinished,
         targetProfile,
         userData,
         userPosts,
-    } from 'stores/app/profile';
-    import { dismissModal, fetchUser, showModal } from 'utilities/app/main';
-    import { loadProfilePosts } from 'utilities/app/profile';
+    } from 'stores/profile';
+    import { dismissModal, fetchUser, showModal } from 'utilities/main';
+    import { loadProfilePosts } from 'utilities/profile';
 
     let memberInfo: FronvoAccount[] = [];
 

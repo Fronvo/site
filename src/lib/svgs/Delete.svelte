@@ -1,5 +1,5 @@
 <script>
-    import { darkTheme } from 'stores/global';
+    import { darkTheme } from 'stores/all';
 </script>
 
 <svg

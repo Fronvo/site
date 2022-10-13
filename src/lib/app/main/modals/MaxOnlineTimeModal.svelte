@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { sessionTime, sessionWarningShown } from 'stores/global';
-    import { dismissModal } from 'utilities/app/main';
+    import { sessionTime, sessionWarningShown } from 'stores/all';
+    import { dismissModal } from 'utilities/main';
     import { getKey } from 'utilities/global';
 
     function resetSession(): void {

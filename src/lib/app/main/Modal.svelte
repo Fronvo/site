@@ -4,7 +4,7 @@
         modalAnimDuration,
         modals,
         modalVisible,
-    } from 'stores/app/main';
+    } from 'stores/main';
     import { quadInOut } from 'svelte/easing';
     import { scale } from 'svelte/transition';
 </script>

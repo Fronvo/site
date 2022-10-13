@@ -9,6 +9,7 @@
     import { socket } from 'stores/all';
     import Time from 'svelte-time';
     import { loadProfilePosts } from 'utilities/profile';
+    import DeleteChatOption from '$lib/svgs/DeleteChatOption.svelte';
 
     function deletePost(): void {
         dismissModal();
@@ -91,10 +92,7 @@
             <hr />
 
             <div class="actions-container">
-                <div on:click={deletePost}>
-                    <Delete />
-                    <h1>Delete</h1>
-                </div>
+                <DeleteChatOption callback={deletePost} />
             </div>
         {/if}
     </div>
@@ -172,7 +170,7 @@
         color: var(--profile_info_color);
         white-space: pre-wrap;
         text-align: center;
-        max-width: 65%;
+        max-width: 100%;
     }
 
     .data-container #attachment {
@@ -201,29 +199,10 @@
     }
 
     .actions-container {
-        margin-top: 10px;
-    }
-
-    .actions-container div {
         display: flex;
         justify-content: center;
         align-items: center;
         cursor: pointer;
-        border-radius: 10px;
-        transition: 250ms border-radius;
-        padding: 10px;
-        border: 2px solid var(--profile_info_color);
-    }
-
-    .actions-container div:hover {
-        border-radius: 20px;
-    }
-
-    .actions-container div h1 {
-        margin: 0;
-        margin-left: 10px;
-        color: var(--profile_info_color);
-        font-size: 2rem;
     }
 
     .options-container {
@@ -263,14 +242,6 @@
             font-size: 1.5rem;
         }
 
-        .actions-container div {
-            cursor: default;
-        }
-
-        .actions-container div h1 {
-            font-size: 1.8rem;
-        }
-
         .options-container button {
             font-size: 1.8rem;
             cursor: default;
@@ -306,10 +277,6 @@
 
         .data-container #creation-date {
             font-size: 1.2rem;
-        }
-
-        .actions-container div h1 {
-            font-size: 1.5rem;
         }
 
         .options-container button {

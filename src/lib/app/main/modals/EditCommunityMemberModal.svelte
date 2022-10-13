@@ -204,6 +204,7 @@
 
         .data-container button {
             font-size: 1.6rem;
+            cursor: default;
         }
 
         .data-container #avatar {

@@ -1,6 +1,8 @@
 <script lang="ts">
+    import linkifyHtml from 'linkify-html';
     import { homePosts } from 'stores/home';
     import { postModalForHome, postModalInfo } from 'stores/main';
+    import { onMount } from 'svelte';
     import Time from 'svelte-time';
     import { fade } from 'svelte/transition';
     import { ModalTypes } from 'types/main';
@@ -13,6 +15,30 @@
         $postModalForHome = true;
         showModal(ModalTypes.ViewPost);
     }
+
+    function generateContentLinks(postId: string, content: string): void {
+        setTimeout(() => {
+            const targetElement = document.getElementsByClassName(postId)[0];
+
+            if (!targetElement) return;
+
+            targetElement.innerHTML = linkifyHtml(content, {
+                className: 'link',
+                truncate: 40,
+                validate: {
+                    url: (value) =>
+                        /^https?:\/\/[0-9a-zA-Z-.\/\?=]+/.test(value),
+                },
+                target: '_blank',
+            });
+        }, 0);
+    }
+
+    onMount(() => {
+        $homePosts.forEach((homePost) => {
+            generateContentLinks(homePost.post.postId, homePost.post.content);
+        });
+    });
 </script>
 
 <div class="posts-container" in:fade={{ delay: 400 }}>
@@ -43,7 +69,7 @@
                 </div>
 
                 <h1 id="title">{post.title}</h1>
-                <h1 id="content">{post.content}</h1>
+                <h1 id="content" class={post.postId}>{post.content}</h1>
 
                 {#if post.attachment}
                     <img
@@ -145,6 +171,15 @@
         flex: 1;
         white-space: pre-wrap;
         text-align: center;
+    }
+
+    :global(.post-container #content .link) {
+        text-decoration: none;
+        color: var(--text_color);
+    }
+
+    :global(.post-container #content .link:hover::after) {
+        background: var(--profile_info_color);
     }
 
     .post-container #attachment {

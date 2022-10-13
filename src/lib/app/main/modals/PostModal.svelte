@@ -10,6 +10,8 @@
     import Time from 'svelte-time';
     import { loadProfilePosts } from 'utilities/profile';
     import DeleteChatOption from '$lib/svgs/DeleteChatOption.svelte';
+    import { onMount } from 'svelte';
+    import linkifyHtml from 'linkify-html';
 
     function deletePost(): void {
         dismissModal();
@@ -49,6 +51,28 @@
         }
         return $userData;
     }
+
+    function generateContentLinks(postId: string, content: string): void {
+        setTimeout(() => {
+            const targetElement = document.getElementsByClassName(postId)[0];
+
+            if (!targetElement) return;
+
+            targetElement.innerHTML = linkifyHtml(content, {
+                className: 'link',
+                truncate: 40,
+                validate: {
+                    url: (value) =>
+                        /^https?:\/\/[0-9a-zA-Z-.\/\?=]+/.test(value),
+                },
+                target: '_blank',
+            });
+        }, 0);
+    }
+
+    onMount(() => {
+        generateContentLinks(getPostData().postId, getPostData().content);
+    });
 </script>
 
 <div class="view-container">
@@ -67,7 +91,9 @@
     <div class="data-container">
         <h1 id="title">{getPostData().title}</h1>
 
-        <h1 id="content">{getPostData().content}</h1>
+        <h1 id="content" class={getPostData().postId}>
+            {getPostData().content}
+        </h1>
 
         {#if getPostData().attachment}
             <img
@@ -171,6 +197,15 @@
         white-space: pre-wrap;
         text-align: center;
         max-width: 100%;
+    }
+
+    :global(.data-container #content .link) {
+        text-decoration: none;
+        color: var(--text_color);
+    }
+
+    :global(.data-container #content .link:hover::after) {
+        background: var(--profile_info_color);
     }
 
     .data-container #attachment {

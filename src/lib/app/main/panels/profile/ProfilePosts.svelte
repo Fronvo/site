@@ -1,26 +1,64 @@
 <script lang="ts">
+    import linkifyHtml from 'linkify-html';
     import { postModalForHome, postModalInfo } from 'stores/main';
     import {
         profileLoadingFinished,
         userData,
         userPosts,
     } from 'stores/profile';
+    import { onDestroy, onMount } from 'svelte';
     import Time from 'svelte-time';
+    import type { Unsubscriber } from 'svelte/store';
     import { fade } from 'svelte/transition';
     import { ModalTypes } from 'types/main';
     import { showModal } from 'utilities/main';
 
     let mountTransitionsDone = false;
-
-    setTimeout(() => {
-        mountTransitionsDone = true;
-    }, 500);
+    let unsubscribe: Unsubscriber;
 
     function showViewPost(postIndex: number): void {
         $postModalInfo = $userPosts[postIndex];
         $postModalForHome = false;
         showModal(ModalTypes.ViewPost);
     }
+
+    function generateContentLinks(postId: string, content: string): void {
+        setTimeout(() => {
+            const targetElement = document.getElementsByClassName(postId)[0];
+
+            if (!targetElement) return;
+
+            targetElement.innerHTML = linkifyHtml(content, {
+                className: 'link',
+                truncate: 40,
+                validate: {
+                    url: (value) =>
+                        /^https?:\/\/[0-9a-zA-Z-.\/\?=]+/.test(value),
+                },
+                target: '_blank',
+            });
+        }, 0);
+    }
+
+    onMount(() => {
+        unsubscribe = userPosts.subscribe((posts) => {
+            if (!posts) return;
+
+            setTimeout(() => {
+                mountTransitionsDone = true;
+            }, 500);
+
+            setTimeout(() => {
+                $userPosts.forEach((userPost) => {
+                    generateContentLinks(userPost.postId, userPost.content);
+                });
+            }, 100);
+        });
+    });
+
+    onDestroy(() => {
+        unsubscribe();
+    });
 </script>
 
 {#if $profileLoadingFinished}
@@ -34,7 +72,7 @@
                     : 'This profile is private'}
             </h1>
         {:else}
-            {#each $userPosts as { title, content, attachment, creationDate }, i}
+            {#each $userPosts as { postId, title, content, attachment, creationDate }, i}
                 <div
                     class="post-container"
                     on:click={() => showViewPost(i)}
@@ -44,7 +82,7 @@
                     }}
                 >
                     <h1 id="title">{title}</h1>
-                    <h1 id="content">{content}</h1>
+                    <h1 id="content" class={postId}>{content}</h1>
 
                     {#if attachment}
                         <img
@@ -127,6 +165,15 @@
         flex: 1;
         white-space: pre-wrap;
         text-align: center;
+    }
+
+    :global(.post-container #content .link) {
+        text-decoration: none;
+        color: var(--text_color);
+    }
+
+    :global(.post-container #content .link:hover::after) {
+        background: var(--profile_info_color);
     }
 
     .post-container #attachment {

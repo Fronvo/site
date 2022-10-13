@@ -65,6 +65,7 @@
 
     @media screen and (max-width: 720px) {
         svg {
+            margin-top: 0;
             margin-bottom: 0;
             margin-left: 10px;
             cursor: default;

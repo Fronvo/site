@@ -3,6 +3,7 @@
     import Home from '$lib/svgs/Home.svelte';
     import Profile from '$lib/svgs/Profile.svelte';
     import Settings from '$lib/svgs/Settings.svelte';
+    import Search from '$lib/svgs/Search.svelte';
     import { fly } from 'svelte/transition';
 </script>
 
@@ -17,9 +18,11 @@
 
     <Communities />
 
-    <br />
-
     <hr />
+
+    <Search />
+
+    <br />
 
     <Settings />
 </div>

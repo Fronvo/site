@@ -45,7 +45,7 @@
         stroke: var(--svg_stroke);
         stroke-width: 2px;
         cursor: pointer;
-        margin-top: 10px;
+        margin-top: 15px;
         transition: 100ms all;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -66,7 +66,6 @@
     @media screen and (max-width: 720px) {
         svg {
             margin-bottom: 0;
-            margin-top: 0;
             margin-left: 10px;
             cursor: default;
         }

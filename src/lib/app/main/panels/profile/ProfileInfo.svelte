@@ -3,7 +3,6 @@
     import CreatePost from 'src/lib/svgs/CreatePost.svelte';
     import DisableProfile from 'src/lib/svgs/DisableProfile.svelte';
     import EditProfile from 'src/lib/svgs/EditProfile.svelte';
-    import FindProfiles from 'src/lib/svgs/FindProfiles.svelte';
     import Follow from 'src/lib/svgs/Follow.svelte';
     import Logout from 'src/lib/svgs/Logout.svelte';
     import {
@@ -151,7 +150,6 @@
             {#if $userData.isSelf}
                 <EditProfile />
                 <CreatePost />
-                <FindProfiles />
                 <Logout />
             {:else}
                 <Follow />

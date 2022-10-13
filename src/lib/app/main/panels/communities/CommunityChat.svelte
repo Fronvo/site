@@ -602,6 +602,10 @@
         .message-container #creation-date {
             font-size: 1.2rem;
         }
+
+        .message-info-container .menu-container {
+            opacity: 1;
+        }
     }
 
     @media screen and (max-width: 520px) {

@@ -3,25 +3,31 @@
     import Loading from '$lib/app/Loading.svelte';
     import HomeGrass from '$lib/app/main/panels/home/HomeGrass.svelte';
     import HomePosts from '$lib/app/main/panels/home/HomePosts.svelte';
-    import { homePosts } from 'stores/home';
+    import { socket } from 'stores/all';
+    import { homePosts as homePostsStore } from 'stores/home';
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
-    import { loadHomePosts } from 'utilities/home';
 
-    goto('/home', {
-        replaceState: true,
+    onMount(() => {
+        goto('/home', {
+            replaceState: true,
+        });
+
+        loadPosts();
     });
 
-    onMount(async () => {
-        // Don't reload posts
-        setTimeout(async () => {
-            !$homePosts && (await loadHomePosts());
-        }, 500);
-    });
+    function loadPosts(): void {
+        // Dont reload posts in the same session
+        if (!$homePostsStore) {
+            socket.emit('fetchHomePosts', ({ homePosts }) => {
+                $homePostsStore = homePosts;
+            });
+        }
+    }
 </script>
 
 <div class="home-container" in:fade={{ duration: 300, delay: 200 }}>
-    {#if $homePosts}
+    {#if $homePostsStore}
         <h1 id="latest-posts">Latest posts</h1>
 
         <HomePosts />

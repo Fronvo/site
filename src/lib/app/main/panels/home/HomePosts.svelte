@@ -4,16 +4,19 @@
     import { postModalForHome, postModalInfo } from 'stores/main';
     import { onMount } from 'svelte';
     import Time from 'svelte-time';
-    import { fade } from 'svelte/transition';
     import { ModalTypes } from 'types/main';
     import { showModal } from 'utilities/main';
 
     const posts = homePosts;
 
-    function viewPost(postIndex: number): void {
-        $postModalInfo = $homePosts[postIndex];
-        $postModalForHome = true;
-        showModal(ModalTypes.ViewPost);
+    onMount(() => {
+        setupContentLinks();
+    });
+
+    function setupContentLinks(): void {
+        $homePosts.forEach((homePost) => {
+            generateContentLinks(homePost.post.postId, homePost.post.content);
+        });
     }
 
     function generateContentLinks(postId: string, content: string): void {
@@ -34,64 +37,50 @@
         }, 0);
     }
 
-    onMount(() => {
-        $homePosts.forEach((homePost) => {
-            generateContentLinks(homePost.post.postId, homePost.post.content);
-        });
-    });
+    function viewPost(postIndex: number): void {
+        $postModalInfo = $homePosts[postIndex];
+        $postModalForHome = true;
+        showModal(ModalTypes.ViewPost);
+    }
 </script>
 
-<div class="posts-container" in:fade={{ delay: 400 }}>
-    {#if $posts.length == 0}
-        <h1 in:fade={{ duration: 500, delay: 400 }} id="empty-text">
-            No posts, yet
-        </h1>
-    {:else}
-        {#each $posts as { post, profileData }, i}
-            <div
-                on:click={() => viewPost(i)}
-                class="post-container"
-                in:fade={{
-                    duration: 500,
-                    delay: i < 5 ? (i + 1) * 100 : 0,
-                }}
-            >
-                <div class="author-container">
-                    <img
-                        id="avatar"
-                        src={profileData.avatar
-                            ? profileData.avatar
-                            : '/svgs/profile/default.svg'}
-                        draggable={false}
-                        alt={`${profileData.username}'s avatar`}
-                    />
-                    <h1 id="author">{profileData.username}</h1>
-                </div>
-
-                <h1 id="title">{post.title}</h1>
-                <h1 id="content" class={post.postId}>{post.content}</h1>
-
-                {#if post.attachment}
-                    <img
-                        id="attachment"
-                        src={post.attachment}
-                        alt={`'${post.title}' attachment`}
-                        draggable={false}
-                    />
-                {/if}
-
-                <h1 id="creation-date">
-                    <!-- Updates every 15 seconds -->
-                    <Time
-                        relative
-                        format={'dddd HH:mm · MMMM D YYYY'}
-                        live={15000}
-                        timestamp={post.creationDate}
-                    />
-                </h1>
+<div class="posts-container">
+    {#each $posts as { post, profileData }, i}
+        <div on:click={() => viewPost(i)} class="post-container">
+            <div class="author-container">
+                <img
+                    id="avatar"
+                    src={profileData.avatar
+                        ? profileData.avatar
+                        : '/svgs/profile/default.svg'}
+                    draggable={false}
+                    alt={`${profileData.username}'s avatar`}
+                />
+                <h1 id="author">{profileData.username}</h1>
             </div>
-        {/each}
-    {/if}
+
+            <h1 id="title">{post.title}</h1>
+            <h1 id="content" class={post.postId}>{post.content}</h1>
+
+            {#if post.attachment}
+                <img
+                    id="attachment"
+                    src={post.attachment}
+                    alt={`'${post.title}' attachment`}
+                    draggable={false}
+                />
+            {/if}
+
+            <h1 id="creation-date">
+                <Time
+                    relative
+                    format={'dddd HH:mm · MMMM D YYYY'}
+                    live={60000}
+                    timestamp={post.creationDate}
+                />
+            </h1>
+        </div>
+    {/each}
 </div>
 
 <style>
@@ -195,11 +184,6 @@
         margin-top: 20px;
     }
 
-    .posts-container #empty-text {
-        margin: 0;
-        font-size: 2rem;
-    }
-
     @media screen and (max-width: 720px) {
         .post-container {
             max-width: 400px;
@@ -240,10 +224,6 @@
         .post-container #creation-date {
             font-size: 1.2rem;
         }
-
-        .posts-container #empty-text {
-            font-size: 1.8rem;
-        }
     }
 
     @media screen and (max-width: 520px) {
@@ -276,10 +256,6 @@
 
         .post-container #creation-date {
             font-size: 1.1rem;
-        }
-
-        .posts-container #empty-text {
-            font-size: 1.6rem;
         }
     }
 </style>

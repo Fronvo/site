@@ -57,8 +57,8 @@ a:focus {
 }
 
 h1 {
-    font-family: 'DM Sans';
-    font-weight: 500;
+    font-family: Nunito;
+    font-weight: 300;
     color: var(--text_color);
 }
 
@@ -67,7 +67,7 @@ button {
     border-radius: 12px;
     color: white;
     padding: 10px;
-    font-family: 'DM Sans';
+    font-family: Nunito;
     box-shadow: 0 0 5px var(--text_color);
     font-weight: 500;
     cursor: pointer;
@@ -103,7 +103,7 @@ input,
 textarea {
     border: none;
     border-radius: 5px;
-    font-family: 'DM Sans';
+    font-family: Nunito;
     transition: 0.5s;
     color: var(--text_color);
     padding: 5px;

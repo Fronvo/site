@@ -30,7 +30,7 @@
                 !newContent ||
                 (newContent.length < 40 && newContent.indexOf('\n') == -1)
             ) {
-                targetHeight = $replyingTo ? 70 : 55;
+                targetHeight = $replyingTo ? 70 : 60;
             } else {
                 targetHeight = Math.min(
                     contentInput.scrollHeight,

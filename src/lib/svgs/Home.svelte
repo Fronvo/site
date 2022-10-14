@@ -36,52 +36,25 @@
             stroke-width: 0;
         }
     </style><path
-        in:draw={{ duration: 1000, easing: quadIn }}
         class="svg"
-        d="M8 42V21.95l-4.2 3.2-1.8-2.4 6-4.55v-5.7h3v3.4L24 6l22 16.8-1.8 2.35-4.2-3.2V42Zm3-3h11.5v-8h3v8H37V19.65l-13-9.9-13 9.9ZM8 10q0-2.3 1.625-3.9T13.5 4.5q1.05 0 1.775-.75Q16 3 16 2h3q0 2.25-1.6 3.875T13.5 7.5q-1 0-1.75.725T11 10Zm3 29h26-26Z"
+        d="M9.2 40.95V21.3l-4.3 3.3-1.3-1.75 5.6-4.25v-5.35h2.2v3.6l12.65-9.6 20.4 15.6-1.3 1.7-4.2-3.25v19.65h-12.9V30h-4v10.95Zm0-30.25q0-2 1.35-3.375T14 5.95q1.25 0 1.925-.775t.725-1.825h2.2q-.05 2-1.375 3.375T14 8.1q-1.2 0-1.9.75t-.7 1.85Z"
     /></svg
 >
 
 <style>
     svg {
-        fill: none;
-        stroke: var(--svg_stroke);
-        stroke-width: 2px;
-        cursor: pointer;
-        transition: 100ms all;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
         margin-bottom: 15px;
-    }
-
-    svg:hover {
-        opacity: 0.8;
-    }
-
-    svg:active {
-        transform: scale(0.95);
     }
 
     @media screen and (max-width: 720px) {
         svg {
             margin-bottom: 0;
             margin-right: 20px;
-            cursor: default;
-        }
-
-        svg:hover {
-            opacity: 1;
         }
     }
 
     @media screen and (max-width: 520px) {
         svg {
-            width: 40px;
-            height: 40px;
             margin-right: 10px;
         }
     }

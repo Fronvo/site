@@ -1,0 +1,17 @@
+<script lang="ts">
+    import { ModalTypes } from 'types/main';
+    import { showModal } from 'utilities/main';
+</script>
+
+<svg
+    version="1.2"
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 48 48"
+    width="48"
+    height="48"
+    on:click={() => showModal(ModalTypes.CreatePost)}
+    ><path
+        class="svg"
+        d="M24.15 30.7q1.85 0 3.125-1.275T28.55 26.3V13.95h5.55V11.2h-7.3v11.9q-.5-.5-1.2-.775t-1.45-.275q-1.8 0-3 1.25t-1.2 3q0 1.8 1.2 3.1t3 1.3Zm-10.3 5.75q-1.15 0-1.975-.825-.825-.825-.825-1.975V7.95q0-1.1.825-1.95.825-.85 1.975-.85h25.7q1.1 0 1.95.85.85.85.85 1.95v25.7q0 1.15-.85 1.975-.85.825-1.95.825Zm-5.4 5.4q-1.1 0-1.95-.85-.85-.85-.85-1.95v-27.9h2.2v27.9q0 .2.2.4t.4.2h27.9v2.2Z"
+    /></svg
+>

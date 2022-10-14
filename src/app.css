@@ -20,6 +20,25 @@ a {
     position: relative;
 }
 
+svg {
+    cursor: pointer;
+    transition: 100ms all;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+svg:hover {
+    opacity: 0.8;
+}
+
+svg:active {
+    transform: scale(0.95);
+}
+
 a::after {
     content: '';
     display: block;
@@ -140,4 +159,21 @@ select:-webkit-autofill::first-line {
 ::-webkit-scrollbar-thumb {
     background: rgb(100, 0, 255);
     border-radius: 20px;
+}
+
+@media screen and (max-width: 720px) {
+    svg {
+        cursor: default;
+    }
+
+    svg:hover {
+        opacity: 1;
+    }
+}
+
+@media screen and (max-width: 520px) {
+    svg {
+        width: 40px;
+        height: 40px;
+    }
 }

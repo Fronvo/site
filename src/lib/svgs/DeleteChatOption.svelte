@@ -11,44 +11,6 @@
     on:click={callback}
     ><path
         class="svg"
-        d="M13.05 42q-1.25 0-2.125-.875T10.05 39V10.5H8v-3h9.4V6h13.2v1.5H40v3h-2.05V39q0 1.2-.9 2.1-.9.9-2.1.9Zm21.9-31.5h-21.9V39h21.9Zm-16.6 24.2h3V14.75h-3Zm8.3 0h3V14.75h-3Zm-13.6-24.2V39Z"
+        d="M13.95 40.85q-1.1 0-1.95-.85-.85-.85-.85-1.95v-27.1h-2v-2.2h8.45V7.4h12.85v1.35h8.45v2.2h-2.05v27.1q0 1.1-.825 1.95-.825.85-1.975.85Zm5.2-6.4h2.2V15.1h-2.2Zm7.55 0h2.2V15.1h-2.2Z"
     /></svg
 >
-
-<style>
-    svg {
-        cursor: pointer;
-        transition: 100ms all;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
-
-    svg:hover {
-        opacity: 0.8;
-    }
-
-    svg:active {
-        transform: scale(0.95);
-    }
-
-    @media screen and (max-width: 720px) {
-        svg {
-            cursor: default;
-        }
-
-        svg:hover {
-            opacity: 1;
-        }
-    }
-
-    @media screen and (max-width: 520px) {
-        svg {
-            width: 40px;
-            height: 40px;
-        }
-    }
-</style>

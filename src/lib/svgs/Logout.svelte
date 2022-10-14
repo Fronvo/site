@@ -49,44 +49,6 @@
     on:click={logout}
     ><path
         class="svg"
-        d="M9 42q-1.2 0-2.1-.9Q6 40.2 6 39V9q0-1.2.9-2.1Q7.8 6 9 6h14.55v3H9v30h14.55v3Zm24.3-9.25-2.15-2.15 5.1-5.1h-17.5v-3h17.4l-5.1-5.1 2.15-2.15 8.8 8.8Z"
+        d="M19.9 40.85v-5.5L13.1 28v-9.7q0-1 .65-1.75t1.75-.85v3.15L3.75 7.15l1.55-1.6L42.4 42.7l-1.5 1.55L30 33.35l-1.9 2v5.5ZM33.95 29.7 18.3 14.05v-6.9h2.15v8.35h7.1V7.15h2.15v9.45l-1.05-1.1h3.45q1.15 0 1.975.825.825.825.825 1.975v10.25Z"
     /></svg
 >
-
-<style>
-    svg {
-        cursor: pointer;
-        transition: 250ms all;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
-
-    svg:hover {
-        opacity: 0.8;
-    }
-
-    svg:active {
-        transform: scale(0.95);
-    }
-
-    @media screen and (max-width: 720px) {
-        svg {
-            cursor: default;
-        }
-
-        svg:hover {
-            opacity: 1;
-        }
-    }
-
-    @media screen and (max-width: 520px) {
-        svg {
-            width: 40px;
-            height: 40px;
-        }
-    }
-</style>

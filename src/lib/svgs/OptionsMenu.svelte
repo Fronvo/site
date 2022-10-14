@@ -18,14 +18,7 @@
 
 <style>
     svg {
-        transition: 250ms;
         border-radius: 10px;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
     }
 
     svg:hover {

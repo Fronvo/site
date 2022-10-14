@@ -12,32 +12,13 @@
     on:click={() => showModal(ModalTypes.FindProfiles)}
     ><path
         class="svg"
-        d="M39.8 41.95 26.65 28.8q-1.5 1.3-3.5 2.025-2 .725-4.25.725-5.4 0-9.15-3.75T6 18.75q0-5.3 3.75-9.05 3.75-3.75 9.1-3.75 5.3 0 9.025 3.75 3.725 3.75 3.725 9.05 0 2.15-.7 4.15-.7 2-2.1 3.75L42 39.75Zm-20.95-13.4q4.05 0 6.9-2.875Q28.6 22.8 28.6 18.75t-2.85-6.925Q22.9 8.95 18.85 8.95q-4.1 0-6.975 2.875T9 18.75q0 4.05 2.875 6.925t6.975 2.875Z"
+        d="M22 22.75q-2.7 0-4.625-1.95-1.925-1.95-1.925-4.6 0-2.75 1.925-4.65Q19.3 9.65 22 9.65t4.625 1.9q1.925 1.9 1.925 4.65 0 2.65-1.925 4.6Q24.7 22.75 22 22.75Zm21.8 22.6-6.25-6.3q-1.1.8-2.275 1.125Q34.1 40.5 33 40.5q-3.15 0-5.325-2.175Q25.5 36.15 25.5 33q0-3.15 2.175-5.35 2.175-2.2 5.325-2.2 3.15 0 5.35 2.2 2.2 2.2 2.2 5.35 0 1.1-.325 2.275Q39.9 36.45 39.05 37.5l6.35 6.3ZM33 38.3q2.25 0 3.8-1.525Q38.35 35.25 38.35 33t-1.55-3.8q-1.55-1.55-3.8-1.55t-3.775 1.55Q27.7 30.75 27.7 33t1.525 3.775Q30.75 38.3 33 38.3Zm-9.15-10.85q-1.55 2.65-1.525 5.6.025 2.95 1.625 5.45H7.15v-3.75q0-1.55.775-2.675Q8.7 30.95 10.15 30.2q2.25-1.1 5.975-2.075 3.725-.975 7.725-.675Z"
     /></svg
 >
 
 <style>
     svg {
-        fill: none;
-        stroke: var(--svg_stroke);
-        stroke-width: 2px;
-        cursor: pointer;
         margin-top: 10px;
-        transition: 100ms all;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
-
-    svg:hover {
-        opacity: 0.8;
-    }
-
-    svg:active {
-        transform: scale(0.95);
     }
 
     @media screen and (max-width: 720px) {
@@ -45,18 +26,11 @@
             margin-top: 0;
             margin-bottom: 0;
             margin-left: 10px;
-            cursor: default;
-        }
-
-        svg:hover {
-            opacity: 1;
         }
     }
 
     @media screen and (max-width: 520px) {
         svg {
-            width: 40px;
-            height: 40px;
             margin-left: 5px;
         }
     }

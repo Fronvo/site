@@ -526,6 +526,12 @@
     .reply-container #reply-name {
         font-size: 1.6rem;
         margin: 0;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
 
     .reply-container #reply-name span {

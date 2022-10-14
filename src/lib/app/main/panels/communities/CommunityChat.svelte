@@ -386,6 +386,7 @@
 
                         <!-- Only the community owner can delete messages -->
                         {#if $joinedCommunity?.ownerId == $ourProfileData.profileId}
+                            <!-- TODO: Confirmation modal -->
                             <DeleteChatOption
                                 callback={() => deleteMessage(i)}
                             />

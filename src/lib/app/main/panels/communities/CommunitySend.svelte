@@ -59,9 +59,11 @@
         <div class="reply-container" in:fade={{ duration: 300 }}>
             <Abort callback={abortReply} />
             <h1 id="reply-name">Replying to <span>{$replyingTo}</span></h1>
+            <!-- TODO: Show message content above possibly, may be very helpful -->
         </div>
     {/if}
 
+    <!-- TODO: Arrow to expand textarea for mobile (maybe desktop aswell, will disable keyListener too as a store) -->
     <textarea id="textarea-content" bind:value={$sendContent} maxlength={512} />
 </div>
 

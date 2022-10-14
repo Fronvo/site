@@ -56,12 +56,6 @@ export const currentModalId = writable(0);
 export const modalVisible = writable(false);
 export const modalAnimDuration = 200;
 
-// General Dropdown settings
-export const currentDropdownId = writable(0);
-export const dropdownVisible = writable(false);
-export const dropdownAnimDuration = 200;
-export const dropdownPosition = writable([0, 0]);
-
 // FollowModal
 export const followModalInfo: Writable<string[]> = writable();
 export const followModalForFollowing: Writable<boolean> = writable();
@@ -72,3 +66,9 @@ export const postModalForHome: Writable<boolean> = writable();
 
 // CommunityMemberModal
 export const targetCommunityMember: Writable<FronvoAccount> = writable();
+
+// General Dropdown settings
+export const currentDropdownId = writable(0);
+export const dropdownVisible = writable(false);
+export const dropdownAnimDuration = 200;
+export const dropdownPosition = writable([0, 0]);

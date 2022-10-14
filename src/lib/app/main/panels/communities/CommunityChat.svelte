@@ -244,6 +244,7 @@
         if ($modalVisible) return;
 
         // Allow ctrl / shift combinations, dont handle
+        // TODO: Keycodes such as pgup/down, remove shift
         if (event.ctrlKey || event.shiftKey) {
             return;
         }

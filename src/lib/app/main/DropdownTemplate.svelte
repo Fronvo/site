@@ -1,17 +1,24 @@
 <script lang="ts">
     import type { DropdownActions } from 'types/main';
+    import { dismissDropdown } from 'utilities/main';
 
     export let actions: DropdownActions[];
+
+    function runCallback(callback: () => void): void {
+        dismissDropdown();
+
+        callback();
+    }
 </script>
 
 <div class="dropdown-container">
     {#each actions as { title, callback, condition }}
         {#if typeof condition != 'undefined'}
             {#if condition}
-                <button on:click={callback}>{title}</button>
+                <button on:click={() => runCallback(callback)}>{title}</button>
             {/if}
         {:else}
-            <button on:click={callback}>{title}</button>
+            <button on:click={() => runCallback(callback)}>{title}</button>
         {/if}
     {/each}
 </div>

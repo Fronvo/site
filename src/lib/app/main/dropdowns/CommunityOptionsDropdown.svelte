@@ -1,7 +1,7 @@
 <script lang="ts">
     import { joinedCommunity, ourProfileData } from 'stores/communities';
     import { ModalTypes, type DropdownActions } from 'types/main';
-    import { dismissDropdown, showModal } from 'utilities/main';
+    import { showModal } from 'utilities/main';
     import DropdownTemplate from '../DropdownTemplate.svelte';
 
     let pendingRequests: number;
@@ -17,20 +17,14 @@
     }
 
     function editCommmunity(): void {
-        dismissDropdown();
-
         showModal(ModalTypes.EditCommunity);
     }
 
     function viewMembers(): void {
-        dismissDropdown();
-
         showModal(ModalTypes.CommunityMembers);
     }
 
     function leaveCommunity(): void {
-        dismissDropdown();
-
         showModal(ModalTypes.LeaveCommunity);
     }
 

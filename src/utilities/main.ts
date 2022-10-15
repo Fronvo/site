@@ -95,7 +95,7 @@ export async function fetchPosts(profileId: string): Promise<AccountPost[]> {
             'fetchProfilePosts',
             { profileId, from: '0', to: '20' },
             ({ profilePosts }) => {
-                resolve(profilePosts || []);
+                resolve(profilePosts?.reverse() || []);
             }
         );
     });

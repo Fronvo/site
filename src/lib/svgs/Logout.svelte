@@ -11,7 +11,6 @@
         targetCommunityMessages,
     } from 'stores/communities';
     import { homePosts } from 'stores/home';
-    import { targetProfile, userData } from 'stores/profile';
     import { loginSucceeded } from 'stores/main';
 
     function logout(): void {
@@ -21,10 +20,6 @@
             removeKey('token');
             $accountRegisterVerifyTab = false;
             $loginSucceeded = false;
-
-            // Also reset userData, update smoothly on re-login
-            $userData = undefined;
-            $targetProfile = undefined;
 
             // And home posts
             $homePosts = undefined;

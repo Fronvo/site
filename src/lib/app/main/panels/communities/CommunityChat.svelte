@@ -545,6 +545,7 @@
         margin: 0;
         font-size: 1.3rem;
         margin-left: 10px;
+        overflow: hidden;
     }
 
     .message-container:hover .message-info-container .menu-container {

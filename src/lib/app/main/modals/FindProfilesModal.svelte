@@ -1,15 +1,12 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
     import Center from '$lib/app/Center.svelte';
     import Loading from '$lib/app/Loading.svelte';
     import type { FronvoAccount } from 'interfaces/all';
-    import { modalAnimDuration } from 'stores/main';
-    import { targetProfile, userData, userPosts } from 'stores/profile';
     import { socket } from 'stores/all';
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
-    import { dismissModal, fetchUser } from 'utilities/main';
-    import { loadProfilePosts } from 'utilities/profile';
+    import { dismissModal } from 'utilities/main';
+    import { loadProfilePanel } from 'utilities/profile';
 
     let searchValue: Writable<string> = writable('');
     let findResults: FronvoAccount[] = [];
@@ -89,32 +86,7 @@
     async function viewProfile(accountIndex: number): Promise<void> {
         dismissModal();
 
-        setTimeout(() => {
-            goto(`/profile/${newProfile}`, {
-                replaceState: true,
-            });
-        }, modalAnimDuration);
-
-        // Reset everything for cool transitions
-        userData.set(undefined);
-        userPosts.set(undefined);
-
-        // Start loading the new profile
-        const newProfile = findResults[accountIndex].profileId;
-
-        $targetProfile = newProfile;
-
-        // Update profile panel
-        $userData = await fetchUser(newProfile);
-
-        const isAccessible =
-            $userData.isFollower || $userData.isSelf || !$userData.isPrivate;
-
-        if (isAccessible) {
-            await loadProfilePosts(newProfile);
-        } else {
-            userPosts.set([]);
-        }
+        await loadProfilePanel(findResults[accountIndex].profileId);
     }
 </script>
 

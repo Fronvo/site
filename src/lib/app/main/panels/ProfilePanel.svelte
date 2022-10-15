@@ -1,72 +1,31 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
     import ProfileInfo from '$lib/app/main/panels/profile/ProfileInfo.svelte';
     import ProfilePosts from '$lib/app/main/panels/profile/ProfilePosts.svelte';
-    import { ourProfileData } from 'stores/communities';
     import {
         profileLoadingFinished,
         targetProfile,
+        userCommunity,
         userData,
         userPosts,
     } from 'stores/profile';
     import { onDestroy, onMount } from 'svelte';
-    import { fetchUser } from 'utilities/main';
-    import { loadProfilePosts } from 'utilities/profile';
-
-    goto(`/profile/${$targetProfile ? $targetProfile : ''}`, {
-        replaceState: true,
-    });
+    import { loadProfilePanel } from 'utilities/profile';
 
     onMount(async () => {
-        fetchUser($targetProfile)
-            .then(async (profileData) => {
-                if (!$targetProfile) {
-                    goto(`/profile/${profileData.profileId}`, {
-                        replaceState: true,
-                    });
-                }
-
-                $userData = profileData;
-
-                const isAccessible =
-                    profileData.isFollower ||
-                    profileData.isSelf ||
-                    !profileData.isPrivate;
-
-                if (profileData.isSelf) {
-                    $ourProfileData = profileData;
-                } else {
-                    if (!$ourProfileData) {
-                        $ourProfileData = await fetchUser();
-                    }
-                }
-
-                if (isAccessible) {
-                    await loadProfilePosts(profileData.profileId);
-                } else {
-                    $userPosts = [];
-                }
-            })
-            .catch(() => {
-                $targetProfile = undefined;
-
-                goto('/home', {
-                    replaceState: true,
-                });
-            });
+        await loadProfilePanel($targetProfile);
     });
 
     // Reset active profile
     onDestroy(() => {
-        $targetProfile = undefined;
         $userData = undefined;
         $userPosts = undefined;
+        $userCommunity = undefined;
+        $targetProfile = undefined;
         $profileLoadingFinished = false;
     });
 </script>
 
 <div class="profile-container">
-    <!-- Hot updates in dev -->
     {#if $userData && $userPosts}
         <ProfileInfo />
 

@@ -7,10 +7,8 @@
         userData,
     } from 'stores/profile';
     import { socket } from 'stores/all';
-    import { loadProfilePosts } from 'utilities/profile';
+    import { loadProfilePanel } from 'utilities/profile';
     import { currentPanelId } from 'stores/main';
-    import { quadIn } from 'svelte/easing';
-    import { draw } from 'svelte/transition';
     import { PanelTypes } from 'types/main';
     import { switchPanel } from 'utilities/main';
 
@@ -19,27 +17,7 @@
             $currentPanelId == PanelTypes.Profile &&
             $userData.profileId != $ourProfileData.profileId
         ) {
-            goto(`/profile/${$ourProfileData.profileId}`, {
-                replaceState: true,
-            });
-            $profileLoadingFinished = false;
-            $userData = $ourProfileData;
-
-            await loadProfilePosts($ourProfileData.profileId);
-
-            if ($ourProfileData.isInCommunity) {
-                socket.emit(
-                    'fetchCommunityData',
-                    { communityId: $userData.communityId },
-                    ({ communityData, err }) => {
-                        !err && userCommunity.set(communityData);
-
-                        $profileLoadingFinished = true;
-                    }
-                );
-            } else {
-                $profileLoadingFinished = true;
-            }
+            await loadProfilePanel();
         } else {
             switchPanel(PanelTypes.Profile);
         }

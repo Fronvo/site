@@ -1,18 +1,11 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
     import Loading from '$lib/app/Loading.svelte';
     import type { FronvoAccount } from 'interfaces/all';
     import { joinedCommunity, ourProfileData } from 'stores/communities';
     import { ModalTypes } from 'types/main';
     import { targetCommunityMember } from 'stores/main';
-    import {
-        profileLoadingFinished,
-        targetProfile,
-        userData,
-        userPosts,
-    } from 'stores/profile';
     import { dismissModal, fetchUser, showModal } from 'utilities/main';
-    import { loadProfilePosts } from 'utilities/profile';
+    import { loadProfilePanel } from 'utilities/profile';
 
     let memberInfo: FronvoAccount[] = [];
 
@@ -43,33 +36,9 @@
     }
 
     async function viewProfile(accountIndex: number): Promise<void> {
-        dismissModal(() => {
-            goto(`/profile/${newProfile}`, {
-                replaceState: true,
-            });
-        });
+        dismissModal();
 
-        // Reset everything for cool transitions
-        $userData = undefined;
-        $userPosts = undefined;
-        $profileLoadingFinished = false;
-
-        // Start loading the new profile
-        const newProfile = memberInfo[accountIndex].profileId;
-
-        $targetProfile = newProfile;
-
-        // Update profile panel
-        $userData = await fetchUser(newProfile);
-
-        const isAccessible =
-            $userData.isFollower || $userData.isSelf || !$userData.isPrivate;
-
-        if (isAccessible) {
-            await loadProfilePosts(newProfile);
-        } else {
-            userPosts.set([]);
-        }
+        await loadProfilePanel(memberInfo[accountIndex].profileId);
     }
 
     function editProfile(accountIndex: number): void {

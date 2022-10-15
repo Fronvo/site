@@ -1,11 +1,10 @@
 <script lang="ts">
-    import { targetProfile } from 'stores/profile';
+    import { userPosts } from 'stores/profile';
     import { socket } from 'stores/all';
     import { onMount } from 'svelte';
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
-    import { dismissModal } from 'utilities/main';
-    import { loadProfilePosts } from 'utilities/profile';
+    import { dismissModal, fetchPosts } from 'utilities/main';
 
     let title: string;
     let content: string;
@@ -26,7 +25,7 @@
                 content,
                 attachment: $attachment,
             },
-            ({ err }) => {
+            async ({ err }) => {
                 if (err) {
                     errorMessage = err.msg;
                     isSharing = false;
@@ -35,7 +34,7 @@
                 }
 
                 // Update, new posts
-                loadProfilePosts($targetProfile);
+                $userPosts = await fetchPosts(undefined);
 
                 dismissModal();
             }

@@ -1,16 +1,15 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
     import type { HomePost } from 'interfaces/all';
     import type { AccountPost, FronvoAccount } from 'interfaces/all';
-    import { dismissModal } from 'utilities/main';
+    import { dismissModal, fetchPosts } from 'utilities/main';
     import { postModalForHome, postModalInfo } from 'stores/main';
-    import { targetProfile, userData } from 'stores/profile';
+    import { userData, userPosts } from 'stores/profile';
     import { socket } from 'stores/all';
     import Time from 'svelte-time';
-    import { loadProfilePosts } from 'utilities/profile';
     import DeleteChatOption from '$lib/svgs/DeleteChatOption.svelte';
     import { onMount } from 'svelte';
     import linkifyHtml from 'linkify-html';
+    import { loadProfilePanel } from 'utilities/profile';
 
     function deletePost(): void {
         dismissModal();
@@ -20,21 +19,21 @@
             { postId: ($postModalInfo as AccountPost).postId },
             async ({ err }) => {
                 if (!err) {
-                    loadProfilePosts($targetProfile);
+                    $userPosts = await fetchPosts(undefined);
                 }
             }
         );
     }
 
-    function viewProfile(): void {
+    async function viewProfile(): Promise<void> {
         // No need to revisit from the profile panel
         if (!$postModalForHome) return;
 
         dismissModal();
 
-        goto(`/profile/${($postModalInfo as HomePost).profileData.profileId}`, {
-            replaceState: true,
-        });
+        await loadProfilePanel(
+            ($postModalInfo as HomePost).profileData.profileId
+        );
     }
 
     function getPostData(): AccountPost {

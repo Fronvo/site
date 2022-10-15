@@ -63,27 +63,25 @@ export function performLogin(): void {
 
 export async function fetchUser(id?: string): Promise<FronvoAccount> {
     // If no id, fetch self
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
         if (!id) {
             // Fetch our id first
-            socket.emit('fetchProfileId', async ({ profileId, err }) => {
-                err && reject(err);
-
+            socket.emit('fetchProfileId', async ({ profileId }) => {
                 await fetchData(profileId);
             });
         } else {
             await fetchData(id);
         }
 
-        async function fetchData(id: string): Promise<FronvoAccount> {
+        async function fetchData(
+            id: string
+        ): Promise<FronvoAccount | undefined> {
             return new Promise(() => {
                 socket.emit(
                     'fetchProfileData',
                     { profileId: id },
-                    ({ profileData, err }) => {
-                        err && reject(err);
-
-                        resolve(profileData);
+                    ({ profileData }) => {
+                        resolve(profileData || undefined);
                     }
                 );
             });
@@ -91,19 +89,13 @@ export async function fetchUser(id?: string): Promise<FronvoAccount> {
     });
 }
 
-export async function fetchPosts(
-    profileId: string,
-    from: string,
-    to: string
-): Promise<AccountPost[]> {
+export async function fetchPosts(profileId: string): Promise<AccountPost[]> {
     return new Promise(async (resolve) => {
         socket.emit(
             'fetchProfilePosts',
-            { profileId, from, to },
-            ({ err, profilePosts }) => {
-                err && userPosts.set([]);
-
-                resolve(profilePosts);
+            { profileId, from: '0', to: '20' },
+            ({ profilePosts }) => {
+                resolve(profilePosts || []);
             }
         );
     });

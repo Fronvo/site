@@ -1,21 +1,10 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
     import Center from '$lib/app/Center.svelte';
     import Loading from '$lib/app/Loading.svelte';
     import type { FronvoAccount } from 'interfaces/all';
-    import {
-        followModalForFollowing,
-        followModalInfo,
-        modalAnimDuration,
-    } from 'stores/main';
-    import {
-        profileLoadingFinished,
-        targetProfile,
-        userData,
-        userPosts,
-    } from 'stores/profile';
+    import { followModalForFollowing, followModalInfo } from 'stores/main';
     import { dismissModal, fetchUser } from 'utilities/main';
-    import { loadProfilePosts } from 'utilities/profile';
+    import { loadProfilePanel } from 'utilities/profile';
 
     let followInfo: FronvoAccount[] = [];
 
@@ -48,38 +37,13 @@
     async function viewProfile(accountIndex: number): Promise<void> {
         dismissModal();
 
-        setTimeout(() => {
-            goto(`/profile/${newProfile}`, {
-                replaceState: true,
-            });
-        }, modalAnimDuration);
-
-        // Reset everything for cool transitions
-        $userData = undefined;
-        $userPosts = undefined;
-        $profileLoadingFinished = false;
-
-        // Start loading the new profile
-        const newProfile = followInfo[accountIndex].profileId;
-
-        $targetProfile = newProfile;
-
-        // Update profile panel
-        $userData = await fetchUser(newProfile);
-
-        const isAccessible =
-            $userData.isFollower || $userData.isSelf || !$userData.isPrivate;
-
-        if (isAccessible) {
-            await loadProfilePosts(newProfile);
-        } else {
-            userPosts.set([]);
-        }
+        await loadProfilePanel(followInfo[accountIndex].profileId);
     }
 
     $: loadFollowInfo();
 </script>
 
+<!-- TODO: Dropdown, Modal slot components to make their creation easy -->
 <div class="following-container">
     <div class="header-container">
         <h1 id="header">

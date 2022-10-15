@@ -1,45 +1,14 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
     import { joinedCommunity } from 'stores/communities';
     import { targetCommunityMember } from 'stores/main';
-    import {
-        profileLoadingFinished,
-        targetProfile,
-        userData,
-        userPosts,
-    } from 'stores/profile';
     import { socket } from 'stores/all';
-    import { dismissModal, fetchUser } from 'utilities/main';
-    import { loadProfilePosts } from 'utilities/profile';
+    import { dismissModal } from 'utilities/main';
+    import { loadProfilePanel } from 'utilities/profile';
 
     async function viewProfile(): Promise<void> {
-        dismissModal(() => {
-            goto(`/profile/${newProfile}`, {
-                replaceState: true,
-            });
-        });
+        dismissModal();
 
-        // Reset everything for cool transitions
-        $userData = undefined;
-        $userPosts = undefined;
-        $profileLoadingFinished = false;
-
-        // Start loading the new profile
-        const newProfile = $targetCommunityMember.profileId;
-
-        $targetProfile = newProfile;
-
-        // Update profile panel
-        $userData = await fetchUser(newProfile);
-
-        const isAccessible =
-            $userData.isFollower || $userData.isSelf || !$userData.isPrivate;
-
-        if (isAccessible) {
-            await loadProfilePosts(newProfile);
-        } else {
-            userPosts.set([]);
-        }
+        await loadProfilePanel();
     }
 
     function hasChatPerms(): boolean {

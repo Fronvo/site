@@ -16,8 +16,6 @@
         userCommunity,
         userData,
     } from 'stores/profile';
-    import { socket } from 'stores/all';
-    import { onDestroy } from 'svelte';
     import { fade } from 'svelte/transition';
     import { ModalTypes, PanelTypes } from 'types/main';
     import { showModal, switchPanel } from 'utilities/main';
@@ -25,28 +23,12 @@
     const isAccessible =
         $userData.isFollower || $userData.isSelf || !$userData.isPrivate;
 
-    // Once targetProfile changes to visit a new profile from this panel directly
-    // update UI
-    const unsubscribe = userData.subscribe(async (newProfile) => {
-        if (!newProfile) return;
-
-        if (newProfile.isInCommunity) return;
-
-        $profileLoadingFinished = true;
-    });
-
-    onDestroy(() => {
-        $userCommunity = undefined;
-
-        // Prevent memory leak
-        unsubscribe();
-    });
-
     function showFollowInfo(followInfo: string[], forFollowing: boolean): void {
         if (!isAccessible) return;
 
         $followModalInfo = followInfo;
         $followModalForFollowing = forFollowing;
+
         showModal(ModalTypes.FollowInfo);
     }
 
@@ -67,20 +49,6 @@
         }
     }
 
-    function loadUserCommunity(): void {
-        if ($userData.isInCommunity) {
-            socket.emit(
-                'fetchCommunityData',
-                { communityId: $userData.communityId },
-                ({ communityData, err }) => {
-                    !err && userCommunity.set(communityData);
-
-                    $profileLoadingFinished = true;
-                }
-            );
-        }
-    }
-
     function visitCommunity(): void {
         switchPanel(PanelTypes.Communities);
 
@@ -94,8 +62,6 @@
             }, 250);
         }
     }
-
-    $: loadUserCommunity();
 </script>
 
 {#if $profileLoadingFinished}

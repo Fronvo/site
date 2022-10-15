@@ -1,7 +1,8 @@
 <script lang="ts">
     import { joinedCommunity, ourProfileData } from 'stores/communities';
-    import { ModalTypes } from 'types/main';
+    import { ModalTypes, type DropdownActions } from 'types/main';
     import { dismissDropdown, showModal } from 'utilities/main';
+    import DropdownTemplate from '../DropdownTemplate.svelte';
 
     let pendingRequests: number;
 
@@ -32,50 +33,24 @@
 
         showModal(ModalTypes.LeaveCommunity);
     }
+
+    const actions: DropdownActions[] = [
+        {
+            title: 'Edit',
+            callback: editCommmunity,
+            condition: isOwner(),
+        },
+        {
+            title: `Members ${
+                isOwner() && pendingRequests > 0 ? `(${pendingRequests})` : ''
+            }`,
+            callback: viewMembers,
+        },
+        {
+            title: isOwner() ? 'Delete' : 'Leave',
+            callback: leaveCommunity,
+        },
+    ];
 </script>
 
-<div class="options-dropdown">
-    <!-- Custom owner options -->
-    {#if isOwner()}
-        <button on:click={editCommmunity}>Edit</button>
-    {/if}
-
-    <button on:click={viewMembers}
-        >Members {isOwner() && pendingRequests > 0
-            ? `(${pendingRequests})`
-            : ''}</button
-    >
-
-    <button on:click={leaveCommunity}>{isOwner() ? 'Delete' : 'Leave'}</button>
-</div>
-
-<style>
-    .options-dropdown {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .options-dropdown button {
-        font-size: 1.4rem;
-        margin-bottom: 10px;
-        width: max-content;
-    }
-
-    .options-dropdown button:nth-last-child(1) {
-        margin-bottom: 0;
-    }
-
-    @media screen and (max-width: 720px) {
-        .options-dropdown button {
-            font-size: 1.2rem;
-            cursor: default;
-        }
-    }
-
-    @media screen and (max-width: 520px) {
-        .options-dropdown button {
-            font-size: 1rem;
-        }
-    }
-</style>
+<DropdownTemplate {actions} />

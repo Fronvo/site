@@ -28,3 +28,9 @@ export enum ModalTypes {
 export enum DropdownTypes {
     CommunityInfo,
 }
+
+export interface DropdownActions {
+    title: string;
+    callback: () => void;
+    condition?: boolean;
+}

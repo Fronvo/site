@@ -132,6 +132,20 @@
         width: 100%;
     }
 
+    .reset-container #email-input {
+        color: white;
+        background: transparent;
+        border-radius: 12px;
+        border: 3px solid white;
+    }
+
+    .reset-container #email-input {
+        color: white;
+        background: transparent;
+        border-radius: 12px;
+        border: 3px solid white;
+    }
+
     .reset-container #input-header {
         color: white;
         margin: 0;

@@ -161,6 +161,14 @@
         width: 100%;
     }
 
+    .account-container #email-input,
+    .account-container #password-input {
+        color: white;
+        background: transparent;
+        border-radius: 12px;
+        border: 3px solid white;
+    }
+
     .account-container #input-header {
         color: white;
         margin: 0;

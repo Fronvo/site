@@ -49,7 +49,7 @@
             }, 500);
 
             setTimeout(() => {
-                $userPosts.forEach((userPost) => {
+                $userPosts?.forEach((userPost) => {
                     generateContentLinks(userPost.postId, userPost.content);
                 });
             }, 100);

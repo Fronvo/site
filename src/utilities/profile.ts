@@ -10,7 +10,10 @@ import {
 } from 'stores/profile';
 import { fetchPosts, fetchUser } from './main';
 
+let ourData: FronvoAccount;
 let userDataGlobal: FronvoAccount;
+let isLoading = false;
+let lastTarget: string;
 
 function setUserData(data: FronvoAccount): void {
     userData.set(data);
@@ -18,6 +21,11 @@ function setUserData(data: FronvoAccount): void {
 }
 
 export async function loadProfilePanel(targetProfile?: string): Promise<void> {
+    if (isLoading && targetProfile == lastTarget) return;
+
+    isLoading = true;
+    lastTarget = targetProfile;
+
     // Reset previous data
     profileLoadingFinished.set(false);
     setUserData(undefined);
@@ -27,7 +35,7 @@ export async function loadProfilePanel(targetProfile?: string): Promise<void> {
     // For follow relations and more
     await loadOurData();
 
-    if (targetProfile) {
+    if (targetProfile && targetProfile != ourData.profileId) {
         await loadTargetProfile(targetProfile);
     } else {
         await loadProfile();
@@ -38,21 +46,22 @@ export async function loadProfilePanel(targetProfile?: string): Promise<void> {
     }
 
     profileLoadingFinished.set(true);
+    isLoading = false;
 }
 
 async function loadOurData(): Promise<void> {
-    const ourData = await fetchUser();
+    ourData = await fetchUser();
 
     ourProfileData.set(ourData);
     userDataGlobal = ourData;
 }
 
 async function loadProfile(): Promise<void> {
-    setUserData(userDataGlobal);
-    userPosts.set(await fetchPosts(userDataGlobal.profileId));
+    setUserData(ourData);
+    userPosts.set(await fetchPosts(ourData.profileId));
 
     // Didnt redirect before, no targetProfile
-    goto(`/profile/${userDataGlobal.profileId}`, {
+    goto(`/profile/${ourData.profileId}`, {
         replaceState: true,
     });
 }

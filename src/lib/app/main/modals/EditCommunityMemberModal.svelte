@@ -8,7 +8,7 @@
     async function viewProfile(): Promise<void> {
         dismissModal();
 
-        await loadProfilePanel();
+        await loadProfilePanel($targetCommunityMember.profileId);
     }
 
     function hasChatPerms(): boolean {

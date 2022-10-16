@@ -12,6 +12,7 @@
 
     let maxOnlineTime = getKey('maxOnlineTime') / 60 || 0;
     let tempDarkTheme = $darkTheme;
+    let tempDataSaver = $dataSaver;
 
     function saveMaxOnlineTime(): void {
         const onlineTime = validateMaxOnlineTime() * 60;
@@ -48,7 +49,8 @@
     }
 
     function saveDataSaver(): void {
-        setKey('dataSaver', $dataSaver);
+        setKey('dataSaver', tempDataSaver);
+        $dataSaver = tempDataSaver;
     }
 
     function saveSettings(): void {
@@ -87,7 +89,7 @@
         <div class="single-line">
             <h1>Data saver</h1>
             <Checkbox
-                bind:checked={$dataSaver}
+                bind:checked={tempDataSaver}
                 class="private-checkbox"
                 size="2.7rem"
                 primaryColor="rgb(180, 120, 255)"

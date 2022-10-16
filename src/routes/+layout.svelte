@@ -1,7 +1,7 @@
 <script lang="ts">
     import Account from '$lib/app/account/Account.svelte';
     import Main from '$lib/app/main/Main.svelte';
-    import { tokenInvalid } from 'stores/all';
+    import { dataSaver, tokenInvalid } from 'stores/all';
     import {
         dropdownPosition,
         loginSucceeded,
@@ -32,6 +32,7 @@
 
         // Try our best to default to dark
         $darkTheme = !getKey('darkTheme') || getKey('darkTheme') == 'true';
+        $dataSaver = getKey('dataSaver') == 'true';
 
         darkTheme.subscribe((dark) => {
             if (typeof dark == 'undefined') {

@@ -6,11 +6,12 @@
     import { targetCommunityMember } from 'stores/main';
     import { dismissModal, fetchUser, showModal } from 'utilities/main';
     import { loadProfilePanel } from 'utilities/profile';
+    import { dataSaver } from 'stores/all';
 
     let memberInfo: FronvoAccount[] = [];
-
-    // Cap at 20 max loaded
-    const memberInfoCopy = $joinedCommunity.members.slice(0, 20);
+    const memberInfoCopy = $dataSaver
+        ? $joinedCommunity.members.slice(0, 20)
+        : $joinedCommunity.members;
     let loadingFinished = false;
 
     function isOwner(profileId?: string): boolean {

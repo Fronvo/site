@@ -1,6 +1,7 @@
 <script lang="ts">
     import {
         darkTheme,
+        dataSaver,
         sessionTime,
         sessionTimeEnabled,
         sessionWarningShown,
@@ -46,9 +47,14 @@
         $darkTheme = tempDarkTheme;
     }
 
+    function saveDataSaver(): void {
+        setKey('dataSaver', $dataSaver);
+    }
+
     function saveSettings(): void {
         saveMaxOnlineTime();
         saveDarkTheme();
+        saveDataSaver();
 
         dismissModal();
     }
@@ -71,6 +77,17 @@
             <h1>Dark theme</h1>
             <Checkbox
                 bind:checked={tempDarkTheme}
+                class="private-checkbox"
+                size="2.7rem"
+                primaryColor="rgb(180, 120, 255)"
+                secondaryColor="white"
+            />
+        </div>
+
+        <div class="single-line">
+            <h1>Data saver</h1>
+            <Checkbox
+                bind:checked={$dataSaver}
                 class="private-checkbox"
                 size="2.7rem"
                 primaryColor="rgb(180, 120, 255)"

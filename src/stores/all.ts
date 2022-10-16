@@ -43,3 +43,4 @@ export const sessionTime = writable(0);
 export const sessionWarningShown = writable(false);
 export const sessionAttached = writable(false);
 export const darkTheme = writable(undefined);
+export const dataSaver = writable(false);

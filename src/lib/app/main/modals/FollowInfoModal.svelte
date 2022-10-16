@@ -2,6 +2,7 @@
     import Center from '$lib/app/Center.svelte';
     import Loading from '$lib/app/Loading.svelte';
     import type { FronvoAccount } from 'interfaces/all';
+    import { dataSaver } from 'stores/all';
     import { followModalForFollowing, followModalInfo } from 'stores/main';
     import { dismissModal, fetchUser } from 'utilities/main';
     import { loadProfilePanel } from 'utilities/profile';
@@ -9,7 +10,9 @@
     let followInfo: FronvoAccount[] = [];
 
     // Cap at 20 max loaded
-    const followInfoCopy = $followModalInfo.slice(0, 10);
+    const followInfoCopy = $dataSaver
+        ? $followModalInfo.slice(0, 10)
+        : $followModalInfo;
     let loadingFinished = false;
 
     async function loadFollowInfo() {

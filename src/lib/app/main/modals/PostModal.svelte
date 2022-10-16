@@ -1,9 +1,9 @@
 <script lang="ts">
     import type { HomePost } from 'interfaces/all';
     import type { AccountPost, FronvoAccount } from 'interfaces/all';
-    import { dismissModal, fetchPosts } from 'utilities/main';
+    import { dismissModal } from 'utilities/main';
     import { postModalForHome, postModalInfo } from 'stores/main';
-    import { userData, userPosts } from 'stores/profile';
+    import { userData } from 'stores/profile';
     import { socket } from 'stores/all';
     import Time from 'svelte-time';
     import DeleteChatOption from '$lib/svgs/DeleteChatOption.svelte';
@@ -19,7 +19,7 @@
             { postId: ($postModalInfo as AccountPost).postId },
             async ({ err }) => {
                 if (!err) {
-                    $userPosts = await fetchPosts(undefined);
+                    await loadProfilePanel();
                 }
             }
         );

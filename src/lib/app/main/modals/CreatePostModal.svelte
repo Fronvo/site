@@ -1,10 +1,10 @@
 <script lang="ts">
-    import { userPosts } from 'stores/profile';
     import { socket } from 'stores/all';
     import { onMount } from 'svelte';
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
-    import { dismissModal, fetchPosts } from 'utilities/main';
+    import { dismissModal } from 'utilities/main';
+    import { loadProfilePanel } from 'utilities/profile';
 
     let title: string;
     let content: string;
@@ -34,7 +34,7 @@
                 }
 
                 // Update, new posts
-                $userPosts = await fetchPosts(undefined);
+                loadProfilePanel();
 
                 dismissModal();
             }

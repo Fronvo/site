@@ -28,11 +28,13 @@
 
 <div class="home-container" in:fade={{ duration: 300, delay: 200 }}>
     {#if $homePostsStore}
-        <h1 id="latest-posts">Latest posts</h1>
+        <div in:fade={{ duration: 300, delay: 200 }}>
+            <h1 id="latest-posts">Latest posts</h1>
 
-        <HomePosts />
+            <HomePosts />
 
-        <HomeGrass />
+            <HomeGrass />
+        </div>
     {:else}
         <Loading text="Loading posts.." />
     {/if}

@@ -5,6 +5,8 @@
     import {
         initialCommunityLoadingFinished,
         joinedCommunity,
+        replyingTo,
+        replyingToId,
         sendContent,
         targetCommunity,
         targetCommunityData,
@@ -31,6 +33,8 @@
             $targetCommunityData = undefined;
             $sendContent = '';
             $targetCommunityMessages = undefined;
+            $replyingTo = undefined;
+            $replyingToId = undefined;
         });
     }
 </script>

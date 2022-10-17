@@ -5,13 +5,10 @@
     import EditProfile from '$lib/svgs/EditProfile.svelte';
     import Follow from '$lib/svgs/Follow.svelte';
     import Logout from '$lib/svgs/Logout.svelte';
-    import {
-        joinedCommunity,
-        ourProfileData,
-        targetCommunityData,
-    } from 'stores/communities';
+    import { joinedCommunity, targetCommunityData } from 'stores/communities';
     import { followModalForFollowing, followModalInfo } from 'stores/main';
     import {
+        ourProfileData,
         profileLoadingFinished,
         userCommunity,
         userData,

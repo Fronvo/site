@@ -7,6 +7,7 @@
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
     import { dismissModal } from 'utilities/main';
+    import { loadCommunitiesPanel } from 'utilities/communities';
 
     let name: string;
     let description: string;
@@ -27,7 +28,7 @@
                 description,
                 icon: $icon,
             },
-            ({ communityData, err }) => {
+            async ({ err }) => {
                 if (err) {
                     errorMessage = err.msg;
                     isCreating = false;
@@ -35,15 +36,9 @@
                     return;
                 }
 
-                // Update, new community data
-                $joinedCommunity = communityData;
-                $chatRequestAccepted = true;
-
-                goto(`/community/${communityData.communityId}`, {
-                    replaceState: true,
-                });
-
                 dismissModal();
+
+                await loadCommunitiesPanel();
             }
         );
     }

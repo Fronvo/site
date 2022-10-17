@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { joinedCommunity, ourProfileData } from 'stores/communities';
+    import { joinedCommunity } from 'stores/communities';
+    import { ourProfileData } from 'stores/profile';
     import { ModalTypes, type DropdownActions } from 'types/main';
     import { showModal } from 'utilities/main';
     import DropdownTemplate from '../DropdownTemplate.svelte';

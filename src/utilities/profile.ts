@@ -1,7 +1,7 @@
 import { goto } from '$app/navigation';
 import type { FronvoAccount } from 'interfaces/all';
 import { socket } from 'stores/all';
-import { ourProfileData } from 'stores/communities';
+import { ourProfileData } from 'stores/profile';
 import {
     profileLoadingFinished,
     userCommunity,
@@ -49,11 +49,13 @@ export async function loadProfilePanel(targetProfile?: string): Promise<void> {
     isLoading = false;
 }
 
-async function loadOurData(): Promise<void> {
+export async function loadOurData(): Promise<FronvoAccount> {
     ourData = await fetchUser();
 
     ourProfileData.set(ourData);
     userDataGlobal = ourData;
+
+    return ourData;
 }
 
 async function loadProfile(): Promise<void> {

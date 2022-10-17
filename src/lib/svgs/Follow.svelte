@@ -3,7 +3,7 @@
     import { userData } from 'stores/profile';
     import { socket } from 'stores/all';
     import { homePosts } from 'stores/home';
-    import { ourProfileData } from 'stores/communities';
+    import { ourProfileData } from 'stores/profile';
 
     let isFollowed = $ourProfileData.following.includes($userData.profileId);
     let isRequesting = false;

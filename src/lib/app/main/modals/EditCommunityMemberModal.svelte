@@ -4,6 +4,7 @@
     import { socket } from 'stores/all';
     import { dismissModal } from 'utilities/main';
     import { loadProfilePanel } from 'utilities/profile';
+    import { fetchCommunity } from 'utilities/communities';
 
     async function viewProfile(): Promise<void> {
         dismissModal();
@@ -26,15 +27,9 @@
                 profileId: $targetCommunityMember.profileId,
                 accepted: newChatPermState,
             },
-            () => {
-                socket.emit(
-                    'fetchCommunityData',
-                    { communityId: $joinedCommunity.communityId },
-                    ({ communityData }) => {
-                        $joinedCommunity = communityData;
-
-                        dismissModal();
-                    }
+            async () => {
+                $joinedCommunity = await fetchCommunity(
+                    $joinedCommunity.communityId
                 );
             }
         );

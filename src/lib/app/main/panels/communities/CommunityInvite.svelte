@@ -1,10 +1,5 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
-    import {
-        joinedCommunity,
-        targetCommunity,
-        targetCommunityData,
-    } from 'stores/communities';
+    import { targetCommunityData } from 'stores/communities';
     import { socket } from 'stores/all';
     import { fade } from 'svelte/transition';
     import { loadCommunitiesPanel } from 'utilities/communities';
@@ -19,12 +14,10 @@
         socket.emit(
             'joinCommunity',
             { communityId: $targetCommunityData.communityId },
-            ({ communityData, err }) => {
+            async ({ err }) => {
                 if (!err) {
                     // Update community panel
-                    $targetCommunity = undefined;
-                    $targetCommunityData = undefined;
-                    $joinedCommunity = communityData;
+                    await loadCommunitiesPanel();
                 } else {
                     isJoining = false;
                 }
@@ -43,17 +36,10 @@
         );
     }
 
-    function rejectInvite(): void {
+    async function rejectInvite(): Promise<void> {
         if (isJoining) return;
 
-        $targetCommunity = undefined;
-        $targetCommunityData = undefined;
-
-        goto('/community', {
-            replaceState: true,
-        });
-
-        loadCommunitiesPanel();
+        await loadCommunitiesPanel();
     }
 </script>
 

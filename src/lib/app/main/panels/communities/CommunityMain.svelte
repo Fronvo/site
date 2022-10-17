@@ -1,34 +1,18 @@
 <script lang="ts">
-    import { socket } from 'stores/all';
-    import {
-        initialCommunityLoadingFinished,
-        joinedCommunity,
-        targetCommunityMessages,
-    } from 'stores/communities';
-    import { onMount } from 'svelte';
+    import { joinedCommunity } from 'stores/communities';
     import { fade } from 'svelte/transition';
     import CommunityChat from './CommunityChat.svelte';
     import CommunityInfo from './CommunityInfo.svelte';
     import CommunitySend from './CommunitySend.svelte';
-
-    onMount(() => {
-        socket.emit('fetchCommunityMessages', ({ communityMessages }) => {
-            $targetCommunityMessages = communityMessages;
-
-            $initialCommunityLoadingFinished = true;
-        });
-    });
 </script>
 
-{#if $joinedCommunity && $initialCommunityLoadingFinished}
-    <div class="main-container" in:fade={{ duration: 500 }}>
-        <CommunityInfo />
+<div class="main-container" in:fade={{ duration: 500 }}>
+    <CommunityInfo />
 
-        <CommunityChat />
+    <CommunityChat />
 
-        <CommunitySend />
-    </div>
-{/if}
+    <CommunitySend />
+</div>
 
 <svelte:head>
     <title>Fronvo | {$joinedCommunity?.name}</title>

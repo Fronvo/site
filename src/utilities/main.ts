@@ -15,7 +15,6 @@ import {
     modalAnimDuration,
     modalVisible,
 } from 'stores/main';
-import { userPosts } from 'stores/profile';
 import type { DropdownTypes, ModalTypes, PanelTypes } from 'types/main';
 import { getKey, removeKey, setKey } from './global';
 

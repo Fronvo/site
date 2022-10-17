@@ -15,22 +15,24 @@
     }
 </script>
 
-<div
-    class="info-container"
-    in:fly={{ y: -150, duration: $maxChatAnimDelay + 200 }}
->
-    <img
-        id="icon"
-        src={$joinedCommunity.icon
-            ? $joinedCommunity.icon
-            : '/svgs/profile/default.svg'}
-        alt={`${$joinedCommunity.name}'s' icon`}
-        draggable={false}
-    />
-    <h1 id="name">{$joinedCommunity.name}</h1>
+{#if $joinedCommunity}
+    <div
+        class="info-container"
+        in:fly={{ y: -150, duration: $maxChatAnimDelay + 200 }}
+    >
+        <img
+            id="icon"
+            src={$joinedCommunity.icon
+                ? $joinedCommunity.icon
+                : '/svgs/profile/default.svg'}
+            alt={`${$joinedCommunity.name}'s' icon`}
+            draggable={false}
+        />
+        <h1 id="name">{$joinedCommunity.name}</h1>
 
-    <OptionsMenu callback={showCommunityInfoDropdown} />
-</div>
+        <OptionsMenu callback={showCommunityInfoDropdown} />
+    </div>
+{/if}
 
 <style>
     .info-container {

@@ -1,12 +1,6 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
-    import { ourProfileData } from 'stores/communities';
-    import {
-        profileLoadingFinished,
-        userCommunity,
-        userData,
-    } from 'stores/profile';
-    import { socket } from 'stores/all';
+    import { ourProfileData } from 'stores/profile';
+    import { userData } from 'stores/profile';
     import { loadProfilePanel } from 'utilities/profile';
     import { currentPanelId } from 'stores/main';
     import { PanelTypes } from 'types/main';

@@ -8,6 +8,7 @@
     import { socket } from 'stores/all';
     import { fade } from 'svelte/transition';
     import { dismissModal } from 'utilities/main';
+    import { loadCommunitiesPanel } from 'utilities/communities';
 
     let inviteCode: string;
     let isJoining = false;
@@ -24,7 +25,7 @@
             {
                 communityId: inviteCode,
             },
-            ({ communityData, err }) => {
+            async ({ err }) => {
                 if (err) {
                     errorMessage = err.msg;
                     isJoining = false;
@@ -32,16 +33,10 @@
                     return;
                 }
 
-                // Update community panel
-                $targetCommunity = undefined;
-                $targetCommunityData = undefined;
-                $joinedCommunity = communityData;
-
-                goto(`/community/${$joinedCommunity.communityId}`, {
-                    replaceState: true,
-                });
-
                 dismissModal();
+
+                // Update community panel
+                await loadCommunitiesPanel();
             }
         );
     }

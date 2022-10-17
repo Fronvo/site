@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
     import type {
         CommunityMessage,
         CommunityMessageFinal,
@@ -10,15 +9,11 @@
     import { loadCommunitiesPanel } from 'utilities/communities';
     import {
         chatRequestAccepted,
-        initialCommunityLoadingFinished,
         joinedCommunity,
         maxChatAnimDelay,
-        ourProfileData,
         replyingTo,
         replyingToId,
         sendContent,
-        targetCommunity,
-        targetCommunityData,
         targetCommunityMessages,
         targetSendHeight,
     } from 'stores/communities';
@@ -30,6 +25,7 @@
     import { fetchUser } from 'utilities/main';
     import linkifyHtml from 'linkify-html';
     import Reply from '$lib/svgs/Reply.svelte';
+    import { ourProfileData } from 'stores/profile';
 
     let animationsFinished = false;
 
@@ -96,9 +92,6 @@
             if (
                 tempFinalizedMessages.length == $targetCommunityMessages.length
             ) {
-                // Finally, reverse the order
-                // tempFinalizedMessages.reverse();
-
                 // Update messages
                 finalizedMessages = tempFinalizedMessages;
 
@@ -184,16 +177,8 @@
 
     function attachCommunityDeletedListener(): void {
         if (!($ourProfileData.profileId == $joinedCommunity.ownerId)) {
-            socket.on('communityDeleted', () => {
-                $targetCommunity = undefined;
-                $targetCommunityData = undefined;
-                $initialCommunityLoadingFinished = false;
-
-                loadCommunitiesPanel();
-
-                goto('/community', {
-                    replaceState: true,
-                });
+            socket.on('communityDeleted', async () => {
+                await loadCommunitiesPanel();
             });
         }
     }
@@ -336,92 +321,95 @@
     });
 </script>
 
-<div class="chat-container">
-    {#if $targetCommunityMessages.length == 0}
-        <h1 id="chat-start" in:scale={{ duration: 500, start: 0.95 }}>
-            Welcome to {$joinedCommunity.name}'s chat room!
-        </h1>
-    {:else if finalizedMessages}
-        {#each finalizedMessages as { messageId, profileData, content, creationDate, isReply, replyId }, i}
-            <div
-                class="message-container"
-                in:fly={{
-                    x: 10,
-                    y: 25,
-                    opacity: 0,
-                    // easing: circInOut,
-                    duration: 500,
-                    delay: !animationsFinished
-                        ? Math.min(
-                              (finalizedMessages.length - i) * 50,
-                              $maxChatAnimDelay
-                          )
-                        : 0,
-                }}
-            >
-                <div class="message-info-container">
-                    <img
-                        id="avatar"
-                        draggable={false}
-                        src={profileData.avatar || '/svgs/profile/default.svg'}
-                        alt={`${profileData.username}'s avatar`}
-                    />
-                    <h1 id="username">{profileData.username}</h1>
+{#if $targetCommunityMessages}
+    <div class="chat-container">
+        {#if $targetCommunityMessages.length == 0}
+            <h1 id="chat-start" in:scale={{ duration: 500, start: 0.95 }}>
+                Welcome to {$joinedCommunity.name}'s chat room!
+            </h1>
+        {:else if finalizedMessages}
+            {#each finalizedMessages as { messageId, profileData, content, creationDate, isReply, replyId }, i}
+                <div
+                    class="message-container"
+                    in:fly={{
+                        x: 10,
+                        y: 25,
+                        opacity: 0,
+                        // easing: circInOut,
+                        duration: 500,
+                        delay: !animationsFinished
+                            ? Math.min(
+                                  (finalizedMessages.length - i) * 50,
+                                  $maxChatAnimDelay
+                              )
+                            : 0,
+                    }}
+                >
+                    <div class="message-info-container">
+                        <img
+                            id="avatar"
+                            draggable={false}
+                            src={profileData.avatar ||
+                                '/svgs/profile/default.svg'}
+                            alt={`${profileData.username}'s avatar`}
+                        />
+                        <h1 id="username">{profileData.username}</h1>
 
-                    <div class="menu-container">
-                        <!-- Anyone can reply, if the chat request is accepted -->
-                        {#if $chatRequestAccepted}
-                            <Reply callback={() => replyMessage(i)} />
-                        {/if}
+                        <div class="menu-container">
+                            <!-- Anyone can reply, if the chat request is accepted -->
+                            {#if $chatRequestAccepted}
+                                <Reply callback={() => replyMessage(i)} />
+                            {/if}
 
-                        <!-- Only the community owner can delete messages -->
-                        {#if $joinedCommunity?.ownerId == $ourProfileData.profileId}
-                            <!-- TODO: Confirmation modal -->
-                            <DeleteChatOption
-                                callback={() => deleteMessage(i)}
-                            />
-                        {/if}
+                            <!-- Only the community owner can delete messages -->
+                            {#if $joinedCommunity?.ownerId == $ourProfileData.profileId}
+                                <!-- TODO: Confirmation modal -->
+                                <DeleteChatOption
+                                    callback={() => deleteMessage(i)}
+                                />
+                            {/if}
+                        </div>
                     </div>
+
+                    {#if isReply}
+                        <div class="reply-container">
+                            {#if findMessageById(replyId)}
+                                <h1 id="reply-name">
+                                    Replying to <span
+                                        >{findCachedData(
+                                            findMessageById(replyId).ownerId
+                                        ).username}</span
+                                    >
+                                </h1>
+                                <h1 id="reply-message">
+                                    {findMessageById(replyId).content}
+                                </h1>
+                            {:else}
+                                <h1 id="reply-name">
+                                    Replying to <span>a deleted message</span>
+                                </h1>
+                            {/if}
+                        </div>
+                    {/if}
+
+                    <h1 id="content" class={messageId}>
+                        {content}
+                    </h1>
+
+                    <h1 id="creation-date">
+                        <!-- Updates every 15 seconds -->
+                        <Time
+                            relative
+                            format={'dddd HH:mm · MMMM D YYYY'}
+                            live={15000}
+                            timestamp={creationDate}
+                        />
+                    </h1>
                 </div>
-
-                {#if isReply}
-                    <div class="reply-container">
-                        {#if findMessageById(replyId)}
-                            <h1 id="reply-name">
-                                Replying to <span
-                                    >{findCachedData(
-                                        findMessageById(replyId).ownerId
-                                    ).username}</span
-                                >
-                            </h1>
-                            <h1 id="reply-message">
-                                {findMessageById(replyId).content}
-                            </h1>
-                        {:else}
-                            <h1 id="reply-name">
-                                Replying to <span>a deleted message</span>
-                            </h1>
-                        {/if}
-                    </div>
-                {/if}
-
-                <h1 id="content" class={messageId}>
-                    {content}
-                </h1>
-
-                <h1 id="creation-date">
-                    <!-- Updates every 15 seconds -->
-                    <Time
-                        relative
-                        format={'dddd HH:mm · MMMM D YYYY'}
-                        live={15000}
-                        timestamp={creationDate}
-                    />
-                </h1>
-            </div>
-        {/each}
-    {/if}
-</div>
+            {/each}
+        {/if}
+    </div>
+{/if}
 
 <style>
     .chat-container {

@@ -3,7 +3,7 @@
     import { removeKey } from 'utilities/global';
     import { accountRegisterVerifyTab } from 'stores/account';
     import {
-        initialCommunityLoadingFinished,
+        communityLoadingFinished,
         joinedCommunity,
         replyingTo,
         replyingToId,
@@ -27,7 +27,7 @@
             $homePosts = undefined;
 
             // And communities
-            $initialCommunityLoadingFinished = undefined;
+            $communityLoadingFinished = undefined;
             $joinedCommunity = undefined;
             $targetCommunity = undefined;
             $targetCommunityData = undefined;

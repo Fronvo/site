@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
     import { officialCommunity } from 'stores/communities';
     import { socket } from 'stores/all';
     import { fade } from 'svelte/transition';
@@ -9,17 +8,9 @@
 
     function joinOfficialCommunity(): void {
         // Join without invite info
-        socket.emit(
-            'joinCommunity',
-            { communityId: 'fronvo' },
-            ({ err, communityData }) => {
-                goto(`/community/${communityData.communityId}`, {
-                    replaceState: true,
-                });
-
-                !err && loadCommunitiesPanel();
-            }
-        );
+        socket.emit('joinCommunity', { communityId: 'fronvo' }, async () => {
+            await loadCommunitiesPanel();
+        });
     }
 </script>
 

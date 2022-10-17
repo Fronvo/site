@@ -10,6 +10,7 @@
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
     import { dismissModal } from 'utilities/main';
+    import { loadCommunitiesPanel } from 'utilities/communities';
 
     let searchValue: Writable<string> = writable('');
     let findResults: Community[] = [];
@@ -89,16 +90,9 @@
     async function viewCommunity(communityIndex: number): Promise<void> {
         dismissModal();
 
-        setTimeout(() => {
-            $targetCommunityData = findResults[communityIndex];
-
-            goto(`/community/${$targetCommunityData.communityId}`, {
-                replaceState: true,
-            });
+        setTimeout(async () => {
+            await loadCommunitiesPanel(findResults[communityIndex].communityId);
         }, modalAnimDuration);
-
-        // Reset everything for cool transitions
-        $targetCommunityData = undefined;
     }
 </script>
 

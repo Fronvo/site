@@ -1,12 +1,13 @@
 <script lang="ts">
     import Loading from '$lib/app/Loading.svelte';
     import type { FronvoAccount } from 'interfaces/all';
-    import { joinedCommunity, ourProfileData } from 'stores/communities';
+    import { joinedCommunity } from 'stores/communities';
     import { ModalTypes } from 'types/main';
     import { targetCommunityMember } from 'stores/main';
     import { dismissModal, fetchUser, showModal } from 'utilities/main';
     import { loadProfilePanel } from 'utilities/profile';
     import { dataSaver } from 'stores/all';
+    import { ourProfileData } from 'stores/profile';
 
     let memberInfo: FronvoAccount[] = [];
     const memberInfoCopy = $dataSaver

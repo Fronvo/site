@@ -2,7 +2,6 @@
     import { goto } from '$app/navigation';
     import {
         joinedCommunity,
-        ourProfileData,
         targetCommunity,
         targetCommunityData,
     } from 'stores/communities';
@@ -10,6 +9,7 @@
     import { loadCommunitiesPanel } from 'utilities/communities';
     import { dismissModal } from 'utilities/main';
     import Center from '$lib/app/Center.svelte';
+    import { ourProfileData } from 'stores/profile';
 
     let isLeaving = false;
 

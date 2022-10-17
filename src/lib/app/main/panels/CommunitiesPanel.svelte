@@ -1,52 +1,29 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
     import {
+        communityLoadingFinished,
         joinedCommunity,
         targetCommunity,
         targetCommunityData,
     } from 'stores/communities';
-    import { onDestroy, onMount } from 'svelte';
+    import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
     import { loadCommunitiesPanel } from 'utilities/communities';
     import CommunityInvite from './communities/CommunityInvite.svelte';
     import CommunityMain from './communities/CommunityMain.svelte';
     import OfficialCommunity from './communities/OfficialCommunity.svelte';
 
-    let loadingFinished = false;
-
-    goto(`/community/${$targetCommunity ? $targetCommunity : ''}`, {
-        replaceState: true,
-    });
-
     onMount(async () => {
-        // If already in a community, redirect
-        // Otherwise load community panel / get invite info
         await loadCommunitiesPanel($targetCommunity);
-
-        // Correct url if in a community
-        if ($joinedCommunity) {
-            goto(`/community/${$joinedCommunity.communityId}`, {
-                replaceState: true,
-            });
-        }
-
-        loadingFinished = true;
-    });
-
-    // Reset community variables
-    onDestroy(() => {
-        $targetCommunity = undefined;
-        $targetCommunityData = undefined;
     });
 </script>
 
 <div class="communities-container" in:fade={{ duration: 200, delay: 200 }}>
     <!-- Wait for loading to finish -->
-    {#if loadingFinished}
+    {#if $communityLoadingFinished}
         <!-- If joined community is not filled, decide what to do -->
         {#if !$joinedCommunity}
             <!-- If theres no target, show the official community tab -->
-            {#if !$targetCommunity && !$targetCommunityData}
+            {#if !$targetCommunity || !$targetCommunityData}
                 <OfficialCommunity />
 
                 <!-- Otherwise just show the invite info -->

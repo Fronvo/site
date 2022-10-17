@@ -1,27 +1,12 @@
 <script lang="ts">
     import ProfileInfo from '$lib/app/main/panels/profile/ProfileInfo.svelte';
     import ProfilePosts from '$lib/app/main/panels/profile/ProfilePosts.svelte';
-    import {
-        profileLoadingFinished,
-        targetProfile,
-        userCommunity,
-        userData,
-        userPosts,
-    } from 'stores/profile';
-    import { onDestroy, onMount } from 'svelte';
+    import { targetProfile, userData, userPosts } from 'stores/profile';
+    import { onMount } from 'svelte';
     import { loadProfilePanel } from 'utilities/profile';
 
     onMount(async () => {
         await loadProfilePanel($targetProfile);
-    });
-
-    // Reset active profile
-    onDestroy(() => {
-        $userData = undefined;
-        $userPosts = undefined;
-        $userCommunity = undefined;
-        $targetProfile = undefined;
-        $profileLoadingFinished = false;
     });
 </script>
 

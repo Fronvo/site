@@ -46,6 +46,7 @@ export async function loadCommunitiesPanel(
     officialCommunityStore.set(undefined);
     joinedCommunityStore.set(undefined);
     targetCommunityData.set(undefined);
+    chatRequestAccepted.set(undefined);
 
     ourData = await loadOurData();
 

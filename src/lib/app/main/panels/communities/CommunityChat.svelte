@@ -72,34 +72,24 @@
         for (const messageIndex in $targetCommunityMessages) {
             const message = $targetCommunityMessages[messageIndex];
 
-            const cachedAccount = findCachedData(message.ownerId);
+            let cachedAccount = findCachedData(message.ownerId);
 
             if (!cachedAccount) {
-                await fetchUser(message.ownerId).then((account) => {
-                    // Add profileData
-                    tempFinalizedMessages.push({
-                        ...message,
-                        profileData: account,
-                    });
+                cachedAccount = await fetchUser(message.ownerId);
 
-                    // Update cache
-                    cachedAccountData.push(account);
-
-                    generateContentLinks(message.messageId, message.content);
-
-                    checkLoadingDone();
-                });
-            } else {
-                // Read from cache already, proceed
-                tempFinalizedMessages.push({
-                    ...message,
-                    profileData: cachedAccount,
-                });
-
-                generateContentLinks(message.messageId, message.content);
-
-                checkLoadingDone();
+                // Update cache
+                cachedAccountData.push(cachedAccount);
             }
+
+            // Read from cache already, proceed
+            tempFinalizedMessages.push({
+                ...message,
+                profileData: cachedAccount,
+            });
+
+            generateContentLinks(message.messageId, message.content);
+
+            checkLoadingDone();
         }
 
         function checkLoadingDone(): void {

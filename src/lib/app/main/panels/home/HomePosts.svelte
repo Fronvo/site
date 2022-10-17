@@ -4,6 +4,7 @@
     import { postModalForHome, postModalInfo } from 'stores/main';
     import { onMount } from 'svelte';
     import Time from 'svelte-time';
+    import { fade } from 'svelte/transition';
     import { ModalTypes } from 'types/main';
     import { showModal } from 'utilities/main';
 
@@ -44,7 +45,7 @@
     }
 </script>
 
-<div class="posts-container">
+<div class="posts-container" in:fade={{ duration: 300, delay: 200 }}>
     {#each $posts as { post, profileData }, i}
         <div on:click={() => viewPost(i)} class="post-container">
             <div class="author-container">

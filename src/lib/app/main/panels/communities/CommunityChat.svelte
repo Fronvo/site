@@ -199,6 +199,7 @@
 
         if (
             event.ctrlKey ||
+            event.shiftKey ||
             event.key.startsWith('Page') ||
             event.key.startsWith('Arrow')
         ) {

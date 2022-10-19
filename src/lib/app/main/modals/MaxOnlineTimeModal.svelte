@@ -26,17 +26,13 @@
 </script>
 
 <ModalTemplate {data}>
-    <Center absolute>
-        <h1>
-            You have reached your maximum online time allowance of <span
-                >{getKey('maxOnlineTime') / 60}</span
-            > minute(s).
-        </h1>
+    <h1>
+        You have reached your maximum online time allowance of <span
+            >{getKey('maxOnlineTime') / 60}</span
+        > minute(s).
+    </h1>
 
-        <h1>
-            You should exit Fronvo now but you can also reset the session time.
-        </h1>
-    </Center>
+    <h1>You should exit Fronvo now but you can also reset the session time.</h1>
 </ModalTemplate>
 
 <style>

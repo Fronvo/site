@@ -17,15 +17,16 @@
         targetCommunityMessages,
         targetSendHeight,
     } from 'stores/communities';
-    import { modalVisible } from 'stores/main';
+    import { modalVisible, targetConfirmCommunityMessage } from 'stores/main';
     import { onDestroy, onMount } from 'svelte';
     import Time from 'svelte-time';
     import type { Unsubscriber } from 'svelte/store';
     import { fly, scale } from 'svelte/transition';
-    import { fetchUser } from 'utilities/main';
+    import { fetchUser, showModal } from 'utilities/main';
     import linkifyHtml from 'linkify-html';
     import Reply from '$lib/svgs/Reply.svelte';
     import { ourProfileData } from 'stores/profile';
+    import { ModalTypes } from 'types/main';
 
     let animationsFinished = false;
 
@@ -115,25 +116,9 @@
     }
 
     function deleteMessage(messageIndex: number): void {
-        // Will recieve result in listener if successful
-        socket.emit('deleteCommunityMessage', {
-            messageId: $targetCommunityMessages[messageIndex].messageId,
-        });
+        $targetConfirmCommunityMessage = finalizedMessages[messageIndex];
 
-        for (const messageIndexLoop in $targetCommunityMessages) {
-            const targetMessage = $targetCommunityMessages[messageIndexLoop];
-
-            if (
-                targetMessage.messageId ==
-                $targetCommunityMessages[messageIndex].messageId
-            ) {
-                $targetCommunityMessages.splice(Number(messageIndex), 1);
-
-                break;
-            }
-        }
-
-        loadMessages();
+        showModal(ModalTypes.ConfirmDeleteMessage);
     }
 
     function replyMessage(messageIndex: number): void {
@@ -155,23 +140,17 @@
 
     function attachDeletedMessageListener(): void {
         socket.on('communityMessageDeleted', ({ messageId }) => {
-            if (!($ourProfileData.profileId == $joinedCommunity.ownerId)) {
-                for (const messageIndex in $targetCommunityMessages) {
-                    const targetMessage =
-                        $targetCommunityMessages[messageIndex];
+            for (const messageIndex in $targetCommunityMessages) {
+                const targetMessage = $targetCommunityMessages[messageIndex];
 
-                    if (targetMessage.messageId == messageId) {
-                        $targetCommunityMessages.splice(
-                            Number(messageIndex),
-                            1
-                        );
+                if (targetMessage.messageId == messageId) {
+                    $targetCommunityMessages.splice(Number(messageIndex), 1);
 
-                        break;
-                    }
+                    break;
                 }
-
-                loadMessages();
             }
+
+            loadMessages();
         });
     }
 

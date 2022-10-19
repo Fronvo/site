@@ -4,6 +4,7 @@
 
 import CommunityOptionsDropdown from '$lib/app/main/dropdowns/CommunityOptionsDropdown.svelte';
 import CommunityMembers from '$lib/app/main/modals/CommunityMembers.svelte';
+import ConfirmDeleteMessageModal from '$lib/app/main/modals/ConfirmDeleteMessageModal.svelte';
 import CreateCommunityModal from '$lib/app/main/modals/CreateCommunityModal.svelte';
 import CreatePostModal from '$lib/app/main/modals/CreatePostModal.svelte';
 import EditCommunityMemberModal from '$lib/app/main/modals/EditCommunityMemberModal.svelte';
@@ -20,7 +21,12 @@ import SettingsModal from '$lib/app/main/modals/SettingsModal.svelte';
 import CommunitiesPanel from '$lib/app/main/panels/CommunitiesPanel.svelte';
 import HomePanel from '$lib/app/main/panels/HomePanel.svelte';
 import ProfilePanel from '$lib/app/main/panels/ProfilePanel.svelte';
-import type { AccountPost, HomePost, FronvoAccount } from 'interfaces/all';
+import type {
+    AccountPost,
+    HomePost,
+    FronvoAccount,
+    CommunityMessage,
+} from 'interfaces/all';
 import { writable, type Writable } from 'svelte/store';
 
 export const loginSucceeded = writable(false);
@@ -46,6 +52,7 @@ export const modals = [
     CommunityMembers,
     EditCommunityModal,
     EditCommunityMemberModal,
+    ConfirmDeleteMessageModal,
 ];
 
 // Dropdown settings
@@ -66,6 +73,10 @@ export const postModalForHome: Writable<boolean> = writable();
 
 // CommunityMemberModal
 export const targetCommunityMember: Writable<FronvoAccount> = writable();
+
+// ConfirmDeleteMessageModal
+export const targetConfirmCommunityMessage: Writable<CommunityMessage> =
+    writable();
 
 // General Dropdown settings
 export const currentDropdownId = writable(0);

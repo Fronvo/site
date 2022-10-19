@@ -23,6 +23,7 @@ export enum ModalTypes {
     CommunityMembers,
     EditCommunity,
     EditCommunityMember,
+    ConfirmDeleteMessage,
 }
 
 export enum DropdownTypes {

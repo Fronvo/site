@@ -52,7 +52,7 @@
             <div class="author-container">
                 <img
                     id="avatar"
-                    src={profileData.avatar
+                    src={profileData.avatar && !$dataSaver
                         ? profileData.avatar
                         : '/svgs/profile/default.svg'}
                     draggable={false}

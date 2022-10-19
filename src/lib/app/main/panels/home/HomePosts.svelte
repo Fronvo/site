@@ -1,5 +1,6 @@
 <script lang="ts">
     import linkifyHtml from 'linkify-html';
+    import { dataSaver } from 'stores/all';
     import { homePosts } from 'stores/home';
     import { postModalForHome, postModalInfo } from 'stores/main';
     import { onMount } from 'svelte';
@@ -63,7 +64,7 @@
             <h1 id="title">{post.title}</h1>
             <h1 id="content" class={post.postId}>{post.content}</h1>
 
-            {#if post.attachment}
+            {#if post.attachment && !$dataSaver}
                 <img
                     id="attachment"
                     src={post.attachment}

@@ -3,7 +3,7 @@
     import Loading from '$lib/app/Loading.svelte';
     import type { Community } from 'interfaces/all';
     import { modalAnimDuration } from 'stores/main';
-    import { socket } from 'stores/all';
+    import { dataSaver, socket } from 'stores/all';
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
     import { dismissModal } from 'utilities/main';
@@ -131,7 +131,9 @@
                     <div on:click={() => viewCommunity(i)}>
                         <img
                             id="icon"
-                            src={icon ? icon : '/svgs/profile/default.svg'}
+                            src={icon && !$dataSaver
+                                ? icon
+                                : '/svgs/profile/default.svg'}
                             alt={`${name} community's icon`}
                             draggable={false}
                         />

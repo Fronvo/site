@@ -2,7 +2,7 @@
     import Center from '$lib/app/Center.svelte';
     import Loading from '$lib/app/Loading.svelte';
     import type { FronvoAccount } from 'interfaces/all';
-    import { socket } from 'stores/all';
+    import { dataSaver, socket } from 'stores/all';
     import { onMount } from 'svelte';
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
@@ -128,7 +128,9 @@
                     <div on:click={() => viewProfile(i)}>
                         <img
                             id="avatar"
-                            src={avatar ? avatar : '/svgs/profile/default.svg'}
+                            src={avatar && !$dataSaver
+                                ? avatar
+                                : '/svgs/profile/default.svg'}
                             alt={`${profileId}'s avatar`}
                             draggable={false}
                         />

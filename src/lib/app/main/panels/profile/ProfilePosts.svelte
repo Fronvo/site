@@ -1,5 +1,6 @@
 <script lang="ts">
     import linkifyHtml from 'linkify-html';
+    import { dataSaver } from 'stores/all';
     import { postModalForHome, postModalInfo } from 'stores/main';
     import {
         profileLoadingFinished,
@@ -84,7 +85,7 @@
                     <h1 id="title">{title}</h1>
                     <h1 id="content" class={postId}>{content}</h1>
 
-                    {#if attachment}
+                    {#if attachment && !$dataSaver}
                         <img
                             id="attachment"
                             src={attachment}

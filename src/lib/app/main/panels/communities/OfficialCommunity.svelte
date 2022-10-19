@@ -1,6 +1,6 @@
 <script lang="ts">
     import { officialCommunity } from 'stores/communities';
-    import { socket } from 'stores/all';
+    import { dataSaver, socket } from 'stores/all';
     import { fade } from 'svelte/transition';
     import { ModalTypes } from 'types/main';
     import { loadCommunitiesPanel } from 'utilities/communities';
@@ -25,7 +25,7 @@
         >
             <img
                 id="avatar"
-                src={$officialCommunity.icon
+                src={$officialCommunity.icon && !$dataSaver
                     ? $officialCommunity.icon
                     : '/svgs/profile/default.svg'}
                 alt={`${$officialCommunity.name} community avatar`}

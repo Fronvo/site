@@ -1,7 +1,7 @@
 <script lang="ts">
     import { joinedCommunity } from 'stores/communities';
     import { targetCommunityMember } from 'stores/main';
-    import { socket } from 'stores/all';
+    import { dataSaver, socket } from 'stores/all';
     import { dismissModal } from 'utilities/main';
     import { loadProfilePanel } from 'utilities/profile';
     import { fetchCommunity } from 'utilities/communities';
@@ -57,7 +57,7 @@
     <img
         id="avatar"
         alt={`${$targetCommunityMember.username}'s avatar`}
-        src={$targetCommunityMember.avatar
+        src={$targetCommunityMember.avatar && !$dataSaver
             ? $targetCommunityMember.avatar
             : '/svgs/profile/default.svg'}
         draggable={false}

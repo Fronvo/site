@@ -5,7 +5,7 @@
     } from 'interfaces/all';
     import type { FronvoAccount } from 'interfaces/all';
     import DeleteChatOption from '$lib/svgs/DeleteChatOption.svelte';
-    import { socket } from 'stores/all';
+    import { dataSaver, socket } from 'stores/all';
     import { loadCommunitiesPanel } from 'utilities/communities';
     import {
         chatRequestAccepted,
@@ -351,8 +351,9 @@
                         <img
                             id="avatar"
                             draggable={false}
-                            src={profileData.avatar ||
-                                '/svgs/profile/default.svg'}
+                            src={profileData.avatar && !$dataSaver
+                                ? profileData.avatar
+                                : '/svgs/profile/default.svg'}
                             alt={`${profileData.username}'s avatar`}
                         />
                         <h1 id="username">{profileData.username}</h1>

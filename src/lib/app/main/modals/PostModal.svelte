@@ -10,6 +10,7 @@
     import type { ModalData } from 'types/main';
     import ModalTemplate from '../ModalTemplate.svelte';
     import Center from '$lib/app/Center.svelte';
+    import { dataSaver } from 'stores/all';
 
     function getPostData(): AccountPost {
         if ($postModalForHome) {
@@ -69,7 +70,7 @@
         {getPostData().content}
     </h1>
 
-    {#if getPostData().attachment}
+    {#if getPostData().attachment && !$dataSaver}
         <img
             id="attachment"
             src={getPostData().attachment}

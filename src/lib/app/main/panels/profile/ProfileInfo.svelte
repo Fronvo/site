@@ -5,6 +5,7 @@
     import EditProfile from '$lib/svgs/EditProfile.svelte';
     import Follow from '$lib/svgs/Follow.svelte';
     import Logout from '$lib/svgs/Logout.svelte';
+    import { dataSaver } from 'stores/all';
     import { joinedCommunity, targetCommunityData } from 'stores/communities';
     import { followModalForFollowing, followModalInfo } from 'stores/main';
     import {
@@ -63,11 +64,9 @@
 
 {#if $profileLoadingFinished}
     <div class="info-container" in:fade={{ duration: 500 }}>
-        <!-- Avatar, username -->
-
         <img
             id="avatar"
-            src={$userData.avatar
+            src={$userData.avatar && !$dataSaver
                 ? $userData.avatar
                 : '/svgs/profile/default.svg'}
             alt={`${$userData.username}\'s avatar`}
@@ -86,7 +85,7 @@
             <div class="community-container">
                 <img
                     id="icon"
-                    src={$userCommunity.icon
+                    src={$userCommunity.icon && !$dataSaver
                         ? $userCommunity.icon
                         : '/svgs/profile/default.svg'}
                     alt={`${$userData.username}'s community`}

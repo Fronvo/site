@@ -1,6 +1,6 @@
 <script lang="ts">
     import { targetCommunityData } from 'stores/communities';
-    import { socket } from 'stores/all';
+    import { dataSaver, socket } from 'stores/all';
     import { fade } from 'svelte/transition';
     import { loadCommunitiesPanel } from 'utilities/communities';
 
@@ -53,7 +53,7 @@
         >
             <img
                 id="avatar"
-                src={$targetCommunityData.icon
+                src={$targetCommunityData.icon && !$dataSaver
                     ? $targetCommunityData.icon
                     : '/svgs/profile/default.svg'}
                 alt={`${$targetCommunityData.name} community avatar`}

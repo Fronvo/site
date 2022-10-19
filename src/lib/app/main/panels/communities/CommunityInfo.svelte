@@ -5,6 +5,7 @@
     import { fly } from 'svelte/transition';
     import { DropdownTypes } from 'types/main';
     import { dismissDropdown, showDropdown } from 'utilities/main';
+    import { dataSaver } from 'stores/all';
 
     function showCommunityInfoDropdown(): void {
         if ($dropdownVisible) {
@@ -22,7 +23,7 @@
     >
         <img
             id="icon"
-            src={$joinedCommunity.icon
+            src={$joinedCommunity.icon && !$dataSaver
                 ? $joinedCommunity.icon
                 : '/svgs/profile/default.svg'}
             alt={`${$joinedCommunity.name}'s' icon`}

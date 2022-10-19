@@ -7,6 +7,8 @@
     import Checkbox from 'svelte-checkbox';
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
+    import ModalTemplate from '../ModalTemplate.svelte';
+    import type { ModalData } from 'types/main';
 
     let profileId = $userData.profileId;
     let username = $userData.username;
@@ -112,102 +114,67 @@
             }
         });
     });
+
+    const data: ModalData = {
+        title: 'Edit Profile',
+
+        actions: [
+            {
+                title: 'Save',
+                callback: uploadData,
+            },
+            {
+                title: 'Discard',
+                callback: dismissModal,
+            },
+        ],
+
+        extraStyling: ['width: 40%'],
+    };
 </script>
 
-<div class="edit-container">
-    <div class="header-container">
-        <h1 id="header">Edit Profile</h1>
+<ModalTemplate {data}>
+    {#if errorMessage}
+        <h1 id="error-header" in:fade={{ duration: 500 }}>
+            {errorMessage}
+        </h1>
+    {/if}
+
+    <h1 id="input-header">Profile ID</h1>
+    <input bind:value={profileId} maxlength={30} />
+
+    <h1 id="input-header">Username</h1>
+    <input bind:value={username} maxlength={30} />
+
+    <h1 id="input-header">Bio</h1>
+    <textarea id="bio-input" bind:value={bio} maxlength={128} rows={4} />
+
+    <div>
+        <img
+            id="avatar-preview"
+            src={$avatar ? $avatar : '/svgs/profile/default.svg'}
+            alt="New avatar"
+            draggable={false}
+        />
+        <h1 id="input-header" class="avatar-info">Avatar</h1>
     </div>
 
-    <hr />
+    <input maxlength={512} bind:value={$avatar} />
 
-    <div class="data-container">
-        {#if errorMessage}
-            <h1 id="error-header" in:fade={{ duration: 500 }}>
-                {errorMessage}
-            </h1>
-        {/if}
-
-        <h1 id="input-header">Profile ID</h1>
-        <input bind:value={profileId} maxlength={30} />
-
-        <h1 id="input-header">Username</h1>
-        <input bind:value={username} maxlength={30} />
-
-        <h1 id="input-header">Bio</h1>
-        <textarea id="bio-input" bind:value={bio} maxlength={128} rows={4} />
-
-        <div>
-            <img
-                id="avatar-preview"
-                src={$avatar ? $avatar : '/svgs/profile/default.svg'}
-                alt="New avatar"
-                draggable={false}
-            />
-            <h1 id="input-header" class="avatar-info">Avatar</h1>
-        </div>
-
-        <input maxlength={512} bind:value={$avatar} />
-
-        <div class="centered-container">
-            <h1 id="input-header">Private account</h1>
-            <Checkbox
-                bind:checked={isPrivate}
-                class="private-checkbox"
-                size="2.7rem"
-                primaryColor="rgb(180, 120, 255)"
-                secondaryColor="white"
-            />
-        </div>
+    <div class="centered-container">
+        <h1 id="input-header">Private account</h1>
+        <Checkbox
+            bind:checked={isPrivate}
+            class="private-checkbox"
+            size="2.7rem"
+            primaryColor="rgb(180, 120, 255)"
+            secondaryColor="white"
+        />
     </div>
-
-    <div class="options-container">
-        <button on:click={uploadData}>Save</button>
-
-        <button
-            on:click={() => {
-                if (!isUploading) dismissModal();
-            }}>Discard</button
-        >
-    </div>
-</div>
+</ModalTemplate>
 
 <style>
-    hr {
-        width: 100px;
-    }
-
-    .edit-container {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        height: 100%;
-        align-items: center;
-        overflow-y: auto;
-    }
-
-    .header-container {
-        display: flex;
-        width: 100%;
-        justify-content: center;
-    }
-
-    .header-container #header {
-        font-size: 3rem;
-        margin: 0;
-        padding-right: 5px;
-    }
-
-    .data-container {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        justify-content: center;
-        width: 40%;
-        min-width: 450px;
-    }
-
-    .data-container #error-header {
+    #error-header {
         color: red;
         font-size: 2rem;
         margin: 0;
@@ -216,30 +183,30 @@
         margin-bottom: 20px;
     }
 
-    .data-container div {
+    div {
         display: flex;
         align-items: center;
         margin-bottom: 10px;
     }
 
-    .data-container div #avatar-preview {
+    #avatar-preview {
         width: 64px;
         height: 64px;
         border-radius: 10px;
         margin-right: 10px;
     }
 
-    .data-container .centered-container {
+    .centered-container {
         display: flex;
         justify-content: center;
         align-items: center;
     }
 
-    :global(.data-container div .private-checkbox) {
+    :global(.private-checkbox) {
         margin-left: 20px;
     }
 
-    .data-container #input-header {
+    #input-header {
         color: var(--profile_info_color);
         margin: 0;
         font-size: 2.2rem;
@@ -251,103 +218,65 @@
         user-select: none;
     }
 
-    .data-container input,
-    .data-container textarea {
+    input,
+    textarea {
         font-size: 2rem;
         margin: 0 5px 20px 5px;
         width: 95%;
         background: var(--modal_input_bg_color);
     }
 
-    .data-container textarea {
+    textarea {
         min-height: 100px;
     }
 
-    .data-container #bio-input {
+    #bio-input {
         font-size: 1.7rem;
     }
 
-    .options-container {
-        display: flex;
-        margin-bottom: 15px;
-        margin-top: 10px;
-    }
-
-    .options-container button {
-        font-size: 2.2rem;
-        margin-right: 20px;
-    }
-
     @media screen and (max-width: 720px) {
-        .header-container #header {
-            font-size: 2.4rem;
-        }
-
-        .data-container {
-            width: 350px;
-            min-width: auto;
-        }
-
-        .data-container #error-header {
+        #error-header {
             font-size: 1.7rem;
         }
 
-        .data-container div #avatar-preview {
+        #avatar-preview {
             width: 48px;
             height: 48px;
         }
 
-        :global(.data-container div .private-checkbox) {
+        :global(.private-checkbox) {
             margin-left: 10px;
             padding: 0;
         }
 
-        .data-container #input-header {
+        #input-header {
             font-size: 1.7rem;
         }
 
-        .data-container input {
+        input {
             font-size: 1.7rem;
         }
 
-        .data-container #bio-input {
+        #bio-input {
             font-size: 1.5rem;
-        }
-
-        .options-container button {
-            font-size: 1.8rem;
-            cursor: default;
         }
     }
 
     @media screen and (max-width: 520px) {
-        .header-container #header {
-            font-size: 2rem;
-        }
-
-        .data-container {
-            width: 300px;
-        }
-
-        .data-container #error-header {
+        #error-header {
             font-size: 1.4rem;
         }
 
-        .data-container #input-header {
+        #input-header {
             font-size: 1.4rem;
         }
 
-        .data-container input {
+        input {
             font-size: 1.4rem;
         }
 
-        .data-container #bio-input {
+        #bio-input {
             font-size: 1.3rem;
-        }
-
-        .options-container button {
-            font-size: 1.5rem;
-            margin-top: 5px;
         }
     }
 </style>

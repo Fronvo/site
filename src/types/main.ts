@@ -34,3 +34,16 @@ export interface DropdownActions {
     callback: () => void;
     condition?: boolean;
 }
+
+export interface ModalActions {
+    title: string;
+    callback: () => void;
+}
+
+export interface ModalData {
+    titlePreSpan?: any;
+    title: string;
+    actions: ModalActions[];
+    noSeperator?: boolean;
+    extraStyling?: string[];
+}

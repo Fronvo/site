@@ -4,8 +4,11 @@
     import type { FronvoAccount } from 'interfaces/all';
     import { dataSaver } from 'stores/all';
     import { followModalForFollowing, followModalInfo } from 'stores/main';
+    import { onMount } from 'svelte';
+    import type { ModalData } from 'types/main';
     import { dismissModal, fetchUser } from 'utilities/main';
     import { loadProfilePanel } from 'utilities/profile';
+    import ModalTemplate from '../ModalTemplate.svelte';
 
     let followInfo: FronvoAccount[] = [];
 
@@ -43,23 +46,27 @@
         await loadProfilePanel(followInfo[accountIndex].profileId);
     }
 
-    $: loadFollowInfo();
+    onMount(async () => {
+        await loadFollowInfo();
+    });
+
+    const data: ModalData = {
+        titlePreSpan: $followModalInfo.length,
+        title: $followModalForFollowing ? 'Following' : 'Followers',
+
+        actions: [
+            {
+                title: 'Close',
+                callback: dismissModal,
+            },
+        ],
+    };
 </script>
 
-<!-- TODO: Dropdown, Modal slot components to make their creation easy -->
-<div class="following-container">
-    <div class="header-container">
-        <h1 id="header">
-            <span>{$followModalInfo.length}</span>
-            {$followModalForFollowing ? 'Following' : 'Followers'}
-        </h1>
-    </div>
-
-    <hr />
-
+<ModalTemplate {data}>
     {#if loadingFinished}
         {#if followInfo.length == 0}
-            <Center>
+            <Center absolute>
                 <h1 id="no-follow">
                     No {$followModalForFollowing
                         ? 'followed users'
@@ -96,52 +103,12 @@
                 {/each}
             </div>
         {/if}
-
-        <button
-            id="close"
-            on:click={() => {
-                dismissModal();
-            }}>Close</button
-        >
     {:else}
         <Loading text="Loading..." />
     {/if}
-</div>
+</ModalTemplate>
 
 <style>
-    hr {
-        width: 100px;
-    }
-
-    .following-container {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        align-items: center;
-    }
-
-    .header-container {
-        display: flex;
-        width: 100%;
-        justify-content: center;
-    }
-
-    .header-container #header {
-        font-size: 3rem;
-        margin: 0;
-        padding-right: 20px;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
-
-    .header-container #header span {
-        color: var(--profile_info_color);
-    }
-
     .following-items-container {
         display: flex;
         flex-direction: row;
@@ -230,17 +197,7 @@
         user-select: none;
     }
 
-    #close {
-        font-size: 2.2rem;
-        margin-top: 15px;
-        margin-bottom: 15px;
-    }
-
     @media screen and (max-width: 720px) {
-        .header-container #header {
-            font-size: 2.4rem;
-        }
-
         .following-items-container {
             flex-direction: column;
             justify-content: start;
@@ -281,18 +238,9 @@
         #no-follow {
             font-size: 2rem;
         }
-
-        #close {
-            font-size: 1.8rem;
-            cursor: default;
-        }
     }
 
     @media screen and (max-width: 520px) {
-        .header-container #header {
-            font-size: 2rem;
-        }
-
         .following-items-container div {
             width: 280px;
             margin-right: 0;
@@ -311,11 +259,6 @@
 
         #no-follow {
             font-size: 1.7rem;
-        }
-
-        #close {
-            font-size: 1.5rem;
-            margin-top: 5px;
         }
     }
 </style>

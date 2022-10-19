@@ -1,23 +1,21 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
-
     import Center from '$lib/app/Center.svelte';
     import Loading from '$lib/app/Loading.svelte';
     import type { Community } from 'interfaces/all';
-    import { targetCommunityData } from 'stores/communities';
     import { modalAnimDuration } from 'stores/main';
     import { socket } from 'stores/all';
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
     import { dismissModal } from 'utilities/main';
     import { loadCommunitiesPanel } from 'utilities/communities';
+    import { onMount } from 'svelte';
+    import type { ModalData } from 'types/main';
+    import ModalTemplate from '../ModalTemplate.svelte';
 
     let searchValue: Writable<string> = writable('');
     let findResults: Community[] = [];
     let errorMessage: string;
     let loadingFinished = false;
-
-    $: loadingFinished = true;
 
     searchValue.subscribe((newSearch) => {
         // Return if no value
@@ -94,27 +92,37 @@
             await loadCommunitiesPanel(findResults[communityIndex].communityId);
         }, modalAnimDuration);
     }
+
+    onMount(() => {
+        loadingFinished = true;
+    });
+
+    const data: ModalData = {
+        title: 'Find communities',
+        noSeperator: true,
+
+        actions: [
+            {
+                title: 'Close',
+                callback: dismissModal,
+            },
+        ],
+    };
 </script>
 
-<div class="find-container">
-    <div class="header-container">
-        <h1 id="header">Find communities</h1>
+<ModalTemplate {data}>
+    {#if errorMessage}
+        <h1 id="error-header" in:fade={{ duration: 500 }}>
+            {errorMessage}
+        </h1>
+    {/if}
 
-        {#if errorMessage}
-            <h1 id="error-header" in:fade={{ duration: 500 }}>
-                {errorMessage}
-            </h1>
-        {/if}
-
-        <!-- svelte-ignore a11y-autofocus -->
-        <input autofocus bind:value={$searchValue} maxlength={30} />
-    </div>
-
-    <hr />
+    <!-- svelte-ignore a11y-autofocus -->
+    <input autofocus bind:value={$searchValue} maxlength={30} />
 
     {#if loadingFinished}
         {#if findResults.length == 0}
-            <Center>
+            <Center absolute>
                 <h1 id="no-results" in:fade={{ duration: 300 }}>No results</h1>
             </Center>
         {:else}
@@ -137,62 +145,17 @@
                 {/each}
             </div>
         {/if}
-
-        <button
-            id="close"
-            on:click={() => {
-                dismissModal();
-            }}>Close</button
-        >
     {:else}
         <Loading text="Loading..." />
     {/if}
-</div>
+</ModalTemplate>
 
 <style>
-    hr {
-        width: 100px;
-    }
-
-    .find-container {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        align-items: center;
-    }
-
-    .header-container {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .header-container #header {
-        font-size: 3rem;
-        margin: 0;
-        padding-right: 20px;
-        text-align: center;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
-
-    .header-container #error-header {
-        color: red;
-        font-size: 2rem;
-        margin: 0;
-        width: 100%;
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    .header-container input {
+    input {
         font-size: 2rem;
         margin: 0 5px 20px 5px;
         width: 95%;
+        max-width: max-content;
         background: var(--modal_input_bg_color);
     }
 
@@ -251,7 +214,7 @@
         user-select: none;
     }
 
-    .find-container div #description {
+    .find-items-container div #description {
         text-align: center;
         color: var(--profile_info_color);
         margin-top: 10px;
@@ -290,22 +253,8 @@
         user-select: none;
     }
 
-    #close {
-        font-size: 2.2rem;
-        margin-top: 15px;
-        margin-bottom: 15px;
-    }
-
     @media screen and (max-width: 720px) {
-        .header-container #header {
-            font-size: 2.4rem;
-        }
-
-        .header-container #error-header {
-            font-size: 1.7rem;
-        }
-
-        .header-container input {
+        input {
             font-size: 1.7rem;
         }
 
@@ -335,7 +284,7 @@
             cursor: default;
         }
 
-        .find-container div #description {
+        .find-items-container div #description {
             display: none;
         }
 
@@ -352,23 +301,10 @@
         #no-results {
             font-size: 2rem;
         }
-
-        #close {
-            font-size: 1.8rem;
-            cursor: default;
-        }
     }
 
     @media screen and (max-width: 520px) {
-        .header-container #header {
-            font-size: 2rem;
-        }
-
-        .header-container #error-header {
-            font-size: 1.4rem;
-        }
-
-        .header-container input {
+        input {
             font-size: 1.4rem;
         }
 
@@ -389,11 +325,6 @@
 
         #no-results {
             font-size: 1.7rem;
-        }
-
-        #close {
-            font-size: 1.5rem;
-            margin-top: 5px;
         }
     }
 </style>

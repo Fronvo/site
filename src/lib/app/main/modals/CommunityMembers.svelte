@@ -2,12 +2,14 @@
     import Loading from '$lib/app/Loading.svelte';
     import type { FronvoAccount } from 'interfaces/all';
     import { joinedCommunity } from 'stores/communities';
-    import { ModalTypes } from 'types/main';
+    import { ModalTypes, type ModalData } from 'types/main';
     import { targetCommunityMember } from 'stores/main';
     import { dismissModal, fetchUser, showModal } from 'utilities/main';
     import { loadProfilePanel } from 'utilities/profile';
     import { dataSaver } from 'stores/all';
     import { ourProfileData } from 'stores/profile';
+    import ModalTemplate from '../ModalTemplate.svelte';
+    import { onMount } from 'svelte';
 
     let memberInfo: FronvoAccount[] = [];
     const memberInfoCopy = $dataSaver
@@ -51,19 +53,24 @@
         });
     }
 
-    $: loadFollowInfo();
+    onMount(async () => {
+        await loadFollowInfo();
+    });
+
+    const data: ModalData = {
+        titlePreSpan: $joinedCommunity.members.length,
+        title: 'Members',
+
+        actions: [
+            {
+                title: 'Close',
+                callback: dismissModal,
+            },
+        ],
+    };
 </script>
 
-<div class="members-container">
-    <div class="header-container">
-        <h1 id="header">
-            <span>{$joinedCommunity.members.length}</span>
-            Members
-        </h1>
-    </div>
-
-    <hr />
-
+<ModalTemplate {data}>
     {#if loadingFinished}
         <div class="members-items-container">
             {#each memberInfo as { profileId, username, following, followers, avatar, isFollower, isPrivate, isSelf }, i}
@@ -89,6 +96,7 @@
                                 : '?'}</span
                         > following
                     </h1>
+
                     <h1 id="followers">
                         <span
                             >{isFollower || isSelf || !isPrivate
@@ -99,52 +107,12 @@
                 </div>
             {/each}
         </div>
-
-        <button
-            id="close"
-            on:click={() => {
-                dismissModal();
-            }}>Close</button
-        >
     {:else}
         <Loading text="Loading..." />
     {/if}
-</div>
+</ModalTemplate>
 
 <style>
-    hr {
-        width: 100px;
-    }
-
-    .members-container {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-        align-items: center;
-    }
-
-    .header-container {
-        display: flex;
-        width: 100%;
-        justify-content: center;
-    }
-
-    .header-container #header {
-        font-size: 3rem;
-        margin: 0;
-        padding-right: 20px;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
-
-    .header-container #header span {
-        color: var(--profile_info_color);
-    }
-
     .members-items-container {
         display: flex;
         flex-direction: row;
@@ -177,10 +145,6 @@
         );
     }
 
-    .members-items-container .owner-div #username {
-        color: gold;
-    }
-
     .members-items-container div:hover {
         background-position: right center;
     }
@@ -202,6 +166,10 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+    }
+
+    .members-items-container div .owner-div #username {
+        color: gold;
     }
 
     .members-items-container div #following,
@@ -227,23 +195,7 @@
         border-radius: 10px;
     }
 
-    #close {
-        font-size: 2.2rem;
-        margin-top: 15px;
-        margin-bottom: 15px;
-    }
-
     @media screen and (max-width: 720px) {
-        .header-container #header {
-            font-size: 2.4rem;
-        }
-
-        .members-items-container {
-            flex-direction: column;
-            justify-content: start;
-            flex-wrap: nowrap;
-        }
-
         .members-items-container div {
             width: 300px;
             display: flex;
@@ -265,7 +217,7 @@
         }
 
         .members-items-container div #following,
-        .members-items-container div #followers {
+        #followers {
             display: none;
         }
 
@@ -274,18 +226,9 @@
             height: 64px;
             margin-right: 5px;
         }
-
-        #close {
-            font-size: 1.8rem;
-            cursor: default;
-        }
     }
 
     @media screen and (max-width: 520px) {
-        .header-container #header {
-            font-size: 2rem;
-        }
-
         .members-items-container div {
             width: 280px;
             margin-right: 0;
@@ -300,11 +243,6 @@
         .members-items-container div #following,
         .members-items-container div #followers {
             font-size: 1.7rem;
-        }
-
-        #close {
-            font-size: 1.5rem;
-            margin-top: 5px;
         }
     }
 </style>

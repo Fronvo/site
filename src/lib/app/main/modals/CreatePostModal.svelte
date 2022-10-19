@@ -3,8 +3,10 @@
     import { onMount } from 'svelte';
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
+    import type { ModalData } from 'types/main';
     import { dismissModal } from 'utilities/main';
     import { loadProfilePanel } from 'utilities/profile';
+    import ModalTemplate from '../ModalTemplate.svelte';
 
     let title: string;
     let content: string;
@@ -85,93 +87,52 @@
             }
         });
     });
+
+    const data: ModalData = {
+        title: 'Create Post',
+
+        actions: [
+            {
+                title: 'Share',
+                callback: sharePost,
+            },
+            {
+                title: 'Discard',
+                callback: dismissModal,
+            },
+        ],
+
+        extraStyling: ['width: 50%'],
+    };
 </script>
 
-<div class="create-container">
-    <div class="header-container">
-        <h1 id="header">Create Post</h1>
-    </div>
+<ModalTemplate {data}>
+    {#if errorMessage}
+        <h1 id="error-header" in:fade={{ duration: 500 }}>
+            {errorMessage}
+        </h1>
+    {/if}
 
-    <hr />
+    <h1 id="input-header">Title</h1>
+    <!-- svelte-ignore a11y-autofocus -->
+    <input autofocus bind:value={title} maxlength={30} />
 
-    <div class="data-container">
-        {#if errorMessage}
-            <h1 id="error-header" in:fade={{ duration: 500 }}>
-                {errorMessage}
-            </h1>
-        {/if}
+    <h1 id="input-header">Content</h1>
+    <textarea bind:value={content} maxlength={256} rows={6} />
 
-        <h1 id="input-header">Title</h1>
-        <!-- svelte-ignore a11y-autofocus -->
-        <input autofocus bind:value={title} maxlength={30} />
-
-        <h1 id="input-header">Content</h1>
-        <textarea bind:value={content} maxlength={256} rows={6} />
-
-        <!-- Just for attachment checking, no preview -->
-        <img
-            id="attachment-preview"
-            src={$attachment ? $attachment : ''}
-            alt="Post attachment"
-            draggable={false}
-        />
-        <h1 id="input-header" class="attachment-info">Attachment</h1>
-        <input bind:value={$attachment} maxlength={256} />
-    </div>
-
-    <div class="options-container">
-        <button on:click={sharePost}>Share</button>
-
-        <button
-            on:click={() => {
-                if (!isSharing) dismissModal();
-            }}>Discard</button
-        >
-    </div>
-</div>
+    <!-- Just for attachment checking, no preview -->
+    <img
+        id="attachment-preview"
+        src={$attachment ? $attachment : ''}
+        alt="Post attachment"
+        draggable={false}
+    />
+    <h1 id="input-header" class="attachment-info">Attachment</h1>
+    <input bind:value={$attachment} maxlength={256} />
+</ModalTemplate>
 
 <style>
-    hr {
-        width: 100px;
-    }
-
-    .create-container {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        height: 100%;
-        align-items: center;
-        overflow-y: auto;
-    }
-
-    .header-container {
-        display: flex;
-        width: 100%;
-        justify-content: center;
-    }
-
-    .header-container #header {
-        font-size: 3rem;
-        margin: 0;
-        padding-right: 5px;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
-
-    .data-container {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        justify-content: center;
-        width: 50%;
-        min-width: 500px;
-    }
-
-    .data-container #error-header {
+    #error-header {
         color: red;
         font-size: 2rem;
         margin: 0;
@@ -180,7 +141,7 @@
         margin-bottom: 20px;
     }
 
-    .data-container #input-header {
+    #input-header {
         color: var(--profile_info_color);
         margin: 0;
         font-size: 2.2rem;
@@ -192,83 +153,45 @@
         user-select: none;
     }
 
-    .data-container input,
-    .data-container textarea {
+    input,
+    textarea {
         font-size: 2rem;
         margin: 0 5px 20px 5px;
         width: 95%;
         background: var(--modal_input_bg_color);
     }
 
-    .data-container #attachment-preview {
+    #attachment-preview {
         display: none;
     }
 
-    .options-container {
-        display: flex;
-        margin-bottom: 15px;
-        margin-top: 50px;
-    }
-
-    .options-container button {
-        font-size: 2.2rem;
-        margin-right: 20px;
-    }
-
     @media screen and (max-width: 720px) {
-        .header-container #header {
-            font-size: 2.4rem;
-        }
-
-        .data-container {
-            width: 400px;
-            min-width: auto;
-        }
-
-        .data-container #error-header {
+        #error-header {
             font-size: 1.7rem;
         }
 
-        .data-container #input-header {
+        #input-header {
             font-size: 1.7rem;
         }
 
-        .data-container input,
-        .data-container textarea {
+        input,
+        textarea {
             font-size: 1.7rem;
-        }
-
-        .options-container button {
-            font-size: 1.8rem;
-            cursor: default;
         }
     }
 
     @media screen and (max-width: 520px) {
-        .header-container #header {
-            font-size: 2rem;
-        }
-
-        .data-container {
-            width: 300px;
-        }
-
-        .data-container #error-header {
+        #error-header {
             font-size: 1.4rem;
         }
 
-        .data-container #input-header {
+        #input-header {
             font-size: 1.4rem;
         }
 
-        .data-container input,
-        .data-container textarea {
+        input,
+        textarea {
             font-size: 1.4rem;
-        }
-
-        .options-container button {
-            font-size: 1.5rem;
-            margin-top: 5px;
         }
     }
 </style>

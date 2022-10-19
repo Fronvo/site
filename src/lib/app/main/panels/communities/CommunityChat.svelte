@@ -218,9 +218,11 @@
     async function keyDownListener(event: KeyboardEvent): Promise<void> {
         if ($modalVisible) return;
 
-        // Allow ctrl / shift combinations, dont handle
-        // TODO: Keycodes such as pgup/down, remove shift
-        if (event.ctrlKey || event.shiftKey) {
+        if (
+            event.ctrlKey ||
+            event.key.startsWith('Page') ||
+            event.key.startsWith('Arrow')
+        ) {
             return;
         }
 

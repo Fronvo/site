@@ -9,7 +9,6 @@
     import linkifyHtml from 'linkify-html';
     import type { ModalData } from 'types/main';
     import ModalTemplate from '../ModalTemplate.svelte';
-    import Center from '$lib/app/Center.svelte';
     import { dataSaver } from 'stores/all';
 
     function getPostData(): AccountPost {

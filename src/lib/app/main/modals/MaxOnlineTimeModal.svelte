@@ -4,6 +4,7 @@
     import { getKey } from 'utilities/global';
     import type { ModalData } from 'types/main';
     import ModalTemplate from '../ModalTemplate.svelte';
+    import Center from '$lib/app/Center.svelte';
 
     function resetSession(): void {
         $sessionTime = 0;
@@ -25,13 +26,17 @@
 </script>
 
 <ModalTemplate {data}>
-    <h1>
-        You have reached your maximum online time allowance of <span
-            >{getKey('maxOnlineTime') / 60}</span
-        > minute(s).
-    </h1>
+    <Center absolute>
+        <h1>
+            You have reached your maximum online time allowance of <span
+                >{getKey('maxOnlineTime') / 60}</span
+            > minute(s).
+        </h1>
 
-    <h1>You should exit Fronvo now but you can also reset the session time.</h1>
+        <h1>
+            You should exit Fronvo now but you can also reset the session time.
+        </h1>
+    </Center>
 </ModalTemplate>
 
 <style>

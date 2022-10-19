@@ -306,7 +306,7 @@
     <div class="chat-container">
         {#if $targetCommunityMessages.length == 0}
             <h1 id="chat-start" in:scale={{ duration: 500, start: 0.95 }}>
-                Welcome to {$joinedCommunity.name}'s chat room!
+                Welcome to {$joinedCommunity?.name}'s chat room!
             </h1>
         {:else if finalizedMessages}
             {#each finalizedMessages as { messageId, profileData, content, creationDate, isReply, replyId }, i}

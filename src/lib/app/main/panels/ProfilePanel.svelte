@@ -2,11 +2,15 @@
     import ProfileInfo from '$lib/app/main/panels/profile/ProfileInfo.svelte';
     import ProfilePosts from '$lib/app/main/panels/profile/ProfilePosts.svelte';
     import { targetProfile, userData, userPosts } from 'stores/profile';
-    import { onMount } from 'svelte';
+    import { onDestroy, onMount } from 'svelte';
     import { loadProfilePanel } from 'utilities/profile';
 
     onMount(async () => {
         await loadProfilePanel($targetProfile);
+    });
+
+    onDestroy(() => {
+        $targetProfile = undefined;
     });
 </script>
 

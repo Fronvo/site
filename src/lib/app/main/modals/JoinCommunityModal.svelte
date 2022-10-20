@@ -53,21 +53,20 @@
         ],
 
         removeTransparency: true,
+        absolute: true,
     };
 </script>
 
 <ModalTemplate {data}>
-    <Center absolute>
-        {#if errorMessage}
-            <h1 id="error-header" in:fade={{ duration: 500 }}>
-                {errorMessage}
-            </h1>
-        {/if}
+    {#if errorMessage}
+        <h1 id="error-header" in:fade={{ duration: 500 }}>
+            {errorMessage}
+        </h1>
+    {/if}
 
-        <h1 id="input-header">Invite code</h1>
-        <!-- svelte-ignore a11y-autofocus -->
-        <input autofocus bind:value={inviteCode} maxlength={15} />
-    </Center>
+    <h1 id="input-header">Invite code</h1>
+    <!-- svelte-ignore a11y-autofocus -->
+    <input autofocus bind:value={inviteCode} maxlength={15} />
 </ModalTemplate>
 
 <style>

@@ -24,6 +24,7 @@
         ],
 
         removeTransparency: true,
+        absolute: true,
     };
 </script>
 

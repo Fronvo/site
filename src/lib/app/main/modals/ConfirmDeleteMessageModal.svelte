@@ -31,25 +31,26 @@
 
         extraStyling: ['width: 50%'],
         removeTransparency: true,
+        absolute: true,
     };
 </script>
 
 <ModalTemplate {data}>
-    <Center absolute>
-        <h1 id="question">Delete this message?</h1>
+    <h1 id="question">Delete this message?</h1>
 
-        <h1 id="content">{$targetConfirmCommunityMessage.content}</h1>
-    </Center>
+    <h1 id="content">{$targetConfirmCommunityMessage.content}</h1>
 </ModalTemplate>
 
 <style>
     #question {
         font-size: 2.5rem;
+        margin: 0;
     }
 
     #content {
         color: var(--profile_info_color);
         font-size: 1.8rem;
+        margin: 0;
     }
 
     @media screen and (max-width: 720px) {

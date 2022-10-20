@@ -48,4 +48,5 @@ export interface ModalData {
     noSeperator?: boolean;
     extraStyling?: string[];
     removeTransparency?: boolean;
+    absolute?: boolean;
 }

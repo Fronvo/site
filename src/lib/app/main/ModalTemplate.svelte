@@ -1,5 +1,6 @@
 <script lang="ts">
     import type { ModalData } from 'types/main';
+    import Center from '../Center.svelte';
 
     export let data: ModalData;
 
@@ -13,7 +14,11 @@
         data.removeTransparency ? 'modal-no-transparency' : ''
     }`}
 >
-    <div class="header-container">
+    <div
+        class={`${
+            data.absolute ? 'header-container-absolute' : 'header-container'
+        }`}
+    >
         <h1 id="header">
             {#if data.titlePreSpan}
                 <span>{`${data.titlePreSpan} `}</span>
@@ -23,7 +28,7 @@
         </h1>
     </div>
 
-    {#if !data.noSeperator}
+    {#if !data.noSeperator && !data.absolute}
         <hr />
     {/if}
 
@@ -31,10 +36,20 @@
         class="data-container"
         style={data.extraStyling ? data.extraStyling.join('; ') : ''}
     >
-        <slot />
+        {#if data.absolute}
+            <Center>
+                <slot />
+            </Center>
+        {:else}
+            <slot />
+        {/if}
     </div>
 
-    <div class="options-container">
+    <div
+        class={`${
+            data.absolute ? 'options-container-absolute' : 'options-container'
+        }`}
+    >
         {#each data.actions as { title, callback }}
             <button on:click={() => runCallback(callback)}>{title}</button>
         {/each}
@@ -56,6 +71,15 @@
         overflow: auto;
     }
 
+    .modal-container-absolute {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+    }
+
     .modal-no-transparency {
         background: var(--modal_bg_color_full);
     }
@@ -68,7 +92,17 @@
         padding-right: 10px;
     }
 
-    .header-container #header {
+    .header-container-absolute {
+        position: absolute;
+        top: 0;
+        display: flex;
+        width: 100%;
+        justify-content: center;
+        z-index: 1;
+        padding-right: 10px;
+    }
+
+    #header {
         font-size: 3rem;
         margin: 0;
         padding-right: 5px;
@@ -80,7 +114,7 @@
         user-select: none;
     }
 
-    .header-container #header span {
+    #header span {
         color: var(--profile_info_color);
     }
 
@@ -97,11 +131,16 @@
         align-items: flex-end;
         flex: 1;
         height: 100%;
-        margin-bottom: 10px;
+        margin-bottom: 20px;
         margin-top: 20px;
     }
 
-    .options-container button {
+    .options-container-absolute {
+        position: absolute;
+        bottom: 20px;
+    }
+
+    button {
         font-size: 2.2rem;
         margin-right: 20px;
     }
@@ -111,7 +150,7 @@
             margin-bottom: 20px;
         }
 
-        .header-container #header {
+        #header {
             font-size: 2.4rem;
         }
 
@@ -120,14 +159,14 @@
             min-width: auto;
         }
 
-        .options-container button {
+        button {
             font-size: 1.8rem;
             cursor: default;
         }
     }
 
     @media screen and (max-width: 520px) {
-        .header-container #header {
+        #header {
             font-size: 2rem;
         }
 
@@ -135,7 +174,7 @@
             width: 300px;
         }
 
-        .options-container button {
+        button {
             font-size: 1.5rem;
             margin-top: 5px;
         }

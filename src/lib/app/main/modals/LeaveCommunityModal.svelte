@@ -56,18 +56,17 @@
                 callback: dismissModal,
             },
         ],
+        absolute: true,
     };
 </script>
 
 <ModalTemplate {data}>
-    <Center absolute>
-        {#if $joinedCommunity}
-            <h1 id="leave-community">
-                {isOwner() ? 'Delete' : 'Leave'} the
-                <span>{$joinedCommunity.name}</span> community?
-            </h1>
-        {/if}
-    </Center>
+    {#if $joinedCommunity}
+        <h1 id="leave-community">
+            {isOwner() ? 'Delete' : 'Leave'} the
+            <span>{$joinedCommunity.name}</span> community?
+        </h1>
+    {/if}
 </ModalTemplate>
 
 <style>

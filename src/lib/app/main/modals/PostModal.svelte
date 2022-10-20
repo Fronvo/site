@@ -60,6 +60,7 @@
 
         extraStyling: ['width: 75%'],
         removeTransparency: true,
+        absolute: true,
     };
 </script>
 

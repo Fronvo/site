@@ -1,11 +1,11 @@
 <script lang="ts">
-    import { scale } from 'svelte/transition';
+    import { accountPanelAnimDuration } from 'stores/account';
+    import { fade } from 'svelte/transition';
 </script>
 
 <div
     class="header-container"
-    in:scale={{ duration: 750, start: 0.9, delay: 300 }}
-    out:scale={{ duration: 400, start: 0.9 }}
+    transition:fade={{ duration: accountPanelAnimDuration }}
 >
     <img
         id="icon"
@@ -18,18 +18,18 @@
 
 <style>
     .header-container {
-        position: absolute;
+        position: fixed;
         width: 100%;
         top: 0;
+        right: 0;
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-top: 50px;
+        overflow: hidden;
     }
 
     .header-container #icon {
         width: 90px;
-        margin-right: 5px;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;

@@ -2,6 +2,7 @@
     import Center from '$lib/app/Center.svelte';
     import type { FronvoError } from 'interfaces/all';
     import {
+        accountPanelAnimDuration,
         accountRegisterTab,
         accountResetPasswordFinalTab,
         accountResetPasswordTab,
@@ -79,36 +80,34 @@
     <title>Fronvo | Set new password</title>
 </svelte:head>
 
-<Center absolute>
-    <div
-        class="reset-container"
-        in:scale={{ duration: 750, start: 0.9, delay: 300 }}
-        out:scale={{ duration: 400, start: 0.9 }}
-    >
-        <h1 id="header">Set new password</h1>
+<div
+    class="reset-container"
+    transition:scale={{ duration: accountPanelAnimDuration, start: 1.1 }}
+>
+    <h1 id="header">Set new password</h1>
 
-        {#if isErrorVisible}
-            <h1 id="error-header" in:fade={{ duration: 500 }}>
-                {errorMessage}
-            </h1>
-        {/if}
+    {#if isErrorVisible}
+        <h1 id="error-header" in:fade={{ duration: 500 }}>
+            {errorMessage}
+        </h1>
+    {/if}
 
-        <h1 id="input-header">New password</h1>
-        <input
-            id="password-input"
-            bind:value={newPassword}
-            type="password"
-            maxlength={90}
-        />
+    <h1 id="input-header">New password</h1>
+    <input
+        id="password-input"
+        bind:value={newPassword}
+        type="password"
+        maxlength={90}
+    />
 
-        <br />
+    <br />
 
-        <button id="update-button" on:click={reset}>Update password</button>
-    </div>
-</Center>
+    <button id="update-button" on:click={reset}>Update password</button>
+</div>
 
 <style>
     .reset-container {
+        position: fixed;
         border-radius: 10px;
         background: rgb(111, 28, 236);
         padding: 20px 30px 20px 30px;

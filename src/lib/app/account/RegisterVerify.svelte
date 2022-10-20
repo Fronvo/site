@@ -7,6 +7,7 @@
     import { fade, scale } from 'svelte/transition';
     import { setKey } from 'utilities/global';
     import Center from '$lib/app/Center.svelte';
+    import { accountPanelAnimDuration } from 'stores/account';
 
     let code: string;
     let isErrorVisible = false;
@@ -38,45 +39,41 @@
     <title>Fronvo | Verify</title>
 </svelte:head>
 
-<Center absolute>
-    <div
-        class="verify-container"
-        in:scale={{ duration: 750, start: 0.9, delay: 300 }}
-        out:scale={{ duration: 400, start: 0.9 }}
-    >
-        <h1 id="header">Register Verification</h1>
+<div
+    class="verify-container"
+    transition:scale={{ duration: accountPanelAnimDuration, start: 1.1 }}
+>
+    <h1 id="header">Register Verification</h1>
 
-        <h1 id="info">
-            A 6-digit verification code has been sent to your email
+    <h1 id="info">A 6-digit verification code has been sent to your email</h1>
+
+    {#if isErrorVisible}
+        <h1 in:fade={{ duration: 500 }} id="error-header">
+            {errorMessage}
         </h1>
+    {/if}
 
-        {#if isErrorVisible}
-            <h1 in:fade={{ duration: 500 }} id="error-header">
-                {errorMessage}
-            </h1>
-        {/if}
+    <SvelteSegmentedInput
+        bind:value={code}
+        on:valueEntered={verify}
+        length={6}
+        style={{
+            fontSize: '2rem',
+            borderRadius: '10px',
+            borderWidth: '2px',
+            borderColorActive: 'rgb(255, 255, 255)',
+            textColor: 'white',
+            inputWidth: '100%',
+            padding: '10px 10px 10px 10px',
+        }}
+    />
 
-        <SvelteSegmentedInput
-            bind:value={code}
-            on:valueEntered={verify}
-            length={6}
-            style={{
-                fontSize: '2rem',
-                borderRadius: '10px',
-                borderWidth: '2px',
-                borderColorActive: 'rgb(255, 255, 255)',
-                textColor: 'white',
-                inputWidth: '100%',
-                padding: '10px 10px 10px 10px',
-            }}
-        />
-
-        <button on:click={verify}>Verify</button>
-    </div>
-</Center>
+    <button on:click={verify}>Verify</button>
+</div>
 
 <style>
     .verify-container {
+        position: fixed;
         border-radius: 10px;
         background: rgb(111, 28, 236);
         padding: 20px 30px 20px 30px;

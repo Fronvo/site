@@ -2,6 +2,7 @@
     import Center from '$lib/app/Center.svelte';
     import type { FronvoError } from 'interfaces/all';
     import {
+        accountPanelAnimDuration,
         accountResetPasswordTab,
         accountResetPasswordVerifyTab,
     } from 'stores/account';
@@ -83,33 +84,31 @@
     <title>Fronvo | Reset password</title>
 </svelte:head>
 
-<Center absolute>
-    <div
-        class="reset-container"
-        in:scale={{ duration: 750, start: 0.9, delay: 300 }}
-        out:scale={{ duration: 400, start: 0.9 }}
-    >
-        <h1 id="header">Reset password</h1>
+<div
+    class="reset-container"
+    transition:scale={{ duration: accountPanelAnimDuration, start: 1.1 }}
+>
+    <h1 id="header">Reset password</h1>
 
-        {#if isErrorVisible}
-            <h1 id="error-header" in:fade={{ duration: 500 }}>
-                {errorMessage}
-            </h1>
-        {/if}
+    {#if isErrorVisible}
+        <h1 id="error-header" in:fade={{ duration: 500 }}>
+            {errorMessage}
+        </h1>
+    {/if}
 
-        <h1 id="input-header">Email</h1>
-        <input id="email-input" bind:value={email} maxlength={120} />
+    <h1 id="input-header">Email</h1>
+    <input id="email-input" bind:value={email} maxlength={120} />
 
-        <br />
+    <br />
 
-        <button id="reset-button" on:click={reset}>Send reset email</button>
+    <button id="reset-button" on:click={reset}>Send reset email</button>
 
-        <h1 id="login-redirect" on:click={loginTab}>Back to login</h1>
-    </div>
-</Center>
+    <h1 id="login-redirect" on:click={loginTab}>Back to login</h1>
+</div>
 
 <style>
     .reset-container {
+        position: fixed;
         border-radius: 10px;
         background: rgb(111, 28, 236);
         padding: 20px 30px 20px 30px;

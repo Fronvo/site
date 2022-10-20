@@ -13,3 +13,5 @@ export const accountResetPasswordTab = writable(false);
 export const accountResetPasswordVerifyTab = writable(false);
 
 export const accountResetPasswordFinalTab = writable(false);
+
+export const accountPanelAnimDuration = 500;

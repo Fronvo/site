@@ -2,6 +2,7 @@
     import Center from '$lib/app/Center.svelte';
     import type { FronvoError } from 'interfaces/all';
     import {
+        accountPanelAnimDuration,
         accountRegisterTab,
         accountRegisterVerifyTab,
     } from 'stores/account';
@@ -93,43 +94,39 @@
     <title>Fronvo | Register</title>
 </svelte:head>
 
-<Center absolute>
-    <div
-        class="account-container"
-        in:scale={{ duration: 750, start: 0.9, delay: 300 }}
-        out:scale={{ duration: 400, start: 0.9 }}
-    >
-        <h1 id="header">Create an account</h1>
+<div
+    class="account-container"
+    transition:scale={{ duration: accountPanelAnimDuration, start: 1.1 }}
+>
+    <h1 id="header">Create an account</h1>
 
-        {#if isErrorVisible}
-            <h1 id="error-header" in:fade={{ duration: 500 }}>
-                {errorMessage}
-            </h1>
-        {/if}
-
-        <h1 id="input-header">Email</h1>
-        <input id="email-input" bind:value={email} maxlength={120} />
-
-        <h1 id="input-header">Password</h1>
-        <input
-            id="password-input"
-            bind:value={password}
-            type="password"
-            maxlength={90}
-        />
-
-        <br />
-
-        <button id="register-button" on:click={register}>Register</button>
-
-        <h1 id="login-redirect" on:click={changeTab}>
-            Already have an account?
+    {#if isErrorVisible}
+        <h1 id="error-header" in:fade={{ duration: 500 }}>
+            {errorMessage}
         </h1>
-    </div>
-</Center>
+    {/if}
+
+    <h1 id="input-header">Email</h1>
+    <input id="email-input" bind:value={email} maxlength={120} />
+
+    <h1 id="input-header">Password</h1>
+    <input
+        id="password-input"
+        bind:value={password}
+        type="password"
+        maxlength={90}
+    />
+
+    <br />
+
+    <button id="register-button" on:click={register}>Register</button>
+
+    <h1 id="login-redirect" on:click={changeTab}>Already have an account?</h1>
+</div>
 
 <style>
     .account-container {
+        position: fixed;
         border-radius: 10px;
         background: rgb(111, 28, 236);
         padding: 20px 30px 20px 30px;

@@ -10,6 +10,7 @@
         accountResetPasswordTab,
         accountResetPasswordVerifyTab,
     } from 'stores/account';
+    import Center from '../Center.svelte';
     import AccountHeader from './AccountHeader.svelte';
     import ResetPassword from './ResetPassword.svelte';
     import ResetPasswordFinal from './ResetPasswordFinal.svelte';
@@ -21,20 +22,22 @@
     });
 </script>
 
-<AccountHeader />
+<Center>
+    <AccountHeader />
 
-{#if $accountRegisterVerifyTab}
-    <RegisterVerify />
-{:else if $accountResetPasswordTab}
-    {#if $accountResetPasswordFinalTab}
-        <ResetPasswordFinal />
-    {:else if $accountResetPasswordVerifyTab}
-        <ResetPasswordVerify />
+    {#if $accountRegisterVerifyTab}
+        <RegisterVerify />
+    {:else if $accountResetPasswordTab}
+        {#if $accountResetPasswordFinalTab}
+            <ResetPasswordFinal />
+        {:else if $accountResetPasswordVerifyTab}
+            <ResetPasswordVerify />
+        {:else}
+            <ResetPassword />
+        {/if}
+    {:else if $accountRegisterTab}
+        <Register />
     {:else}
-        <ResetPassword />
+        <Login />
     {/if}
-{:else if $accountRegisterTab}
-    <Register />
-{:else}
-    <Login />
-{/if}
+</Center>

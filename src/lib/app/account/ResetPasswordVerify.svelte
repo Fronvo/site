@@ -1,7 +1,10 @@
 <script lang="ts">
     import Center from '$lib/app/Center.svelte';
     import type { FronvoError } from 'interfaces/all';
-    import { accountResetPasswordFinalTab } from 'stores/account';
+    import {
+        accountPanelAnimDuration,
+        accountResetPasswordFinalTab,
+    } from 'stores/account';
     import { socket } from 'stores/all';
     import SvelteSegmentedInput from 'svelte-segmented-input';
     import { fade, scale } from 'svelte/transition';
@@ -36,45 +39,41 @@
     <title>Fronvo | Reset password verification</title>
 </svelte:head>
 
-<Center absolute>
-    <div
-        class="reset-container"
-        in:scale={{ duration: 750, start: 0.9, delay: 300 }}
-        out:scale={{ duration: 400, start: 0.9 }}
-    >
-        <h1 id="header">Reset verification</h1>
+<div
+    class="reset-container"
+    transition:scale={{ duration: accountPanelAnimDuration, start: 1.1 }}
+>
+    <h1 id="header">Reset verification</h1>
 
-        <h1 id="info">
-            A 6-digit verification code has been sent to your email
+    <h1 id="info">A 6-digit verification code has been sent to your email</h1>
+
+    {#if isErrorVisible}
+        <h1 id="error-header" in:fade={{ duration: 500 }}>
+            {errorMessage}
         </h1>
+    {/if}
 
-        {#if isErrorVisible}
-            <h1 id="error-header" in:fade={{ duration: 500 }}>
-                {errorMessage}
-            </h1>
-        {/if}
+    <SvelteSegmentedInput
+        bind:value={code}
+        on:valueEntered={reset}
+        length={6}
+        style={{
+            fontSize: '2rem',
+            borderRadius: '10px',
+            borderWidth: '2px',
+            borderColorActive: 'rgb(255, 255, 255)',
+            textColor: 'white',
+            inputWidth: '100%',
+            padding: '10px 10px 10px 10px',
+        }}
+    />
 
-        <SvelteSegmentedInput
-            bind:value={code}
-            on:valueEntered={reset}
-            length={6}
-            style={{
-                fontSize: '2rem',
-                borderRadius: '10px',
-                borderWidth: '2px',
-                borderColorActive: 'rgb(255, 255, 255)',
-                textColor: 'white',
-                inputWidth: '100%',
-                padding: '10px 10px 10px 10px',
-            }}
-        />
-
-        <button on:click={reset}>Reset password</button>
-    </div>
-</Center>
+    <button on:click={reset}>Reset password</button>
+</div>
 
 <style>
     .reset-container {
+        position: fixed;
         border-radius: 10px;
         background: rgb(111, 28, 236);
         padding: 20px 30px 20px 30px;

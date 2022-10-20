@@ -215,7 +215,7 @@
         }
 
         // Send message this way
-        if (event.key == 'Enter') {
+        if (event.key == 'Enter' && $sendContent.length <= 500) {
             // Reset text
             contentInput.disabled = true;
 

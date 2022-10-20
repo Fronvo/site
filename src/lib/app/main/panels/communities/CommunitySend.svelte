@@ -64,7 +64,7 @@
     {/if}
 
     <!-- TODO: Arrow to expand textarea for mobile (maybe desktop aswell, will disable keyListener too as a store) -->
-    <textarea id="textarea-content" bind:value={$sendContent} maxlength={512} />
+    <textarea id="textarea-content" bind:value={$sendContent} maxlength={500} />
 </div>
 
 <style>

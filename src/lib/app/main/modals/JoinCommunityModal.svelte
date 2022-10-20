@@ -51,6 +51,8 @@
                 callback: dismissModal,
             },
         ],
+
+        removeTransparency: true,
     };
 </script>
 

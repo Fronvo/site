@@ -19,6 +19,9 @@ interface ThemingOptions {
     // Modal background color
     modal_bg_color: string;
 
+    // Modal background color for no transparency
+    modal_bg_color_full: string;
+
     // Modal input background color
     modal_input_bg_color: string;
 
@@ -39,6 +42,8 @@ export const defaultTheme: ThemingOptions = {
 
     modal_bg_color: 'rgba(10, 10, 10, 85%)',
 
+    modal_bg_color_full: 'rgb(10, 10, 10, 100%)',
+
     modal_input_bg_color: 'rgba(40, 40, 40, 0.5)',
 
     profile_info_color: 'white',
@@ -56,6 +61,8 @@ export const whiteTheme: ThemingOptions = {
     svg_stroke: 'rgb(130, 64, 255)',
 
     modal_bg_color: 'rgba(230, 230, 230, 85%)',
+
+    modal_bg_color_full: 'rgb(230, 230, 230)',
 
     modal_input_bg_color: 'rgba(255, 255, 255, 50%)',
 

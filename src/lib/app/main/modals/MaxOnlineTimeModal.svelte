@@ -22,6 +22,8 @@
                 callback: resetSession,
             },
         ],
+
+        removeTransparency: true,
     };
 </script>
 

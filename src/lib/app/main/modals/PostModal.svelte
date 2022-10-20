@@ -59,6 +59,7 @@
         ],
 
         extraStyling: ['width: 75%'],
+        removeTransparency: true,
     };
 </script>
 

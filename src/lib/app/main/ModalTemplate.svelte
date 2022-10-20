@@ -8,7 +8,11 @@
     }
 </script>
 
-<div class="modal-container">
+<div
+    class={`modal-container ${
+        data.removeTransparency ? 'modal-no-transparency' : ''
+    }`}
+>
     <div class="header-container">
         <h1 id="header">
             {#if data.titlePreSpan}
@@ -50,6 +54,10 @@
         width: 100%;
         height: 100%;
         overflow: auto;
+    }
+
+    .modal-no-transparency {
+        background: var(--modal_bg_color_full);
     }
 
     .header-container {

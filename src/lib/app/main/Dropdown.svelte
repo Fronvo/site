@@ -2,13 +2,12 @@
     import {
         currentDropdownId,
         currentPanelId,
+        dropdownAnimDuration,
         dropdownPosition,
         dropdowns,
         dropdownVisible,
-        modalAnimDuration,
     } from 'stores/main';
     import { onDestroy, onMount } from 'svelte';
-    import { quadInOut } from 'svelte/easing';
     import type { Unsubscriber } from 'svelte/store';
     import { scale } from 'svelte/transition';
     import { dismissDropdown } from 'utilities/main';
@@ -44,9 +43,8 @@
         <div
             class="item-container"
             in:scale={{
-                duration: modalAnimDuration,
-                start: 0.96,
-                easing: quadInOut,
+                duration: dropdownAnimDuration,
+                start: 1.1,
             }}
         >
             <svelte:component this={dropdowns[$currentDropdownId]} />

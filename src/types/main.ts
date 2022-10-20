@@ -47,4 +47,5 @@ export interface ModalData {
     actions: ModalActions[];
     noSeperator?: boolean;
     extraStyling?: string[];
+    removeTransparency?: boolean;
 }

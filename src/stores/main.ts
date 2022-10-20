@@ -61,7 +61,7 @@ export const dropdowns = [CommunityOptionsDropdown];
 // General Modal settings
 export const currentModalId = writable(0);
 export const modalVisible = writable(false);
-export const modalAnimDuration = 200;
+export const modalAnimDuration = 300;
 
 // FollowModal
 export const followModalInfo: Writable<string[]> = writable();
@@ -81,5 +81,5 @@ export const targetConfirmCommunityMessage: Writable<CommunityMessage> =
 // General Dropdown settings
 export const currentDropdownId = writable(0);
 export const dropdownVisible = writable(false);
-export const dropdownAnimDuration = 200;
+export const dropdownAnimDuration = 350;
 export const dropdownPosition = writable([0, 0]);

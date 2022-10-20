@@ -5,7 +5,6 @@
         modals,
         modalVisible,
     } from 'stores/main';
-    import { quadInOut } from 'svelte/easing';
     import { scale } from 'svelte/transition';
 </script>
 
@@ -14,8 +13,7 @@
         class="modal-container"
         transition:scale={{
             duration: modalAnimDuration,
-            start: 0.96,
-            easing: quadInOut,
+            start: 1.1,
         }}
     >
         <svelte:component this={modals[$currentModalId]} />

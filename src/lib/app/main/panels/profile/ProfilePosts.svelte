@@ -151,6 +151,7 @@
         margin: 0;
         text-align: center;
         font-size: 2.1rem;
+        width: 100%;
     }
 
     .post-container #content {

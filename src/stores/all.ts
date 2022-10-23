@@ -5,7 +5,6 @@
 import type { ClientToServerEvents } from 'interfaces/c2s';
 import type { ServerToClientEvents } from 'interfaces/s2c';
 import { io, Socket } from 'socket.io-client';
-import binaryParser from 'socket.io-msgpack-parser';
 import { writable } from 'svelte/store';
 
 export let socket: Socket<ServerToClientEvents, ClientToServerEvents>;
@@ -18,8 +17,6 @@ export function initSocket(callback?: () => void): void {
     socket = io('wss://fronvosrv.fly.dev', {
         transports: ['websocket'],
         path: '/fronvo',
-        parser: binaryParser,
-        onlyBinaryUpgrades: true,
     });
 
     if (callback) {

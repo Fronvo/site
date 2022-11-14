@@ -5,6 +5,7 @@
         modals,
         modalVisible,
     } from 'stores/main';
+    import { backOut } from 'svelte/easing';
     import { scale } from 'svelte/transition';
 </script>
 
@@ -13,7 +14,8 @@
         class="modal-container"
         transition:scale={{
             duration: modalAnimDuration,
-            start: 1.1,
+            start: 1.05,
+            easing: backOut,
         }}
     >
         <svelte:component this={modals[$currentModalId]} />

@@ -1,6 +1,5 @@
 <script lang="ts">
     import type { ModalData } from 'types/main';
-    import Center from '../Center.svelte';
 
     export let data: ModalData;
 
@@ -9,16 +8,8 @@
     }
 </script>
 
-<div
-    class={`modal-container ${
-        data.removeTransparency ? 'modal-no-transparency' : ''
-    }`}
->
-    <div
-        class={`${
-            data.absolute ? 'header-container-absolute' : 'header-container'
-        }`}
-    >
+<div class="modal-container">
+    <div class="header-container">
         <h1 id="header">
             {#if data.titlePreSpan}
                 <span>{`${data.titlePreSpan} `}</span>
@@ -28,28 +19,15 @@
         </h1>
     </div>
 
-    {#if !data.noSeperator && !data.absolute}
+    {#if !data.noSeperator}
         <hr />
     {/if}
 
-    <div
-        class="data-container"
-        style={data.extraStyling ? data.extraStyling.join('; ') : ''}
-    >
-        {#if data.absolute}
-            <Center>
-                <slot />
-            </Center>
-        {:else}
-            <slot />
-        {/if}
+    <div class="data-container">
+        <slot />
     </div>
 
-    <div
-        class={`${
-            data.absolute ? 'options-container-absolute' : 'options-container'
-        }`}
-    >
+    <div class="options-container">
         {#each data.actions as { title, callback }}
             <button on:click={() => runCallback(callback)}>{title}</button>
         {/each}
@@ -66,35 +44,18 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 100%;
-        height: 100%;
         overflow: auto;
-    }
-
-    .modal-container-absolute {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 100%;
-        height: 100%;
-        overflow: auto;
-    }
-
-    .modal-no-transparency {
-        background: var(--modal_bg_color_full);
+        border-radius: 25px;
+        min-height: 75%;
+        max-height: 90%;
+        background: var(--modal_content_bg_color);
+        box-shadow: 0 0 5px var(--modal_content_shadow_bg_color);
+        min-width: 40%;
+        max-width: 60%;
+        padding: 5px;
     }
 
     .header-container {
-        display: flex;
-        width: 100%;
-        justify-content: center;
-        z-index: 1;
-        padding-right: 10px;
-    }
-
-    .header-container-absolute {
-        position: absolute;
-        top: 0;
         display: flex;
         width: 100%;
         justify-content: center;
@@ -133,11 +94,6 @@
         height: 100%;
         margin-bottom: 20px;
         margin-top: 20px;
-    }
-
-    .options-container-absolute {
-        position: absolute;
-        bottom: 20px;
     }
 
     button {

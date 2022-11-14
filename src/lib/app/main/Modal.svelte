@@ -28,11 +28,10 @@
         left: 0;
         bottom: 0;
         display: flex;
-        flex-direction: column;
-        justify-content: center;
         align-items: center;
-        transition: 250ms all;
+        justify-content: center;
         z-index: 3;
         background: var(--modal_bg_color);
+        overflow: auto;
     }
 </style>

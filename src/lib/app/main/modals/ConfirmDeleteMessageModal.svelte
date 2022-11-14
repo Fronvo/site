@@ -1,5 +1,4 @@
 <script lang="ts">
-    import Center from '$lib/app/Center.svelte';
     import { socket } from 'stores/all';
     import { targetConfirmCommunityMessage } from 'stores/main';
     import type { ModalData } from 'types/main';
@@ -29,9 +28,7 @@
             },
         ],
 
-        extraStyling: ['width: 50%'],
         removeTransparency: true,
-        absolute: true,
     };
 </script>
 
@@ -57,6 +54,7 @@
         color: var(--profile_info_color);
         font-size: 1.8rem;
         margin: 0;
+        white-space: pre-wrap;
     }
 
     @media screen and (max-width: 720px) {

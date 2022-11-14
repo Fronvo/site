@@ -5,7 +5,6 @@
     import { loadCommunitiesPanel } from 'utilities/communities';
     import type { ModalData } from 'types/main';
     import ModalTemplate from '../ModalTemplate.svelte';
-    import Center from '$lib/app/Center.svelte';
 
     let inviteCode: string;
     let isJoining = false;
@@ -53,7 +52,6 @@
         ],
 
         removeTransparency: true,
-        absolute: true,
     };
 </script>
 

@@ -48,8 +48,6 @@
                 callback: dismissModal,
             },
         ],
-
-        extraStyling: ['width: 40%'],
     };
 </script>
 

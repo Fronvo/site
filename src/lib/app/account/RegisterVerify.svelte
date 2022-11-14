@@ -6,7 +6,6 @@
     import SvelteSegmentedInput from 'svelte-segmented-input';
     import { fade, scale } from 'svelte/transition';
     import { setKey } from 'utilities/global';
-    import Center from '$lib/app/Center.svelte';
     import { accountPanelAnimDuration } from 'stores/account';
 
     let code: string;

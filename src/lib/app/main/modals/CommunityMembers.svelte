@@ -122,6 +122,7 @@
         flex-wrap: wrap;
         overflow-y: auto;
         flex: 1;
+        margin-top: 10px;
     }
 
     .members-items-container div {
@@ -129,26 +130,20 @@
         flex-direction: column;
         align-items: center;
         background: var(--nav_bg_color);
-        box-shadow: 0 0 10px var(--nav_shadow_color);
-        width: 350px;
+        box-shadow: 0 0 5px var(--nav_shadow_color);
+        width: 300px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        margin-right: 25px;
         height: min-content;
         border-radius: 10px;
         padding: 10px;
-        margin-right: 25px;
-        margin-bottom: 20px;
         transition: 400ms background;
         cursor: pointer;
-        background-size: 200% auto;
-        background-image: linear-gradient(
-            to right,
-            rgba(0, 0, 0, 1%) 0%,
-            rgba(146, 73, 255, 20%) 51%,
-            rgba(0, 0, 0, 1%) 100%
-        );
     }
 
-    .members-items-container div:hover {
-        background-position: right center;
+    .members-items-container div:nth-child(1) {
+        margin-left: 15px;
     }
 
     .members-items-container div h1 {

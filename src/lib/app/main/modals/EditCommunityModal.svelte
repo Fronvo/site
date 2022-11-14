@@ -127,8 +127,6 @@
                 callback: dismissModal,
             },
         ],
-
-        extraStyling: ['width: 40%'],
     };
 </script>
 
@@ -171,8 +169,8 @@
             bind:checked={inviteOnly}
             class="invite-only-checkbox"
             size="2.7rem"
-            primaryColor="rgb(180, 120, 255)"
-            secondaryColor="white"
+            primaryColor="var(--modal_checkbox_primary_color)"
+            secondaryColor="var(--modal_checkbox_secondary_color)"
         />
     </div>
 </ModalTemplate>

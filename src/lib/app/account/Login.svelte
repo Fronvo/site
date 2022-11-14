@@ -1,5 +1,4 @@
 <script lang="ts">
-    import Center from '$lib/app/Center.svelte';
     import type { FronvoError } from 'interfaces/all';
     import {
         accountPanelAnimDuration,

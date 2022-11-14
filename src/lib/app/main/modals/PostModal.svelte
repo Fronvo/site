@@ -58,8 +58,8 @@
             },
         ],
 
-        extraStyling: ['width: 75%'],
         removeTransparency: true,
+        noSeperator: true,
     };
 </script>
 
@@ -93,7 +93,7 @@
     #title {
         margin: 0;
         text-align: center;
-        font-size: 3rem;
+        font-size: 2.7rem;
     }
 
     #content {
@@ -116,8 +116,8 @@
     }
 
     #attachment {
-        max-width: 70%;
-        max-height: 70%;
+        max-width: 1024px;
+        max-height: 1024px;
         margin-top: 10px;
         border-radius: 10px;
         -webkit-touch-callout: none;
@@ -150,11 +150,6 @@
             max-width: none;
         }
 
-        #attachment {
-            max-width: 100%;
-            max-height: 512px;
-        }
-
         #creation-date {
             font-size: 1.5rem;
         }
@@ -167,11 +162,6 @@
 
         #content {
             font-size: 1.6rem;
-        }
-
-        #attachment {
-            max-width: 100%;
-            max-height: 100%;
         }
 
         #creation-date {

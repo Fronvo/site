@@ -73,9 +73,7 @@
             },
         ],
 
-        extraStyling: ['width: 85%'],
         removeTransparency: true,
-        absolute: true,
     };
 </script>
 
@@ -91,8 +89,8 @@
             bind:checked={tempDarkTheme}
             class="private-checkbox"
             size="2.7rem"
-            primaryColor="rgb(180, 120, 255)"
-            secondaryColor="white"
+            primaryColor="var(--modal_checkbox_primary_color)"
+            secondaryColor="var(--modal_checkbox_secondary_color)"
         />
     </div>
 
@@ -102,8 +100,8 @@
             bind:checked={tempDataSaver}
             class="private-checkbox"
             size="2.7rem"
-            primaryColor="rgb(180, 120, 255)"
-            secondaryColor="white"
+            primaryColor="var(--modal_checkbox_primary_color)"
+            secondaryColor="var(--modal_checkbox_secondary_color)"
         />
     </div>
 </ModalTemplate>

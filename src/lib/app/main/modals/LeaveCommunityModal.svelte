@@ -11,7 +11,6 @@
     import { ourProfileData } from 'stores/profile';
     import type { ModalData } from 'types/main';
     import ModalTemplate from '../ModalTemplate.svelte';
-    import Center from '$lib/app/Center.svelte';
 
     let isLeaving = false;
 
@@ -56,7 +55,6 @@
                 callback: dismissModal,
             },
         ],
-        absolute: true,
     };
 </script>
 

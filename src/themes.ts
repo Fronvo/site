@@ -19,11 +19,20 @@ interface ThemingOptions {
     // Modal background color
     modal_bg_color: string;
 
-    // Modal background color for no transparency
-    modal_bg_color_full: string;
+    // Modal content background color
+    modal_content_bg_color: string;
+
+    // Modal content shadow bg color
+    modal_content_shadow_bg_color: string;
 
     // Modal input background color
     modal_input_bg_color: string;
+
+    // Modal checkbox primary color
+    modal_checkbox_primary_color: string;
+
+    // Modal checkbox secondary color
+    modal_checkbox_secondary_color: string;
 
     // Highlighted profile info color
     profile_info_color: string;
@@ -40,11 +49,17 @@ export const defaultTheme: ThemingOptions = {
 
     svg_stroke: 'rgb(130, 64, 255)',
 
-    modal_bg_color: 'rgba(10, 10, 10, 85%)',
+    modal_bg_color: 'rgba(10, 10, 10, 45%)',
 
-    modal_bg_color_full: 'rgb(10, 10, 10, 100%)',
+    modal_content_bg_color: 'rgb(20, 20, 20)',
 
-    modal_input_bg_color: 'rgba(40, 40, 40, 0.5)',
+    modal_content_shadow_bg_color: 'rgb(10, 10, 10)',
+
+    modal_input_bg_color: 'rgba(35, 35, 35, 0.5)',
+
+    modal_checkbox_primary_color: 'rgb(150, 100, 250)',
+
+    modal_checkbox_secondary_color: 'rgb(150, 100, 220)',
 
     profile_info_color: 'white',
 };
@@ -60,11 +75,17 @@ export const whiteTheme: ThemingOptions = {
 
     svg_stroke: 'rgb(130, 64, 255)',
 
-    modal_bg_color: 'rgba(230, 230, 230, 85%)',
+    modal_bg_color: 'rgba(230, 230, 230, 45%)',
 
-    modal_bg_color_full: 'rgb(230, 230, 230)',
+    modal_content_bg_color: 'rgb(250, 250, 250)',
 
-    modal_input_bg_color: 'rgba(255, 255, 255, 50%)',
+    modal_content_shadow_bg_color: 'rgb(210, 210, 210)',
+
+    modal_input_bg_color: 'rgb(240, 240, 240)',
+
+    modal_checkbox_primary_color: 'rgb(150, 100, 250)',
+
+    modal_checkbox_secondary_color: 'rgb(150, 100, 220)',
 
     profile_info_color: 'rgb(40, 40, 40)',
 };

@@ -4,7 +4,6 @@
     import { getKey } from 'utilities/global';
     import type { ModalData } from 'types/main';
     import ModalTemplate from '../ModalTemplate.svelte';
-    import Center from '$lib/app/Center.svelte';
 
     function resetSession(): void {
         $sessionTime = 0;
@@ -24,7 +23,6 @@
         ],
 
         removeTransparency: true,
-        absolute: true,
     };
 </script>
 

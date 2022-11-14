@@ -49,7 +49,7 @@ export const defaultTheme: ThemingOptions = {
 
     svg_stroke: 'rgb(130, 64, 255)',
 
-    modal_bg_color: 'rgba(10, 10, 10, 45%)',
+    modal_bg_color: 'rgba(12, 12, 12, 75%)',
 
     modal_content_bg_color: 'rgb(20, 20, 20)',
 
@@ -75,7 +75,7 @@ export const whiteTheme: ThemingOptions = {
 
     svg_stroke: 'rgb(130, 64, 255)',
 
-    modal_bg_color: 'rgba(230, 230, 230, 45%)',
+    modal_bg_color: 'rgba(230, 230, 230, 75%)',
 
     modal_content_bg_color: 'rgb(250, 250, 250)',
 

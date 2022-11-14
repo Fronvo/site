@@ -53,6 +53,7 @@
         min-width: 40%;
         max-width: 60%;
         padding: 5px;
+        overflow-x: hidden;
     }
 
     .header-container {

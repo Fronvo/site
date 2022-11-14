@@ -103,7 +103,6 @@
         white-space: pre-wrap;
         text-align: center;
         max-width: 100%;
-        overflow: hidden;
     }
 
     :global(#content .link) {
@@ -148,6 +147,10 @@
         #content {
             font-size: 1.7rem;
             max-width: none;
+        }
+
+        #attachment {
+            max-width: 100%;
         }
 
         #creation-date {

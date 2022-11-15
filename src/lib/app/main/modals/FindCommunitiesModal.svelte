@@ -168,7 +168,6 @@
         flex-wrap: wrap;
         overflow-y: auto;
         flex: 1;
-        margin-top: 10px;
     }
 
     .find-items-container div {
@@ -180,16 +179,13 @@
         width: 300px;
         margin-top: 15px;
         margin-bottom: 15px;
-        margin-right: 25px;
+        margin-right: 10px;
+        margin-left: 10px;
         height: min-content;
         border-radius: 10px;
         padding: 10px;
         transition: 400ms background;
         cursor: pointer;
-    }
-
-    .find-items-container div:nth-child(1) {
-        margin-left: 15px;
     }
 
     .find-items-container div:hover {
@@ -271,13 +267,9 @@
             flex-direction: row;
             align-items: center;
             padding: 5px;
-            margin-right: 10px;
-            margin-bottom: 10px;
+            margin: 10px;
+            margin-bottom: 5px;
             cursor: default;
-        }
-
-        .find-items-container div:first-child {
-            padding-top: 0;
         }
 
         .find-items-container div #name {

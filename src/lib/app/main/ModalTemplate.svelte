@@ -83,7 +83,7 @@
     .data-container {
         display: flex;
         flex-direction: column;
-        min-width: 450px;
+        min-width: 500px;
         text-align: center;
         align-items: center;
     }
@@ -103,6 +103,14 @@
     }
 
     @media screen and (max-width: 720px) {
+        .modal-container {
+            max-width: none;
+            max-height: 90%;
+            min-width: 85%;
+            max-width: 95%;
+            border-radius: 25px;
+        }
+
         hr {
             margin-bottom: 20px;
         }

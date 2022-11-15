@@ -1,4 +1,7 @@
 <script lang="ts">
+    import { modalAnimDuration } from 'stores/main';
+    import { backOut } from 'svelte/easing';
+    import { scale } from 'svelte/transition';
     import type { ModalData } from 'types/main';
 
     export let data: ModalData;
@@ -8,7 +11,14 @@
     }
 </script>
 
-<div class="modal-container">
+<div
+    class="modal-container"
+    transition:scale={{
+        duration: modalAnimDuration,
+        start: 1.05,
+        easing: backOut,
+    }}
+>
     <div class="header-container">
         <h1 id="header">
             {#if data.titlePreSpan}

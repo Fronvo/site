@@ -236,8 +236,7 @@
     @media screen and (max-width: 520px) {
         .following-items-container div {
             width: 280px;
-            margin-right: 0;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             padding: 5px;
         }
 

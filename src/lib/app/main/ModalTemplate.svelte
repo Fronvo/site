@@ -3,6 +3,7 @@
     import { backOut } from 'svelte/easing';
     import { scale } from 'svelte/transition';
     import type { ModalData } from 'types/main';
+    import { dismissModal } from 'utilities/main';
 
     export let data: ModalData;
 
@@ -20,7 +21,25 @@
     }}
 >
     <div class="header-container">
-        <h1 id="header">
+        <h1
+            id="header"
+            style={data.titleListener ? 'cursor: pointer;' : ''}
+            on:click={() => {
+                dismissModal();
+                data.titleListener();
+            }}
+        >
+            {#if data.titleIcon}
+                <img
+                    id="icon"
+                    src={data.titleIcon
+                        ? data.titleIcon
+                        : '/svgs/profile/default.svg'}
+                    draggable={false}
+                    alt="Title icon"
+                />
+            {/if}
+
             {#if data.titlePreSpan}
                 <span>{`${data.titlePreSpan} `}</span>
             {/if}
@@ -75,9 +94,12 @@
     }
 
     #header {
-        font-size: 3rem;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.8rem;
         margin: 0;
-        padding-right: 5px;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -88,6 +110,13 @@
 
     #header span {
         color: var(--profile_info_color);
+    }
+
+    #header #icon {
+        width: 64px;
+        height: 64px;
+        border-radius: 10px;
+        margin-right: 10px;
     }
 
     .data-container {
@@ -117,7 +146,7 @@
             max-width: none;
             max-height: 90%;
             min-width: 85%;
-            max-width: 95%;
+            max-width: 100%;
             border-radius: 25px;
         }
 
@@ -127,6 +156,12 @@
 
         #header {
             font-size: 2.4rem;
+        }
+
+        #header #icon {
+            width: 54px;
+            height: 54px;
+            margin-right: 5px;
         }
 
         .data-container {
@@ -143,6 +178,11 @@
     @media screen and (max-width: 520px) {
         #header {
             font-size: 2rem;
+        }
+
+        #header #icon {
+            width: 48px;
+            height: 48px;
         }
 
         .data-container {

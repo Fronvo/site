@@ -2,14 +2,19 @@
     import type { HomePost } from 'interfaces/all';
     import type { AccountPost, FronvoAccount } from 'interfaces/all';
     import { dismissModal } from 'utilities/main';
-    import { postModalForHome, postModalInfo } from 'stores/main';
-    import { userData } from 'stores/profile';
+    import {
+        currentPanelId,
+        postModalForHome,
+        postModalInfo,
+    } from 'stores/main';
+    import { ourProfileData, userData } from 'stores/profile';
     import Time from 'svelte-time';
     import { onMount } from 'svelte';
     import linkifyHtml from 'linkify-html';
-    import type { ModalData } from 'types/main';
+    import { PanelTypes, type ModalData } from 'types/main';
     import ModalTemplate from '../ModalTemplate.svelte';
     import { dataSaver } from 'stores/all';
+    import { loadProfilePanel } from 'utilities/profile';
 
     function getPostData(): AccountPost {
         if ($postModalForHome) {
@@ -48,7 +53,11 @@
     });
 
     const data: ModalData = {
-        titlePreSpan: `By ${getUserData().username}`,
+        titlePreSpan: getUserData().username,
+        titleIcon: getUserData().avatar || '/svgs/profile/default.svg',
+        titleListener: () =>
+            $currentPanelId != PanelTypes.Profile &&
+            loadProfilePanel(getUserData().profileId),
         title: '',
 
         actions: [
@@ -93,16 +102,17 @@
     #title {
         margin: 0;
         text-align: center;
-        font-size: 2.7rem;
+        font-size: 2.4rem;
     }
 
     #content {
         margin: 0;
-        font-size: 2rem;
+        font-size: 1.9rem;
         color: var(--profile_info_color);
         white-space: pre-wrap;
         text-align: center;
-        max-width: 100%;
+        margin-left: 20px;
+        margin-right: 20px;
     }
 
     :global(#content .link) {
@@ -117,8 +127,8 @@
     #attachment {
         max-width: 1024px;
         max-height: 1024px;
-        margin-top: 10px;
         border-radius: 10px;
+        margin-top: 10px;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -128,9 +138,8 @@
     }
 
     #creation-date {
-        font-size: 1.6rem;
+        font-size: 1.3rem;
         margin: 0;
-        margin-top: 20px;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -141,12 +150,11 @@
 
     @media screen and (max-width: 720px) {
         #title {
-            font-size: 2.4rem;
+            font-size: 2.2rem;
         }
 
         #content {
             font-size: 1.7rem;
-            max-width: none;
         }
 
         #attachment {
@@ -154,21 +162,21 @@
         }
 
         #creation-date {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
         }
     }
 
     @media screen and (max-width: 520px) {
         #title {
-            font-size: 2rem;
+            font-size: 1.8rem;
         }
 
         #content {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
         }
 
         #creation-date {
-            font-size: 1.2rem;
+            font-size: 1rem;
         }
     }
 </style>

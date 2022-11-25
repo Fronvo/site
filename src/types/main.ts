@@ -43,6 +43,8 @@ export interface ModalActions {
 
 export interface ModalData {
     titlePreSpan?: any;
+    titleIcon?: string;
+    titleListener?: () => void;
     title: string;
     actions: ModalActions[];
     noSeperator?: boolean;

@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { dataSaver } from 'stores/all';
     import { modalAnimDuration } from 'stores/main';
     import { backOut } from 'svelte/easing';
     import { scale } from 'svelte/transition';
@@ -32,7 +33,7 @@
             {#if data.titleIcon}
                 <img
                     id="icon"
-                    src={data.titleIcon
+                    src={data.titleIcon && !$dataSaver
                         ? data.titleIcon
                         : '/svgs/profile/default.svg'}
                     draggable={false}

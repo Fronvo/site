@@ -26,8 +26,10 @@
             id="header"
             style={data.titleListener ? 'cursor: pointer;' : ''}
             on:click={() => {
-                dismissModal();
-                data.titleListener();
+                if (typeof data.titleListener == 'function') {
+                    dismissModal();
+                    data.titleListener();
+                }
             }}
         >
             {#if data.titleIcon}
@@ -163,6 +165,7 @@
         #header,
         #header #title {
             font-size: 2.4rem;
+            cursor: default;
         }
 
         #header #icon {

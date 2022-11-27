@@ -45,7 +45,7 @@
                 <span>{`${data.titlePreSpan} `}</span>
             {/if}
 
-            {data.title}
+            <h1 id="title">{data.title}</h1>
         </h1>
     </div>
 
@@ -94,7 +94,8 @@
         padding-right: 10px;
     }
 
-    #header {
+    #header,
+    #header #title {
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -107,6 +108,10 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+    }
+
+    #header #title {
+        margin-left: 5px;
     }
 
     #header span {
@@ -155,7 +160,8 @@
             margin-bottom: 20px;
         }
 
-        #header {
+        #header,
+        #header #title {
             font-size: 2.4rem;
         }
 
@@ -177,7 +183,8 @@
     }
 
     @media screen and (max-width: 520px) {
-        #header {
+        #header,
+        #header #title {
             font-size: 2rem;
         }
 

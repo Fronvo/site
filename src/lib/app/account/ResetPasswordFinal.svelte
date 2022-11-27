@@ -141,6 +141,10 @@
         font-size: 2rem;
         margin: 0 5px 20px 5px;
         width: 95%;
+        color: white;
+        background: transparent;
+        border-radius: 12px;
+        border: 3px solid white;
     }
 
     .reset-container button {

@@ -17,7 +17,7 @@
     onMount(() => {
         // Remove homepage for registered users
         if (getKey('token')) {
-            goto('/app', {
+            goto('/register', {
                 replaceState: true,
             });
             return;

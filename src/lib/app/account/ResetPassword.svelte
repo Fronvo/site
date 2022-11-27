@@ -1,7 +1,9 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import type { FronvoError } from 'interfaces/all';
     import {
         accountPanelAnimDuration,
+        accountRegisterTab,
         accountResetPasswordTab,
         accountResetPasswordVerifyTab,
     } from 'stores/account';
@@ -27,6 +29,10 @@
     }
 
     onMount(() => {
+        goto('/reset', {
+            replaceState: true,
+        });
+
         emailInput = document.getElementById('email-input') as HTMLInputElement;
         resetButton = document.getElementById(
             'reset-button'
@@ -75,6 +81,7 @@
     function loginTab(): void {
         if (isResetting) return;
 
+        $accountRegisterTab = false;
         $accountResetPasswordTab = false;
     }
 </script>

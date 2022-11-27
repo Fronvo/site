@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import type { FronvoError } from 'interfaces/all';
     import {
         accountPanelAnimDuration,
@@ -34,6 +35,10 @@
     }
 
     onMount(() => {
+        goto('/register', {
+            replaceState: true,
+        });
+
         emailInput = document.getElementById('email-input') as HTMLInputElement;
         passwordInput = document.getElementById(
             'password-input'

@@ -11,6 +11,7 @@
     import { onMount, onDestroy } from 'svelte';
     import { fade, scale } from 'svelte/transition';
     import { setKey } from 'utilities/global';
+    import { goto } from '$app/navigation';
 
     let email: string;
     let password: string;
@@ -37,6 +38,10 @@
     }
 
     onMount(() => {
+        goto('/login', {
+            replaceState: true,
+        });
+
         emailInput = document.getElementById('email-input') as HTMLInputElement;
         passwordInput = document.getElementById(
             'password-input'

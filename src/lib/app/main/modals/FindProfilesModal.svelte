@@ -53,7 +53,7 @@
                     }
                 }
             );
-        }, 500);
+        }, 250);
     });
 
     function loadProfiles(targetIds: string[]): void {

@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
     import Containers from '$lib/index/Containers.svelte';
     import Footer from '$lib/index/Footer.svelte';
     import Top from '$lib/index/Top.svelte';
@@ -17,9 +16,7 @@
     onMount(() => {
         // Remove homepage for registered users
         if (getKey('token')) {
-            goto('/register', {
-                replaceState: true,
-            });
+            $showLayout = true;
             return;
         }
 

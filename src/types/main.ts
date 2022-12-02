@@ -24,6 +24,8 @@ export enum ModalTypes {
     EditCommunity,
     EditCommunityMember,
     ConfirmDeleteMessage,
+    JoinRequests,
+    EditJoinRequest,
 }
 
 export enum DropdownTypes {

@@ -24,7 +24,7 @@
     <div class="header-container">
         <h1
             id="header"
-            style={data.titleListener ? 'cursor: pointer;' : ''}
+            class={data.titleListener ? 'clickable' : ''}
             on:click={() => {
                 if (typeof data.titleListener == 'function') {
                     dismissModal();
@@ -112,6 +112,10 @@
         user-select: none;
     }
 
+    :global(.clickable) {
+        cursor: pointer;
+    }
+
     #header #title {
         margin-left: 5px;
     }
@@ -165,6 +169,10 @@
         #header,
         #header #title {
             font-size: 2.4rem;
+            cursor: default;
+        }
+
+        :global(.clickable) {
             cursor: default;
         }
 

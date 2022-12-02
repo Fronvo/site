@@ -9,11 +9,13 @@ import CreateCommunityModal from '$lib/app/main/modals/CreateCommunityModal.svel
 import CreatePostModal from '$lib/app/main/modals/CreatePostModal.svelte';
 import EditCommunityMemberModal from '$lib/app/main/modals/EditCommunityMemberModal.svelte';
 import EditCommunityModal from '$lib/app/main/modals/EditCommunityModal.svelte';
+import EditJoinRequestModal from '$lib/app/main/modals/EditJoinRequestModal.svelte';
 import EditProfileModal from '$lib/app/main/modals/EditProfileModal.svelte';
 import FindCommunitiesModal from '$lib/app/main/modals/FindCommunitiesModal.svelte';
 import FindProfilesModal from '$lib/app/main/modals/FindProfilesModal.svelte';
 import FollowInfoModal from '$lib/app/main/modals/FollowInfoModal.svelte';
 import JoinCommunityModal from '$lib/app/main/modals/JoinCommunityModal.svelte';
+import JoinRequestsModal from '$lib/app/main/modals/JoinRequestsModal.svelte';
 import LeaveCommunityModal from '$lib/app/main/modals/LeaveCommunityModal.svelte';
 import MaxOnlineTimeModal from '$lib/app/main/modals/MaxOnlineTimeModal.svelte';
 import PostModal from '$lib/app/main/modals/PostModal.svelte';
@@ -53,6 +55,8 @@ export const modals = [
     EditCommunityModal,
     EditCommunityMemberModal,
     ConfirmDeleteMessageModal,
+    JoinRequestsModal,
+    EditJoinRequestModal,
 ];
 
 // Dropdown settings
@@ -77,6 +81,9 @@ export const targetCommunityMember: Writable<FronvoAccount> = writable();
 // ConfirmDeleteMessageModal
 export const targetConfirmCommunityMessage: Writable<CommunityMessage> =
     writable();
+
+// JoinRequestModal
+export const targetJoinRequestEmail: Writable<string> = writable();
 
 // General Dropdown settings
 export const currentDropdownId = writable(0);

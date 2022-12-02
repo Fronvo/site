@@ -76,3 +76,7 @@ export interface FronvoContainer {
     title: string;
     svg: string;
 }
+
+export interface JoinRequest {
+    email: string;
+}

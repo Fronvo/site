@@ -1,12 +1,12 @@
 <script lang="ts">
     import type { FronvoError } from 'interfaces/all';
-    import { tokenInvalid } from 'stores/all';
-    import { loginSucceeded } from 'stores/main';
     import { socket } from 'stores/all';
     import SvelteSegmentedInput from 'svelte-segmented-input';
     import { fade, scale } from 'svelte/transition';
-    import { setKey } from 'utilities/global';
-    import { accountPanelAnimDuration } from 'stores/account';
+    import {
+        accountPanelAnimDuration,
+        accountRegisterFinalTab,
+    } from 'stores/account';
 
     let code: string;
     let isErrorVisible = false;
@@ -19,13 +19,11 @@
         }
 
         function attemptVerify(): void {
-            socket.emit('registerVerify', { code }, ({ err, token }) => {
+            socket.emit('registerVerify', { code }, ({ err }) => {
                 if (err) {
                     setError({ err });
                 } else {
-                    setKey('token', token);
-                    $tokenInvalid = false;
-                    $loginSucceeded = true;
+                    $accountRegisterFinalTab = true;
                 }
             });
         }

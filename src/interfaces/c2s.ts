@@ -92,6 +92,15 @@ import type {
     ResetPasswordVerifyParams,
     ResetPasswordVerifyResult,
 } from './noAccount/resetPasswordVerify';
+import type {
+    AcceptJoinRequestParams,
+    AcceptJoinRequestResult,
+} from './account/acceptJoinRequest';
+import type { ListJoinRequestsResult } from './account/listJoinRequests';
+import type {
+    RejectJoinRequestParams,
+    RejectJoinRequestResult,
+} from './account/rejectJoinRequest';
 
 export interface ClientToServerEvents {
     register: (
@@ -195,5 +204,14 @@ export interface ClientToServerEvents {
     toggleDisableAccount: (
         {}: ToggleDisableAccountParams,
         callback?: ({}: ToggleDisableAccountResult) => void
+    ) => void;
+    acceptJoinRequest: (
+        {}: AcceptJoinRequestParams,
+        callback?: ({}: AcceptJoinRequestResult) => void
+    ) => void;
+    listJoinRequests: (callback?: ({}: ListJoinRequestsResult) => void) => void;
+    rejectJoinRequest: (
+        {}: RejectJoinRequestParams,
+        callback?: ({}: RejectJoinRequestResult) => void
     ) => void;
 }

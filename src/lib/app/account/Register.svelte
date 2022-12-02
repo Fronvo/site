@@ -102,7 +102,7 @@
     class="account-container"
     transition:scale={{ duration: accountPanelAnimDuration, start: 1.1 }}
 >
-    <h1 id="header">Create an account</h1>
+    <h1 id="header">Join closed beta</h1>
 
     {#if isErrorVisible}
         <h1 id="error-header" in:fade={{ duration: 500 }}>

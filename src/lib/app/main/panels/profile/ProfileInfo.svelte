@@ -4,6 +4,7 @@
     import DisableProfile from '$lib/svgs/DisableProfile.svelte';
     import EditProfile from '$lib/svgs/EditProfile.svelte';
     import Follow from '$lib/svgs/Follow.svelte';
+    import JoinRequests from '$lib/svgs/JoinRequests.svelte';
     import Logout from '$lib/svgs/Logout.svelte';
     import { dataSaver } from 'stores/all';
     import { joinedCommunity, targetCommunityData } from 'stores/communities';
@@ -112,6 +113,11 @@
             {#if $userData.isSelf}
                 <EditProfile />
                 <CreatePost />
+
+                {#if $ourProfileData.isAdmin}
+                    <JoinRequests />
+                {/if}
+
                 <Logout />
             {:else}
                 <Follow />

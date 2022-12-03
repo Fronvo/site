@@ -23,17 +23,27 @@
         <!-- Side nav which transforms into a Top nav on mobile -->
         <MainSideNav />
 
-        <!-- Reactive panel switching -->
-        <svelte:component this={panels[$currentPanelId]} />
+        <div id="content">
+            <!-- Reactive panel switching -->
+            <svelte:component this={panels[$currentPanelId]} />
+        </div>
     </div>
 {/if}
 
 <style>
-    @media screen and (max-width: 720px) {
+    .main-container {
+        display: flex;
+        flex-direction: row;
+    }
+
+    #content {
+        width: 100%;
+        justify-content: center;
+    }
+
+    @media screen and (max-width: 520px) {
         .main-container {
-            display: flex;
             flex-direction: column;
-            height: max-content;
         }
     }
 </style>

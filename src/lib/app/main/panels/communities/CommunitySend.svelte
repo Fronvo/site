@@ -113,7 +113,6 @@
 
     @media screen and (max-width: 720px) {
         .send-container {
-            bottom: 110px;
             width: 80%;
             min-width: initial;
             min-height: 55px;

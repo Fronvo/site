@@ -7,4 +7,5 @@ export type LocalKeys =
     | 'panelId'
     | 'maxOnlineTime'
     | 'darkTheme'
-    | 'dataSaver';
+    | 'dataSaver'
+    | 'xmasMode';

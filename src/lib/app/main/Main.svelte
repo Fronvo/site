@@ -5,7 +5,7 @@
     import { onMount } from 'svelte';
     import { getKey } from 'utilities/global';
     import Dropdown from './Dropdown.svelte';
-    import { particleOptions } from 'stores/all';
+    import { particleOptions, xmasMode } from 'stores/all';
 
     let ParticlesComponent: any;
 
@@ -19,11 +19,13 @@
 </script>
 
 {#if $loginSucceeded}
-    <svelte:component
-        this={ParticlesComponent}
-        id="tsparticles"
-        options={particleOptions}
-    />
+    {#if $xmasMode}
+        <svelte:component
+            this={ParticlesComponent}
+            id="tsparticles"
+            options={particleOptions}
+        />
+    {/if}
 
     <!-- Smoothity-smooth modal auto-switching -->
     <Modal />

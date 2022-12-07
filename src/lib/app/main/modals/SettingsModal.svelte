@@ -5,6 +5,7 @@
         sessionTime,
         sessionTimeEnabled,
         sessionWarningShown,
+        xmasMode,
     } from 'stores/all';
     import Checkbox from 'svelte-checkbox';
     import { dismissModal } from 'utilities/main';
@@ -15,6 +16,7 @@
     let maxOnlineTime = getKey('maxOnlineTime') / 60 || 0;
     let tempDarkTheme = $darkTheme;
     let tempDataSaver = $dataSaver;
+    let tempXmasMode = $xmasMode;
 
     function saveMaxOnlineTime(): void {
         const onlineTime = validateMaxOnlineTime() * 60;
@@ -39,6 +41,7 @@
 
             const onlineTime = Number(maxOnlineTime);
 
+            // @ts-ignore
             if (onlineTime != NaN && onlineTime > 0) {
                 return onlineTime;
             }
@@ -55,10 +58,16 @@
         $dataSaver = tempDataSaver;
     }
 
+    function saveXmasMode(): void {
+        setKey('xmasMode', tempXmasMode);
+        $xmasMode = tempXmasMode;
+    }
+
     function saveSettings(): void {
         saveMaxOnlineTime();
         saveDarkTheme();
         saveDataSaver();
+        saveXmasMode();
 
         dismissModal();
     }
@@ -98,6 +107,17 @@
         <h1>Data saver</h1>
         <Checkbox
             bind:checked={tempDataSaver}
+            class="private-checkbox"
+            size="2.7rem"
+            primaryColor="var(--modal_checkbox_primary_color)"
+            secondaryColor="var(--modal_checkbox_secondary_color)"
+        />
+    </div>
+
+    <div class="single-line">
+        <h1>Christmas mode</h1>
+        <Checkbox
+            bind:checked={tempXmasMode}
             class="private-checkbox"
             size="2.7rem"
             primaryColor="var(--modal_checkbox_primary_color)"

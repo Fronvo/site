@@ -176,7 +176,7 @@
         }
 
         div h1 {
-            font-size: 2.1rem;
+            font-size: 2rem;
         }
     }
 
@@ -186,7 +186,7 @@
         }
 
         div h1 {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
         }
     }
 </style>

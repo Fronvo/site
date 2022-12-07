@@ -41,3 +41,49 @@ export const sessionWarningShown = writable(false);
 export const sessionAttached = writable(false);
 export const darkTheme = writable(undefined);
 export const dataSaver = writable(false);
+
+export const particleOptions = {
+    particles: {
+        color: {
+            value: '#ffffff',
+        },
+
+        move: {
+            enable: true,
+            direction: 'bottom',
+            speed: 2,
+        },
+
+        number: {
+            density: {
+                enable: true,
+                area: 500,
+            },
+            value: 4,
+        },
+
+        opacity: {
+            value: 1,
+        },
+
+        shape: {
+            type: 'circle',
+        },
+
+        size: {
+            value: 5,
+        },
+
+        // wobbly wobbly right left
+        wobble: {
+            enable: true,
+            distance: 18,
+            speed: 3,
+        },
+
+        // size randomness
+        zIndex: {
+            value: { min: 0, max: 100 },
+        },
+    },
+};

@@ -5,14 +5,26 @@
     import { onMount } from 'svelte';
     import { getKey } from 'utilities/global';
     import Dropdown from './Dropdown.svelte';
+    import { particleOptions } from 'stores/all';
 
-    onMount(() => {
+    let ParticlesComponent: any;
+
+    onMount(async () => {
         // Get latest panel id / Home
         $currentPanelId = getKey('panelId', 0);
+
+        const module = await import('svelte-particles');
+        ParticlesComponent = module.default;
     });
 </script>
 
 {#if $loginSucceeded}
+    <svelte:component
+        this={ParticlesComponent}
+        id="tsparticles"
+        options={particleOptions}
+    />
+
     <!-- Smoothity-smooth modal auto-switching -->
     <Modal />
 

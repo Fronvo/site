@@ -1,7 +1,7 @@
 <script lang="ts">
     import Account from '$lib/app/account/Account.svelte';
     import Main from '$lib/app/main/Main.svelte';
-    import { dataSaver, tokenInvalid } from 'stores/all';
+    import { dataSaver, particleOptions, tokenInvalid } from 'stores/all';
     import {
         dropdownPosition,
         loginSucceeded,
@@ -40,6 +40,9 @@
             }
 
             currentTheme.set(dark ? defaultTheme : whiteTheme);
+
+            // @ts-ignore
+            particleOptions.particles.color = dark ? '#ffffff' : '#dddddd';
         });
 
         function startSessionTime(): void {

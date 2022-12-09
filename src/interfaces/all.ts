@@ -35,6 +35,7 @@ export interface FronvoAccount {
     bio: string;
     email?: string;
     avatar: string;
+    banner: string;
     creationDate: string;
     following: string[];
     followers: string[];

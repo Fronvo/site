@@ -1,7 +1,12 @@
 <script lang="ts">
     import Account from '$lib/app/account/Account.svelte';
     import Main from '$lib/app/main/Main.svelte';
-    import { dataSaver, particleOptions, tokenInvalid } from 'stores/all';
+    import {
+        dataSaver,
+        fronvoTitle,
+        particleOptions,
+        tokenInvalid,
+    } from 'stores/all';
     import {
         dropdownPosition,
         loginSucceeded,
@@ -108,6 +113,10 @@
         });
     });
 </script>
+
+<svelte:head>
+    <title>{$fronvoTitle}</title>
+</svelte:head>
 
 <div class="main" use:themingVars={{ ...$currentTheme }}>
     {#if mountReady}

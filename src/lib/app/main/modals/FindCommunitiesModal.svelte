@@ -133,7 +133,7 @@
                             id="icon"
                             src={icon && !$dataSaver
                                 ? icon
-                                : '/svgs/profile/default.svg'}
+                                : '/svgs/profile/avatar.svg'}
                             alt={`${name} community's icon`}
                             draggable={false}
                         />

@@ -103,10 +103,6 @@
     }
 </script>
 
-<svelte:head>
-    <title>Fronvo | Login</title>
-</svelte:head>
-
 <div
     class="account-container"
     transition:scale={{ duration: accountPanelAnimDuration, start: 1.1 }}

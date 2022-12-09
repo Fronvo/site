@@ -8,7 +8,7 @@
     import { onMount } from 'svelte';
     import { sineOut } from 'svelte/easing';
     import { fade, scale } from 'svelte/transition';
-    import { dismissModal } from 'utilities/main';
+    import { dismissModal, setTitle } from 'utilities/main';
     import { getKey } from 'utilities/global';
 
     let mountReady = false;
@@ -19,6 +19,8 @@
             $showLayout = true;
             return;
         }
+
+        setTitle('Fronvo, Your Gateway to Free Conversations');
 
         // Remove modals if navigating back
         dismissModal();
@@ -33,10 +35,6 @@
         mountReady = true;
     });
 </script>
-
-<svelte:head>
-    <title>Fronvo | Your Gateway to Free Conversations</title>
-</svelte:head>
 
 {#if mountReady && $indexVisible}
     <div

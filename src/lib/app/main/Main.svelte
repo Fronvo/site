@@ -5,7 +5,7 @@
     import { onMount } from 'svelte';
     import { getKey } from 'utilities/global';
     import Dropdown from './Dropdown.svelte';
-    import { particleOptions, xmasMode } from 'stores/all';
+    import { fronvoTitle, particleOptions, xmasMode } from 'stores/all';
 
     let ParticlesComponent: any;
 

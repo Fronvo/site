@@ -94,10 +94,6 @@
     }
 </script>
 
-<svelte:head>
-    <title>Fronvo | Register</title>
-</svelte:head>
-
 <div
     class="account-container"
     transition:scale={{ duration: accountPanelAnimDuration, start: 1.1 }}

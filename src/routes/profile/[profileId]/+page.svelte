@@ -11,7 +11,3 @@
     // Update panel
     switchPanel(PanelTypes.Profile);
 </script>
-
-<svelte:head>
-    <title>Fronvo | {$page.params.profileId}</title>
-</svelte:head>

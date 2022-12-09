@@ -56,7 +56,7 @@
                     <div on:click={() => editRequest(i)}>
                         <img
                             id="avatar"
-                            src={'/svgs/profile/default.svg'}
+                            src={'/svgs/profile/avatar.svg'}
                             alt={`${email}'s avatar`}
                             draggable={false}
                         />

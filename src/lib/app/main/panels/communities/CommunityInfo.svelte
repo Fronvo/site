@@ -25,7 +25,7 @@
             id="icon"
             src={$joinedCommunity.icon && !$dataSaver
                 ? $joinedCommunity.icon
-                : '/svgs/profile/default.svg'}
+                : '/svgs/profile/avatar.svg'}
             alt={`${$joinedCommunity.name}'s' icon`}
             draggable={false}
         />

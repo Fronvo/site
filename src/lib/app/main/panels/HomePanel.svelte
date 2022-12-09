@@ -7,6 +7,7 @@
     import { homePosts as homePostsStore } from 'stores/home';
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
+    import { setTitle } from 'utilities/main';
 
     onMount(() => {
         goto('/home', {
@@ -14,6 +15,8 @@
         });
 
         loadPosts();
+
+        setTitle('Fronvo - Home');
     });
 
     function loadPosts(): void {

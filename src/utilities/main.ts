@@ -3,7 +3,7 @@
 // ******************** //
 
 import type { AccountPost, FronvoAccount } from 'interfaces/all';
-import { socket } from 'stores/all';
+import { fronvoTitle, socket } from 'stores/all';
 import { tokenInvalid } from 'stores/all';
 import {
     currentDropdownId,
@@ -161,4 +161,8 @@ export function dismissDropdown(callback?: Function): void {
             }, dropdownAnimDuration + 50);
         }
     }
+}
+
+export function setTitle(title: string): void {
+    fronvoTitle.set(title);
 }

@@ -34,10 +34,6 @@
     }
 </script>
 
-<svelte:head>
-    <title>Fronvo | Reset password verification</title>
-</svelte:head>
-
 <div
     class="reset-container"
     transition:scale={{ duration: accountPanelAnimDuration, start: 1.1 }}

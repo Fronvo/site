@@ -9,7 +9,7 @@
 >
     <img
         id="icon"
-        src="/svgs/profile/default.svg"
+        src="/svgs/profile/avatar.svg"
         alt="Fronvo logo header"
         draggable={false}
     />

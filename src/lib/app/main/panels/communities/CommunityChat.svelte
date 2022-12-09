@@ -333,7 +333,7 @@
                             draggable={false}
                             src={profileData.avatar && !$dataSaver
                                 ? profileData.avatar
-                                : '/svgs/profile/default.svg'}
+                                : '/svgs/profile/avatar.svg'}
                             alt={`${profileData.username}'s avatar`}
                         />
                         <h1 id="username">{profileData.username}</h1>

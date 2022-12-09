@@ -9,7 +9,3 @@
     // Update panel
     switchPanel(PanelTypes.Home);
 </script>
-
-<svelte:head>
-    <title>Fronvo | Home</title>
-</svelte:head>

@@ -84,7 +84,7 @@
             iconText.textContent = 'Icon - Invalid URL';
 
             canUpload = false;
-            iconPreview.src = '/svgs/profile/default.svg';
+            iconPreview.src = '/svgs/profile/avatar.svg';
         };
 
         icon.subscribe((newIcon) => {
@@ -154,7 +154,7 @@
     <div>
         <img
             id="icon-preview"
-            src={$icon ? $icon : '/svgs/profile/default.svg'}
+            src={$icon ? $icon : '/svgs/profile/avatar.svg'}
             alt="New avatar"
             draggable={false}
         />

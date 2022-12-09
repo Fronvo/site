@@ -1,7 +1,7 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
     import { dismissModal } from 'utilities/main';
-    import { userData } from 'stores/profile';
+    import { profileLoadingFinished, userData } from 'stores/profile';
     import { socket } from 'stores/all';
     import { onMount } from 'svelte';
     import Checkbox from 'svelte-checkbox';
@@ -14,6 +14,7 @@
     let username = $userData.username;
     let bio = $userData.bio;
     let avatar: Writable<string> = writable($userData.avatar);
+    let banner: Writable<string> = writable($userData.banner);
     let isPrivate = $userData.isPrivate;
 
     let canUpload = true;
@@ -43,6 +44,10 @@
             updatedData['avatar'] = $avatar;
         }
 
+        if ($userData.banner != $banner) {
+            updatedData['banner'] = $banner;
+        }
+
         if ($userData.isPrivate != isPrivate) {
             updatedData['isPrivate'] = isPrivate;
         }
@@ -67,52 +72,72 @@
 
                 $userData = { ...$userData, ...profileData };
 
+                // Reload banner
+                $profileLoadingFinished = false;
+                $profileLoadingFinished = true;
+
                 dismissModal();
             }
         );
     }
 
-    onMount(() => {
-        // Provided 404 backup image
-        const avatarPreview: HTMLImageElement = document.getElementById(
-            'avatar-preview'
-        ) as HTMLImageElement;
+    function previewListener(
+        item: HTMLImageElement,
+        name: string,
+        store: Writable<string>,
+        defaultSrc?: string
+    ): void {
+        const info = document.getElementsByClassName(
+            `${name.toLowerCase()}-info`
+        )[0];
 
-        avatarPreview.onerror = () => {
-            const avatarText =
-                document.getElementsByClassName('avatar-info')[0];
-
-            avatarText.textContent = 'Avatar - Invalid URL';
+        item.onerror = () => {
+            info.textContent = `${name} - Invalid URL`;
 
             canUpload = false;
-            avatarPreview.src = '/svgs/profile/default.svg';
+            item.src = `/svgs/profile/${
+                defaultSrc ? defaultSrc : 'avatar'
+            }.svg`;
         };
-        avatar.subscribe((newAvatar) => {
-            if (newAvatar == undefined) return;
 
-            const avatarText =
-                document.getElementsByClassName('avatar-info')[0];
+        store.subscribe((newStore) => {
+            if (newStore == undefined) return;
 
             // Allow empty avatar url, reset it
-            if (newAvatar == '') {
+            if (newStore == '') {
                 // Reset state
-                avatarText.textContent = 'Avatar';
+                info.textContent = name;
 
                 canUpload = true;
             }
 
             // Check for avatar https, perform some client side validation on our own
-            else if (!newAvatar.match(/^(https:\/\/).+$/)) {
-                avatarText.textContent = 'Avatar - Invalid URL';
+            else if (!newStore.match(/^(https:\/\/).+$/)) {
+                info.textContent = `${name} - Invalid URL`;
 
                 canUpload = false;
             } else if (!canUpload) {
                 // Reset state
-                avatarText.textContent = 'Avatar';
+                info.textContent = name;
 
                 canUpload = true;
             }
         });
+    }
+
+    onMount(() => {
+        previewListener(
+            document.getElementById('avatar-preview') as HTMLImageElement,
+            'Avatar',
+            avatar
+        );
+
+        previewListener(
+            document.getElementById('banner-preview') as HTMLImageElement,
+            'Banner',
+            banner,
+            'banner'
+        );
     });
 
     const data: ModalData = {
@@ -148,16 +173,28 @@
     <textarea id="bio-input" bind:value={bio} maxlength={128} rows={4} />
 
     <div>
+        <h1 id="input-header" class="avatar-info">Avatar</h1>
         <img
             id="avatar-preview"
-            src={$avatar ? $avatar : '/svgs/profile/default.svg'}
+            src={$avatar ? $avatar : '/svgs/profile/avatar.svg'}
             alt="New avatar"
             draggable={false}
         />
-        <h1 id="input-header" class="avatar-info">Avatar</h1>
     </div>
 
     <input maxlength={512} bind:value={$avatar} />
+
+    <div>
+        <h1 id="input-header" class="banner-info">Banner</h1>
+        <img
+            id="banner-preview"
+            src={$banner ? $banner : '/svgs/profile/banner.svg'}
+            alt="New banner"
+            draggable={false}
+        />
+    </div>
+
+    <input maxlength={512} bind:value={$banner} />
 
     <div class="centered-container">
         <h1 id="input-header">Private account</h1>
@@ -182,16 +219,22 @@
     }
 
     div {
-        display: flex;
         align-items: center;
+        justify-content: center;
         margin-bottom: 10px;
     }
 
     #avatar-preview {
-        width: 64px;
-        height: 64px;
+        width: 128px;
+        height: 128px;
         border-radius: 10px;
         margin-right: 10px;
+    }
+
+    #banner-preview {
+        width: 550px;
+        height: 300px;
+        border-radius: 5px;
     }
 
     .centered-container {
@@ -207,7 +250,7 @@
     #input-header {
         color: var(--profile_info_color);
         margin: 0;
-        font-size: 2.2rem;
+        font-size: 2rem;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -218,9 +261,10 @@
 
     input,
     textarea {
-        font-size: 2rem;
+        font-size: 1.8rem;
         margin: 0 5px 20px 5px;
-        width: 95%;
+        width: 30vw;
+        min-width: 400px;
         background: var(--modal_input_bg_color);
     }
 
@@ -238,8 +282,13 @@
         }
 
         #avatar-preview {
-            width: 48px;
-            height: 48px;
+            width: 64px;
+            height: 64px;
+        }
+
+        #banner-preview {
+            width: 400px;
+            height: 225px;
         }
 
         :global(.private-checkbox) {
@@ -263,6 +312,11 @@
     @media screen and (max-width: 520px) {
         #error-header {
             font-size: 1.4rem;
+        }
+
+        #banner-preview {
+            width: 300px;
+            height: 169px;
         }
 
         #input-header {

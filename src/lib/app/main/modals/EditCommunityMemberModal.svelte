@@ -57,7 +57,7 @@
         alt={`${$targetCommunityMember.username}'s avatar`}
         src={$targetCommunityMember.avatar && !$dataSaver
             ? $targetCommunityMember.avatar
-            : '/svgs/profile/default.svg'}
+            : '/svgs/profile/avatar.svg'}
         draggable={false}
     />
     <h1 id="username">{$targetCommunityMember.username}</h1>

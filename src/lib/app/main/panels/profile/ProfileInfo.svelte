@@ -15,9 +15,13 @@
         userCommunity,
         userData,
     } from 'stores/profile';
+    import { onDestroy, onMount } from 'svelte';
+    import type { Unsubscriber } from 'svelte/store';
     import { fade } from 'svelte/transition';
     import { ModalTypes, PanelTypes } from 'types/main';
-    import { showModal, switchPanel } from 'utilities/main';
+    import { setTitle, showModal, switchPanel } from 'utilities/main';
+
+    let unsubscribe: Unsubscriber;
 
     const isAccessible =
         $userData.isFollower || $userData.isSelf || !$userData.isPrivate;
@@ -61,18 +65,53 @@
             }, 250);
         }
     }
+
+    // Shadofer 🎯 (shadofer) - Fronvo
+    setTitle(`${$userData.username} (${$userData.profileId}) - Fronvo`);
+
+    onMount(() => {
+        unsubscribe = profileLoadingFinished.subscribe((val) => {
+            if (!val) return;
+
+            setTimeout(() => {
+                const target = document.getElementsByClassName(
+                    'top-container'
+                )[0] as HTMLDivElement;
+
+                if (!target) return;
+
+                target.style.background = `url(${
+                    $userData.banner && !$dataSaver
+                        ? $userData.banner
+                        : '/svgs/profile/banner.svg'
+                })`;
+
+                target.style.backgroundPositionX = 'center';
+                target.style.backgroundPositionY = 'center';
+                target.style.backgroundSize = 'cover';
+                target.style.backgroundRepeat = 'no-repeat';
+                target.style.backgroundClip = 'padding-box';
+            }, 0);
+        });
+    });
+
+    onDestroy(() => {
+        if (unsubscribe) unsubscribe();
+    });
 </script>
 
 {#if $profileLoadingFinished}
     <div class="info-container" in:fade={{ duration: 500 }}>
-        <img
-            id="avatar"
-            src={$userData.avatar && !$dataSaver
-                ? $userData.avatar
-                : '/svgs/profile/default.svg'}
-            alt={`${$userData.username}\'s avatar`}
-            draggable={false}
-        />
+        <div class="top-container">
+            <img
+                id="avatar"
+                src={$userData.avatar && !$dataSaver
+                    ? $userData.avatar
+                    : '/svgs/profile/avatar-filled.svg'}
+                alt={`${$userData.username}\'s avatar`}
+                draggable={false}
+            />
+        </div>
 
         <h1 id="username">
             {$userData.username}
@@ -88,7 +127,7 @@
                     id="icon"
                     src={$userCommunity.icon && !$dataSaver
                         ? $userCommunity.icon
-                        : '/svgs/profile/default.svg'}
+                        : '/svgs/profile/avatar.svg'}
                     alt={`${$userData.username}'s community`}
                     draggable={false}
                 />
@@ -138,16 +177,32 @@
         align-items: center;
     }
 
-    .info-container #avatar {
+    .top-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        width: 30vw;
+        height: 27vh;
+        min-width: 550px;
+        max-width: 90%;
+        min-height: 200px;
+        border-radius: 5px;
+    }
+
+    .top-container #avatar {
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        width: 128px;
-        height: 128px;
-        border-radius: 10px;
+        width: 155px;
+        height: 155px;
+        border-radius: 100px;
+        align-self: flex-end;
+        box-shadow: 0 0 5px rgb(0, 0, 0);
+        margin-bottom: 5px;
     }
 
     .info-container #username {
@@ -237,7 +292,13 @@
     }
 
     @media screen and (max-width: 720px) {
-        .info-container #avatar {
+        .top-container {
+            min-width: 400px;
+            border-radius: none;
+            height: 25vh;
+        }
+
+        .top-container #avatar {
             width: 120px;
             height: 120px;
         }
@@ -274,9 +335,11 @@
     }
 
     @media screen and (max-width: 520px) {
-        .info-container #avatar {
-            width: 100px;
-            height: 100px;
+        .top-container {
+            width: 100vw;
+            min-width: none;
+            max-width: none;
+            border-radius: 0;
         }
 
         .info-container #username {

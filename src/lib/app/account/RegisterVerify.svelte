@@ -32,10 +32,6 @@
     }
 </script>
 
-<svelte:head>
-    <title>Fronvo | Verify</title>
-</svelte:head>
-
 <div
     class="verify-container"
     transition:scale={{ duration: accountPanelAnimDuration, start: 1.1 }}

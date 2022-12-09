@@ -55,7 +55,7 @@
                 id="avatar"
                 src={$targetCommunityData.icon && !$dataSaver
                     ? $targetCommunityData.icon
-                    : '/svgs/profile/default.svg'}
+                    : '/svgs/profile/avatar.svg'}
                 alt={`${$targetCommunityData.name} community avatar`}
                 draggable={false}
             />

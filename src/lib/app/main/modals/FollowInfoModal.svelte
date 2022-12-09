@@ -81,7 +81,7 @@
                             id="avatar"
                             src={avatar && !$dataSaver
                                 ? avatar
-                                : '/svgs/profile/default.svg'}
+                                : '/svgs/profile/avatar.svg'}
                             alt={`${username}'s avatar`}
                             draggable={false}
                         />

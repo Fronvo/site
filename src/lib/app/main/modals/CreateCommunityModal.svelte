@@ -56,7 +56,7 @@
             attachmentText.textContent = 'Icon - Invalid URL';
 
             canCreate = false;
-            iconPreview.src = '/svgs/profile/default.svg';
+            iconPreview.src = '/svgs/profile/avatar.svg';
         };
 
         icon.subscribe((newIcon) => {

@@ -4,7 +4,8 @@
     import { fade } from 'svelte/transition';
     import { ModalTypes } from 'types/main';
     import { loadCommunitiesPanel } from 'utilities/communities';
-    import { showModal } from 'utilities/main';
+    import { setTitle, showModal } from 'utilities/main';
+    import { onMount } from 'svelte';
 
     function joinOfficialCommunity(): void {
         // Join without invite info
@@ -12,6 +13,10 @@
             await loadCommunitiesPanel();
         });
     }
+
+    onMount(() => {
+        setTitle('Community - Fronvo');
+    });
 </script>
 
 {#if $officialCommunity}
@@ -27,7 +32,7 @@
                 id="avatar"
                 src={$officialCommunity.icon && !$dataSaver
                     ? $officialCommunity.icon
-                    : '/svgs/profile/default.svg'}
+                    : '/svgs/profile/avatar.svg'}
                 alt={`${$officialCommunity.name} community avatar`}
                 draggable={false}
             />
@@ -63,10 +68,6 @@
         </div>
     </div>
 {/if}
-
-<svelte:head>
-    <title>Fronvo | Community</title>
-</svelte:head>
 
 <style>
     hr {

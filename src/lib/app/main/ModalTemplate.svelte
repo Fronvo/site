@@ -37,7 +37,7 @@
                     id="icon"
                     src={data.titleIcon && !$dataSaver
                         ? data.titleIcon
-                        : '/svgs/profile/default.svg'}
+                        : '/svgs/profile/avatar.svg'}
                     draggable={false}
                     alt="Title icon"
                 />

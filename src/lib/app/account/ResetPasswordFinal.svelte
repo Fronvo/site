@@ -75,10 +75,6 @@
     }
 </script>
 
-<svelte:head>
-    <title>Fronvo | Set new password</title>
-</svelte:head>
-
 <div
     class="reset-container"
     transition:scale={{ duration: accountPanelAnimDuration, start: 1.1 }}

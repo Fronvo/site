@@ -54,7 +54,7 @@
 
     const data: ModalData = {
         titlePreSpan: getUserData().username,
-        titleIcon: getUserData().avatar || '/svgs/profile/default.svg',
+        titleIcon: getUserData().avatar || '/svgs/profile/avatar.svg',
         titleListener: () =>
             $currentPanelId != PanelTypes.Profile &&
             loadProfilePanel(getUserData().profileId),

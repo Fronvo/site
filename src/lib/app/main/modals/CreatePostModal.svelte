@@ -57,7 +57,7 @@
             attachmentText.textContent = 'Attachment - Invalid URL';
 
             canShare = false;
-            attachmentPreview.src = '/svgs/profile/default.svg';
+            attachmentPreview.src = '/svgs/profile/avatar.svg';
         };
 
         attachment.subscribe((newAttachment) => {

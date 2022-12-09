@@ -22,6 +22,7 @@
     import { setTitle, showModal, switchPanel } from 'utilities/main';
 
     let unsubscribe: Unsubscriber;
+    let unsubscribe2: Unsubscriber;
 
     const isAccessible =
         $userData.isFollower || $userData.isSelf || !$userData.isPrivate;
@@ -69,34 +70,45 @@
     // Shadofer 🎯 (shadofer) - Fronvo
     setTitle(`${$userData.username} (${$userData.profileId}) - Fronvo`);
 
+    function setBanner(): void {
+        setTimeout(() => {
+            const target = document.getElementsByClassName(
+                'top-container'
+            )[0] as HTMLDivElement;
+
+            if (!target) return;
+
+            target.style.background = `url(${
+                $userData.banner && !$dataSaver
+                    ? $userData.banner
+                    : '/svgs/profile/banner.svg'
+            })`;
+
+            target.style.backgroundPositionX = 'center';
+            target.style.backgroundPositionY = 'center';
+            target.style.backgroundSize = 'cover';
+            target.style.backgroundRepeat = 'no-repeat';
+            target.style.backgroundClip = 'padding-box';
+        }, 0);
+    }
+
     onMount(() => {
         unsubscribe = profileLoadingFinished.subscribe((val) => {
             if (!val) return;
 
-            setTimeout(() => {
-                const target = document.getElementsByClassName(
-                    'top-container'
-                )[0] as HTMLDivElement;
+            setBanner();
+        });
 
-                if (!target) return;
+        unsubscribe2 = dataSaver.subscribe((state) => {
+            if (typeof state != 'boolean') return;
 
-                target.style.background = `url(${
-                    $userData.banner && !$dataSaver
-                        ? $userData.banner
-                        : '/svgs/profile/banner.svg'
-                })`;
-
-                target.style.backgroundPositionX = 'center';
-                target.style.backgroundPositionY = 'center';
-                target.style.backgroundSize = 'cover';
-                target.style.backgroundRepeat = 'no-repeat';
-                target.style.backgroundClip = 'padding-box';
-            }, 0);
+            setBanner();
         });
     });
 
     onDestroy(() => {
         if (unsubscribe) unsubscribe();
+        if (unsubscribe2) unsubscribe2();
     });
 </script>
 
@@ -294,7 +306,6 @@
     @media screen and (max-width: 720px) {
         .top-container {
             min-width: 400px;
-            border-radius: none;
             height: 25vh;
         }
 
@@ -337,9 +348,6 @@
     @media screen and (max-width: 520px) {
         .top-container {
             width: 100vw;
-            min-width: none;
-            max-width: none;
-            border-radius: 0;
         }
 
         .info-container #username {

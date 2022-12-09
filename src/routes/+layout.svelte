@@ -4,8 +4,9 @@
     import {
         dataSaver,
         fronvoTitle,
-        particleOptions,
+        xmasParticleOptions,
         tokenInvalid,
+        xmasMode,
     } from 'stores/all';
     import {
         dropdownPosition,
@@ -38,6 +39,7 @@
         // Try our best to default to dark
         $darkTheme = !getKey('darkTheme') || getKey('darkTheme') == 'true';
         $dataSaver = getKey('dataSaver') == 'true';
+        $xmasMode = new Date().getMonth() == 11 && getKey('xmasMode') == 'true';
 
         darkTheme.subscribe((dark) => {
             if (typeof dark == 'undefined') {
@@ -47,7 +49,7 @@
             currentTheme.set(dark ? defaultTheme : whiteTheme);
 
             // @ts-ignore
-            particleOptions.particles.color = dark ? '#ffffff' : '#dddddd';
+            xmasParticleOptions.particles.color = dark ? '#ffffff' : '#dddddd';
         });
 
         function startSessionTime(): void {

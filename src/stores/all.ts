@@ -42,9 +42,9 @@ export const sessionWarningShown = writable(false);
 export const sessionAttached = writable(false);
 export const darkTheme = writable(undefined);
 export const dataSaver = writable(false);
-export const xmasMode = writable(true);
+export const xmasMode = writable(false);
 
-export const particleOptions = {
+export const xmasParticleOptions = {
     particles: {
         color: {
             value: '#ffffff',

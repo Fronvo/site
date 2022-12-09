@@ -114,16 +114,18 @@
         />
     </div>
 
-    <div class="single-line">
-        <h1>Christmas mode</h1>
-        <Checkbox
-            bind:checked={tempXmasMode}
-            class="private-checkbox"
-            size="2.7rem"
-            primaryColor="var(--modal_checkbox_primary_color)"
-            secondaryColor="var(--modal_checkbox_secondary_color)"
-        />
-    </div>
+    {#if new Date().getMonth() == 11}
+        <div class="single-line">
+            <h1>Christmas mode</h1>
+            <Checkbox
+                bind:checked={tempXmasMode}
+                class="private-checkbox"
+                size="2.7rem"
+                primaryColor="var(--modal_checkbox_primary_color)"
+                secondaryColor="var(--modal_checkbox_secondary_color)"
+            />
+        </div>
+    {/if}
 </ModalTemplate>
 
 <style>

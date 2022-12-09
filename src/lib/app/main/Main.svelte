@@ -5,7 +5,7 @@
     import { onMount } from 'svelte';
     import { getKey } from 'utilities/global';
     import Dropdown from './Dropdown.svelte';
-    import { fronvoTitle, particleOptions, xmasMode } from 'stores/all';
+    import { xmasParticleOptions, xmasMode } from 'stores/all';
 
     let ParticlesComponent: any;
 
@@ -23,7 +23,7 @@
         <svelte:component
             this={ParticlesComponent}
             id="tsparticles"
-            options={particleOptions}
+            options={xmasParticleOptions}
         />
     {/if}
 

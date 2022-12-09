@@ -14,7 +14,7 @@ export function initSocket(callback?: () => void): void {
     // Only init once, callback discarded
     if (socket) return;
 
-    socket = io('ws://localhost:3001', {
+    socket = io('wss://fronvosrv.fly.dev', {
         transports: ['websocket'],
         path: '/fronvo',
     });

@@ -7,7 +7,7 @@
 [![forthebadge](https://forthebadge.com/images/badges/uses-html.svg)](https://forthebadge.com)
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
 
-<img src='https://raw.githubusercontent.com/Fronvo/site/master/.github/assets/demo-run-autohost.svg' alt='Fronvo demo autohost'>
+<img src='https://raw.githubusercontent.com/Fronvo/site/master/.github/assets/intro.png' alt='Fronvo profile preview'>
 
 </h2>
 

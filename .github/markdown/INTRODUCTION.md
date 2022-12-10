@@ -1,6 +1,6 @@
 ## The open-source convo app.
 
-Powered by blazing fast technologies.
+Powered by **_BLAZING FAST_** technologies.
 
 Host it, test it, modify it, all yours. **_ZERO_** tracking.
 
@@ -16,10 +16,12 @@ How, you ask?
 
 ## Features
 
--   Front-facing servers. Want to advertise an organisation server, on the app, for free? You got it. Discovery View.
+-   Communities. Gather all your friends in one and start chatting!
 
--   Voice your opinion! (and let others have a take on their own, too). All of that with the ability to share Personal Posts.
+-   Posts. Want to give an update to your followers? Post it on your profile and they will see it on their Home page.
 
--   Finding the app theme, let's say, a little boring..? Make your own or use shared ones from the Theme Marketplace.
+-   Finding the app theme, let's say, a little boring..? Make your own or use shared ones from the Theme Marketplace. (SOON)
+
+-   Ambient mode. Bring your profile to life with a custom banner (and illuminate it!)
 
 -   Want to feel even more secure? Self-host this site AND [the Fronvo server](https://github.com/Fronvo/server) to invite your friends, securely.

@@ -48,8 +48,13 @@
 
             currentTheme.set(dark ? defaultTheme : whiteTheme);
 
-            // @ts-ignore
-            xmasParticleOptions.particles.color = dark ? '#ffffff' : '#dddddd';
+            // Update XMAS particles
+            if ($xmasMode) {
+                // @ts-ignore
+                $xmasParticleOptions.particles.color = dark
+                    ? '#ffffff'
+                    : '#cccccc';
+            }
         });
 
         function startSessionTime(): void {

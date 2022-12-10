@@ -23,7 +23,7 @@
         <svelte:component
             this={ParticlesComponent}
             id="tsparticles"
-            options={xmasParticleOptions}
+            options={$xmasParticleOptions}
         />
     {/if}
 

@@ -44,7 +44,7 @@ export const darkTheme = writable(undefined);
 export const dataSaver = writable(false);
 export const xmasMode = writable(false);
 
-export const xmasParticleOptions = {
+export const xmasParticleOptions = writable({
     particles: {
         color: {
             value: '#ffffff',
@@ -88,4 +88,4 @@ export const xmasParticleOptions = {
             value: { min: 0, max: 100 },
         },
     },
-};
+});

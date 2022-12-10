@@ -226,6 +226,9 @@
         .post-container {
             max-width: 400px;
             max-height: 450px;
+        }
+
+        .posts-container .post-container {
             cursor: default;
         }
 

@@ -6,7 +6,7 @@
     import Follow from '$lib/svgs/Follow.svelte';
     import JoinRequests from '$lib/svgs/JoinRequests.svelte';
     import Logout from '$lib/svgs/Logout.svelte';
-    import { dataSaver } from 'stores/all';
+    import { ambientMode, dataSaver } from 'stores/all';
     import { joinedCommunity, targetCommunityData } from 'stores/communities';
     import { followModalForFollowing, followModalInfo } from 'stores/main';
     import {
@@ -16,6 +16,7 @@
         userData,
     } from 'stores/profile';
     import { onDestroy, onMount } from 'svelte';
+    import { sineInOut } from 'svelte/easing';
     import type { Unsubscriber } from 'svelte/store';
     import { fade } from 'svelte/transition';
     import { ModalTypes, PanelTypes } from 'types/main';
@@ -71,12 +72,11 @@
     setTitle(`${$userData.username} (${$userData.profileId}) - Fronvo`);
 
     function setBanner(): void {
-        setTimeout(() => {
-            const target = document.getElementsByClassName(
-                'top-container'
-            )[0] as HTMLDivElement;
-
-            if (!target) return;
+        function setIcon(
+            target: HTMLDivElement,
+            preventDefault?: boolean
+        ): void {
+            if (!target || (preventDefault && !$userData.banner)) return;
 
             target.style.background = `url(${
                 $userData.banner && !$dataSaver
@@ -89,6 +89,21 @@
             target.style.backgroundSize = 'cover';
             target.style.backgroundRepeat = 'no-repeat';
             target.style.backgroundClip = 'padding-box';
+        }
+
+        setTimeout(() => {
+            setIcon(
+                document.getElementsByClassName(
+                    'top-container'
+                )[0] as HTMLDivElement
+            );
+
+            setIcon(
+                document.getElementsByClassName(
+                    'ambient-bg'
+                )[0] as HTMLDivElement,
+                true
+            );
         }, 0);
     }
 
@@ -113,6 +128,13 @@
 </script>
 
 {#if $profileLoadingFinished}
+    {#if $ambientMode && !$dataSaver}
+        <div
+            class="ambient-bg"
+            in:fade={{ duration: 500, delay: 200, easing: sineInOut }}
+        />
+    {/if}
+
     <div class="info-container" in:fade={{ duration: 500 }}>
         <div class="top-container">
             <img
@@ -182,6 +204,16 @@
 {/if}
 
 <style>
+    .ambient-bg {
+        position: fixed;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: -100;
+        filter: blur(30px) opacity(15%);
+        overflow: hidden;
+    }
+
     .info-container {
         display: flex;
         flex-direction: column;
@@ -200,6 +232,7 @@
         max-width: 90%;
         min-height: 200px;
         border-radius: 5px;
+        z-index: -1;
     }
 
     .top-container #avatar {

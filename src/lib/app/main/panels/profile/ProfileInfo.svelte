@@ -347,7 +347,8 @@
 
     @media screen and (max-width: 520px) {
         .top-container {
-            width: 100vw;
+            min-width: 95vw;
+            max-width: 99vw;
         }
 
         .info-container #username {

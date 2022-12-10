@@ -1,4 +1,4 @@
-## Hosting on Heroku
+## Hosting on the cloud
 
 -   Install a svelte-kit [adapter](https://kit.svelte.dev/docs#adapters) and follow each step.
 

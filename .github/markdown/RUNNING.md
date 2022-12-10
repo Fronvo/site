@@ -2,10 +2,8 @@
 
 `npm install`
 
-`npm run autohost`
+`npm run build`
 
-The site should be hosted locally at port 3000.
+`npm run preview -- --open`
 
-# Demo
-
-<img src='https://raw.githubusercontent.com/Fronvo/site/master/.github/assets/demo-run-autohost.svg' alt='Fronvo demo autohost'>
+The site should be running locally at port 4173.

@@ -73,6 +73,8 @@
                     : 'This profile is private'}
             </h1>
         {:else}
+            <h1 id="counter"><span>{$userPosts.length}</span> posts</h1>
+
             {#each $userPosts as { postId, title, content, attachment, creationDate }, i}
                 <div
                     class="post-container"
@@ -116,7 +118,23 @@
         flex-direction: column;
     }
 
-    .post-container {
+    .posts-container #counter {
+        margin: 0;
+        margin-bottom: 10px;
+        text-align: center;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    .posts-container #counter span {
+        color: var(--profile_info_color);
+    }
+
+    .posts-container .post-container {
         display: flex;
         flex-direction: column;
         background: var(--nav_bg_color);
@@ -197,6 +215,10 @@
     }
 
     @media screen and (max-width: 720px) {
+        .posts-container #counter {
+            font-size: 1.6rem;
+        }
+
         .post-container {
             max-width: 400px;
             max-height: 450px;
@@ -230,6 +252,10 @@
     }
 
     @media screen and (max-width: 520px) {
+        .posts-container #counter {
+            font-size: 1.4rem;
+        }
+
         .post-container {
             max-width: 300px;
             max-height: 400px;

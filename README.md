@@ -4,9 +4,6 @@
 
 <img src='https://raw.githubusercontent.com/Fronvo/site/master/.github/assets/intro.png' alt='Fronvo profile preview'>
 
-<p align='center'><b>The site of Fronvo</b></p>
-<p align='center'><b>Built with Svelte for undisputed performance</b></p>
-
 [![forthebadge](https://forthebadge.com/images/badges/uses-html.svg)](https://forthebadge.com)
 [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com)
 

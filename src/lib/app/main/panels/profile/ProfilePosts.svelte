@@ -73,7 +73,11 @@
                     : 'This profile is private'}
             </h1>
         {:else}
-            <h1 id="counter"><span>{$userPosts.length}</span> posts</h1>
+            <h1 id="counter">
+                <span>{$userPosts.length}</span> post{$userPosts.length != 1
+                    ? 's'
+                    : ''}
+            </h1>
 
             {#each $userPosts as { postId, title, content, attachment, creationDate }, i}
                 <div

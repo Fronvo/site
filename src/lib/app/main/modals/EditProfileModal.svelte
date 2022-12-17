@@ -1,6 +1,6 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
-    import { dismissModal } from 'utilities/main';
+    import { dismissModal, setTitle } from 'utilities/main';
     import { profileLoadingFinished, userData } from 'stores/profile';
     import { socket } from 'stores/all';
     import { onMount } from 'svelte';
@@ -68,6 +68,21 @@
                     goto(`/profile/${profileId}`, {
                         replaceState: true,
                     });
+                }
+
+                // Update route title
+                if (
+                    $userData.profileId != profileId ||
+                    $userData.username != username
+                ) {
+                    // Wait for $userData to be updated
+                    setTimeout(
+                        () =>
+                            setTitle(
+                                `${$userData.username} (${$userData.profileId}) - Fronvo`
+                            ),
+                        0
+                    );
                 }
 
                 $userData = { ...$userData, ...profileData };

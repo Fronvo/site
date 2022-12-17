@@ -46,6 +46,7 @@ export interface FronvoAccount {
     communityId: string;
     isAdmin: boolean;
     isDisabled: boolean;
+    totalPosts: number;
 }
 
 export interface Community {

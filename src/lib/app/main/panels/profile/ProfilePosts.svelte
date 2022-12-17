@@ -1,6 +1,6 @@
 <script lang="ts">
     import linkifyHtml from 'linkify-html';
-    import { dataSaver } from 'stores/all';
+    import { dataSaver, socket } from 'stores/all';
     import { postModalForHome, postModalInfo } from 'stores/main';
     import {
         profileLoadingFinished,
@@ -21,6 +21,23 @@
         $postModalInfo = $userPosts[postIndex];
         $postModalForHome = false;
         showModal(ModalTypes.ViewPost);
+    }
+
+    function loadMorePosts(): void {
+        socket.emit(
+            'fetchProfilePosts',
+            {
+                profileId: $userData.profileId,
+                from: $userPosts.length.toString(),
+                to: ($userPosts.length + 5).toString(),
+            },
+            ({ profilePosts }) => {
+                const tempPosts = $userPosts;
+                tempPosts.push(...profilePosts.reverse());
+
+                $userPosts = tempPosts;
+            }
+        );
     }
 
     function generateContentLinks(postId: string, content: string): void {
@@ -64,7 +81,7 @@
 
 {#if $profileLoadingFinished}
     <div class="posts-container" in:fade={{ duration: 500 }}>
-        {#if $userPosts.length == 0}
+        {#if $userData.totalPosts == 0}
             <h1 in:fade={{ duration: 500 }} id="empty-text">
                 {$userData.isFollower ||
                 $userData.isSelf ||
@@ -74,7 +91,8 @@
             </h1>
         {:else}
             <h1 id="counter">
-                <span>{$userPosts.length}</span> post{$userPosts.length != 1
+                <span>{$userData.totalPosts}</span> post{$userData.totalPosts !=
+                1
                     ? 's'
                     : ''}
             </h1>
@@ -111,6 +129,10 @@
                     </h1>
                 </div>
             {/each}
+
+            {#if $userPosts.length < $userData.totalPosts}
+                <button id="more" on:click={loadMorePosts}>Load more</button>
+            {/if}
         {/if}
     </div>
 {/if}
@@ -120,6 +142,7 @@
         margin-top: 20px;
         display: flex;
         flex-direction: column;
+        margin-bottom: 10px;
     }
 
     .posts-container #counter {
@@ -159,6 +182,7 @@
         transition: 150ms box-shadow;
         cursor: pointer;
         align-items: center;
+        justify-content: center;
     }
 
     .post-container:hover {
@@ -218,6 +242,14 @@
         font-size: 2rem;
     }
 
+    .posts-container #more {
+        width: max-content;
+        margin: auto;
+        font-size: 2rem;
+        margin-bottom: 20px;
+        margin-top: 20px;
+    }
+
     @media screen and (max-width: 720px) {
         .posts-container #counter {
             font-size: 1.6rem;
@@ -256,6 +288,10 @@
         .posts-container #empty-text {
             font-size: 1.8rem;
         }
+
+        .posts-container #more {
+            font-size: 1.8rem;
+        }
     }
 
     @media screen and (max-width: 520px) {
@@ -287,6 +323,10 @@
 
         .posts-container #empty-text {
             font-size: 1.6rem;
+        }
+
+        .posts-container #more {
+            font-size: 1.4rem;
         }
     }
 </style>

@@ -92,7 +92,7 @@ export async function fetchPosts(profileId: string): Promise<AccountPost[]> {
     return new Promise(async (resolve) => {
         socket.emit(
             'fetchProfilePosts',
-            { profileId, from: '0', to: '100' },
+            { profileId, from: '0', to: '5' },
             ({ profilePosts }) => {
                 resolve(profilePosts?.reverse() || []);
             }

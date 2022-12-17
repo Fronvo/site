@@ -16,6 +16,7 @@
 
     let mountTransitionsDone = false;
     let unsubscribe: Unsubscriber;
+    let isLoadingMore = false;
 
     function showViewPost(postIndex: number): void {
         $postModalInfo = $userPosts[postIndex];
@@ -24,6 +25,10 @@
     }
 
     function loadMorePosts(): void {
+        if (isLoadingMore) return;
+
+        isLoadingMore = true;
+
         socket.emit(
             'fetchProfilePosts',
             {
@@ -36,6 +41,8 @@
                 tempPosts.push(...profilePosts.reverse());
 
                 $userPosts = tempPosts;
+
+                isLoadingMore = false;
             }
         );
     }

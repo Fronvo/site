@@ -59,6 +59,7 @@ export interface Community {
     members: string[];
     inviteOnly: boolean;
     acceptedChatRequests: string[];
+    totalMessages: number;
 }
 
 export interface CommunityMessage {

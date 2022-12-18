@@ -38,6 +38,9 @@
     // Messages finalised with profile info
     let finalizedMessages: CommunityMessageFinal[] = [];
 
+    let showLoadMore = false;
+    let isLoadingMore = false;
+
     function findCachedData(profileId: string): FronvoAccount | undefined {
         for (const accountIndex in cachedAccountData) {
             const targetAccount = cachedAccountData[accountIndex];
@@ -96,12 +99,35 @@
                 // Update messages
                 finalizedMessages = tempFinalizedMessages;
 
+                if (!showLoadMore) showLoadMore = true;
+
                 // No delay for new messages
                 setTimeout(() => {
                     animationsFinished = true;
                 }, $maxChatAnimDelay);
             }
         }
+    }
+
+    function loadMore(): void {
+        if (isLoadingMore) return;
+
+        isLoadingMore = true;
+
+        socket.emit(
+            'fetchCommunityMessages',
+            {
+                from: $targetCommunityMessages.length.toString(),
+                to: ($targetCommunityMessages.length + 30).toString(),
+            },
+            ({ communityMessages }) => {
+                $targetCommunityMessages.push(...communityMessages);
+
+                loadMessages();
+
+                isLoadingMore = false;
+            }
+        );
     }
 
     function sendMessage(): void {
@@ -320,10 +346,7 @@
                         // easing: circInOut,
                         duration: 500,
                         delay: !animationsFinished
-                            ? Math.min(
-                                  (finalizedMessages.length - i) * 50,
-                                  $maxChatAnimDelay
-                              )
+                            ? Math.min(i * 50, $maxChatAnimDelay)
                             : 0,
                     }}
                 >
@@ -390,6 +413,12 @@
                     </h1>
                 </div>
             {/each}
+
+            {#if $joinedCommunity && showLoadMore}
+                {#if $targetCommunityMessages.length < $joinedCommunity.totalMessages}
+                    <button id="more" on:click={loadMore}>Load more</button>
+                {/if}
+            {/if}
         {/if}
     </div>
 {/if}
@@ -398,7 +427,6 @@
     .chat-container {
         display: flex;
         flex-direction: column;
-        flex-flow: column-reverse;
         align-items: center;
         flex-wrap: wrap;
         margin-top: 90px;
@@ -421,6 +449,14 @@
         width: 100%;
     }
 
+    .chat-container #more {
+        width: max-content;
+        margin: auto;
+        font-size: 2rem;
+        margin-bottom: 35px;
+        margin-top: 20px;
+    }
+
     .message-container {
         display: flex;
         flex-direction: column;
@@ -432,11 +468,11 @@
         margin-bottom: 5px;
     }
 
-    .message-container:nth-last-child(1) {
+    .message-container:nth-child(1) {
         margin-top: 10px;
     }
 
-    .message-container:nth-child(1) {
+    .message-container:nth-last-child(1) {
         margin-bottom: 35px;
     }
 
@@ -553,6 +589,10 @@
             font-size: 1.8rem;
         }
 
+        .chat-container #more {
+            font-size: 1.8rem;
+        }
+
         .message-container #username {
             font-size: 1.7rem;
         }
@@ -585,6 +625,10 @@
 
         .chat-container #chat-start {
             font-size: 1.5rem;
+        }
+
+        .chat-container #more {
+            font-size: 1.4rem;
         }
 
         .message-container #avatar {

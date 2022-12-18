@@ -114,11 +114,18 @@ async function loadJoinedCommunity(joinedCommunity?: string): Promise<void> {
 
     async function loadCommunityMessages(): Promise<void> {
         return new Promise((resolve) => {
-            socket.emit('fetchCommunityMessages', ({ communityMessages }) => {
-                targetCommunityMessages.set(communityMessages);
+            socket.emit(
+                'fetchCommunityMessages',
+                {
+                    from: '0',
+                    to: '20',
+                },
+                ({ communityMessages }) => {
+                    targetCommunityMessages.set(communityMessages);
 
-                resolve();
-            });
+                    resolve();
+                }
+            );
         });
     }
 }

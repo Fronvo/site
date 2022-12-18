@@ -16,7 +16,10 @@ import type {
     FetchCommunityDataParams,
     FetchCommunityDataResult,
 } from './account/fetchCommunityData';
-import type { FetchCommunityMessagesResult } from './account/fetchCommunityMessages';
+import type {
+    FetchCommunityMessagesParams,
+    FetchCommunityMessagesResult,
+} from './account/fetchCommunityMessages';
 import type { FetchHomePostsResult } from './account/fetchHomePosts';
 import type {
     FetchProfileDataParams,
@@ -191,6 +194,7 @@ export interface ClientToServerEvents {
         callback?: ({}: SendCommunityMessageResult) => void
     ) => void;
     fetchCommunityMessages: (
+        {}: FetchCommunityMessagesParams,
         callback?: ({}: FetchCommunityMessagesResult) => void
     ) => void;
     deleteCommunityMessage: (

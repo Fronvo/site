@@ -64,7 +64,7 @@
 
     .item-container {
         background: rgb(255, 255, 255, 0.05);
-        box-shadow: 0 0 3px var(--nav_shadow_color);
+        box-shadow: 0 0 3px var(--accent_shadow_color);
         border-radius: 10px;
         padding: 10px;
     }

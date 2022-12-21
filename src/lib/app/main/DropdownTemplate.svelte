@@ -43,7 +43,6 @@
     @media screen and (max-width: 720px) {
         .dropdown-container button {
             font-size: 1.2rem;
-            cursor: default;
         }
     }
 

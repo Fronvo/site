@@ -1,6 +1,5 @@
 <script lang="ts">
     import { joinedCommunity } from 'stores/communities';
-    import { fade } from 'svelte/transition';
     import { setTitle } from 'utilities/main';
     import CommunityChat from './CommunityChat.svelte';
     import CommunityInfo from './CommunityInfo.svelte';
@@ -9,7 +8,7 @@
     setTitle(`${$joinedCommunity.name} - Fronvo`);
 </script>
 
-<div class="main-container" in:fade={{ duration: 500 }}>
+<div class="main-container">
     <CommunityInfo />
 
     <CommunityChat />

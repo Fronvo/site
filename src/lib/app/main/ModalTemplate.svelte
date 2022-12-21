@@ -189,7 +189,6 @@
 
         button {
             font-size: 1.8rem;
-            cursor: default;
         }
     }
 

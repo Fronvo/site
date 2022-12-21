@@ -109,8 +109,8 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        background: var(--nav_bg_color);
-        box-shadow: 0 0 10px var(--nav_shadow_color);
+        background: var(--accent_bg_color);
+        box-shadow: 0 0 10px var(--accent_shadow_color);
         width: 450px;
         height: min-content;
         border-radius: 10px;
@@ -235,7 +235,6 @@
 
         .options-container button {
             font-size: 1.8rem;
-            cursor: default;
         }
     }
 

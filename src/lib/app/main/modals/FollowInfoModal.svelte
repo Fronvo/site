@@ -124,8 +124,8 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        background: var(--nav_bg_color);
-        box-shadow: 0 0 5px var(--nav_shadow_color);
+        background: var(--accent_bg_color);
+        box-shadow: 0 0 5px var(--accent_shadow_color);
         width: 300px;
         margin-top: 15px;
         margin-bottom: 15px;

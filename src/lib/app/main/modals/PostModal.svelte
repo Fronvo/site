@@ -7,7 +7,7 @@
         postModalForHome,
         postModalInfo,
     } from 'stores/main';
-    import { ourProfileData, userData } from 'stores/profile';
+    import { userData } from 'stores/profile';
     import Time from 'svelte-time';
     import { onMount } from 'svelte';
     import linkifyHtml from 'linkify-html';

@@ -1,7 +1,7 @@
 <script lang="ts">
     import OptionsMenu from '$lib/svgs/OptionsMenu.svelte';
     import { dropdownVisible } from 'stores/main';
-    import { joinedCommunity, maxChatAnimDelay } from 'stores/communities';
+    import { joinedCommunity } from 'stores/communities';
     import { fly } from 'svelte/transition';
     import { DropdownTypes } from 'types/main';
     import { dismissDropdown, showDropdown } from 'utilities/main';
@@ -17,10 +17,7 @@
 </script>
 
 {#if $joinedCommunity}
-    <div
-        class="info-container"
-        in:fly={{ y: -150, duration: $maxChatAnimDelay + 200 }}
-    >
+    <div id="blur" class="info-container" in:fly={{ y: -150, duration: 500 }}>
         <img
             id="icon"
             src={$joinedCommunity.icon && !$dataSaver
@@ -43,11 +40,11 @@
         align-items: center;
         width: 50%;
         padding: 10px;
-        border-radius: 10px;
-        backdrop-filter: blur(5px);
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
         z-index: 1;
+        background: var(--accent_bg_color);
     }
-
     .info-container #icon {
         width: 64px;
         height: 64px;
@@ -77,7 +74,7 @@
     @media screen and (max-width: 720px) {
         .info-container {
             backdrop-filter: none;
-            background: var(--nav_bg_color);
+            background: var(--accent_bg_color);
         }
 
         .info-container #icon {

@@ -1,7 +1,6 @@
 <script lang="ts">
     import Abort from '$lib/svgs/Abort.svelte';
     import {
-        maxChatAnimDelay,
         replyingTo,
         replyingToId,
         sendContent,
@@ -51,10 +50,7 @@
     });
 </script>
 
-<div
-    class="send-container"
-    in:fly={{ y: 150, duration: $maxChatAnimDelay + 200 }}
->
+<div id="blur" class="send-container" in:fly={{ y: 150, duration: 500 }}>
     {#if $replyingTo}
         <div class="reply-container" in:fade={{ duration: 300 }}>
             <Abort callback={abortReply} />
@@ -77,15 +73,14 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        background: var(--nav_bg_color);
-        box-shadow: 0 0 10px var(--nav_shadow_color);
+        background: var(--accent_bg_color);
+        box-shadow: 0 0 10px var(--accent_shadow_color);
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        backdrop-filter: blur(5px);
     }
 
     .send-container textarea {

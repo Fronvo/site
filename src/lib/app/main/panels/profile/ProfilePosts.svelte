@@ -87,7 +87,7 @@
 </script>
 
 {#if $profileLoadingFinished}
-    <div class="posts-container" in:fade={{ duration: 500 }}>
+    <div class="posts-container" in:fade={{ duration: 200 }}>
         {#if $userData.totalPosts == 0}
             <h1 in:fade={{ duration: 500 }} id="empty-text">
                 {$userData.isFollower ||
@@ -171,8 +171,8 @@
     .posts-container .post-container {
         display: flex;
         flex-direction: column;
-        background: var(--nav_bg_color);
-        box-shadow: 0 0 10px var(--nav_shadow_color);
+        background: var(--accent_bg_color);
+        box-shadow: 0 0 10px var(--accent_shadow_color);
         padding: 10px;
         padding-top: 5px;
         padding-bottom: 5px;
@@ -186,14 +186,18 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        transition: 150ms box-shadow;
+        transition: 150ms;
         cursor: pointer;
         align-items: center;
         justify-content: center;
     }
 
     .post-container:hover {
-        box-shadow: 0 0 20px var(--nav_shadow_color);
+        transform: scale(0.99);
+    }
+
+    .post-container:active {
+        transform: scale(0.975);
     }
 
     .post-container #title {
@@ -272,7 +276,11 @@
         }
 
         .post-container:hover {
-            box-shadow: 0 0 10px var(--nav_shadow_color);
+            transform: none;
+        }
+
+        .post-container:active {
+            transform: none;
         }
 
         .post-container #title {

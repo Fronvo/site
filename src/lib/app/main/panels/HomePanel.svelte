@@ -29,7 +29,7 @@
     }
 </script>
 
-<div class="home-container" in:fade={{ duration: 300, delay: 200 }}>
+<div class="home-container" in:fade={{ duration: 200 }}>
     {#if $homePostsStore}
         <h1 id="latest-posts">Latest posts</h1>
 

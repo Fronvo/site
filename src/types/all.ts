@@ -8,5 +8,4 @@ export type LocalKeys =
     | 'maxOnlineTime'
     | 'darkTheme'
     | 'dataSaver'
-    | 'xmasMode'
-    | 'ambientMode';
+    | 'xmasMode';

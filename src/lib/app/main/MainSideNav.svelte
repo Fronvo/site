@@ -23,7 +23,7 @@
     }
 </script>
 
-<div in:fly={{ x: -100, duration: 1000 }} class="side-nav-container">
+<div id="blur" in:fly={{ x: -100, duration: 1000 }} class="side-nav-container">
     <div id="component" on:click={() => switchPanel(PanelTypes.Home)}>
         <Home />
         <h1>Home</h1>
@@ -61,12 +61,11 @@
         width: max-content;
         padding: 10px;
         height: 100vh;
-        background: var(--nav_bg_color);
-        box-shadow: 0 0 10px var(--nav_shadow_color);
+        background: var(--accent_bg_color);
         transition: 300ms background;
         transition: 500ms all;
         z-index: 1;
-        backdrop-filter: blur(5px);
+        backdrop-filter: brightness(50%);
     }
 
     #component {
@@ -78,17 +77,13 @@
         margin-top: 20px;
         margin-bottom: 20px;
         border-radius: 10px;
-    }
-
-    #component:hover {
         cursor: pointer;
-        background: var(--nav_bg_color);
-        transform: scale(1.01);
+        transition: 100ms;
     }
 
     #component:active {
-        transform: scale(1);
-        opacity: 0.9;
+        transform: scale(0.975);
+        opacity: 0.75;
     }
 
     #component h1 {
@@ -104,7 +99,7 @@
     }
 
     @media screen and (max-width: 1024px) {
-        #component:hover {
+        #component {
             cursor: default;
         }
 

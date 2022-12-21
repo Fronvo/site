@@ -8,7 +8,6 @@ export const targetCommunityData: Writable<Community> = writable();
 export const targetCommunityMessages: Writable<CommunityMessage[]> = writable();
 export const sendContent: Writable<string> = writable();
 export const targetSendHeight: Writable<number> = writable();
-export const maxChatAnimDelay: Writable<number> = writable(350);
 export const targetMessageDropdown: Writable<CommunityMessage> = writable();
 export const communityLoadingFinished: Writable<boolean> = writable(false);
 export const chatRequestAccepted: Writable<boolean> = writable(false);

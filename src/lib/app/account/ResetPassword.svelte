@@ -211,7 +211,6 @@
 
         .reset-container button {
             font-size: 2.2rem;
-            cursor: default;
         }
 
         .reset-container #login-redirect {

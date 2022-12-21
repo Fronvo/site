@@ -70,7 +70,6 @@
     @media screen and (max-width: 720px) {
         button {
             font-size: 1.6rem;
-            cursor: default;
         }
 
         #email {

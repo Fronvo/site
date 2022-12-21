@@ -17,7 +17,7 @@
     });
 </script>
 
-<div class="communities-container" in:fade={{ duration: 200, delay: 200 }}>
+<div class="communities-container" in:fade={{ duration: 200 }}>
     <!-- Wait for loading to finish -->
     {#if $communityLoadingFinished}
         <!-- If joined community is not filled, decide what to do -->

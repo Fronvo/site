@@ -221,7 +221,6 @@
 
         .account-container button {
             font-size: 2.2rem;
-            cursor: default;
         }
 
         .account-container #login-redirect {

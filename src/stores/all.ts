@@ -14,7 +14,7 @@ export function initSocket(callback?: () => void): void {
     // Only init once, callback discarded
     if (socket) return;
 
-    socket = io('wss://fronvosrv.fly.dev', {
+    socket = io('ws://localhost:3001', {
         transports: ['websocket'],
         path: '/fronvo',
     });
@@ -41,7 +41,6 @@ export const sessionTime = writable(0);
 export const sessionWarningShown = writable(false);
 export const sessionAttached = writable(false);
 export const darkTheme = writable(undefined);
-export const ambientMode = writable(undefined);
 export const dataSaver = writable(false);
 export const xmasMode = writable(false);
 

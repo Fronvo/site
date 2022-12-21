@@ -6,7 +6,7 @@
     import Follow from '$lib/svgs/Follow.svelte';
     import JoinRequests from '$lib/svgs/JoinRequests.svelte';
     import Logout from '$lib/svgs/Logout.svelte';
-    import { ambientMode, dataSaver } from 'stores/all';
+    import { dataSaver } from 'stores/all';
     import { joinedCommunity, targetCommunityData } from 'stores/communities';
     import { followModalForFollowing, followModalInfo } from 'stores/main';
     import {
@@ -59,12 +59,6 @@
 
         if (!$joinedCommunity) {
             $targetCommunityData = $userCommunity;
-
-            setTimeout(() => {
-                goto(`/community/${$userCommunity.communityId}`, {
-                    replaceState: true,
-                });
-            }, 250);
         }
     }
 
@@ -128,10 +122,10 @@
 </script>
 
 {#if $profileLoadingFinished}
-    {#if $ambientMode && !$dataSaver}
+    {#if !$dataSaver}
         <div
             class="ambient-bg"
-            in:fade={{ duration: 500, delay: 200, easing: sineInOut }}
+            in:fade={{ duration: 200, easing: sineInOut }}
         />
     {/if}
 

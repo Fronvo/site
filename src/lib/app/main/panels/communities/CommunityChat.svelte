@@ -10,7 +10,6 @@
     import {
         chatRequestAccepted,
         joinedCommunity,
-        maxChatAnimDelay,
         replyingTo,
         replyingToId,
         sendContent,
@@ -21,14 +20,12 @@
     import { onDestroy, onMount } from 'svelte';
     import Time from 'svelte-time';
     import type { Unsubscriber } from 'svelte/store';
-    import { fly, scale } from 'svelte/transition';
+    import { fade, scale } from 'svelte/transition';
     import { fetchUser, showModal } from 'utilities/main';
     import linkifyHtml from 'linkify-html';
     import Reply from '$lib/svgs/Reply.svelte';
     import { ourProfileData } from 'stores/profile';
     import { ModalTypes } from 'types/main';
-
-    let animationsFinished = false;
 
     // Prevent massive data requests
     const cachedAccountData: FronvoAccount[] = [];
@@ -100,11 +97,6 @@
                 finalizedMessages = tempFinalizedMessages;
 
                 if (!showLoadMore) showLoadMore = true;
-
-                // No delay for new messages
-                setTimeout(() => {
-                    animationsFinished = true;
-                }, $maxChatAnimDelay);
             }
         }
     }
@@ -157,8 +149,9 @@
 
     function attachNewMessageListener(): void {
         socket.on('newCommunityMessage', ({ newMessageData }) => {
-            $targetCommunityMessages =
-                $targetCommunityMessages.concat(newMessageData);
+            $targetCommunityMessages = [newMessageData].concat(
+                $targetCommunityMessages.concat(newMessageData)
+            );
 
             loadMessages();
         });
@@ -337,19 +330,7 @@
             </h1>
         {:else if finalizedMessages}
             {#each finalizedMessages as { messageId, profileData, content, creationDate, isReply, replyId }, i}
-                <div
-                    class="message-container"
-                    in:fly={{
-                        x: 10,
-                        y: 25,
-                        opacity: 0,
-                        // easing: circInOut,
-                        duration: 500,
-                        delay: !animationsFinished
-                            ? Math.min(i * 50, $maxChatAnimDelay)
-                            : 0,
-                    }}
-                >
+                <div class="message-container" in:fade={{ duration: 400 }}>
                     <div class="message-info-container">
                         <img
                             id="avatar"
@@ -464,7 +445,7 @@
         height: min-content;
         border-radius: 10px;
         padding: 10px;
-        transition: 200ms background;
+        transition: 200ms;
         margin-bottom: 5px;
     }
 
@@ -477,8 +458,8 @@
     }
 
     .message-container:hover {
-        background: var(--nav_bg_color);
-        box-shadow: 0 0 10px var(--nav_shadow_color);
+        background: var(--accent_bg_color);
+        box-shadow: 0 0 10px var(--accent_shadow_color);
     }
 
     .message-info-container {

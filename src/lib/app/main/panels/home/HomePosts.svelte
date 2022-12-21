@@ -5,7 +5,7 @@
     import { postModalForHome, postModalInfo } from 'stores/main';
     import { onMount } from 'svelte';
     import Time from 'svelte-time';
-    import { fade } from 'svelte/transition';
+    import { fade, scale } from 'svelte/transition';
     import { ModalTypes } from 'types/main';
     import { showModal } from 'utilities/main';
 
@@ -48,7 +48,11 @@
 
 <div class="posts-container" in:fade={{ duration: 300, delay: 200 }}>
     {#each $posts as { post, profileData }, i}
-        <div on:click={() => viewPost(i)} class="post-container">
+        <div
+            on:click={() => viewPost(i)}
+            in:scale={{ duration: 500, delay: Math.min(i * 50, 500) }}
+            class="post-container"
+        >
             <div class="author-container">
                 <img
                     id="avatar"
@@ -89,19 +93,25 @@
     .posts-container {
         margin-top: 20px;
         display: flex;
-        flex-direction: column-reverse;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
     }
 
     .post-container {
         display: flex;
         flex-direction: column;
-        background: var(--nav_bg_color);
-        box-shadow: 0 0 10px var(--nav_shadow_color);
-        padding: 10px;
+        background: var(--accent_bg_color);
+        box-shadow: 0 0 10px var(--accent_shadow_color);
+        padding: 0px;
         padding-top: 5px;
         padding-bottom: 5px;
-        margin-bottom: 30px;
-        width: 550px;
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-bottom: 50px;
+        width: 450px;
+        max-width: 600px;
         max-height: 650px;
         border-radius: 10px;
         -webkit-touch-callout: none;
@@ -110,13 +120,17 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        transition: 150ms box-shadow;
+        transition: 150ms;
         cursor: pointer;
         align-items: center;
     }
 
     .post-container:hover {
-        box-shadow: 0 0 20px var(--nav_shadow_color);
+        transform: scale(0.99);
+    }
+
+    .post-container:active {
+        transform: scale(0.975);
     }
 
     .author-container {
@@ -148,6 +162,8 @@
         text-align: center;
         font-size: 2.1rem;
         width: 100%;
+        margin-right: 5px;
+        margin-left: 5px;
     }
 
     .post-container #content {
@@ -158,6 +174,8 @@
         -webkit-box-orient: vertical;
         margin: 0;
         margin-top: 10px;
+        margin-right: 5px;
+        margin-left: 5px;
         font-size: 1.8rem;
         color: var(--profile_info_color);
         flex: 1;
@@ -178,7 +196,6 @@
         max-width: 100%;
         max-height: 275px;
         margin-top: 10px;
-        border-radius: 10px;
     }
 
     .post-container #creation-date {
@@ -188,6 +205,10 @@
     }
 
     @media screen and (max-width: 720px) {
+        .posts-container {
+            flex-direction: column;
+        }
+
         .post-container {
             max-width: 400px;
             max-height: 500px;
@@ -195,7 +216,11 @@
         }
 
         .post-container:hover {
-            box-shadow: 0 0 10px var(--nav_shadow_color);
+            transform: none;
+        }
+
+        .post-container:active {
+            transform: none;
         }
 
         .author-container {

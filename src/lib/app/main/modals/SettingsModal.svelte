@@ -1,6 +1,5 @@
 <script lang="ts">
     import {
-        ambientMode,
         darkTheme,
         dataSaver,
         sessionTime,
@@ -13,11 +12,9 @@
     import { getKey, removeKey, setKey } from 'utilities/global';
     import type { ModalData } from 'types/main';
     import ModalTemplate from '../ModalTemplate.svelte';
-    import { profileLoadingFinished } from 'stores/profile';
 
     let maxOnlineTime = getKey('maxOnlineTime') / 60 || 0;
     let tempDarkTheme = $darkTheme;
-    let tempAmbientMode = $ambientMode;
     let tempDataSaver = $dataSaver;
     let tempXmasMode = $xmasMode;
 
@@ -56,15 +53,6 @@
         $darkTheme = tempDarkTheme;
     }
 
-    function saveAmbientMode(): void {
-        setKey('ambientMode', tempAmbientMode);
-        $ambientMode = tempAmbientMode;
-
-        // Reload profile
-        $profileLoadingFinished = false;
-        $profileLoadingFinished = true;
-    }
-
     function saveDataSaver(): void {
         setKey('dataSaver', tempDataSaver);
         $dataSaver = tempDataSaver;
@@ -78,7 +66,6 @@
     function saveSettings(): void {
         saveMaxOnlineTime();
         saveDarkTheme();
-        saveAmbientMode();
         saveDataSaver();
         saveXmasMode();
 
@@ -109,17 +96,6 @@
         <h1>Dark theme</h1>
         <Checkbox
             bind:checked={tempDarkTheme}
-            class="private-checkbox"
-            size="2.7rem"
-            primaryColor="var(--modal_checkbox_primary_color)"
-            secondaryColor="var(--modal_checkbox_secondary_color)"
-        />
-    </div>
-
-    <div class="single-line">
-        <h1>Ambient mode</h1>
-        <Checkbox
-            bind:checked={tempAmbientMode}
             class="private-checkbox"
             size="2.7rem"
             primaryColor="var(--modal_checkbox_primary_color)"

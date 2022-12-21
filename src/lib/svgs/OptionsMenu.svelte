@@ -22,7 +22,7 @@
     }
 
     svg:hover {
-        background: var(--nav_bg_color);
+        background: var(--accent_bg_color);
     }
 
     @media screen and (max-width: 520px) {

@@ -187,14 +187,14 @@
     <h1 id="input-header">Bio</h1>
     <textarea id="bio-input" bind:value={bio} maxlength={128} rows={4} />
 
-    <div>
-        <h1 id="input-header" class="avatar-info">Avatar</h1>
+    <div class="centered-container">
         <img
             id="avatar-preview"
             src={$avatar ? $avatar : '/svgs/profile/avatar.svg'}
             alt="New avatar"
             draggable={false}
         />
+        <h1 id="input-header" class="avatar-info">Avatar</h1>
     </div>
 
     <input maxlength={512} bind:value={$avatar} />
@@ -240,8 +240,8 @@
     }
 
     #avatar-preview {
-        width: 128px;
-        height: 128px;
+        width: 64px;
+        height: 64px;
         border-radius: 10px;
         margin-right: 10px;
     }

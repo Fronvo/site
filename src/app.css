@@ -161,6 +161,10 @@ select:-webkit-autofill::first-line {
     svg:hover {
         opacity: 1;
     }
+
+    button {
+        cursor: default;
+    }
 }
 
 @media screen and (max-width: 520px) {

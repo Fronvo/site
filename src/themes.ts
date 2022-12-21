@@ -8,10 +8,10 @@ interface ThemingOptions {
     text_color: string;
 
     // SideNav background color (accent 2)
-    nav_bg_color: string;
+    accent_bg_color: string;
 
     // SideNav shadow color (accent 2.2)
-    nav_shadow_color: string;
+    accent_shadow_color: string;
 
     // SVG strokes
     svg_stroke: string;
@@ -43,9 +43,9 @@ export const defaultTheme: ThemingOptions = {
 
     text_color: 'rgb(180, 120, 255)',
 
-    nav_bg_color: 'rgba(20, 20, 20, 0.75)',
+    accent_bg_color: 'rgba(22, 22, 22, 50%)',
 
-    nav_shadow_color: 'black',
+    accent_shadow_color: 'rgb(10, 10, 10)',
 
     svg_stroke: 'rgb(130, 64, 255)',
 
@@ -69,9 +69,9 @@ export const whiteTheme: ThemingOptions = {
 
     text_color: 'rgb(150, 100, 250)',
 
-    nav_bg_color: 'white',
+    accent_bg_color: 'rgb(255, 255, 255, 50%)',
 
-    nav_shadow_color: 'rgb(220, 220, 220)',
+    accent_shadow_color: 'rgb(230, 230, 230)',
 
     svg_stroke: 'rgb(130, 64, 255)',
 

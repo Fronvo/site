@@ -7,7 +7,6 @@
         xmasParticleOptions,
         tokenInvalid,
         xmasMode,
-        ambientMode,
     } from 'stores/all';
     import {
         dropdownPosition,
@@ -39,8 +38,6 @@
 
         // Try our best to default to dark
         $darkTheme = !getKey('darkTheme') || getKey('darkTheme') == 'true';
-        $ambientMode =
-            !getKey('ambientMode') || getKey('ambientMode') == 'true';
         $dataSaver = getKey('dataSaver') == 'true';
         $xmasMode =
             new Date().getMonth() == 11 &&
@@ -152,6 +149,12 @@
         width: 100%;
         background: var(--bg_color);
         overflow: auto;
+    }
+
+    /* Elegant theme feature */
+    :global(#blur) {
+        backdrop-filter: blur(3px);
+        background: none;
     }
 
     /* Not needed on desktop with mobile width */

@@ -147,7 +147,6 @@
         font-size: 2.5rem;
         margin-top: 25px;
         width: 90%;
-        cursor: default;
         border: 3px solid white;
         padding: 7px;
     }

@@ -9,6 +9,7 @@
         xmasMode,
     } from 'stores/all';
     import {
+        currentPanelId,
         dropdownPosition,
         loginSucceeded,
         modalVisible,
@@ -116,6 +117,11 @@
                 Math.min(ev.clientX, window.innerWidth - 150),
                 ev.clientY,
             ]);
+        });
+
+        // Reset scroll
+        currentPanelId.subscribe(() => {
+            document.getElementsByClassName('main')[0].scrollTo(0, 0);
         });
     });
 </script>

@@ -278,8 +278,7 @@
     textarea {
         font-size: 1.8rem;
         margin: 0 5px 20px 5px;
-        width: 30vw;
-        min-width: 400px;
+        width: 100%;
         background: var(--modal_input_bg_color);
     }
 

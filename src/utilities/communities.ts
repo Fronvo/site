@@ -48,8 +48,6 @@ export async function loadCommunitiesPanel(
     targetCommunityData.set(undefined);
     chatRequestAccepted.set(undefined);
 
-    const start = Date.now();
-
     ourData = await loadOurData();
 
     // If not in a community, load the target community

@@ -34,7 +34,7 @@
             {
                 profileId: $userData.profileId,
                 from: $userPosts.length.toString(),
-                to: ($userPosts.length + 5).toString(),
+                to: ($userPosts.length + 10).toString(),
             },
             ({ profilePosts }) => {
                 const tempPosts = $userPosts;

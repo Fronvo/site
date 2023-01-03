@@ -373,7 +373,7 @@
                                 </h1>
                             {:else}
                                 <h1 id="reply-name">
-                                    Replying to <span>a deleted message</span>
+                                    Replying to <span>an unknown message</span>
                                 </h1>
                             {/if}
                         </div>
@@ -445,7 +445,6 @@
         height: min-content;
         border-radius: 10px;
         padding: 10px;
-        transition: 200ms;
         margin-bottom: 5px;
     }
 

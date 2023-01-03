@@ -224,7 +224,7 @@
     textarea {
         font-size: 2rem;
         margin: 0 5px 20px 5px;
-        width: 95%;
+        width: 100%;
         background: var(--modal_input_bg_color);
     }
 

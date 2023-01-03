@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
     import CreatePost from '$lib/svgs/CreatePost.svelte';
     import DisableProfile from '$lib/svgs/DisableProfile.svelte';
     import EditProfile from '$lib/svgs/EditProfile.svelte';

@@ -258,6 +258,7 @@
         .post-container {
             max-width: 300px;
             max-height: 450px;
+            margin-bottom: 25px;
         }
 
         .author-container #avatar {

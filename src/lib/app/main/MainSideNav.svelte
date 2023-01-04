@@ -8,7 +8,7 @@
     import { showModal, switchPanel } from 'utilities/main';
     import { ModalTypes, PanelTypes } from 'types/main';
     import { currentPanelId } from 'stores/main';
-    import { ourProfileData, userData } from 'stores/profile';
+    import { ourProfileData, targetProfile, userData } from 'stores/profile';
     import { loadProfilePanel } from 'utilities/profile';
 
     async function decideProfileAction(): Promise<void> {
@@ -17,6 +17,8 @@
             $userData.profileId != $ourProfileData.profileId
         ) {
             await loadProfilePanel();
+
+            $targetProfile = undefined;
         } else {
             switchPanel(PanelTypes.Profile);
         }

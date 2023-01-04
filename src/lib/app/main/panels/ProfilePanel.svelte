@@ -1,20 +1,36 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import ProfileInfo from '$lib/app/main/panels/profile/ProfileInfo.svelte';
     import ProfilePosts from '$lib/app/main/panels/profile/ProfilePosts.svelte';
-    import { targetProfile, userData, userPosts } from 'stores/profile';
-    import { onDestroy, onMount } from 'svelte';
+    import {
+        ourProfileData,
+        profileLoadingFinished,
+        targetProfile,
+        userData,
+        userPosts,
+    } from 'stores/profile';
+    import { onMount } from 'svelte';
+    import { fade } from 'svelte/transition';
     import { loadProfilePanel } from 'utilities/profile';
 
     onMount(async () => {
-        await loadProfilePanel($targetProfile);
-    });
-
-    onDestroy(() => {
-        $targetProfile = undefined;
+        if (
+            $profileLoadingFinished &&
+            $targetProfile == $ourProfileData.profileId
+        ) {
+            goto(`/profile/${$ourProfileData.profileId}`, {
+                replaceState: true,
+            });
+        } else {
+            await loadProfilePanel($targetProfile);
+        }
     });
 </script>
 
-<div class="profile-container">
+<div
+    class="profile-container"
+    in:fade={{ duration: 250, delay: $profileLoadingFinished ? 200 : 0 }}
+>
     {#if $userData && $userPosts}
         <ProfileInfo />
 

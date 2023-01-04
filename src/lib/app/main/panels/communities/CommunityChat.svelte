@@ -9,10 +9,12 @@
     import { loadCommunitiesPanel } from 'utilities/communities';
     import {
         chatRequestAccepted,
+        communityLoadingFinished,
         joinedCommunity,
         replyingTo,
         replyingToId,
         sendContent,
+        targetCommunityData,
         targetCommunityMessages,
         targetSendHeight,
     } from 'stores/communities';
@@ -286,13 +288,16 @@
     }
 
     onMount(() => {
-        checkChatRequest();
-        loadMessages();
-        attachChatRequestListener();
-        attachNewMessageListener();
-        attachDeletedMessageListener();
-        attachCommunityDeletedListener();
-        attachMemberChangeListener();
+        // Only first initialisation
+        if (!$targetCommunityData) {
+            checkChatRequest();
+            loadMessages();
+            attachChatRequestListener();
+            attachNewMessageListener();
+            attachDeletedMessageListener();
+            attachCommunityDeletedListener();
+            attachMemberChangeListener();
+        }
 
         // Adjustable margin
         unsubscribe = targetSendHeight.subscribe((newHeight) => {
@@ -311,12 +316,6 @@
 
     onDestroy(() => {
         unsubscribe();
-        socket.off('chatRequestUpdated');
-        socket.off('communityMessageDeleted');
-        socket.off('newCommunityMessage');
-        socket.off('communityDeleted');
-        socket.off('memberJoined');
-        socket.off('memberLeft');
 
         document.removeEventListener('keydown', keyDownListener);
     });
@@ -494,7 +493,7 @@
 
     .message-info-container .menu-container {
         opacity: 0;
-        transition: 250ms;
+        transition: 200ms;
     }
 
     .reply-container {

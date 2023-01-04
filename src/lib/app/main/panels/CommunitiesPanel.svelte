@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import {
         communityLoadingFinished,
         joinedCommunity,
@@ -13,11 +14,24 @@
     import OfficialCommunity from './communities/OfficialCommunity.svelte';
 
     onMount(async () => {
-        await loadCommunitiesPanel($targetCommunity);
+        // Only reload if needed
+        // Events are always in the background
+        if (!$communityLoadingFinished) {
+            await loadCommunitiesPanel($targetCommunity);
+        } else {
+            goto(
+                `/community${$targetCommunity || $joinedCommunity ? '/' : ''}${
+                    $targetCommunity || $joinedCommunity
+                }`,
+                {
+                    replaceState: true,
+                }
+            );
+        }
     });
 </script>
 
-<div class="communities-container" in:fade={{ duration: 200 }}>
+<div class="communities-container" in:fade={{ duration: 500 }}>
     <!-- Wait for loading to finish -->
     {#if $communityLoadingFinished}
         <!-- If joined community is not filled, decide what to do -->

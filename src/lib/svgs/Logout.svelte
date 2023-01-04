@@ -14,6 +14,7 @@
     } from 'stores/communities';
     import { homePosts } from 'stores/home';
     import { loginSucceeded } from 'stores/main';
+    import { profileLoadingFinished, targetProfile } from 'stores/profile';
 
     function logout(): void {
         socket.emit('logout', ({ err }) => {
@@ -35,6 +36,10 @@
             $targetCommunityMessages = undefined;
             $replyingTo = undefined;
             $replyingToId = undefined;
+
+            // And profiles
+            $profileLoadingFinished = false;
+            $targetProfile = undefined;
         });
     }
 </script>

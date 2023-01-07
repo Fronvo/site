@@ -188,7 +188,7 @@
         border-radius: 10px;
     }
 
-    @media screen and (max-width: 720px) {
+    @media screen and (max-width: 1085px) {
         .members-items-container div {
             width: 300px;
             display: flex;

@@ -194,7 +194,7 @@
         user-select: none;
     }
 
-    @media screen and (max-width: 720px) {
+    @media screen and (max-width: 1100px) {
         .following-items-container {
             flex-direction: column;
             justify-content: start;

@@ -260,7 +260,7 @@
         user-select: none;
     }
 
-    @media screen and (max-width: 720px) {
+    @media screen and (max-width: 1100px) {
         input {
             font-size: 1.7rem;
         }

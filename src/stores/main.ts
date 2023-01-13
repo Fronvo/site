@@ -90,3 +90,6 @@ export const currentDropdownId = writable(0);
 export const dropdownVisible = writable(false);
 export const dropdownAnimDuration = 350;
 export const dropdownPosition = writable([0, 0]);
+
+// Loading
+export const progressBarVisible = writable(false);

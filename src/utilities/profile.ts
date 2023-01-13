@@ -8,7 +8,7 @@ import {
     userData,
     userPosts,
 } from 'stores/profile';
-import { fetchPosts, fetchUser } from './main';
+import { fetchPosts, fetchUser, setProgressBar } from './main';
 
 let ourData: FronvoAccount;
 let userDataGlobal: FronvoAccount;
@@ -21,6 +21,8 @@ function setUserData(data: FronvoAccount): void {
 }
 
 export async function loadProfilePanel(targetProfile?: string): Promise<void> {
+    setProgressBar(true);
+
     if (isLoading && targetProfile == lastTarget) return;
 
     isLoading = true;
@@ -47,6 +49,8 @@ export async function loadProfilePanel(targetProfile?: string): Promise<void> {
 
     profileLoadingFinished.set(true);
     isLoading = false;
+
+    setProgressBar(false);
 }
 
 export async function loadOurData(): Promise<FronvoAccount> {

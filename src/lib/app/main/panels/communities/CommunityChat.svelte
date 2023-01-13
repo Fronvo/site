@@ -23,7 +23,7 @@
     import Time from 'svelte-time';
     import type { Unsubscriber } from 'svelte/store';
     import { fade, scale } from 'svelte/transition';
-    import { fetchUser, showModal } from 'utilities/main';
+    import { fetchUser, setProgressBar, showModal } from 'utilities/main';
     import linkifyHtml from 'linkify-html';
     import Reply from '$lib/svgs/Reply.svelte';
     import { ourProfileData } from 'stores/profile';
@@ -99,6 +99,8 @@
                 finalizedMessages = tempFinalizedMessages;
 
                 if (!showLoadMore) showLoadMore = true;
+
+                setProgressBar(false);
             }
         }
     }

@@ -16,6 +16,7 @@
     onMount(async () => {
         // Only reload if needed
         // Events are always in the background
+
         if (!$communityLoadingFinished) {
             await loadCommunitiesPanel($targetCommunity);
         } else {

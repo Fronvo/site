@@ -6,6 +6,7 @@
     import { getKey } from 'utilities/global';
     import Dropdown from './Dropdown.svelte';
     import { xmasParticleOptions, xmasMode } from 'stores/all';
+    import ProgressBar from './ProgressBar.svelte';
 
     let ParticlesComponent: any;
 
@@ -26,6 +27,9 @@
             options={$xmasParticleOptions}
         />
     {/if}
+
+    <!-- Loading indicator -->
+    <ProgressBar />
 
     <!-- Smoothity-smooth modal auto-switching -->
     <Modal />

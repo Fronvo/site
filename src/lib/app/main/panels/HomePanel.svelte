@@ -7,16 +7,18 @@
     import { homePosts as homePostsStore } from 'stores/home';
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
-    import { setTitle } from 'utilities/main';
+    import { setProgressBar, setTitle } from 'utilities/main';
 
     onMount(() => {
         goto('/home', {
             replaceState: true,
         });
 
-        loadPosts();
-
         setTitle('Fronvo - Home');
+
+        setProgressBar(true);
+
+        loadPosts();
     });
 
     function loadPosts(): void {
@@ -24,7 +26,11 @@
         if (!$homePostsStore) {
             socket.emit('fetchHomePosts', ({ homePosts }) => {
                 $homePostsStore = homePosts;
+
+                setProgressBar(false);
             });
+        } else {
+            setProgressBar(false);
         }
     }
 </script>

@@ -14,6 +14,7 @@ import {
     targetCommunityData,
     targetCommunityMessages,
 } from 'stores/communities';
+import { setProgressBar } from './main';
 import { loadOurData } from './profile';
 
 let ourData: FronvoAccount;
@@ -42,6 +43,8 @@ export async function fetchCommunity(
 export async function loadCommunitiesPanel(
     targetCommunity?: string
 ): Promise<void> {
+    setProgressBar(true);
+
     communityLoadingFinished.set(false);
     officialCommunityStore.set(undefined);
     joinedCommunityStore.set(undefined);

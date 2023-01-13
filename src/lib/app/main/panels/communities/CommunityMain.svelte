@@ -1,11 +1,13 @@
 <script lang="ts">
     import { joinedCommunity } from 'stores/communities';
-    import { setTitle } from 'utilities/main';
+    import { setProgressBar, setTitle } from 'utilities/main';
     import CommunityChat from './CommunityChat.svelte';
     import CommunityInfo from './CommunityInfo.svelte';
     import CommunitySend from './CommunitySend.svelte';
 
     setTitle(`${$joinedCommunity.name} - Fronvo`);
+
+    setProgressBar(true);
 </script>
 
 <div class="main-container">

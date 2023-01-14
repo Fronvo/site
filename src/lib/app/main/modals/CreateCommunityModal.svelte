@@ -3,7 +3,7 @@
     import { onMount } from 'svelte';
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
-    import { dismissModal } from 'utilities/main';
+    import { dismissModal, setProgressBar } from 'utilities/main';
     import { loadCommunitiesPanel } from 'utilities/communities';
     import type { ModalData } from 'types/main';
     import ModalTemplate from '../ModalTemplate.svelte';
@@ -19,6 +19,8 @@
         if (!canCreate || isCreating) return;
 
         isCreating = true;
+
+        setProgressBar(true);
 
         socket.emit(
             'createCommunity',

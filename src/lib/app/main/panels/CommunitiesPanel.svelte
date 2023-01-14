@@ -20,14 +20,15 @@
         if (!$communityLoadingFinished) {
             await loadCommunitiesPanel($targetCommunity);
         } else {
-            goto(
-                `/community${$targetCommunity || $joinedCommunity ? '/' : ''}${
-                    $targetCommunity || $joinedCommunity
-                }`,
-                {
+            if ($targetCommunity || $joinedCommunity) {
+                goto(`/community/${$targetCommunity || $joinedCommunity}`, {
                     replaceState: true,
-                }
-            );
+                });
+            } else {
+                goto('/community', {
+                    replaceState: true,
+                });
+            }
         }
     });
 </script>

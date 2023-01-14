@@ -104,12 +104,10 @@
     }
 
     .community-container {
-        background: white;
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        background: var(--accent_bg_color);
         box-shadow: 0 0 10px var(--accent_shadow_color);
         width: 450px;
         height: min-content;
@@ -117,13 +115,6 @@
         padding: 10px;
         transition: 400ms background;
         cursor: pointer;
-        background-size: 200% auto;
-        background-image: linear-gradient(
-            to right,
-            rgba(0, 0, 0, 1%) 0%,
-            rgba(146, 73, 255, 20%) 51%,
-            rgba(0, 0, 0, 1%) 100%
-        );
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;

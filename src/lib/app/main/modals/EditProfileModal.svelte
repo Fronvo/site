@@ -1,6 +1,6 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
-    import { dismissModal, setTitle } from 'utilities/main';
+    import { dismissModal, setProgressBar, setTitle } from 'utilities/main';
     import { profileLoadingFinished, userData } from 'stores/profile';
     import { socket } from 'stores/all';
     import { onMount } from 'svelte';
@@ -25,6 +25,7 @@
         if (!canUpload || isUploading) return;
 
         isUploading = true;
+        setProgressBar(true);
 
         const updatedData = {};
 
@@ -90,6 +91,7 @@
                 // Reload banner
                 $profileLoadingFinished = false;
                 $profileLoadingFinished = true;
+                setProgressBar(false);
 
                 dismissModal();
             }

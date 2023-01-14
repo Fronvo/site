@@ -1,6 +1,6 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
-    import { dismissModal } from 'utilities/main';
+    import { dismissModal, setProgressBar } from 'utilities/main';
     import { socket } from 'stores/all';
     import { onMount } from 'svelte';
     import { writable, type Writable } from 'svelte/store';
@@ -24,6 +24,7 @@
         if (!canUpload || isUploading) return;
 
         isUploading = true;
+        setProgressBar(true);
 
         const updatedData = {};
 
@@ -68,6 +69,7 @@
                 $joinedCommunity = { ...$joinedCommunity, ...communityData };
 
                 dismissModal();
+                setProgressBar(false);
             }
         );
     }

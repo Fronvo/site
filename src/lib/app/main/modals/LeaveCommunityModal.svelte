@@ -7,7 +7,7 @@
     } from 'stores/communities';
     import { socket } from 'stores/all';
     import { loadCommunitiesPanel } from 'utilities/communities';
-    import { dismissModal } from 'utilities/main';
+    import { dismissModal, setProgressBar } from 'utilities/main';
     import { ourProfileData } from 'stores/profile';
     import type { ModalData } from 'types/main';
     import ModalTemplate from '../ModalTemplate.svelte';
@@ -22,6 +22,7 @@
         if (isLeaving) return;
 
         isLeaving = true;
+        setProgressBar(true);
 
         socket.emit('leaveCommunity', ({ err }) => {
             if (!err) {
@@ -38,6 +39,7 @@
                 });
             } else {
                 isLeaving = false;
+                setProgressBar(false);
             }
         });
     }

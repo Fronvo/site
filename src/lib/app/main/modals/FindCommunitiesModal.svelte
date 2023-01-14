@@ -1,12 +1,11 @@
 <script lang="ts">
     import Center from '$lib/app/Center.svelte';
-    import Loading from '$lib/app/Loading.svelte';
     import type { Community } from 'interfaces/all';
     import { modalAnimDuration } from 'stores/main';
     import { dataSaver, socket } from 'stores/all';
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
-    import { dismissModal } from 'utilities/main';
+    import { dismissModal, setProgressBar } from 'utilities/main';
     import { loadCommunitiesPanel } from 'utilities/communities';
     import { onMount } from 'svelte';
     import type { ModalData } from 'types/main';
@@ -43,6 +42,8 @@
 
             loadingFinished = false;
 
+            setProgressBar(true);
+
             socket.emit(
                 'findCommunities',
                 { name: $searchValue, maxResults: '10' },
@@ -52,6 +53,8 @@
                     } else {
                         loadCommunities(findResults);
                     }
+
+                    setProgressBar(false);
                 }
             );
         }, 500);
@@ -147,8 +150,6 @@
                 {/each}
             </div>
         {/if}
-    {:else}
-        <Loading text="Loading..." />
     {/if}
 </ModalTemplate>
 

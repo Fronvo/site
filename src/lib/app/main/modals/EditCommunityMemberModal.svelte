@@ -2,7 +2,7 @@
     import { joinedCommunity } from 'stores/communities';
     import { targetCommunityMember } from 'stores/main';
     import { dataSaver, socket } from 'stores/all';
-    import { dismissModal } from 'utilities/main';
+    import { dismissModal, setProgressBar } from 'utilities/main';
     import { loadProfilePanel } from 'utilities/profile';
     import { fetchCommunity } from 'utilities/communities';
     import type { ModalData } from 'types/main';
@@ -21,6 +21,8 @@
     }
 
     function updateChatPerms(): void {
+        setProgressBar(true);
+
         const newChatPermState = !hasChatPerms();
 
         socket.emit(
@@ -35,6 +37,7 @@
                 );
 
                 dismissModal();
+                setProgressBar(false);
             }
         );
     }

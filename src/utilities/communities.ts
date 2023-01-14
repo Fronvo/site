@@ -61,6 +61,8 @@ export async function loadCommunitiesPanel(
         } else {
             await loadOfficialCommunity();
         }
+
+        setProgressBar(false);
     } else {
         // Load the joined community otherwise
         await loadJoinedCommunity(ourData.communityId);

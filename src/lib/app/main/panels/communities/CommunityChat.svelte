@@ -65,6 +65,7 @@
 
         if ($targetCommunityMessages.length == 0) {
             finalizedMessages = [];
+            setProgressBar(false);
             return;
         }
 
@@ -206,12 +207,12 @@
 
     function attachMemberChangeListener(): void {
         socket.on('memberJoined', ({ profileId }) => {
-            $joinedCommunity.members.push(profileId);
+            $joinedCommunity?.members.push(profileId);
         });
 
         socket.on('memberLeft', ({ profileId }) => {
-            $joinedCommunity.members.splice(
-                $joinedCommunity.members.indexOf(profileId),
+            $joinedCommunity?.members.splice(
+                $joinedCommunity?.members.indexOf(profileId),
                 1
             );
         });

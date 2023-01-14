@@ -1,7 +1,7 @@
 <script lang="ts">
     import { socket } from 'stores/all';
     import { fade } from 'svelte/transition';
-    import { dismissModal } from 'utilities/main';
+    import { dismissModal, setProgressBar } from 'utilities/main';
     import { loadCommunitiesPanel } from 'utilities/communities';
     import type { ModalData } from 'types/main';
     import ModalTemplate from '../ModalTemplate.svelte';
@@ -16,6 +16,8 @@
 
         isJoining = true;
 
+        setProgressBar(true);
+
         socket.emit(
             'joinCommunity',
             {
@@ -25,6 +27,7 @@
                 if (err) {
                     errorMessage = err.msg;
                     isJoining = false;
+                    setProgressBar(false);
 
                     return;
                 }

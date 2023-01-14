@@ -1,22 +1,24 @@
 <script lang="ts">
     import Center from '$lib/app/Center.svelte';
-    import Loading from '$lib/app/Loading.svelte';
     import { socket } from 'stores/all';
     import { targetJoinRequestEmail } from 'stores/main';
     import { joinRequests } from 'stores/profile';
     import { onMount } from 'svelte';
     import { ModalTypes, type ModalData } from 'types/main';
-    import { dismissModal, showModal } from 'utilities/main';
+    import { dismissModal, setProgressBar, showModal } from 'utilities/main';
     import ModalTemplate from '../ModalTemplate.svelte';
 
     let loadingFinished = false;
 
     async function loadJoinRequests() {
+        setProgressBar(true);
+
         // Fetch all followed users, notify UI once finished
         socket.emit('listJoinRequests', (res) => {
             $joinRequests = res.joinRequests;
 
             loadingFinished = true;
+            setProgressBar(false);
         });
     }
 
@@ -65,8 +67,6 @@
                 {/each}
             </div>
         {/if}
-    {:else}
-        <Loading text="Loading..." />
     {/if}
 </ModalTemplate>
 

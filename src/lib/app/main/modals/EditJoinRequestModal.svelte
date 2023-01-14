@@ -1,11 +1,13 @@
 <script lang="ts">
     import { targetJoinRequestEmail } from 'stores/main';
     import { socket } from 'stores/all';
-    import { dismissModal } from 'utilities/main';
+    import { dismissModal, setProgressBar } from 'utilities/main';
     import type { ModalData } from 'types/main';
     import ModalTemplate from '../ModalTemplate.svelte';
 
     function acceptJoinRequest(): void {
+        setProgressBar(true);
+
         socket.emit(
             'acceptJoinRequest',
             {
@@ -13,11 +15,14 @@
             },
             () => {
                 dismissModal();
+                setProgressBar(false);
             }
         );
     }
 
     function rejectJoinRequest(): void {
+        setProgressBar(true);
+
         socket.emit(
             'rejectJoinRequest',
             {
@@ -25,6 +30,7 @@
             },
             () => {
                 dismissModal();
+                setProgressBar(false);
             }
         );
     }

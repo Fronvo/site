@@ -1,10 +1,14 @@
 <script lang="ts">
-    import Loading from '$lib/app/Loading.svelte';
     import type { FronvoAccount } from 'interfaces/all';
     import { joinedCommunity } from 'stores/communities';
     import { ModalTypes, type ModalData } from 'types/main';
     import { targetCommunityMember } from 'stores/main';
-    import { dismissModal, fetchUser, showModal } from 'utilities/main';
+    import {
+        dismissModal,
+        fetchUser,
+        setProgressBar,
+        showModal,
+    } from 'utilities/main';
     import { loadProfilePanel } from 'utilities/profile';
     import { dataSaver } from 'stores/all';
     import { ourProfileData } from 'stores/profile';
@@ -24,9 +28,10 @@
         );
     }
 
-    async function loadFollowInfo() {
-        // Fetch all community members, notify UI once finished
+    async function loadCommunityMembers() {
+        setProgressBar(true);
 
+        // Fetch all community members, notify UI once finished
         for (const memberIndex in memberInfoCopy) {
             fetchUser(memberInfoCopy[memberIndex]).then((user) => {
                 memberInfo.push(user);
@@ -34,6 +39,7 @@
                 // Finish loading
                 if (memberInfo.length == memberInfoCopy.length) {
                     loadingFinished = true;
+                    setProgressBar(false);
                 }
             });
         }
@@ -54,7 +60,7 @@
     }
 
     onMount(async () => {
-        await loadFollowInfo();
+        await loadCommunityMembers();
     });
 
     const data: ModalData = {
@@ -109,8 +115,6 @@
                 </div>
             {/each}
         </div>
-    {:else}
-        <Loading text="Loading..." />
     {/if}
 </ModalTemplate>
 

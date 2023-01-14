@@ -12,7 +12,7 @@
     import type { Unsubscriber } from 'svelte/store';
     import { fade } from 'svelte/transition';
     import { ModalTypes } from 'types/main';
-    import { showModal } from 'utilities/main';
+    import { setProgressBar, showModal } from 'utilities/main';
 
     let mountTransitionsDone = false;
     let unsubscribe: Unsubscriber;
@@ -28,6 +28,7 @@
         if (isLoadingMore) return;
 
         isLoadingMore = true;
+        setProgressBar(true);
 
         socket.emit(
             'fetchProfilePosts',
@@ -43,6 +44,7 @@
                 $userPosts = tempPosts;
 
                 isLoadingMore = false;
+                setProgressBar(false);
             }
         );
     }

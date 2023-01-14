@@ -1,13 +1,12 @@
 <script lang="ts">
     import Center from '$lib/app/Center.svelte';
-    import Loading from '$lib/app/Loading.svelte';
     import type { FronvoAccount } from 'interfaces/all';
     import { dataSaver, socket } from 'stores/all';
     import { onMount } from 'svelte';
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
     import type { ModalData } from 'types/main';
-    import { dismissModal } from 'utilities/main';
+    import { dismissModal, setProgressBar } from 'utilities/main';
     import { loadProfilePanel } from 'utilities/profile';
     import ModalTemplate from '../ModalTemplate.svelte';
 
@@ -40,6 +39,8 @@
                 return;
             }
 
+            setProgressBar(true);
+
             loadingFinished = false;
 
             socket.emit(
@@ -51,6 +52,8 @@
                     } else {
                         loadProfiles(findResults);
                     }
+
+                    setProgressBar(false);
                 }
             );
         }, 250);
@@ -120,10 +123,10 @@
     {#if loadingFinished}
         {#if findResults.length == 0}
             <Center absolute>
-                <h1 id="no-results" in:fade={{ duration: 300 }}>No results</h1>
+                <h1 id="no-results" in:fade={{ duration: 250 }}>No results</h1>
             </Center>
         {:else}
-            <div class="find-items-container" in:fade={{ duration: 500 }}>
+            <div class="find-items-container" in:fade={{ duration: 250 }}>
                 {#each findResults as { profileId, following, followers, avatar, isFollower, isPrivate, isSelf }, i}
                     <div on:click={() => viewProfile(i)}>
                         <img
@@ -154,8 +157,6 @@
                 {/each}
             </div>
         {/if}
-    {:else}
-        <Loading text="Loading..." />
     {/if}
 </ModalTemplate>
 

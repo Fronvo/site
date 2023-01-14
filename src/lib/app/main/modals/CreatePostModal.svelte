@@ -1,10 +1,11 @@
 <script lang="ts">
     import { socket } from 'stores/all';
+    import { ourProfileData, userData, userPosts } from 'stores/profile';
     import { onMount } from 'svelte';
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
     import type { ModalData } from 'types/main';
-    import { dismissModal } from 'utilities/main';
+    import { dismissModal, setProgressBar } from 'utilities/main';
     import { loadProfilePanel } from 'utilities/profile';
     import ModalTemplate from '../ModalTemplate.svelte';
 
@@ -20,6 +21,8 @@
 
         isSharing = true;
 
+        setProgressBar(true);
+
         socket.emit(
             'createPost',
             {
@@ -31,14 +34,26 @@
                 if (err) {
                     errorMessage = err.msg;
                     isSharing = false;
+                    setProgressBar(false);
 
                     return;
                 }
 
                 // Update, new posts
-                loadProfilePanel();
-
-                dismissModal();
+                socket.emit(
+                    'fetchProfilePosts',
+                    {
+                        profileId: $ourProfileData.profileId,
+                        from: '0',
+                        // Including newer post
+                        to: ($userPosts.length + 1).toString(),
+                    },
+                    ({ profilePosts }) => {
+                        $userPosts = profilePosts.reverse();
+                        $userData.totalPosts += 1;
+                        dismissModal();
+                    }
+                );
             }
         );
     }

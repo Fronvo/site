@@ -1,12 +1,11 @@
 <script lang="ts">
     import Center from '$lib/app/Center.svelte';
-    import Loading from '$lib/app/Loading.svelte';
     import type { FronvoAccount } from 'interfaces/all';
     import { dataSaver } from 'stores/all';
     import { followModalForFollowing, followModalInfo } from 'stores/main';
     import { onMount } from 'svelte';
     import type { ModalData } from 'types/main';
-    import { dismissModal, fetchUser } from 'utilities/main';
+    import { dismissModal, fetchUser, setProgressBar } from 'utilities/main';
     import { loadProfilePanel } from 'utilities/profile';
     import ModalTemplate from '../ModalTemplate.svelte';
 
@@ -19,11 +18,14 @@
     let loadingFinished = false;
 
     async function loadFollowInfo() {
+        setProgressBar(true);
+
         // Fetch all followed users, notify UI once finished
 
         // Sanity check for new accounts, new UI will be displayed
         if (followInfoCopy.length == 0) {
             loadingFinished = true;
+            setProgressBar(false);
             return;
         }
 
@@ -34,6 +36,7 @@
 
                 // Finish loading
                 if (followInfo.length == followInfoCopy.length) {
+                    setProgressBar(false);
                     loadingFinished = true;
                 }
             });
@@ -105,8 +108,6 @@
                 {/each}
             </div>
         {/if}
-    {:else}
-        <Loading text="Loading..." />
     {/if}
 </ModalTemplate>
 

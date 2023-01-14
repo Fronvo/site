@@ -123,6 +123,9 @@ export function showModal(newModal: ModalTypes): void {
 }
 
 export function dismissModal(callback?: Function): void {
+    // Pending operations
+    setProgressBar(false);
+
     if (!modalStateVisible) {
         if (callback) callback();
     } else {

@@ -113,6 +113,7 @@
         if (isLoadingMore) return;
 
         isLoadingMore = true;
+        setProgressBar(true);
 
         socket.emit(
             'fetchCommunityMessages',

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { fetchUser } from 'utilities/main';
+    import { fetchUser, setProgressBar } from 'utilities/main';
     import { userData } from 'stores/profile';
     import { socket } from 'stores/all';
     import { homePosts } from 'stores/home';
@@ -13,6 +13,7 @@
 
         // Block adjacent requests
         isRequesting = true;
+        setProgressBar(true);
 
         if (!isFollowed) {
             socket.emit(
@@ -41,6 +42,7 @@
             $userData = await fetchUser($userData.profileId);
 
             isRequesting = false;
+            setProgressBar(false);
 
             // Reset home posts
             homePosts.set(undefined);

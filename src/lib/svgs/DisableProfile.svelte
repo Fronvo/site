@@ -1,8 +1,11 @@
 <script lang="ts">
     import { socket } from 'stores/all';
     import { userData } from 'stores/profile';
+    import { setProgressBar } from 'utilities/main';
 
     function toggleDisable(): void {
+        setProgressBar(true);
+
         socket.emit(
             'toggleDisableAccount',
             { profileId: $userData.profileId },
@@ -10,6 +13,8 @@
                 if (!err) {
                     $userData.isDisabled = !$userData.isDisabled;
                 }
+
+                setProgressBar(false);
             }
         );
     }

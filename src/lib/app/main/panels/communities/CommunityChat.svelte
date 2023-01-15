@@ -13,7 +13,6 @@
         replyingTo,
         replyingToId,
         sendContent,
-        targetCommunityData,
         targetCommunityMessages,
         targetSendHeight,
     } from 'stores/communities';
@@ -21,7 +20,7 @@
     import { onDestroy, onMount } from 'svelte';
     import Time from 'svelte-time';
     import type { Unsubscriber } from 'svelte/store';
-    import { fade, scale } from 'svelte/transition';
+    import { scale } from 'svelte/transition';
     import {
         dismissModal,
         fetchUser,
@@ -157,6 +156,9 @@
     }
 
     function attachNewMessageListener(): void {
+        // Remove previous listeners
+        socket.off('newCommunityMessage');
+
         socket.on('newCommunityMessage', ({ newMessageData }) => {
             $targetCommunityMessages = [newMessageData].concat(
                 $targetCommunityMessages
@@ -167,6 +169,8 @@
     }
 
     function attachDeletedMessageListener(): void {
+        socket.off('communityMessageDeleted');
+
         socket.on('communityMessageDeleted', ({ messageId }) => {
             for (const messageIndex in $targetCommunityMessages) {
                 const targetMessage = $targetCommunityMessages[messageIndex];
@@ -196,6 +200,8 @@
     }
 
     function attachCommunityDeletedListener(): void {
+        socket.off('communityDeleted');
+
         if (!($ourProfileData.profileId == $joinedCommunity.ownerId)) {
             socket.on('communityDeleted', async () => {
                 await loadCommunitiesPanel();
@@ -204,6 +210,8 @@
     }
 
     function attachChatRequestListener(): void {
+        socket.off('chatRequestUpdated');
+
         socket.on('chatRequestUpdated', ({ accepted }) => {
             const contentInput = document.getElementById(
                 'textarea-content'
@@ -257,6 +265,8 @@
 
         // Send message this way
         if (event.key == 'Enter' && $sendContent.length <= 500) {
+            setProgressBar(true);
+
             // Reset text
             contentInput.disabled = true;
 
@@ -264,8 +274,6 @@
 
             contentInput.value = '';
             $sendContent = '';
-
-            await loadMessages();
 
             setTimeout(() => {
                 contentInput.disabled = false;
@@ -308,16 +316,14 @@
     }
 
     onMount(() => {
-        // Only first initialisation
-        if (!$targetCommunityData) {
-            checkChatRequest();
-            loadMessages();
-            attachChatRequestListener();
-            attachNewMessageListener();
-            attachDeletedMessageListener();
-            attachCommunityDeletedListener();
-            attachMemberChangeListener();
-        }
+        // Reload listeners and messages
+        checkChatRequest();
+        loadMessages();
+        attachChatRequestListener();
+        attachNewMessageListener();
+        attachDeletedMessageListener();
+        attachCommunityDeletedListener();
+        attachMemberChangeListener();
 
         // Adjustable margin
         unsubscribe = targetSendHeight.subscribe((newHeight) => {
@@ -349,7 +355,7 @@
             </h1>
         {:else if finalizedMessages}
             {#each finalizedMessages as { messageId, profileData, content, creationDate, isReply, replyId }, i}
-                <div class="message-container" in:fade={{ duration: 400 }}>
+                <div class="message-container">
                     <div class="message-info-container">
                         <img
                             id="avatar"

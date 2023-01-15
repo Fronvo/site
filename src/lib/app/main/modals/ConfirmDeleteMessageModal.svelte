@@ -2,16 +2,16 @@
     import { socket } from 'stores/all';
     import { targetConfirmCommunityMessage } from 'stores/main';
     import type { ModalData } from 'types/main';
-    import { dismissModal } from 'utilities/main';
+    import { dismissModal, setProgressBar } from 'utilities/main';
     import ModalTemplate from '../ModalTemplate.svelte';
 
     function deleteMessage(): void {
         // Will recieve result in CommunityChat listener if successful
+        setProgressBar(true);
+
         socket.emit('deleteCommunityMessage', {
             messageId: $targetConfirmCommunityMessage.messageId,
         });
-
-        dismissModal();
     }
 
     const data: ModalData = {

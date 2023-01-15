@@ -9,7 +9,6 @@
     import { loadCommunitiesPanel } from 'utilities/communities';
     import {
         chatRequestAccepted,
-        communityLoadingFinished,
         joinedCommunity,
         replyingTo,
         replyingToId,
@@ -23,7 +22,12 @@
     import Time from 'svelte-time';
     import type { Unsubscriber } from 'svelte/store';
     import { fade, scale } from 'svelte/transition';
-    import { fetchUser, setProgressBar, showModal } from 'utilities/main';
+    import {
+        dismissModal,
+        fetchUser,
+        setProgressBar,
+        showModal,
+    } from 'utilities/main';
     import linkifyHtml from 'linkify-html';
     import Reply from '$lib/svgs/Reply.svelte';
     import { ourProfileData } from 'stores/profile';
@@ -155,7 +159,7 @@
     function attachNewMessageListener(): void {
         socket.on('newCommunityMessage', ({ newMessageData }) => {
             $targetCommunityMessages = [newMessageData].concat(
-                $targetCommunityMessages.concat(newMessageData)
+                $targetCommunityMessages
             );
 
             loadMessages();
@@ -169,12 +173,20 @@
 
                 if (targetMessage.messageId == messageId) {
                     $targetCommunityMessages.splice(Number(messageIndex), 1);
+                    $joinedCommunity.totalMessages -= 1;
+
+                    if (
+                        $targetConfirmCommunityMessage?.messageId ==
+                        targetMessage.messageId
+                    ) {
+                        dismissModal();
+                    }
+
+                    loadMessages();
 
                     break;
                 }
             }
-
-            loadMessages();
         });
     }
 

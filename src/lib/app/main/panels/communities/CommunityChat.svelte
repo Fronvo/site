@@ -182,6 +182,11 @@
                         dismissModal();
                     }
 
+                    if ($replyingToId == targetMessage.messageId) {
+                        $replyingTo = undefined;
+                        $replyingToId = undefined;
+                    }
+
                     loadMessages();
 
                     break;

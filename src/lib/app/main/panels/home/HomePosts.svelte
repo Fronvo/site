@@ -1,5 +1,6 @@
 <script lang="ts">
     import linkifyHtml from 'linkify-html';
+    import Saos from 'saos';
     import { dataSaver } from 'stores/all';
     import { homePosts } from 'stores/home';
     import { postModalForHome, postModalInfo } from 'stores/main';
@@ -48,44 +49,52 @@
 
 <div class="posts-container" in:fade={{ duration: 300, delay: 200 }}>
     {#each $posts as { post, profileData }, i}
-        <div
-            on:click={() => viewPost(i)}
-            in:scale={{ duration: 500, delay: Math.min(i * 50, 500) }}
-            class="post-container"
+        <Saos
+            once
+            animation={'slide-top 0.5s cubic-bezier(0.230, 1.000, 0.320, 1.000) both'}
         >
-            <div class="author-container">
-                <img
-                    id="avatar"
-                    src={profileData.avatar && !$dataSaver
-                        ? profileData.avatar
-                        : '/svgs/profile/avatar.svg'}
-                    draggable={false}
-                    alt={`${profileData.username}'s avatar`}
-                />
-                <h1 id="author">{profileData.username}</h1>
+            <div
+                on:click={() => viewPost(i)}
+                in:scale={{
+                    duration: 500,
+                    start: 0.8,
+                }}
+                class="post-container"
+            >
+                <div class="author-container">
+                    <img
+                        id="avatar"
+                        src={profileData.avatar && !$dataSaver
+                            ? profileData.avatar
+                            : '/svgs/profile/avatar.svg'}
+                        draggable={false}
+                        alt={`${profileData.username}'s avatar`}
+                    />
+                    <h1 id="author">{profileData.username}</h1>
+                </div>
+
+                <h1 id="title">{post.title}</h1>
+                <h1 id="content" class={post.postId}>{post.content}</h1>
+
+                {#if post.attachment && !$dataSaver}
+                    <img
+                        id="attachment"
+                        src={post.attachment}
+                        alt={`'${post.title}' attachment`}
+                        draggable={false}
+                    />
+                {/if}
+
+                <h1 id="creation-date">
+                    <Time
+                        relative
+                        format={'dddd HH:mm · MMMM D YYYY'}
+                        live={60000}
+                        timestamp={post.creationDate}
+                    />
+                </h1>
             </div>
-
-            <h1 id="title">{post.title}</h1>
-            <h1 id="content" class={post.postId}>{post.content}</h1>
-
-            {#if post.attachment && !$dataSaver}
-                <img
-                    id="attachment"
-                    src={post.attachment}
-                    alt={`'${post.title}' attachment`}
-                    draggable={false}
-                />
-            {/if}
-
-            <h1 id="creation-date">
-                <Time
-                    relative
-                    format={'dddd HH:mm · MMMM D YYYY'}
-                    live={60000}
-                    timestamp={post.creationDate}
-                />
-            </h1>
-        </div>
+        </Saos>
     {/each}
 </div>
 
@@ -285,6 +294,19 @@
 
         .post-container #creation-date {
             font-size: 1.1rem;
+        }
+    }
+
+    /* For SAOS, animation on scroll */
+    @keyframes -global-slide-top {
+        0% {
+            opacity: 0.5;
+            transform: translateY(25px);
+        }
+
+        100% {
+            opacity: 1;
+            transform: translateY(0);
         }
     }
 </style>

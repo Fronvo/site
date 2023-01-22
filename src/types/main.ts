@@ -26,10 +26,12 @@ export enum ModalTypes {
     ConfirmDeleteMessage,
     JoinRequests,
     EditJoinRequest,
+    DeletePost,
 }
 
 export enum DropdownTypes {
     CommunityInfo,
+    PostOptions,
 }
 
 export interface DropdownActions {
@@ -46,7 +48,10 @@ export interface ModalActions {
 export interface ModalData {
     titlePreSpan?: any;
     titleIcon?: string;
+    titleDropdown?: any;
+    titleDropdownCondition?: () => boolean;
     titleListener?: () => void;
+    titleListenerCondition?: () => boolean;
     title: string;
     actions: ModalActions[];
     noSeperator?: boolean;

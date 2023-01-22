@@ -7,11 +7,11 @@
         postModalForHome,
         postModalInfo,
     } from 'stores/main';
-    import { userData } from 'stores/profile';
+    import { ourProfileData, userData } from 'stores/profile';
     import Time from 'svelte-time';
     import { onMount } from 'svelte';
     import linkifyHtml from 'linkify-html';
-    import { PanelTypes, type ModalData } from 'types/main';
+    import { DropdownTypes, PanelTypes, type ModalData } from 'types/main';
     import ModalTemplate from '../ModalTemplate.svelte';
     import { dataSaver } from 'stores/all';
     import { loadProfilePanel } from 'utilities/profile';
@@ -55,10 +55,22 @@
     const data: ModalData = {
         titlePreSpan: getUserData().username,
         titleIcon: getUserData().avatar || '/svgs/profile/avatar.svg',
-        titleListener: () =>
-            $currentPanelId != PanelTypes.Profile &&
-            loadProfilePanel(getUserData().profileId),
+        titleListener: () => loadProfilePanel(getUserData().profileId),
+        titleListenerCondition: () => {
+            // Only visit if not in profile panel, profile posts ARE IN THE SAME PROFILE
+            return $currentPanelId != PanelTypes.Profile;
+        },
         title: '',
+        titleDropdown: DropdownTypes.PostOptions,
+        titleDropdownCondition: () => {
+            // Only show post options if in the Profile Panel
+            // and if it's OUR POST
+            // TODO: Options in home for all users, save etc
+            return (
+                $currentPanelId == PanelTypes.Profile &&
+                $userData.profileId == $ourProfileData.profileId
+            );
+        },
 
         actions: [
             {

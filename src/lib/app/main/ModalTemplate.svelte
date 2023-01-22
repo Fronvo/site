@@ -1,15 +1,28 @@
 <script lang="ts">
+    import OptionsMenu from '$lib/svgs/OptionsMenu.svelte';
     import { dataSaver } from 'stores/all';
-    import { modalAnimDuration } from 'stores/main';
+    import { dropdownVisible, modalAnimDuration } from 'stores/main';
     import { backOut } from 'svelte/easing';
     import { scale } from 'svelte/transition';
-    import type { ModalData } from 'types/main';
-    import { dismissModal } from 'utilities/main';
+    import type { DropdownTypes, ModalData } from 'types/main';
+    import {
+        dismissDropdown,
+        dismissModal,
+        showDropdown,
+    } from 'utilities/main';
 
     export let data: ModalData;
 
     function runCallback(callback: () => void): void {
         callback();
+    }
+
+    function callDropdown(dropdown: DropdownTypes): void {
+        if ($dropdownVisible) {
+            dismissDropdown();
+        } else {
+            showDropdown(dropdown);
+        }
     }
 </script>
 
@@ -26,7 +39,10 @@
             id="header"
             class={data.titleListener ? 'clickable' : ''}
             on:click={() => {
-                if (typeof data.titleListener == 'function') {
+                if (
+                    typeof data.titleListener == 'function' &&
+                    data.titleListenerCondition()
+                ) {
                     dismissModal();
                     data.titleListener();
                 }
@@ -48,6 +64,14 @@
             {/if}
 
             <h1 id="title">{data.title}</h1>
+
+            {#if data.titleDropdown}
+                {#if data.titleDropdownCondition()}
+                    <OptionsMenu
+                        callback={() => callDropdown(data.titleDropdown)}
+                    />
+                {/if}
+            {/if}
         </h1>
     </div>
 

@@ -59,7 +59,7 @@
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        z-index: 2;
+        z-index: 3;
     }
 
     .item-container {

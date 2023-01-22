@@ -3,10 +3,12 @@
 // ******************** //
 
 import CommunityOptionsDropdown from '$lib/app/main/dropdowns/CommunityOptionsDropdown.svelte';
+import PostOptionsDropdown from '$lib/app/main/dropdowns/PostOptionsDropdown.svelte';
 import CommunityMembers from '$lib/app/main/modals/CommunityMembers.svelte';
 import ConfirmDeleteMessageModal from '$lib/app/main/modals/ConfirmDeleteMessageModal.svelte';
 import CreateCommunityModal from '$lib/app/main/modals/CreateCommunityModal.svelte';
 import CreatePostModal from '$lib/app/main/modals/CreatePostModal.svelte';
+import DeletePostModal from '$lib/app/main/modals/DeletePostModal.svelte';
 import EditCommunityMemberModal from '$lib/app/main/modals/EditCommunityMemberModal.svelte';
 import EditCommunityModal from '$lib/app/main/modals/EditCommunityModal.svelte';
 import EditJoinRequestModal from '$lib/app/main/modals/EditJoinRequestModal.svelte';
@@ -57,10 +59,11 @@ export const modals = [
     ConfirmDeleteMessageModal,
     JoinRequestsModal,
     EditJoinRequestModal,
+    DeletePostModal,
 ];
 
 // Dropdown settings
-export const dropdowns = [CommunityOptionsDropdown];
+export const dropdowns = [CommunityOptionsDropdown, PostOptionsDropdown];
 
 // General Modal settings
 export const currentModalId = writable(0);
@@ -72,6 +75,7 @@ export const followModalInfo: Writable<string[]> = writable();
 export const followModalForFollowing: Writable<boolean> = writable();
 
 // PostModal
+export const postModalIndex: Writable<number> = writable();
 export const postModalInfo: Writable<AccountPost | HomePost> = writable();
 export const postModalForHome: Writable<boolean> = writable();
 

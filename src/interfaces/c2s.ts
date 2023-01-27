@@ -20,7 +20,10 @@ import type {
     FetchCommunityMessagesParams,
     FetchCommunityMessagesResult,
 } from './account/fetchCommunityMessages';
-import type { FetchHomePostsResult } from './account/fetchHomePosts';
+import type {
+    FetchHomePostsParams,
+    FetchHomePostsResult,
+} from './account/fetchHomePosts';
 import type {
     FetchProfileDataParams,
     FetchProfileDataResult,
@@ -167,7 +170,10 @@ export interface ClientToServerEvents {
         {}: FindProfilesParams,
         callback?: ({}: FindProfilesResult) => void
     ) => void;
-    fetchHomePosts: (callback?: ({}: FetchHomePostsResult) => void) => void;
+    fetchHomePosts: (
+        {}: FetchHomePostsParams,
+        callback?: ({}: FetchHomePostsResult) => void
+    ) => void;
     createCommunity: (
         {}: CreateCommunityParams,
         callback?: ({}: CreateCommunityResult) => void

@@ -1,23 +1,23 @@
 <script lang="ts">
     import linkifyHtml from 'linkify-html';
     import Saos from 'saos';
-    import { dataSaver } from 'stores/all';
-    import { homePosts } from 'stores/home';
+    import { dataSaver, socket } from 'stores/all';
+    import { homePosts as homePostsStore, totalHomePosts } from 'stores/home';
     import { postModalForHome, postModalInfo } from 'stores/main';
     import { onMount } from 'svelte';
     import Time from 'svelte-time';
     import { fade, scale } from 'svelte/transition';
     import { ModalTypes } from 'types/main';
-    import { showModal } from 'utilities/main';
+    import { setProgressBar, showModal } from 'utilities/main';
 
-    const posts = homePosts;
+    let isLoadingMore = false;
 
     onMount(() => {
         setupContentLinks();
     });
 
     function setupContentLinks(): void {
-        $homePosts.forEach((homePost) => {
+        $homePostsStore.forEach((homePost) => {
             generateContentLinks(homePost.post.postId, homePost.post.content);
         });
     }
@@ -41,14 +41,38 @@
     }
 
     function viewPost(postIndex: number): void {
-        $postModalInfo = $homePosts[postIndex];
+        $postModalInfo = $homePostsStore[postIndex];
         $postModalForHome = true;
         showModal(ModalTypes.ViewPost);
+    }
+
+    function loadMore(): void {
+        if (isLoadingMore) return;
+
+        isLoadingMore = true;
+        setProgressBar(true);
+
+        socket.emit(
+            'fetchHomePosts',
+            {
+                from: $homePostsStore.length.toString(),
+                to: ($homePostsStore.length + 15).toString(),
+            },
+            ({ homePosts }) => {
+                const tempPosts = $homePostsStore;
+                tempPosts.push(...homePosts);
+
+                $homePostsStore = tempPosts;
+
+                isLoadingMore = false;
+                setProgressBar(false);
+            }
+        );
     }
 </script>
 
 <div class="posts-container" in:fade={{ duration: 300, delay: 200 }}>
-    {#each $posts as { post, profileData }, i}
+    {#each $homePostsStore as { post, profileData }, i}
         <Saos
             once
             animation={'slide-top 0.5s cubic-bezier(0.230, 1.000, 0.320, 1.000) both'}
@@ -96,13 +120,17 @@
             </div>
         </Saos>
     {/each}
+
+    {#if $homePostsStore.length < $totalHomePosts}
+        <button id="more" on:click={loadMore}>Load more</button>
+    {/if}
 </div>
 
 <style>
     .posts-container {
         margin-top: 20px;
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         flex-wrap: wrap;
         align-items: center;
         justify-content: center;
@@ -119,8 +147,7 @@
         margin-right: 10px;
         margin-left: 10px;
         margin-bottom: 50px;
-        width: 450px;
-        max-width: 600px;
+        width: 600px;
         max-height: 650px;
         border-radius: 10px;
         -webkit-touch-callout: none;
@@ -213,11 +240,15 @@
         margin-top: 20px;
     }
 
-    @media screen and (max-width: 720px) {
-        .posts-container {
-            flex-direction: column;
-        }
+    .posts-container #more {
+        width: max-content;
+        margin: auto;
+        font-size: 2rem;
+        margin-bottom: 20px;
+        margin-top: 20px;
+    }
 
+    @media screen and (max-width: 720px) {
         .post-container {
             max-width: 400px;
             max-height: 500px;
@@ -261,6 +292,10 @@
         .post-container #creation-date {
             font-size: 1.2rem;
         }
+
+        .posts-container #more {
+            font-size: 1.8rem;
+        }
     }
 
     @media screen and (max-width: 520px) {
@@ -294,6 +329,10 @@
 
         .post-container #creation-date {
             font-size: 1.1rem;
+        }
+
+        .posts-container #more {
+            font-size: 1.4rem;
         }
     }
 

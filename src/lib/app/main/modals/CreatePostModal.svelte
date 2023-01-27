@@ -6,7 +6,6 @@
     import { fade } from 'svelte/transition';
     import type { ModalData } from 'types/main';
     import { dismissModal, setProgressBar } from 'utilities/main';
-    import { loadProfilePanel } from 'utilities/profile';
     import ModalTemplate from '../ModalTemplate.svelte';
 
     let title: string;

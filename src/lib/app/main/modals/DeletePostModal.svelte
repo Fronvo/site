@@ -22,6 +22,7 @@
                 if (!err) {
                     dismissModal(() => {
                         $userPosts.splice($postModalIndex, 1);
+
                         $userPosts = $userPosts;
                         $userData.totalPosts -= 1;
                     });

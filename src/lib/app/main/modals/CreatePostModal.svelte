@@ -48,7 +48,7 @@
                         to: ($userPosts.length + 1).toString(),
                     },
                     ({ profilePosts }) => {
-                        $userPosts = profilePosts.reverse();
+                        $userPosts = profilePosts;
                         $userData.totalPosts += 1;
                         dismissModal();
                     }

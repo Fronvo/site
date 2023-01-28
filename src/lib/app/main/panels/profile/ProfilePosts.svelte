@@ -1,7 +1,11 @@
 <script lang="ts">
     import linkifyHtml from 'linkify-html';
     import { dataSaver, socket } from 'stores/all';
-    import { postModalForHome, postModalInfo } from 'stores/main';
+    import {
+        postModalForHome,
+        postModalIndex,
+        postModalInfo,
+    } from 'stores/main';
     import {
         profileLoadingFinished,
         userData,
@@ -21,6 +25,10 @@
     function showViewPost(postIndex: number): void {
         $postModalInfo = $userPosts[postIndex];
         $postModalForHome = false;
+
+        // For deletePost
+        $postModalIndex = postIndex;
+
         showModal(ModalTypes.ViewPost);
     }
 
@@ -39,7 +47,7 @@
             },
             ({ profilePosts }) => {
                 const tempPosts = $userPosts;
-                tempPosts.push(...profilePosts.reverse());
+                tempPosts.push(...profilePosts);
 
                 $userPosts = tempPosts;
 

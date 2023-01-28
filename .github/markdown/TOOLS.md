@@ -4,4 +4,4 @@
 
 -   [sveltekit](https://kit.svelte.dev/) for more advanced features and rapid development.
 
--   [socket.io](https://socket.io/) for ease of cummunication and cross-platform ability.
+-   [socket.io](https://socket.io/) for ease of communication and cross-platform ability.

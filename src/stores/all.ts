@@ -8,7 +8,6 @@ import { io, Socket } from 'socket.io-client';
 import { writable } from 'svelte/store';
 
 export let socket: Socket<ServerToClientEvents, ClientToServerEvents>;
-export const tokenInvalid = writable(false);
 
 export function initSocket(callback?: () => void): void {
     // Only init once, callback discarded

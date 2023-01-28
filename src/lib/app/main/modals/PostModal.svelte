@@ -4,6 +4,7 @@
     import { dismissModal } from 'utilities/main';
     import {
         currentPanelId,
+        loginSucceeded,
         postModalForHome,
         postModalInfo,
     } from 'stores/main';
@@ -58,7 +59,7 @@
         titleListener: () => loadProfilePanel(getUserData().profileId),
         titleListenerCondition: () => {
             // Only visit if not in profile panel, profile posts ARE IN THE SAME PROFILE
-            return $currentPanelId != PanelTypes.Profile;
+            return $loginSucceeded && $currentPanelId != PanelTypes.Profile;
         },
         title: '',
         titleDropdown: DropdownTypes.PostOptions,

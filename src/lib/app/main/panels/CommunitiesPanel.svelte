@@ -6,30 +6,42 @@
         targetCommunity,
         targetCommunityData,
     } from 'stores/communities';
-    import { onMount } from 'svelte';
+    import { loginSucceeded } from 'stores/main';
+    import { onDestroy, onMount } from 'svelte';
+    import type { Unsubscriber } from 'svelte/store';
     import { fade } from 'svelte/transition';
     import { loadCommunitiesPanel } from 'utilities/communities';
     import CommunityInvite from './communities/CommunityInvite.svelte';
     import CommunityMain from './communities/CommunityMain.svelte';
     import OfficialCommunity from './communities/OfficialCommunity.svelte';
 
-    onMount(async () => {
-        // Only reload if needed
-        // Events are always in the background
+    let unsubscribe: Unsubscriber;
 
-        if (!$communityLoadingFinished) {
-            await loadCommunitiesPanel($targetCommunity);
-        } else {
-            if ($targetCommunity || $joinedCommunity) {
-                goto(`/community/${$targetCommunity || $joinedCommunity}`, {
-                    replaceState: true,
-                });
+    onMount(async () => {
+        unsubscribe = loginSucceeded.subscribe(async (state) => {
+            if (!state) return;
+
+            // Only reload if needed
+            // Events are always in the background
+
+            if (!$communityLoadingFinished) {
+                await loadCommunitiesPanel($targetCommunity);
             } else {
-                goto('/community', {
-                    replaceState: true,
-                });
+                if ($targetCommunity || $joinedCommunity) {
+                    goto(`/community/${$targetCommunity || $joinedCommunity}`, {
+                        replaceState: true,
+                    });
+                } else {
+                    goto('/community', {
+                        replaceState: true,
+                    });
+                }
             }
-        }
+        });
+    });
+
+    onDestroy(() => {
+        unsubscribe();
     });
 </script>
 

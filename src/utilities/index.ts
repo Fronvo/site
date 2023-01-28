@@ -3,17 +3,22 @@
 // ******************** //
 
 import { goto } from '$app/navigation';
-import { initSocket } from 'stores/all';
+import { initSocket, showLayout } from 'stores/all';
 import { indexAnimDuration, indexVisible } from 'stores/index';
-import { performLogin } from 'utilities/main';
+import { loginSucceeded } from 'stores/main';
 
 export function redirectApp(): void {
     // Preload socket and login immediately, no delay afterwards
-    initSocket(performLogin);
+    initSocket();
 
     indexVisible.set(false);
 
     setTimeout(() => {
-        goto('/login');
+        showLayout.set(true);
+        loginSucceeded.set(false);
+
+        goto('/home', {
+            replaceState: true,
+        });
     }, indexAnimDuration);
 }

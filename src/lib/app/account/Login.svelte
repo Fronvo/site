@@ -5,13 +5,13 @@
         accountRegisterTab,
         accountResetPasswordTab,
     } from 'stores/account';
-    import { tokenInvalid } from 'stores/all';
     import { loginSucceeded } from 'stores/main';
     import { socket } from 'stores/all';
     import { onMount, onDestroy } from 'svelte';
     import { fade, scale } from 'svelte/transition';
     import { setKey } from 'utilities/global';
-    import { goto } from '$app/navigation';
+    import { dismissModal } from 'utilities/main';
+    import { homePosts } from 'stores/home';
 
     let email: string;
     let password: string;
@@ -38,10 +38,6 @@
     }
 
     onMount(() => {
-        goto('/login', {
-            replaceState: true,
-        });
-
         emailInput = document.getElementById('email-input') as HTMLInputElement;
         passwordInput = document.getElementById(
             'password-input'
@@ -80,9 +76,10 @@
                     toggleUI(true);
                 } else {
                     setKey('token', token);
-                    // Incase it occured before
-                    $tokenInvalid = false;
+                    $homePosts = undefined;
                     $loginSucceeded = true;
+
+                    dismissModal();
                 }
             });
         }

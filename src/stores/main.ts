@@ -17,6 +17,7 @@ import FindCommunitiesModal from '$lib/app/main/modals/FindCommunitiesModal.svel
 import FindProfilesModal from '$lib/app/main/modals/FindProfilesModal.svelte';
 import FollowInfoModal from '$lib/app/main/modals/FollowInfoModal.svelte';
 import JoinCommunityModal from '$lib/app/main/modals/JoinCommunityModal.svelte';
+import JoinFronvoModal from '$lib/app/main/modals/JoinFronvoModal.svelte';
 import JoinRequestsModal from '$lib/app/main/modals/JoinRequestsModal.svelte';
 import LeaveCommunityModal from '$lib/app/main/modals/LeaveCommunityModal.svelte';
 import MaxOnlineTimeModal from '$lib/app/main/modals/MaxOnlineTimeModal.svelte';
@@ -33,7 +34,7 @@ import type {
 } from 'interfaces/all';
 import { writable, type Writable } from 'svelte/store';
 
-export const loginSucceeded = writable(false);
+export const loginSucceeded = writable();
 
 // Panel settings
 export const panels = [HomePanel, ProfilePanel, CommunitiesPanel];
@@ -60,6 +61,7 @@ export const modals = [
     JoinRequestsModal,
     EditJoinRequestModal,
     DeletePostModal,
+    JoinFronvoModal,
 ];
 
 // Dropdown settings

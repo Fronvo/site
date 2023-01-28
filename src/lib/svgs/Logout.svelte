@@ -1,21 +1,13 @@
 <script lang="ts">
     import { socket } from 'stores/all';
     import { removeKey } from 'utilities/global';
-    import { accountRegisterVerifyTab } from 'stores/account';
-    import {
-        communityLoadingFinished,
-        joinedCommunity,
-        replyingTo,
-        replyingToId,
-        sendContent,
-        targetCommunity,
-        targetCommunityData,
-        targetCommunityMessages,
-    } from 'stores/communities';
     import { homePosts } from 'stores/home';
     import { loginSucceeded } from 'stores/main';
+    import { setProgressBar, switchPanel } from 'utilities/main';
+    import { PanelTypes } from 'types/main';
+    import { goto } from '$app/navigation';
     import { profileLoadingFinished, targetProfile } from 'stores/profile';
-    import { setProgressBar } from 'utilities/main';
+    import { communityLoadingFinished } from 'stores/communities';
 
     function logout(): void {
         setProgressBar(true);
@@ -24,25 +16,21 @@
             if (err) return;
 
             removeKey('token');
-            $accountRegisterVerifyTab = false;
-            $loginSucceeded = false;
 
-            // And home posts
+            // Login state, home posts, profile, community need refreshing
             $homePosts = undefined;
 
-            // And communities
-            $communityLoadingFinished = undefined;
-            $joinedCommunity = undefined;
-            $targetCommunity = undefined;
-            $targetCommunityData = undefined;
-            $sendContent = '';
-            $targetCommunityMessages = undefined;
-            $replyingTo = undefined;
-            $replyingToId = undefined;
-
-            // And profiles
             $profileLoadingFinished = false;
             $targetProfile = undefined;
+
+            $communityLoadingFinished = false;
+            $loginSucceeded = false;
+
+            goto('/home', {
+                replaceState: true,
+            });
+
+            switchPanel(PanelTypes.Home);
 
             setProgressBar(false);
         });

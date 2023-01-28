@@ -27,6 +27,7 @@ export enum ModalTypes {
     JoinRequests,
     EditJoinRequest,
     DeletePost,
+    JoinFronvo,
 }
 
 export enum DropdownTypes {

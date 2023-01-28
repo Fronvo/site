@@ -3,7 +3,11 @@
     import Saos from 'saos';
     import { dataSaver, socket } from 'stores/all';
     import { homePosts as homePostsStore, totalHomePosts } from 'stores/home';
-    import { postModalForHome, postModalInfo } from 'stores/main';
+    import {
+        loginSucceeded,
+        postModalForHome,
+        postModalInfo,
+    } from 'stores/main';
     import { onMount } from 'svelte';
     import Time from 'svelte-time';
     import { fade, scale } from 'svelte/transition';
@@ -53,7 +57,7 @@
         setProgressBar(true);
 
         socket.emit(
-            'fetchHomePosts',
+            $loginSucceeded ? 'fetchHomePosts' : 'fetchHomePostsGuest',
             {
                 from: $homePostsStore.length.toString(),
                 to: ($homePostsStore.length + 15).toString(),

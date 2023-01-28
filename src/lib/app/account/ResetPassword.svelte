@@ -29,10 +29,6 @@
     }
 
     onMount(() => {
-        goto('/reset', {
-            replaceState: true,
-        });
-
         emailInput = document.getElementById('email-input') as HTMLInputElement;
         resetButton = document.getElementById(
             'reset-button'

@@ -2,6 +2,7 @@
     import { goto } from '$app/navigation';
     import ProfileInfo from '$lib/app/main/panels/profile/ProfileInfo.svelte';
     import ProfilePosts from '$lib/app/main/panels/profile/ProfilePosts.svelte';
+    import { loginSucceeded } from 'stores/main';
     import {
         ourProfileData,
         profileLoadingFinished,
@@ -9,21 +10,32 @@
         userData,
         userPosts,
     } from 'stores/profile';
-    import { onMount } from 'svelte';
+    import { onDestroy, onMount } from 'svelte';
+    import type { Unsubscriber } from 'svelte/store';
     import { fade } from 'svelte/transition';
     import { loadProfilePanel } from 'utilities/profile';
 
+    let unsubscribe: Unsubscriber;
+
     onMount(async () => {
-        if (
-            $profileLoadingFinished &&
-            $targetProfile == $ourProfileData.profileId
-        ) {
-            goto(`/profile/${$ourProfileData.profileId}`, {
-                replaceState: true,
-            });
-        } else {
-            await loadProfilePanel($targetProfile);
-        }
+        unsubscribe = loginSucceeded.subscribe(async (state) => {
+            if (!state) return;
+
+            if (
+                $profileLoadingFinished &&
+                $targetProfile == $ourProfileData.profileId
+            ) {
+                goto(`/profile/${$ourProfileData.profileId}`, {
+                    replaceState: true,
+                });
+            } else {
+                await loadProfilePanel($targetProfile);
+            }
+        });
+    });
+
+    onDestroy(() => {
+        unsubscribe();
     });
 </script>
 

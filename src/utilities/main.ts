@@ -4,7 +4,6 @@
 
 import type { AccountPost, FronvoAccount } from 'interfaces/all';
 import { fronvoTitle, socket } from 'stores/all';
-import { tokenInvalid } from 'stores/all';
 import {
     currentDropdownId,
     currentModalId,
@@ -48,7 +47,7 @@ export function performLogin(): void {
                 // If the login failed, reset token and redirect to accounts
                 if (err) {
                     removeKey('token');
-                    tokenInvalid.set(true);
+                    loginSucceeded.set(false);
                 } else {
                     // Login succeeded, advance
                     loginSucceeded.set(true);

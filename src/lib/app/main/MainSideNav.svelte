@@ -7,11 +7,17 @@
     import { fly } from 'svelte/transition';
     import { showModal, switchPanel } from 'utilities/main';
     import { ModalTypes, PanelTypes } from 'types/main';
-    import { currentPanelId } from 'stores/main';
+    import { currentPanelId, loginSucceeded } from 'stores/main';
     import { ourProfileData, targetProfile, userData } from 'stores/profile';
     import { loadProfilePanel } from 'utilities/profile';
+    import { goto } from '$app/navigation';
 
     async function decideProfileAction(): Promise<void> {
+        if (!$loginSucceeded) {
+            showModal(ModalTypes.JoinFronvo);
+            return;
+        }
+
         if (
             $currentPanelId == PanelTypes.Profile &&
             $userData.profileId != $ourProfileData.profileId
@@ -23,10 +29,35 @@
             switchPanel(PanelTypes.Profile);
         }
     }
+
+    function loadPanel(panel: PanelTypes): void {
+        if ($loginSucceeded) {
+            switchPanel(panel);
+        } else {
+            showModal(ModalTypes.JoinFronvo);
+        }
+    }
+
+    function loadModal(modal: ModalTypes): void {
+        if ($loginSucceeded) {
+            showModal(modal);
+        } else {
+            showModal(ModalTypes.JoinFronvo);
+        }
+    }
 </script>
 
 <div id="blur" in:fly={{ x: -100, duration: 1000 }} class="side-nav-container">
-    <div id="component" on:click={() => switchPanel(PanelTypes.Home)}>
+    <div
+        id="component"
+        on:click={() => {
+            goto('/home', {
+                replaceState: true,
+            });
+
+            switchPanel(PanelTypes.Home);
+        }}
+    >
         <Home />
         <h1>Home</h1>
     </div>
@@ -36,12 +67,12 @@
         <h1>Profile</h1>
     </div>
 
-    <div id="component" on:click={() => switchPanel(PanelTypes.Communities)}>
+    <div id="component" on:click={() => loadPanel(PanelTypes.Communities)}>
         <Communities />
         <h1>Community</h1>
     </div>
 
-    <div id="component" on:click={() => showModal(ModalTypes.FindProfiles)}>
+    <div id="component" on:click={() => loadModal(ModalTypes.FindProfiles)}>
         <Search />
         <h1>Search</h1>
     </div>

@@ -1,12 +1,11 @@
 <script lang="ts">
-    import Account from '$lib/app/account/Account.svelte';
     import Main from '$lib/app/main/Main.svelte';
     import {
         dataSaver,
         fronvoTitle,
         xmasParticleOptions,
-        tokenInvalid,
         xmasMode,
+        initSocket,
     } from 'stores/all';
     import {
         currentPanelId,
@@ -16,7 +15,6 @@
     } from 'stores/main';
     import {
         darkTheme,
-        initSocket,
         sessionAttached,
         sessionTime,
         sessionTimeEnabled,
@@ -94,7 +92,7 @@
         // When layout is visible, perform socket actions
         showLayout.subscribe((state) => {
             if (state) {
-                // Init, login (will return if already called from index, only placed for direct route access)
+                // Init regardless of login state
                 initSocket(performLogin);
 
                 if (getKey('maxOnlineTime')) {
@@ -132,13 +130,9 @@
 
 <div class="main" use:themingVars={{ ...$currentTheme }}>
     {#if mountReady}
-        {#if $showLayout}
+        {#if $showLayout && $loginSucceeded != undefined}
             <div in:fade={{ duration: 500 }}>
-                {#if (getKey('token') || $loginSucceeded) && !$tokenInvalid}
-                    <Main />
-                {:else}
-                    <Account />
-                {/if}
+                <Main />
             </div>
         {/if}
 

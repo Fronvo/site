@@ -14,8 +14,6 @@
         // Get latest panel id / Home
         $currentPanelId = getKey('panelId', 0);
 
-        console.log($currentPanelId);
-
         const module = await import('svelte-particles');
         ParticlesComponent = module.default;
     });

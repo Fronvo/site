@@ -23,7 +23,6 @@
     } from 'stores/all';
     import { onMount } from 'svelte';
     import themingVars from 'svelte-css-vars';
-    import { fade } from 'svelte/transition';
     import { ModalTypes } from 'types/main';
     import { performLogin, showModal } from 'utilities/main';
     import { getKey } from 'utilities/global';
@@ -131,9 +130,7 @@
 <div class="main" use:themingVars={{ ...$currentTheme }}>
     {#if mountReady}
         {#if $showLayout && $loginSucceeded != undefined}
-            <div in:fade={{ duration: 500 }}>
-                <Main />
-            </div>
+            <Main />
         {/if}
 
         <slot />

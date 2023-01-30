@@ -13,8 +13,6 @@
     let unsubscribe: Unsubscriber;
 
     onMount(() => {
-        setTitle('Fronvo - Home');
-
         setProgressBar(true);
 
         unsubscribe = loginSucceeded.subscribe((state) => {
@@ -22,8 +20,10 @@
 
             if (
                 !location.href.includes('/profile') &&
-                !location.href.includes('community')
+                !location.href.includes('/community')
             ) {
+                setTitle('Fronvo - Home');
+
                 goto('/home', {
                     replaceState: true,
                 });

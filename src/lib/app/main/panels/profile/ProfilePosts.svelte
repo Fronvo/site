@@ -356,7 +356,8 @@
         }
 
         .posts-container #join {
-            font-size: 1.7rem;
+            font-size: 1.6rem;
+            margin-bottom: 75px;
         }
 
         .posts-container #more {
@@ -396,7 +397,7 @@
         }
 
         .posts-container #join {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
         }
 
         .posts-container #more {

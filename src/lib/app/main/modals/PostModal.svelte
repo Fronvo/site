@@ -59,7 +59,7 @@
         titleListener: () => loadProfilePanel(getUserData().profileId),
         titleListenerCondition: () => {
             // Only visit if not in profile panel, profile posts ARE IN THE SAME PROFILE
-            return $loginSucceeded && $currentPanelId != PanelTypes.Profile;
+            return $currentPanelId != PanelTypes.Profile;
         },
         title: '',
         titleDropdown: DropdownTypes.PostOptions,

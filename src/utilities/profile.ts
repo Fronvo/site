@@ -1,6 +1,7 @@
 import { goto } from '$app/navigation';
 import type { FronvoAccount } from 'interfaces/all';
 import { socket } from 'stores/all';
+import { currentPanelId } from 'stores/main';
 import { ourProfileData } from 'stores/profile';
 import {
     profileLoadingFinished,
@@ -8,12 +9,15 @@ import {
     userData,
     userPosts,
 } from 'stores/profile';
+import { PanelTypes } from 'types/main';
+import { getKey } from './global';
 import { fetchPosts, fetchUser, setProgressBar } from './main';
 
 let ourData: FronvoAccount;
 let userDataGlobal: FronvoAccount;
 let isLoading = false;
 let lastTarget: string;
+let guestMode = false;
 
 function setUserData(data: FronvoAccount): void {
     userData.set(data);
@@ -27,6 +31,7 @@ export async function loadProfilePanel(targetProfile?: string): Promise<void> {
 
     isLoading = true;
     lastTarget = targetProfile;
+    guestMode = !getKey('token');
 
     // Reset previous data
     profileLoadingFinished.set(false);
@@ -35,9 +40,9 @@ export async function loadProfilePanel(targetProfile?: string): Promise<void> {
     userCommunity.set(undefined);
 
     // For follow relations and more
-    await loadOurData();
+    !guestMode && (await loadOurData());
 
-    if (targetProfile && targetProfile != ourData.profileId) {
+    if (targetProfile && targetProfile != ourData?.profileId) {
         await loadTargetProfile(targetProfile);
     } else {
         await loadProfile();
@@ -64,10 +69,10 @@ export async function loadOurData(): Promise<FronvoAccount> {
 
 async function loadProfile(): Promise<void> {
     setUserData(ourData);
-    userPosts.set(await fetchPosts(ourData.profileId));
+    userPosts.set(!guestMode && (await fetchPosts(ourData.profileId)));
 
     // Didnt redirect before, no targetProfile
-    goto(`/profile/${ourData.profileId}`, {
+    goto(`/profile/${ourData?.profileId}`, {
         replaceState: true,
     });
 }
@@ -82,12 +87,23 @@ async function loadTargetProfile(targetProfile?: string): Promise<void> {
 
     // Abort if it doesnt exist
     if (!data) {
+        if (guestMode) {
+            // Redirect to Home
+            currentPanelId.set(PanelTypes.Home);
+
+            goto('/home', {
+                replaceState: true,
+            });
+
+            return;
+        }
+
         await loadProfile();
         return;
     }
 
     setUserData(data);
-    userPosts.set(await fetchPosts(data.profileId));
+    userPosts.set(!guestMode && (await fetchPosts(data.profileId)));
 }
 
 async function loadProfileCommunity(): Promise<void> {

@@ -111,6 +111,10 @@ import type {
     FetchHomePostsGuestParams,
     FetchHomePostsGuestResult,
 } from './noAccount/fetchHomePostsGuest';
+import type {
+    FetchProfileDataGuestParams,
+    FetchProfileDataGuestResult,
+} from './noAccount/fetchProfileDataGuest';
 
 export interface ClientToServerEvents {
     register: (
@@ -231,5 +235,9 @@ export interface ClientToServerEvents {
     fetchHomePostsGuest: (
         {}: FetchHomePostsGuestParams,
         callback?: ({}: FetchHomePostsGuestResult) => void
+    ) => void;
+    fetchProfileDataGuest: (
+        {}: FetchProfileDataGuestParams,
+        callback?: ({}: FetchProfileDataGuestResult) => void
     ) => void;
 }

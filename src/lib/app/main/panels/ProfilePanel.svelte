@@ -13,13 +13,14 @@
     import { onDestroy, onMount } from 'svelte';
     import type { Unsubscriber } from 'svelte/store';
     import { fade } from 'svelte/transition';
+    import { getKey } from 'utilities/global';
     import { loadProfilePanel } from 'utilities/profile';
 
     let unsubscribe: Unsubscriber;
 
     onMount(async () => {
         unsubscribe = loginSucceeded.subscribe(async (state) => {
-            if (!state) return;
+            if (!state && $targetProfile == undefined) return;
 
             if (
                 $profileLoadingFinished &&
@@ -43,7 +44,7 @@
     class="profile-container"
     in:fade={{ duration: 250, delay: $profileLoadingFinished ? 200 : 0 }}
 >
-    {#if $userData && $userPosts}
+    {#if $userData && (!getKey('token') || $userPosts)}
         <ProfileInfo />
 
         <ProfilePosts />

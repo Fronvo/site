@@ -11,9 +11,10 @@
     import { ourProfileData, targetProfile, userData } from 'stores/profile';
     import { loadProfilePanel } from 'utilities/profile';
     import { goto } from '$app/navigation';
+    import { getKey } from 'utilities/global';
 
     async function decideProfileAction(): Promise<void> {
-        if (!$loginSucceeded) {
+        if (!getKey('token')) {
             showModal(ModalTypes.JoinFronvo);
             return;
         }
@@ -31,7 +32,7 @@
     }
 
     function loadPanel(panel: PanelTypes): void {
-        if ($loginSucceeded) {
+        if (getKey('token') && $loginSucceeded) {
             switchPanel(panel);
         } else {
             showModal(ModalTypes.JoinFronvo);
@@ -39,7 +40,7 @@
     }
 
     function loadModal(modal: ModalTypes): void {
-        if ($loginSucceeded) {
+        if (getKey('token') && $loginSucceeded) {
             showModal(modal);
         } else {
             showModal(ModalTypes.JoinFronvo);

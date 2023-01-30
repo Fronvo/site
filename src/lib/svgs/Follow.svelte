@@ -1,15 +1,22 @@
 <script lang="ts">
-    import { fetchUser, setProgressBar } from 'utilities/main';
+    import { fetchUser, setProgressBar, showModal } from 'utilities/main';
     import { userData } from 'stores/profile';
     import { socket } from 'stores/all';
     import { homePosts } from 'stores/home';
     import { ourProfileData } from 'stores/profile';
+    import { getKey } from 'utilities/global';
+    import { ModalTypes } from 'types/main';
 
-    let isFollowed = $ourProfileData.following.includes($userData.profileId);
+    let isFollowed = $ourProfileData?.following.includes($userData.profileId);
     let isRequesting = false;
 
     async function handleFollowProfile(): Promise<void> {
         if (isRequesting) return;
+
+        if (!getKey('token')) {
+            showModal(ModalTypes.JoinFronvo);
+            return;
+        }
 
         // Block adjacent requests
         isRequesting = true;

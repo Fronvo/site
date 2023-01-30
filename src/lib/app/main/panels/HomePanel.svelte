@@ -3,7 +3,7 @@
     import HomePosts from '$lib/app/main/panels/home/HomePosts.svelte';
     import { socket } from 'stores/all';
     import { homePosts as homePostsStore, totalHomePosts } from 'stores/home';
-    import { loginSucceeded } from 'stores/main';
+    import { currentPanelId, loginSucceeded } from 'stores/main';
     import { onDestroy, onMount } from 'svelte';
     import type { Unsubscriber } from 'svelte/store';
     import { fade } from 'svelte/transition';
@@ -20,7 +20,8 @@
 
             if (
                 !location.href.includes('/profile') &&
-                !location.href.includes('/community')
+                !location.href.includes('/community') &&
+                $currentPanelId == 0
             ) {
                 setTitle('Fronvo - Home');
 

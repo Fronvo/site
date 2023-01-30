@@ -5,13 +5,16 @@
         accountRegisterTab,
         accountResetPasswordTab,
     } from 'stores/account';
-    import { loginSucceeded } from 'stores/main';
+    import { currentPanelId, loginSucceeded } from 'stores/main';
     import { socket } from 'stores/all';
     import { onMount, onDestroy } from 'svelte';
     import { fade, scale } from 'svelte/transition';
     import { setKey } from 'utilities/global';
     import { dismissModal } from 'utilities/main';
     import { homePosts } from 'stores/home';
+    import { loadProfilePanel } from 'utilities/profile';
+    import { targetProfile } from 'stores/profile';
+    import { PanelTypes } from 'types/main';
 
     let email: string;
     let password: string;
@@ -78,6 +81,11 @@
                     setKey('token', token);
                     $homePosts = undefined;
                     $loginSucceeded = true;
+
+                    // Profile panel while in guest mode, reload
+                    if ($currentPanelId == PanelTypes.Profile) {
+                        loadProfilePanel($targetProfile);
+                    }
 
                     dismissModal();
                 }

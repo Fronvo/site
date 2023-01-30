@@ -19,6 +19,7 @@
     import type { Unsubscriber } from 'svelte/store';
     import { fade } from 'svelte/transition';
     import { ModalTypes, PanelTypes } from 'types/main';
+    import { getKey } from 'utilities/global';
     import { setTitle, showModal, switchPanel } from 'utilities/main';
 
     let unsubscribe: Unsubscriber;
@@ -28,6 +29,13 @@
         $userData.isFollower || $userData.isSelf || !$userData.isPrivate;
 
     function showFollowInfo(followInfo: string[], forFollowing: boolean): void {
+        // Custom clients can use fetchProfileDataGuest to load follow info
+        // We won't, disable manually
+        if (!getKey('token')) {
+            showModal(ModalTypes.JoinFronvo);
+            return;
+        }
+
         if (!isAccessible) return;
 
         $followModalInfo = followInfo;
@@ -145,7 +153,7 @@
         </h1>
 
         <h1 id="bio">
-            {isAccessible ? $userData.bio : ''}
+            {$userData.bio}
         </h1>
 
         {#if $userCommunity}
@@ -180,7 +188,7 @@
                 <EditProfile />
                 <CreatePost />
 
-                {#if $ourProfileData.isAdmin}
+                {#if $ourProfileData?.isAdmin}
                     <JoinRequests />
                 {/if}
 
@@ -189,7 +197,7 @@
                 <Follow />
             {/if}
 
-            {#if !$userData.isSelf && $ourProfileData.isAdmin}
+            {#if !$userData.isSelf && $ourProfileData?.isAdmin}
                 <DisableProfile />
             {/if}
         </div>

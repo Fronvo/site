@@ -16,6 +16,7 @@
     import type { Unsubscriber } from 'svelte/store';
     import { fade } from 'svelte/transition';
     import { ModalTypes } from 'types/main';
+    import { getKey } from 'utilities/global';
     import { setProgressBar, showModal } from 'utilities/main';
 
     let mountTransitionsDone = false;
@@ -98,14 +99,41 @@
 
 {#if $profileLoadingFinished}
     <div class="posts-container" in:fade={{ duration: 200 }}>
-        {#if $userData.totalPosts == 0}
+        {#if $userData.totalPosts == 0 || !getKey('token')}
             <h1 in:fade={{ duration: 500 }} id="empty-text">
-                {$userData.isFollower ||
-                $userData.isSelf ||
-                !$userData.isPrivate
-                    ? 'No posts, yet'
-                    : 'This profile is private'}
+                <!-- Private account -->
+                {#if $userData.isPrivate}
+                    <!-- Logged in, viewing private account -->
+                    {#if getKey('token')}
+                        This profile is private
+
+                        <!-- Guest, viewing private account -->
+                    {:else}
+                        {'This profile is private'}
+                        {'\nJoin Fronvo to follow'}
+                        <span>{$userData.username}</span>
+                    {/if}
+                {:else}
+                    <!-- Logged in, viewing public account with no posts -->
+                    {#if getKey('token')}
+                        No posts, yet
+
+                        <!-- Guest, viewing public account with (maybe) no posts, guest can't know, no endpoint -->
+                    {:else}
+                        {'Join Fronvo to see'}
+                        <span>{$userData.username}</span>'s posts
+                    {/if}
+                {/if}
             </h1>
+
+            {#if !getKey('token')}
+                <button
+                    id="join"
+                    in:fade={{ duration: 500 }}
+                    on:click={() => showModal(ModalTypes.JoinFronvo)}
+                    >Join Fronvo</button
+                >
+            {/if}
         {:else}
             <h1 id="counter">
                 <span>{$userData.totalPosts}</span> post{$userData.totalPosts !=
@@ -261,6 +289,19 @@
     .posts-container #empty-text {
         margin: 0;
         font-size: 2rem;
+        white-space: pre-wrap;
+        text-align: center;
+    }
+
+    .posts-container #empty-text span {
+        color: var(--profile_info_color);
+    }
+
+    .posts-container #join {
+        width: max-content;
+        font-size: 2rem;
+        margin: auto;
+        margin-top: 10px;
     }
 
     .posts-container #more {
@@ -314,6 +355,10 @@
             font-size: 1.8rem;
         }
 
+        .posts-container #join {
+            font-size: 1.7rem;
+        }
+
         .posts-container #more {
             font-size: 1.8rem;
         }
@@ -348,6 +393,10 @@
 
         .posts-container #empty-text {
             font-size: 1.6rem;
+        }
+
+        .posts-container #join {
+            font-size: 1.4rem;
         }
 
         .posts-container #more {

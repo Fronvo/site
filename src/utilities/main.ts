@@ -42,7 +42,7 @@ export function performLogin(): void {
     // Get current login state
     socket.emit('isLoggedIn', ({ loggedIn }) => {
         // If not logged in, attempt to login with stored token
-        if (!loggedIn) {
+        if (!loggedIn && getKey('token')) {
             socket.emit('loginToken', { token: getKey('token') }, ({ err }) => {
                 // If the login failed, reset token and redirect to accounts
                 if (err) {
@@ -77,7 +77,7 @@ export async function fetchUser(id?: string): Promise<FronvoAccount> {
         ): Promise<FronvoAccount | undefined> {
             return new Promise(() => {
                 socket.emit(
-                    'fetchProfileData',
+                    `fetchProfileData${!getKey('token') ? 'Guest' : ''}`,
                     { profileId: id },
                     ({ profileData }) => {
                         resolve(profileData || undefined);

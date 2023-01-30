@@ -352,11 +352,13 @@
         }
 
         .posts-container #empty-text {
-            font-size: 1.8rem;
+            font-size: 1.7rem;
+            margin-left: 10px;
+            margin-right: 10px;
         }
 
         .posts-container #join {
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             margin-bottom: 75px;
         }
 
@@ -393,11 +395,11 @@
         }
 
         .posts-container #empty-text {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
         }
 
         .posts-container #join {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
         }
 
         .posts-container #more {

@@ -20,14 +20,18 @@
 
         function attemptReset(): void {
             // Little hack to recieve required field messages
-            socket.emit('resetPasswordVerify', { code }, ({ err }) => {
-                if (err) {
-                    setError({ err });
-                } else {
-                    // Move on to verification
-                    $accountResetPasswordFinalTab = true;
+            socket.emit(
+                'resetPasswordVerify',
+                { code: code || '' },
+                ({ err }) => {
+                    if (err) {
+                        setError({ err });
+                    } else {
+                        // Move on to verification
+                        $accountResetPasswordFinalTab = true;
+                    }
                 }
-            });
+            );
         }
 
         attemptReset();

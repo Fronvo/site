@@ -55,18 +55,22 @@
 
         function attemptReset(): void {
             // Little hack to recieve required field messages
-            socket.emit('resetPasswordFinal', { newPassword }, ({ err }) => {
-                if (err) {
-                    setError({ err });
-                    toggleUI(true);
-                } else {
-                    // Complete action, redirect to login
-                    $accountResetPasswordTab = false;
-                    $accountResetPasswordVerifyTab = false;
-                    $accountResetPasswordFinalTab = false;
-                    $accountRegisterTab = false;
+            socket.emit(
+                'resetPasswordFinal',
+                { newPassword: newPassword || '' },
+                ({ err }) => {
+                    if (err) {
+                        setError({ err });
+                        toggleUI(true);
+                    } else {
+                        // Complete action, redirect to login
+                        $accountResetPasswordTab = false;
+                        $accountResetPasswordVerifyTab = false;
+                        $accountResetPasswordFinalTab = false;
+                        $accountRegisterTab = false;
+                    }
                 }
-            });
+            );
         }
 
         toggleUI(false);

@@ -73,23 +73,27 @@
         }
 
         function attemptLogin(): void {
-            socket.emit('login', { email, password }, ({ err, token }) => {
-                if (err) {
-                    setError({ err });
-                    toggleUI(true);
-                } else {
-                    setKey('token', token);
-                    $homePosts = undefined;
-                    $loginSucceeded = true;
+            socket.emit(
+                'login',
+                { email: email || '', password: password || '' },
+                ({ err, token }) => {
+                    if (err) {
+                        setError({ err });
+                        toggleUI(true);
+                    } else {
+                        setKey('token', token);
+                        $homePosts = undefined;
+                        $loginSucceeded = true;
 
-                    // Profile panel while in guest mode, reload
-                    if ($currentPanelId == PanelTypes.Profile) {
-                        loadProfilePanel($targetProfile);
+                        // Profile panel while in guest mode, reload
+                        if ($currentPanelId == PanelTypes.Profile) {
+                            loadProfilePanel($targetProfile);
+                        }
+
+                        dismissModal();
                     }
-
-                    dismissModal();
                 }
-            });
+            );
         }
 
         toggleUI(false);

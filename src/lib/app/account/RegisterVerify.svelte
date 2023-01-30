@@ -19,7 +19,7 @@
         }
 
         function attemptVerify(): void {
-            socket.emit('registerVerify', { code }, ({ err }) => {
+            socket.emit('registerVerify', { code: code || '' }, ({ err }) => {
                 if (err) {
                     setError({ err });
                 } else {

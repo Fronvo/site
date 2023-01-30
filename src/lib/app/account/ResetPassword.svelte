@@ -58,7 +58,7 @@
 
         function attemptReset(): void {
             // Little hack to recieve required field messages
-            socket.emit('resetPassword', { email }, ({ err }) => {
+            socket.emit('resetPassword', { email: email || '' }, ({ err }) => {
                 if (err) {
                     setError({ err });
                     toggleUI(true);

@@ -104,7 +104,7 @@ async function loadTargetProfile(targetProfile?: string): Promise<void> {
 
     setUserData(data);
 
-    if (!guestMode && !data.isPrivate) {
+    if (!guestMode && !data.isFollower) {
         userPosts.set(!guestMode && (await fetchPosts(data.profileId)));
     } else {
         userPosts.set([]);

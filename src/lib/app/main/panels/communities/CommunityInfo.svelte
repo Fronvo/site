@@ -2,7 +2,7 @@
     import OptionsMenu from '$lib/svgs/OptionsMenu.svelte';
     import { dropdownVisible } from 'stores/main';
     import { joinedCommunity } from 'stores/communities';
-    import { fly } from 'svelte/transition';
+    import { fade } from 'svelte/transition';
     import { DropdownTypes } from 'types/main';
     import { dismissDropdown, showDropdown } from 'utilities/main';
     import { dataSaver } from 'stores/all';
@@ -17,7 +17,7 @@
 </script>
 
 {#if $joinedCommunity}
-    <div id="blur" class="info-container" in:fly={{ y: -150, duration: 500 }}>
+    <div id="blur" class="info-container" in:fade={{ duration: 200 }}>
         <img
             id="icon"
             src={$joinedCommunity.icon && !$dataSaver

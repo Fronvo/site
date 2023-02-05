@@ -8,8 +8,10 @@
     import { dataSaver, socket } from 'stores/all';
     import { loadCommunitiesPanel } from 'utilities/communities';
     import {
+        cachedAccountData,
         chatRequestAccepted,
         joinedCommunity,
+        queuedAccounts,
         replyingTo,
         replyingToId,
         sendContent,
@@ -33,7 +35,7 @@
     import { ModalTypes } from 'types/main';
 
     // Prevent massive data requests
-    const cachedAccountData: FronvoAccount[] = [];
+    let loadedAccounts = 0;
 
     let unsubscribe: Unsubscriber;
 
@@ -44,8 +46,8 @@
     let isLoadingMore = false;
 
     function findCachedData(profileId: string): FronvoAccount | undefined {
-        for (const accountIndex in cachedAccountData) {
-            const targetAccount = cachedAccountData[accountIndex];
+        for (const accountIndex in $cachedAccountData) {
+            const targetAccount = $cachedAccountData[accountIndex];
 
             if (targetAccount.profileId == profileId) {
                 return targetAccount;
@@ -63,6 +65,40 @@
         }
     }
 
+    async function loadMessageAuthors(): Promise<void> {
+        // Reset counter, helps combat loadMore errors
+        loadedAccounts = 0;
+
+        for (const messageIndex in $targetCommunityMessages) {
+            const message = $targetCommunityMessages[messageIndex];
+
+            // No duplicates
+            if ($queuedAccounts.includes(message.ownerId)) {
+                loadedAccounts += 1;
+
+                checkLoadingDone();
+
+                continue;
+            }
+
+            $queuedAccounts.push(message.ownerId);
+
+            const account = await fetchUser(message.ownerId);
+
+            $cachedAccountData.push(account);
+
+            loadedAccounts += 1;
+
+            checkLoadingDone();
+        }
+
+        function checkLoadingDone(): void {
+            if (loadedAccounts == $targetCommunityMessages.length) {
+                loadMessages();
+            }
+        }
+    }
+
     async function loadMessages(): Promise<void> {
         const tempFinalizedMessages: CommunityMessageFinal[] = [];
 
@@ -75,14 +111,8 @@
         for (const messageIndex in $targetCommunityMessages) {
             const message = $targetCommunityMessages[messageIndex];
 
+            // No extra latency, preloaded
             let cachedAccount = findCachedData(message.ownerId);
-
-            if (!cachedAccount) {
-                cachedAccount = await fetchUser(message.ownerId);
-
-                // Update cache
-                cachedAccountData.push(cachedAccount);
-            }
 
             // Read from cache already, proceed
             tempFinalizedMessages.push({
@@ -90,6 +120,7 @@
                 profileData: cachedAccount,
             });
 
+            // As mentioned above, no latency means it WILL work 100%, div will be visible
             generateContentLinks(message.messageId, message.content);
 
             checkLoadingDone();
@@ -124,7 +155,7 @@
             ({ communityMessages }) => {
                 $targetCommunityMessages.push(...communityMessages);
 
-                loadMessages();
+                loadMessageAuthors();
 
                 isLoadingMore = false;
             }
@@ -165,7 +196,7 @@
                 $targetCommunityMessages
             );
 
-            loadMessages();
+            loadMessageAuthors();
         });
     }
 
@@ -192,7 +223,7 @@
                         $replyingToId = undefined;
                     }
 
-                    loadMessages();
+                    loadMessageAuthors();
 
                     break;
                 }
@@ -319,7 +350,7 @@
     onMount(() => {
         // Reload listeners and messages
         checkChatRequest();
-        loadMessages();
+        loadMessageAuthors();
         attachChatRequestListener();
         attachNewMessageListener();
         attachDeletedMessageListener();

@@ -8,7 +8,7 @@
     } from 'stores/communities';
     import { onDestroy, onMount } from 'svelte';
     import type { Unsubscriber } from 'svelte/store';
-    import { fade, fly } from 'svelte/transition';
+    import { fade } from 'svelte/transition';
 
     let unsubscribe: Unsubscriber;
 
@@ -50,7 +50,7 @@
     });
 </script>
 
-<div id="blur" class="send-container" in:fly={{ y: 150, duration: 500 }}>
+<div id="blur" class="send-container" in:fade={{ duration: 200 }}>
     {#if $replyingTo}
         <div class="reply-container" in:fade={{ duration: 300 }}>
             <Abort callback={abortReply} />

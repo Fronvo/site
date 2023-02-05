@@ -24,8 +24,7 @@
             $userData.profileId != $ourProfileData.profileId
         ) {
             await loadProfilePanel();
-
-            $targetProfile = undefined;
+            $targetProfile = $ourProfileData.profileId;
         } else {
             switchPanel(PanelTypes.Profile);
         }

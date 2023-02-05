@@ -103,7 +103,12 @@ async function loadTargetProfile(targetProfile?: string): Promise<void> {
     }
 
     setUserData(data);
-    userPosts.set(!guestMode && (await fetchPosts(data.profileId)));
+
+    if (!guestMode && !data.isPrivate) {
+        userPosts.set(!guestMode && (await fetchPosts(data.profileId)));
+    } else {
+        userPosts.set([]);
+    }
 }
 
 async function loadProfileCommunity(): Promise<void> {

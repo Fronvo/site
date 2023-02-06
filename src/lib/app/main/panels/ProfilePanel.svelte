@@ -2,7 +2,7 @@
     import { goto } from '$app/navigation';
     import ProfileInfo from '$lib/app/main/panels/profile/ProfileInfo.svelte';
     import ProfilePosts from '$lib/app/main/panels/profile/ProfilePosts.svelte';
-    import { loginSucceeded } from 'stores/main';
+    import { cachedAccountData, loginSucceeded } from 'stores/main';
     import {
         ourProfileData,
         profileLoadingFinished,
@@ -30,7 +30,7 @@
                     replaceState: true,
                 });
             } else {
-                await loadProfilePanel($targetProfile);
+                await loadProfilePanel($cachedAccountData, $targetProfile);
             }
         });
     });

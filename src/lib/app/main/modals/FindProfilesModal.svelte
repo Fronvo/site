@@ -2,11 +2,17 @@
     import Center from '$lib/app/Center.svelte';
     import type { FronvoAccount } from 'interfaces/all';
     import { dataSaver, socket } from 'stores/all';
+    import { cachedAccountData } from 'stores/main';
     import { onMount } from 'svelte';
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
     import type { ModalData } from 'types/main';
-    import { dismissModal, setProgressBar } from 'utilities/main';
+    import {
+        dismissModal,
+        fetchUser,
+        findCachedAccount,
+        setProgressBar,
+    } from 'utilities/main';
     import { loadProfilePanel } from 'utilities/profile';
     import ModalTemplate from '../ModalTemplate.svelte';
 
@@ -64,33 +70,51 @@
         findResults = [];
 
         // Should contain some id, none found otherwise
-        if (targetIds.length > 0) {
-            for (const idIndex in targetIds) {
-                socket.emit(
-                    'fetchProfileData',
-                    { profileId: targetIds[idIndex] },
-                    ({ profileData }) => {
-                        findResults.push(profileData);
-
-                        // Finish loading if we're at the last id
-                        if (
-                            findResults.length == targetIds.length ||
-                            targetIds.length == 1
-                        ) {
-                            loadingFinished = true;
-                        }
-                    }
-                );
-            }
-        } else {
+        if (targetIds.length == 0) {
             loadingFinished = true;
+            return;
+        }
+
+        for (const idIndex in targetIds) {
+            const targetUser = findCachedAccount(
+                targetIds[idIndex],
+                $cachedAccountData
+            );
+
+            if (targetUser) {
+                findResults.push(targetUser);
+
+                checkLoadingDone();
+            } else {
+                // Not cached, fetch
+                fetchUser(targetIds[idIndex]).then((user) => {
+                    findResults.push(user);
+
+                    // Update cache
+                    $cachedAccountData.push(user);
+
+                    checkLoadingDone();
+                });
+            }
+        }
+
+        function checkLoadingDone(): void {
+            if (
+                findResults.length == targetIds.length ||
+                targetIds.length == 1
+            ) {
+                loadingFinished = true;
+            }
         }
     }
 
     async function viewProfile(accountIndex: number): Promise<void> {
         dismissModal();
 
-        await loadProfilePanel(findResults[accountIndex].profileId);
+        await loadProfilePanel(
+            $cachedAccountData,
+            findResults[accountIndex].profileId
+        );
     }
 
     onMount(() => {

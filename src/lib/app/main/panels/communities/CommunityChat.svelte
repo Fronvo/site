@@ -8,17 +8,20 @@
     import { dataSaver, socket } from 'stores/all';
     import { loadCommunitiesPanel } from 'utilities/communities';
     import {
-        cachedAccountData,
         chatRequestAccepted,
         joinedCommunity,
-        queuedAccounts,
         replyingTo,
         replyingToId,
         sendContent,
         targetCommunityMessages,
         targetSendHeight,
     } from 'stores/communities';
-    import { modalVisible, targetConfirmCommunityMessage } from 'stores/main';
+    import {
+        cachedAccountData,
+        modalVisible,
+        queuedAccounts,
+        targetConfirmCommunityMessage,
+    } from 'stores/main';
     import { onDestroy, onMount } from 'svelte';
     import Time from 'svelte-time';
     import type { Unsubscriber } from 'svelte/store';

@@ -5,7 +5,11 @@
         accountRegisterTab,
         accountResetPasswordTab,
     } from 'stores/account';
-    import { currentPanelId, loginSucceeded } from 'stores/main';
+    import {
+        cachedAccountData,
+        currentPanelId,
+        loginSucceeded,
+    } from 'stores/main';
     import { socket } from 'stores/all';
     import { onMount, onDestroy } from 'svelte';
     import { fade, scale } from 'svelte/transition';
@@ -87,7 +91,10 @@
 
                         // Profile panel while in guest mode, reload
                         if ($currentPanelId == PanelTypes.Profile) {
-                            loadProfilePanel($targetProfile);
+                            loadProfilePanel(
+                                $cachedAccountData,
+                                $targetProfile
+                            );
                         }
 
                         dismissModal();

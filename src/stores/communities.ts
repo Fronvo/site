@@ -1,8 +1,4 @@
-import type {
-    Community,
-    CommunityMessage,
-    FronvoAccount,
-} from 'interfaces/all';
+import type { Community, CommunityMessage } from 'interfaces/all';
 import { writable, type Writable } from 'svelte/store';
 
 export const officialCommunity: Writable<Community> = writable();
@@ -17,5 +13,3 @@ export const communityLoadingFinished: Writable<boolean> = writable(false);
 export const chatRequestAccepted: Writable<boolean> = writable(false);
 export const replyingTo: Writable<string> = writable();
 export const replyingToId: Writable<string> = writable();
-export const queuedAccounts: Writable<string[]> = writable([]);
-export const cachedAccountData: Writable<FronvoAccount[]> = writable([]);

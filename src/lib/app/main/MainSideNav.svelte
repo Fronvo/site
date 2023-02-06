@@ -7,7 +7,11 @@
     import { fly } from 'svelte/transition';
     import { showModal, switchPanel } from 'utilities/main';
     import { ModalTypes, PanelTypes } from 'types/main';
-    import { currentPanelId, loginSucceeded } from 'stores/main';
+    import {
+        cachedAccountData,
+        currentPanelId,
+        loginSucceeded,
+    } from 'stores/main';
     import { ourProfileData, targetProfile, userData } from 'stores/profile';
     import { loadProfilePanel } from 'utilities/profile';
     import { goto } from '$app/navigation';
@@ -23,7 +27,7 @@
             $currentPanelId == PanelTypes.Profile &&
             $userData.profileId != $ourProfileData.profileId
         ) {
-            await loadProfilePanel();
+            await loadProfilePanel($cachedAccountData);
             $targetProfile = $ourProfileData.profileId;
         } else {
             switchPanel(PanelTypes.Profile);

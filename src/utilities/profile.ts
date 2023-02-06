@@ -11,9 +11,15 @@ import {
 } from 'stores/profile';
 import { PanelTypes } from 'types/main';
 import { getKey } from './global';
-import { fetchPosts, fetchUser, setProgressBar } from './main';
+import {
+    fetchPosts,
+    fetchUser,
+    findCachedAccount,
+    setProgressBar,
+} from './main';
 
 let ourData: FronvoAccount;
+let ourId: string;
 let userDataGlobal: FronvoAccount;
 let isLoading = false;
 let lastTarget: string;
@@ -24,7 +30,10 @@ function setUserData(data: FronvoAccount): void {
     userDataGlobal = data;
 }
 
-export async function loadProfilePanel(targetProfile?: string): Promise<void> {
+export async function loadProfilePanel(
+    cachedData: FronvoAccount[],
+    targetProfile?: string
+): Promise<void> {
     setProgressBar(true);
 
     if (isLoading && targetProfile == lastTarget) return;
@@ -39,18 +48,22 @@ export async function loadProfilePanel(targetProfile?: string): Promise<void> {
     userPosts.set(undefined);
     userCommunity.set(undefined);
 
-    // For follow relations and more
-    !guestMode && (await loadOurData());
+    if (!ourId) {
+        // For follow relations and more
+        !guestMode && (await loadOurData());
+    }
 
     if (targetProfile && targetProfile != ourData?.profileId) {
-        await loadTargetProfile(targetProfile);
+        await loadTargetProfile(cachedData, targetProfile);
     } else {
         await loadProfile();
     }
 
     if (userDataGlobal.isInCommunity) {
-        await loadProfileCommunity();
+        loadProfileCommunity();
     }
+
+    await loadProfilePosts();
 
     profileLoadingFinished.set(true);
     isLoading = false;
@@ -63,6 +76,8 @@ export async function loadOurData(): Promise<FronvoAccount> {
 
     ourProfileData.set(ourData);
     userDataGlobal = ourData;
+
+    ourId = ourData.profileId;
 
     return ourData;
 }
@@ -77,13 +92,22 @@ async function loadProfile(): Promise<void> {
     });
 }
 
-async function loadTargetProfile(targetProfile?: string): Promise<void> {
+async function loadTargetProfile(
+    cachedData: FronvoAccount[],
+    targetProfile?: string
+): Promise<void> {
     // Redirect now
     goto(`/profile/${targetProfile}`, {
         replaceState: true,
     });
 
-    const data = await fetchUser(targetProfile);
+    // Recover from cache
+    let data = findCachedAccount(targetProfile, cachedData);
+
+    // Or fetch manually
+    if (!data) {
+        data = await fetchUser(targetProfile);
+    }
 
     // Abort if it doesnt exist
     if (!data) {
@@ -103,9 +127,21 @@ async function loadTargetProfile(targetProfile?: string): Promise<void> {
     }
 
     setUserData(data);
+}
 
-    if (!guestMode && !data.isFollower) {
-        userPosts.set(!guestMode && (await fetchPosts(data.profileId)));
+async function loadProfilePosts(): Promise<void> {
+    // Not in guest mode
+    // Must either be our follower as a private account or just a public one
+    // Or just ourselves
+    if (
+        !guestMode &&
+        (userDataGlobal.isFollower ||
+            !userDataGlobal.isPrivate ||
+            userDataGlobal.isSelf)
+    ) {
+        userPosts.set(
+            !guestMode && (await fetchPosts(userDataGlobal.profileId))
+        );
     } else {
         userPosts.set([]);
     }
@@ -123,4 +159,9 @@ async function loadProfileCommunity(): Promise<void> {
             }
         );
     });
+}
+
+export async function resetForLogout(): Promise<void> {
+    ourData = undefined;
+    ourId = undefined;
 }

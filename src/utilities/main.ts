@@ -173,3 +173,16 @@ export function setTitle(title: string): void {
 export function setProgressBar(state: boolean): void {
     progressBarVisible.set(state);
 }
+
+export function findCachedAccount(
+    profileId: string,
+    cachedData: FronvoAccount[]
+): FronvoAccount | undefined {
+    for (const accountIndex in cachedData) {
+        const targetAccount = cachedData[accountIndex];
+
+        if (targetAccount.profileId == profileId) {
+            return targetAccount;
+        }
+    }
+}

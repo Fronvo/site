@@ -2,10 +2,11 @@
     import type { FronvoAccount } from 'interfaces/all';
     import { joinedCommunity } from 'stores/communities';
     import { ModalTypes, type ModalData } from 'types/main';
-    import { targetCommunityMember } from 'stores/main';
+    import { cachedAccountData, targetCommunityMember } from 'stores/main';
     import {
         dismissModal,
         fetchUser,
+        findCachedAccount,
         setProgressBar,
         showModal,
     } from 'utilities/main';
@@ -33,22 +34,44 @@
 
         // Fetch all community members, notify UI once finished
         for (const memberIndex in memberInfoCopy) {
-            fetchUser(memberInfoCopy[memberIndex]).then((user) => {
-                memberInfo.push(user);
+            const targetUser = findCachedAccount(
+                memberInfoCopy[memberIndex],
+                $cachedAccountData
+            );
 
-                // Finish loading
-                if (memberInfo.length == memberInfoCopy.length) {
-                    loadingFinished = true;
-                    setProgressBar(false);
-                }
-            });
+            if (targetUser) {
+                memberInfo.push(targetUser);
+
+                checkLoadingFinished();
+            } else {
+                // Not cached, fetch
+                fetchUser(memberInfoCopy[memberIndex]).then((user) => {
+                    memberInfo.push(user);
+
+                    // Update cache
+                    $cachedAccountData.push(user);
+
+                    checkLoadingFinished();
+                });
+            }
+        }
+
+        function checkLoadingFinished(): void {
+            // Finish loading
+            if (memberInfo.length == memberInfoCopy.length) {
+                loadingFinished = true;
+                setProgressBar(false);
+            }
         }
     }
 
     async function viewProfile(accountIndex: number): Promise<void> {
         dismissModal();
 
-        await loadProfilePanel(memberInfo[accountIndex].profileId);
+        await loadProfilePanel(
+            $cachedAccountData,
+            memberInfo[accountIndex].profileId
+        );
     }
 
     function editProfile(accountIndex: number): void {

@@ -2,17 +2,22 @@
     import { socket } from 'stores/all';
     import { removeKey } from 'utilities/global';
     import { homePosts } from 'stores/home';
-    import { loginSucceeded } from 'stores/main';
+    import {
+        cachedAccountData,
+        loginSucceeded,
+        queuedAccounts,
+    } from 'stores/main';
     import { setProgressBar, switchPanel } from 'utilities/main';
     import { PanelTypes } from 'types/main';
     import { goto } from '$app/navigation';
     import { profileLoadingFinished, targetProfile } from 'stores/profile';
     import { communityLoadingFinished } from 'stores/communities';
+    import { resetForLogout } from 'utilities/profile';
 
     function logout(): void {
         setProgressBar(true);
 
-        socket.emit('logout', ({ err }) => {
+        socket.emit('logout', async ({ err }) => {
             if (err) return;
 
             removeKey('token');
@@ -25,6 +30,11 @@
 
             $communityLoadingFinished = false;
             $loginSucceeded = false;
+
+            // Reset cache
+            $queuedAccounts = [];
+            $cachedAccountData = [];
+            await resetForLogout();
 
             goto('/home', {
                 replaceState: true,

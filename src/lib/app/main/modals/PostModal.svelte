@@ -3,8 +3,8 @@
     import type { AccountPost, FronvoAccount } from 'interfaces/all';
     import { dismissModal } from 'utilities/main';
     import {
+        cachedAccountData,
         currentPanelId,
-        loginSucceeded,
         postModalForHome,
         postModalInfo,
     } from 'stores/main';
@@ -56,7 +56,8 @@
     const data: ModalData = {
         titlePreSpan: getUserData().username,
         titleIcon: getUserData().avatar || '/svgs/profile/avatar.svg',
-        titleListener: () => loadProfilePanel(getUserData().profileId),
+        titleListener: () =>
+            loadProfilePanel($cachedAccountData, getUserData().profileId),
         titleListenerCondition: () => {
             // Only visit if not in profile panel, profile posts ARE IN THE SAME PROFILE
             return $currentPanelId != PanelTypes.Profile;

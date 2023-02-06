@@ -99,3 +99,7 @@ export const dropdownPosition = writable([0, 0]);
 
 // Loading
 export const progressBarVisible = writable(false);
+
+// Caching
+export const queuedAccounts: Writable<string[]> = writable([]);
+export const cachedAccountData: Writable<FronvoAccount[]> = writable([]);

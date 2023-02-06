@@ -1,6 +1,6 @@
 <script lang="ts">
     import { joinedCommunity } from 'stores/communities';
-    import { targetCommunityMember } from 'stores/main';
+    import { cachedAccountData, targetCommunityMember } from 'stores/main';
     import { dataSaver, socket } from 'stores/all';
     import { dismissModal, setProgressBar } from 'utilities/main';
     import { loadProfilePanel } from 'utilities/profile';
@@ -11,7 +11,10 @@
     async function viewProfile(): Promise<void> {
         dismissModal();
 
-        await loadProfilePanel($targetCommunityMember.profileId);
+        await loadProfilePanel(
+            $cachedAccountData,
+            $targetCommunityMember.profileId
+        );
     }
 
     function hasChatPerms(): boolean {

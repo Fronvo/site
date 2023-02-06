@@ -2,10 +2,19 @@
     import Center from '$lib/app/Center.svelte';
     import type { FronvoAccount } from 'interfaces/all';
     import { dataSaver } from 'stores/all';
-    import { followModalForFollowing, followModalInfo } from 'stores/main';
+    import {
+        cachedAccountData,
+        followModalForFollowing,
+        followModalInfo,
+    } from 'stores/main';
     import { onMount } from 'svelte';
     import type { ModalData } from 'types/main';
-    import { dismissModal, fetchUser, setProgressBar } from 'utilities/main';
+    import {
+        dismissModal,
+        fetchUser,
+        findCachedAccount,
+        setProgressBar,
+    } from 'utilities/main';
     import { loadProfilePanel } from 'utilities/profile';
     import ModalTemplate from '../ModalTemplate.svelte';
 
@@ -31,22 +40,44 @@
 
         // Some followed users exist, fetch them
         for (const followIndex in followInfoCopy) {
-            fetchUser(followInfoCopy[followIndex]).then((user) => {
-                followInfo.push(user);
+            const targetUser = findCachedAccount(
+                followInfoCopy[followIndex],
+                $cachedAccountData
+            );
 
-                // Finish loading
-                if (followInfo.length == followInfoCopy.length) {
-                    setProgressBar(false);
-                    loadingFinished = true;
-                }
-            });
+            if (targetUser) {
+                followInfo.push(targetUser);
+
+                checkLoadingDone();
+            } else {
+                // Not cached, fetch
+                fetchUser(followInfoCopy[followIndex]).then((user) => {
+                    followInfo.push(user);
+
+                    // Update cache
+                    $cachedAccountData.push(user);
+
+                    checkLoadingDone();
+                });
+            }
+        }
+
+        function checkLoadingDone(): void {
+            // Finish loading
+            if (followInfo.length == followInfoCopy.length) {
+                setProgressBar(false);
+                loadingFinished = true;
+            }
         }
     }
 
     async function viewProfile(accountIndex: number): Promise<void> {
         dismissModal();
 
-        await loadProfilePanel(followInfo[accountIndex].profileId);
+        await loadProfilePanel(
+            $cachedAccountData,
+            followInfo[accountIndex].profileId
+        );
     }
 
     onMount(async () => {

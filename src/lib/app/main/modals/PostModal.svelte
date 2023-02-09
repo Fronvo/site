@@ -116,12 +116,12 @@
     #title {
         margin: 0;
         text-align: center;
-        font-size: 2.4rem;
+        font-size: 2.1rem;
     }
 
     #content {
         margin: 0;
-        font-size: 1.9rem;
+        font-size: 1.7rem;
         color: var(--profile_info_color);
         white-space: pre-wrap;
         text-align: center;
@@ -152,7 +152,7 @@
     }
 
     #creation-date {
-        font-size: 1.3rem;
+        font-size: 1.2rem;
         margin: 0;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -164,11 +164,11 @@
 
     @media screen and (max-width: 720px) {
         #title {
-            font-size: 2.2rem;
+            font-size: 1.9rem;
         }
 
         #content {
-            font-size: 1.7rem;
+            font-size: 1.5rem;
         }
 
         #attachment {
@@ -176,17 +176,17 @@
         }
 
         #creation-date {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
     }
 
     @media screen and (max-width: 520px) {
         #title {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
         }
 
         #content {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
         }
 
         #creation-date {

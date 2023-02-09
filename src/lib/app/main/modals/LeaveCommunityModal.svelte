@@ -62,7 +62,7 @@
 
 <ModalTemplate {data}>
     {#if $joinedCommunity}
-        <h1 id="leave-community">
+        <h1 class="modal-header">
             {isOwner() ? 'Delete' : 'Leave'} the
             <span>{$joinedCommunity.name}</span> community?
         </h1>
@@ -70,30 +70,4 @@
 </ModalTemplate>
 
 <style>
-    h1 {
-        font-size: 3rem;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        text-align: center;
-    }
-
-    h1 span {
-        color: var(--profile_info_color);
-    }
-
-    @media screen and (max-width: 720px) {
-        h1 {
-            font-size: 2rem;
-        }
-    }
-
-    @media screen and (max-width: 520px) {
-        h1 {
-            font-size: 1.7rem;
-        }
-    }
 </style>

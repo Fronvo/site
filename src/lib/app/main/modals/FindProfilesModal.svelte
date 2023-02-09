@@ -18,7 +18,6 @@
 
     let searchValue: Writable<string> = writable('');
     let findResults: FronvoAccount[] = [];
-    let errorMessage: string;
     let loadingFinished = false;
 
     searchValue.subscribe((newSearch) => {
@@ -135,19 +134,20 @@
 </script>
 
 <ModalTemplate {data}>
-    {#if errorMessage}
-        <h1 id="error-header" in:fade={{ duration: 500 }}>
-            {errorMessage}
-        </h1>
-    {/if}
-
     <!-- svelte-ignore a11y-autofocus -->
-    <input autofocus bind:value={$searchValue} maxlength={30} />
+    <input
+        class="modal-input"
+        autofocus
+        bind:value={$searchValue}
+        maxlength={30}
+    />
 
     {#if loadingFinished}
         {#if findResults.length == 0}
             <Center absolute>
-                <h1 id="no-results" in:fade={{ duration: 250 }}>No results</h1>
+                <h1 class="modal-header" in:fade={{ duration: 250 }}>
+                    No results
+                </h1>
             </Center>
         {:else}
             <div class="find-items-container" in:fade={{ duration: 250 }}>
@@ -185,23 +185,6 @@
 </ModalTemplate>
 
 <style>
-    input {
-        font-size: 2rem;
-        margin: 0 5px 20px 5px;
-        width: 95%;
-        max-width: max-content;
-        background: var(--modal_input_bg_color);
-    }
-
-    .find-items-container {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        flex-wrap: wrap;
-        overflow-y: auto;
-        flex: 1;
-    }
-
     .find-items-container {
         display: flex;
         flex-direction: row;
@@ -215,22 +198,23 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        background: var(--accent_bg_color);
-        box-shadow: 0 0 5px var(--accent_shadow_color);
-        width: 300px;
+        background: transparent;
+        box-shadow: 0 0 10px var(--accent_shadow_color);
+        width: 200px;
         margin-top: 15px;
         margin-bottom: 15px;
         margin-right: 10px;
         margin-left: 10px;
-        height: min-content;
-        border-radius: 10px;
+        height: 235px;
+        overflow: hidden;
+        border-radius: 5px;
         padding: 10px;
-        transition: 400ms background;
+        transition: 200ms;
         cursor: pointer;
     }
 
     .find-items-container div:hover {
-        background-position: right center;
+        opacity: 0.8;
     }
 
     .find-items-container div h1 {
@@ -242,7 +226,11 @@
     }
 
     .find-items-container div #profileId {
-        font-size: 2.5rem;
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        font-size: 1.9rem;
         color: var(--profile_info_color);
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -254,7 +242,7 @@
 
     .find-items-container div #following,
     .find-items-container div #followers {
-        font-size: 2.1rem;
+        font-size: 1.7rem;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -270,26 +258,12 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        width: 128px;
-        height: 128px;
+        width: 100px;
+        height: 100px;
         border-radius: 10px;
     }
 
-    #no-results {
-        font-size: 2.3rem;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
-
     @media screen and (max-width: 1100px) {
-        input {
-            font-size: 1.7rem;
-        }
-
         .find-items-container {
             flex-direction: column;
             justify-content: start;
@@ -298,6 +272,7 @@
 
         .find-items-container div {
             width: 300px;
+            height: 75px;
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -305,6 +280,14 @@
             margin: 10px;
             margin-bottom: 5px;
             cursor: default;
+        }
+
+        .find-items-container div:hover {
+            opacity: 1;
+        }
+
+        .find-items-container div:nth-child(1) {
+            margin-left: 10px;
         }
 
         .find-items-container div #profileId {
@@ -322,34 +305,20 @@
             height: 64px;
             margin-right: 5px;
         }
-
-        #no-results {
-            font-size: 2rem;
-        }
     }
 
     @media screen and (max-width: 520px) {
-        input {
-            font-size: 1.4rem;
-        }
-
         .find-items-container div {
-            width: 280px;
-            margin-bottom: 5px;
-            padding: 5px;
+            height: 65px;
         }
 
         .find-items-container div #profileId {
-            font-size: 1.7rem;
+            font-size: 1.5rem;
         }
 
-        .find-items-container div #following,
-        .find-items-container div #followers {
-            font-size: 1.7rem;
-        }
-
-        #no-results {
-            font-size: 1.7rem;
+        .find-items-container div #avatar {
+            width: 58px;
+            height: 58px;
         }
     }
 </style>

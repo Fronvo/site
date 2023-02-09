@@ -154,10 +154,76 @@
         background: none;
     }
 
-    /* Not needed on desktop with mobile width */
+    /* Checkboxes */
+    :global(.checkbox) {
+        margin-left: 15px;
+    }
+
+    /* Modal-related */
+    :global(.modal-header) {
+        color: var(--profile_info_color);
+        margin: 0;
+        font-size: var(--modal_header_size);
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    :global(.modal-error-header) {
+        color: red;
+        margin: 10px;
+        width: 100%;
+        text-align: center;
+    }
+
+    :global(.modal-input) {
+        font-size: var(--modal_input_size);
+        margin: 0 5px 10px 5px;
+        width: 400px;
+        text-align: center;
+        background: var(--modal_input_bg_color);
+    }
+
+    :global(.modal-button) {
+        font-size: var(--modal_button_size);
+        width: max-content;
+    }
+
     @media screen and (max-width: 720px) {
+        /* Not needed on desktop with mobile width */
         :global(::-webkit-scrollbar) {
             width: 0px;
+        }
+
+        :global(.modal-header) {
+            font-size: var(--modal_header_size_720);
+        }
+
+        :global(.modal-input) {
+            font-size: var(--modal_input_size_720);
+            width: 350px;
+        }
+
+        :global(.modal-button) {
+            font-size: var(--modal_button_size_720);
+        }
+    }
+
+    @media screen and (max-width: 520px) {
+        :global(.modal-header) {
+            font-size: var(--modal_header_size_520);
+        }
+
+        :global(.modal-input) {
+            font-size: var(--modal_input_size_520);
+            width: 250px;
+        }
+
+        :global(.modal-button) {
+            font-size: var(--modal_button_size_520);
         }
     }
 </style>

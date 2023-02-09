@@ -33,23 +33,12 @@
 </script>
 
 <ModalTemplate {data}>
-    <h1 id="question">Delete this message?</h1>
+    <h1 class="modal-header">Delete this message?</h1>
 
     <h1 id="content">{$targetConfirmCommunityMessage.content}</h1>
 </ModalTemplate>
 
 <style>
-    #question {
-        font-size: 2.5rem;
-        margin: 0;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
-
     #content {
         color: var(--profile_info_color);
         font-size: 1.8rem;
@@ -58,20 +47,12 @@
     }
 
     @media screen and (max-width: 720px) {
-        #question {
-            font-size: 2.2rem;
-        }
-
         #content {
             font-size: 1.6rem;
         }
     }
 
     @media screen and (max-width: 520px) {
-        #question {
-            font-size: 1.9rem;
-        }
-
         #content {
             font-size: 1.3rem;
         }

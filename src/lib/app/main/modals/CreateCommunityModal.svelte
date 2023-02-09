@@ -108,17 +108,22 @@
 
 <ModalTemplate {data}>
     {#if errorMessage}
-        <h1 id="error-header" in:fade={{ duration: 500 }}>
+        <h1 class="modal-error-header modal-header" in:fade={{ duration: 500 }}>
             {errorMessage}
         </h1>
     {/if}
 
-    <h1 id="input-header">Name</h1>
+    <h1 class="modal-header">Name</h1>
     <!-- svelte-ignore a11y-autofocus -->
-    <input autofocus bind:value={name} maxlength={15} />
+    <input class="modal-input" autofocus bind:value={name} maxlength={15} />
 
-    <h1 id="input-header">Description</h1>
-    <textarea bind:value={description} maxlength={50} rows={4} />
+    <h1 class="modal-header">Description</h1>
+    <textarea
+        class="modal-input"
+        bind:value={description}
+        maxlength={50}
+        rows={4}
+    />
 
     <!-- Just for attachment checking, no preview -->
     <img
@@ -128,71 +133,12 @@
         draggable={false}
     />
 
-    <h1 id="input-header" class="icon-info">H</h1>
-    <input bind:value={$icon} maxlength={256} />
+    <h1 class="modal-header icon-info">H</h1>
+    <input class="modal-input" bind:value={$icon} maxlength={256} />
 </ModalTemplate>
 
 <style>
-    #error-header {
-        color: red;
-        font-size: 2rem;
-        margin: 0;
-        width: 100%;
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
-    #input-header {
-        color: var(--profile_info_color);
-        margin: 0;
-        font-size: 2.2rem;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
-
-    input,
-    textarea {
-        font-size: 2rem;
-        margin: 0 5px 20px 5px;
-        width: 95%;
-        background: var(--modal_input_bg_color);
-    }
-
     #icon-preview {
         display: none;
-    }
-
-    @media screen and (max-width: 720px) {
-        #error-header {
-            font-size: 1.7rem;
-        }
-
-        #input-header {
-            font-size: 1.7rem;
-        }
-
-        input,
-        textarea {
-            font-size: 1.7rem;
-        }
-    }
-
-    @media screen and (max-width: 520px) {
-        #error-header {
-            font-size: 1.4rem;
-        }
-
-        #input-header {
-            font-size: 1.4rem;
-        }
-
-        input,
-        textarea {
-            font-size: 1.4rem;
-        }
     }
 </style>

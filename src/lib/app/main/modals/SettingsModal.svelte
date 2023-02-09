@@ -88,15 +88,15 @@
 
 <ModalTemplate {data}>
     <div>
-        <h1>Max online minutes</h1>
-        <input bind:value={maxOnlineTime} maxlength={4} />
+        <h1 class="modal-header">Max online minutes</h1>
+        <input class="modal-input" bind:value={maxOnlineTime} maxlength={4} />
     </div>
 
     <div class="single-line">
-        <h1>Dark theme</h1>
+        <h1 class="modal-header">Dark theme</h1>
         <Checkbox
             bind:checked={tempDarkTheme}
-            class="private-checkbox"
+            class="checkbox"
             size="2.7rem"
             primaryColor="var(--modal_checkbox_primary_color)"
             secondaryColor="var(--modal_checkbox_secondary_color)"
@@ -104,10 +104,10 @@
     </div>
 
     <div class="single-line">
-        <h1>Data saver</h1>
+        <h1 class="modal-header">Data saver</h1>
         <Checkbox
             bind:checked={tempDataSaver}
-            class="private-checkbox"
+            class="checkbox"
             size="2.7rem"
             primaryColor="var(--modal_checkbox_primary_color)"
             secondaryColor="var(--modal_checkbox_secondary_color)"
@@ -116,10 +116,10 @@
 
     {#if new Date().getMonth() == 11}
         <div class="single-line">
-            <h1>Christmas mode</h1>
+            <h1 class="modal-header">Christmas mode</h1>
             <Checkbox
                 bind:checked={tempXmasMode}
-                class="private-checkbox"
+                class="checkbox"
                 size="2.7rem"
                 primaryColor="var(--modal_checkbox_primary_color)"
                 secondaryColor="var(--modal_checkbox_secondary_color)"
@@ -142,53 +142,16 @@
         flex-direction: row;
     }
 
-    input {
-        text-align: center;
-        font-size: 2rem;
-        margin: 0 5px 20px 5px;
-        width: 18%;
-        min-width: 100px;
-        background: var(--modal_input_bg_color);
-    }
-
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
         -webkit-appearance: none;
     }
 
     div h1 {
-        margin: 0;
         margin-right: 15px;
-        font-size: 2.4rem;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
     }
 
     .single-line h1 {
         margin-right: 0;
-    }
-
-    @media screen and (max-width: 720px) {
-        input {
-            font-size: 1.7rem;
-        }
-
-        div h1 {
-            font-size: 2rem;
-        }
-    }
-
-    @media screen and (max-width: 520px) {
-        input {
-            font-size: 1.4rem;
-        }
-
-        div h1 {
-            font-size: 1.6rem;
-        }
     }
 </style>

@@ -29,6 +29,8 @@ svg {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    width: var(--svg_size);
+    height: var(--svg_size);
 }
 
 svg:hover {

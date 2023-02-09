@@ -13,7 +13,6 @@
 
     let searchValue: Writable<string> = writable('');
     let findResults: Community[] = [];
-    let errorMessage: string;
     let loadingFinished = false;
 
     searchValue.subscribe((newSearch) => {
@@ -114,22 +113,23 @@
 </script>
 
 <ModalTemplate {data}>
-    {#if errorMessage}
-        <h1 id="error-header" in:fade={{ duration: 500 }}>
-            {errorMessage}
-        </h1>
-    {/if}
-
     <!-- svelte-ignore a11y-autofocus -->
-    <input autofocus bind:value={$searchValue} maxlength={30} />
+    <input
+        class="modal-input"
+        autofocus
+        bind:value={$searchValue}
+        maxlength={30}
+    />
 
     {#if loadingFinished}
         {#if findResults.length == 0}
             <Center absolute>
-                <h1 id="no-results" in:fade={{ duration: 300 }}>No results</h1>
+                <h1 class="modal-header" in:fade={{ duration: 250 }}>
+                    No results
+                </h1>
             </Center>
         {:else}
-            <div class="find-items-container" in:fade={{ duration: 500 }}>
+            <div class="find-items-container" in:fade={{ duration: 250 }}>
                 {#each findResults as { name, description, members, icon }, i}
                     <div on:click={() => viewCommunity(i)}>
                         <img
@@ -154,14 +154,6 @@
 </ModalTemplate>
 
 <style>
-    input {
-        font-size: 2rem;
-        margin: 0 5px 20px 5px;
-        width: 95%;
-        max-width: max-content;
-        background: var(--modal_input_bg_color);
-    }
-
     .find-items-container {
         display: flex;
         flex-direction: row;
@@ -241,21 +233,7 @@
         border-radius: 10px;
     }
 
-    #no-results {
-        font-size: 2.3rem;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
-
     @media screen and (max-width: 720px) {
-        input {
-            font-size: 1.7rem;
-        }
-
         .find-items-container {
             flex-direction: column;
             justify-content: start;
@@ -291,17 +269,9 @@
             height: 64px;
             margin-right: 5px;
         }
-
-        #no-results {
-            font-size: 2rem;
-        }
     }
 
     @media screen and (max-width: 520px) {
-        input {
-            font-size: 1.4rem;
-        }
-
         .find-items-container div {
             width: 280px;
             margin-right: 0;
@@ -314,10 +284,6 @@
         }
 
         .find-items-container div #members {
-            font-size: 1.7rem;
-        }
-
-        #no-results {
             font-size: 1.7rem;
         }
     }

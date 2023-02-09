@@ -47,6 +47,7 @@
 
     const data: ModalData = {
         title: 'Edit Member',
+        noSeperator: true,
 
         actions: [
             {
@@ -72,21 +73,16 @@
         <h1 id="bio">{$targetCommunityMember.bio}</h1>
     {/if}
 
-    <button on:click={viewProfile}>View profile</button>
+    <button class="modal-button" on:click={viewProfile}>View profile</button>
 
     <br />
 
-    <button on:click={updateChatPerms}
+    <button class="modal-button" on:click={updateChatPerms}
         >{hasChatPerms() ? 'Revoke' : 'Give'} chat permission</button
     >
 </ModalTemplate>
 
 <style>
-    button {
-        font-size: 1.8rem;
-        width: max-content;
-    }
-
     #avatar {
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -94,13 +90,13 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        width: 128px;
-        height: 128px;
+        width: 100px;
+        height: 100px;
         border-radius: 10px;
     }
 
     #username {
-        font-size: 3rem;
+        font-size: 2.3rem;
         margin: 0;
         margin-right: 10px;
         margin-left: 10px;
@@ -109,10 +105,11 @@
     }
 
     #bio {
-        font-size: 1.7rem;
+        font-size: 1.4rem;
         margin: 0;
         margin-left: 10px;
         margin-right: 10px;
+        margin-bottom: 10px;
         color: var(--profile_info_color);
         text-align: center;
         white-space: pre-wrap;
@@ -123,40 +120,32 @@
     }
 
     @media screen and (max-width: 720px) {
-        button {
-            font-size: 1.6rem;
-        }
-
         #avatar {
-            width: 120px;
-            height: 120px;
+            width: 80px;
+            height: 80px;
         }
 
         #username {
-            font-size: 2.6rem;
+            font-size: 1.8rem;
         }
 
         #bio {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
         }
     }
 
     @media screen and (max-width: 520px) {
-        button {
-            font-size: 1.4rem;
-        }
-
         #avatar {
             width: 100px;
             height: 100px;
         }
 
         #username {
-            font-size: 2.1rem;
+            font-size: 1.5rem;
         }
 
         #bio {
-            font-size: 1.2rem;
+            font-size: 1rem;
         }
     }
 </style>

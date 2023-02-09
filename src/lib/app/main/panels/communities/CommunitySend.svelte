@@ -29,7 +29,7 @@
                 !newContent ||
                 (newContent.length < 40 && newContent.indexOf('\n') == -1)
             ) {
-                targetHeight = $replyingTo ? 70 : 60;
+                targetHeight = 50;
             } else {
                 targetHeight = Math.min(
                     contentInput.scrollHeight,
@@ -63,16 +63,16 @@
 
 <style>
     .send-container {
-        width: 50%;
-        min-width: 600px;
-        min-height: 65px;
+        width: 45%;
+        min-width: 400px;
+        background: var(--accent_bg_color);
+        box-shadow: 0 0 10px var(--accent_shadow_color);
         position: fixed;
-        bottom: 15px;
+        bottom: 10px;
+        border-radius: 10px;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        background: var(--accent_bg_color);
-        box-shadow: 0 0 10px var(--accent_shadow_color);
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -82,22 +82,22 @@
     }
 
     .send-container textarea {
-        background: transparent;
-        font-size: 2.1rem;
+        background: var(--accent_bg_color);
+        font-size: 1.5rem;
         color: var(--profile_info_color);
         overflow: auto;
     }
 
     .reply-container {
+        background: var(--accent_bg_color);
         display: flex;
         align-items: center;
     }
 
     .reply-container #reply-name {
-        font-size: 1.9rem;
+        font-size: 1.4rem;
         margin: 0;
-        padding: 10px;
-        padding-left: 5px;
+        padding: 5px;
     }
 
     .reply-container #reply-name span {

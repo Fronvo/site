@@ -45,10 +45,11 @@
         z-index: 1;
         background: var(--accent_bg_color);
     }
+
     .info-container #icon {
-        width: 64px;
-        height: 64px;
-        margin-right: 10px;
+        width: 55px;
+        height: 55px;
+        margin-right: 5px;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -60,7 +61,7 @@
 
     .info-container #name {
         margin: 0;
-        font-size: 2.7rem;
+        font-size: 2.2rem;
         color: var(--profile_info_color);
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -69,6 +70,10 @@
         -ms-user-select: none;
         user-select: none;
         margin-right: 10px;
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
     }
 
     @media screen and (max-width: 720px) {
@@ -83,7 +88,7 @@
         }
 
         .info-container #name {
-            font-size: 2.3rem;
+            font-size: 2rem;
         }
     }
 

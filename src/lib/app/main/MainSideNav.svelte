@@ -126,7 +126,7 @@
     #component h1 {
         margin: 0;
         margin-left: 5px;
-        font-size: 1.7rem;
+        font-size: 1.6rem;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;

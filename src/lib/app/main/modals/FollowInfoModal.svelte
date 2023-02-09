@@ -101,7 +101,7 @@
     {#if loadingFinished}
         {#if followInfo.length == 0}
             <Center absolute>
-                <h1 id="no-follow">
+                <h1 class="modal-header">
                     No {$followModalForFollowing
                         ? 'followed users'
                         : 'followers'}
@@ -156,22 +156,23 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        background: var(--accent_bg_color);
-        box-shadow: 0 0 5px var(--accent_shadow_color);
-        width: 300px;
+        background: transparent;
+        box-shadow: 0 0 10px var(--accent_shadow_color);
+        width: 200px;
         margin-top: 15px;
         margin-bottom: 15px;
         margin-right: 10px;
         margin-left: 10px;
-        height: min-content;
-        border-radius: 10px;
+        height: 235px;
+        overflow: hidden;
+        border-radius: 5px;
         padding: 10px;
-        transition: 400ms background;
+        transition: 200ms;
         cursor: pointer;
     }
 
     .following-items-container div:hover {
-        background-position: right center;
+        opacity: 0.8;
     }
 
     .following-items-container div h1 {
@@ -183,7 +184,11 @@
     }
 
     .following-items-container div #username {
-        font-size: 2.5rem;
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        font-size: 1.9rem;
         color: var(--profile_info_color);
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -195,7 +200,7 @@
 
     .following-items-container div #following,
     .following-items-container div #followers {
-        font-size: 2.1rem;
+        font-size: 1.7rem;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -211,19 +216,9 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        width: 128px;
-        height: 128px;
+        width: 100px;
+        height: 100px;
         border-radius: 10px;
-    }
-
-    #no-follow {
-        font-size: 2.3rem;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
     }
 
     @media screen and (max-width: 1100px) {
@@ -235,6 +230,7 @@
 
         .following-items-container div {
             width: 300px;
+            height: 75px;
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -242,6 +238,14 @@
             margin: 10px;
             margin-bottom: 5px;
             cursor: default;
+        }
+
+        .following-items-container div:hover {
+            opacity: 1;
+        }
+
+        .following-items-container div:nth-child(1) {
+            margin-left: 10px;
         }
 
         .following-items-container div #username {
@@ -259,30 +263,20 @@
             height: 64px;
             margin-right: 5px;
         }
-
-        #no-follow {
-            font-size: 2rem;
-        }
     }
 
     @media screen and (max-width: 520px) {
         .following-items-container div {
-            width: 280px;
-            margin-bottom: 5px;
-            padding: 5px;
+            height: 65px;
         }
 
         .following-items-container div #username {
-            font-size: 1.7rem;
+            font-size: 1.5rem;
         }
 
-        .following-items-container div #following,
-        .following-items-container div #followers {
-            font-size: 1.7rem;
-        }
-
-        #no-follow {
-            font-size: 1.7rem;
+        .following-items-container div #avatar {
+            width: 58px;
+            height: 58px;
         }
     }
 </style>

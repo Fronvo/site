@@ -55,6 +55,7 @@
                 if (err) {
                     errorMessage = err.msg;
                     isUploading = false;
+                    setProgressBar(false);
 
                     return;
                 }
@@ -118,6 +119,7 @@
 
     const data: ModalData = {
         title: 'Edit Community',
+        noSeperator: true,
 
         actions: [
             {
@@ -134,20 +136,20 @@
 
 <ModalTemplate {data}>
     {#if errorMessage}
-        <h1 id="error-header" in:fade={{ duration: 500 }}>
+        <h1 class="modal-error-header modal-header" in:fade={{ duration: 500 }}>
             {errorMessage}
         </h1>
     {/if}
 
-    <h1 id="input-header">Community ID</h1>
-    <input bind:value={communityId} maxlength={15} />
+    <h1 class="modal-header">Community ID</h1>
+    <input class="modal-input" bind:value={communityId} maxlength={15} />
 
-    <h1 id="input-header">Name</h1>
-    <input bind:value={name} maxlength={15} />
+    <h1 class="modal-header">Name</h1>
+    <input class="modal-input" bind:value={name} maxlength={15} />
 
-    <h1 id="input-header">Description</h1>
+    <h1 class="modal-header">Description</h1>
     <textarea
-        id="description-input"
+        class="modal-input"
         bind:value={description}
         maxlength={50}
         rows={3}
@@ -160,16 +162,16 @@
             alt="New avatar"
             draggable={false}
         />
-        <h1 id="input-header" class="icon-info">Icon</h1>
+        <h1 class="modal-header icon-info">Icon</h1>
     </div>
 
-    <input maxlength={512} bind:value={$icon} />
+    <input class="modal-input" maxlength={512} bind:value={$icon} />
 
     <div class="centered-container">
-        <h1 id="input-header">Invite only</h1>
+        <h1 class="modal-header">Invite only</h1>
         <Checkbox
             bind:checked={inviteOnly}
-            class="invite-only-checkbox"
+            class="checkbox"
             size="2.7rem"
             primaryColor="var(--modal_checkbox_primary_color)"
             secondaryColor="var(--modal_checkbox_secondary_color)"
@@ -178,15 +180,6 @@
 </ModalTemplate>
 
 <style>
-    #error-header {
-        color: red;
-        font-size: 2rem;
-        margin: 0;
-        width: 100%;
-        text-align: center;
-        margin-bottom: 20px;
-    }
-
     div {
         display: flex;
         align-items: center;
@@ -199,10 +192,6 @@
         align-items: center;
     }
 
-    :global(div .invite-only-checkbox) {
-        margin-left: 20px;
-    }
-
     div #icon-preview {
         width: 64px;
         height: 64px;
@@ -210,77 +199,10 @@
         margin-right: 10px;
     }
 
-    #input-header {
-        color: var(--profile_info_color);
-        margin: 0;
-        font-size: 2.2rem;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
-
-    input,
-    textarea {
-        font-size: 2rem;
-        margin: 0 5px 20px 5px;
-        width: 100%;
-        background: var(--modal_input_bg_color);
-    }
-
-    textarea {
-        min-height: 100px;
-    }
-
-    #description-input {
-        font-size: 1.7rem;
-    }
-
     @media screen and (max-width: 720px) {
-        #error-header {
-            font-size: 1.7rem;
-        }
-
         div #icon-preview {
             width: 48px;
             height: 48px;
-        }
-
-        :global(div .invite-only-checkbox) {
-            margin-left: 10px;
-            padding: 0;
-        }
-
-        #input-header {
-            font-size: 1.7rem;
-        }
-
-        input {
-            font-size: 1.7rem;
-        }
-
-        #description-input {
-            font-size: 1.5rem;
-        }
-    }
-
-    @media screen and (max-width: 520px) {
-        #error-header {
-            font-size: 1.4rem;
-        }
-
-        #input-header {
-            font-size: 1.4rem;
-        }
-
-        input {
-            font-size: 1.4rem;
-        }
-
-        #description-input {
-            font-size: 1.3rem;
         }
     }
 </style>

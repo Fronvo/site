@@ -50,7 +50,7 @@
     {#if loadingFinished}
         {#if $joinRequests?.length == 0}
             <Center absolute>
-                <h1 id="no-requests">No join requests</h1>
+                <h1 class="modal-header">No join requests</h1>
             </Center>
         {:else}
             <div class="join-requests-container">
@@ -130,16 +130,6 @@
         border-radius: 10px;
     }
 
-    #no-requests {
-        font-size: 2.3rem;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
-
     @media screen and (max-width: 720px) {
         .join-requests-container {
             flex-direction: column;
@@ -168,10 +158,6 @@
             height: 64px;
             margin-right: 5px;
         }
-
-        #no-requests {
-            font-size: 2rem;
-        }
     }
 
     @media screen and (max-width: 520px) {
@@ -182,10 +168,6 @@
         }
 
         .join-requests-container div #email {
-            font-size: 1.7rem;
-        }
-
-        #no-requests {
             font-size: 1.7rem;
         }
     }

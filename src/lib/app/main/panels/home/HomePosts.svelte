@@ -79,7 +79,7 @@
     {#each $homePostsStore as { post, profileData }, i}
         <Saos
             once
-            animation={'slide-top 0.5s cubic-bezier(0.230, 1.000, 0.320, 1.000) both'}
+            animation={'slide-top 0.75s cubic-bezier(0.230, 1.000, 0.320, 1.000) both'}
         >
             <div
                 on:click={() => viewPost(i)}
@@ -132,7 +132,7 @@
 
 <style>
     .posts-container {
-        margin-top: 20px;
+        margin-top: 5px;
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
@@ -143,17 +143,14 @@
     .post-container {
         display: flex;
         flex-direction: column;
-        background: var(--accent_bg_color);
-        box-shadow: 0 0 10px var(--accent_shadow_color);
-        padding: 0px;
-        padding-top: 5px;
-        padding-bottom: 5px;
-        margin-right: 10px;
-        margin-left: 10px;
-        margin-bottom: 50px;
+        background: transparent;
+        margin-bottom: 25px;
         width: 600px;
+        background: transparent;
+        box-shadow: 0 0 5px var(--accent_shadow_color);
         max-height: 650px;
         border-radius: 10px;
+        padding: 5px;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -166,7 +163,8 @@
     }
 
     .post-container:hover {
-        transform: scale(0.99);
+        background: var(--accent_bg_color);
+        box-shadow: 0 0 10px var(--accent_shadow_color);
     }
 
     .post-container:active {
@@ -177,19 +175,18 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin-bottom: 10px;
     }
 
     .author-container #avatar {
-        width: 64px;
-        height: 64px;
+        width: 55px;
+        height: 55px;
         border-radius: 10px;
-        margin-right: 10px;
+        margin-right: 5px;
     }
 
     .author-container #author {
         color: var(--profile_info_color);
-        font-size: 2.5rem;
+        font-size: 2.3rem;
         margin: 0;
     }
 
@@ -200,7 +197,7 @@
         -webkit-box-orient: vertical;
         margin: 0;
         text-align: center;
-        font-size: 2.1rem;
+        font-size: 1.9rem;
         width: 100%;
         margin-right: 5px;
         margin-left: 5px;
@@ -213,12 +210,10 @@
         -webkit-line-clamp: 5;
         -webkit-box-orient: vertical;
         margin: 0;
-        margin-top: 10px;
         margin-right: 5px;
         margin-left: 5px;
-        font-size: 1.8rem;
+        font-size: 1.5rem;
         color: var(--profile_info_color);
-        flex: 1;
         white-space: pre-wrap;
         text-align: center;
     }
@@ -234,21 +229,21 @@
 
     .post-container #attachment {
         max-width: 100%;
-        max-height: 275px;
-        margin-top: 10px;
+        max-height: 350px;
+        margin-top: 5px;
     }
 
     .post-container #creation-date {
         font-size: 1.3rem;
         margin: 0;
-        margin-top: 20px;
+        margin-top: 10px;
     }
 
     .posts-container #more {
         width: max-content;
         margin: auto;
-        font-size: 2rem;
-        margin-bottom: 20px;
+        font-size: 1.8rem;
+        margin-bottom: 60px;
         margin-top: 20px;
     }
 
@@ -260,7 +255,8 @@
         }
 
         .post-container:hover {
-            transform: none;
+            background: transparent;
+            box-shadow: 0 0 5px var(--accent_shadow_color);
         }
 
         .post-container:active {
@@ -271,26 +267,21 @@
             margin-bottom: 5px;
         }
 
-        .author-container #avatar {
-            width: 64px;
-            height: 64px;
-        }
-
         .author-container #author {
-            font-size: 2.2rem;
+            font-size: 2rem;
         }
 
         .post-container #title {
-            font-size: 1.7rem;
+            font-size: 1.6rem;
         }
 
         .post-container #content {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             -webkit-line-clamp: 4;
         }
 
         .post-container #attachment {
-            max-height: 225px;
+            max-height: 250px;
         }
 
         .post-container #creation-date {
@@ -298,11 +289,15 @@
         }
 
         .posts-container #more {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
         }
     }
 
     @media screen and (max-width: 520px) {
+        .posts-container {
+            margin-bottom: 75px;
+        }
+
         .post-container {
             max-width: 300px;
             max-height: 450px;
@@ -310,8 +305,8 @@
         }
 
         .author-container #avatar {
-            width: 48px;
-            height: 48px;
+            width: 40px;
+            height: 40px;
         }
 
         .author-container #author {
@@ -337,14 +332,15 @@
 
         .posts-container #more {
             font-size: 1.4rem;
+            margin-bottom: 50px;
         }
     }
 
     /* For SAOS, animation on scroll */
     @keyframes -global-slide-top {
         0% {
-            opacity: 0.5;
-            transform: translateY(25px);
+            opacity: 0;
+            transform: translateY(15px);
         }
 
         100% {

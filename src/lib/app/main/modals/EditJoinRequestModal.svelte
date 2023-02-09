@@ -37,6 +37,7 @@
 
     const data: ModalData = {
         title: 'Edit Request',
+        noSeperator: true,
 
         actions: [
             {
@@ -48,21 +49,20 @@
 </script>
 
 <ModalTemplate {data}>
-    <h1 id="email">{$targetJoinRequestEmail}</h1>
+    <h1 class="modal-header" id="email">{$targetJoinRequestEmail}</h1>
 
-    <button on:click={acceptJoinRequest}>Accept request</button>
+    <button class="modal-button" on:click={acceptJoinRequest}
+        >Accept request</button
+    >
 
     <br />
 
-    <button on:click={rejectJoinRequest}>Reject request</button>
+    <button class="modal-button" on:click={rejectJoinRequest}
+        >Reject request</button
+    >
 </ModalTemplate>
 
 <style>
-    button {
-        font-size: 1.8rem;
-        width: max-content;
-    }
-
     #email {
         font-size: 2.2rem;
         margin: 0;
@@ -74,20 +74,12 @@
     }
 
     @media screen and (max-width: 720px) {
-        button {
-            font-size: 1.6rem;
-        }
-
         #email {
             font-size: 1.9rem;
         }
     }
 
     @media screen and (max-width: 520px) {
-        button {
-            font-size: 1.4rem;
-        }
-
         #email {
             font-size: 1.5rem;
         }

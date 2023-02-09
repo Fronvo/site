@@ -51,30 +51,8 @@
 </script>
 
 <ModalTemplate {data}>
-    <h1>Delete the selected post?</h1>
+    <h1 class="modal-header">Delete the selected post?</h1>
 </ModalTemplate>
 
 <style>
-    h1 {
-        font-size: 3rem;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        text-align: center;
-    }
-
-    @media screen and (max-width: 720px) {
-        h1 {
-            font-size: 2rem;
-        }
-    }
-
-    @media screen and (max-width: 520px) {
-        h1 {
-            font-size: 1.7rem;
-        }
-    }
 </style>

@@ -102,12 +102,12 @@
         align-items: center;
         overflow: auto;
         border-radius: 25px;
-        min-height: 75%;
+        min-height: 600px;
         max-height: 90%;
         background: var(--modal_content_bg_color);
         box-shadow: 0 0 5px var(--modal_content_shadow_bg_color);
-        min-width: 40%;
-        max-width: 60%;
+        min-width: 550px;
+        max-width: 70vw;
         padding: 5px;
         overflow-x: hidden;
     }
@@ -126,7 +126,7 @@
         flex-direction: row;
         align-items: center;
         justify-content: center;
-        font-size: 2.8rem;
+        font-size: 2.4rem;
         margin: 0;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -149,10 +149,10 @@
     }
 
     #header #icon {
-        width: 64px;
-        height: 64px;
+        width: 55px;
+        height: 55px;
         border-radius: 10px;
-        margin-right: 10px;
+        margin-right: 5px;
     }
 
     .data-container {
@@ -173,13 +173,12 @@
     }
 
     button {
-        font-size: 2.2rem;
+        font-size: 1.8rem;
         margin-right: 20px;
     }
 
     @media screen and (max-width: 720px) {
         .modal-container {
-            max-width: none;
             max-height: 90%;
             min-width: 85%;
             max-width: 100%;
@@ -192,7 +191,7 @@
 
         #header,
         #header #title {
-            font-size: 2.4rem;
+            font-size: 2.1rem;
             cursor: default;
         }
 
@@ -201,8 +200,8 @@
         }
 
         #header #icon {
-            width: 54px;
-            height: 54px;
+            width: 46px;
+            height: 46px;
             margin-right: 5px;
         }
 
@@ -212,19 +211,19 @@
         }
 
         button {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
         }
     }
 
     @media screen and (max-width: 520px) {
         #header,
         #header #title {
-            font-size: 2rem;
+            font-size: 1.8rem;
         }
 
         #header #icon {
-            width: 48px;
-            height: 48px;
+            width: 40px;
+            height: 40px;
         }
 
         .data-container {
@@ -232,7 +231,7 @@
         }
 
         button {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             margin-top: 5px;
         }
     }

@@ -211,7 +211,7 @@
         width: 100vw;
         height: 100vh;
         z-index: -100;
-        filter: blur(30px) opacity(15%);
+        filter: blur(30px) opacity(20%);
         overflow: hidden;
     }
 
@@ -243,8 +243,8 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        width: 155px;
-        height: 155px;
+        width: 128px;
+        height: 128px;
         border-radius: 100px;
         align-self: flex-end;
         box-shadow: 0 0 5px rgb(0, 0, 0);
@@ -252,7 +252,7 @@
     }
 
     .info-container #username {
-        font-size: 3rem;
+        font-size: 2.5rem;
         margin: 0;
         margin-right: 10px;
         margin-left: 10px;
@@ -261,7 +261,7 @@
     }
 
     .info-container #bio {
-        font-size: 1.7rem;
+        font-size: 1.5rem;
         margin: 0;
         margin-left: 10px;
         margin-right: 10px;
@@ -278,11 +278,11 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-top: 15px;
+        margin-top: 10px;
     }
 
     .community-container #community-name {
-        font-size: 2.1rem;
+        font-size: 1.8rem;
         color: var(--profile_info_color);
         cursor: pointer;
         margin: 0;
@@ -295,8 +295,8 @@
     }
 
     .community-container #icon {
-        width: 42px;
-        height: 42px;
+        width: 38px;
+        height: 38px;
         margin-right: 5px;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -304,18 +304,18 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        border-radius: 5px;
+        border-radius: 10px;
     }
 
     .follow-container {
         display: flex;
         flex-wrap: nowrap;
-        margin-top: 10px;
+        margin-top: 5px;
     }
 
     .follow-container h1 {
         cursor: pointer;
-        font-size: 1.9rem;
+        font-size: 1.6rem;
         margin: 0;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -326,7 +326,7 @@
     }
 
     .follow-container h1:first-child {
-        margin-right: 20px;
+        margin-right: 15px;
     }
 
     .follow-container h1 span {
@@ -334,7 +334,7 @@
     }
 
     .options-container {
-        margin-top: 10px;
+        margin-top: 5px;
     }
 
     @media screen and (max-width: 720px) {

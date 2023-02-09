@@ -31,7 +31,7 @@
     }
 
     .dropdown-container button {
-        font-size: 1.4rem;
+        font-size: 1.2rem;
         margin-bottom: 10px;
         width: max-content;
     }
@@ -42,7 +42,7 @@
 
     @media screen and (max-width: 720px) {
         .dropdown-container button {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
     }
 

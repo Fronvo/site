@@ -24,8 +24,7 @@
 
     function isOwner(profileId?: string): boolean {
         return (
-            $joinedCommunity.ownerId ==
-            (profileId ? profileId : $ourProfileData.profileId)
+            $joinedCommunity.ownerId == (profileId || $ourProfileData.profileId)
         );
     }
 
@@ -155,18 +154,23 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        background: var(--accent_bg_color);
-        box-shadow: 0 0 5px var(--accent_shadow_color);
-        width: 300px;
+        background: transparent;
+        box-shadow: 0 0 10px var(--accent_shadow_color);
+        width: 200px;
         margin-top: 15px;
         margin-bottom: 15px;
         margin-right: 10px;
         margin-left: 10px;
-        height: min-content;
-        border-radius: 10px;
+        height: 235px;
+        overflow: hidden;
+        border-radius: 5px;
         padding: 10px;
-        transition: 400ms background;
+        transition: 200ms;
         cursor: pointer;
+    }
+
+    .members-items-container div:hover {
+        opacity: 0.8;
     }
 
     .members-items-container div h1 {
@@ -178,7 +182,11 @@
     }
 
     .members-items-container div #username {
-        font-size: 2.5rem;
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        font-size: 1.9rem;
         color: var(--profile_info_color);
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -188,13 +196,13 @@
         user-select: none;
     }
 
-    .members-items-container div .owner-div #username {
-        color: gold;
+    .members-items-container .owner-div {
+        box-shadow: 0 0 10px var(--text_color);
     }
 
     .members-items-container div #following,
     .members-items-container div #followers {
-        font-size: 2.1rem;
+        font-size: 1.7rem;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -210,21 +218,31 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        width: 128px;
-        height: 128px;
+        width: 100px;
+        height: 100px;
         border-radius: 10px;
     }
 
-    @media screen and (max-width: 1085px) {
+    @media screen and (max-width: 1100px) {
+        .members-items-container {
+            flex-direction: column;
+            justify-content: start;
+            flex-wrap: nowrap;
+        }
+
         .members-items-container div {
             width: 300px;
+            height: 75px;
             display: flex;
             flex-direction: row;
             align-items: center;
-            padding: 5px;
             margin: 10px;
             margin-bottom: 5px;
             cursor: default;
+        }
+
+        .members-items-container div:hover {
+            opacity: 1;
         }
 
         .members-items-container div:nth-child(1) {
@@ -237,7 +255,7 @@
         }
 
         .members-items-container div #following,
-        #followers {
+        .members-items-container div #followers {
             display: none;
         }
 
@@ -250,19 +268,16 @@
 
     @media screen and (max-width: 520px) {
         .members-items-container div {
-            width: 280px;
-            margin-right: 0;
-            margin-bottom: 10px;
-            padding: 5px;
+            height: 65px;
         }
 
         .members-items-container div #username {
-            font-size: 1.7rem;
+            font-size: 1.5rem;
         }
 
-        .members-items-container div #following,
-        .members-items-container div #followers {
-            font-size: 1.7rem;
+        .members-items-container div #avatar {
+            width: 58px;
+            height: 58px;
         }
     }
 </style>

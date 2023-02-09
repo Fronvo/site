@@ -166,10 +166,29 @@
     }
 
     function sendMessage(): void {
-        socket.emit('sendCommunityMessage', {
-            message: $sendContent,
-            replyId: $replyingToId,
-        });
+        socket.emit(
+            'sendCommunityMessage',
+            {
+                message: $sendContent,
+                replyId: $replyingToId,
+            },
+            ({ err }) => {
+                if (err) {
+                    setProgressBar(false);
+                } else {
+                    $sendContent = '';
+                }
+
+                const contentInput = document.getElementById(
+                    'textarea-content'
+                ) as HTMLTextAreaElement;
+
+                setTimeout(() => {
+                    contentInput.disabled = false;
+                    contentInput.focus();
+                }, 0);
+            }
+        );
 
         // Reset reply info
         $replyingTo = undefined;
@@ -299,7 +318,12 @@
         }
 
         // Send message this way
-        if (event.key == 'Enter' && $sendContent.length <= 500) {
+        if (
+            event.key == 'Enter' &&
+            contentInput.value.trim() != '' &&
+            $sendContent.length > 0 &&
+            $sendContent.length <= 500
+        ) {
             setProgressBar(true);
 
             // Reset text
@@ -307,15 +331,11 @@
 
             sendMessage();
 
-            contentInput.value = '';
-            $sendContent = '';
-
-            setTimeout(() => {
-                contentInput.disabled = false;
-                contentInput.focus();
-            }, 0);
-
             return;
+        } else {
+            if (event.key == 'Enter') {
+                event.preventDefault();
+            }
         }
 
         contentInput.focus();
@@ -428,7 +448,10 @@
                                     >
                                 </h1>
                                 <h1 id="reply-message">
-                                    {findMessageById(replyId).content}
+                                    > <span
+                                        >{findMessageById(replyId)
+                                            .content}</span
+                                    >
                                 </h1>
                             {:else}
                                 <h1 id="reply-name">
@@ -492,7 +515,7 @@
     .chat-container #more {
         width: max-content;
         margin: auto;
-        font-size: 2rem;
+        font-size: 1.6rem;
         margin-bottom: 35px;
         margin-top: 20px;
     }
@@ -500,11 +523,9 @@
     .message-container {
         display: flex;
         flex-direction: column;
-        width: 90%;
-        height: min-content;
-        border-radius: 10px;
+        width: 95%;
+        border-radius: 30px;
         padding: 10px;
-        margin-bottom: 5px;
     }
 
     .message-container:nth-child(1) {
@@ -517,7 +538,7 @@
 
     .message-container:hover {
         background: var(--accent_bg_color);
-        box-shadow: 0 0 10px var(--accent_shadow_color);
+        box-shadow: 0 0 15px var(--accent_shadow_color);
     }
 
     .message-info-container {
@@ -526,10 +547,10 @@
     }
 
     .message-info-container #avatar {
-        width: 64px;
-        height: 64px;
-        border-radius: 10px;
-        margin-right: 5px;
+        width: 48px;
+        height: 48px;
+        border-radius: 5px;
+        margin-right: 10px;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -541,7 +562,7 @@
     .message-info-container #username {
         color: var(--profile_info_color);
         margin: 0;
-        font-size: 1.9rem;
+        font-size: 1.6rem;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -553,16 +574,11 @@
 
     .message-info-container .menu-container {
         opacity: 0;
-        transition: 200ms;
-    }
-
-    .reply-container {
-        margin-top: 5px;
-        margin-bottom: 5px;
+        transition: 100ms;
     }
 
     .reply-container #reply-name {
-        font-size: 1.6rem;
+        font-size: 1.3rem;
         margin: 0;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -577,11 +593,19 @@
     }
 
     .reply-container #reply-message {
-        color: var(--profile_info_color);
         margin: 0;
-        font-size: 1.3rem;
-        margin-left: 10px;
+        font-size: 1.2rem;
         overflow: hidden;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    .reply-container #reply-message span {
+        color: var(--profile_info_color);
     }
 
     .message-container:hover .message-info-container .menu-container {
@@ -591,9 +615,8 @@
     .message-container #content {
         color: var(--profile_info_color);
         margin: 0;
-        margin-top: 5px;
-        margin-bottom: 5px;
-        font-size: 1.7rem;
+        margin-left: 2px;
+        font-size: 1.4rem;
         white-space: pre-wrap;
         overflow: hidden;
     }
@@ -603,14 +626,10 @@
         color: var(--text_color);
     }
 
-    :global(.message-container #content .link:hover::after) {
-        background: var(--profile_info_color);
-    }
-
     .message-container #creation-date {
-        font-size: 1.3rem;
+        font-size: 1.1rem;
         margin: 0;
-        margin-top: 10px;
+        margin-top: 5px;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;

@@ -6,6 +6,7 @@
     import { ourProfileData } from 'stores/profile';
     import { getKey } from 'utilities/global';
     import { ModalTypes } from 'types/main';
+    import { loadOurData } from 'utilities/profile';
 
     let isFollowed = $ourProfileData?.following.includes($userData.profileId);
     let isRequesting = false;
@@ -47,6 +48,9 @@
         async function reloadProfile(): Promise<void> {
             // Update follow counts
             $userData = await fetchUser($userData.profileId);
+            await loadOurData();
+
+            // TODO: Update cached profile function
 
             isRequesting = false;
             setProgressBar(false);

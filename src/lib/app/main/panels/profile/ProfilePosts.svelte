@@ -200,6 +200,7 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+        font-size: 1.7rem;
     }
 
     .posts-container #counter span {
@@ -209,15 +210,14 @@
     .posts-container .post-container {
         display: flex;
         flex-direction: column;
-        background: var(--accent_bg_color);
-        box-shadow: 0 0 10px var(--accent_shadow_color);
-        padding: 10px;
-        padding-top: 5px;
-        padding-bottom: 5px;
-        margin-bottom: 30px;
+        background: transparent;
+        margin-bottom: 25px;
         width: 550px;
-        max-height: 600px;
+        background: transparent;
+        box-shadow: 0 0 15px var(--accent_shadow_color);
+        max-height: 650px;
         border-radius: 10px;
+        padding: 5px;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -227,11 +227,11 @@
         transition: 150ms;
         cursor: pointer;
         align-items: center;
-        justify-content: center;
     }
 
     .post-container:hover {
-        transform: scale(0.99);
+        background: var(--accent_bg_color);
+        box-shadow: 0 0 10px var(--accent_shadow_color);
     }
 
     .post-container:active {
@@ -245,8 +245,9 @@
         -webkit-box-orient: vertical;
         margin: 0;
         text-align: center;
-        font-size: 2.1rem;
-        width: 100%;
+        font-size: 1.9rem;
+        margin-right: 5px;
+        margin-left: 5px;
     }
 
     .post-container #content {
@@ -256,10 +257,10 @@
         -webkit-line-clamp: 5;
         -webkit-box-orient: vertical;
         margin: 0;
-        margin-top: 10px;
-        font-size: 1.8rem;
+        margin-right: 5px;
+        margin-left: 5px;
+        font-size: 1.5rem;
         color: var(--profile_info_color);
-        flex: 1;
         white-space: pre-wrap;
         text-align: center;
     }
@@ -275,20 +276,19 @@
 
     .post-container #attachment {
         max-width: 100%;
-        max-height: 275px;
-        margin-top: 10px;
-        border-radius: 10px;
+        max-height: 350px;
+        margin-top: 5px;
     }
 
     .post-container #creation-date {
         font-size: 1.3rem;
         margin: 0;
-        margin-top: 20px;
+        margin-top: 10px;
     }
 
     .posts-container #empty-text {
         margin: 0;
-        font-size: 2rem;
+        font-size: 1.7rem;
         white-space: pre-wrap;
         text-align: center;
     }
@@ -307,8 +307,8 @@
     .posts-container #more {
         width: max-content;
         margin: auto;
-        font-size: 2rem;
-        margin-bottom: 20px;
+        font-size: 1.8rem;
+        margin-bottom: 60px;
         margin-top: 20px;
     }
 
@@ -319,7 +319,8 @@
 
         .post-container {
             max-width: 400px;
-            max-height: 450px;
+            max-height: 500px;
+            cursor: default;
         }
 
         .posts-container .post-container {
@@ -327,7 +328,8 @@
         }
 
         .post-container:hover {
-            transform: none;
+            background: transparent;
+            box-shadow: 0 0 15px var(--accent_shadow_color);
         }
 
         .post-container:active {
@@ -335,20 +337,24 @@
         }
 
         .post-container #title {
-            font-size: 1.7rem;
+            font-size: 1.6rem;
         }
 
         .post-container #content {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             -webkit-line-clamp: 4;
         }
 
         .post-container #attachment {
-            max-height: 225px;
+            max-height: 250px;
         }
 
         .post-container #creation-date {
             font-size: 1.2rem;
+        }
+
+        .posts-container #more {
+            font-size: 1.6rem;
         }
 
         .posts-container #empty-text {
@@ -361,20 +367,21 @@
             font-size: 1.4rem;
             margin-bottom: 75px;
         }
-
-        .posts-container #more {
-            font-size: 1.8rem;
-        }
     }
 
     @media screen and (max-width: 520px) {
+        .posts-container {
+            margin-bottom: 75px;
+        }
+
         .posts-container #counter {
             font-size: 1.4rem;
         }
 
         .post-container {
             max-width: 300px;
-            max-height: 400px;
+            max-height: 450px;
+            margin-bottom: 25px;
         }
 
         .post-container #title {
@@ -394,16 +401,17 @@
             font-size: 1.1rem;
         }
 
+        .posts-container #more {
+            font-size: 1.4rem;
+            margin-bottom: 50px;
+        }
+
         .posts-container #empty-text {
             font-size: 1.4rem;
         }
 
         .posts-container #join {
             font-size: 1.3rem;
-        }
-
-        .posts-container #more {
-            font-size: 1.4rem;
         }
     }
 </style>

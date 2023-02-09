@@ -77,7 +77,7 @@
 
     .home-container #latest-posts {
         color: var(--profile_info_color);
-        font-size: 3rem;
+        font-size: 2.6rem;
         margin: 0;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -94,14 +94,14 @@
         }
 
         .home-container #latest-posts {
-            font-size: 2.7rem;
+            font-size: 2.3rem;
             margin: 0;
         }
     }
 
     @media screen and (max-width: 520px) {
         .home-container #latest-posts {
-            font-size: 2.3rem;
+            font-size: 2rem;
             margin: 0;
         }
     }

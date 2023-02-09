@@ -35,6 +35,8 @@
     }
 
     .top-container #logo {
+        width: 1280px;
+        height: 200px;
         fill: none;
         animation-name: animated-stroke;
         animation-duration: 20000ms;

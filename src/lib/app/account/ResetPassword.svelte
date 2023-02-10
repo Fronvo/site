@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
     import type { FronvoError } from 'interfaces/all';
     import {
         accountPanelAnimDuration,

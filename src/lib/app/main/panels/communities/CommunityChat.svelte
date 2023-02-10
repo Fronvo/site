@@ -25,18 +25,8 @@
 
     let unsubscribe: Unsubscriber;
 
-    let showLoadMore = false;
+    let showLoadMore = true;
     let isLoadingMore = false;
-
-    function findMessageById(messageId: string): CommunityMessage | undefined {
-        for (const messageIndex in $messages) {
-            const targetMessage = $messages[messageIndex];
-
-            if (targetMessage.message.messageId == messageId) {
-                return targetMessage.message;
-            }
-        }
-    }
 
     async function addMessageLinks(): Promise<void> {
         if ($messages.length == 0) {
@@ -89,10 +79,14 @@
             },
             ({ communityMessages }) => {
                 $messages.push(...communityMessages);
+                $messages = $messages;
 
                 addMessageLinks();
 
                 isLoadingMore = false;
+
+                showLoadMore =
+                    $messages.length < $joinedCommunity.totalMessages;
             }
         );
     }
@@ -355,17 +349,14 @@
 
                     {#if message.isReply}
                         <div class="reply-container">
-                            {#if findMessageById(message.replyId)}
+                            {#if message.replyContent}
                                 <h1 id="reply-name">
                                     Replying to <span
                                         >{profileData.username}</span
                                     >
                                 </h1>
                                 <h1 id="reply-message">
-                                    > <span
-                                        >{findMessageById(message.replyId)
-                                            .content}</span
-                                    >
+                                    > <span>{message.replyContent}</span>
                                 </h1>
                             {:else}
                                 <h1 id="reply-name">

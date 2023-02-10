@@ -68,7 +68,7 @@ export interface CommunityMessage {
     content: string;
     creationDate: string;
     isReply: boolean;
-    replyId: string;
+    replyContent: string;
 }
 
 export interface CommunityMessageFinal extends CommunityMessage {

@@ -1,9 +1,5 @@
 <script lang="ts">
-    import type {
-        CommunityMessage,
-        CommunityMessageFinal,
-    } from 'interfaces/all';
-    import type { FronvoAccount } from 'interfaces/all';
+    import type { CommunityMessage } from 'interfaces/all';
     import DeleteChatOption from '$lib/svgs/DeleteChatOption.svelte';
     import { dataSaver, socket } from 'stores/all';
     import { loadCommunitiesPanel } from 'utilities/communities';
@@ -13,134 +9,70 @@
         replyingTo,
         replyingToId,
         sendContent,
-        targetCommunityMessages,
+        communityMessages as messages,
         targetSendHeight,
     } from 'stores/communities';
-    import {
-        cachedAccountData,
-        modalVisible,
-        queuedAccounts,
-        targetConfirmCommunityMessage,
-    } from 'stores/main';
+    import { modalVisible, targetConfirmCommunityMessage } from 'stores/main';
     import { onDestroy, onMount } from 'svelte';
     import Time from 'svelte-time';
     import type { Unsubscriber } from 'svelte/store';
     import { scale } from 'svelte/transition';
-    import {
-        dismissModal,
-        fetchUser,
-        setProgressBar,
-        showModal,
-    } from 'utilities/main';
+    import { dismissModal, setProgressBar, showModal } from 'utilities/main';
     import linkifyHtml from 'linkify-html';
     import Reply from '$lib/svgs/Reply.svelte';
     import { ourProfileData } from 'stores/profile';
     import { ModalTypes } from 'types/main';
 
-    // Prevent massive data requests
-    let loadedAccounts = 0;
-
     let unsubscribe: Unsubscriber;
-
-    // Messages finalised with profile info
-    let finalizedMessages: CommunityMessageFinal[] = [];
 
     let showLoadMore = false;
     let isLoadingMore = false;
 
-    function findCachedData(profileId: string): FronvoAccount | undefined {
-        for (const accountIndex in $cachedAccountData) {
-            const targetAccount = $cachedAccountData[accountIndex];
-
-            if (targetAccount.profileId == profileId) {
-                return targetAccount;
-            }
-        }
-    }
-
     function findMessageById(messageId: string): CommunityMessage | undefined {
-        for (const messageIndex in $targetCommunityMessages) {
-            const targetMessage = $targetCommunityMessages[messageIndex];
+        for (const messageIndex in $messages) {
+            const targetMessage = $messages[messageIndex];
 
-            if (targetMessage.messageId == messageId) {
-                return targetMessage;
+            if (targetMessage.message.messageId == messageId) {
+                return targetMessage.message;
             }
         }
     }
 
-    async function loadMessageAuthors(): Promise<void> {
-        // Reset counter, helps combat loadMore errors
-        loadedAccounts = 0;
-
-        for (const messageIndex in $targetCommunityMessages) {
-            const message = $targetCommunityMessages[messageIndex];
-
-            // No duplicates
-            if ($queuedAccounts.includes(message.ownerId)) {
-                loadedAccounts += 1;
-
-                checkLoadingDone();
-
-                continue;
-            }
-
-            $queuedAccounts.push(message.ownerId);
-
-            const account = await fetchUser(message.ownerId);
-
-            $cachedAccountData.push(account);
-
-            loadedAccounts += 1;
-
-            checkLoadingDone();
-        }
-
-        function checkLoadingDone(): void {
-            if (loadedAccounts == $targetCommunityMessages.length) {
-                loadMessages();
-            }
-        }
-    }
-
-    async function loadMessages(): Promise<void> {
-        const tempFinalizedMessages: CommunityMessageFinal[] = [];
-
-        if ($targetCommunityMessages.length == 0) {
-            finalizedMessages = [];
+    async function addMessageLinks(): Promise<void> {
+        if ($messages.length == 0) {
             setProgressBar(false);
             return;
         }
 
-        for (const messageIndex in $targetCommunityMessages) {
-            const message = $targetCommunityMessages[messageIndex];
+        function findLinkElements(messageId: string, content: string): void {
+            setTimeout(() => {
+                const targetElement =
+                    document.getElementsByClassName(messageId)[0];
 
-            // No extra latency, preloaded
-            let cachedAccount = findCachedData(message.ownerId);
+                if (!targetElement) return;
 
-            // Read from cache already, proceed
-            tempFinalizedMessages.push({
-                ...message,
-                profileData: cachedAccount,
-            });
-
-            // As mentioned above, no latency means it WILL work 100%, div will be visible
-            generateContentLinks(message.messageId, message.content);
-
-            checkLoadingDone();
+                targetElement.innerHTML = linkifyHtml(content, {
+                    className: 'link',
+                    truncate: 40,
+                    validate: {
+                        url: (value) =>
+                            /^https?:\/\/[0-9a-zA-Z-.\/\?=]+/.test(value),
+                    },
+                    target: '_blank',
+                });
+            }, 0);
         }
 
-        function checkLoadingDone(): void {
-            if (
-                tempFinalizedMessages.length == $targetCommunityMessages.length
-            ) {
-                // Update messages
-                finalizedMessages = tempFinalizedMessages;
+        for (const messageIndex in $messages) {
+            const message = $messages[messageIndex];
 
-                if (!showLoadMore) showLoadMore = true;
-
-                setProgressBar(false);
-            }
+            findLinkElements(
+                message.message.messageId,
+                message.message.content
+            );
         }
+
+        setProgressBar(false);
     }
 
     function loadMore(): void {
@@ -152,13 +84,13 @@
         socket.emit(
             'fetchCommunityMessages',
             {
-                from: $targetCommunityMessages.length.toString(),
-                to: ($targetCommunityMessages.length + 30).toString(),
+                from: $messages.length.toString(),
+                to: ($messages.length + 30).toString(),
             },
             ({ communityMessages }) => {
-                $targetCommunityMessages.push(...communityMessages);
+                $messages.push(...communityMessages);
 
-                loadMessageAuthors();
+                addMessageLinks();
 
                 isLoadingMore = false;
             }
@@ -196,17 +128,16 @@
     }
 
     function deleteMessage(messageIndex: number): void {
-        $targetConfirmCommunityMessage = finalizedMessages[messageIndex];
+        $targetConfirmCommunityMessage = $messages[messageIndex].message;
 
         showModal(ModalTypes.ConfirmDeleteMessage);
     }
 
     function replyMessage(messageIndex: number): void {
         // Update reply info
-        $replyingTo = findCachedData(
-            finalizedMessages[messageIndex].ownerId
-        ).username;
-        $replyingToId = finalizedMessages[messageIndex].messageId;
+        $replyingTo = $messages[messageIndex].profileData.username;
+
+        $replyingToId = $messages[messageIndex].message.messageId;
     }
 
     function attachNewMessageListener(): void {
@@ -214,11 +145,9 @@
         socket.off('newCommunityMessage');
 
         socket.on('newCommunityMessage', ({ newMessageData }) => {
-            $targetCommunityMessages = [newMessageData].concat(
-                $targetCommunityMessages
-            );
+            $messages = [newMessageData].concat($messages);
 
-            loadMessageAuthors();
+            addMessageLinks();
         });
     }
 
@@ -226,26 +155,31 @@
         socket.off('communityMessageDeleted');
 
         socket.on('communityMessageDeleted', ({ messageId }) => {
-            for (const messageIndex in $targetCommunityMessages) {
-                const targetMessage = $targetCommunityMessages[messageIndex];
+            for (const messageIndex in $messages) {
+                const targetMessage = $messages[messageIndex];
 
-                if (targetMessage.messageId == messageId) {
-                    $targetCommunityMessages.splice(Number(messageIndex), 1);
+                if (targetMessage.message.messageId == messageId) {
+                    console.log(messageIndex, messageId);
+
+                    $messages.splice(Number(messageIndex), 1);
+                    $messages = $messages;
+
                     $joinedCommunity.totalMessages -= 1;
 
+                    // ConfirmDeleteMessageModal
                     if (
                         $targetConfirmCommunityMessage?.messageId ==
-                        targetMessage.messageId
+                        targetMessage.message.messageId
                     ) {
                         dismissModal();
                     }
 
-                    if ($replyingToId == targetMessage.messageId) {
+                    if ($replyingToId == targetMessage.message.messageId) {
                         $replyingTo = undefined;
                         $replyingToId = undefined;
                     }
 
-                    loadMessageAuthors();
+                    addMessageLinks();
 
                     break;
                 }
@@ -352,28 +286,10 @@
         }
     }
 
-    function generateContentLinks(messageId: string, content: string): void {
-        setTimeout(() => {
-            const targetElement = document.getElementsByClassName(messageId)[0];
-
-            if (!targetElement) return;
-
-            targetElement.innerHTML = linkifyHtml(content, {
-                className: 'link',
-                truncate: 40,
-                validate: {
-                    url: (value) =>
-                        /^https?:\/\/[0-9a-zA-Z-.\/\?=]+/.test(value),
-                },
-                target: '_blank',
-            });
-        }, 0);
-    }
-
     onMount(() => {
         // Reload listeners and messages
         checkChatRequest();
-        loadMessageAuthors();
+        addMessageLinks();
         attachChatRequestListener();
         attachNewMessageListener();
         attachDeletedMessageListener();
@@ -402,14 +318,14 @@
     });
 </script>
 
-{#if $targetCommunityMessages}
+{#if $messages}
     <div class="chat-container">
-        {#if $targetCommunityMessages.length == 0}
+        {#if $messages.length == 0}
             <h1 id="chat-start" in:scale={{ duration: 500, start: 0.95 }}>
                 Welcome to {$joinedCommunity?.name}'s chat room!
             </h1>
-        {:else if finalizedMessages}
-            {#each finalizedMessages as { messageId, profileData, content, creationDate, isReply, replyId }, i}
+        {:else if $messages}
+            {#each $messages as { message, profileData }, i}
                 <div class="message-container">
                     <div class="message-info-container">
                         <img
@@ -428,8 +344,8 @@
                                 <Reply callback={() => replyMessage(i)} />
                             {/if}
 
-                            <!-- Only the community owner can delete messages -->
-                            {#if $joinedCommunity?.ownerId == $ourProfileData.profileId}
+                            <!-- Only the message author / community owner can delete messages -->
+                            {#if $joinedCommunity?.ownerId == $ourProfileData.profileId || message.ownerId == $ourProfileData.profileId}
                                 <DeleteChatOption
                                     callback={() => deleteMessage(i)}
                                 />
@@ -437,19 +353,17 @@
                         </div>
                     </div>
 
-                    {#if isReply}
+                    {#if message.isReply}
                         <div class="reply-container">
-                            {#if findMessageById(replyId)}
+                            {#if findMessageById(message.replyId)}
                                 <h1 id="reply-name">
                                     Replying to <span
-                                        >{findCachedData(
-                                            findMessageById(replyId).ownerId
-                                        ).username}</span
+                                        >{profileData.username}</span
                                     >
                                 </h1>
                                 <h1 id="reply-message">
                                     > <span
-                                        >{findMessageById(replyId)
+                                        >{findMessageById(message.replyId)
                                             .content}</span
                                     >
                                 </h1>
@@ -461,8 +375,8 @@
                         </div>
                     {/if}
 
-                    <h1 id="content" class={messageId}>
-                        {content}
+                    <h1 id="content" class={message.messageId}>
+                        {message.content}
                     </h1>
 
                     <h1 id="creation-date">
@@ -471,14 +385,14 @@
                             relative
                             format={'dddd HH:mm · MMMM D YYYY'}
                             live={15000}
-                            timestamp={creationDate}
+                            timestamp={message.creationDate}
                         />
                     </h1>
                 </div>
             {/each}
 
             {#if $joinedCommunity && showLoadMore}
-                {#if $targetCommunityMessages.length < $joinedCommunity.totalMessages}
+                {#if $messages.length < $joinedCommunity.totalMessages}
                     <button id="more" on:click={loadMore}>Load more</button>
                 {/if}
             {/if}

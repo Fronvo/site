@@ -2,7 +2,11 @@
 // Interfaces for the fetchCommunityMessages event file.
 // ******************** //
 
-import type { CommunityMessage, FronvoError } from 'interfaces/all';
+import type {
+    CommunityMessage,
+    FronvoAccount,
+    FronvoError,
+} from 'interfaces/all';
 
 export interface FetchCommunityMessagesParams {
     from: string;
@@ -10,5 +14,8 @@ export interface FetchCommunityMessagesParams {
 }
 
 export interface FetchCommunityMessagesResult extends FronvoError {
-    communityMessages: CommunityMessage[];
+    communityMessages: {
+        message: CommunityMessage;
+        profileData: FronvoAccount;
+    }[];
 }

@@ -2,8 +2,8 @@
 // Interfaces for the newCommunityMessage event.
 // ******************** //
 
-import type { CommunityMessage } from 'interfaces/all';
+import type { CommunityMessage, FronvoAccount } from 'interfaces/all';
 
 export interface NewCommunityMessageResult {
-    newMessageData: CommunityMessage;
+    newMessageData: { message: CommunityMessage; profileData: FronvoAccount };
 }

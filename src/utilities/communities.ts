@@ -12,7 +12,7 @@ import {
     joinedCommunity as joinedCommunityStore,
     targetCommunity as targetCommunityStore,
     targetCommunityData,
-    targetCommunityMessages,
+    communityMessages as communityMessagesStore,
 } from 'stores/communities';
 import { setProgressBar } from './main';
 import { loadOurData } from './profile';
@@ -126,7 +126,7 @@ async function loadJoinedCommunity(joinedCommunity?: string): Promise<void> {
                     to: '20',
                 },
                 ({ communityMessages }) => {
-                    targetCommunityMessages.set(communityMessages);
+                    communityMessagesStore.set(communityMessages);
 
                     resolve();
                 }

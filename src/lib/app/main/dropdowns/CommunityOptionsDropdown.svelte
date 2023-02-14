@@ -7,7 +7,7 @@
 
     let pendingRequests: number;
 
-    if (isOwner()) {
+    if (isOwner() && $joinedCommunity.chatRequestsEnabled) {
         pendingRequests =
             $joinedCommunity.members.length -
             $joinedCommunity.acceptedChatRequests.length;

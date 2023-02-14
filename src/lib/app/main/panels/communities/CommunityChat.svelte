@@ -199,13 +199,28 @@
 
     function attachChatRequestListener(): void {
         socket.off('chatRequestUpdated');
+        socket.off('communityChatRequestsUpdated');
 
         socket.on('chatRequestUpdated', ({ accepted }) => {
+            adjustContentInput(accepted);
+        });
+
+        socket.on('communityChatRequestsUpdated', ({ state }) => {
+            // not state = not required = always have chat request perm
+            // state = required = dont have chat request perm
+
+            // Bypass if the owner
+            if ($joinedCommunity.ownerId != $ourProfileData.profileId) {
+                adjustContentInput(!state);
+            }
+        });
+
+        function adjustContentInput(chatRequestState: boolean): void {
             const contentInput = document.getElementById(
                 'textarea-content'
             ) as HTMLTextAreaElement;
 
-            if (!accepted) {
+            if (!chatRequestState) {
                 contentInput.disabled = true;
                 contentInput.value = 'Chat request pending';
             } else {
@@ -214,8 +229,8 @@
                 $sendContent = '';
             }
 
-            $chatRequestAccepted = accepted;
-        });
+            $chatRequestAccepted = chatRequestState;
+        }
     }
 
     function attachMemberChangeListener(): void {
@@ -252,7 +267,7 @@
             'textarea-content'
         ) as HTMLTextAreaElement;
 
-        if (!$chatRequestAccepted) {
+        if (!$chatRequestAccepted && $joinedCommunity.chatRequestsEnabled) {
             return;
         }
 
@@ -281,7 +296,7 @@
     }
 
     function checkChatRequest(): void {
-        if (!$chatRequestAccepted) {
+        if (!$chatRequestAccepted && $joinedCommunity.chatRequestsEnabled) {
             const contentInput = document.getElementById(
                 'textarea-content'
             ) as HTMLTextAreaElement;

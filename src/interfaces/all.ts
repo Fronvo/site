@@ -58,6 +58,7 @@ export interface Community {
     icon?: string;
     members: string[];
     inviteOnly: boolean;
+    chatRequestsEnabled: boolean;
     acceptedChatRequests: string[];
     totalMessages: number;
 }

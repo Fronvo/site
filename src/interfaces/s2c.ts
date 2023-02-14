@@ -3,6 +3,7 @@
 // ******************** //
 
 import type { ChatRequestUpdatedResult } from './account/chatRequestUpdated';
+import type { CommunityChatRequestsUpdatedResult } from './account/communityChatRequestsUpdated';
 import type { CommunityMessageDeletedResult } from './account/communityMessageDeleted';
 import type { MemberJoinedResult } from './account/memberJoined';
 import type { MemberLeftResult } from './account/memberLeft';
@@ -40,4 +41,5 @@ export interface ServerToClientEvents {
     chatRequestUpdated: ({}: ChatRequestUpdatedResult) => void;
     memberJoined: ({}: MemberJoinedResult) => void;
     memberLeft: ({}: MemberLeftResult) => void;
+    communityChatRequestsUpdated: ({}: CommunityChatRequestsUpdatedResult) => void;
 }

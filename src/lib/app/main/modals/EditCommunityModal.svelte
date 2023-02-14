@@ -15,6 +15,7 @@
     let description = $joinedCommunity.description;
     let icon: Writable<string> = writable($joinedCommunity.icon);
     let inviteOnly = $joinedCommunity.inviteOnly;
+    let chatRequestsEnabled = $joinedCommunity.chatRequestsEnabled;
 
     let canUpload = true;
     let isUploading = false;
@@ -46,6 +47,10 @@
 
         if ($joinedCommunity.inviteOnly != inviteOnly) {
             updatedData['inviteOnly'] = inviteOnly;
+        }
+
+        if ($joinedCommunity.chatRequestsEnabled != chatRequestsEnabled) {
+            updatedData['chatRequestsEnabled'] = chatRequestsEnabled;
         }
 
         socket.emit(
@@ -171,6 +176,17 @@
         <h1 class="modal-header">Invite only</h1>
         <Checkbox
             bind:checked={inviteOnly}
+            class="checkbox"
+            size="2.7rem"
+            primaryColor="var(--modal_checkbox_primary_color)"
+            secondaryColor="var(--modal_checkbox_secondary_color)"
+        />
+    </div>
+
+    <div class="centered-container">
+        <h1 class="modal-header">Chat requests</h1>
+        <Checkbox
+            bind:checked={chatRequestsEnabled}
             class="checkbox"
             size="2.7rem"
             primaryColor="var(--modal_checkbox_primary_color)"

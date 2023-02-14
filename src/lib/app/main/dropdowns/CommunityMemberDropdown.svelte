@@ -86,6 +86,7 @@
         {
             title: `${hasChatPerms() ? 'Revoke' : 'Give'} chat permission`,
             callback: updateChatPerms,
+            condition: $joinedCommunity.chatRequestsEnabled,
         },
         {
             title: 'Kick member',

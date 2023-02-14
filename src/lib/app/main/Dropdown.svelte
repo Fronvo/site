@@ -6,6 +6,7 @@
         dropdownPosition,
         dropdowns,
         dropdownVisible,
+        modalVisible,
     } from 'stores/main';
     import { onDestroy, onMount } from 'svelte';
     import type { Unsubscriber } from 'svelte/store';
@@ -15,6 +16,7 @@
     let dropdownElement: HTMLDivElement;
     let unsubscribe: Unsubscriber;
     let unsubscribe2: Unsubscriber;
+    let unsubscribe3: Unsubscriber;
 
     onMount(() => {
         unsubscribe = dropdownPosition.subscribe((newPosition) => {
@@ -30,11 +32,16 @@
         unsubscribe2 = currentPanelId.subscribe(() => {
             dismissDropdown();
         });
+
+        unsubscribe3 = modalVisible.subscribe(() => {
+            dismissDropdown();
+        });
     });
 
     onDestroy(() => {
         unsubscribe();
         unsubscribe2();
+        unsubscribe3();
     });
 </script>
 

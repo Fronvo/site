@@ -7,6 +7,7 @@
         followModalForFollowing,
         followModalInfo,
     } from 'stores/main';
+    import { targetProfile } from 'stores/profile';
     import { onMount } from 'svelte';
     import type { ModalData } from 'types/main';
     import {
@@ -73,6 +74,8 @@
 
     async function viewProfile(accountIndex: number): Promise<void> {
         dismissModal();
+
+        $targetProfile = followInfo[accountIndex].profileId;
 
         await loadProfilePanel(
             $cachedAccountData,

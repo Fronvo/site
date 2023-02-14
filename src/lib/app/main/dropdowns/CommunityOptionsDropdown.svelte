@@ -29,6 +29,10 @@
         showModal(ModalTypes.LeaveCommunity);
     }
 
+    function showBans(): void {
+        showModal(ModalTypes.ShowBans);
+    }
+
     const actions: DropdownActions[] = [
         {
             title: 'Edit',
@@ -40,6 +44,11 @@
                 isOwner() && pendingRequests > 0 ? `(${pendingRequests})` : ''
             }`,
             callback: viewMembers,
+        },
+        {
+            title: 'Bans',
+            callback: showBans,
+            condition: isOwner(),
         },
         {
             title: isOwner() ? 'Delete' : 'Leave',

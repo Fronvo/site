@@ -22,17 +22,19 @@ export enum ModalTypes {
     LeaveCommunity,
     CommunityMembers,
     EditCommunity,
-    EditCommunityMember,
     ConfirmDeleteMessage,
     JoinRequests,
     EditJoinRequest,
     DeletePost,
     JoinFronvo,
+    ShowBans,
 }
 
 export enum DropdownTypes {
     CommunityInfo,
     PostOptions,
+    CommunityMember,
+    CommunityMemberUnban,
 }
 
 export interface DropdownActions {

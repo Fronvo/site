@@ -115,6 +115,13 @@ import type {
     FetchProfileDataGuestParams,
     FetchProfileDataGuestResult,
 } from './noAccount/fetchProfileDataGuest';
+import type { KickMemberParams, KickMemberResult } from './account/kickMember';
+import type { BanMemberParams, BanMemberResult } from './account/banMember';
+import type { ShowBannedMembersResult } from './account/showBannedMembers';
+import type {
+    UnbanMemberParams,
+    UnbanMemberResult,
+} from './account/unbanMember';
 
 export interface ClientToServerEvents {
     register: (
@@ -239,5 +246,20 @@ export interface ClientToServerEvents {
     fetchProfileDataGuest: (
         {}: FetchProfileDataGuestParams,
         callback?: ({}: FetchProfileDataGuestResult) => void
+    ) => void;
+    kickMember: (
+        {}: KickMemberParams,
+        callback?: ({}: KickMemberResult) => void
+    ) => void;
+    banMember: (
+        {}: BanMemberParams,
+        callback?: ({}: BanMemberResult) => void
+    ) => void;
+    showBannedMembers: (
+        callback?: ({}: ShowBannedMembersResult) => void
+    ) => void;
+    unbanMember: (
+        {}: UnbanMemberParams,
+        callback?: ({}: UnbanMemberResult) => void
     ) => void;
 }

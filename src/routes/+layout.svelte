@@ -109,7 +109,7 @@
             startSessionTime();
         });
 
-        document.addEventListener('mousemove', (ev) => {
+        document.addEventListener('mousedown', (ev) => {
             dropdownPosition.set([
                 Math.min(ev.clientX, window.innerWidth - 150),
                 ev.clientY,

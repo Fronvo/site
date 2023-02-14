@@ -1,100 +1,61 @@
 <script lang="ts">
+    import Center from '$lib/app/Center.svelte';
     import type { FronvoAccount } from 'interfaces/all';
-    import { joinedCommunity } from 'stores/communities';
+    import { dataSaver, socket } from 'stores/all';
+    import { dropdownVisible, targetCommunityMember } from 'stores/main';
+    import { onMount } from 'svelte';
+    import { writable, type Writable } from 'svelte/store';
     import { DropdownTypes, type ModalData } from 'types/main';
-    import {
-        cachedAccountData,
-        dropdownVisible,
-        targetCommunityMember,
-    } from 'stores/main';
     import {
         dismissDropdown,
         dismissModal,
-        fetchUser,
-        findCachedAccount,
         setProgressBar,
         showDropdown,
     } from 'utilities/main';
-    import { loadProfilePanel } from 'utilities/profile';
-    import { dataSaver } from 'stores/all';
-    import { ourProfileData } from 'stores/profile';
     import ModalTemplate from '../ModalTemplate.svelte';
-    import { onMount } from 'svelte';
 
-    let memberInfo: FronvoAccount[] = [];
-    const memberInfoCopy = $dataSaver
-        ? $joinedCommunity.members.slice(0, 20)
-        : $joinedCommunity.members;
+    // Cap at 20 max loaded
     let loadingFinished = false;
+    const bansInfo: Writable<FronvoAccount[]> = writable([]);
 
-    function isOwner(profileId?: string): boolean {
-        return (
-            $joinedCommunity.ownerId == (profileId || $ourProfileData.profileId)
-        );
-    }
+    async function loadBannedMembers(): Promise<void> {
+        return new Promise((resolve) => {
+            socket.emit('showBannedMembers', ({ bannedMembers }) => {
+                // Save data
+                if ($dataSaver) {
+                    bannedMembers = bannedMembers.splice(0, 10);
+                }
 
-    async function loadCommunityMembers() {
-        setProgressBar(true);
+                $bansInfo = bannedMembers;
 
-        // Fetch all community members, notify UI once finished
-        for (const memberIndex in memberInfoCopy) {
-            const targetUser = findCachedAccount(
-                memberInfoCopy[memberIndex],
-                $cachedAccountData
-            );
-
-            if (targetUser) {
-                memberInfo.push(targetUser);
-
-                checkLoadingFinished();
-            } else {
-                // Not cached, fetch
-                fetchUser(memberInfoCopy[memberIndex]).then((user) => {
-                    memberInfo.push(user);
-
-                    // Update cache
-                    $cachedAccountData.push(user);
-
-                    checkLoadingFinished();
-                });
-            }
-        }
-
-        function checkLoadingFinished(): void {
-            // Finish loading
-            if (memberInfo.length == memberInfoCopy.length) {
-                loadingFinished = true;
-                setProgressBar(false);
-            }
-        }
-    }
-
-    async function viewProfile(accountIndex: number): Promise<void> {
-        dismissModal();
-
-        await loadProfilePanel(
-            $cachedAccountData,
-            memberInfo[accountIndex].profileId
-        );
+                resolve();
+            });
+        });
     }
 
     function editProfile(accountIndex: number): void {
         if ($dropdownVisible) {
             dismissDropdown();
         } else {
-            $targetCommunityMember = memberInfo[accountIndex];
+            $targetCommunityMember = $bansInfo[accountIndex];
 
-            showDropdown(DropdownTypes.CommunityMember);
+            showDropdown(DropdownTypes.CommunityMemberUnban);
         }
     }
 
     onMount(async () => {
-        await loadCommunityMembers();
+        setProgressBar(true);
+
+        await loadBannedMembers();
+
+        loadingFinished = true;
+
+        setProgressBar(false);
     });
 
     const data: ModalData = {
-        titlePreSpan: $joinedCommunity.members.length,
-        title: 'Members',
+        titlePreSpan: $bansInfo.length,
+        title: 'Banned members',
 
         actions: [
             {
@@ -107,43 +68,43 @@
 
 <ModalTemplate {data}>
     {#if loadingFinished}
-        <div class="members-items-container">
-            {#each memberInfo as { profileId, username, following, followers, avatar, isFollower, isPrivate, isSelf }, i}
-                <div
-                    class={isOwner(profileId) ? 'owner-div' : ''}
-                    on:click={() =>
-                        isOwner() && !($ourProfileData.profileId == profileId)
-                            ? editProfile(i)
-                            : viewProfile(i)}
-                >
-                    <img
-                        id="avatar"
-                        src={avatar && !$dataSaver
-                            ? avatar
-                            : '/svgs/profile/avatar.svg'}
-                        alt={`${username}'s avatar`}
-                        draggable={false}
-                    />
-                    <h1 id="username">{username}</h1>
+        {#if $bansInfo.length == 0}
+            <Center absolute>
+                <h1 class="modal-header">No banned users</h1>
+            </Center>
+        {:else}
+            <div class="members-items-container">
+                {#each $bansInfo as { username, following, followers, avatar, isFollower, isPrivate, isSelf }, i}
+                    <div on:click={() => editProfile(i)}>
+                        <img
+                            id="avatar"
+                            src={avatar && !$dataSaver
+                                ? avatar
+                                : '/svgs/profile/avatar.svg'}
+                            alt={`${username}'s avatar`}
+                            draggable={false}
+                        />
+                        <h1 id="username">{username}</h1>
 
-                    <h1 id="following">
-                        <span
-                            >{isFollower || isSelf || !isPrivate
-                                ? following.length
-                                : '?'}</span
-                        > following
-                    </h1>
+                        <h1 id="following">
+                            <span
+                                >{isFollower || isSelf || !isPrivate
+                                    ? following.length
+                                    : '?'}</span
+                            > following
+                        </h1>
 
-                    <h1 id="followers">
-                        <span
-                            >{isFollower || isSelf || !isPrivate
-                                ? followers.length
-                                : '?'}</span
-                        > followers
-                    </h1>
-                </div>
-            {/each}
-        </div>
+                        <h1 id="followers">
+                            <span
+                                >{isFollower || isSelf || !isPrivate
+                                    ? followers.length
+                                    : '?'}</span
+                            > followers
+                        </h1>
+                    </div>
+                {/each}
+            </div>
+        {/if}
     {/if}
 </ModalTemplate>
 

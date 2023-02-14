@@ -2,6 +2,8 @@
 // Shared variables for the app route, after login.
 // ******************** //
 
+import CommunityMemberDropdown from '$lib/app/main/dropdowns/CommunityMemberDropdown.svelte';
+import CommunityMemberUnbanDropdown from '$lib/app/main/dropdowns/CommunityMemberUnbanDropdown.svelte';
 import CommunityOptionsDropdown from '$lib/app/main/dropdowns/CommunityOptionsDropdown.svelte';
 import PostOptionsDropdown from '$lib/app/main/dropdowns/PostOptionsDropdown.svelte';
 import CommunityMembers from '$lib/app/main/modals/CommunityMembers.svelte';
@@ -9,7 +11,6 @@ import ConfirmDeleteMessageModal from '$lib/app/main/modals/ConfirmDeleteMessage
 import CreateCommunityModal from '$lib/app/main/modals/CreateCommunityModal.svelte';
 import CreatePostModal from '$lib/app/main/modals/CreatePostModal.svelte';
 import DeletePostModal from '$lib/app/main/modals/DeletePostModal.svelte';
-import EditCommunityMemberModal from '$lib/app/main/modals/EditCommunityMemberModal.svelte';
 import EditCommunityModal from '$lib/app/main/modals/EditCommunityModal.svelte';
 import EditJoinRequestModal from '$lib/app/main/modals/EditJoinRequestModal.svelte';
 import EditProfileModal from '$lib/app/main/modals/EditProfileModal.svelte';
@@ -23,6 +24,7 @@ import LeaveCommunityModal from '$lib/app/main/modals/LeaveCommunityModal.svelte
 import MaxOnlineTimeModal from '$lib/app/main/modals/MaxOnlineTimeModal.svelte';
 import PostModal from '$lib/app/main/modals/PostModal.svelte';
 import SettingsModal from '$lib/app/main/modals/SettingsModal.svelte';
+import ShowBansModal from '$lib/app/main/modals/ShowBansModal.svelte';
 import CommunitiesPanel from '$lib/app/main/panels/CommunitiesPanel.svelte';
 import HomePanel from '$lib/app/main/panels/HomePanel.svelte';
 import ProfilePanel from '$lib/app/main/panels/ProfilePanel.svelte';
@@ -56,16 +58,21 @@ export const modals = [
     LeaveCommunityModal,
     CommunityMembers,
     EditCommunityModal,
-    EditCommunityMemberModal,
     ConfirmDeleteMessageModal,
     JoinRequestsModal,
     EditJoinRequestModal,
     DeletePostModal,
     JoinFronvoModal,
+    ShowBansModal,
 ];
 
 // Dropdown settings
-export const dropdowns = [CommunityOptionsDropdown, PostOptionsDropdown];
+export const dropdowns = [
+    CommunityOptionsDropdown,
+    PostOptionsDropdown,
+    CommunityMemberDropdown,
+    CommunityMemberUnbanDropdown,
+];
 
 // General Modal settings
 export const currentModalId = writable(0);
@@ -81,7 +88,7 @@ export const postModalIndex: Writable<number> = writable();
 export const postModalInfo: Writable<AccountPost | HomePost> = writable();
 export const postModalForHome: Writable<boolean> = writable();
 
-// CommunityMemberModal
+// EditCommunityMemberModal
 export const targetCommunityMember: Writable<FronvoAccount> = writable();
 
 // ConfirmDeleteMessageModal

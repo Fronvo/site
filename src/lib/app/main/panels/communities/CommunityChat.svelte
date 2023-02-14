@@ -1,5 +1,4 @@
 <script lang="ts">
-    import type { CommunityMessage } from 'interfaces/all';
     import DeleteChatOption from '$lib/svgs/DeleteChatOption.svelte';
     import { dataSaver, socket } from 'stores/all';
     import { loadCommunitiesPanel } from 'utilities/communities';
@@ -12,7 +11,11 @@
         communityMessages as messages,
         targetSendHeight,
     } from 'stores/communities';
-    import { modalVisible, targetConfirmCommunityMessage } from 'stores/main';
+    import {
+        cachedAccountData,
+        modalVisible,
+        targetConfirmCommunityMessage,
+    } from 'stores/main';
     import { onDestroy, onMount } from 'svelte';
     import Time from 'svelte-time';
     import type { Unsubscriber } from 'svelte/store';
@@ -22,6 +25,7 @@
     import Reply from '$lib/svgs/Reply.svelte';
     import { ourProfileData } from 'stores/profile';
     import { ModalTypes } from 'types/main';
+    import { loadProfilePanel } from 'utilities/profile';
 
     let unsubscribe: Unsubscriber;
 
@@ -91,6 +95,10 @@
         );
     }
 
+    function loadAuthorProfile(profileId: string): void {
+        loadProfilePanel($cachedAccountData, profileId);
+    }
+
     function sendMessage(): void {
         socket.emit(
             'sendCommunityMessage',
@@ -153,8 +161,6 @@
                 const targetMessage = $messages[messageIndex];
 
                 if (targetMessage.message.messageId == messageId) {
-                    console.log(messageIndex, messageId);
-
                     $messages.splice(Number(messageIndex), 1);
                     $messages = $messages;
 
@@ -218,10 +224,15 @@
         });
 
         socket.on('memberLeft', ({ profileId }) => {
-            $joinedCommunity?.members.splice(
-                $joinedCommunity?.members.indexOf(profileId),
-                1
-            );
+            // Another client / kicked / banned
+            if (profileId == $ourProfileData.profileId) {
+                loadCommunitiesPanel();
+            } else {
+                $joinedCommunity?.members.splice(
+                    $joinedCommunity?.members.indexOf(profileId),
+                    1
+                );
+            }
         });
     }
 
@@ -325,6 +336,8 @@
                         <img
                             id="avatar"
                             draggable={false}
+                            on:click={() =>
+                                loadAuthorProfile(profileData.profileId)}
                             src={profileData.avatar && !$dataSaver
                                 ? profileData.avatar
                                 : '/svgs/profile/avatar.svg'}
@@ -462,6 +475,7 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+        cursor: pointer;
     }
 
     .message-info-container #username {
@@ -578,6 +592,10 @@
 
         .message-info-container .menu-container {
             opacity: 1;
+        }
+
+        .message-info-container #avatar {
+            cursor: default;
         }
     }
 

@@ -111,8 +111,8 @@
 
         document.addEventListener('mousedown', (ev) => {
             dropdownPosition.set([
-                Math.min(ev.clientX, window.innerWidth - 150),
-                ev.clientY,
+                Math.min(ev.clientX, window.innerWidth - 215),
+                Math.min(ev.clientY, window.innerHeight - 200),
             ]);
         });
 

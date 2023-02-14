@@ -69,15 +69,6 @@
         }
     }
 
-    async function viewProfile(accountIndex: number): Promise<void> {
-        dismissModal();
-
-        await loadProfilePanel(
-            $cachedAccountData,
-            memberInfo[accountIndex].profileId
-        );
-    }
-
     function editProfile(accountIndex: number): void {
         if ($dropdownVisible) {
             dismissDropdown();
@@ -111,10 +102,7 @@
             {#each memberInfo as { profileId, username, following, followers, avatar, isFollower, isPrivate, isSelf }, i}
                 <div
                     class={isOwner(profileId) ? 'owner-div' : ''}
-                    on:click={() =>
-                        isOwner() && !($ourProfileData.profileId == profileId)
-                            ? editProfile(i)
-                            : viewProfile(i)}
+                    on:click={() => editProfile(i)}
                 >
                     <img
                         id="avatar"

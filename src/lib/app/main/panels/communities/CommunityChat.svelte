@@ -13,19 +13,28 @@
     } from 'stores/communities';
     import {
         cachedAccountData,
+        dropdownVisible,
         modalVisible,
+        targetCommunityMember,
         targetConfirmCommunityMessage,
     } from 'stores/main';
     import { onDestroy, onMount } from 'svelte';
     import Time from 'svelte-time';
     import type { Unsubscriber } from 'svelte/store';
     import { scale } from 'svelte/transition';
-    import { dismissModal, setProgressBar, showModal } from 'utilities/main';
+    import {
+        dismissDropdown,
+        dismissModal,
+        setProgressBar,
+        showDropdown,
+        showModal,
+    } from 'utilities/main';
     import linkifyHtml from 'linkify-html';
     import Reply from '$lib/svgs/Reply.svelte';
     import { ourProfileData } from 'stores/profile';
-    import { ModalTypes } from 'types/main';
+    import { DropdownTypes, ModalTypes } from 'types/main';
     import { loadProfilePanel } from 'utilities/profile';
+    import type { FronvoAccount } from 'interfaces/all';
 
     let unsubscribe: Unsubscriber;
 
@@ -95,8 +104,14 @@
         );
     }
 
-    function loadAuthorProfile(profileId: string): void {
-        loadProfilePanel($cachedAccountData, profileId);
+    function editAuthorProfile(profileData: FronvoAccount): void {
+        if ($dropdownVisible) {
+            dismissDropdown();
+        } else {
+            $targetCommunityMember = profileData;
+
+            showDropdown(DropdownTypes.CommunityMember);
+        }
     }
 
     function sendMessage(): void {
@@ -351,8 +366,7 @@
                         <img
                             id="avatar"
                             draggable={false}
-                            on:click={() =>
-                                loadAuthorProfile(profileData.profileId)}
+                            on:click={() => editAuthorProfile(profileData)}
                             src={profileData.avatar && !$dataSaver
                                 ? profileData.avatar
                                 : '/svgs/profile/avatar.svg'}

@@ -86,17 +86,23 @@
         {
             title: `${hasChatPerms() ? 'Revoke' : 'Give'} chat permission`,
             callback: updateChatPerms,
-            condition: $joinedCommunity.chatRequestsEnabled,
+            condition:
+                $joinedCommunity.chatRequestsEnabled &&
+                $targetCommunityMember.profileId != $ourProfileData.profileId,
         },
         {
             title: 'Kick member',
             callback: kickMember,
-            condition: isOwner(),
+            condition:
+                isOwner() &&
+                $targetCommunityMember.profileId != $ourProfileData.profileId,
         },
         {
             title: 'Ban member',
             callback: banMember,
-            condition: isOwner(),
+            condition:
+                isOwner() &&
+                $targetCommunityMember.profileId != $ourProfileData.profileId,
         },
     ];
 </script>

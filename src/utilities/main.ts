@@ -16,7 +16,7 @@ import {
     progressBarVisible,
 } from 'stores/main';
 import type { DropdownTypes, ModalTypes, PanelTypes } from 'types/main';
-import { getKey, removeKey, setKey } from './global';
+import { getKey, removeKey } from './global';
 
 // Preserve modal state
 let modalStateVisible: boolean;
@@ -101,12 +101,6 @@ export async function fetchPosts(profileId: string): Promise<AccountPost[]> {
 }
 
 export function switchPanel(newPanel: PanelTypes): void {
-    // Prevent panel spam hogging performance
-    if (getKey('panelId') == newPanel) return;
-
-    // Update panelId for future page reloads
-    setKey('panelId', newPanel);
-
     // Set the panel dynamically
     currentPanelId.set(newPanel);
 }

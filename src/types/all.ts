@@ -4,7 +4,6 @@
 
 export type LocalKeys =
     | 'token'
-    | 'panelId'
     | 'maxOnlineTime'
     | 'darkTheme'
     | 'dataSaver'

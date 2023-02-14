@@ -164,10 +164,6 @@
         user-select: none;
     }
 
-    .members-items-container .owner-div {
-        box-shadow: 0 0 10px var(--text_color);
-    }
-
     .members-items-container div #following,
     .members-items-container div #followers {
         font-size: 1.7rem;

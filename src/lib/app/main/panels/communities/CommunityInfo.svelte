@@ -88,23 +88,22 @@
         }
 
         .info-container #name {
-            font-size: 2rem;
+            font-size: 1.9rem;
         }
     }
 
     @media screen and (max-width: 520px) {
         .info-container {
             width: 90%;
-            justify-content: flex-start;
         }
 
         .info-container #icon {
-            width: 48px;
-            height: 48px;
+            width: 36px;
+            height: 36px;
         }
 
         .info-container #name {
-            font-size: 1.9rem;
+            font-size: 1.5rem;
         }
     }
 </style>

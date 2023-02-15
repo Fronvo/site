@@ -113,11 +113,11 @@
         }
 
         .send-container textarea {
-            font-size: 1.9rem;
+            font-size: 1.3rem;
         }
 
         .reply-container #reply-name {
-            font-size: 1.7rem;
+            font-size: 1.2rem;
         }
     }
 
@@ -128,12 +128,12 @@
         }
 
         .send-container textarea {
-            font-size: 1.4rem;
+            font-size: 1.1rem;
             min-height: 45px;
         }
 
         .reply-container #reply-name {
-            font-size: 1.3rem;
+            font-size: 1rem;
         }
     }
 </style>

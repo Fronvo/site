@@ -51,7 +51,7 @@
     }
 </script>
 
-<div id="blur" in:fly={{ x: -100, duration: 1000 }} class="side-nav-container">
+<div in:fly={{ x: -100, duration: 1000 }} class="side-nav-container">
     <div
         id="component"
         on:click={() => {
@@ -98,11 +98,9 @@
         width: max-content;
         padding: 10px;
         height: 100vh;
-        background: var(--accent_bg_color);
         transition: 300ms background;
         transition: 500ms all;
         z-index: 1;
-        backdrop-filter: brightness(50%);
     }
 
     #component {
@@ -152,16 +150,20 @@
             bottom: 0;
             border-top-left-radius: 25px;
             border-top-right-radius: 25px;
-            height: 65px;
-            padding: 10px;
+            height: 60px;
             position: fixed;
             right: 0;
             left: 0;
             margin: auto;
+            background: var(--bg_color);
+            box-shadow: 0 0 10px var(--accent_shadow_color);
         }
 
         #component {
-            padding: 5px;
+            margin: 0;
+            padding: 0;
+            padding-left: 8px;
+            padding-right: 8px;
         }
     }
 </style>

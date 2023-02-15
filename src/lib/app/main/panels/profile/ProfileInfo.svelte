@@ -152,6 +152,8 @@
             {$userData.username}
         </h1>
 
+        <h1 id="profileId">{$userData.profileId}</h1>
+
         <h1 id="bio">
             {$userData.bio}
         </h1>
@@ -252,7 +254,7 @@
     }
 
     .info-container #username {
-        font-size: 2.5rem;
+        font-size: 2.4rem;
         margin: 0;
         margin-right: 10px;
         margin-left: 10px;
@@ -260,9 +262,18 @@
         text-align: center;
     }
 
+    .info-container #profileId {
+        font-size: 1.6rem;
+        margin: 0;
+        margin-right: 10px;
+        margin-left: 10px;
+        text-align: center;
+    }
+
     .info-container #bio {
         font-size: 1.5rem;
         margin: 0;
+        margin-top: 10px;
         margin-left: 10px;
         margin-right: 10px;
         color: var(--profile_info_color);
@@ -341,28 +352,29 @@
         .top-container {
             min-width: 400px;
             height: 25vh;
+            width: 15vw;
         }
 
         .top-container #avatar {
-            width: 120px;
-            height: 120px;
+            width: 100px;
+            height: 100px;
         }
 
         .info-container #username {
-            font-size: 2.6rem;
+            font-size: 2.1rem;
+        }
+
+        .info-container #profileId {
+            font-size: 1.4rem;
         }
 
         .info-container #bio {
-            font-size: 1.5rem;
-        }
-
-        .community-container #icon {
-            width: 40px;
-            height: 40px;
+            font-size: 1.3rem;
         }
 
         .community-container #community-name {
-            font-size: 1.9rem;
+            font-size: 1.5rem;
+            cursor: default;
         }
 
         .follow-container {
@@ -370,7 +382,7 @@
         }
 
         .follow-container h1 {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             cursor: default;
         }
 
@@ -381,12 +393,19 @@
 
     @media screen and (max-width: 520px) {
         .top-container {
-            min-width: 95vw;
-            max-width: 99vw;
+            min-width: 100vw;
+            max-width: 100vw;
+            border-radius: 0px;
+            height: 23vh;
+            min-height: 0;
         }
 
         .info-container #username {
-            font-size: 2.1rem;
+            font-size: 1.9rem;
+        }
+
+        .info-container #profileId {
+            font-size: 1.2rem;
         }
 
         .info-container #bio {
@@ -403,11 +422,11 @@
         }
 
         .community-container #community-name {
-            font-size: 1.7rem;
+            font-size: 1.2rem;
         }
 
         .follow-container h1 {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
         }
 
         .follow-container h1:first-child {

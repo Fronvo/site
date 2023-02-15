@@ -267,16 +267,21 @@
             margin-bottom: 5px;
         }
 
+        .author-container #avatar {
+            width: 40px;
+            height: 40px;
+        }
+
         .author-container #author {
-            font-size: 2rem;
+            font-size: 1.8rem;
         }
 
         .post-container #title {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
         }
 
         .post-container #content {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             -webkit-line-clamp: 4;
         }
 
@@ -299,26 +304,21 @@
         }
 
         .post-container {
-            max-width: 300px;
-            max-height: 450px;
-            margin-bottom: 25px;
-        }
-
-        .author-container #avatar {
-            width: 40px;
-            height: 40px;
+            max-width: 325px;
+            max-height: 400px;
+            margin-bottom: 10px;
         }
 
         .author-container #author {
-            font-size: 1.9rem;
+            font-size: 1.6rem;
         }
 
         .post-container #title {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
         }
 
         .post-container #content {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             -webkit-line-clamp: 3;
         }
 
@@ -327,11 +327,11 @@
         }
 
         .post-container #creation-date {
-            font-size: 1.1rem;
+            font-size: 0.95rem;
         }
 
         .posts-container #more {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             margin-bottom: 50px;
         }
     }

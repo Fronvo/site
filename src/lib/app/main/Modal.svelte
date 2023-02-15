@@ -35,5 +35,6 @@
         z-index: 3;
         background: var(--modal_bg_color);
         overflow: auto;
+        overflow-x: hidden;
     }
 </style>

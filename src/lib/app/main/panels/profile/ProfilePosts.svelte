@@ -184,10 +184,12 @@
 
 <style>
     .posts-container {
-        margin-top: 20px;
+        margin-top: 5px;
         display: flex;
         flex-direction: column;
-        margin-bottom: 10px;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
     }
 
     .posts-container #counter {
@@ -212,9 +214,9 @@
         flex-direction: column;
         background: transparent;
         margin-bottom: 25px;
-        width: 550px;
+        width: 600px;
         background: transparent;
-        box-shadow: 0 0 15px var(--accent_shadow_color);
+        box-shadow: 0 0 5px var(--accent_shadow_color);
         max-height: 650px;
         border-radius: 10px;
         padding: 5px;
@@ -246,6 +248,7 @@
         margin: 0;
         text-align: center;
         font-size: 1.9rem;
+        width: 100%;
         margin-right: 5px;
         margin-left: 5px;
     }
@@ -329,19 +332,23 @@
 
         .post-container:hover {
             background: transparent;
-            box-shadow: 0 0 15px var(--accent_shadow_color);
+            box-shadow: 0 0 5px var(--accent_shadow_color);
         }
 
         .post-container:active {
             transform: none;
         }
 
+        .author-container {
+            margin-bottom: 5px;
+        }
+
         .post-container #title {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
         }
 
         .post-container #content {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             -webkit-line-clamp: 4;
         }
 
@@ -375,21 +382,21 @@
         }
 
         .posts-container #counter {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
         }
 
         .post-container {
-            max-width: 300px;
-            max-height: 450px;
-            margin-bottom: 25px;
+            max-width: 325px;
+            max-height: 400px;
+            margin-bottom: 10px;
         }
 
         .post-container #title {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
         }
 
         .post-container #content {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             -webkit-line-clamp: 3;
         }
 
@@ -398,11 +405,11 @@
         }
 
         .post-container #creation-date {
-            font-size: 1.1rem;
+            font-size: 0.95rem;
         }
 
         .posts-container #more {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             margin-bottom: 50px;
         }
 

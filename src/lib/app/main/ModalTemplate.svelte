@@ -179,10 +179,9 @@
 
     @media screen and (max-width: 720px) {
         .modal-container {
-            max-height: 90%;
-            min-width: 85%;
-            max-width: 100%;
-            border-radius: 25px;
+            min-width: 100%;
+            min-height: 100%;
+            border-radius: 0px;
         }
 
         hr {

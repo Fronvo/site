@@ -595,31 +595,27 @@
         }
 
         .chat-container #more {
-            font-size: 1.8rem;
-        }
-
-        .message-container #username {
-            font-size: 1.7rem;
-        }
-
-        .reply-container #reply-name {
             font-size: 1.4rem;
         }
 
-        .reply-container #reply-message {
+        .message-container #username {
+            font-size: 1.4rem;
+        }
+
+        .reply-container #reply-name {
             font-size: 1.2rem;
+        }
+
+        .reply-container #reply-message {
+            font-size: 1.1rem;
         }
 
         .message-container #content {
-            font-size: 1.5rem;
-        }
-
-        .message-container #creation-date {
             font-size: 1.2rem;
         }
 
-        .message-info-container .menu-container {
-            opacity: 1;
+        .message-container #creation-date {
+            font-size: 1rem;
         }
 
         .message-info-container #avatar {
@@ -637,32 +633,32 @@
         }
 
         .chat-container #more {
-            font-size: 1.4rem;
+            font-size: 1.1rem;
         }
 
         .message-container #avatar {
-            width: 48px;
-            height: 48px;
+            width: 36px;
+            height: 36px;
         }
 
         .message-container #username {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
         }
 
         .reply-container #reply-name {
-            font-size: 1.3rem;
+            font-size: 1rem;
         }
 
         .reply-container #reply-message {
-            font-size: 1.1rem;
+            font-size: 0.9rem;
         }
 
         .message-container #content {
-            font-size: 1.3rem;
+            font-size: 1rem;
         }
 
         .message-container #creation-date {
-            font-size: 1.1rem;
+            font-size: 0.8rem;
         }
     }
 </style>

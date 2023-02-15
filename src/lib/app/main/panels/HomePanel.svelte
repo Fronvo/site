@@ -101,7 +101,7 @@
 
     @media screen and (max-width: 520px) {
         .home-container #latest-posts {
-            font-size: 2rem;
+            font-size: 1.9rem;
             margin: 0;
         }
     }

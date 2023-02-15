@@ -12,7 +12,6 @@
         targetSendHeight,
     } from 'stores/communities';
     import {
-        cachedAccountData,
         dropdownVisible,
         modalVisible,
         targetCommunityMember,
@@ -33,7 +32,6 @@
     import Reply from '$lib/svgs/Reply.svelte';
     import { ourProfileData } from 'stores/profile';
     import { DropdownTypes, ModalTypes } from 'types/main';
-    import { loadProfilePanel } from 'utilities/profile';
     import type { FronvoAccount } from 'interfaces/all';
 
     let unsubscribe: Unsubscriber;
@@ -244,6 +242,7 @@
                 $sendContent = '';
             }
 
+            // TODO: Can chat
             $chatRequestAccepted = chatRequestState;
         }
     }
@@ -375,8 +374,8 @@
                         <h1 id="username">{profileData.username}</h1>
 
                         <div class="menu-container">
-                            <!-- Anyone can reply, if the chat request is accepted -->
-                            {#if $chatRequestAccepted}
+                            <!-- Anyone can reply, if the chat request is accepted / not enabled -->
+                            {#if $chatRequestAccepted || !$joinedCommunity.chatRequestsEnabled}
                                 <Reply callback={() => replyMessage(i)} />
                             {/if}
 

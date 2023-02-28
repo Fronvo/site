@@ -1,68 +1,20 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
-    import HomePosts from '$lib/app/main/panels/home/HomePosts.svelte';
-    import { socket } from 'stores/all';
-    import { homePosts as homePostsStore, totalHomePosts } from 'stores/home';
-    import { currentPanelId, loginSucceeded } from 'stores/main';
-    import { onDestroy, onMount } from 'svelte';
-    import type { Unsubscriber } from 'svelte/store';
     import { fade } from 'svelte/transition';
-    import { getKey } from 'utilities/global';
-    import { setProgressBar, setTitle } from 'utilities/main';
+    import { setTitle } from 'utilities/main';
+    import HomePosts from './home/HomePosts.svelte';
 
-    let unsubscribe: Unsubscriber;
-
-    onMount(() => {
-        setProgressBar(true);
-
-        unsubscribe = loginSucceeded.subscribe((state) => {
-            if (typeof state == 'undefined') return;
-
-            if (
-                !location.href.includes('/profile') &&
-                !location.href.includes('/community') &&
-                $currentPanelId == 0
-            ) {
-                setTitle('Fronvo - Home');
-
-                goto('/home', {
-                    replaceState: true,
-                });
-            }
-
-            loadPosts();
-        });
+    goto('/home', {
+        replaceState: true,
     });
 
-    onDestroy(() => {
-        unsubscribe();
-    });
-
-    function loadPosts(): void {
-        // Dont reload posts in the same session
-        if (!$homePostsStore) {
-            socket.emit(
-                getKey('token') ? 'fetchHomePosts' : 'fetchHomePostsGuest',
-                { from: '0', to: '15' },
-                ({ homePosts, totalPosts }) => {
-                    $totalHomePosts = totalPosts;
-                    $homePostsStore = homePosts;
-
-                    setProgressBar(false);
-                }
-            );
-        } else {
-            setProgressBar(false);
-        }
-    }
+    setTitle('Home - Fronvo');
 </script>
 
 <div class="home-container">
-    {#if $homePostsStore}
-        <h1 in:fade={{ duration: 500 }} id="latest-posts">Latest posts</h1>
+    <h1 in:fade={{ duration: 250 }} id="latest-posts">Latest posts</h1>
 
-        <HomePosts />
-    {/if}
+    <HomePosts />
 </div>
 
 <style>
@@ -73,11 +25,11 @@
         align-items: center;
         margin-left: 100px;
         margin-right: 100px;
+        margin-bottom: 40px;
     }
 
     .home-container #latest-posts {
         color: var(--profile_info_color);
-        font-size: 2.6rem;
         margin: 0;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -85,23 +37,19 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+        font-size: 2.5rem;
+        border-bottom: 5px solid var(--text_color);
+        padding: 10px;
     }
 
-    @media screen and (max-width: 720px) {
+    @media screen and (max-width: 700px) {
         .home-container {
             margin-left: 0;
             margin-right: 0;
         }
 
         .home-container #latest-posts {
-            font-size: 2.3rem;
-            margin: 0;
-        }
-    }
-
-    @media screen and (max-width: 520px) {
-        .home-container #latest-posts {
-            font-size: 1.9rem;
+            font-size: 1.7rem;
             margin: 0;
         }
     }

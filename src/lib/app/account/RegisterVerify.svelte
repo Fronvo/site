@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { FronvoError } from 'interfaces/all';
-    import { socket } from 'stores/all';
+    import { socket } from 'stores/main';
     import SvelteSegmentedInput from 'svelte-segmented-input';
     import { fade, scale } from 'svelte/transition';
     import {
@@ -96,31 +96,21 @@
     .verify-container button {
         font-size: 2rem;
         margin-top: 20px;
+        background-size: 200% auto;
+        background-image: linear-gradient(
+            to right,
+            rgb(102, 0, 255) 0%,
+            rgb(146, 73, 255) 51%,
+            rgb(102, 0, 255) 100%
+        );
+        color: white;
     }
 
-    @media screen and (max-width: 720px) {
-        .verify-container {
-            width: 450px;
-        }
-
-        .verify-container #header {
-            font-size: 2.3rem;
-        }
-
-        .verify-container #info {
-            font-size: 1.6rem;
-        }
-
-        .verify-container #error-header {
-            font-size: 1.7rem;
-        }
-
-        .verify-container button {
-            font-size: 1.8rem;
-        }
+    .verify-container button:hover {
+        background-position: bottom center;
     }
 
-    @media screen and (max-width: 520px) {
+    @media screen and (max-width: 700px) {
         .verify-container {
             width: 350px;
         }

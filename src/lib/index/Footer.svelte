@@ -45,9 +45,9 @@
         cursor: pointer;
     }
 
-    @media screen and (max-width: 720px) {
+    @media screen and (max-width: 700px) {
         .footer .content h1 {
-            font-size: 2.3rem;
+            font-size: 2rem;
         }
 
         .footer .content img {

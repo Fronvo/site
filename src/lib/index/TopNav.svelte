@@ -30,6 +30,7 @@
         margin: auto;
         background: rgba(133, 40, 255, 0.5);
         transition: 300ms background;
+        backdrop-filter: blur(10px);
     }
 
     .top-nav-container #logo {
@@ -50,24 +51,22 @@
 
     .top-nav-container #try-1 {
         font-size: 1.7rem;
+        background-size: 200% auto;
+        background-image: linear-gradient(
+            to right,
+            rgb(102, 0, 255) 0%,
+            rgb(146, 73, 255) 51%,
+            rgb(102, 0, 255) 100%
+        );
+        color: white;
+        box-shadow: 0 0 2px var(--text_color);
     }
 
-    @media screen and (max-width: 720px) {
-        .top-nav-container {
-            padding: 15px;
-        }
-
-        .top-nav-container #logo {
-            font-size: 1.8rem;
-        }
-
-        .top-nav-container #try-1 {
-            font-size: 1.3rem;
-            cursor: default;
-        }
+    .top-nav-container #try-1:hover {
+        background-position: bottom center;
     }
 
-    @media screen and (max-width: 520px) {
+    @media screen and (max-width: 700px) {
         .top-nav-container {
             right: 5px;
             left: 5px;
@@ -76,6 +75,11 @@
 
         .top-nav-container #logo {
             font-size: 1.5rem;
+        }
+
+        .top-nav-container #try-1 {
+            font-size: 1.3rem;
+            cursor: default;
         }
     }
 </style>

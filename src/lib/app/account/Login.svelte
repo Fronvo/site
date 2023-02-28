@@ -5,20 +5,13 @@
         accountRegisterTab,
         accountResetPasswordTab,
     } from 'stores/account';
-    import {
-        cachedAccountData,
-        currentPanelId,
-        loginSucceeded,
-    } from 'stores/main';
-    import { socket } from 'stores/all';
+    import { homePosts } from 'stores/home';
+    import { cachedAccountData, socket } from 'stores/main';
+    import { pendingSearchId } from 'stores/profile';
     import { onMount, onDestroy } from 'svelte';
     import { fade, scale } from 'svelte/transition';
     import { setKey } from 'utilities/global';
-    import { dismissModal } from 'utilities/main';
-    import { homePosts } from 'stores/home';
-    import { loadProfilePanel } from 'utilities/profile';
-    import { targetProfile } from 'stores/profile';
-    import { PanelTypes } from 'types/main';
+    import { dismissModal, performLogin } from 'utilities/main';
 
     let email: string;
     let password: string;
@@ -35,13 +28,6 @@
         }
 
         if (ev.ctrlKey || ev.altKey) return;
-
-        if (!email) {
-            emailInput.focus();
-            return;
-        }
-
-        passwordInput.focus();
     }
 
     onMount(() => {
@@ -53,11 +39,11 @@
             'login-button'
         ) as HTMLButtonElement;
 
-        document.addEventListener('keypress', keyListener);
+        document.addEventListener('keydown', keyListener);
     });
 
     onDestroy(() => {
-        document.removeEventListener('keypress', keyListener);
+        document.removeEventListener('keydown', keyListener);
     });
 
     function login(): void {
@@ -80,22 +66,18 @@
             socket.emit(
                 'login',
                 { email: email || '', password: password || '' },
-                ({ err, token }) => {
+                async ({ err, token }) => {
                     if (err) {
                         setError({ err });
                         toggleUI(true);
                     } else {
                         setKey('token', token);
                         $homePosts = undefined;
-                        $loginSucceeded = true;
 
-                        // Profile panel while in guest mode, reload
-                        if ($currentPanelId == PanelTypes.Profile) {
-                            loadProfilePanel(
-                                $cachedAccountData,
-                                $targetProfile
-                            );
-                        }
+                        await performLogin(
+                            $pendingSearchId,
+                            $cachedAccountData
+                        );
 
                         dismissModal();
                     }
@@ -223,6 +205,19 @@
         width: 90%;
         border: 3px solid white;
         padding: 7px;
+        transition: 0.25s;
+        background-size: 200% auto;
+        background-image: linear-gradient(
+            to right,
+            rgb(102, 0, 255) 0%,
+            rgb(146, 73, 255) 51%,
+            rgb(102, 0, 255) 100%
+        );
+        color: white;
+    }
+
+    .account-container button:hover {
+        background-position: bottom center;
     }
 
     .account-container #register-redirect {
@@ -244,44 +239,7 @@
         color: rgb(233, 206, 255);
     }
 
-    @media screen and (max-width: 720px) {
-        .account-container {
-            width: 450px;
-        }
-
-        .account-container #header {
-            font-size: 2.5rem;
-        }
-
-        .account-container #error-header {
-            font-size: 1.7rem;
-        }
-
-        .account-container #input-header {
-            font-size: 1.7rem;
-        }
-
-        .account-container input {
-            font-size: 1.7rem;
-        }
-
-        .account-container #reset-redirect {
-            font-size: 1.7rem;
-            cursor: default;
-        }
-
-        .account-container button {
-            font-size: 2.2rem;
-            cursor: default;
-        }
-
-        .account-container #register-redirect {
-            font-size: 1.7rem;
-            cursor: default;
-        }
-    }
-
-    @media screen and (max-width: 520px) {
+    @media screen and (max-width: 700px) {
         .account-container {
             width: 350px;
         }

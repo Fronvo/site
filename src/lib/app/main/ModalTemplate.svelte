@@ -1,10 +1,18 @@
 <script lang="ts">
     import OptionsMenu from '$lib/svgs/OptionsMenu.svelte';
-    import { dataSaver } from 'stores/all';
-    import { dropdownVisible, modalAnimDuration } from 'stores/main';
-    import { backOut } from 'svelte/easing';
-    import { scale } from 'svelte/transition';
-    import type { DropdownTypes, ModalData } from 'types/main';
+    import {
+        dropdownImage,
+        DropdownTypes,
+        dropdownVisible,
+    } from 'stores/dropdowns';
+    import { dataSaver } from 'stores/main';
+    import {
+        modalAnimDuration,
+        modalInput,
+        modalSide,
+        type ModalData,
+    } from 'stores/modals';
+    import { fly } from 'svelte/transition';
     import {
         dismissDropdown,
         dismissModal,
@@ -12,6 +20,7 @@
     } from 'utilities/main';
 
     export let data: ModalData;
+    $modalSide = data.sideModal?.side;
 
     function runCallback(callback: () => void): void {
         callback();
@@ -24,14 +33,32 @@
             showDropdown(dropdown);
         }
     }
+
+    function showImageDropdown(targetImage: string): void {
+        $dropdownImage = targetImage;
+
+        callDropdown(DropdownTypes.Image);
+    }
 </script>
 
 <div
-    class="modal-container"
-    transition:scale={{
+    class={`modal-container ${
+        $modalSide && 'modal-side'
+    } modal-side-${$modalSide}`}
+    in:fly={{
         duration: modalAnimDuration,
-        start: 1.05,
-        easing: backOut,
+        y: !$modalSide || document.body.clientWidth < 700 ? 25 : 0,
+        x:
+            $modalSide &&
+            document.body.clientWidth > 700 &&
+            ($modalSide == 'left' ? -100 : 100),
+    }}
+    out:fly={{
+        duration: modalAnimDuration,
+        x:
+            $modalSide &&
+            document.body.clientWidth > 700 &&
+            ($modalSide == 'left' ? -100 : 100),
     }}
 >
     <div class="header-container">
@@ -56,6 +83,7 @@
                         : '/svgs/profile/avatar.svg'}
                     draggable={false}
                     alt="Title icon"
+                    on:contextmenu={() => showImageDropdown(data.titleIcon)}
                 />
             {/if}
 
@@ -63,7 +91,12 @@
                 <span>{`${data.titlePreSpan} `}</span>
             {/if}
 
-            <h1 id="title">{data.title}</h1>
+            <h1 id="title">
+                {data.titlePreSpan
+                    ? data.title[0].toLowerCase() +
+                      data.title.substring(1, data.title.length)
+                    : data.title}
+            </h1>
 
             {#if data.titleDropdown}
                 {#if data.titleDropdownCondition()}
@@ -73,60 +106,92 @@
                 {/if}
             {/if}
         </h1>
+
+        {#if data.useInput}
+            <!-- svelte-ignore a11y-autofocus -->
+            <input
+                class="modal-input"
+                autofocus
+                bind:value={$modalInput}
+                maxlength={data.inputMaxLength || 15}
+            />
+        {/if}
     </div>
 
-    {#if !data.noSeperator}
-        <hr />
-    {/if}
+    <hr />
 
     <div class="data-container">
         <slot />
     </div>
 
     <div class="options-container">
-        {#each data.actions as { title, callback }}
-            <button on:click={() => runCallback(callback)}>{title}</button>
+        {#each data.actions as { title, callback, danger }}
+            <button
+                class={`${danger ? 'danger' : ''}`}
+                on:click={() => runCallback(callback)}>{title}</button
+            >
         {/each}
     </div>
 </div>
 
 <style>
     hr {
-        width: 100px;
-        z-index: 1;
+        width: 100%;
+        margin-top: 5px;
+        margin-bottom: 15px;
+        border-color: var(--seperator_background);
     }
 
     .modal-container {
         display: flex;
         flex-direction: column;
         align-items: center;
-        overflow: auto;
-        border-radius: 25px;
-        min-height: 600px;
+        overflow: hidden;
+        border-radius: 10px;
+        min-height: 200px;
         max-height: 90%;
         background: var(--modal_content_bg_color);
-        box-shadow: 0 0 5px var(--modal_content_shadow_bg_color);
-        min-width: 550px;
+        box-shadow: 0 0 10px var(--accent_shadow_color);
+        min-width: 600px;
         max-width: 70vw;
-        padding: 5px;
         overflow-x: hidden;
+    }
+
+    .modal-side {
+        min-width: 500px;
+        max-width: 500px;
+        width: max-content;
+        max-height: none;
+        height: 100%;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+
+    .modal-side-left {
+        border-top-left-radius: 0;
+    }
+
+    .modal-side-right {
+        border-top-right-radius: 0;
     }
 
     .header-container {
         display: flex;
+        flex-direction: column;
         width: 100%;
-        justify-content: center;
         z-index: 1;
-        padding-right: 10px;
+        align-items: center;
+        justify-content: center;
+        margin-top: 5px;
     }
 
     #header,
     #header #title {
         display: flex;
         flex-direction: row;
+        text-align: center;
         align-items: center;
-        justify-content: center;
-        font-size: 2.4rem;
+        font-size: 2.3rem;
         margin: 0;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -134,6 +199,7 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+        color: var(--profile_info_color);
     }
 
     :global(.clickable) {
@@ -145,6 +211,7 @@
     }
 
     #header span {
+        margin-right: 5px;
         color: var(--profile_info_color);
     }
 
@@ -158,9 +225,10 @@
     .data-container {
         display: flex;
         flex-direction: column;
-        min-width: 500px;
-        text-align: center;
+        justify-content: start;
         align-items: center;
+        text-align: center;
+        overflow: auto;
     }
 
     .options-container {
@@ -168,53 +236,37 @@
         align-items: flex-end;
         flex: 1;
         height: 100%;
-        margin-bottom: 20px;
-        margin-top: 20px;
+        margin-bottom: 10px;
+        margin-top: 10px;
     }
 
     button {
         font-size: 1.8rem;
-        margin-right: 20px;
+        margin-left: 10px;
+        margin-right: 10px;
     }
 
-    @media screen and (max-width: 720px) {
+    .danger {
+        color: red;
+    }
+
+    @media screen and (max-width: 700px) {
         .modal-container {
-            min-width: 100%;
-            min-height: 100%;
+            position: fixed;
+            bottom: 0;
             border-radius: 0px;
+            min-width: 100%;
         }
 
-        hr {
-            margin-bottom: 20px;
-        }
-
-        #header,
-        #header #title {
-            font-size: 2.1rem;
-            cursor: default;
+        .modal-side {
+            max-height: 90%;
+            height: min-content;
         }
 
         :global(.clickable) {
             cursor: default;
         }
 
-        #header #icon {
-            width: 46px;
-            height: 46px;
-            margin-right: 5px;
-        }
-
-        .data-container {
-            width: 350px;
-            min-width: auto;
-        }
-
-        button {
-            font-size: 1.6rem;
-        }
-    }
-
-    @media screen and (max-width: 520px) {
         #header,
         #header #title {
             font-size: 1.8rem;
@@ -226,7 +278,8 @@
         }
 
         .data-container {
-            width: 300px;
+            min-width: auto;
+            max-width: 100%;
         }
 
         button {

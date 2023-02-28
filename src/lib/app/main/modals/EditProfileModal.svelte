@@ -1,21 +1,22 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
-    import { dismissModal, setProgressBar, setTitle } from 'utilities/main';
-    import { profileLoadingFinished, userData } from 'stores/profile';
-    import { socket } from 'stores/all';
+    import { dismissModal, setProgressBar } from 'utilities/main';
     import { onMount } from 'svelte';
     import Checkbox from 'svelte-checkbox';
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
     import ModalTemplate from '../ModalTemplate.svelte';
-    import type { ModalData } from 'types/main';
+    import { ourData, searchData } from 'stores/profile';
+    import { loadOurProfile, loadTargetProfile } from 'utilities/profile';
+    import { cachedAccountData, socket } from 'stores/main';
+    import { currentPanelId, PanelTypes } from 'stores/panels';
+    import type { ModalData } from 'stores/modals';
 
-    let profileId = $userData.profileId;
-    let username = $userData.username;
-    let bio = $userData.bio;
-    let avatar: Writable<string> = writable($userData.avatar);
-    let banner: Writable<string> = writable($userData.banner);
-    let isPrivate = $userData.isPrivate;
+    let profileId = $ourData.profileId;
+    let username = $ourData.username;
+    let bio = $ourData.bio;
+    let avatar: Writable<string> = writable($ourData.avatar);
+    let banner: Writable<string> = writable($ourData.banner);
+    let isPrivate = $ourData.isPrivate;
 
     let canUpload = true;
     let isUploading = false;
@@ -29,74 +30,52 @@
 
         const updatedData = {};
 
-        if ($userData.profileId != profileId) {
+        if ($ourData.profileId != profileId) {
             updatedData['profileId'] = profileId;
         }
 
-        if ($userData.username != username) {
+        if ($ourData.username != username) {
             updatedData['username'] = username;
         }
 
-        if ($userData.bio != bio) {
+        if ($ourData.bio != bio) {
             updatedData['bio'] = bio;
         }
 
-        if ($userData.avatar != $avatar) {
+        if ($ourData.avatar != $avatar) {
             updatedData['avatar'] = $avatar;
         }
 
-        if ($userData.banner != $banner) {
+        if ($ourData.banner != $banner) {
             updatedData['banner'] = $banner;
         }
 
-        if ($userData.isPrivate != isPrivate) {
+        if ($ourData.isPrivate != isPrivate) {
             updatedData['isPrivate'] = isPrivate;
         }
 
-        socket.emit(
-            'updateProfileData',
-            updatedData,
-            ({ err, profileData }) => {
-                if (err) {
-                    errorMessage = err.msg;
-                    isUploading = false;
-                    setProgressBar(false);
-
-                    return;
-                }
-
-                // Redirect to new profile
-                if ($userData.profileId != profileId) {
-                    goto(`/profile/${profileId}`, {
-                        replaceState: true,
-                    });
-                }
-
-                // Update route title
-                if (
-                    $userData.profileId != profileId ||
-                    $userData.username != username
-                ) {
-                    // Wait for $userData to be updated
-                    setTimeout(
-                        () =>
-                            setTitle(
-                                `${$userData.username} (${$userData.profileId}) - Fronvo`
-                            ),
-                        0
-                    );
-                }
-
-                $userData = { ...$userData, ...profileData };
-
-                // Reload banner
-                $profileLoadingFinished = false;
-                $profileLoadingFinished = true;
+        socket.emit('updateProfileData', updatedData, async ({ err }) => {
+            if (err) {
+                errorMessage = err.msg;
+                isUploading = false;
                 setProgressBar(false);
 
-                dismissModal();
+                return;
             }
-        );
+
+            await loadOurProfile($cachedAccountData);
+
+            if (
+                $searchData?.profileId == $ourData.profileId &&
+                $currentPanelId == PanelTypes.Profile
+            ) {
+                await loadTargetProfile($ourData.profileId, $cachedAccountData);
+            }
+
+            setProgressBar(false);
+
+            dismissModal();
+        });
     }
 
     function previewListener(
@@ -160,7 +139,6 @@
 
     const data: ModalData = {
         title: 'Edit Profile',
-        noSeperator: true,
 
         actions: [
             {
@@ -191,7 +169,7 @@
     <h1 class="modal-header">Bio</h1>
     <textarea class="modal-input" bind:value={bio} maxlength={128} rows={4} />
 
-    <div class="centered-container">
+    <div class="modal-center">
         <img
             id="avatar-preview"
             src={$avatar ? $avatar : '/svgs/profile/avatar.svg'}
@@ -215,7 +193,7 @@
 
     <input class="modal-input" maxlength={512} bind:value={$banner} />
 
-    <div class="centered-container modal-header">
+    <div class="modal-center">
         <h1 class="modal-header">Private account</h1>
         <Checkbox
             bind:checked={isPrivate}
@@ -247,29 +225,16 @@
         border-radius: 5px;
     }
 
-    .centered-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
     textarea {
         min-height: 100px;
     }
 
-    @media screen and (max-width: 720px) {
+    @media screen and (max-width: 700px) {
         #avatar-preview {
             width: 48px;
             height: 48px;
         }
 
-        #banner-preview {
-            width: 450px;
-            height: 225px;
-        }
-    }
-
-    @media screen and (max-width: 520px) {
         #banner-preview {
             width: 300px;
             height: 169px;

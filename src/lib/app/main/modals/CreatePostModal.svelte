@@ -1,14 +1,15 @@
 <script lang="ts">
-    import { socket } from 'stores/all';
-    import { ourProfileData, userData, userPosts } from 'stores/profile';
+    import { cachedAccountData, socket } from 'stores/main';
+    import type { ModalData } from 'stores/modals';
+    import { currentPanelId, PanelTypes } from 'stores/panels';
+    import { ourData, searchData } from 'stores/profile';
     import { onMount } from 'svelte';
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
-    import type { ModalData } from 'types/main';
     import { dismissModal, setProgressBar } from 'utilities/main';
+    import { loadTargetProfile } from 'utilities/profile';
     import ModalTemplate from '../ModalTemplate.svelte';
 
-    let title: string;
     let content: string;
     let attachment: Writable<string> = writable('');
     let isSharing = false;
@@ -25,7 +26,6 @@
         socket.emit(
             'createPost',
             {
-                title,
                 content,
                 attachment: $attachment,
             },
@@ -38,21 +38,14 @@
                     return;
                 }
 
-                // Update, new posts
-                socket.emit(
-                    'fetchProfilePosts',
-                    {
-                        profileId: $ourProfileData.profileId,
-                        from: '0',
-                        // Including newer post
-                        to: ($userPosts.length + 1).toString(),
-                    },
-                    ({ profilePosts }) => {
-                        $userPosts = profilePosts;
-                        $userData.totalPosts += 1;
-                        dismissModal();
-                    }
-                );
+                if (
+                    $searchData.profileId == $ourData.profileId &&
+                    $currentPanelId == PanelTypes.Profile
+                ) {
+                    loadTargetProfile($ourData.profileId, $cachedAccountData);
+                }
+
+                dismissModal();
             }
         );
     }
@@ -104,7 +97,6 @@
 
     const data: ModalData = {
         title: 'Create Post',
-        noSeperator: true,
 
         actions: [
             {
@@ -127,10 +119,6 @@
             {errorMessage}
         </h1>
     {/if}
-
-    <h1 class="modal-header">Title</h1>
-    <!-- svelte-ignore a11y-autofocus -->
-    <input class="modal-input" autofocus bind:value={title} maxlength={30} />
 
     <h1 class="modal-header">Content</h1>
     <textarea

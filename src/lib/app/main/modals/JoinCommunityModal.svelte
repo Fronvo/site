@@ -1,10 +1,12 @@
 <script lang="ts">
-    import { socket } from 'stores/all';
     import { fade } from 'svelte/transition';
-    import { dismissModal, setProgressBar } from 'utilities/main';
-    import { loadCommunitiesPanel } from 'utilities/communities';
-    import type { ModalData } from 'types/main';
+    import { dismissModal, setProgressBar, switchPanel } from 'utilities/main';
+    import { loadCommunitiesData } from 'utilities/communities';
     import ModalTemplate from '../ModalTemplate.svelte';
+    import { cachedAccountData, socket } from 'stores/main';
+    import type { ModalData } from 'stores/modals';
+    import { loadOurProfile } from 'utilities/profile';
+    import { PanelTypes } from 'stores/panels';
 
     let inviteCode: string;
     let isJoining = false;
@@ -12,7 +14,7 @@
     let errorMessage: string;
 
     function joinCommunity(): void {
-        if (!canJoin || isJoining) return;
+        if (!canJoin || isJoining || !inviteCode) return;
 
         isJoining = true;
 
@@ -31,11 +33,14 @@
 
                     return;
                 }
+                // Update community panel
+                await loadCommunitiesData(
+                    await loadOurProfile($cachedAccountData)
+                );
+
+                switchPanel(PanelTypes.Community);
 
                 dismissModal();
-
-                // Update community panel
-                await loadCommunitiesPanel();
             }
         );
     }
@@ -66,6 +71,7 @@
     {/if}
 
     <h1 class="modal-header">Invite code</h1>
+
     <!-- svelte-ignore a11y-autofocus -->
     <input
         class="modal-input"

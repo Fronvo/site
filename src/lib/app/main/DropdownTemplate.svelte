@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { DropdownActions } from 'types/main';
+    import type { DropdownActions } from 'stores/dropdowns';
     import { dismissDropdown } from 'utilities/main';
 
     export let actions: DropdownActions[];
@@ -12,18 +12,35 @@
 </script>
 
 <div class="dropdown-container">
-    {#each actions as { title, callback, condition }}
+    {#each actions as { title, callback, condition, useHr }}
         {#if typeof condition != 'undefined'}
             {#if condition}
                 <button on:click={() => runCallback(callback)}>{title}</button>
+
+                {#if useHr}
+                    <hr />
+                {/if}
             {/if}
         {:else}
             <button on:click={() => runCallback(callback)}>{title}</button>
+
+            {#if useHr}
+                <hr />
+            {/if}
         {/if}
     {/each}
 </div>
 
 <style>
+    hr {
+        width: 25%;
+        opacity: 25%;
+        height: 1px;
+        padding: 0;
+        margin: 0;
+        align-self: center;
+    }
+
     .dropdown-container {
         display: flex;
         flex-direction: column;
@@ -32,21 +49,14 @@
 
     .dropdown-container button {
         font-size: 1.2rem;
-        margin-bottom: 10px;
-        width: max-content;
+        width: 100%;
+        border: none;
+        border-radius: none;
+        box-shadow: none;
+        background: transparent;
     }
 
-    .dropdown-container button:nth-last-child(1) {
-        margin-bottom: 0;
-    }
-
-    @media screen and (max-width: 720px) {
-        .dropdown-container button {
-            font-size: 1.1rem;
-        }
-    }
-
-    @media screen and (max-width: 520px) {
+    @media screen and (max-width: 700px) {
         .dropdown-container button {
             font-size: 1rem;
         }

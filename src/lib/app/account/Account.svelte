@@ -11,7 +11,6 @@
         accountResetPasswordVerifyTab,
     } from 'stores/account';
     import Center from '../Center.svelte';
-    import AccountHeader from './AccountHeader.svelte';
     import RegisterFinal from './RegisterFinal.svelte';
     import ResetPassword from './ResetPassword.svelte';
     import ResetPasswordFinal from './ResetPasswordFinal.svelte';
@@ -19,8 +18,6 @@
 </script>
 
 <Center>
-    <AccountHeader />
-
     {#if $accountRegisterFinalTab}
         <RegisterFinal />
     {:else if $accountRegisterVerifyTab}

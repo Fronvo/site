@@ -61,27 +61,21 @@
         width: 90%;
         border: 3px solid white;
         padding: 7px;
+        background-size: 200% auto;
+        background-image: linear-gradient(
+            to right,
+            rgb(102, 0, 255) 0%,
+            rgb(146, 73, 255) 51%,
+            rgb(102, 0, 255) 100%
+        );
+        color: white;
     }
 
-    @media screen and (max-width: 720px) {
-        .account-container {
-            width: 450px;
-        }
-
-        .account-container #header {
-            font-size: 2.5rem;
-        }
-
-        .account-container #congrats {
-            font-size: 1.9rem;
-        }
-
-        .account-container button {
-            font-size: 2.2rem;
-        }
+    .account-container button:hover {
+        background-position: bottom center;
     }
 
-    @media screen and (max-width: 520px) {
+    @media screen and (max-width: 700px) {
         .account-container {
             width: 350px;
         }

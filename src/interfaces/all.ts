@@ -18,7 +18,6 @@ export interface FronvoError {
 export interface AccountPost {
     postId: string;
     author: string;
-    title: string;
     content: string;
     attachment?: string;
     creationDate: string;
@@ -53,7 +52,6 @@ export interface Community {
     communityId: string;
     ownerId: string;
     name: string;
-    description: string;
     creationDate: string;
     icon?: string;
     members: string[];

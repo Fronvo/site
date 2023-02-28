@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { ModalTypes } from 'types/main';
+    import { ModalTypes } from 'stores/modals';
     import { showModal } from 'utilities/main';
 </script>
 

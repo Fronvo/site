@@ -91,22 +91,12 @@
         transform: scale(1.1, 1.1);
     }
 
-    @media screen and (max-width: 720px) {
+    @media screen and (max-width: 700px) {
         .container #title {
-            font-size: 3rem;
+            font-size: 2.5rem;
             margin-bottom: 10px;
             margin-right: 5px;
             margin-left: 5px;
-        }
-
-        .container .svg {
-            height: 230px;
-        }
-    }
-
-    @media screen and (max-width: 520px) {
-        .container #title {
-            font-size: 2.5rem;
         }
 
         .container .svg {

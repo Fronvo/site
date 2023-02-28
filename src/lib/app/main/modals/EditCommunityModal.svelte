@@ -1,21 +1,20 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
     import { dismissModal, setProgressBar } from 'utilities/main';
-    import { socket } from 'stores/all';
     import { onMount } from 'svelte';
     import { writable, type Writable } from 'svelte/store';
     import { fade } from 'svelte/transition';
-    import { joinedCommunity } from 'stores/communities';
     import Checkbox from 'svelte-checkbox';
-    import type { ModalData } from 'types/main';
     import ModalTemplate from '../ModalTemplate.svelte';
+    import { communityData as comData } from 'stores/community';
+    import { socket } from 'stores/main';
+    import type { ModalData } from 'stores/modals';
 
-    let communityId = $joinedCommunity.communityId;
-    let name = $joinedCommunity.name;
-    let description = $joinedCommunity.description;
-    let icon: Writable<string> = writable($joinedCommunity.icon);
-    let inviteOnly = $joinedCommunity.inviteOnly;
-    let chatRequestsEnabled = $joinedCommunity.chatRequestsEnabled;
+    let id = $comData.communityId;
+    let name = $comData.name;
+    let icon: Writable<string> = writable($comData.icon);
+    let inviteOnly = $comData.inviteOnly;
+    let chatRequests = $comData.chatRequestsEnabled;
 
     let canUpload = true;
     let isUploading = false;
@@ -29,28 +28,24 @@
 
         const updatedData = {};
 
-        if ($joinedCommunity.communityId != communityId) {
-            updatedData['communityId'] = communityId;
+        if ($comData.communityId != id) {
+            updatedData['communityId'] = id;
         }
 
-        if ($joinedCommunity.name != name) {
+        if ($comData.name != name) {
             updatedData['name'] = name;
         }
 
-        if ($joinedCommunity.description != description) {
-            updatedData['description'] = description;
-        }
-
-        if ($joinedCommunity.icon != $icon) {
+        if ($comData.icon != $icon) {
             updatedData['icon'] = $icon;
         }
 
-        if ($joinedCommunity.inviteOnly != inviteOnly) {
+        if ($comData.inviteOnly != inviteOnly) {
             updatedData['inviteOnly'] = inviteOnly;
         }
 
-        if ($joinedCommunity.chatRequestsEnabled != chatRequestsEnabled) {
-            updatedData['chatRequestsEnabled'] = chatRequestsEnabled;
+        if ($comData.chatRequestsEnabled != chatRequests) {
+            updatedData['chatRequestsEnabled'] = chatRequests;
         }
 
         socket.emit(
@@ -66,13 +61,13 @@
                 }
 
                 // Redirect to new community
-                if ($joinedCommunity.communityId != communityId) {
-                    goto(`/community/${communityId}`, {
+                if ($comData.communityId != id) {
+                    goto(`/c/${id}`, {
                         replaceState: true,
                     });
                 }
 
-                $joinedCommunity = { ...$joinedCommunity, ...communityData };
+                $comData = { ...$comData, ...communityData };
 
                 dismissModal();
                 setProgressBar(false);
@@ -124,7 +119,6 @@
 
     const data: ModalData = {
         title: 'Edit Community',
-        noSeperator: true,
 
         actions: [
             {
@@ -147,18 +141,10 @@
     {/if}
 
     <h1 class="modal-header">Community ID</h1>
-    <input class="modal-input" bind:value={communityId} maxlength={15} />
+    <input class="modal-input" bind:value={id} maxlength={15} />
 
     <h1 class="modal-header">Name</h1>
     <input class="modal-input" bind:value={name} maxlength={15} />
-
-    <h1 class="modal-header">Description</h1>
-    <textarea
-        class="modal-input"
-        bind:value={description}
-        maxlength={50}
-        rows={3}
-    />
 
     <div>
         <img
@@ -172,23 +158,23 @@
 
     <input class="modal-input" maxlength={512} bind:value={$icon} />
 
-    <div class="centered-container">
+    <div class="modal-center">
         <h1 class="modal-header">Invite only</h1>
         <Checkbox
             bind:checked={inviteOnly}
             class="checkbox"
-            size="2.7rem"
+            size="2.5rem"
             primaryColor="var(--modal_checkbox_primary_color)"
             secondaryColor="var(--modal_checkbox_secondary_color)"
         />
     </div>
 
-    <div class="centered-container">
+    <div class="modal-center">
         <h1 class="modal-header">Chat requests</h1>
         <Checkbox
-            bind:checked={chatRequestsEnabled}
+            bind:checked={chatRequests}
             class="checkbox"
-            size="2.7rem"
+            size="2.5rem"
             primaryColor="var(--modal_checkbox_primary_color)"
             secondaryColor="var(--modal_checkbox_secondary_color)"
         />
@@ -202,12 +188,6 @@
         margin-bottom: 10px;
     }
 
-    .centered-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
     div #icon-preview {
         width: 64px;
         height: 64px;
@@ -215,7 +195,7 @@
         margin-right: 10px;
     }
 
-    @media screen and (max-width: 720px) {
+    @media screen and (max-width: 700px) {
         div #icon-preview {
             width: 48px;
             height: 48px;

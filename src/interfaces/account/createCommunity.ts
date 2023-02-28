@@ -6,7 +6,6 @@ import type { Community, FronvoError } from 'interfaces/all';
 
 export interface CreateCommunityParams {
     name: string;
-    description: string;
     icon?: string;
 }
 

@@ -7,7 +7,7 @@
         accountResetPasswordTab,
         accountResetPasswordVerifyTab,
     } from 'stores/account';
-    import { socket } from 'stores/all';
+    import { socket } from 'stores/main';
     import { onMount, onDestroy } from 'svelte';
     import { fade, scale } from 'svelte/transition';
 
@@ -23,8 +23,6 @@
         }
 
         if (ev.ctrlKey || ev.altKey) return;
-
-        passwordInput.focus();
     }
 
     onMount(() => {
@@ -35,11 +33,11 @@
             'update-button'
         ) as HTMLButtonElement;
 
-        document.addEventListener('keypress', keyListener);
+        document.addEventListener('keydown', keyListener);
     });
 
     onDestroy(() => {
-        document.removeEventListener('keypress', keyListener);
+        document.removeEventListener('keydown', keyListener);
     });
 
     function reset(): void {
@@ -153,35 +151,21 @@
         width: 90%;
         border: 3px solid white;
         padding: 7px;
+        background-size: 200% auto;
+        background-image: linear-gradient(
+            to right,
+            rgb(102, 0, 255) 0%,
+            rgb(146, 73, 255) 51%,
+            rgb(102, 0, 255) 100%
+        );
+        color: white;
     }
 
-    @media screen and (max-width: 720px) {
-        .reset-container {
-            width: 450px;
-        }
-
-        .reset-container #header {
-            font-size: 2.5rem;
-        }
-
-        .reset-container #error-header {
-            font-size: 1.7rem;
-        }
-
-        .reset-container #input-header {
-            font-size: 1.7rem;
-        }
-
-        .reset-container input {
-            font-size: 1.7rem;
-        }
-
-        .reset-container button {
-            font-size: 2.2rem;
-        }
+    .reset-container button:hover {
+        background-position: bottom center;
     }
 
-    @media screen and (max-width: 520px) {
+    @media screen and (max-width: 700px) {
         .reset-container {
             width: 350px;
         }

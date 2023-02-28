@@ -1,10 +1,1 @@
-// ******************** //
-// Shared types for all files.
-// ******************** //
-
-export type LocalKeys =
-    | 'token'
-    | 'maxOnlineTime'
-    | 'darkTheme'
-    | 'dataSaver'
-    | 'xmasMode';
+export type LocalKeys = 'token' | 'darkTheme' | 'dataSaver' | 'xmasMode';

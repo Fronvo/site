@@ -1,20 +1,21 @@
 <script lang="ts">
-    import { joinedCommunity } from 'stores/communities';
-    import { ourProfileData } from 'stores/profile';
-    import { ModalTypes, type DropdownActions } from 'types/main';
+    import { communityData } from 'stores/community';
+    import type { DropdownActions } from 'stores/dropdowns';
+    import { ModalTypes } from 'stores/modals';
+    import { ourData } from 'stores/profile';
     import { showModal } from 'utilities/main';
     import DropdownTemplate from '../DropdownTemplate.svelte';
 
     let pendingRequests: number;
 
-    if (isOwner() && $joinedCommunity.chatRequestsEnabled) {
+    if (isOwner() && $communityData.chatRequestsEnabled) {
         pendingRequests =
-            $joinedCommunity.members.length -
-            $joinedCommunity.acceptedChatRequests.length;
+            $communityData.members.length -
+            $communityData.acceptedChatRequests.length;
     }
 
     function isOwner(): boolean {
-        return $joinedCommunity.ownerId == $ourProfileData.profileId;
+        return $communityData.ownerId == $ourData.profileId;
     }
 
     function editCommmunity(): void {
@@ -44,6 +45,7 @@
                 isOwner() && pendingRequests > 0 ? `(${pendingRequests})` : ''
             }`,
             callback: viewMembers,
+            useHr: true,
         },
         {
             title: 'Bans',

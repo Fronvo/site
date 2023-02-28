@@ -1,26 +1,25 @@
 <script lang="ts">
-    import { socket } from 'stores/all';
-    import { joinedCommunity } from 'stores/communities';
-    import { cachedAccountData, targetCommunityMember } from 'stores/main';
-    import { ourProfileData } from 'stores/profile';
-    import type { DropdownActions } from 'types/main';
+    import { communityData } from 'stores/community';
+    import {
+        targetMemberDropdown,
+        type DropdownActions,
+    } from 'stores/dropdowns';
+    import { cachedAccountData, socket } from 'stores/main';
+    import { ourData } from 'stores/profile';
     import { fetchCommunity } from 'utilities/communities';
     import { dismissModal, setProgressBar } from 'utilities/main';
-    import { loadProfilePanel } from 'utilities/profile';
+    import { loadTargetProfile } from 'utilities/profile';
     import DropdownTemplate from '../DropdownTemplate.svelte';
 
-    async function viewProfile(): Promise<void> {
-        dismissModal();
+    function viewProfile(): void {
+        loadTargetProfile($targetMemberDropdown.profileId, $cachedAccountData);
 
-        await loadProfilePanel(
-            $cachedAccountData,
-            $targetCommunityMember.profileId
-        );
+        dismissModal();
     }
 
     function hasChatPerms(): boolean {
-        return $joinedCommunity.acceptedChatRequests.includes(
-            $targetCommunityMember.profileId
+        return $communityData.acceptedChatRequests.includes(
+            $targetMemberDropdown.profileId
         );
     }
 
@@ -32,13 +31,13 @@
         socket.emit(
             'updateChatRequest',
             {
-                profileId: $targetCommunityMember.profileId,
+                profileId: $targetMemberDropdown.profileId,
                 accepted: newChatPermState,
             },
             async ({ err }) => {
                 if (!err) {
-                    $joinedCommunity = await fetchCommunity(
-                        $joinedCommunity.communityId
+                    $communityData = await fetchCommunity(
+                        $communityData.communityId
                     );
                 }
 
@@ -53,7 +52,7 @@
 
         socket.emit(
             'kickMember',
-            { profileId: $targetCommunityMember.profileId },
+            { profileId: $targetMemberDropdown.profileId },
             () => {
                 dismissModal();
                 setProgressBar(false);
@@ -66,7 +65,7 @@
 
         socket.emit(
             'banMember',
-            { profileId: $targetCommunityMember.profileId },
+            { profileId: $targetMemberDropdown.profileId },
             () => {
                 dismissModal();
                 setProgressBar(false);
@@ -75,34 +74,41 @@
     }
 
     function isOwner(): boolean {
-        return $joinedCommunity.ownerId == $ourProfileData.profileId;
+        return $communityData.ownerId == $ourData.profileId;
+    }
+
+    function isSelf(): boolean {
+        return $targetMemberDropdown.profileId == $ourData.profileId;
+    }
+
+    function isMember(): boolean {
+        return $communityData.members.includes($targetMemberDropdown.profileId);
     }
 
     const actions: DropdownActions[] = [
         {
             title: 'View profile',
             callback: viewProfile,
+            useHr: !isSelf() && isOwner() && isMember(),
         },
         {
             title: `${hasChatPerms() ? 'Revoke' : 'Give'} chat permission`,
             callback: updateChatPerms,
             condition:
-                $joinedCommunity.chatRequestsEnabled &&
-                $targetCommunityMember.profileId != $ourProfileData.profileId,
+                isMember() &&
+                isOwner() &&
+                !isSelf() &&
+                $communityData.chatRequestsEnabled,
         },
         {
             title: 'Kick member',
             callback: kickMember,
-            condition:
-                isOwner() &&
-                $targetCommunityMember.profileId != $ourProfileData.profileId,
+            condition: isMember() && isOwner() && !isSelf(),
         },
         {
             title: 'Ban member',
             callback: banMember,
-            condition:
-                isOwner() &&
-                $targetCommunityMember.profileId != $ourProfileData.profileId,
+            condition: isMember() && isOwner() && !isSelf(),
         },
     ];
 </script>

@@ -5,7 +5,6 @@
 import type { AccountPost, FronvoError } from 'interfaces/all';
 
 export interface CreatePostParams {
-    title: string;
     content: string;
     attachment?: string;
 }

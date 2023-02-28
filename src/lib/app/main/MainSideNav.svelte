@@ -1,41 +1,28 @@
 <script lang="ts">
     import Communities from '$lib/svgs/Communities.svelte';
     import Home from '$lib/svgs/Home.svelte';
-    import Profile from '$lib/svgs/Profile.svelte';
     import Settings from '$lib/svgs/Settings.svelte';
     import Search from '$lib/svgs/Search.svelte';
     import { fly } from 'svelte/transition';
-    import { showModal, switchPanel } from 'utilities/main';
-    import { ModalTypes, PanelTypes } from 'types/main';
     import {
-        cachedAccountData,
-        currentPanelId,
-        loginSucceeded,
-    } from 'stores/main';
-    import { ourProfileData, targetProfile, userData } from 'stores/profile';
-    import { loadProfilePanel } from 'utilities/profile';
+        dismissDropdown,
+        showDropdown,
+        showModal,
+        switchPanel,
+    } from 'utilities/main';
     import { goto } from '$app/navigation';
-    import { getKey } from 'utilities/global';
-
-    async function decideProfileAction(): Promise<void> {
-        if (!getKey('token')) {
-            showModal(ModalTypes.JoinFronvo);
-            return;
-        }
-
-        if (
-            $currentPanelId == PanelTypes.Profile &&
-            $userData.profileId != $ourProfileData.profileId
-        ) {
-            await loadProfilePanel($cachedAccountData);
-            $targetProfile = $ourProfileData.profileId;
-        } else {
-            switchPanel(PanelTypes.Profile);
-        }
-    }
+    import CreatePost from '$lib/svgs/CreatePost.svelte';
+    import Account from '$lib/svgs/Account.svelte';
+    import { ourData, searchData } from 'stores/profile';
+    import Admin from '$lib/svgs/Admin.svelte';
+    import { loadTargetProfile } from 'utilities/profile';
+    import { currentPanelId, PanelTypes } from 'stores/panels';
+    import { DropdownTypes, dropdownVisible } from 'stores/dropdowns';
+    import { ModalTypes } from 'stores/modals';
+    import { cachedAccountData, guestMode } from 'stores/main';
 
     function loadPanel(panel: PanelTypes): void {
-        if (getKey('token') && $loginSucceeded) {
+        if (!$guestMode) {
             switchPanel(panel);
         } else {
             showModal(ModalTypes.JoinFronvo);
@@ -43,10 +30,46 @@
     }
 
     function loadModal(modal: ModalTypes): void {
-        if (getKey('token') && $loginSucceeded) {
+        if (!$guestMode) {
             showModal(modal);
         } else {
             showModal(ModalTypes.JoinFronvo);
+        }
+    }
+
+    function loadDropdown(
+        dropdown: DropdownTypes,
+        guestEnabled?: boolean
+    ): void {
+        if ($guestMode && !guestEnabled) {
+            showModal(ModalTypes.JoinFronvo);
+            return;
+        }
+
+        if ($dropdownVisible) {
+            dismissDropdown();
+        } else {
+            showDropdown(dropdown);
+        }
+    }
+
+    function decideSearchAction(): void {
+        if (
+            $searchData &&
+            $searchData?.profileId != $ourData?.profileId &&
+            $currentPanelId != PanelTypes.Profile
+        ) {
+            loadTargetProfile($searchData.profileId, $cachedAccountData);
+        } else {
+            loadModal(ModalTypes.Search);
+        }
+    }
+
+    function decideCommunityAction(): void {
+        if (!$ourData?.isInCommunity || $guestMode) {
+            loadDropdown(DropdownTypes.Community);
+        } else {
+            loadPanel(PanelTypes.Community);
         }
     }
 </script>
@@ -66,54 +89,76 @@
         <h1>Home</h1>
     </div>
 
-    <div id="component" on:click={decideProfileAction}>
-        <Profile />
-        <h1>Profile</h1>
-    </div>
-
-    <div id="component" on:click={() => loadPanel(PanelTypes.Communities)}>
-        <Communities />
-        <h1>Community</h1>
-    </div>
-
-    <div id="component" on:click={() => loadModal(ModalTypes.FindProfiles)}>
+    <div id="component" on:click={decideSearchAction}>
         <Search />
         <h1>Search</h1>
+    </div>
+
+    <div id="component" on:click={decideCommunityAction}>
+        <Communities />
+        <h1>Community</h1>
     </div>
 
     <div
         id="component"
         on:click={() => {
-            showModal(ModalTypes.Settings);
+            loadModal(ModalTypes.CreatePost);
+        }}
+    >
+        <CreatePost />
+        <h1>Share</h1>
+    </div>
+
+    <div
+        id="component"
+        on:click={() => loadDropdown(DropdownTypes.AccountOptions, false)}
+    >
+        <Account />
+        <h1>{`${$ourData?.username ? $ourData?.username : 'Account'}`}</h1>
+    </div>
+
+    <div
+        id="component"
+        on:click={() => {
+            loadDropdown(DropdownTypes.Settings, true);
         }}
     >
         <Settings />
         <h1>Settings</h1>
     </div>
+
+    {#if $ourData?.isAdmin}
+        <div
+            id="component"
+            on:click={() => {
+                loadDropdown(DropdownTypes.Admin, false);
+            }}
+        >
+            <Admin />
+            <h1>Admin</h1>
+        </div>
+    {/if}
 </div>
 
 <style>
     .side-nav-container {
         position: fixed;
         width: max-content;
-        padding: 10px;
         height: 100vh;
         transition: 300ms background;
-        transition: 500ms all;
         z-index: 1;
     }
 
     #component {
         display: flex;
         align-items: center;
-        text-align: center;
-        transition: 100ms;
         padding: 10px;
         margin-top: 20px;
         margin-bottom: 20px;
         border-radius: 10px;
+        width: max-content;
         cursor: pointer;
-        transition: 100ms;
+        transition: 300ms all;
     }
 
     #component:active {
@@ -122,6 +167,10 @@
     }
 
     #component h1 {
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
         margin: 0;
         margin-left: 5px;
         font-size: 1.6rem;
@@ -131,11 +180,16 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+        color: var(--profile_info_color);
+        width: max-content;
+        max-width: 150px;
+        height: 35px;
     }
 
     @media screen and (max-width: 1024px) {
         #component {
             cursor: default;
+            width: max-content;
         }
 
         #component h1 {
@@ -143,7 +197,7 @@
         }
     }
 
-    @media screen and (max-width: 520px) {
+    @media screen and (max-width: 700px) {
         .side-nav-container {
             display: flex;
             right: 0;

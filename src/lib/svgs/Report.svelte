@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { ModalTypes } from 'types/main';
+    import { ModalTypes } from 'stores/modals';
     import { showModal } from 'utilities/main';
 </script>
 
@@ -17,7 +17,7 @@
 >
 
 <style>
-    @media screen and (max-width: 520px) {
+    @media screen and (max-width: 700px) {
         svg {
             width: 36px;
             height: 36px;

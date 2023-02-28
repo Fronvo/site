@@ -1,16 +1,16 @@
 <script lang="ts">
     import {
         currentDropdownId,
-        currentPanelId,
         dropdownAnimDuration,
         dropdownPosition,
         dropdowns,
         dropdownVisible,
-        modalVisible,
-    } from 'stores/main';
+    } from 'stores/dropdowns';
+    import { modalVisible } from 'stores/modals';
+    import { currentPanelId } from 'stores/panels';
     import { onDestroy, onMount } from 'svelte';
     import type { Unsubscriber } from 'svelte/store';
-    import { scale } from 'svelte/transition';
+    import { slide } from 'svelte/transition';
     import { dismissDropdown } from 'utilities/main';
 
     let dropdownElement: HTMLDivElement;
@@ -49,9 +49,8 @@
     {#if $dropdownVisible}
         <div
             class="item-container"
-            in:scale={{
+            in:slide={{
                 duration: dropdownAnimDuration,
-                start: 1.1,
             }}
         >
             <svelte:component this={dropdowns[$currentDropdownId]} />
@@ -70,13 +69,13 @@
     }
 
     .item-container {
-        background: rgb(255, 255, 255, 0.05);
-        box-shadow: 0 0 3px var(--accent_shadow_color);
-        border-radius: 10px;
-        padding: 10px;
+        background: var(--button_background);
+        box-shadow: 0 0 5px var(--accent_shadow_color);
+        border-radius: 15px;
+        overflow: hidden;
     }
 
-    @media screen and (max-width: 720px) {
+    @media screen and (max-width: 700px) {
         .item-container {
             padding: 5px;
         }

@@ -1,22 +1,32 @@
-// ******************** //
-// Reusable functions for the app route, after login.
-// ******************** //
-
-import type { AccountPost, FronvoAccount } from 'interfaces/all';
-import { fronvoTitle, socket } from 'stores/all';
+import { goto } from '$app/navigation';
+import type { FronvoAccount, AccountPost } from 'interfaces/all';
+import { io } from 'socket.io-client';
 import {
     currentDropdownId,
-    currentModalId,
-    currentPanelId,
     dropdownAnimDuration,
+    DropdownTypes,
     dropdownVisible,
+} from 'stores/dropdowns';
+import {
+    fronvoTitle,
+    guestMode,
     loginSucceeded,
-    modalAnimDuration,
-    modalVisible,
     progressBarVisible,
+    setSocket,
+    socket,
 } from 'stores/main';
-import type { DropdownTypes, ModalTypes, PanelTypes } from 'types/main';
+import {
+    currentModalId,
+    modalAnimDuration,
+    modalInput,
+    ModalTypes,
+    modalVisible,
+} from 'stores/modals';
+import { PanelTypes, currentPanelId } from 'stores/panels';
+import { loadCommunitiesData } from './communities';
 import { getKey, removeKey } from './global';
+import { loadHomePosts } from './home';
+import { loadOurProfile, loadTargetProfile } from './profile';
 
 // Preserve modal state
 let modalStateVisible: boolean;
@@ -38,25 +48,123 @@ setTimeout(() => {
     });
 }, 0);
 
-export function performLogin(): void {
-    // Get current login state
-    socket.emit('isLoggedIn', ({ loggedIn }) => {
-        // If not logged in, attempt to login with stored token
-        if (!loggedIn && getKey('token')) {
-            socket.emit('loginToken', { token: getKey('token') }, ({ err }) => {
-                // If the login failed, reset token and redirect to accounts
-                if (err) {
-                    removeKey('token');
-                    loginSucceeded.set(false);
-                } else {
-                    // Login succeeded, advance
-                    loginSucceeded.set(true);
-                }
-            });
-        } else {
-            // Already logged in, skip manual login
+export function initSocket(callback?: () => void): void {
+    // Only init once, callback discarded
+    if (socket) return;
+
+    setSocket(
+        io('wss://fronvosrv.fly.dev', {
+            transports: ['websocket'],
+            path: '/fronvo',
+        })
+    );
+
+    if (callback) {
+        socket.on('connect', callback);
+    }
+}
+
+export async function performLogin(
+    pendingSearchId: string,
+    cachedData: FronvoAccount[]
+): Promise<void> {
+    ////////// Strucure //////////
+
+    // 1. Check if we have already logged in to prevent multiple function calls
+
+    // 2. If we have already logged in, resolve, load immediately and return
+
+    // 3. If we haven't logged in, check if we have a token saved locally
+
+    // 4. If we don't, set ourselves to guest mode and indicate that the login hasn't succeeded and return
+
+    // 5. If we do, attempt to login with it
+
+    // 6. If there's no error, disable guest mode and indicate that the login has succeeded, load and return
+
+    // 7. If the token is invalid or something similar, remove it and do the rest as step number 4
+
+    ////////// Strucure //////////
+
+    return new Promise((resolve) => {
+        async function loadAccountData(): Promise<void> {
+            const ourData = await loadOurProfile(cachedData);
+
+            await loadCommunitiesData(ourData);
+            await loadHomePosts();
+
+            await updateSearch();
+
+            guestMode.set(false);
             loginSucceeded.set(true);
         }
+
+        async function loadGuestData(): Promise<void> {
+            await loadHomePosts();
+
+            if (pendingSearchId) {
+                await updateSearch();
+            } else {
+                goto('/home', {
+                    replaceState: true,
+                });
+            }
+
+            guestMode.set(true);
+            loginSucceeded.set(false);
+        }
+
+        async function updateSearch(): Promise<void> {
+            if (pendingSearchId) {
+                await loadTargetProfile(pendingSearchId, cachedData);
+            }
+        }
+
+        // 1. Check if we have already logged in to prevent multiple function calls
+        socket.emit('isLoggedIn', async ({ loggedIn }) => {
+            // 2. If we have already logged in, resolve, load immediately and return
+            if (loggedIn) {
+                await loadAccountData();
+
+                resolve();
+                return;
+            }
+
+            // 3. If we haven't logged in, check if we have a token saved locally
+
+            // 4. If we don't, set ourselves to guest mode and indicate that the login hasn't succeeded and return
+            if (!getKey('token')) {
+                await loadGuestData();
+
+                resolve();
+                return;
+            }
+
+            // 5. If we do, attempt to login with it
+            socket.emit(
+                'loginToken',
+                { token: getKey('token') },
+                async ({ err }) => {
+                    // 6. If there's no error, disable guest mode and indicate that the login has succeeded, load and return
+                    if (!err) {
+                        await loadAccountData();
+
+                        resolve();
+                        return;
+                    }
+
+                    // 7. If the token is invalid or something similar, remove it and do the rest as step number 4
+                    removeKey('token');
+
+                    await loadGuestData();
+
+                    goto('/home', {
+                        replaceState: true,
+                    });
+                    resolve();
+                }
+            );
+        });
     });
 }
 
@@ -125,7 +233,10 @@ export function dismissModal(callback?: Function): void {
         // First, dismiss
         modalVisible.set(false);
 
-        // Then, set timeout to reset for callback
+        // Then, reset modalInput
+        modalInput.set(undefined);
+
+        // Finally, set timeout to reset for callback
         if (callback) {
             setTimeout(() => {
                 callback();
@@ -168,10 +279,10 @@ export function setProgressBar(state: boolean): void {
     progressBarVisible.set(state);
 }
 
-export function findCachedAccount(
+export async function findCachedAccount(
     profileId: string,
     cachedData: FronvoAccount[]
-): FronvoAccount | undefined {
+): Promise<FronvoAccount> {
     for (const accountIndex in cachedData) {
         const targetAccount = cachedData[accountIndex];
 
@@ -179,4 +290,55 @@ export function findCachedAccount(
             return targetAccount;
         }
     }
+
+    // Not found in cache, create and return
+    return await updateCachedAccount(profileId, cachedData);
+}
+
+export async function updateCachedAccount(
+    profileId: string,
+    cachedData: FronvoAccount[],
+    defaultValue?: FronvoAccount
+): Promise<FronvoAccount | undefined> {
+    let accountFound = false;
+    let accountIndex = -1;
+
+    for (const accountIndexNum in cachedData) {
+        const targetAccount = cachedData[accountIndexNum];
+
+        if (targetAccount.profileId == profileId) {
+            accountFound = true;
+            accountIndex = Number(accountIndexNum);
+            break;
+        }
+    }
+
+    const tempCachedData = cachedData || [];
+
+    // Remove old entry
+    if (accountFound) {
+        tempCachedData.splice(Number(accountIndex), 1);
+    }
+
+    // Will also create / use default if not found, used in findCachedAccount
+    let newData: FronvoAccount;
+
+    if (defaultValue) {
+        newData = defaultValue;
+    } else {
+        newData = await fetchUser(profileId);
+    }
+
+    // Might be an invalid profile, ignore
+    if (newData) {
+        tempCachedData.push(newData);
+    }
+
+    return newData;
+}
+
+export function getTimeDifferenceM(endDate: Date, startDate: Date): number {
+    return Math.abs(
+        Math.round((endDate.getTime() - startDate.getTime()) / 1000 / 60)
+    );
 }

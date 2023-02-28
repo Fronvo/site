@@ -1,10 +1,12 @@
 <script lang="ts">
-    import Center from '$lib/app/Center.svelte';
-    import { socket } from 'stores/all';
-    import { targetJoinRequestEmail } from 'stores/main';
-    import { joinRequests } from 'stores/profile';
+    import { socket } from 'stores/main';
+    import {
+        joinRequests,
+        ModalTypes,
+        targetRequestModal,
+        type ModalData,
+    } from 'stores/modals';
     import { onMount } from 'svelte';
-    import { ModalTypes, type ModalData } from 'types/main';
     import { dismissModal, setProgressBar, showModal } from 'utilities/main';
     import ModalTemplate from '../ModalTemplate.svelte';
 
@@ -24,7 +26,7 @@
 
     function editRequest(accountIndex: number): void {
         dismissModal(() => {
-            $targetJoinRequestEmail = $joinRequests[accountIndex].email;
+            $targetRequestModal = $joinRequests[accountIndex].email;
 
             showModal(ModalTypes.EditJoinRequest);
         });
@@ -43,15 +45,17 @@
                 callback: dismissModal,
             },
         ],
+
+        sideModal: {
+            side: 'left',
+        },
     };
 </script>
 
 <ModalTemplate {data}>
     {#if loadingFinished}
         {#if $joinRequests?.length == 0}
-            <Center absolute>
-                <h1 class="modal-header">No join requests</h1>
-            </Center>
+            <h1 class="modal-header">No join requests</h1>
         {:else}
             <div class="join-requests-container">
                 {#each $joinRequests as { email }, i}
@@ -130,7 +134,7 @@
         border-radius: 10px;
     }
 
-    @media screen and (max-width: 720px) {
+    @media screen and (max-width: 700px) {
         .join-requests-container {
             flex-direction: column;
             justify-content: start;
@@ -138,18 +142,18 @@
         }
 
         .join-requests-container div {
-            width: 300px;
             display: flex;
             flex-direction: row;
             align-items: center;
-            padding: 5px;
             margin: 10px;
-            margin-bottom: 5px;
             cursor: default;
+            width: 280px;
+            margin-bottom: 5px;
+            padding: 5px;
         }
 
         .join-requests-container div #email {
-            font-size: 1.7rem;
+            font-size: 1.6rem;
             cursor: default;
         }
 
@@ -157,18 +161,6 @@
             width: 64px;
             height: 64px;
             margin-right: 5px;
-        }
-    }
-
-    @media screen and (max-width: 520px) {
-        .join-requests-container div {
-            width: 280px;
-            margin-bottom: 5px;
-            padding: 5px;
-        }
-
-        .join-requests-container div #email {
-            font-size: 1.7rem;
         }
     }
 </style>

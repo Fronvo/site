@@ -1,13 +1,15 @@
 <script lang="ts">
-    import { socket } from 'stores/all';
     import { dismissModal, setProgressBar } from 'utilities/main';
-    import type { ModalData } from 'types/main';
     import ModalTemplate from '../ModalTemplate.svelte';
-    import { postModalIndex, postModalInfo } from 'stores/main';
     import type { AccountPost } from 'interfaces/all';
-    import { userData, userPosts } from 'stores/profile';
+    import { ourData } from 'stores/profile';
+    import { loadOurProfile, loadTargetProfile } from 'utilities/profile';
+    import Post from '$lib/app/reusables/all/Post.svelte';
+    import { postModalInfo, type ModalData } from 'stores/modals';
+    import { cachedAccountData, socket } from 'stores/main';
 
     let isDeleting = false;
+    const postData = $postModalInfo as AccountPost;
 
     function deletePost(): void {
         if (isDeleting) return;
@@ -18,14 +20,15 @@
         socket.emit(
             'deletePost',
             { postId: ($postModalInfo as AccountPost).postId },
-            ({ err }) => {
+            async ({ err }) => {
                 if (!err) {
-                    dismissModal(() => {
-                        $userPosts.splice($postModalIndex, 1);
+                    await loadOurProfile($cachedAccountData);
 
-                        $userPosts = $userPosts;
-                        $userData.totalPosts -= 1;
-                    });
+                    await loadTargetProfile(
+                        $ourData.profileId,
+                        $cachedAccountData
+                    );
+                    dismissModal();
                 } else {
                     isDeleting = false;
                     setProgressBar(false);
@@ -41,6 +44,7 @@
             {
                 title: 'Yes, delete',
                 callback: deletePost,
+                danger: true,
             },
             {
                 title: 'No, keep',
@@ -51,8 +55,5 @@
 </script>
 
 <ModalTemplate {data}>
-    <h1 class="modal-header">Delete the selected post?</h1>
+    <Post {postData} profileData={$ourData} hideOptions isPreview />
 </ModalTemplate>
-
-<style>
-</style>

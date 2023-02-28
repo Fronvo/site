@@ -1,41 +1,38 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
-    import {
-        joinedCommunity,
-        targetCommunity,
-        targetCommunityData,
-    } from 'stores/communities';
-    import { socket } from 'stores/all';
-    import { loadCommunitiesPanel } from 'utilities/communities';
-    import { dismissModal, setProgressBar } from 'utilities/main';
-    import { ourProfileData } from 'stores/profile';
-    import type { ModalData } from 'types/main';
+    import { dismissModal, setProgressBar, switchPanel } from 'utilities/main';
+    import { ourData } from 'stores/profile';
     import ModalTemplate from '../ModalTemplate.svelte';
+    import { cachedAccountData, socket } from 'stores/main';
+    import { communityData } from 'stores/community';
+    import { loadCommunitiesData } from 'utilities/communities';
+    import { loadOurProfile } from 'utilities/profile';
+    import type { ModalData } from 'stores/modals';
+    import { PanelTypes } from 'stores/panels';
+    import Checkbox from 'svelte-checkbox';
 
     let isLeaving = false;
+    let consent = false;
 
     function isOwner(): boolean {
-        return $joinedCommunity.ownerId == $ourProfileData.profileId;
+        return $communityData.ownerId == $ourData.profileId;
     }
 
     function leaveCommunity(): void {
-        if (isLeaving) return;
+        if (isLeaving || (isOwner() && !consent)) return;
 
         isLeaving = true;
         setProgressBar(true);
 
         socket.emit('leaveCommunity', ({ err }) => {
             if (!err) {
-                dismissModal(() => {
-                    $joinedCommunity = undefined;
-                    $targetCommunity = undefined;
-                    $targetCommunityData = undefined;
+                dismissModal(async () => {
+                    $communityData = undefined;
 
-                    loadCommunitiesPanel();
+                    switchPanel(PanelTypes.Home);
 
-                    goto('/community', {
-                        replaceState: true,
-                    });
+                    await loadCommunitiesData(
+                        await loadOurProfile($cachedAccountData)
+                    );
                 });
             } else {
                 isLeaving = false;
@@ -51,6 +48,7 @@
             {
                 title: `Yes, ${isOwner() ? 'delete' : 'leave'}`,
                 callback: leaveCommunity,
+                danger: true,
             },
             {
                 title: `No, ${isOwner() ? 'keep' : 'stay'}`,
@@ -61,13 +59,25 @@
 </script>
 
 <ModalTemplate {data}>
-    {#if $joinedCommunity}
-        <h1 class="modal-header">
-            {isOwner() ? 'Delete' : 'Leave'} the
-            <span>{$joinedCommunity.name}</span> community?
-        </h1>
+    {#if $communityData}
+        {#if !isOwner()}
+            <h1 class="modal-header">
+                {isOwner() ? 'Delete' : 'Leave'} the
+                <span>{$communityData?.name}</span> community?
+            </h1>
+        {:else}
+            <div class="modal-center-no-overflow">
+                <h1 class="modal-header">
+                    I consent to the deletion of this community
+                </h1>
+                <Checkbox
+                    bind:checked={consent}
+                    class="checkbox"
+                    size="2.4rem"
+                    primaryColor="var(--modal_checkbox_primary_color)"
+                    secondaryColor="var(--modal_checkbox_secondary_color)"
+                />
+            </div>
+        {/if}
     {/if}
 </ModalTemplate>
-
-<style>
-</style>

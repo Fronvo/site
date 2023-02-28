@@ -1,23 +1,11 @@
-// ******************** //
-// Reusable functions for the app communities panel.
-// ******************** //
-
-import { goto } from '$app/navigation';
 import type { Community, FronvoAccount } from 'interfaces/all';
-import { socket } from 'stores/all';
 import {
     chatRequestAccepted,
-    communityLoadingFinished,
-    officialCommunity as officialCommunityStore,
-    joinedCommunity as joinedCommunityStore,
-    targetCommunity as targetCommunityStore,
-    targetCommunityData,
-    communityMessages as communityMessagesStore,
-} from 'stores/communities';
-import { setProgressBar } from './main';
-import { loadOurData } from './profile';
-
-let ourData: FronvoAccount;
+    communityData,
+    communityMessages as messages,
+} from 'stores/community';
+import { socket } from 'stores/main';
+import { getKey } from './global';
 
 export async function fetchCommunity(
     communityId: string
@@ -40,80 +28,38 @@ export async function fetchCommunity(
     });
 }
 
-export async function loadCommunitiesPanel(
-    targetCommunity?: string
+export async function loadCommunitiesData(
+    ourData: FronvoAccount
 ): Promise<void> {
-    setProgressBar(true);
-
-    communityLoadingFinished.set(false);
-    officialCommunityStore.set(undefined);
-    joinedCommunityStore.set(undefined);
-    targetCommunityData.set(undefined);
+    communityData.set(undefined);
+    messages.set([]);
     chatRequestAccepted.set(undefined);
 
-    ourData = await loadOurData();
-
-    // If not in a community, load the target community
-    // Or the official one if that's empty
-    if (!ourData.isInCommunity) {
-        if (targetCommunity) {
-            await loadTargetCommunity(targetCommunity);
-        } else {
-            await loadOfficialCommunity();
-        }
-
-        setProgressBar(false);
-    } else {
-        // Load the joined community otherwise
-        await loadJoinedCommunity(ourData.communityId);
-    }
-
-    communityLoadingFinished.set(true);
-}
-
-async function loadOfficialCommunity(): Promise<void> {
-    goto('/community', {
-        replaceState: true,
-    });
-
-    officialCommunityStore.set(await fetchCommunity('fronvo'));
-}
-
-async function loadTargetCommunity(targetCommunity?: string): Promise<void> {
-    goto(`/community/${targetCommunity}`, {
-        replaceState: true,
-    });
-
-    const targetData = await fetchCommunity(targetCommunity);
-
-    // Abort if non-existent, load official community
-    if (!targetData) {
-        targetCommunityStore.set(undefined);
-        await loadOfficialCommunity();
+    if (!getKey('token')) {
         return;
     }
 
-    targetCommunityData.set(targetData);
+    // If not in a community, return
+    if (!ourData.isInCommunity) return;
+
+    // Otherwise, load the joined community
+    await loadJoinedCommunity(ourData);
 }
 
-async function loadJoinedCommunity(joinedCommunity?: string): Promise<void> {
-    goto(`/community/${joinedCommunity}`, {
-        replaceState: true,
-    });
+async function loadJoinedCommunity(ourData: FronvoAccount): Promise<Community> {
+    const data = await fetchCommunity(ourData.communityId);
 
-    const communityData = await fetchCommunity(joinedCommunity);
+    communityData.set(data);
 
-    joinedCommunityStore.set(communityData);
-
-    // Update chat requests status
     loadRequestStatus();
 
-    // Load the community messages aswell
     await loadCommunityMessages();
+
+    return data;
 
     function loadRequestStatus(): void {
         chatRequestAccepted.set(
-            communityData.acceptedChatRequests.includes(ourData.profileId)
+            data.acceptedChatRequests.includes(ourData.profileId)
         );
     }
 
@@ -126,7 +72,7 @@ async function loadJoinedCommunity(joinedCommunity?: string): Promise<void> {
                     to: '20',
                 },
                 ({ communityMessages }) => {
-                    communityMessagesStore.set(communityMessages);
+                    messages.set(communityMessages);
 
                     resolve();
                 }

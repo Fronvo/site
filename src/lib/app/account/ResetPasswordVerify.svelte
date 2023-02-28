@@ -4,7 +4,7 @@
         accountPanelAnimDuration,
         accountResetPasswordFinalTab,
     } from 'stores/account';
-    import { socket } from 'stores/all';
+    import { socket } from 'stores/main';
     import SvelteSegmentedInput from 'svelte-segmented-input';
     import { fade, scale } from 'svelte/transition';
 
@@ -102,31 +102,21 @@
     .reset-container button {
         font-size: 2rem;
         margin-top: 20px;
+        background-size: 200% auto;
+        background-image: linear-gradient(
+            to right,
+            rgb(102, 0, 255) 0%,
+            rgb(146, 73, 255) 51%,
+            rgb(102, 0, 255) 100%
+        );
+        color: white;
     }
 
-    @media screen and (max-width: 720px) {
-        .reset-container {
-            width: 450px;
-        }
-
-        .reset-container #header {
-            font-size: 2.5rem;
-        }
-
-        .reset-container #info {
-            font-size: 1.6rem;
-        }
-
-        .reset-container #error-header {
-            font-size: 1.7rem;
-        }
-
-        .reset-container button {
-            font-size: 1.8rem;
-        }
+    .reset-container button:hover {
+        background-position: bottom center;
     }
 
-    @media screen and (max-width: 520px) {
+    @media screen and (max-width: 700px) {
         .reset-container {
             width: 350px;
         }

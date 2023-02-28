@@ -1,112 +1,97 @@
-// ******************** //
-// Shared variables for the app route, after login.
-// ******************** //
-
-import CommunityMemberDropdown from '$lib/app/main/dropdowns/CommunityMemberDropdown.svelte';
-import CommunityMemberUnbanDropdown from '$lib/app/main/dropdowns/CommunityMemberUnbanDropdown.svelte';
-import CommunityOptionsDropdown from '$lib/app/main/dropdowns/CommunityOptionsDropdown.svelte';
-import PostOptionsDropdown from '$lib/app/main/dropdowns/PostOptionsDropdown.svelte';
-import CommunityMembers from '$lib/app/main/modals/CommunityMembers.svelte';
-import ConfirmDeleteMessageModal from '$lib/app/main/modals/ConfirmDeleteMessageModal.svelte';
-import CreateCommunityModal from '$lib/app/main/modals/CreateCommunityModal.svelte';
-import CreatePostModal from '$lib/app/main/modals/CreatePostModal.svelte';
-import DeletePostModal from '$lib/app/main/modals/DeletePostModal.svelte';
-import EditCommunityModal from '$lib/app/main/modals/EditCommunityModal.svelte';
-import EditJoinRequestModal from '$lib/app/main/modals/EditJoinRequestModal.svelte';
-import EditProfileModal from '$lib/app/main/modals/EditProfileModal.svelte';
-import FindCommunitiesModal from '$lib/app/main/modals/FindCommunitiesModal.svelte';
-import FindProfilesModal from '$lib/app/main/modals/FindProfilesModal.svelte';
-import FollowInfoModal from '$lib/app/main/modals/FollowInfoModal.svelte';
-import JoinCommunityModal from '$lib/app/main/modals/JoinCommunityModal.svelte';
-import JoinFronvoModal from '$lib/app/main/modals/JoinFronvoModal.svelte';
-import JoinRequestsModal from '$lib/app/main/modals/JoinRequestsModal.svelte';
-import LeaveCommunityModal from '$lib/app/main/modals/LeaveCommunityModal.svelte';
-import MaxOnlineTimeModal from '$lib/app/main/modals/MaxOnlineTimeModal.svelte';
-import PostModal from '$lib/app/main/modals/PostModal.svelte';
-import SettingsModal from '$lib/app/main/modals/SettingsModal.svelte';
-import ShowBansModal from '$lib/app/main/modals/ShowBansModal.svelte';
-import CommunitiesPanel from '$lib/app/main/panels/CommunitiesPanel.svelte';
-import HomePanel from '$lib/app/main/panels/HomePanel.svelte';
-import ProfilePanel from '$lib/app/main/panels/ProfilePanel.svelte';
-import type {
-    AccountPost,
-    HomePost,
-    FronvoAccount,
-    CommunityMessage,
-} from 'interfaces/all';
+import type { FronvoAccount } from 'interfaces/all';
+import type { ClientToServerEvents } from 'interfaces/c2s';
+import type { ServerToClientEvents } from 'interfaces/s2c';
+import type { Socket } from 'socket.io-client';
 import { writable, type Writable } from 'svelte/store';
 
-export const loginSucceeded = writable();
+/****************************** Fronvo client ******************************/
+export let socket: Socket<ServerToClientEvents, ClientToServerEvents>;
 
-// Panel settings
-export const panels = [HomePanel, ProfilePanel, CommunitiesPanel];
+export function setSocket(
+    socketVar: Socket<ServerToClientEvents, ClientToServerEvents>
+): void {
+    socket = socketVar;
+}
+/****************************** Fronvo client ******************************/
 
-export const currentPanelId = writable(0);
+/****************************** Fronvo title ******************************/
+export const fronvoTitle = writable('');
+/****************************** Fronvo title ******************************/
 
-// Modal settings
-export const modals = [
-    SettingsModal,
-    FollowInfoModal,
-    EditProfileModal,
-    CreatePostModal,
-    PostModal,
-    FindProfilesModal,
-    MaxOnlineTimeModal,
-    CreateCommunityModal,
-    JoinCommunityModal,
-    FindCommunitiesModal,
-    LeaveCommunityModal,
-    CommunityMembers,
-    EditCommunityModal,
-    ConfirmDeleteMessageModal,
-    JoinRequestsModal,
-    EditJoinRequestModal,
-    DeletePostModal,
-    JoinFronvoModal,
-    ShowBansModal,
-];
+/****************************** Fronvo layout ******************************/
+export const showLayout = writable(false);
+/****************************** Fronvo layout ******************************/
 
-// Dropdown settings
-export const dropdowns = [
-    CommunityOptionsDropdown,
-    PostOptionsDropdown,
-    CommunityMemberDropdown,
-    CommunityMemberUnbanDropdown,
-];
+/****************************** Fronvo dark theme ******************************/
+export const darkTheme = writable(undefined);
+/****************************** Fronvo dark theme ******************************/
 
-// General Modal settings
-export const currentModalId = writable(0);
-export const modalVisible = writable(false);
-export const modalAnimDuration = 300;
+/****************************** Fronvo data saver ******************************/
+export const dataSaver = writable(false);
+/****************************** Fronvo data saver ******************************/
 
-// FollowModal
-export const followModalInfo: Writable<string[]> = writable();
-export const followModalForFollowing: Writable<boolean> = writable();
+/****************************** Fronvo chistmas mode ******************************/
+export const xmasMode = writable(false);
+export const xmasParticleOptions = writable({
+    particles: {
+        color: {
+            value: '#ffffff',
+        },
 
-// PostModal
-export const postModalIndex: Writable<number> = writable();
-export const postModalInfo: Writable<AccountPost | HomePost> = writable();
-export const postModalForHome: Writable<boolean> = writable();
+        move: {
+            enable: true,
+            direction: 'bottom',
+            speed: 2,
+        },
 
-// EditCommunityMemberModal
-export const targetCommunityMember: Writable<FronvoAccount> = writable();
+        number: {
+            density: {
+                enable: true,
+                area: 500,
+            },
+            value: 4,
+        },
 
-// ConfirmDeleteMessageModal
-export const targetConfirmCommunityMessage: Writable<CommunityMessage> =
-    writable();
+        opacity: {
+            value: 1,
+        },
 
-// JoinRequestModal
-export const targetJoinRequestEmail: Writable<string> = writable();
+        shape: {
+            type: 'circle',
+        },
 
-// General Dropdown settings
-export const currentDropdownId = writable(0);
-export const dropdownVisible = writable(false);
-export const dropdownAnimDuration = 350;
-export const dropdownPosition = writable([0, 0]);
+        size: {
+            value: 5,
+        },
 
-// Loading
+        // wobbly wobbly right left
+        wobble: {
+            enable: true,
+            distance: 18,
+            speed: 3,
+        },
+
+        // size randomness
+        zIndex: {
+            value: { min: 0, max: 100 },
+        },
+    },
+});
+/****************************** Fronvo christmas mode ******************************/
+
+/****************************** Fronvo login state ******************************/
+export const loginSucceeded: Writable<boolean> = writable();
+/****************************** Fronvo login state ******************************/
+
+/****************************** Fronvo guest mode ******************************/
+export const guestMode: Writable<boolean> = writable();
+/****************************** Fronvo guest mode ******************************/
+
+/****************************** Fronvo loading state ******************************/
 export const progressBarVisible = writable(false);
+/****************************** Fronvo loading state ******************************/
 
-// Caching
+/****************************** Fronvo caching ******************************/
 export const queuedAccounts: Writable<string[]> = writable([]);
 export const cachedAccountData: Writable<FronvoAccount[]> = writable([]);
+/****************************** Fronvo caching ******************************/

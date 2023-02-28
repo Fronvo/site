@@ -34,10 +34,6 @@ import type {
     FetchProfilePostsResult,
 } from './account/fetchProfilePosts';
 import type {
-    FindCommunitiesParams,
-    FindCommunitiesResult,
-} from './account/findCommunities';
-import type {
     FindProfilesParams,
     FindProfilesResult,
 } from './account/findProfiles';
@@ -192,10 +188,6 @@ export interface ClientToServerEvents {
     createCommunity: (
         {}: CreateCommunityParams,
         callback?: ({}: CreateCommunityResult) => void
-    ) => void;
-    findCommunities: (
-        {}: FindCommunitiesParams,
-        callback?: ({}: FindCommunitiesResult) => void
     ) => void;
     joinCommunity: (
         {}: JoinCommunityParams,

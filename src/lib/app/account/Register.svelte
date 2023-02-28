@@ -5,7 +5,7 @@
         accountRegisterTab,
         accountRegisterVerifyTab,
     } from 'stores/account';
-    import { socket } from 'stores/all';
+    import { socket } from 'stores/main';
     import { onMount, onDestroy } from 'svelte';
     import { fade, scale } from 'svelte/transition';
 
@@ -24,13 +24,6 @@
         }
 
         if (ev.ctrlKey || ev.altKey) return;
-
-        if (!email) {
-            emailInput.focus();
-            return;
-        }
-
-        passwordInput.focus();
     }
 
     onMount(() => {
@@ -42,11 +35,11 @@
             'register-button'
         ) as HTMLButtonElement;
 
-        document.addEventListener('keypress', keyListener);
+        document.addEventListener('keydown', keyListener);
     });
 
     onDestroy(() => {
-        document.removeEventListener('keypress', keyListener);
+        document.removeEventListener('keydown', keyListener);
     });
 
     function register(): void {
@@ -176,6 +169,18 @@
         width: 90%;
         border: 3px solid white;
         padding: 7px;
+        background-size: 200% auto;
+        background-image: linear-gradient(
+            to right,
+            rgb(102, 0, 255) 0%,
+            rgb(146, 73, 255) 51%,
+            rgb(102, 0, 255) 100%
+        );
+        color: white;
+    }
+
+    .account-container button:hover {
+        background-position: bottom center;
     }
 
     .account-container #login-redirect {
@@ -197,38 +202,7 @@
         color: rgb(233, 206, 255);
     }
 
-    @media screen and (max-width: 720px) {
-        .account-container {
-            width: 450px;
-        }
-
-        .account-container #header {
-            font-size: 2.5rem;
-        }
-
-        .account-container #error-header {
-            font-size: 1.7rem;
-        }
-
-        .account-container #input-header {
-            font-size: 1.7rem;
-        }
-
-        .account-container input {
-            font-size: 1.7rem;
-        }
-
-        .account-container button {
-            font-size: 2.2rem;
-        }
-
-        .account-container #login-redirect {
-            font-size: 1.7rem;
-            cursor: default;
-        }
-    }
-
-    @media screen and (max-width: 520px) {
+    @media screen and (max-width: 700px) {
         .account-container {
             width: 350px;
         }

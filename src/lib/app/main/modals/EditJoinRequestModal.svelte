@@ -1,8 +1,7 @@
 <script lang="ts">
-    import { targetJoinRequestEmail } from 'stores/main';
-    import { socket } from 'stores/all';
+    import { socket } from 'stores/main';
+    import { targetRequestModal, type ModalData } from 'stores/modals';
     import { dismissModal, setProgressBar } from 'utilities/main';
-    import type { ModalData } from 'types/main';
     import ModalTemplate from '../ModalTemplate.svelte';
 
     function acceptJoinRequest(): void {
@@ -11,7 +10,7 @@
         socket.emit(
             'acceptJoinRequest',
             {
-                email: $targetJoinRequestEmail,
+                email: $targetRequestModal,
             },
             () => {
                 dismissModal();
@@ -26,7 +25,7 @@
         socket.emit(
             'rejectJoinRequest',
             {
-                email: $targetJoinRequestEmail,
+                email: $targetRequestModal,
             },
             () => {
                 dismissModal();
@@ -37,7 +36,6 @@
 
     const data: ModalData = {
         title: 'Edit Request',
-        noSeperator: true,
 
         actions: [
             {
@@ -49,7 +47,7 @@
 </script>
 
 <ModalTemplate {data}>
-    <h1 class="modal-header" id="email">{$targetJoinRequestEmail}</h1>
+    <h1 class="modal-header" id="email">{$targetRequestModal}</h1>
 
     <button class="modal-button" on:click={acceptJoinRequest}
         >Accept request</button
@@ -73,13 +71,7 @@
         text-align: center;
     }
 
-    @media screen and (max-width: 720px) {
-        #email {
-            font-size: 1.9rem;
-        }
-    }
-
-    @media screen and (max-width: 520px) {
+    @media screen and (max-width: 700px) {
         #email {
             font-size: 1.5rem;
         }

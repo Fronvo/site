@@ -1,7 +1,3 @@
-// ******************** //
-// Reusable functions for all kinds of files.
-// ******************** //
-
 import type { LocalKeys } from 'types/all';
 
 export function getKey(key: LocalKeys, fallback?: any): any {

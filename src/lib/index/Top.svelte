@@ -71,7 +71,7 @@
         }
     }
 
-    @media screen and (max-width: 520px) {
+    @media screen and (max-width: 700px) {
         svg {
             width: 100%;
             height: 100%;

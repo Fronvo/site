@@ -14,23 +14,17 @@ body {
     margin: 0;
 }
 
-a {
-    text-decoration: none;
-    display: inline-block;
-    position: relative;
-}
-
 svg {
     cursor: pointer;
-    transition: 100ms all;
+    transition: 300ms;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    width: var(--svg_size);
-    height: var(--svg_size);
+    width: 36px;
+    height: 36px;
 }
 
 svg:hover {
@@ -39,19 +33,6 @@ svg:hover {
 
 svg:active {
     transform: scale(0.95);
-}
-
-a::after {
-    content: '';
-    display: block;
-    height: 2px;
-    width: 0px;
-    transition: width 0.75s, background-color 0.75s;
-}
-
-a:hover::after {
-    width: 100%;
-    background: white;
 }
 
 a:focus {
@@ -66,21 +47,15 @@ h1 {
 
 button {
     border: none;
-    border-radius: 12px;
-    color: white;
+    border-radius: 5px;
+    color: var(--profile_info_color);
+    background: var(--button_background);
+    box-shadow: 0 0 5px var(--accent_shadow_color);
     padding: 10px;
     font-family: Nunito;
-    box-shadow: 0 0 5px var(--text_color);
     font-weight: 500;
     cursor: pointer;
-    transition: 0.25s;
-    background-size: 200% auto;
-    background-image: linear-gradient(
-        to right,
-        rgb(102, 0, 255) 0%,
-        rgb(146, 73, 255) 51%,
-        rgb(102, 0, 255) 100%
-    );
+    transition: 300ms all;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -90,7 +65,12 @@ button {
 }
 
 button:hover {
-    background-position: bottom center;
+    color: var(--text_color);
+}
+
+button:active {
+    transition: 50ms;
+    transform: scale(0.96);
 }
 
 button:disabled {
@@ -155,8 +135,14 @@ select:-webkit-autofill::first-line {
     border-radius: 20px;
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 700px) {
+    img {
+        cursor: default;
+    }
+
     svg {
+        width: 40px;
+        height: 40px;
         cursor: default;
     }
 
@@ -166,12 +152,5 @@ select:-webkit-autofill::first-line {
 
     button {
         cursor: default;
-    }
-}
-
-@media screen and (max-width: 520px) {
-    svg {
-        width: 40px;
-        height: 40px;
     }
 }

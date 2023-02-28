@@ -218,7 +218,7 @@
 
     @media screen and (max-width: 700px) {
         .post-container {
-            width: 90vw;
+            width: 100vw;
         }
 
         .preview {

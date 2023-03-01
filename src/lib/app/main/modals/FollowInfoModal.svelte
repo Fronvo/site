@@ -99,11 +99,11 @@
         flex-direction: row;
         justify-content: center;
         flex-wrap: wrap;
-        overflow-y: auto;
+        overflow-y: auto scroll;
         flex: 1;
     }
 
-    @media screen and (max-width: 1100px) {
+    @media screen and (max-width: 700px) {
         .following-items-container {
             flex-direction: column;
             justify-content: start;

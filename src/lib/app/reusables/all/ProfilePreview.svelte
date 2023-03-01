@@ -135,15 +135,15 @@
         border-radius: 10px;
     }
 
-    @media screen and (max-width: 1100px) {
+    @media screen and (max-width: 700px) {
         div {
             width: 300px;
-            height: 100px;
+            height: 65px;
             display: flex;
             flex-direction: row;
             align-items: center;
             justify-content: start;
-            padding: 5px;
+            padding: 0;
             margin: 0;
             cursor: default;
             margin-top: 5px;
@@ -159,7 +159,7 @@
         }
 
         div #profileId {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
         }
 
         div #following,
@@ -171,17 +171,6 @@
             width: 48px;
             height: 48px;
             margin-right: 5px;
-        }
-    }
-
-    @media screen and (max-width: 700px) {
-        div {
-            height: 65px;
-            padding: 0;
-        }
-
-        div #profileId {
-            font-size: 1.2rem;
         }
     }
 </style>

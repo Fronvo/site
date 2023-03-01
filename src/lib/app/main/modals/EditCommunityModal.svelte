@@ -13,7 +13,6 @@
     let id = $comData.communityId;
     let name = $comData.name;
     let icon: Writable<string> = writable($comData.icon);
-    let inviteOnly = $comData.inviteOnly;
     let chatRequests = $comData.chatRequestsEnabled;
 
     let canUpload = true;
@@ -38,10 +37,6 @@
 
         if ($comData.icon != $icon) {
             updatedData['icon'] = $icon;
-        }
-
-        if ($comData.inviteOnly != inviteOnly) {
-            updatedData['inviteOnly'] = inviteOnly;
         }
 
         if ($comData.chatRequestsEnabled != chatRequests) {
@@ -157,17 +152,6 @@
     </div>
 
     <input class="modal-input" maxlength={512} bind:value={$icon} />
-
-    <div class="modal-center">
-        <h1 class="modal-header">Invite only</h1>
-        <Checkbox
-            bind:checked={inviteOnly}
-            class="checkbox"
-            size="2.5rem"
-            primaryColor="var(--modal_checkbox_primary_color)"
-            secondaryColor="var(--modal_checkbox_secondary_color)"
-        />
-    </div>
 
     <div class="modal-center">
         <h1 class="modal-header">Chat requests</h1>

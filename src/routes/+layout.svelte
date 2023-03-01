@@ -74,12 +74,22 @@
     }
 
     function setupListeners(): void {
-        document.addEventListener('mousedown', (ev) => {
-            dropdownPosition.set([
-                Math.min(ev.clientX, window.innerWidth - 215),
-                Math.min(ev.clientY, window.innerHeight - 175),
-            ]);
-        });
+        // Mobile needs a different listener
+        if (document.body.clientWidth < 700) {
+            document.addEventListener('mousemove', (ev) => {
+                dropdownPosition.set([
+                    Math.min(ev.clientX, window.innerWidth - 215),
+                    Math.min(ev.clientY, window.innerHeight - 175),
+                ]);
+            });
+        } else {
+            document.addEventListener('mousedown', (ev) => {
+                dropdownPosition.set([
+                    Math.min(ev.clientX, window.innerWidth - 215),
+                    Math.min(ev.clientY, window.innerHeight - 175),
+                ]);
+            });
+        }
 
         document.addEventListener('keydown', (ev) => {
             if (ev.shiftKey) {
@@ -90,6 +100,10 @@
                 dismissModal();
                 dismissDropdown();
             }
+        });
+
+        document.addEventListener('focus', () => {
+            $shiftHeld = false;
         });
 
         document.addEventListener('keyup', (ev) => {

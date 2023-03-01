@@ -1,9 +1,9 @@
-<script lang="ts">
-    import { Diamonds } from 'svelte-loading-spinners';
+<script>
+    import LoadingDiamonds from '$lib/svgs/LoadingDiamonds.svelte';
 </script>
 
 <div class="loading-container">
-    <Diamonds color={'var(--text_color)'} size="128" duration="1.5s" />
+    <LoadingDiamonds />
 </div>
 
 <style>

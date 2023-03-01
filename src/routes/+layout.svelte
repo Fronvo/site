@@ -203,6 +203,8 @@
         display: flex;
         justify-content: center;
         align-items: center;
+        margin-left: 5px;
+        margin-right: 5px;
     }
 
     :global(.modal-center-no-overflow) {
@@ -210,6 +212,8 @@
         justify-content: center;
         align-items: center;
         overflow: hidden;
+        margin-left: 5px;
+        margin-right: 5px;
     }
 
     @media screen and (max-width: 700px) {

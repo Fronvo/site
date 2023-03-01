@@ -6,4 +6,4 @@
 
 `npm run preview -- --open`
 
-The site should be running locally at port 4173.
+The site should be running locally at port 5173.

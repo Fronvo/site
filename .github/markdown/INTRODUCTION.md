@@ -20,8 +20,8 @@ How, you ask?
 
 -   Posts. Want to give an update to your followers? Post it on your profile and they will see it on their Home page.
 
--   Finding the app theme, let's say, a little boring..? Make your own or use shared ones from the Theme Marketplace. (SOON)
-
 -   Ambient mode. Bring your profile to life with a custom banner (and illuminate it!)
+
+-   Finding the app theme, let's say, a little boring..? Make your own or use shared ones from the Theme Marketplace. (SOON)
 
 -   Want to feel even more secure? Self-host this site AND [the Fronvo server](https://github.com/Fronvo/server) to invite your friends, securely.

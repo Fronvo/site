@@ -103,7 +103,5 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-top: 10px;
-        margin-bottom: 10px;
     }
 </style>

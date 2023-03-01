@@ -8,6 +8,7 @@
     import { ourData } from 'stores/profile';
 
     $showLayout = true;
+    let linkFired = false;
 
     if (!getKey('token')) {
         switchPanel(PanelTypes.Home);
@@ -16,10 +17,12 @@
     }
 
     loginSucceeded.subscribe((state) => {
-        if (!state) return;
+        if (!state || linkFired) return;
 
         if ($ourData?.isInCommunity) {
             switchPanel(PanelTypes.Community);
+
+            linkFired = true;
         }
     });
 </script>

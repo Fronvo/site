@@ -246,7 +246,7 @@
 
         .post-container #content {
             font-size: 1.1rem;
-            -webkit-line-clamp: 3;
+            -webkit-line-clamp: 7;
         }
 
         .post-container #attachment {

@@ -79,15 +79,25 @@
             alt={`${profileData.username}'s avatar`}
             on:contextmenu={() => showImageDropdown(profileData.avatar)}
         />
-        <h1
-            id="author"
-            on:click={() =>
-                $currentPanelId != PanelTypes.Profile &&
-                !isPreview &&
-                loadTargetProfile(profileData.profileId, $cachedAccountData)}
-        >
-            {profileData.username} <span>@{profileData.profileId}</span>
-        </h1>
+
+        <div class="info-container">
+            <h1
+                id="username"
+                on:click={() =>
+                    $currentPanelId != PanelTypes.Profile &&
+                    !isPreview &&
+                    loadTargetProfile(
+                        profileData.profileId,
+                        $cachedAccountData
+                    )}
+            >
+                {profileData.username}
+            </h1>
+
+            <h1 id="identifier">
+                @{profileData.profileId}
+            </h1>
+        </div>
 
         <h1 id="creation-date">
             •
@@ -138,12 +148,12 @@
 
     .author-container {
         display: flex;
-        align-items: center;
+        align-items: start;
     }
 
     .author-container #avatar {
-        width: 48px;
-        height: 48px;
+        width: 54px;
+        height: 54px;
         border-radius: 10px;
         margin-right: 5px;
         -webkit-touch-callout: none;
@@ -152,9 +162,17 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+        margin-top: 5px;
     }
 
-    .author-container #author {
+    .info-container {
+        display: flex;
+        flex-direction: column;
+        align-items: start;
+        justify-content: center;
+    }
+
+    .info-container #username {
         color: var(--profile_info_color);
         font-size: 1.6rem;
         margin: 0;
@@ -164,20 +182,25 @@
         -webkit-box-orient: vertical;
     }
 
-    .author-container #author:hover {
+    .info-container #username:hover {
         text-decoration: underline;
         cursor: pointer;
     }
 
-    .author-container #author span {
-        color: var(--text_color);
-        font-size: 1.4rem;
+    .info-container #identifier {
+        font-size: 1.3rem;
+        margin: 0;
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
     }
 
     .post-container #creation-date {
         font-size: 1.1rem;
         margin: 0;
         margin-left: 5px;
+        margin-top: 6px;
         flex: 1;
         text-align: start;
         display: -webkit-box;
@@ -227,16 +250,16 @@
             width: 100%;
         }
 
-        .author-container #author {
+        .info-container #username {
             font-size: 1.3rem;
         }
 
-        .author-container #author:hover {
+        .info-container #username:hover {
             cursor: default;
         }
 
-        .author-container #author span {
-            font-size: 1.1rem;
+        .info-container #identifier {
+            font-size: 1rem;
         }
 
         .author-container #avatar {

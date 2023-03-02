@@ -27,14 +27,6 @@ svg {
     height: 36px;
 }
 
-svg:hover {
-    opacity: 0.8;
-}
-
-svg:active {
-    transform: scale(0.95);
-}
-
 a:focus {
     outline-color: white;
 }
@@ -146,8 +138,8 @@ select:-webkit-autofill::first-line {
         cursor: default;
     }
 
-    svg:hover {
-        opacity: 1;
+    svg:active {
+        transform: scale(0.95);
     }
 
     button {

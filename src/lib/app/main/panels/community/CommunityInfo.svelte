@@ -1,5 +1,5 @@
 <script lang="ts">
-    import OptionsMenu from '$lib/svgs/OptionsMenu.svelte';
+    import Expand from '$lib/svgs/Expand.svelte';
     import { communityData } from 'stores/community';
     import { DropdownTypes, dropdownVisible } from 'stores/dropdowns';
     import { dataSaver } from 'stores/main';
@@ -16,7 +16,12 @@
 </script>
 
 {#if $communityData}
-    <div id="blur" class="info-container" in:fade={{ duration: 200 }}>
+    <div
+        id="blur"
+        class="info-container"
+        in:fade={{ duration: 200 }}
+        on:click={showCommunityInfoDropdown}
+    >
         <img
             id="icon"
             src={$communityData.icon && !$dataSaver
@@ -27,7 +32,7 @@
         />
         <h1 id="name">{$communityData?.name}</h1>
 
-        <OptionsMenu callback={showCommunityInfoDropdown} />
+        <Expand />
     </div>
 {/if}
 
@@ -37,12 +42,17 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        width: 50%;
         padding: 10px;
         border-bottom-left-radius: 10px;
         border-bottom-right-radius: 10px;
         z-index: 1;
         background: var(--accent_bg_color);
+        transition: 150ms;
+        cursor: pointer;
+    }
+
+    .info-container:hover {
+        box-shadow: 0 0 15px var(--accent_shadow_color);
     }
 
     .info-container #icon {
@@ -77,9 +87,7 @@
 
     @media screen and (max-width: 700px) {
         .info-container {
-            width: 90%;
-            backdrop-filter: none;
-            background: var(--accent_bg_color);
+            cursor: default;
         }
 
         .info-container #icon {

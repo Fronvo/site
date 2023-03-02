@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 
 /****************************** Settings ******************************/
-export const accountPanelAnimDuration = 350;
+export const accountPanelAnimDuration = 500;
 /****************************** Settings ******************************/
 
 /****************************** Register ******************************/

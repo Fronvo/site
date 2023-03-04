@@ -83,7 +83,7 @@
     });
 </script>
 
-{#if ($ourData || $guestMode) && $searchData && $searchPosts}
+{#if ($ourData || $guestMode) && $searchData}
     {#if !$dataSaver && $searchData.banner}
         <div
             class="ambient-bg"

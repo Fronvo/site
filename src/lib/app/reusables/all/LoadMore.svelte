@@ -10,6 +10,7 @@
 
 <style>
     div {
+        text-align: center;
         margin: 20px;
         margin-top: 30px;
     }

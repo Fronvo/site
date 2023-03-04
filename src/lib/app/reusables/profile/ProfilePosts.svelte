@@ -38,7 +38,7 @@
     }
 </script>
 
-{#if !$guestMode}
+{#if !$guestMode && posts}
     <div class="posts-container" in:fade={{ duration: 200 }}>
         {#if data.totalPosts > 0 && (!data.isPrivate || data.isFollower || data.isSelf)}
             <h1 id="counter">

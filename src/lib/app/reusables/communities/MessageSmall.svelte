@@ -111,6 +111,14 @@
         opacity: 1;
     }
 
+    .menu-container {
+        cursor: default;
+        border: 3px solid var(--button_background);
+        border-radius: 10px;
+        background: var(--button_background);
+        transform: translateY(-35px);
+    }
+
     .message-container #content {
         color: var(--profile_info_color);
         margin: 0;

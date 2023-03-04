@@ -49,13 +49,18 @@
     }
 
     #content {
-        width: 100%;
+        width: 75%;
+        margin: auto;
         justify-content: center;
     }
 
     @media screen and (max-width: 700px) {
         .main-container {
             flex-direction: column;
+        }
+
+        #content {
+            width: 100%;
         }
     }
 </style>

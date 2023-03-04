@@ -27,7 +27,6 @@
     import { pendingSearchId } from 'stores/profile';
     import { dropdownPosition } from 'stores/dropdowns';
     import { shiftHeld } from 'stores/actions';
-    import { currentPanelId } from 'stores/panels';
 
     let mountReady = false;
 
@@ -41,12 +40,23 @@
     }
 
     function setupTheming(): void {
+        // Save eyes, after site load else it defaults to white
+        setTimeout(() => {
+            document.body.style.setProperty('transition', '300ms background');
+        }, 0);
+
         darkTheme.subscribe((dark) => {
             if (typeof dark == 'undefined') {
                 return;
             }
 
             currentTheme.set(dark ? defaultTheme : whiteTheme);
+
+            // Hacky but works for background color
+            document.documentElement.style.setProperty(
+                '--bg_color',
+                dark ? defaultTheme.bg_color : whiteTheme.bg_color
+            );
 
             // Update XMAS particles, regardless of current state
             $xmasParticleOptions.particles.color.value = dark
@@ -113,13 +123,6 @@
         });
     }
 
-    function setupOther(): void {
-        // Reset scroll
-        currentPanelId.subscribe(() => {
-            document.getElementsByClassName('main')[0].scrollTo(0, 0);
-        });
-    }
-
     onMount(() => {
         mountReady = true;
 
@@ -127,7 +130,6 @@
         setupTheming();
         setupLayout();
         setupListeners();
-        setupOther();
     });
 </script>
 
@@ -135,7 +137,7 @@
     <title>{$fronvoTitle}</title>
 </svelte:head>
 
-<div class="main" use:themingVars={{ ...$currentTheme }}>
+<div use:themingVars={{ ...$currentTheme }}>
     {#if mountReady}
         {#if $showLayout}
             {#if $guestMode == undefined}
@@ -152,15 +154,8 @@
 </div>
 
 <style>
-    .main {
-        padding: 0;
-        margin: 0;
-        position: fixed;
-        height: 100vh;
-        width: 100%;
+    :global(body) {
         background: var(--bg_color);
-        overflow: auto;
-        transition: 300ms background;
     }
 
     /* Elegant theme feature */

@@ -28,7 +28,6 @@
     } from 'stores/modals';
     import type { CommunityMessage, FronvoAccount } from 'interfaces/all';
     import Message from '$lib/app/reusables/communities/Message.svelte';
-    import LoadMore from '$lib/app/reusables/all/LoadMore.svelte';
     import linkifyHtml from 'linkify-html';
     import { cachedAccountData, socket } from 'stores/main';
     import { shiftHeld } from 'stores/actions';
@@ -39,15 +38,10 @@
     let unsubscribe: Unsubscriber;
     let unsubscribe2: Unsubscriber;
 
-    let showLoadMore = true;
-    let isLoadingMore = false;
     let animationsEnabled = true;
 
     async function addMessageLinks(): Promise<void> {
-        if ($messages.length == 0) {
-            setProgressBar(false);
-            return;
-        }
+        if ($messages.length == 0) return;
 
         function findLinkElements(
             messageId: string,
@@ -104,35 +98,6 @@
                 message.message.replyContent
             );
         }
-
-        setProgressBar(false);
-    }
-
-    function loadMore(): void {
-        if (isLoadingMore) return;
-
-        isLoadingMore = true;
-        setProgressBar(true);
-
-        socket.emit(
-            'fetchCommunityMessages',
-            {
-                from: $messages.length.toString(),
-                to: ($messages.length + 30).toString(),
-            },
-            ({ communityMessages }) => {
-                $messages.push(...communityMessages);
-                $messages = $messages;
-
-                addMessageLinks();
-
-                isLoadingMore = false;
-
-                showLoadMore = $messages.length < $communityData.totalMessages;
-
-                setProgressBar(false);
-            }
-        );
     }
 
     function sendMessage(): void {
@@ -142,12 +107,8 @@
                 message: $sendContent,
                 replyId: $replyingToId,
             },
-            ({ err }) => {
-                if (err) {
-                    setProgressBar(false);
-                } else {
-                    $sendContent = '';
-                }
+            () => {
+                $sendContent = '';
 
                 const contentInput = document.getElementById(
                     'textarea-content'
@@ -172,8 +133,6 @@
         // The image is red, user should've known
         if ($shiftHeld) {
             // Will recieve result in CommunityChat listener if successful
-            setProgressBar(true);
-
             socket.emit('deleteCommunityMessage', {
                 messageId: message.messageId,
             });
@@ -200,9 +159,14 @@
         socket.off('newCommunityMessage');
 
         socket.on('newCommunityMessage', ({ newMessageData }) => {
-            $messages = [newMessageData].concat($messages);
+            $messages.push(newMessageData);
+            $messages = $messages;
 
             addMessageLinks();
+
+            setTimeout(() => {
+                window.scrollTo(0, document.body.scrollHeight);
+            }, 0);
         });
     }
 
@@ -342,8 +306,6 @@
             $sendContent.length > 0 &&
             $sendContent.length <= 500
         ) {
-            setProgressBar(true);
-
             // Reset text
             contentInput.disabled = true;
 
@@ -392,7 +354,15 @@
 
         unsubscribe2 = messages.subscribe(() => {
             addMessageLinks();
+
+            setTimeout(() => {
+                window.scrollTo(0, document.body.scrollHeight);
+            }, 50);
         });
+
+        setTimeout(() => {
+            window.scrollTo(0, document.body.scrollHeight);
+        }, 25);
 
         // Efficient send
         document.addEventListener('keydown', keyDownListener);
@@ -411,7 +381,7 @@
         document.removeEventListener('keydown', keyDownListener);
 
         // Limit load after reloading the community panel
-        $messages = $messages.slice(0, 20);
+        $messages = $messages.slice(-40);
     });
 </script>
 
@@ -454,25 +424,12 @@
                     />
                 {/if}
             {/each}
-
-            {#if communityData && showLoadMore}
-                {#if $messages.length < $communityData?.totalMessages}
-                    <LoadMore callback={loadMore} />
-                {/if}
-            {/if}
         {/if}
     </div>
 {/if}
 
 <style>
     .chat-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        flex-wrap: wrap;
-        margin-top: 90px;
-        overflow-y: auto;
-        overflow-x: hidden;
         width: 100%;
     }
 
@@ -491,10 +448,6 @@
     }
 
     @media screen and (max-width: 700px) {
-        .chat-container {
-            margin-top: 60px;
-        }
-
         .chat-container #chat-start {
             font-size: 1.5rem;
         }

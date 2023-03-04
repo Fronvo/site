@@ -226,6 +226,14 @@
         transition: 100ms;
     }
 
+    .menu-container {
+        cursor: default;
+        border: 3px solid var(--button_background);
+        border-radius: 10px;
+        background: var(--button_background);
+        transform: translateY(-35px);
+    }
+
     .reply-container #reply-name {
         font-size: 1.3rem;
         margin: 0;

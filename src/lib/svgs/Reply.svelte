@@ -17,14 +17,16 @@
 
 <style>
     svg {
-        width: 40px;
-        height: 40px;
+        width: 34px;
+        height: 34px;
+        margin-right: 5px;
+        margin-left: 5px;
     }
 
     @media screen and (max-width: 700px) {
         svg {
-            width: 36px;
-            height: 36px;
+            width: 30px;
+            height: 30px;
         }
     }
 </style>

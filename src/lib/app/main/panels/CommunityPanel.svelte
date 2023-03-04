@@ -18,18 +18,16 @@
 
 <style>
     .communities-container {
-        width: 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        margin-right: 10px;
-        margin-bottom: 60px;
+        margin: auto;
     }
 
     @media screen and (max-width: 700px) {
         .communities-container {
-            margin-bottom: 100px;
+            margin-bottom: 70px;
         }
     }
 </style>

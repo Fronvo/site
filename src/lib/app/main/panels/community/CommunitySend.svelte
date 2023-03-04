@@ -42,6 +42,10 @@
 
             // Share the value
             $targetSendHeight = targetHeight;
+
+            setTimeout(() => {
+                window.scrollTo(0, document.body.scrollHeight);
+            }, 0);
         });
     });
 
@@ -63,13 +67,11 @@
 
 <style>
     .send-container {
-        width: 45%;
-        min-width: 400px;
-        background: var(--accent_bg_color);
-        box-shadow: 0 0 10px var(--accent_shadow_color);
+        width: 40%;
+        min-width: 600px;
+        box-shadow: 0 0 5px var(--accent_shadow_color);
         position: fixed;
-        bottom: 10px;
-        border-radius: 10px;
+        bottom: 0;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -107,8 +109,8 @@
 
     @media screen and (max-width: 700px) {
         .send-container {
-            bottom: 85px;
-            width: 70%;
+            bottom: 65px;
+            width: 100%;
             min-width: initial;
             min-height: 55px;
             backdrop-filter: none;

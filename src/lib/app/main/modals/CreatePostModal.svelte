@@ -1,4 +1,6 @@
 <script lang="ts">
+    import Post from '$lib/app/reusables/all/Post.svelte';
+    import type { AccountPost } from 'interfaces/all';
     import { cachedAccountData, socket } from 'stores/main';
     import type { ModalData } from 'stores/modals';
     import { currentPanelId, PanelTypes } from 'stores/panels';
@@ -10,11 +12,17 @@
     import { loadTargetProfile } from 'utilities/profile';
     import ModalTemplate from '../ModalTemplate.svelte';
 
-    let content: string;
-    let attachment: Writable<string> = writable('');
     let isSharing = false;
     let canShare = true;
     let errorMessage: string;
+
+    const postData: Writable<AccountPost> = writable({
+        author: $ourData.profileId,
+        content: '',
+        creationDate: new Date().toString(),
+        postId: '',
+        attachment: '',
+    });
 
     function sharePost(): void {
         if (!canShare || isSharing) return;
@@ -26,8 +34,8 @@
         socket.emit(
             'createPost',
             {
-                content,
-                attachment: $attachment,
+                content: $postData.content,
+                attachment: $postData.attachment,
             },
             async ({ err }) => {
                 if (err) {
@@ -39,7 +47,7 @@
                 }
 
                 if (
-                    $searchData.profileId == $ourData.profileId &&
+                    $searchData?.profileId == $ourData.profileId &&
                     $currentPanelId == PanelTypes.Profile
                 ) {
                     loadTargetProfile($ourData.profileId, $cachedAccountData);
@@ -56,7 +64,7 @@
         ) as HTMLImageElement;
 
         attachmentPreview.onerror = () => {
-            if ($attachment == '') return;
+            if ($postData.attachment == '') return;
 
             const attachmentText =
                 document.getElementsByClassName('attachment-info')[0];
@@ -67,14 +75,14 @@
             attachmentPreview.src = '/svgs/profile/avatar.svg';
         };
 
-        attachment.subscribe((newAttachment) => {
-            if (newAttachment == undefined) return;
+        postData.subscribe(({ attachment }) => {
+            if (attachment == undefined) return;
 
             const attachmentText =
                 document.getElementsByClassName('attachment-info')[0];
 
             // Allow empty avatar url, reset it
-            if (newAttachment == '') {
+            if (attachment == '') {
                 // Reset state
                 attachmentText.textContent = 'Attachment';
 
@@ -82,7 +90,7 @@
             }
 
             // Check for avatar https, perform some client side validation on our own
-            else if (!newAttachment.match(/^(https:\/\/).+$/)) {
+            else if (!attachment.match(/^(https:\/\/).+$/)) {
                 attachmentText.textContent = 'Attachment - Invalid URL';
 
                 canShare = false;
@@ -120,23 +128,26 @@
         </h1>
     {/if}
 
-    <h1 class="modal-header">Content</h1>
-    <textarea
-        class="modal-input"
-        bind:value={content}
-        maxlength={256}
-        rows={6}
+    <Post
+        profileData={$ourData}
+        bind:postData={$postData}
+        hideOptions
+        isPreview
+        isShare
     />
 
-    <!-- Just for attachment checking, no preview -->
     <img
         id="attachment-preview"
-        src={$attachment ? $attachment : ''}
+        src={$postData.attachment ? $postData.attachment : ''}
         alt="Post attachment"
         draggable={false}
     />
     <h1 class="modal-header attachment-info">Attachment</h1>
-    <input class="modal-input" bind:value={$attachment} maxlength={256} />
+    <input
+        class="modal-input"
+        bind:value={$postData.attachment}
+        maxlength={256}
+    />
 </ModalTemplate>
 
 <style>

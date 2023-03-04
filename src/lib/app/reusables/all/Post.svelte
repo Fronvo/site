@@ -19,6 +19,7 @@
     export let postData: AccountPost;
     export let hideOptions = false;
     export let isPreview = false;
+    export let isShare = false;
 
     function showImageDropdown(targetImage: string): void {
         if ($dropdownVisible) {
@@ -114,7 +115,16 @@
         {/if}
     </div>
 
-    <h1 id="content" class={postData.postId}>{postData.content}</h1>
+    {#if !isShare}
+        <h1 id="content" class={postData.postId}>{postData.content}</h1>
+    {:else}
+        <input
+            id="content"
+            class="modal-input"
+            bind:value={postData.content}
+            maxlength={256}
+        />
+    {/if}
 
     {#if postData.attachment && !$dataSaver}
         <img

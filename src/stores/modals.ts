@@ -3,7 +3,6 @@ import CreateCommunityModal from '$lib/app/main/modals/CreateCommunityModal.svel
 import CreatePostModal from '$lib/app/main/modals/CreatePostModal.svelte';
 import DeletePostModal from '$lib/app/main/modals/DeletePostModal.svelte';
 import EditCommunityModal from '$lib/app/main/modals/EditCommunityModal.svelte';
-import EditJoinRequestModal from '$lib/app/main/modals/EditJoinRequestModal.svelte';
 import EditProfileModal from '$lib/app/main/modals/EditProfileModal.svelte';
 import SearchModal from '$lib/app/main/modals/SearchModal.svelte';
 import FollowInfoModal from '$lib/app/main/modals/FollowInfoModal.svelte';
@@ -38,7 +37,6 @@ export const modals = [
     EditCommunityModal,
     DeleteMessageModal,
     JoinRequestsModal,
-    EditJoinRequestModal,
     DeletePostModal,
     JoinFronvoModal,
     ShowBansModal,
@@ -59,7 +57,6 @@ export enum ModalTypes {
     EditCommunity,
     DeleteMessage,
     JoinRequests,
-    EditJoinRequest,
     DeletePost,
     JoinFronvo,
     ShowBans,

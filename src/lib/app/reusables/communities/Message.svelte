@@ -94,6 +94,7 @@
             alt={`${messageProfileData.username}'s avatar`}
             on:contextmenu={() => showImageDropdown(messageProfileData.avatar)}
         />
+
         <h1
             id="username"
             on:click={() =>
@@ -116,6 +117,7 @@
                 timestamp={messageData.creationDate}
             />
         </h1>
+
         {#if !hideOptions}
             <div class="menu-container">
                 <!-- Anyone can reply, if the chat request is accepted / not enabled -->
@@ -130,6 +132,7 @@
             </div>
         {/if}
     </div>
+
     {#if messageData.isReply}
         <div class="reply-container">
             {#if messageData.replyContent}
@@ -158,6 +161,7 @@
         flex-direction: column;
         width: 100%;
         padding: 10px;
+        padding-bottom: 5px;
     }
 
     .preview {
@@ -174,6 +178,7 @@
     .message-info-container {
         display: flex;
         align-items: center;
+        margin-bottom: 5px;
     }
 
     .message-info-container #avatar {

@@ -118,7 +118,7 @@
     {#if !isShare}
         <h1 id="content" class={postData.postId}>{postData.content}</h1>
     {:else}
-        <input
+        <textarea
             id="content"
             class="modal-input"
             bind:value={postData.content}

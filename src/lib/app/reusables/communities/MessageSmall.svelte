@@ -4,7 +4,7 @@
     import type { CommunityMessage, FronvoAccount } from 'interfaces/all';
     import { fade } from 'svelte/transition';
 
-    export let messageProfileData: FronvoAccount;
+    export let profileData: FronvoAccount;
     export let messageData: CommunityMessage;
     export let replyCondition = true;
     export let deleteCondition = true;
@@ -18,7 +18,7 @@
         <div class="reply-container">
             {#if messageData.replyContent}
                 <h1 id="reply-name">
-                    Replying to <span>{messageProfileData.username}</span>
+                    Replying to <span>{profileData.username}</span>
                 </h1>
                 <h1 id="reply-message" class={`${messageData.messageId}-reply`}>
                     > <span>{messageData.replyContent}</span>

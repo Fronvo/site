@@ -14,7 +14,7 @@
     } from 'stores/dropdowns';
     import { cachedAccountData, dataSaver } from 'stores/main';
 
-    export let messageProfileData: FronvoAccount;
+    export let profileData: FronvoAccount;
     export let messageData: CommunityMessage;
     export let hideOptions = false;
     export let replyCondition = true;
@@ -88,23 +88,20 @@
         <img
             id="avatar"
             draggable={false}
-            src={messageProfileData.avatar && !$dataSaver
-                ? messageProfileData.avatar
+            src={profileData.avatar && !$dataSaver
+                ? profileData.avatar
                 : '/svgs/profile/avatar.svg'}
-            alt={`${messageProfileData.username}'s avatar`}
-            on:contextmenu={() => showImageDropdown(messageProfileData.avatar)}
+            alt={`${profileData.username}'s avatar`}
+            on:contextmenu={() => showImageDropdown(profileData.avatar)}
         />
 
         <h1
             id="username"
             on:click={() =>
                 !isPreview &&
-                loadTargetProfile(
-                    messageProfileData.profileId,
-                    $cachedAccountData
-                )}
+                loadTargetProfile(profileData.profileId, $cachedAccountData)}
         >
-            {messageProfileData.username}
+            {profileData.username}
         </h1>
 
         <h1 id="creation-date">
@@ -137,7 +134,7 @@
         <div class="reply-container">
             {#if messageData.replyContent}
                 <h1 id="reply-name">
-                    Replying to <span>{messageProfileData.username}</span>
+                    Replying to <span>{profileData.username}</span>
                 </h1>
                 <h1 id="reply-message" class={`${messageData.messageId}-reply`}>
                     > <span>{messageData.replyContent}</span>

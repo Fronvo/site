@@ -34,11 +34,38 @@
     import { loadOurProfile } from 'utilities/profile';
     import { PanelTypes } from 'stores/panels';
     import MessageSmall from '$lib/app/reusables/communities/MessageSmall.svelte';
+    import InfiniteLoading from 'svelte-infinite-loading';
 
     let unsubscribe: Unsubscriber;
     let unsubscribe2: Unsubscriber;
 
     let animationsEnabled = true;
+
+    async function loadMore({ detail: { loaded, complete } }): Promise<void> {
+        if (animationsEnabled) {
+            window.scrollTo(0, document.body.scrollHeight);
+            loaded();
+            return;
+        }
+
+        socket.emit(
+            'fetchCommunityMessages',
+            {
+                from: $messages.length.toString(),
+                to: ($messages.length + 30).toString(),
+            },
+            ({ communityMessages }) => {
+                if (communityMessages.length == 0) {
+                    complete();
+                    return;
+                }
+
+                $messages = communityMessages.concat($messages);
+
+                loaded();
+            }
+        );
+    }
 
     async function addMessageLinks(): Promise<void> {
         if ($messages.length == 0) return;
@@ -163,10 +190,6 @@
             $messages = $messages;
 
             addMessageLinks();
-
-            setTimeout(() => {
-                window.scrollTo(0, document.body.scrollHeight);
-            }, 0);
         });
     }
 
@@ -354,15 +377,7 @@
 
         unsubscribe2 = messages.subscribe(() => {
             addMessageLinks();
-
-            setTimeout(() => {
-                window.scrollTo(0, document.body.scrollHeight);
-            }, 50);
         });
-
-        setTimeout(() => {
-            window.scrollTo(0, document.body.scrollHeight);
-        }, 25);
 
         // Efficient send
         document.addEventListener('keydown', keyDownListener);
@@ -392,11 +407,20 @@
                 Welcome to {$communityData?.name}'s chat room!
             </h1>
         {:else if $messages}
+            <InfiniteLoading
+                on:infinite={loadMore}
+                direction="top"
+                forceUseInfiniteWrapper
+                distance={1000}
+            >
+                <div slot="noMore" /></InfiniteLoading
+            >
+
             {#each $messages as { message, profileData }, i}
                 <!-- Same author, less than 30 minutes ago -->
                 {#if $messages[i - 1]?.message.ownerId == profileData.profileId && getTimeDifferenceM(new Date(message.creationDate), new Date($messages[i - 1]?.message.creationDate)) < 30}
                     <MessageSmall
-                        messageProfileData={profileData}
+                        {profileData}
                         messageData={message}
                         replyCondition={$chatRequestAccepted ||
                             !$communityData?.chatRequestsEnabled}
@@ -410,7 +434,7 @@
                     />
                 {:else}
                     <Message
-                        messageProfileData={profileData}
+                        {profileData}
                         messageData={message}
                         replyCondition={$chatRequestAccepted ||
                             !$communityData?.chatRequestsEnabled}

@@ -179,10 +179,10 @@
     }
 
     .message-info-container #avatar {
-        width: 48px;
-        height: 48px;
+        width: 44px;
+        height: 44px;
         border-radius: 5px;
-        margin-right: 10px;
+        margin-right: 5px;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -195,7 +195,7 @@
     .message-info-container #username {
         color: var(--profile_info_color);
         margin: 0;
-        font-size: 1.6rem;
+        font-size: 1.45rem;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -210,7 +210,7 @@
     }
 
     .message-info-container #creation-date {
-        font-size: 1.1rem;
+        font-size: 1rem;
         margin: 0;
         margin-left: 5px;
         -webkit-touch-callout: none;
@@ -278,7 +278,7 @@
         color: var(--profile_info_color);
         margin: 0;
         margin-left: 2px;
-        font-size: 1.4rem;
+        font-size: 1.3rem;
         white-space: pre-wrap;
         overflow: hidden;
         text-align: start;
@@ -296,12 +296,12 @@
         }
 
         .message-container #avatar {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
         }
 
         .message-info-container #username {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
         }
 
         .message-info-container #username:hover {
@@ -321,7 +321,7 @@
         }
 
         .message-container #creation-date {
-            font-size: 0.95rem;
+            font-size: 0.85rem;
         }
     }
 </style>

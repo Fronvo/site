@@ -123,7 +123,7 @@
         color: var(--profile_info_color);
         margin: 0;
         margin-left: 2px;
-        font-size: 1.4rem;
+        font-size: 1.3rem;
         white-space: pre-wrap;
         overflow: hidden;
         text-align: start;

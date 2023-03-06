@@ -43,7 +43,6 @@
 
     async function loadMore({ detail: { loaded, complete } }): Promise<void> {
         if (animationsEnabled) {
-            window.scrollTo(0, document.body.scrollHeight);
             loaded();
             return;
         }
@@ -60,7 +59,8 @@
                     return;
                 }
 
-                $messages = communityMessages.concat($messages);
+                $messages.push(...communityMessages.reverse());
+                $messages = $messages;
 
                 loaded();
             }
@@ -186,8 +186,7 @@
         socket.off('newCommunityMessage');
 
         socket.on('newCommunityMessage', ({ newMessageData }) => {
-            $messages.push(newMessageData);
-            $messages = $messages;
+            $messages = [newMessageData].concat($messages);
 
             addMessageLinks();
         });
@@ -407,15 +406,6 @@
                 Welcome to {$communityData?.name}'s chat room!
             </h1>
         {:else if $messages}
-            <InfiniteLoading
-                on:infinite={loadMore}
-                direction="top"
-                forceUseInfiniteWrapper
-                distance={1000}
-            >
-                <div slot="noMore" /></InfiniteLoading
-            >
-
             {#each $messages as { message, profileData }, i}
                 <!-- Same author, less than 30 minutes ago -->
                 {#if $messages[i - 1]?.message.ownerId == profileData.profileId && getTimeDifferenceM(new Date(message.creationDate), new Date($messages[i - 1]?.message.creationDate)) < 30}
@@ -448,6 +438,14 @@
                     />
                 {/if}
             {/each}
+
+            <InfiniteLoading
+                on:infinite={loadMore}
+                forceUseInfiniteWrapper
+                distance={1000}
+            >
+                <div slot="noMore" /></InfiniteLoading
+            >
         {/if}
     </div>
 {/if}

@@ -42,10 +42,6 @@
 
             // Share the value
             $targetSendHeight = targetHeight;
-
-            setTimeout(() => {
-                window.scrollTo(0, document.body.scrollHeight);
-            }, 0);
         });
     });
 

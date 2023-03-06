@@ -395,7 +395,7 @@
         document.removeEventListener('keydown', keyDownListener);
 
         // Limit load after reloading the community panel
-        $messages = $messages.slice(-40);
+        $messages = $messages.slice(40);
     });
 </script>
 

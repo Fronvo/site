@@ -49,5 +49,11 @@
         img {
             cursor: default;
         }
+
+        svg,
+        img {
+            width: 32px;
+            height: 32px;
+        }
     }
 </style>

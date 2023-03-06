@@ -54,5 +54,13 @@
         img {
             cursor: default;
         }
+
+        @media screen and (max-width: 720px) {
+            svg,
+            img {
+                width: 32px;
+                height: 32px;
+            }
+        }
     }
 </style>

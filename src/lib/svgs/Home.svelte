@@ -48,4 +48,11 @@
         width: 36px;
         height: 36px;
     }
+
+    @media screen and (max-width: 720px) {
+        svg {
+            width: 32px;
+            height: 32px;
+        }
+    }
 </style>

@@ -15,3 +15,19 @@
         d="m30.7 25.6 3.75 3.45v2.2H25.1v10.9l-1.1 1.1-1.1-1.1v-10.9h-9.35v-2.2l3.55-3.45V9.3h-2.35V7.1h18.3v2.2H30.7Z"
     /></svg
 >
+
+<style>
+    svg {
+        width: 34px;
+        height: 34px;
+        margin-right: 5px;
+        margin-left: 5px;
+    }
+
+    @media screen and (max-width: 700px) {
+        svg {
+            width: 30px;
+            height: 30px;
+        }
+    }
+</style>

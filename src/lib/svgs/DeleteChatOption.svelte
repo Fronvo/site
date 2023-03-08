@@ -19,15 +19,15 @@
 
 <style>
     svg {
-        width: 30px;
-        height: 30px;
+        width: 34px;
+        height: 34px;
         margin-right: 5px;
     }
 
     @media screen and (max-width: 700px) {
         svg {
-            width: 28px;
-            height: 28px;
+            width: 30px;
+            height: 30px;
         }
     }
 </style>

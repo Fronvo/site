@@ -1,34 +1,15 @@
 <script lang="ts">
-    import {
-        dropdownImage,
-        DropdownTypes,
-        dropdownVisible,
-    } from 'stores/dropdowns';
     import { dataSaver } from 'stores/main';
-    import { dismissDropdown, showDropdown } from 'utilities/main';
 
-    export let banner: string;
     export let avatar: string;
-
-    function showImageDropdown(targetImage: string): void {
-        if ($dropdownVisible) {
-            dismissDropdown();
-            return;
-        }
-
-        $dropdownImage = targetImage;
-
-        showDropdown(DropdownTypes.Image);
-    }
 </script>
 
-<div class="top-container" on:contextmenu={() => showImageDropdown(banner)}>
+<div class="top-container">
     <img
         id="avatar"
         src={avatar && !$dataSaver ? avatar : '/svgs/profile/avatar-filled.svg'}
         alt={`${avatar}`}
         draggable={false}
-        on:contextmenu={() => showImageDropdown(avatar)}
     />
 </div>
 

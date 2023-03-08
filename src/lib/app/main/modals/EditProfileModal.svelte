@@ -213,15 +213,15 @@
     }
 
     #avatar-preview {
-        width: 60px;
-        height: 60px;
+        width: 48px;
+        height: 48px;
         border-radius: 10px;
         margin-right: 10px;
     }
 
     #banner-preview {
-        width: 510px;
-        height: 240px;
+        width: 400px;
+        height: 230px;
         border-radius: 5px;
     }
 
@@ -231,13 +231,13 @@
 
     @media screen and (max-width: 700px) {
         #avatar-preview {
-            width: 48px;
-            height: 48px;
+            width: 40px;
+            height: 40px;
         }
 
         #banner-preview {
-            width: 300px;
-            height: 169px;
+            width: 250px;
+            height: 150px;
         }
     }
 </style>

@@ -173,16 +173,16 @@
     }
 
     div #icon-preview {
-        width: 64px;
-        height: 64px;
+        width: 48px;
+        height: 48px;
         border-radius: 10px;
         margin-right: 10px;
     }
 
     @media screen and (max-width: 700px) {
         div #icon-preview {
-            width: 48px;
-            height: 48px;
+            width: 40px;
+            height: 40px;
         }
     }
 </style>

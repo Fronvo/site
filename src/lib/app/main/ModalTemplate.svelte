@@ -229,6 +229,7 @@
         align-items: center;
         text-align: center;
         overflow: auto;
+        width: 100%;
     }
 
     .options-container {

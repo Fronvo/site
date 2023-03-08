@@ -92,7 +92,7 @@
     {/if}
 
     <div class="info-container" in:fade={{ duration: 500 }}>
-        <ProfileTop banner={$searchData.banner} avatar={$searchData.avatar} />
+        <ProfileTop avatar={$searchData.avatar} />
 
         <ProfileIdentifier data={$searchData} ourData={$ourData} />
 

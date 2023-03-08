@@ -5,7 +5,6 @@ import CommunityMemberDropdown from '$lib/app/main/dropdowns/CommunityMemberDrop
 import CommunityMemberUnbanDropdown from '$lib/app/main/dropdowns/CommunityMemberUnbanDropdown.svelte';
 import CommunityOptionsDropdown from '$lib/app/main/dropdowns/CommunityOptionsDropdown.svelte';
 import ImageDropdown from '$lib/app/main/dropdowns/ImageDropdown.svelte';
-import JoinRequestDropdown from '$lib/app/main/dropdowns/JoinRequestDropdown.svelte';
 import LinkDropdown from '$lib/app/main/dropdowns/LinkDropdown.svelte';
 import PostOptionsDropdown from '$lib/app/main/dropdowns/PostOptionsDropdown.svelte';
 import ProfileOptionsDropdown from '$lib/app/main/dropdowns/ProfileOptionsDropdown.svelte';
@@ -26,7 +25,6 @@ export const dropdowns = [
     AdminDropdown,
     ImageDropdown,
     LinkDropdown,
-    JoinRequestDropdown,
 ];
 /****************************** Dropdowns ******************************/
 
@@ -43,7 +41,6 @@ export enum DropdownTypes {
     Admin,
     Image,
     Link,
-    JoinRequest,
 }
 
 export interface DropdownActions {

@@ -3,7 +3,6 @@
     import Register from '$lib/app/account/Register.svelte';
     import RegisterVerify from '$lib/app/account/RegisterVerify.svelte';
     import {
-        accountRegisterFinalTab,
         accountRegisterTab,
         accountRegisterVerifyTab,
         accountResetPasswordFinalTab,
@@ -11,16 +10,13 @@
         accountResetPasswordVerifyTab,
     } from 'stores/account';
     import Center from '../Center.svelte';
-    import RegisterFinal from './RegisterFinal.svelte';
     import ResetPassword from './ResetPassword.svelte';
     import ResetPasswordFinal from './ResetPasswordFinal.svelte';
     import ResetPasswordVerify from './ResetPasswordVerify.svelte';
 </script>
 
 <Center>
-    {#if $accountRegisterFinalTab}
-        <RegisterFinal />
-    {:else if $accountRegisterVerifyTab}
+    {#if $accountRegisterVerifyTab}
         <RegisterVerify />
     {:else if $accountResetPasswordTab}
         {#if $accountResetPasswordFinalTab}

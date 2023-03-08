@@ -14,7 +14,6 @@
     import CreatePost from '$lib/svgs/CreatePost.svelte';
     import Account from '$lib/svgs/Account.svelte';
     import { ourData, searchData } from 'stores/profile';
-    import Admin from '$lib/svgs/Admin.svelte';
     import { loadTargetProfile } from 'utilities/profile';
     import { currentPanelId, PanelTypes } from 'stores/panels';
     import { DropdownTypes, dropdownVisible } from 'stores/dropdowns';
@@ -127,17 +126,8 @@
         <h1>Settings</h1>
     </div>
 
-    {#if $ourData?.isAdmin}
-        <div
-            id="component"
-            on:click={() => {
-                loadDropdown(DropdownTypes.Admin, false);
-            }}
-        >
-            <Admin />
-            <h1>Admin</h1>
-        </div>
-    {/if}
+    <!-- TODO: Enable in the future if more admin options are available -->
+    <!-- <Admin /> -->
 </div>
 
 <style>

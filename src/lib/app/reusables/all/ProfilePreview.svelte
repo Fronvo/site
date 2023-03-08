@@ -12,9 +12,6 @@
     export let profileData: FronvoAccount;
     export let dropdown: DropdownTypes = undefined;
 
-    export let isJoinRequest = false;
-    export let joinRequestEmail = '';
-
     export let preDropdownCallback = () => {};
 
     function decideFollowOutput(followInfo: string[]): string {
@@ -51,10 +48,7 @@
     }
 </script>
 
-<div
-    class={isJoinRequest ? 'join' : ''}
-    on:click={(dropdown && callDropdown) || viewProfile}
->
+<div on:click={(dropdown && callDropdown) || viewProfile}>
     <img
         id="avatar"
         src={profileData.avatar && !$dataSaver
@@ -65,19 +59,17 @@
     />
 
     <h1 id="username">
-        {!isJoinRequest ? profileData?.username : `${joinRequestEmail}***`}
+        {profileData?.username}
     </h1>
 
-    {#if !isJoinRequest}
-        <h1 id="profileId">@{profileData.profileId}</h1>
+    <h1 id="profileId">@{profileData.profileId}</h1>
 
-        <h1 id="following">
-            <span>{decideFollowOutput(profileData.following)}</span> following
-        </h1>
-        <h1 id="followers">
-            <span>{decideFollowOutput(profileData.followers)}</span> followers
-        </h1>
-    {/if}
+    <h1 id="following">
+        <span>{decideFollowOutput(profileData.following)}</span> following
+    </h1>
+    <h1 id="followers">
+        <span>{decideFollowOutput(profileData.followers)}</span> followers
+    </h1>
 </div>
 
 <style>
@@ -120,10 +112,6 @@
         -webkit-box-orient: vertical;
         font-size: 1.7rem;
         color: var(--profile_info_color);
-    }
-
-    .join #username {
-        -webkit-line-clamp: 3;
     }
 
     div #profileId {
@@ -172,10 +160,6 @@
 
         div #username {
             display: none;
-        }
-
-        .join #username {
-            display: initial;
         }
 
         div #profileId {

@@ -8,7 +8,6 @@ import SearchModal from '$lib/app/main/modals/SearchModal.svelte';
 import FollowInfoModal from '$lib/app/main/modals/FollowInfoModal.svelte';
 import JoinCommunityModal from '$lib/app/main/modals/JoinCommunityModal.svelte';
 import JoinFronvoModal from '$lib/app/main/modals/JoinFronvoModal.svelte';
-import JoinRequestsModal from '$lib/app/main/modals/JoinRequestsModal.svelte';
 import LeaveCommunityModal from '$lib/app/main/modals/LeaveCommunityModal.svelte';
 import PostModal from '$lib/app/main/modals/PostModal.svelte';
 import ShowBansModal from '$lib/app/main/modals/ShowBansModal.svelte';
@@ -19,7 +18,6 @@ import type {
     CommunityMessage,
     FronvoAccount,
     HomePost,
-    JoinRequest,
 } from 'interfaces/all';
 import { writable, type Writable } from 'svelte/store';
 
@@ -36,7 +34,6 @@ export const modals = [
     CommunityMembers,
     EditCommunityModal,
     DeleteMessageModal,
-    JoinRequestsModal,
     DeletePostModal,
     JoinFronvoModal,
     ShowBansModal,
@@ -56,7 +53,6 @@ export enum ModalTypes {
     CommunityMembers,
     EditCommunity,
     DeleteMessage,
-    JoinRequests,
     DeletePost,
     JoinFronvo,
     ShowBans,
@@ -113,8 +109,3 @@ export const postModalForHome = writable(false);
 export const targetMessageModal: Writable<CommunityMessage> = writable();
 export const targetMessageModalProfile: Writable<FronvoAccount> = writable();
 /****************************** DeleteMessageModal ******************************/
-
-/****************************** JoinRequestsModal ******************************/
-export const joinRequests: Writable<JoinRequest[]> = writable([]);
-export const targetRequestModal: Writable<string> = writable();
-/****************************** JoinRequestsModal ******************************/

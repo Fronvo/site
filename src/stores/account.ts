@@ -7,7 +7,6 @@ export const accountPanelAnimDuration = 500;
 /****************************** Register ******************************/
 export const accountRegisterTab = writable(false);
 export const accountRegisterVerifyTab = writable(false);
-export const accountRegisterFinalTab = writable(false);
 /****************************** Register ******************************/
 
 /****************************** Reset Password ******************************/

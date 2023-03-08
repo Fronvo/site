@@ -1,12 +1,20 @@
 <script lang="ts">
     import type { FronvoError } from 'interfaces/all';
-    import { socket } from 'stores/main';
+    import { cachedAccountData, socket } from 'stores/main';
     import SvelteSegmentedInput from 'svelte-segmented-input';
-    import { accountRegisterFinalTab } from 'stores/account';
     import AccountTemplate from '../reusables/index/AccountTemplate.svelte';
     import AccountButton from '../reusables/index/AccountButton.svelte';
     import AccountHeader from '../reusables/index/AccountHeader.svelte';
     import AccountHeaderError from '../reusables/index/AccountHeaderError.svelte';
+    import { setKey } from 'utilities/global';
+    import { homePosts } from 'stores/home';
+    import { dismissModal, performLogin } from 'utilities/main';
+    import { pendingSearchId } from 'stores/profile';
+    import AccountInfo from '../reusables/index/AccountInfo.svelte';
+    import {
+        accountRegisterTab,
+        accountRegisterVerifyTab,
+    } from 'stores/account';
 
     let code: string;
     let errorMessage: string;
@@ -17,13 +25,29 @@
         }
 
         function attemptVerify(): void {
-            socket.emit('registerVerify', { code: code || '' }, ({ err }) => {
-                if (err) {
-                    setError({ err });
-                } else {
-                    $accountRegisterFinalTab = true;
+            socket.emit(
+                'registerVerify',
+                { code: code || '' },
+                async ({ err, token }) => {
+                    if (err) {
+                        setError({ err });
+                    } else {
+                        // Reset tabs
+                        $accountRegisterVerifyTab = false;
+                        $accountRegisterTab = false;
+
+                        setKey('token', token);
+                        $homePosts = undefined;
+
+                        await performLogin(
+                            $pendingSearchId,
+                            $cachedAccountData
+                        );
+
+                        dismissModal();
+                    }
                 }
-            });
+            );
         }
 
         attemptVerify();
@@ -33,8 +57,8 @@
 <AccountTemplate>
     <AccountHeader>Register Verification</AccountHeader>
 
-    <AccountHeader
-        >A 6-digit verification code has been sent to your email</AccountHeader
+    <AccountInfo
+        >A 6-digit verification code has been sent to your email</AccountInfo
     >
 
     <AccountHeaderError {errorMessage} />

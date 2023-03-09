@@ -439,13 +439,17 @@
                 {/if}
             {/each}
 
-            <InfiniteLoading
-                on:infinite={loadMore}
-                forceUseInfiniteWrapper
-                distance={1000}
-            >
-                <div slot="noMore" /></InfiniteLoading
-            >
+            {#if $communityData?.totalMessages > $messages?.length}
+                <InfiniteLoading
+                    on:infinite={loadMore}
+                    forceUseInfiniteWrapper
+                    distance={1000}
+                >
+                    <div slot="noMore" />
+                    <div slot="noResults" />
+                    <div slot="error" />
+                </InfiniteLoading>
+            {/if}
         {/if}
     </div>
 {/if}

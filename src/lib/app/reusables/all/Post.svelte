@@ -70,18 +70,18 @@
     in:fly={{ y: -15, duration: !isPreview ? 250 : 0 }}
     class={`post-container ${isPreview ? 'preview' : ''}`}
 >
-    <div class="author-container">
-        <img
-            id="avatar"
-            src={profileData.avatar && !$dataSaver
-                ? profileData.avatar
-                : '/svgs/profile/avatar.svg'}
-            draggable={false}
-            alt={`${profileData.username}'s avatar`}
-            on:contextmenu={() => showImageDropdown(profileData.avatar)}
-        />
+    <img
+        id="avatar"
+        src={profileData.avatar && !$dataSaver
+            ? profileData.avatar
+            : '/svgs/profile/avatar.svg'}
+        draggable={false}
+        alt={`${profileData.username}'s avatar`}
+        on:contextmenu={() => showImageDropdown(profileData.avatar)}
+    />
 
-        <div class="info-container">
+    <div class="info-container">
+        <div class="top-container">
             <h1
                 id="username"
                 on:click={() =>
@@ -95,55 +95,53 @@
                 {profileData.username}
             </h1>
 
-            <h1 id="identifier">
-                @{profileData.profileId}
+            <h1 id="creation-date">
+                •
+                <Time
+                    relative
+                    format={'dddd HH:mm · MMMM D YYYY'}
+                    live={60000}
+                    timestamp={postData.creationDate}
+                />
             </h1>
+
+            {#if !$guestMode && !hideOptions}
+                <OptionsMenu callback={showPostDropdown} />
+            {/if}
         </div>
 
-        <h1 id="creation-date">
-            •
-            <Time
-                relative
-                format={'dddd HH:mm · MMMM D YYYY'}
-                live={60000}
-                timestamp={postData.creationDate}
+        {#if !isShare}
+            <h1 id="content" class={postData.postId}>
+                {postData.content}
+            </h1>
+        {:else}
+            <textarea
+                id="content"
+                class="modal-input"
+                bind:value={postData.content}
+                maxlength={256}
             />
-        </h1>
+        {/if}
 
-        {#if !$guestMode && !hideOptions}
-            <OptionsMenu callback={showPostDropdown} />
+        {#if postData.attachment && !$dataSaver}
+            <img
+                id="attachment"
+                src={postData.attachment}
+                alt={'Post attachment'}
+                draggable={false}
+                on:contextmenu={() => showImageDropdown(postData.attachment)}
+            />
         {/if}
     </div>
-
-    {#if !isShare}
-        <h1 id="content" class={postData.postId}>{postData.content}</h1>
-    {:else}
-        <textarea
-            id="content"
-            class="modal-input"
-            bind:value={postData.content}
-            maxlength={256}
-        />
-    {/if}
-
-    {#if postData.attachment && !$dataSaver}
-        <img
-            id="attachment"
-            src={postData.attachment}
-            alt={'Post attachment'}
-            draggable={false}
-            on:contextmenu={() => showImageDropdown(postData.attachment)}
-        />
-    {/if}
 </div>
 
 <style>
     .post-container {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        align-items: start;
         background: transparent;
         width: 650px;
-        background: transparent;
         border-top: 1px solid var(--seperator_background);
         transition: 300ms;
         padding: 20px;
@@ -156,15 +154,10 @@
         padding-top: 0;
     }
 
-    .author-container {
-        display: flex;
-        align-items: start;
-    }
-
-    .author-container #avatar {
-        width: 54px;
+    .post-container #avatar {
+        min-width: 54px;
         height: 54px;
-        border-radius: 10px;
+        border-radius: 30px;
         margin-right: 5px;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -172,19 +165,17 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        margin-top: 5px;
     }
 
-    .info-container {
+    .top-container {
         display: flex;
-        flex-direction: column;
-        align-items: start;
+        flex-direction: row;
         justify-content: center;
     }
 
-    .info-container #username {
+    .top-container #username {
         color: var(--profile_info_color);
-        font-size: 1.6rem;
+        font-size: 1.4rem;
         margin: 0;
         display: -webkit-box;
         overflow: hidden;
@@ -192,24 +183,15 @@
         -webkit-box-orient: vertical;
     }
 
-    .info-container #username:hover {
+    .top-container #username:hover {
         text-decoration: underline;
         cursor: pointer;
     }
 
-    .info-container #identifier {
-        font-size: 1.3rem;
+    .top-container #creation-date {
+        font-size: 1rem;
         margin: 0;
-        display: -webkit-box;
-        overflow: hidden;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-    }
-
-    .post-container #creation-date {
-        font-size: 1.1rem;
-        margin: 0;
-        margin-left: 5px;
+        margin-left: 3px;
         margin-top: 6px;
         flex: 1;
         text-align: start;
@@ -219,7 +201,12 @@
         -webkit-box-orient: vertical;
     }
 
-    .post-container #content {
+    .info-container {
+        text-align: start;
+        width: 100%;
+    }
+
+    .info-container #content {
         display: -webkit-box;
         overflow: hidden;
         max-width: 100%;
@@ -227,20 +214,18 @@
         -webkit-box-orient: vertical;
         margin: 0;
         margin-right: 5px;
-        margin-left: 5px;
         font-size: 1.4rem;
         color: var(--profile_info_color);
         white-space: pre-wrap;
         text-align: start;
     }
 
-    .post-container #attachment {
+    .info-container #attachment {
         width: min-content;
         max-width: 100%;
         max-height: 364px;
         border-radius: 10px;
-        margin-top: 10px;
-        align-self: center;
+        margin-top: 5px;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -268,13 +253,9 @@
             cursor: default;
         }
 
-        .info-container #identifier {
-            font-size: 1rem;
-        }
-
         .author-container #avatar {
-            width: 40px;
-            height: 40px;
+            min-width: 48px;
+            min-height: 48px;
         }
 
         .post-container #content {

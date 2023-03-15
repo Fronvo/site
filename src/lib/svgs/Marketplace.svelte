@@ -15,7 +15,7 @@
         margin-bottom: 15px;
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 850px) {
         svg {
             margin-right: 10px;
             margin-bottom: 0;

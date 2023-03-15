@@ -1,7 +1,6 @@
 <script lang="ts">
     import { guestMode, socket } from 'stores/main';
     import type { AccountPost, FronvoAccount } from 'interfaces/all';
-    import { fade } from 'svelte/transition';
     import { setProgressBar } from 'utilities/main';
     import Post from '../all/Post.svelte';
     import { ourData } from 'stores/profile';
@@ -39,7 +38,7 @@
 </script>
 
 {#if !$guestMode && posts}
-    <div class="posts-container" in:fade={{ duration: 200 }}>
+    <div class="posts-container">
         {#if data.totalPosts > 0 && (!data.isPrivate || data.isFollower || data.isSelf)}
             <h1 id="counter">
                 <span>{data.totalPosts}</span> post{data.totalPosts > 1
@@ -89,7 +88,7 @@
         color: var(--profile_info_color);
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 850px) {
         .posts-container #counter {
             font-size: 1.2rem;
         }

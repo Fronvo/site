@@ -18,7 +18,7 @@
         width: 550px;
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 850px) {
         div {
             min-width: 350px;
             width: 50vw;

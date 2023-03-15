@@ -3,13 +3,13 @@
     import { onMount } from 'svelte';
     import Checkbox from 'svelte-checkbox';
     import { writable, type Writable } from 'svelte/store';
-    import { fade } from 'svelte/transition';
     import ModalTemplate from '../ModalTemplate.svelte';
     import { ourData, searchData } from 'stores/profile';
     import { loadOurProfile, loadTargetProfile } from 'utilities/profile';
     import { cachedAccountData, socket } from 'stores/main';
     import { currentPanelId, PanelTypes } from 'stores/panels';
     import type { ModalData } from 'stores/modals';
+    import ErrorHeader from '$lib/app/reusables/all/ErrorHeader.svelte';
 
     let profileId = $ourData.profileId;
     let username = $ourData.username;
@@ -154,11 +154,7 @@
 </script>
 
 <ModalTemplate {data}>
-    {#if errorMessage}
-        <h1 class="modal-error-header modal-header" in:fade={{ duration: 500 }}>
-            {errorMessage}
-        </h1>
-    {/if}
+    <ErrorHeader {errorMessage} />
 
     <h1 class="modal-header">Profile ID</h1>
     <input class="modal-input" bind:value={profileId} maxlength={30} />
@@ -229,7 +225,7 @@
         min-height: 100px;
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 850px) {
         #avatar-preview {
             width: 40px;
             height: 40px;

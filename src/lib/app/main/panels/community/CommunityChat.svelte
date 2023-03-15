@@ -7,7 +7,6 @@
         replyingToId,
         sendContent,
         communityMessages as messages,
-        targetSendHeight,
     } from 'stores/community';
     import { onDestroy, onMount } from 'svelte';
     import type { Unsubscriber } from 'svelte/store';
@@ -37,7 +36,6 @@
     import InfiniteLoading from 'svelte-infinite-loading';
 
     let unsubscribe: Unsubscriber;
-    let unsubscribe2: Unsubscriber;
 
     let animationsEnabled = true;
 
@@ -135,6 +133,10 @@
                 replyId: $replyingToId,
             },
             () => {
+                // Reset reply info
+                $replyingTo = undefined;
+                $replyingToId = undefined;
+
                 $sendContent = '';
 
                 const contentInput = document.getElementById(
@@ -147,10 +149,6 @@
                 }, 0);
             }
         );
-
-        // Reset reply info
-        $replyingTo = undefined;
-        $replyingToId = undefined;
     }
 
     function deleteMessage(
@@ -265,10 +263,10 @@
 
             if (!chatRequestState) {
                 contentInput.disabled = true;
-                contentInput.value = 'Chat request pending';
+                contentInput.placeholder = 'Chat request pending';
             } else {
                 contentInput.disabled = false;
-                contentInput.value = '';
+                contentInput.placeholder = `Send to ${$communityData?.name}`;
                 $sendContent = '';
             }
 
@@ -350,7 +348,7 @@
             ) as HTMLTextAreaElement;
 
             contentInput.disabled = true;
-            contentInput.value = 'Chat request pending';
+            contentInput.placeholder = 'Chat request pending';
         }
     }
 
@@ -363,18 +361,7 @@
         attachCommunityDeletedListener();
         attachMemberChangeListener();
 
-        // Adjustable margin
-        unsubscribe = targetSendHeight.subscribe((newHeight) => {
-            const chatContainer = document.getElementsByClassName(
-                'chat-container'
-            )[0] as HTMLDivElement;
-
-            chatContainer.style.marginBottom = `${
-                $replyingTo ? newHeight + 50 : newHeight
-            }px`;
-        });
-
-        unsubscribe2 = messages.subscribe(() => {
+        unsubscribe = messages.subscribe(() => {
             addMessageLinks();
         });
 
@@ -390,7 +377,6 @@
 
     onDestroy(() => {
         unsubscribe();
-        unsubscribe2();
 
         document.removeEventListener('keydown', keyDownListener);
 
@@ -410,7 +396,6 @@
                 <!-- Same author, less than 30 minutes ago -->
                 {#if $messages[i - 1]?.message.ownerId == profileData.profileId && getTimeDifferenceM(new Date(message.creationDate), new Date($messages[i - 1]?.message.creationDate)) < 30}
                     <MessageSmall
-                        {profileData}
                         messageData={message}
                         replyCondition={$chatRequestAccepted ||
                             !$communityData?.chatRequestsEnabled}
@@ -421,6 +406,7 @@
                         deleteCallback={() =>
                             deleteMessage(message, profileData)}
                         animate={animationsEnabled}
+                        highlight={$replyingToId == message.messageId}
                     />
                 {:else}
                     <Message
@@ -435,6 +421,7 @@
                         deleteCallback={() =>
                             deleteMessage(message, profileData)}
                         animate={animationsEnabled}
+                        highlight={$replyingToId == message.messageId}
                     />
                 {/if}
             {/each}

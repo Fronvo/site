@@ -66,7 +66,7 @@
         background-position: bottom center;
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 850px) {
         .top-nav-container {
             right: 5px;
             left: 5px;

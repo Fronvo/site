@@ -105,7 +105,7 @@
         justify-content: center;
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 850px) {
         .options-container {
             margin-right: 15px;
         }

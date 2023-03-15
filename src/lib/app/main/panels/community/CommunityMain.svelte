@@ -10,26 +10,8 @@
     setProgressBar(true);
 </script>
 
-<div class="main-container">
-    <CommunityInfo />
+<CommunityInfo />
 
-    <CommunityChat />
+<CommunityChat />
 
-    <CommunitySend />
-</div>
-
-<style>
-    .main-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 55%;
-        min-width: 600px;
-    }
-
-    @media screen and (max-width: 700px) {
-        .main-container {
-            min-width: 100%;
-        }
-    }
-</style>
+<CommunitySend />

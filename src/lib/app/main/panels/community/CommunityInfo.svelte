@@ -3,7 +3,6 @@
     import { communityData } from 'stores/community';
     import { DropdownTypes, dropdownVisible } from 'stores/dropdowns';
     import { dataSaver } from 'stores/main';
-    import { fade } from 'svelte/transition';
     import { dismissDropdown, showDropdown } from 'utilities/main';
 
     function showCommunityInfoDropdown(): void {
@@ -16,12 +15,7 @@
 </script>
 
 {#if $communityData}
-    <div
-        id="blur"
-        class="info-container"
-        in:fade={{ duration: 200 }}
-        on:click={showCommunityInfoDropdown}
-    >
+    <div class="info-container" on:click={showCommunityInfoDropdown}>
         <img
             id="icon"
             src={$communityData.icon && !$dataSaver
@@ -45,16 +39,15 @@
         align-items: center;
         margin: auto;
         padding: 10px;
-        border-bottom-left-radius: 10px;
-        border-bottom-right-radius: 10px;
         z-index: 1;
-        background: var(--accent_bg_color);
+        background: var(--side_bg_color);
         transition: 150ms;
         cursor: pointer;
+        width: max-content;
     }
 
     .info-container:hover {
-        box-shadow: 0 0 15px var(--accent_shadow_color);
+        background: var(--side_svg_bg_color);
     }
 
     .info-container #icon {
@@ -87,7 +80,7 @@
         -webkit-box-orient: vertical;
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 850px) {
         .info-container {
             cursor: default;
         }

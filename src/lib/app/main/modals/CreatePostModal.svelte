@@ -1,4 +1,5 @@
 <script lang="ts">
+    import ErrorHeader from '$lib/app/reusables/all/ErrorHeader.svelte';
     import Post from '$lib/app/reusables/all/Post.svelte';
     import type { AccountPost } from 'interfaces/all';
     import { cachedAccountData, socket } from 'stores/main';
@@ -7,7 +8,6 @@
     import { ourData, searchData } from 'stores/profile';
     import { onMount } from 'svelte';
     import { writable, type Writable } from 'svelte/store';
-    import { fade } from 'svelte/transition';
     import { dismissModal, setProgressBar } from 'utilities/main';
     import { loadTargetProfile } from 'utilities/profile';
     import ModalTemplate from '../ModalTemplate.svelte';
@@ -122,11 +122,7 @@
 </script>
 
 <ModalTemplate {data}>
-    {#if errorMessage}
-        <h1 class="modal-error-header modal-header" in:fade={{ duration: 500 }}>
-            {errorMessage}
-        </h1>
-    {/if}
+    <ErrorHeader {errorMessage} />
 
     <Post
         profileData={$ourData}

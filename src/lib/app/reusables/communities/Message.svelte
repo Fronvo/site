@@ -23,6 +23,7 @@
     export let deleteCallback = () => {};
     export let isPreview = false;
     export let animate = true;
+    export let highlight = false;
 
     function showImageDropdown(targetImage: string): void {
         if ($dropdownVisible) {
@@ -82,7 +83,9 @@
 
 <div
     in:fade={{ duration: !isPreview && animate ? 250 : 0 }}
-    class={`message-container ${isPreview ? 'preview' : ''}`}
+    class={`message-container ${isPreview ? 'preview' : ''} ${
+        highlight ? 'highlight' : ''
+    }`}
 >
     <div class="message-info-container">
         <img
@@ -133,9 +136,6 @@
     {#if messageData.isReply}
         <div class="reply-container">
             {#if messageData.replyContent}
-                <h1 id="reply-name">
-                    Replying to <span>{profileData.username}</span>
-                </h1>
                 <h1 id="reply-message" class={`${messageData.messageId}-reply`}>
                     > <span>{messageData.replyContent}</span>
                 </h1>
@@ -164,8 +164,13 @@
     .preview {
         min-width: 550px;
         width: 100%;
-        max-width: 700px;
+        max-width: 850px;
         padding-top: 0;
+    }
+
+    .highlight {
+        background: var(--accent_bg_color);
+        border-left: 5px solid var(--accent_shadow_color);
     }
 
     .message-container:hover {
@@ -225,7 +230,6 @@
 
     .message-info-container .menu-container {
         opacity: 0;
-        transition: 100ms;
     }
 
     .menu-container {
@@ -234,22 +238,6 @@
         border-radius: 10px;
         background: var(--button_background);
         transform: translateY(-25px);
-    }
-
-    .reply-container #reply-name {
-        font-size: 1.3rem;
-        margin: 0;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        text-align: start;
-    }
-
-    .reply-container #reply-name span {
-        color: var(--profile_info_color);
     }
 
     .reply-container #reply-message {
@@ -284,7 +272,7 @@
         text-align: start;
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 850px) {
         .chat-container {
             margin-top: 60px;
         }
@@ -306,10 +294,6 @@
 
         .message-info-container #username:hover {
             cursor: default;
-        }
-
-        .reply-container #reply-name {
-            font-size: 1.1rem;
         }
 
         .reply-container #reply-message {

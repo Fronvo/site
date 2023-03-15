@@ -3,12 +3,12 @@
     import { dismissModal, setProgressBar } from 'utilities/main';
     import { onMount } from 'svelte';
     import { writable, type Writable } from 'svelte/store';
-    import { fade } from 'svelte/transition';
     import Checkbox from 'svelte-checkbox';
     import ModalTemplate from '../ModalTemplate.svelte';
     import { communityData as comData } from 'stores/community';
     import { socket } from 'stores/main';
     import type { ModalData } from 'stores/modals';
+    import ErrorHeader from '$lib/app/reusables/all/ErrorHeader.svelte';
 
     let id = $comData.communityId;
     let name = $comData.name;
@@ -129,11 +129,7 @@
 </script>
 
 <ModalTemplate {data}>
-    {#if errorMessage}
-        <h1 class="modal-error-header modal-header" in:fade={{ duration: 500 }}>
-            {errorMessage}
-        </h1>
-    {/if}
+    <ErrorHeader {errorMessage} />
 
     <h1 class="modal-header">Community ID</h1>
     <input class="modal-input" bind:value={id} maxlength={15} />
@@ -179,7 +175,7 @@
         margin-right: 10px;
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 850px) {
         div #icon-preview {
             width: 40px;
             height: 40px;

@@ -16,7 +16,7 @@
         height: 28px;
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 850px) {
         svg {
             width: 24px;
             height: 24px;

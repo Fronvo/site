@@ -143,7 +143,7 @@
         background: transparent;
         width: 650px;
         border-top: 1px solid var(--seperator_background);
-        transition: 300ms;
+        transition: 150ms;
         padding: 20px;
         padding-top: 10px;
         padding-bottom: 10px;
@@ -234,7 +234,7 @@
         user-select: none;
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 850px) {
         .post-container {
             width: 100vw;
         }

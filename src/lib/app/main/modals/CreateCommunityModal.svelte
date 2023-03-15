@@ -1,6 +1,5 @@
 <script lang="ts">
     import { writable, type Writable } from 'svelte/store';
-    import { fade } from 'svelte/transition';
     import { dismissModal, setProgressBar, switchPanel } from 'utilities/main';
     import { loadCommunitiesData } from 'utilities/communities';
     import ModalTemplate from '../ModalTemplate.svelte';
@@ -8,6 +7,7 @@
     import type { ModalData } from 'stores/modals';
     import { loadOurProfile } from 'utilities/profile';
     import { PanelTypes } from 'stores/panels';
+    import ErrorHeader from '$lib/app/reusables/all/ErrorHeader.svelte';
 
     let name: string;
     let icon: Writable<string> = writable('');
@@ -67,11 +67,7 @@
 </script>
 
 <ModalTemplate {data}>
-    {#if errorMessage}
-        <h1 class="modal-error-header modal-header" in:fade={{ duration: 500 }}>
-            {errorMessage}
-        </h1>
-    {/if}
+    <ErrorHeader {errorMessage} />
 
     <h1 class="modal-header">Community Name</h1>
     <input class="modal-input" bind:value={name} maxlength={15} />

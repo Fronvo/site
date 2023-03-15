@@ -7,15 +7,17 @@
 html {
     /* Save the user's eyes before onMount */
     overflow-y: scroll;
+    height: 100vh;
 }
 
 body {
     margin: 0;
+    height: 100vh;
 }
 
 svg {
     cursor: pointer;
-    transition: 300ms;
+    transition: 150ms;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -46,7 +48,7 @@ button {
     font-family: Nunito;
     font-weight: 500;
     cursor: pointer;
-    transition: 300ms all;
+    transition: 150ms all;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -114,19 +116,19 @@ select:-webkit-autofill::first-line {
 }
 
 ::-webkit-scrollbar {
-    width: 6px;
-}
-
-::-webkit-scrollbar-track {
-    border-radius: 10px;
+    width: 7px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgb(100, 0, 255);
-    border-radius: 20px;
+    background: rgb(179, 179, 179);
+    border-radius: 5px;
 }
 
-@media screen and (max-width: 700px) {
+::-webkit-scrollbar-thumb:hover {
+    background: rgb(146, 146, 146);
+}
+
+@media screen and (max-width: 850px) {
     img {
         cursor: default;
     }

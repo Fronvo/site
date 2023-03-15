@@ -2,6 +2,8 @@
 // Interfaces for all kinds of files.
 // ******************** //
 
+import type { SvelteComponent } from 'svelte';
+
 export interface FronvoError {
     err: {
         msg: string;
@@ -76,4 +78,11 @@ export interface CommunityMessageFinal extends CommunityMessage {
 export interface FronvoContainer {
     title: string;
     svg: string;
+}
+
+export interface MainSideItem {
+    title: string;
+    action: () => void;
+    svg: typeof SvelteComponent;
+    hideOnReveal?: boolean;
 }

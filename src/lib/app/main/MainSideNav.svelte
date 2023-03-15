@@ -3,7 +3,6 @@
     import Home from '$lib/svgs/Home.svelte';
     import Settings from '$lib/svgs/Settings.svelte';
     import Search from '$lib/svgs/Search.svelte';
-    import { fly } from 'svelte/transition';
     import {
         dismissDropdown,
         showDropdown,
@@ -18,7 +17,11 @@
     import { currentPanelId, PanelTypes } from 'stores/panels';
     import { DropdownTypes, dropdownVisible } from 'stores/dropdowns';
     import { ModalTypes } from 'stores/modals';
-    import { cachedAccountData, guestMode } from 'stores/main';
+    import { cachedAccountData, guestMode, sideNavRevealed } from 'stores/main';
+    import type { MainSideItem } from 'interfaces/all';
+    import Reveal from '$lib/svgs/Reveal.svelte';
+    import { fade, fly } from 'svelte/transition';
+    import { setKey } from 'utilities/global';
 
     function loadPanel(panel: PanelTypes): void {
         if (!$guestMode) {
@@ -71,99 +74,148 @@
             loadPanel(PanelTypes.Community);
         }
     }
+
+    function toggleReveal(): void {
+        $sideNavRevealed = !$sideNavRevealed;
+        setKey('revealNav', $sideNavRevealed);
+    }
+
+    // Actions
+    function actionHome(): void {
+        goto('/home', {
+            replaceState: true,
+        });
+
+        switchPanel(PanelTypes.Home);
+    }
+
+    const items: MainSideItem[] = [
+        {
+            title: 'Home',
+            svg: Home,
+            action: actionHome,
+        },
+        {
+            title: 'Search',
+            svg: Search,
+            action: decideSearchAction,
+        },
+        {
+            title: 'Messages',
+            svg: Communities,
+            action: decideCommunityAction,
+        },
+        {
+            title: 'Share',
+            svg: CreatePost,
+            action: () => loadModal(ModalTypes.CreatePost),
+        },
+        {
+            title: $ourData?.username || 'Account',
+            svg: Account,
+            action: () => loadDropdown(DropdownTypes.AccountOptions, false),
+            hideOnReveal: true,
+        },
+        {
+            title: 'Settings',
+            svg: Settings,
+            action: () => loadDropdown(DropdownTypes.Settings, true),
+        },
+    ];
 </script>
 
-<div in:fly={{ x: -100, duration: 1000 }} class="side-nav-container">
-    <div
-        id="component"
-        on:click={() => {
-            goto('/home', {
-                replaceState: true,
-            });
+<div class="side-nav-container" in:fade={{ duration: 250 }}>
+    <div class="nav-top-container">
+        {#each items as { title, action, svg, hideOnReveal }}
+            <div
+                class={`component ${
+                    hideOnReveal && $sideNavRevealed ? 'reveal' : ''
+                }`}
+                on:click={action}
+            >
+                <svelte:component this={svg} />
 
-            switchPanel(PanelTypes.Home);
-        }}
-    >
-        <Home />
-        <h1>Home</h1>
+                {#if $sideNavRevealed}
+                    <h1 in:fly={{ duration: 300, x: -10 }}>{title}</h1>
+                {/if}
+            </div>
+        {/each}
     </div>
 
-    <div id="component" on:click={decideSearchAction}>
-        <Search />
-        <h1>Search</h1>
-    </div>
+    <div class="nav-bottom-container" in:fade={{ duration: 300 }}>
+        {#if $sideNavRevealed}
+            <div
+                class="account-container"
+                on:click={() =>
+                    loadDropdown(DropdownTypes.AccountOptions, false)}
+            >
+                <Account />
+                <h1>{$ourData?.username || 'Account'}</h1>
+            </div>
+        {/if}
 
-    <div id="component" on:click={decideCommunityAction}>
-        <Communities />
-        <h1>Community</h1>
+        <Reveal callback={toggleReveal} />
     </div>
-
-    <div
-        id="component"
-        on:click={() => {
-            loadModal(ModalTypes.CreatePost);
-        }}
-    >
-        <CreatePost />
-        <h1>Share</h1>
-    </div>
-
-    <div
-        id="component"
-        on:click={() => loadDropdown(DropdownTypes.AccountOptions, false)}
-    >
-        <Account />
-        <h1>{`${$ourData?.username ? $ourData?.username : 'Account'}`}</h1>
-    </div>
-
-    <div
-        id="component"
-        on:click={() => {
-            loadDropdown(DropdownTypes.Settings, true);
-        }}
-    >
-        <Settings />
-        <h1>Settings</h1>
-    </div>
-
-    <!-- TODO: Enable in the future if more admin options are available -->
-    <!-- <Admin /> -->
 </div>
 
 <style>
     .side-nav-container {
-        position: fixed;
+        position: sticky;
         width: max-content;
+        max-width: 20%;
         height: 100vh;
-        transition: 300ms background;
-        z-index: 1;
+        transition: 150ms background;
+        z-index: 2;
+        left: 0;
+        top: 0;
+        background: var(--side_bg_color);
     }
 
-    #component {
+    .nav-top-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        height: 92.5%;
+        flex: 1;
+    }
+
+    .component {
         display: flex;
         align-items: center;
-        padding: 10px;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        border-radius: 10px;
-        width: max-content;
+        padding: 8px;
+        margin: 10px;
+        margin-top: 0;
+        margin-bottom: 0;
+        border-radius: 20px;
         cursor: pointer;
-        transition: 300ms all;
+        transition: 50ms all;
     }
 
-    #component:active {
+    .reveal {
+        display: none;
+    }
+
+    .component:nth-child(1) {
+        margin-top: 10px;
+    }
+
+    .component:hover {
+        background: var(--side_svg_bg_color);
+        border-radius: 10px;
+    }
+
+    .component:active {
         transform: scale(0.975);
-        opacity: 0.75;
     }
 
-    #component h1 {
+    .component h1 {
         display: -webkit-box;
         overflow: hidden;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
         margin: 0;
         margin-left: 5px;
-        font-size: 1.6rem;
+        font-size: 1.4rem;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -172,42 +224,135 @@
         user-select: none;
         color: var(--profile_info_color);
         width: max-content;
-        max-width: 150px;
-        height: 35px;
+        cursor: pointer;
+        transition: 150ms all;
     }
 
-    @media screen and (max-width: 1024px) {
-        #component {
-            cursor: default;
+    .nav-bottom-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding: 5px;
+        margin: 10px;
+        margin-left: 5px;
+        margin-right: 5px;
+        margin-top: 0;
+        border-radius: 20px;
+        transition: 100ms all;
+    }
+
+    .account-container {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 15px;
+        padding: 5px;
+        flex: 1;
+        transition: 150ms;
+    }
+
+    .account-container:hover {
+        background: var(--side_svg_bg_color);
+        border-radius: 5px;
+    }
+
+    .account-container:active {
+        transform: scale(0.975);
+    }
+
+    .account-container h1 {
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        margin: 0;
+        margin-left: 2px;
+        font-size: 1.4rem;
+        max-width: 100px;
+        flex: 1;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        color: var(--profile_info_color);
+        width: max-content;
+        cursor: pointer;
+        transition: 150ms all;
+    }
+
+    @media screen and (max-width: 1100px) {
+        .nav-top-container {
+            height: 88%;
+        }
+
+        .nav-bottom-container {
+            flex-direction: column;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .account-container {
             width: max-content;
         }
-
-        #component h1 {
-            display: none;
-        }
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 850px) {
         .side-nav-container {
-            display: flex;
-            right: 0;
+            width: 100%;
+            max-width: none;
+            height: 65px;
+            position: sticky;
             bottom: 0;
-            border-top-left-radius: 25px;
-            border-top-right-radius: 25px;
-            height: 60px;
-            position: fixed;
-            right: 0;
-            left: 0;
-            margin: auto;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
             background: var(--bg_color);
             box-shadow: 0 0 10px var(--accent_shadow_color);
         }
 
-        #component {
+        .nav-top-container {
+            flex-direction: row;
+        }
+
+        .nav-bottom-container {
+            display: none;
+        }
+
+        .component {
+            background: none;
             margin: 0;
             padding: 0;
-            padding-left: 8px;
-            padding-right: 8px;
+            width: 10%;
+            margin-left: 5%;
+            margin-right: 5%;
+            justify-content: center;
+        }
+
+        .reveal {
+            display: initial;
+            align-self: center;
+        }
+
+        .component:nth-child(1) {
+            margin-top: 0;
+        }
+
+        .component:hover {
+            background: transparent;
+        }
+
+        .component h1 {
+            display: none;
         }
     }
 </style>

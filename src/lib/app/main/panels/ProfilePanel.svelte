@@ -1,9 +1,8 @@
 <script lang="ts">
     import ProfileInfo from '$lib/app/main/panels/profile/ProfileInfo.svelte';
-    import { fade } from 'svelte/transition';
 </script>
 
-<div class="profile-container" in:fade={{ duration: 250 }}>
+<div class="profile-container">
     <ProfileInfo />
 </div>
 
@@ -13,13 +12,6 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        margin-top: 10px;
-        margin-bottom: 40px;
-    }
-
-    @media screen and (max-width: 700px) {
-        .profile-container {
-            margin-top: 0;
-        }
+        width: 95%;
     }
 </style>

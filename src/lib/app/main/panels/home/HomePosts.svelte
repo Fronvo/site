@@ -33,23 +33,11 @@
 </script>
 
 {#if $homePostsStore}
-    <div class="posts-container">
-        {#each $homePostsStore as { post, profileData }}
-            <Post {profileData} postData={post} hideOptions />
-        {/each}
+    {#each $homePostsStore as { post, profileData }}
+        <Post {profileData} postData={post} hideOptions />
+    {/each}
 
-        {#if $homePostsStore.length < $totalHomePosts}
-            <LoadMore callback={loadMore} />
-        {/if}
-    </div>
+    {#if $homePostsStore.length < $totalHomePosts}
+        <LoadMore callback={loadMore} />
+    {/if}
 {/if}
-
-<style>
-    .posts-container {
-        display: flex;
-        flex-direction: column;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: center;
-    }
-</style>

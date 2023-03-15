@@ -23,7 +23,7 @@
         -webkit-box-orient: vertical;
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 850px) {
         #bio {
             font-size: 1.1rem;
             margin-left: 25px;

@@ -134,7 +134,7 @@
         flex: 1;
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 850px) {
         .find-items-container {
             flex-direction: column;
             justify-content: start;

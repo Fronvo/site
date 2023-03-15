@@ -200,7 +200,7 @@ export async function fetchPosts(profileId: string): Promise<AccountPost[]> {
     return new Promise(async (resolve) => {
         socket.emit(
             'fetchProfilePosts',
-            { profileId, from: '0', to: '5' },
+            { profileId, from: '0', to: '10' },
             ({ profilePosts }) => {
                 resolve(profilePosts || []);
             }

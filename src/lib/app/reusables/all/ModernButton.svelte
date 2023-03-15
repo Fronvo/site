@@ -15,14 +15,13 @@
         border-radius: 0;
         box-shadow: 0 0 1px var(--profile_info_color);
         margin-top: 10px;
-        margin-bottom: 10px;
     }
 
     button:hover {
         color: var(--profile_info_color);
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 850px) {
         button {
             font-size: 1.1rem;
         }

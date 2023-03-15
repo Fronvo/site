@@ -83,7 +83,7 @@
         height: 250px;
         overflow: hidden;
         padding: 5px;
-        transition: 200ms;
+        transition: 150ms;
         cursor: pointer;
     }
 
@@ -139,7 +139,7 @@
         border-radius: 10px;
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 850px) {
         div {
             width: 300px;
             height: 65px;

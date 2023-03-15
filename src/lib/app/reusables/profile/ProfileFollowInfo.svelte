@@ -89,7 +89,7 @@
         color: var(--profile_info_color);
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 850px) {
         .follow-container {
             margin-top: 5px;
             margin-left: 25px;

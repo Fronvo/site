@@ -19,9 +19,10 @@
     svg {
         width: 40px;
         height: 40px;
+        margin-right: 5px;
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 850px) {
         svg {
             width: 32px;
             height: 32px;

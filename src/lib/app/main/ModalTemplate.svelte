@@ -47,17 +47,17 @@
     } modal-side-${$modalSide}`}
     in:fly={{
         duration: modalAnimDuration,
-        y: !$modalSide || document.body.clientWidth < 700 ? 25 : 0,
+        y: !$modalSide || document.body.clientWidth < 850 ? 25 : 0,
         x:
             $modalSide &&
-            document.body.clientWidth > 700 &&
+            document.body.clientWidth > 850 &&
             ($modalSide == 'left' ? -100 : 100),
     }}
     out:fly={{
         duration: modalAnimDuration,
         x:
             $modalSide &&
-            document.body.clientWidth > 700 &&
+            document.body.clientWidth > 850 &&
             ($modalSide == 'left' ? -100 : 100),
     }}
 >
@@ -111,6 +111,7 @@
             <!-- svelte-ignore a11y-autofocus -->
             <input
                 class="modal-input"
+                placeholder={data.title}
                 autofocus
                 bind:value={$modalInput}
                 maxlength={data.inputMaxLength || 15}
@@ -191,7 +192,7 @@
         flex-direction: row;
         text-align: center;
         align-items: center;
-        font-size: 2.3rem;
+        font-size: 2.1rem;
         margin: 0;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -242,7 +243,7 @@
     }
 
     button {
-        font-size: 1.8rem;
+        font-size: 1.7rem;
         margin-left: 10px;
         margin-right: 10px;
     }
@@ -251,7 +252,7 @@
         color: red;
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 850px) {
         .modal-container {
             position: fixed;
             bottom: 0;
@@ -284,7 +285,7 @@
         }
 
         button {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             margin-top: 5px;
         }
     }

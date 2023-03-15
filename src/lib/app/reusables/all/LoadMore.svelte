@@ -15,7 +15,7 @@
         margin-top: 30px;
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 850px) {
         div {
             margin-bottom: 60px;
         }

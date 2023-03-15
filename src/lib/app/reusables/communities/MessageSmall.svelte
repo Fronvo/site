@@ -1,25 +1,25 @@
 <script lang="ts">
     import DeleteChatOption from '$lib/svgs/DeleteChatOption.svelte';
     import Reply from '$lib/svgs/Reply.svelte';
-    import type { CommunityMessage, FronvoAccount } from 'interfaces/all';
+    import type { CommunityMessage } from 'interfaces/all';
     import { fade } from 'svelte/transition';
 
-    export let profileData: FronvoAccount;
     export let messageData: CommunityMessage;
     export let replyCondition = true;
     export let deleteCondition = true;
     export let replyCallback = () => {};
     export let deleteCallback = () => {};
     export let animate = true;
+    export let highlight = false;
 </script>
 
-<div in:fade={{ duration: animate ? 250 : 0 }} class={'message-container'}>
+<div
+    in:fade={{ duration: animate ? 250 : 0 }}
+    class={`message-container ${highlight ? 'highlight' : ''}`}
+>
     {#if messageData.isReply}
         <div class="reply-container">
             {#if messageData.replyContent}
-                <h1 id="reply-name">
-                    Replying to <span>{profileData.username}</span>
-                </h1>
                 <h1 id="reply-message" class={`${messageData.messageId}-reply`}>
                     > <span>{messageData.replyContent}</span>
                 </h1>
@@ -63,6 +63,11 @@
         background: var(--accent_bg_color);
     }
 
+    .highlight {
+        background: var(--accent_bg_color);
+        border-left: 5px solid var(--accent_shadow_color);
+    }
+
     .message-info-container {
         display: flex;
         align-items: center;
@@ -70,23 +75,6 @@
 
     .message-info-container .menu-container {
         opacity: 0;
-        transition: 100ms;
-    }
-
-    .reply-container #reply-name {
-        font-size: 1.3rem;
-        margin: 0;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        text-align: start;
-    }
-
-    .reply-container #reply-name span {
-        color: var(--profile_info_color);
     }
 
     .reply-container #reply-message {
@@ -130,13 +118,9 @@
         flex: 1;
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 850px) {
         .chat-container {
             margin-top: 60px;
-        }
-
-        .reply-container #reply-name {
-            font-size: 1.1rem;
         }
 
         .reply-container #reply-message {

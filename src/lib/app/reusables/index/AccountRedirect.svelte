@@ -19,8 +19,8 @@
         color: var(--profile_info_color);
         cursor: pointer;
         margin: 0;
-        transition: 250ms color;
-        font-size: 1.8rem;
+        transition: 150ms color;
+        font-size: 1.6rem;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -30,10 +30,10 @@
         text-align: center;
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 850px) {
         h1 {
             cursor: default;
-            font-size: 1.4rem;
+            font-size: 1.2rem;
         }
     }
 </style>

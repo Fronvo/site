@@ -8,13 +8,13 @@
 
 <style>
     button {
-        font-size: 2.5rem;
+        font-size: 2.1rem;
         margin-top: 25px;
         width: 90%;
         background: transparent;
         border: 2px solid var(--profile_info_color);
         padding: 7px;
-        transition: 0.25s;
+        transition: 150ms;
         color: var(--profile_info_color);
     }
 
@@ -23,13 +23,13 @@
     }
 
     button:active {
-        transition: 0.25s;
+        transition: 150ms;
         transform: none;
         background: var(--profile_info_color);
         color: var(--bg_color);
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 850px) {
         button {
             font-size: 1.7rem;
         }

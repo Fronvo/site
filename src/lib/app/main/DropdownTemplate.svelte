@@ -56,7 +56,7 @@
         background: transparent;
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 850px) {
         .dropdown-container button {
             font-size: 1rem;
         }

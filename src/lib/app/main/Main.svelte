@@ -46,21 +46,17 @@
     .main-container {
         display: flex;
         flex-direction: row;
+        justify-content: start;
     }
 
     #content {
-        width: 75%;
-        margin: auto;
-        justify-content: center;
+        width: 100%;
+        justify-content: start;
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 850px) {
         .main-container {
-            flex-direction: column;
-        }
-
-        #content {
-            width: 100%;
+            flex-direction: column-reverse;
         }
     }
 </style>

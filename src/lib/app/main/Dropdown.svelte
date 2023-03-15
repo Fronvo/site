@@ -75,7 +75,7 @@
         overflow: hidden;
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 850px) {
         .item-container {
             padding: 5px;
         }

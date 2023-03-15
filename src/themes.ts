@@ -39,17 +39,21 @@ interface ThemingOptions {
 
     // Target sizes
     modal_header_size: string;
-    modal_header_size_700: string;
+    modal_header_size_850: string;
     modal_input_size: string;
-    modal_input_size_700: string;
+    modal_input_size_850: string;
     modal_button_size: string;
-    modal_button_size_700: string;
+    modal_button_size_850: string;
 
     // Buttons
     button_background: string;
 
     // Seperators
     seperator_background: string;
+
+    // MainSideNav
+    side_bg_color: string;
+    side_svg_bg_color: string;
 }
 
 export const defaultTheme: ThemingOptions = {
@@ -78,15 +82,18 @@ export const defaultTheme: ThemingOptions = {
     profile_info_color: 'white',
 
     modal_header_size: '1.65rem',
-    modal_header_size_700: '1.2rem',
+    modal_header_size_850: '1.2rem',
     modal_input_size: '1.6rem',
-    modal_input_size_700: '1.2rem',
+    modal_input_size_850: '1.2rem',
     modal_button_size: '1.4rem',
-    modal_button_size_700: '1rem',
+    modal_button_size_850: '1rem',
 
     button_background: 'rgb(35, 35, 35)',
 
     seperator_background: 'rgb(40, 40, 40)',
+
+    side_bg_color: 'rgb(25, 25, 25)',
+    side_svg_bg_color: 'rgb(35, 35, 35)',
 };
 
 export const whiteTheme: ThemingOptions = {
@@ -94,7 +101,7 @@ export const whiteTheme: ThemingOptions = {
 
     text_color: 'rgb(130, 70, 255)',
 
-    accent_bg_color: 'rgb(255, 255, 255, 50%)',
+    accent_bg_color: 'rgb(240, 240, 240, 50%)',
 
     accent_shadow_color: 'rgb(230, 230, 230)',
 
@@ -115,15 +122,18 @@ export const whiteTheme: ThemingOptions = {
     profile_info_color: 'rgb(40, 40, 40)',
 
     modal_header_size: '1.65rem',
-    modal_header_size_700: '1.2rem',
+    modal_header_size_850: '1.2rem',
     modal_input_size: '1.6rem',
-    modal_input_size_700: '1.2rem',
+    modal_input_size_850: '1.2rem',
     modal_button_size: '1.4rem',
-    modal_button_size_700: '1rem',
+    modal_button_size_850: '1rem',
 
     button_background: 'rgb(240, 240, 240)',
 
     seperator_background: 'rgb(240, 240, 240)',
+
+    side_bg_color: 'rgb(240, 240, 240)',
+    side_svg_bg_color: 'rgb(250, 250, 250)',
 };
 
 export const currentTheme: Writable<ThemingOptions> = writable(defaultTheme);

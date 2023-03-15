@@ -2,7 +2,7 @@
 
 <style>
     h1 {
-        font-size: 1.8rem;
+        font-size: 1.7rem;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -11,9 +11,9 @@
         user-select: none;
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 850px) {
         h1 {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
         }
     }
 </style>

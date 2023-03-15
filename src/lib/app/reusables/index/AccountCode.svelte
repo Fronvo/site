@@ -11,7 +11,7 @@
     on:valueEntered={valueEntered}
     {length}
     style={{
-        fontSize: document.body.clientWidth > 700 ? '2rem' : '1.5rem',
+        fontSize: document.body.clientWidth > 850 ? '2rem' : '1.5rem',
         borderRadius: '0px',
         borderWidth: '3px',
         borderColorActive: 'rgb(255, 255, 255)',

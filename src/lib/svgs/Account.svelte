@@ -27,7 +27,6 @@
 
 <style>
     img {
-        border: 2px solid var(--profile_info_color);
         border-radius: 10px;
         margin: 0;
         padding: 0;
@@ -45,7 +44,7 @@
         height: 36px;
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 850px) {
         img {
             cursor: default;
         }

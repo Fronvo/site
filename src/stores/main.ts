@@ -22,6 +22,10 @@ export const fronvoTitle = writable('');
 export const showLayout = writable(false);
 /****************************** Fronvo layout ******************************/
 
+/****************************** Fronvo SideNav ******************************/
+export const sideNavRevealed = writable(true);
+/****************************** Fronvo SideNav ******************************/
+
 /****************************** Fronvo dark theme ******************************/
 export const darkTheme = writable(undefined);
 /****************************** Fronvo dark theme ******************************/

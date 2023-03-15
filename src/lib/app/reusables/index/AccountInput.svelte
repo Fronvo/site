@@ -22,7 +22,7 @@
         color: var(--profile_info_color);
         margin: 0;
         margin-bottom: 5px;
-        font-size: 2.1rem;
+        font-size: 1.8rem;
         text-align: start;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -33,7 +33,7 @@
     }
 
     input {
-        font-size: 2rem;
+        font-size: 1.6rem;
         margin: 0 5px 15px 5px;
         width: 95%;
         color: var(--profile_info_color);
@@ -41,13 +41,13 @@
         border: 2px solid var(--profile_info_color);
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 850px) {
         h1 {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
         }
 
         input {
-            font-size: 1.4rem;
+            font-size: 1.1rem;
         }
     }
 </style>

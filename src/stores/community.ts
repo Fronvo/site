@@ -17,7 +17,6 @@ export const communityMessages: Writable<
 
 /****************************** Message ******************************/
 export const sendContent: Writable<string> = writable('');
-export const targetSendHeight: Writable<number> = writable();
 /****************************** Message ******************************/
 
 /****************************** Chat request ******************************/

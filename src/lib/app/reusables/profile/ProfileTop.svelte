@@ -28,8 +28,8 @@
         height: 164px;
         border-radius: 100px;
         align-self: flex-end;
-        margin-left: 30px;
-        transition: 250ms;
+        margin-left: 20px;
+        transition: 150ms;
         transform: translateY(40px);
         border: 2px solid var(--button_background);
         -webkit-touch-callout: none;
@@ -40,7 +40,7 @@
         user-select: none;
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 850px) {
         .top-container {
             border-radius: 0px;
             width: 100%;

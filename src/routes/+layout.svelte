@@ -21,18 +21,24 @@
         fronvoTitle,
         guestMode,
         showLayout,
+        sideNavRevealed,
         xmasMode,
         xmasParticleOptions,
     } from 'stores/main';
     import { pendingSearchId } from 'stores/profile';
-    import { dropdownPosition } from 'stores/dropdowns';
+    import { dropdownPosition, dropdownVisible } from 'stores/dropdowns';
     import { shiftHeld } from 'stores/actions';
+    import { replyingTo, replyingToId } from 'stores/community';
+    import { currentPanelId, PanelTypes } from 'stores/panels';
+    import { modalVisible } from 'stores/modals';
 
     let mountReady = false;
 
     function setupVars(): void {
         // Try our best to default to dark
         $darkTheme = !getKey('darkTheme') || getKey('darkTheme') == 'true';
+        $sideNavRevealed =
+            !getKey('revealNav') || getKey('revealNav') == 'true';
         $dataSaver = getKey('dataSaver') == 'true';
         $xmasMode =
             new Date().getMonth() == 11 &&
@@ -107,6 +113,14 @@
             }
 
             if (ev.key == 'Escape') {
+                // Reset reply if no modal / dropdown active
+                if ($currentPanelId == PanelTypes.Community) {
+                    if (!$modalVisible && !$dropdownVisible) {
+                        $replyingTo = undefined;
+                        $replyingToId = undefined;
+                    }
+                }
+
                 dismissModal();
                 dismissDropdown();
             }
@@ -199,7 +213,6 @@
         font-size: var(--modal_input_size);
         margin: 0 5px 10px 5px;
         width: 400px;
-        text-align: center;
         background: var(--modal_input_bg_color);
     }
 
@@ -225,23 +238,23 @@
         margin-right: 5px;
     }
 
-    @media screen and (max-width: 700px) {
+    @media screen and (max-width: 850px) {
         /* Not needed on desktop with mobile width */
         :global(::-webkit-scrollbar) {
             width: 0px;
         }
 
         :global(.modal-header) {
-            font-size: var(--modal_header_size_700);
+            font-size: var(--modal_header_size_850);
         }
 
         :global(.modal-input) {
-            font-size: var(--modal_input_size_700);
+            font-size: var(--modal_input_size_850);
             width: 250px;
         }
 
         :global(.modal-button) {
-            font-size: var(--modal_button_size_700);
+            font-size: var(--modal_button_size_850);
         }
     }
 </style>

@@ -5,7 +5,7 @@
     import AccountButton from '../reusables/index/AccountButton.svelte';
     import AccountCode from '../reusables/index/AccountCode.svelte';
     import AccountHeader from '../reusables/index/AccountHeader.svelte';
-    import AccountHeaderError from '../reusables/index/AccountHeaderError.svelte';
+    import AccountHeaderError from '../reusables/all/ErrorHeader.svelte';
     import AccountInfo from '../reusables/index/AccountInfo.svelte';
     import AccountTemplate from '../reusables/index/AccountTemplate.svelte';
 

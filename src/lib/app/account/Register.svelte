@@ -8,10 +8,10 @@
     import { onMount, onDestroy } from 'svelte';
     import AccountButton from '../reusables/index/AccountButton.svelte';
     import AccountHeader from '../reusables/index/AccountHeader.svelte';
-    import AccountHeaderError from '../reusables/index/AccountHeaderError.svelte';
     import AccountInput from '../reusables/index/AccountInput.svelte';
     import AccountRedirect from '../reusables/index/AccountRedirect.svelte';
     import AccountTemplate from '../reusables/index/AccountTemplate.svelte';
+    import ErrorHeader from '../reusables/all/ErrorHeader.svelte';
 
     let email = '';
     let password = '';
@@ -77,7 +77,7 @@
 <AccountTemplate>
     <AccountHeader>Join the closed beta</AccountHeader>
 
-    <AccountHeaderError {errorMessage} />
+    <ErrorHeader {errorMessage} />
 
     <AccountInput bind:value={email} maxLength={120}>Email</AccountInput>
 

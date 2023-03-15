@@ -5,7 +5,6 @@
     import AccountTemplate from '../reusables/index/AccountTemplate.svelte';
     import AccountButton from '../reusables/index/AccountButton.svelte';
     import AccountHeader from '../reusables/index/AccountHeader.svelte';
-    import AccountHeaderError from '../reusables/index/AccountHeaderError.svelte';
     import { setKey } from 'utilities/global';
     import { homePosts } from 'stores/home';
     import { dismissModal, performLogin } from 'utilities/main';
@@ -15,6 +14,7 @@
         accountRegisterTab,
         accountRegisterVerifyTab,
     } from 'stores/account';
+    import ErrorHeader from '../reusables/all/ErrorHeader.svelte';
 
     let code: string;
     let errorMessage: string;
@@ -61,7 +61,7 @@
         >A 6-digit verification code has been sent to your email</AccountInfo
     >
 
-    <AccountHeaderError {errorMessage} />
+    <ErrorHeader {errorMessage} />
 
     <SvelteSegmentedInput
         bind:value={code}

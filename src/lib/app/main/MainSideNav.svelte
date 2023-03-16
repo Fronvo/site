@@ -303,9 +303,10 @@
     @media screen and (max-width: 850px) {
         .side-nav-container {
             width: 100%;
-            max-width: none;
+            max-width: 100%;
             height: 65px;
-            position: sticky;
+            position: fixed;
+            top: initial;
             bottom: 0;
             display: flex;
             flex-direction: row;
@@ -322,6 +323,7 @@
 
         .nav-top-container {
             flex-direction: row;
+            justify-content: center;
         }
 
         .nav-bottom-container {
@@ -332,10 +334,9 @@
             background: none;
             margin: 0;
             padding: 0;
-            width: 10%;
-            margin-left: 5%;
-            margin-right: 5%;
-            justify-content: center;
+            width: 20%;
+            margin-left: 2.5%;
+            margin-right: 2.5%;
         }
 
         .reveal {

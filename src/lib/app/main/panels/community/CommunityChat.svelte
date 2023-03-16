@@ -10,7 +10,7 @@
     } from 'stores/community';
     import { onDestroy, onMount } from 'svelte';
     import type { Unsubscriber } from 'svelte/store';
-    import { scale } from 'svelte/transition';
+    import { scale, slide } from 'svelte/transition';
     import {
         dismissModal,
         getTimeDifferenceM,
@@ -388,7 +388,7 @@
 {#if $messages}
     <div class="chat-container">
         {#if $messages.length == 0}
-            <h1 id="chat-start" in:scale={{ duration: 500, start: 0.95 }}>
+            <h1 id="chat-start" in:slide={{ duration: 500 }}>
                 Welcome to {$communityData?.name}'s chat room!
             </h1>
         {:else if $messages}
@@ -454,15 +454,15 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        font-size: 2rem;
-        margin-bottom: 20px;
         text-align: center;
-        width: 100%;
+        font-size: 1.4rem;
+        overflow: hidden;
+        color: var(--profile_info_color);
     }
 
     @media screen and (max-width: 700px) {
         .chat-container #chat-start {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
         }
     }
 </style>

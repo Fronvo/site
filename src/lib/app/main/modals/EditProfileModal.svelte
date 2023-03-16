@@ -209,8 +209,8 @@
     }
 
     #avatar-preview {
-        width: 48px;
-        height: 48px;
+        width: 128px;
+        height: 128px;
         border-radius: 10px;
         margin-right: 10px;
     }
@@ -222,13 +222,13 @@
     }
 
     textarea {
-        min-height: 100px;
+        min-height: 150px;
     }
 
     @media screen and (max-width: 850px) {
         #avatar-preview {
-            width: 40px;
-            height: 40px;
+            width: 64px;
+            height: 64px;
         }
 
         #banner-preview {

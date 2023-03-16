@@ -117,14 +117,17 @@
     @media screen and (max-width: 850px) {
         .send-container {
             bottom: 0px;
-            min-width: initial;
+            min-width: none;
             min-height: 100px;
             padding-bottom: 70px;
+            padding-left: 0;
+            padding-right: 0;
         }
 
         .send-container textarea {
             font-size: 1.1rem;
             min-height: 45px;
+            border-radius: 0;
         }
 
         .reply-container #reply-name {

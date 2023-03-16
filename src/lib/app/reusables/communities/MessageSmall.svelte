@@ -128,7 +128,7 @@
         }
 
         .message-container #content {
-            font-size: 1.15rem;
+            font-size: 1rem;
         }
     }
 </style>

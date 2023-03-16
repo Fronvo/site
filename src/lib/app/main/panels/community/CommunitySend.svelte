@@ -6,12 +6,32 @@
         replyingToId,
         sendContent,
     } from 'stores/community';
+    import { onDestroy, onMount } from 'svelte';
+    import type { Unsubscriber } from 'svelte/store';
     import { slide } from 'svelte/transition';
+
+    let unsubscribe: Unsubscriber;
 
     function abortReply(): void {
         $replyingTo = undefined;
         $replyingToId = undefined;
     }
+
+    onMount(() => {
+        unsubscribe = sendContent.subscribe(() => {
+            const el = document.getElementById(
+                'textarea-content'
+            ) as HTMLTextAreaElement;
+
+            el.style.height = '0px';
+
+            el.style.height = Math.min(el.scrollHeight, 400) + 'px';
+        });
+    });
+
+    onDestroy(() => {
+        unsubscribe();
+    });
 </script>
 
 <div class="send-container">
@@ -70,9 +90,9 @@
         font-size: 1.4rem;
         color: var(--profile_info_color);
         border-radius: 5px;
-        overflow: hidden;
-        min-height: 50px;
-        max-height: 100px;
+        min-height: 40px;
+        max-height: 400px;
+        transition: none;
     }
 
     .reply-container {

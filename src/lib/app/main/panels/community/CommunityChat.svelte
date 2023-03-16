@@ -430,7 +430,7 @@
                 <InfiniteLoading
                     on:infinite={loadMore}
                     forceUseInfiniteWrapper
-                    distance={1000}
+                    distance={1500}
                 >
                     <div slot="noMore" />
                     <div slot="noResults" />

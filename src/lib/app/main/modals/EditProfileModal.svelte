@@ -150,6 +150,8 @@
                 callback: dismissModal,
             },
         ],
+
+        useSecondaryHr: true,
     };
 </script>
 
@@ -172,13 +174,11 @@
             alt="New avatar"
             draggable={false}
         />
-        <h1 class="modal-header avatar-info">Avatar</h1>
     </div>
 
     <input class="modal-input" maxlength={512} bind:value={$avatar} />
 
     <div>
-        <h1 class="modal-header banner-info">Banner</h1>
         <img
             id="banner-preview"
             src={$banner ? $banner : '/svgs/profile/banner.svg'}

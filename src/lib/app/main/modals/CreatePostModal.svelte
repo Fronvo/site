@@ -66,38 +66,21 @@
         attachmentPreview.onerror = () => {
             if ($postData.attachment == '') return;
 
-            const attachmentText =
-                document.getElementsByClassName('attachment-info')[0];
-
-            attachmentText.textContent = 'Attachment - Invalid URL';
-
             canShare = false;
-            attachmentPreview.src = '/svgs/profile/avatar.svg';
         };
 
         postData.subscribe(({ attachment }) => {
             if (attachment == undefined) return;
 
-            const attachmentText =
-                document.getElementsByClassName('attachment-info')[0];
-
             // Allow empty avatar url, reset it
             if (attachment == '') {
-                // Reset state
-                attachmentText.textContent = 'Attachment';
-
                 canShare = true;
             }
 
             // Check for avatar https, perform some client side validation on our own
             else if (!attachment.match(/^(https:\/\/).+$/)) {
-                attachmentText.textContent = 'Attachment - Invalid URL';
-
                 canShare = false;
             } else if (!canShare) {
-                // Reset state
-                attachmentText.textContent = 'Attachment';
-
                 canShare = true;
             }
         });
@@ -117,7 +100,7 @@
             },
         ],
 
-        removeTransparency: true,
+        useSecondaryHr: true,
     };
 </script>
 
@@ -138,8 +121,9 @@
         alt="Post attachment"
         draggable={false}
     />
-    <h1 class="modal-header attachment-info">Attachment</h1>
+
     <input
+        placeholder="Attachment URL"
         class="modal-input"
         bind:value={$postData.attachment}
         maxlength={256}

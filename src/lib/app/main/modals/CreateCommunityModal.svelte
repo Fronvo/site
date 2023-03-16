@@ -62,13 +62,17 @@
             },
         ],
 
-        removeTransparency: true,
+        useSecondaryHr: true,
     };
 </script>
 
 <ModalTemplate {data}>
     <ErrorHeader {errorMessage} />
 
-    <h1 class="modal-header">Community Name</h1>
-    <input class="modal-input" bind:value={name} maxlength={15} />
+    <input
+        placeholder="Community name"
+        class="modal-input"
+        bind:value={name}
+        maxlength={15}
+    />
 </ModalTemplate>

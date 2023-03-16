@@ -77,10 +77,6 @@
         ) as HTMLImageElement;
 
         iconPreview.onerror = () => {
-            const iconText = document.getElementsByClassName('icon-info')[0];
-
-            iconText.textContent = 'Icon - Invalid URL';
-
             canUpload = false;
             iconPreview.src = '/svgs/profile/avatar.svg';
         };
@@ -88,25 +84,15 @@
         icon.subscribe((newIcon) => {
             if (newIcon == undefined) return;
 
-            const iconText = document.getElementsByClassName('icon-info')[0];
-
             // Allow empty avatar url, reset it
             if (newIcon == '') {
-                // Reset state
-                iconText.textContent = 'Icon';
-
                 canUpload = true;
             }
 
             // Check for avatar https, perform some client side validation on our own
             else if (!newIcon.match(/^(https:\/\/).+$/)) {
-                iconText.textContent = 'Icon - Invalid URL';
-
                 canUpload = false;
             } else if (!canUpload) {
-                // Reset state
-                iconText.textContent = 'Icon';
-
                 canUpload = true;
             }
         });
@@ -125,6 +111,8 @@
                 callback: dismissModal,
             },
         ],
+
+        useSecondaryHr: true,
     };
 </script>
 
@@ -144,7 +132,6 @@
             alt="New avatar"
             draggable={false}
         />
-        <h1 class="modal-header icon-info">Icon</h1>
     </div>
 
     <input class="modal-input" maxlength={512} bind:value={$icon} />

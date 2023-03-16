@@ -79,10 +79,10 @@ export interface ModalData {
     titleListenerCondition?: () => boolean;
     title: string;
     actions: ModalActions[];
-    removeTransparency?: boolean;
     sideModal?: SideModalOptions;
     useInput?: boolean;
     inputMaxLength?: number;
+    useSecondaryHr?: boolean;
 }
 /****************************** Modal Exports ******************************/
 

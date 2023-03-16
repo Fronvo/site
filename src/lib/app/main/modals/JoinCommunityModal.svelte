@@ -58,18 +58,15 @@
                 callback: dismissModal,
             },
         ],
-
-        removeTransparency: true,
     };
 </script>
 
 <ModalTemplate {data}>
     <ErrorHeader {errorMessage} />
 
-    <h1 class="modal-header">Invite code</h1>
-
     <!-- svelte-ignore a11y-autofocus -->
     <input
+        placeholder="Invite code"
         class="modal-input"
         autofocus
         bind:value={inviteCode}

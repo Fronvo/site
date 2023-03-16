@@ -115,7 +115,11 @@
                 {postData.content}
             </h1>
         {:else}
+            <!-- svelte-ignore a11y-autofocus -->
+
             <textarea
+                autofocus
+                placeholder="Content"
                 id="content"
                 class="modal-input"
                 bind:value={postData.content}

@@ -125,6 +125,10 @@
         <slot />
     </div>
 
+    {#if data.useSecondaryHr}
+        <hr />
+    {/if}
+
     <div class="options-container">
         {#each data.actions as { title, callback, danger }}
             <button
@@ -141,6 +145,10 @@
         margin-top: 5px;
         margin-bottom: 15px;
         border-color: var(--seperator_background);
+    }
+
+    hr:nth-last-child(2) {
+        margin-bottom: 10px;
     }
 
     .modal-container {
@@ -243,13 +251,18 @@
     }
 
     button {
-        font-size: 1.7rem;
+        font-size: 1.6rem;
         margin-left: 10px;
         margin-right: 10px;
     }
 
     .danger {
         color: red;
+    }
+
+    .danger:hover {
+        color: white;
+        background: red;
     }
 
     @media screen and (max-width: 850px) {

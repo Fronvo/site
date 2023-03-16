@@ -81,10 +81,10 @@ export const defaultTheme: ThemingOptions = {
 
     profile_info_color: 'white',
 
-    modal_header_size: '1.65rem',
-    modal_header_size_850: '1.2rem',
-    modal_input_size: '1.6rem',
-    modal_input_size_850: '1.2rem',
+    modal_header_size: '1.5rem',
+    modal_header_size_850: '1.1rem',
+    modal_input_size: '1.4rem',
+    modal_input_size_850: '1.1rem',
     modal_button_size: '1.4rem',
     modal_button_size_850: '1rem',
 
@@ -121,10 +121,10 @@ export const whiteTheme: ThemingOptions = {
 
     profile_info_color: 'rgb(40, 40, 40)',
 
-    modal_header_size: '1.65rem',
-    modal_header_size_850: '1.2rem',
-    modal_input_size: '1.6rem',
-    modal_input_size_850: '1.2rem',
+    modal_header_size: '1.5rem',
+    modal_header_size_850: '1.1rem',
+    modal_input_size: '1.4rem',
+    modal_input_size_850: '1.1rem',
     modal_button_size: '1.4rem',
     modal_button_size_850: '1rem',
 

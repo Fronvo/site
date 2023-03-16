@@ -214,6 +214,7 @@
         margin: 0 5px 10px 5px;
         width: 400px;
         background: var(--modal_input_bg_color);
+        color: var(--profile_info_color);
     }
 
     :global(.modal-button) {

@@ -51,6 +51,8 @@
                 callback: dismissModal,
             },
         ],
+
+        useSecondaryHr: true,
     };
 </script>
 

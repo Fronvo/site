@@ -80,17 +80,10 @@
 
     function previewListener(
         item: HTMLImageElement,
-        name: string,
         store: Writable<string>,
         defaultSrc?: string
     ): void {
-        const info = document.getElementsByClassName(
-            `${name.toLowerCase()}-info`
-        )[0];
-
         item.onerror = () => {
-            info.textContent = `${name} - Invalid URL`;
-
             canUpload = false;
             item.src = `/svgs/profile/${
                 defaultSrc ? defaultSrc : 'avatar'
@@ -103,20 +96,14 @@
             // Allow empty avatar url, reset it
             if (newStore == '') {
                 // Reset state
-                info.textContent = name;
-
                 canUpload = true;
             }
 
             // Check for avatar https, perform some client side validation on our own
             else if (!newStore.match(/^(https:\/\/).+$/)) {
-                info.textContent = `${name} - Invalid URL`;
-
                 canUpload = false;
             } else if (!canUpload) {
                 // Reset state
-                info.textContent = name;
-
                 canUpload = true;
             }
         });
@@ -125,13 +112,11 @@
     onMount(() => {
         previewListener(
             document.getElementById('avatar-preview') as HTMLImageElement,
-            'Avatar',
             avatar
         );
 
         previewListener(
             document.getElementById('banner-preview') as HTMLImageElement,
-            'Banner',
             banner,
             'banner'
         );

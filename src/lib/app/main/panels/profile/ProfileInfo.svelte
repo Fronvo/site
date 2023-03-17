@@ -130,6 +130,7 @@
 
     @media screen and (max-width: 850px) {
         .info-container {
+            min-width: 100%;
             width: 100%;
         }
     }

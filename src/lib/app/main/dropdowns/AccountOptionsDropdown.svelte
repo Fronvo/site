@@ -1,6 +1,6 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
-    import { communityData, replyingTo } from 'stores/community';
+    import { communityData, replyingTo, replyingToId } from 'stores/community';
     import type { DropdownActions } from 'stores/dropdowns';
     import { homePosts } from 'stores/home';
     import { cachedAccountData, queuedAccounts, socket } from 'stores/main';
@@ -45,6 +45,7 @@
 
             $communityData = undefined;
             $replyingTo = undefined;
+            $replyingToId = undefined;
 
             // Reset cache
             $queuedAccounts = [];

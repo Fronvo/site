@@ -14,4 +14,11 @@
         align-items: center;
         width: 95%;
     }
+
+    @media screen and (max-width: 850px) {
+        .profile-container {
+            width: 100%;
+            margin-bottom: 70px;
+        }
+    }
 </style>

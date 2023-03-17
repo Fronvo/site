@@ -82,6 +82,7 @@
 
     @media screen and (max-width: 850px) {
         .info-container {
+            width: 100%;
             cursor: default;
         }
 

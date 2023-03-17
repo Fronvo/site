@@ -70,14 +70,8 @@
 
     .item-container {
         background: var(--button_background);
-        box-shadow: 0 0 5px var(--accent_shadow_color);
-        border-radius: 15px;
+        box-shadow: 0 0 2px var(--accent_shadow_color);
+        border-radius: 5px;
         overflow: hidden;
-    }
-
-    @media screen and (max-width: 850px) {
-        .item-container {
-            padding: 5px;
-        }
     }
 </style>

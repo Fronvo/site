@@ -69,7 +69,7 @@ async function loadJoinedCommunity(ourData: FronvoAccount): Promise<Community> {
                 'fetchCommunityMessages',
                 {
                     from: '0',
-                    to: '40',
+                    to: '50',
                 },
                 ({ communityMessages }) => {
                     messages.set(communityMessages.reverse());

@@ -159,7 +159,7 @@
     }
 
     .post-container #avatar {
-        min-width: 54px;
+        width: 54px;
         height: 54px;
         border-radius: 30px;
         margin-right: 5px;
@@ -241,6 +241,17 @@
     @media screen and (max-width: 850px) {
         .post-container {
             width: 100vw;
+            overflow: hidden;
+            padding-left: 0;
+            padding-right: 0;
+            margin-left: 0;
+            margin-right: 0;
+        }
+
+        .post-container #avatar {
+            width: 48px;
+            height: 48px;
+            margin-top: 5px;
         }
 
         .preview {
@@ -257,18 +268,15 @@
             cursor: default;
         }
 
-        .author-container #avatar {
-            min-width: 48px;
-            min-height: 48px;
-        }
-
         .post-container #content {
             font-size: 1.1rem;
             -webkit-line-clamp: 7;
+            overflow: hidden;
         }
 
         .post-container #attachment {
             max-height: 250px;
+            max-width: 100%;
         }
 
         .post-container #creation-date {

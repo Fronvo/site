@@ -14,7 +14,6 @@
 
     let isSharing = false;
     let canShare = true;
-    let errorMessage: string;
 
     const postData: Writable<AccountPost> = writable({
         author: $ourData.profileId,
@@ -39,7 +38,6 @@
             },
             async ({ err }) => {
                 if (err) {
-                    errorMessage = err.msg;
                     isSharing = false;
                     setProgressBar(false);
 
@@ -105,8 +103,6 @@
 </script>
 
 <ModalTemplate {data}>
-    <ErrorHeader {errorMessage} />
-
     <Post
         profileData={$ourData}
         bind:postData={$postData}

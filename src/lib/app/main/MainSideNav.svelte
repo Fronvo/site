@@ -293,9 +293,12 @@
             flex-direction: column;
             justify-content: center;
             width: 100%;
+            margin-right: 0;
+            margin-left: 0;
         }
 
         .account-container {
+            margin: 0;
             width: max-content;
         }
     }
@@ -304,7 +307,7 @@
         .side-nav-container {
             width: 100%;
             max-width: 100%;
-            height: 65px;
+            height: 55px;
             position: fixed;
             top: initial;
             bottom: 0;
@@ -337,6 +340,7 @@
             width: 20%;
             margin-left: 2.5%;
             margin-right: 2.5%;
+            cursor: default;
         }
 
         .reveal {

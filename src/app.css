@@ -58,12 +58,13 @@ button {
 }
 
 button:hover {
-    color: var(--text_color);
+    color: var(--profile_info_color);
+    background: var(--bg_color);
 }
 
 button:active {
     transition: 50ms;
-    transform: scale(0.96);
+    transform: scale(0.98);
 }
 
 button:disabled {

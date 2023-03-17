@@ -40,6 +40,11 @@
     }
 
     @media screen and (max-width: 850px) {
+        .home-container {
+            width: 100%;
+            margin-bottom: 70px;
+        }
+
         .home-container #latest-posts {
             font-size: 1.7rem;
             margin: 0;

@@ -33,7 +33,7 @@
 
 <style>
     hr {
-        width: 25%;
+        width: 30%;
         opacity: 25%;
         height: 1px;
         padding: 0;
@@ -48,17 +48,28 @@
     }
 
     .dropdown-container button {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         width: 100%;
         border: none;
         border-radius: none;
         box-shadow: none;
         background: transparent;
+        transition: none;
+        border-radius: 0;
+    }
+
+    .dropdown-container button:hover {
+        color: var(--profile_info_color);
+        background: var(--bg_color);
+    }
+
+    .dropdown-container button:active {
+        transform: none;
     }
 
     @media screen and (max-width: 850px) {
         .dropdown-container button {
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
     }
 </style>

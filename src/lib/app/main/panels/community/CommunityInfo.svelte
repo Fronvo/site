@@ -1,5 +1,4 @@
 <script lang="ts">
-    import Expand from '$lib/svgs/Expand.svelte';
     import { communityData } from 'stores/community';
     import { DropdownTypes, dropdownVisible } from 'stores/dropdowns';
     import { dataSaver } from 'stores/main';
@@ -15,18 +14,18 @@
 </script>
 
 {#if $communityData}
-    <div class="info-container" on:click={showCommunityInfoDropdown}>
-        <img
-            id="icon"
-            src={$communityData.icon && !$dataSaver
-                ? $communityData.icon
-                : '/svgs/profile/avatar.svg'}
-            alt={`${$communityData?.name}'s' icon`}
-            draggable={false}
-        />
-        <h1 id="name">{$communityData?.name}</h1>
-
-        <Expand />
+    <div class="info-container">
+        <div class="data-container" on:click={showCommunityInfoDropdown}>
+            <img
+                id="icon"
+                src={$communityData.icon && !$dataSaver
+                    ? $communityData.icon
+                    : '/svgs/profile/avatar.svg'}
+                alt={`${$communityData?.name}'s' icon`}
+                draggable={false}
+            />
+            <h1 id="name">{$communityData?.name}</h1>
+        </div>
     </div>
 {/if}
 
@@ -35,24 +34,31 @@
         position: sticky;
         top: 0;
         display: flex;
-        justify-content: center;
-        align-items: center;
         margin: auto;
-        padding: 10px;
-        z-index: 1;
+        padding: 5px;
+        z-index: 0;
         background: var(--side_bg_color);
+        border-bottom: 1px solid var(--accent_shadow_color);
         transition: 150ms;
+        width: 100%;
+    }
+
+    .data-container {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        transition: 150ms;
+        border-radius: 10px;
         cursor: pointer;
-        width: max-content;
     }
 
-    .info-container:hover {
-        background: var(--side_svg_bg_color);
+    .data-container:hover {
+        background: var(--bg_color);
     }
 
-    .info-container #icon {
-        width: 55px;
-        height: 55px;
+    #icon {
+        width: 48px;
+        height: 48px;
         margin-right: 5px;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -63,9 +69,9 @@
         border-radius: 5px;
     }
 
-    .info-container #name {
+    #name {
         margin: 0;
-        font-size: 2.2rem;
+        font-size: 2rem;
         color: var(--profile_info_color);
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -81,17 +87,16 @@
     }
 
     @media screen and (max-width: 850px) {
-        .info-container {
-            width: 100%;
+        .data-container {
             cursor: default;
         }
 
-        .info-container #icon {
+        #icon {
             width: 36px;
             height: 36px;
         }
 
-        .info-container #name {
+        #name {
             font-size: 1.5rem;
         }
     }

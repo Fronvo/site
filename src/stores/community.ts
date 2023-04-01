@@ -28,6 +28,10 @@ export const replyingTo: Writable<string> = writable();
 export const replyingToId: Writable<string> = writable();
 /****************************** Reply ******************************/
 
+/****************************** Online Status ******************************/
+export const onlineMembers: Writable<string[]> = writable([]);
+/****************************** Online Status ******************************/
+
 /****************************** FollowInfoModal ******************************/
 export const targetMessageDropdown: Writable<CommunityMessage> = writable();
 /****************************** FollowInfoModal ******************************/

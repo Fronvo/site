@@ -6,14 +6,6 @@
     import { showModal } from 'utilities/main';
     import DropdownTemplate from '../DropdownTemplate.svelte';
 
-    let pendingRequests: number;
-
-    if (isOwner() && $communityData.chatRequestsEnabled) {
-        pendingRequests =
-            $communityData.members.length -
-            $communityData.acceptedChatRequests.length;
-    }
-
     function isOwner(): boolean {
         return $communityData.ownerId == $ourData.profileId;
     }
@@ -39,13 +31,13 @@
             title: 'Edit',
             callback: editCommmunity,
             condition: isOwner(),
+            useHr: document.body.clientWidth > 850,
         },
         {
-            title: `Members ${
-                isOwner() && pendingRequests > 0 ? `(${pendingRequests})` : ''
-            }`,
+            title: 'Members',
             callback: viewMembers,
             useHr: true,
+            condition: document.body.clientWidth < 850,
         },
         {
             title: 'Bans',

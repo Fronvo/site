@@ -169,6 +169,7 @@
         left: 0;
         top: 0;
         background: var(--side_bg_color);
+        border-right: 1px solid var(--accent_shadow_color);
     }
 
     .nav-top-container {

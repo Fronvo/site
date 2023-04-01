@@ -62,14 +62,13 @@
 
     .send-container {
         width: 100%;
-        background: var(--bg_color);
+        background: var(--side_bg_color);
         position: sticky;
         padding-left: 15px;
         padding-right: 15px;
         padding-bottom: 25px;
         padding-top: 10px;
-        border-top-right-radius: 5px;
-        border-top-left-radius: 5px;
+        border-top: 1px solid var(--accent_shadow_color);
         right: 0;
         left: 0;
         bottom: 0;
@@ -90,7 +89,7 @@
         font-size: 1.4rem;
         color: var(--profile_info_color);
         border-radius: 5px;
-        min-height: 40px;
+        min-height: 45px;
         max-height: 400px;
         transition: none;
     }

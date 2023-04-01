@@ -63,7 +63,7 @@ export const defaultTheme: ThemingOptions = {
 
     accent_bg_color: 'rgba(22, 22, 22, 50%)',
 
-    accent_shadow_color: 'rgb(10, 10, 10)',
+    accent_shadow_color: 'rgb(15, 15, 15)',
 
     svg_stroke: 'rgb(130, 64, 255)',
 
@@ -132,7 +132,7 @@ export const whiteTheme: ThemingOptions = {
 
     seperator_background: 'rgb(240, 240, 240)',
 
-    side_bg_color: 'rgb(240, 240, 240)',
+    side_bg_color: 'rgb(248, 248, 248)',
     side_svg_bg_color: 'rgb(250, 250, 250)',
 };
 

@@ -94,8 +94,6 @@
                                     1
                                 );
                             }
-
-                            console.log(profileId, online);
                         }
                     );
                     await performLogin($pendingSearchId, $cachedAccountData);

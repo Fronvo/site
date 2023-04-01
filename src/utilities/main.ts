@@ -53,7 +53,7 @@ export function initSocket(callback?: () => void): void {
     if (socket) return;
 
     setSocket(
-        io('ws://localhost:3001', {
+        io('wss://fronvosrv.fly.dev', {
             transports: ['websocket'],
             path: '/fronvo',
         })

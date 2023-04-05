@@ -1,5 +1,4 @@
 <script lang="ts">
-    import ErrorHeader from '$lib/app/reusables/all/ErrorHeader.svelte';
     import Post from '$lib/app/reusables/all/Post.svelte';
     import type { AccountPost } from 'interfaces/all';
     import { cachedAccountData, socket } from 'stores/main';

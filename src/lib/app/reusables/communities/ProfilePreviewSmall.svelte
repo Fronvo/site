@@ -1,16 +1,19 @@
 <script lang="ts">
     import type { FronvoAccount } from 'interfaces/all';
-    import { onlineMembers } from 'stores/community';
     import { dropdownVisible, type DropdownTypes } from 'stores/dropdowns';
-    import { dataSaver } from 'stores/main';
+    import { dataSaver, socket } from 'stores/main';
     import { fade } from 'svelte/transition';
     import { dismissDropdown, showDropdown } from 'utilities/main';
-    import { ourData } from 'stores/profile';
+    import { onDestroy, onMount } from 'svelte';
+    import type { OnlineStatusUpdatedParams } from 'interfaces/account/onlineStatusUpdated';
 
     export let profileData: FronvoAccount;
     export let dropdown: DropdownTypes = undefined;
 
     export let preDropdownCallback = () => {};
+
+    let statusElement: HTMLHeadingElement;
+    let statusListener: ({}: OnlineStatusUpdatedParams) => void;
 
     function callDropdown(): void {
         if ($dropdownVisible) {
@@ -20,12 +23,39 @@
             showDropdown(dropdown);
         }
     }
+
+    function updateStatus(state: boolean): void {
+        statusElement.classList.add(state ? 'online' : 'offline');
+        statusElement.classList.remove(state ? 'offline' : 'online');
+        statusElement.textContent = state ? 'Online' : 'Offline';
+    }
+
+    onMount(() => {
+        statusElement = document.getElementById(
+            `status-${profileData.profileId}`
+        ) as HTMLHeadingElement;
+
+        updateStatus(profileData.online);
+
+        statusListener = ({ profileId, online }) => {
+            // Only want to monitor our status
+            if (profileId != profileData.profileId) return;
+
+            updateStatus(online);
+        };
+
+        socket.on('onlineStatusUpdated', statusListener);
+    });
+
+    onDestroy(() => {
+        socket.off('onlineStatusUpdated', statusListener);
+    });
 </script>
 
 <div
     class="preview-container"
     in:fade={{ duration: 150 }}
-    on:contextmenu={dropdown && callDropdown}
+    on:click={dropdown && callDropdown}
 >
     <img
         id="avatar"
@@ -42,17 +72,10 @@
         </h1>
 
         <h1
-            class={`${
-                !$onlineMembers.includes(profileData.profileId)
-                    ? 'offline'
-                    : 'online'
-            }`}
-            id="status"
+            class="status online offline"
+            id={`status-${profileData.profileId}`}
         >
-            {$onlineMembers.includes(profileData.profileId) ||
-            profileData.profileId == $ourData?.profileId
-                ? 'Online now'
-                : 'Offline'}
+            Status
         </h1>
     </div>
 </div>
@@ -67,7 +90,6 @@
         overflow: hidden;
         padding: 12px;
         padding-left: 20px;
-        transition: 150ms;
         cursor: pointer;
     }
 
@@ -113,13 +135,13 @@
         width: 100%;
     }
 
-    .bottom-container #status {
+    .bottom-container .status {
         font-size: 1.2rem;
         width: 100%;
     }
 
     .bottom-container .online {
-        color: green;
+        color: rgb(0, 255, 0);
     }
 
     .bottom-container .offline {

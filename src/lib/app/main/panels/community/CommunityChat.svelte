@@ -7,11 +7,10 @@
         replyingToId,
         sendContent,
         communityMessages as messages,
-        onlineMembers,
     } from 'stores/community';
     import { onDestroy, onMount } from 'svelte';
     import type { Unsubscriber } from 'svelte/store';
-    import { scale, slide } from 'svelte/transition';
+    import { slide } from 'svelte/transition';
     import {
         dismissModal,
         getTimeDifferenceM,

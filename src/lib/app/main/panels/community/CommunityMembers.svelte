@@ -2,7 +2,7 @@
     import type { FronvoAccount } from 'interfaces/all';
     import { findCachedAccount, setProgressBar } from 'utilities/main';
     import { onMount } from 'svelte';
-    import { communityData, onlineMembers } from 'stores/community';
+    import { communityData } from 'stores/community';
     import { cachedAccountData } from 'stores/main';
     import { DropdownTypes, targetMemberDropdown } from 'stores/dropdowns';
     import ProfilePreviewSmall from '$lib/app/reusables/communities/ProfilePreviewSmall.svelte';

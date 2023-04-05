@@ -22,14 +22,13 @@
         guestMode,
         showLayout,
         sideNavRevealed,
-        socket,
         xmasMode,
         xmasParticleOptions,
     } from 'stores/main';
     import { pendingSearchId } from 'stores/profile';
     import { dropdownPosition, dropdownVisible } from 'stores/dropdowns';
     import { shiftHeld } from 'stores/actions';
-    import { onlineMembers, replyingTo, replyingToId } from 'stores/community';
+    import { replyingTo, replyingToId } from 'stores/community';
     import { currentPanelId, PanelTypes } from 'stores/panels';
     import { modalVisible } from 'stores/modals';
 
@@ -81,21 +80,6 @@
             if (state) {
                 // Init regardless of login state
                 initSocket(async () => {
-                    socket.off('onlineStatusUpdated');
-
-                    socket.on(
-                        'onlineStatusUpdated',
-                        ({ profileId, online }) => {
-                            if (online) {
-                                $onlineMembers.push(profileId);
-                            } else {
-                                $onlineMembers.splice(
-                                    $onlineMembers.indexOf(profileId),
-                                    1
-                                );
-                            }
-                        }
-                    );
                     await performLogin($pendingSearchId, $cachedAccountData);
 
                     // May have reconnected with an open modal

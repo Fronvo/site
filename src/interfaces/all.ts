@@ -48,6 +48,7 @@ export interface FronvoAccount {
     isAdmin: boolean;
     isDisabled: boolean;
     totalPosts: number;
+    online: boolean;
 }
 
 export interface Community {

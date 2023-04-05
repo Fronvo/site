@@ -38,32 +38,39 @@
             statusElement.textContent = 'Offline';
 
             if (profileData.lastOnline) {
-                const oldDate = new Date(profileData.lastOnline);
-
-                // First minutes
-                let timeDifference = differenceInMinutes(new Date(), oldDate);
-
-                // Then hours, if applicable
-                if (timeDifference > 60) {
-                    timeDifference = differenceInHours(new Date(), oldDate);
-
-                    // Then days, if applicable
-                    if (timeDifference > 24) {
-                        timeDifference = differenceInDays(new Date(), oldDate);
-                    }
-                }
+                // Placeholder
+                setFormattedMinutes(profileData.lastOnline);
 
                 // Fetch the latest lastOnline data
                 socket.emit(
                     'fetchProfileData',
                     { profileId: profileData.profileId },
                     ({ profileData }) => {
-                        statusElement.textContent = `Offline - ${differenceInMinutes(
-                            new Date(),
-                            new Date(profileData.lastOnline)
-                        )}m`;
+                        setFormattedMinutes(profileData.lastOnline);
                     }
                 );
+            }
+
+            function setFormattedMinutes(lastOnline: string): void {
+                const oldDate = new Date(lastOnline);
+
+                // First minutes
+                let timeDifference = differenceInMinutes(new Date(), oldDate);
+                let timeSuffix = 'm';
+
+                // Then hours, if applicable
+                if (timeDifference > 60) {
+                    timeDifference = differenceInHours(new Date(), oldDate);
+                    timeSuffix = 'h';
+
+                    // Then days, if applicable
+                    if (timeDifference > 24) {
+                        timeDifference = differenceInDays(new Date(), oldDate);
+                        timeSuffix = 'd';
+                    }
+                }
+
+                statusElement.textContent = `Offline - ${timeDifference}${timeSuffix}`;
             }
         } else {
             statusElement.textContent = 'Online';

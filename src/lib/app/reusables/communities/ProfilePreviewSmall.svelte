@@ -17,6 +17,7 @@
 
     export let preDropdownCallback = () => {};
 
+    let latestOnline = profileData.lastOnline;
     let statusElement: HTMLHeadingElement;
     let statusListener: ({}: OnlineStatusUpdatedParams) => void;
 
@@ -37,10 +38,7 @@
             // Placeholder if lastOnline is not known, before loading minute difference
             statusElement.textContent = 'Offline';
 
-            if (profileData.lastOnline) {
-                // Placeholder
-                setFormattedMinutes(profileData.lastOnline);
-
+            if (latestOnline) {
                 // Fetch the latest lastOnline data
                 socket.emit(
                     'fetchProfileData',
@@ -52,7 +50,9 @@
             }
 
             function setFormattedMinutes(lastOnline: string): void {
-                const oldDate = new Date(lastOnline);
+                latestOnline = lastOnline;
+
+                const oldDate = new Date(latestOnline);
 
                 // First minutes
                 let timeDifference = differenceInMinutes(new Date(), oldDate);

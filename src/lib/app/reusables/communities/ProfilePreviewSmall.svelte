@@ -6,6 +6,11 @@
     import { dismissDropdown, showDropdown } from 'utilities/main';
     import { onDestroy, onMount } from 'svelte';
     import type { OnlineStatusUpdatedParams } from 'interfaces/account/onlineStatusUpdated';
+    import {
+        differenceInMinutes,
+        differenceInHours,
+        differenceInDays,
+    } from 'date-fns';
 
     export let profileData: FronvoAccount;
     export let dropdown: DropdownTypes = undefined;
@@ -27,7 +32,42 @@
     function updateStatus(state: boolean): void {
         statusElement.classList.add(state ? 'online' : 'offline');
         statusElement.classList.remove(state ? 'offline' : 'online');
-        statusElement.textContent = state ? 'Online' : 'Offline';
+
+        if (!state) {
+            // Placeholder if lastOnline is not known, before loading minute difference
+            statusElement.textContent = 'Offline';
+
+            if (profileData.lastOnline) {
+                const oldDate = new Date(profileData.lastOnline);
+
+                // First minutes
+                let timeDifference = differenceInMinutes(new Date(), oldDate);
+
+                // Then hours, if applicable
+                if (timeDifference > 60) {
+                    timeDifference = differenceInHours(new Date(), oldDate);
+
+                    // Then days, if applicable
+                    if (timeDifference > 24) {
+                        timeDifference = differenceInDays(new Date(), oldDate);
+                    }
+                }
+
+                // Fetch the latest lastOnline data
+                socket.emit(
+                    'fetchProfileData',
+                    { profileId: profileData.profileId },
+                    ({ profileData }) => {
+                        statusElement.textContent = `Offline - ${differenceInMinutes(
+                            new Date(),
+                            new Date(profileData.lastOnline)
+                        )}m`;
+                    }
+                );
+            }
+        } else {
+            statusElement.textContent = 'Online';
+        }
     }
 
     onMount(() => {

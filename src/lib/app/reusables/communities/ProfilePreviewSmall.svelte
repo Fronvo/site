@@ -58,6 +58,8 @@
                 let timeDifference = differenceInMinutes(new Date(), oldDate);
                 let timeSuffix = 'm';
 
+                if (timeDifference == 0) return;
+
                 // Then hours, if applicable
                 if (timeDifference > 60) {
                     timeDifference = differenceInHours(new Date(), oldDate);

@@ -96,7 +96,6 @@
             </h1>
 
             <h1 id="creation-date">
-                •
                 <Time
                     relative
                     format={'dddd HH:mm · MMMM D YYYY'}
@@ -193,9 +192,9 @@
     }
 
     .top-container #creation-date {
-        font-size: 1rem;
+        font-size: 0.9rem;
         margin: 0;
-        margin-left: 3px;
+        margin-left: 9px;
         margin-top: 6px;
         flex: 1;
         text-align: start;
@@ -240,12 +239,13 @@
 
     @media screen and (max-width: 850px) {
         .post-container {
-            width: 100vw;
+            width: 100%;
             overflow: hidden;
             padding-left: 0;
             padding-right: 0;
             margin-left: 0;
             margin-right: 0;
+            margin: auto;
         }
 
         .post-container #avatar {
@@ -255,9 +255,9 @@
         }
 
         .preview {
-            min-width: 100%;
-            max-width: 100%;
-            width: 100%;
+            min-width: 95%;
+            max-width: 95%;
+            width: 95%;
         }
 
         .info-container #username {
@@ -280,7 +280,7 @@
         }
 
         .post-container #creation-date {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
     }
 

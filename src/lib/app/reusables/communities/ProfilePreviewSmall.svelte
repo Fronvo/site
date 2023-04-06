@@ -110,7 +110,7 @@
         // Update every minute
         intervalId = setInterval(() => {
             updateStatus(profileData.online);
-        }, 100 * 60);
+        }, 1000 * 60);
     });
 
     onDestroy(() => {

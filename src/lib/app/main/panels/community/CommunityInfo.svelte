@@ -49,7 +49,7 @@
         display: flex;
         margin: auto;
         padding: 5px;
-        z-index: 0;
+        z-index: 1;
         background: var(--side_bg_color);
         border-bottom: 1px solid var(--accent_shadow_color);
         box-shadow: 0 0 5px var(--accent_shadow_color);

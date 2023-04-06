@@ -1,6 +1,7 @@
 <script lang="ts">
     import type { FronvoAccount } from 'interfaces/all';
     import ProfileActions from './ProfileActions.svelte';
+    import Private from '$lib/svgs/Private.svelte';
 
     export let ourData: FronvoAccount;
     export let data: FronvoAccount;
@@ -8,9 +9,15 @@
 
 <div class="identifier-container">
     <div class="info-container">
-        <h1 id="username">
-            {data.username}
-        </h1>
+        <div class="lock-container">
+            {#if data.isPrivate}
+                <Private />
+            {/if}
+
+            <h1 id="username">
+                {data.username}
+            </h1>
+        </div>
 
         <h1 id="identifier">
             @{data.profileId}
@@ -25,7 +32,7 @@
 <style>
     .identifier-container {
         display: flex;
-        align-items: start;
+        align-items: center;
         justify-content: flex-start;
         margin-bottom: 0;
     }
@@ -36,6 +43,11 @@
         align-items: start;
         justify-content: center;
         flex: 1;
+    }
+
+    .lock-container {
+        display: flex;
+        align-items: center;
     }
 
     #username {
@@ -64,7 +76,6 @@
     @media screen and (max-width: 850px) {
         #username {
             font-size: 1.5rem;
-            margin-left: 25px;
         }
 
         #identifier {

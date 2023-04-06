@@ -20,6 +20,7 @@
     let latestOnline = profileData.lastOnline;
     let statusElement: HTMLHeadingElement;
     let statusListener: ({}: OnlineStatusUpdatedParams) => void;
+    let intervalId: NodeJS.Timer;
 
     function callDropdown(): void {
         if ($dropdownVisible) {
@@ -30,13 +31,14 @@
         }
     }
 
-    function updateStatus(state: boolean): void {
+    function updateStatus(state: boolean, usePlaceholder?: boolean): void {
         statusElement.classList.add(state ? 'online' : 'offline');
         statusElement.classList.remove(state ? 'offline' : 'online');
 
         if (!state) {
-            // Placeholder if lastOnline is not known, before loading minute difference
-            statusElement.textContent = 'Offline';
+            if (usePlaceholder) {
+                statusElement.textContent = 'Offline';
+            }
 
             if (latestOnline) {
                 // Fetch the latest lastOnline data
@@ -47,6 +49,8 @@
                         setFormattedMinutes(profileData.lastOnline);
                     }
                 );
+            } else {
+                statusElement.textContent = 'Offline';
             }
 
             function setFormattedMinutes(lastOnline: string): void {
@@ -58,15 +62,19 @@
                 let timeDifference = differenceInMinutes(new Date(), oldDate);
                 let timeSuffix = 'm';
 
-                if (timeDifference == 0) return;
+                if (timeDifference == 0) {
+                    statusElement.textContent = `Offline - Just now`;
+
+                    return;
+                }
 
                 // Then hours, if applicable
-                if (timeDifference > 60) {
+                if (timeDifference >= 60) {
                     timeDifference = differenceInHours(new Date(), oldDate);
                     timeSuffix = 'h';
 
                     // Then days, if applicable
-                    if (timeDifference > 24) {
+                    if (timeDifference >= 24) {
                         timeDifference = differenceInDays(new Date(), oldDate);
                         timeSuffix = 'd';
                     }
@@ -84,7 +92,11 @@
             `status-${profileData.profileId}`
         ) as HTMLHeadingElement;
 
-        updateStatus(profileData.online);
+        statusElement.style.visibility = 'invisible';
+
+        updateStatus(profileData.online, true);
+
+        statusElement.style.visibility = 'visible';
 
         statusListener = ({ profileId, online }) => {
             // Only want to monitor our status
@@ -94,9 +106,15 @@
         };
 
         socket.on('onlineStatusUpdated', statusListener);
+
+        // Update every minute
+        intervalId = setInterval(() => {
+            updateStatus(profileData.online);
+        }, 100 * 60);
     });
 
     onDestroy(() => {
+        clearInterval(intervalId);
         socket.off('onlineStatusUpdated', statusListener);
     });
 </script>

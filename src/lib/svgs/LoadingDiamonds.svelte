@@ -19,7 +19,7 @@
         left: 0%;
         top: 0;
         border-radius: 2px;
-        background: var(--text_color);
+        background: var(--branding_color);
         transform: translateX(-50%) rotate(45deg) scale(0);
         animation: diamonds 1.5s linear infinite;
     }

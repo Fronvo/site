@@ -80,7 +80,7 @@
         -ms-user-select: none;
         user-select: none;
         font-size: 1.5rem;
-        border-bottom: 5px solid var(--text_color);
+        border-bottom: 5px solid var(--branding_color);
         padding: 10px;
     }
 

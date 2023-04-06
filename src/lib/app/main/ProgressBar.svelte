@@ -16,7 +16,7 @@
         background: linear-gradient(
             -45deg,
             var(--svg_stroke),
-            var(--text_color)
+            var(--branding_color)
         );
         box-shadow: 0 0 10px var(--svg_stroke);
         background-size: 5000%;

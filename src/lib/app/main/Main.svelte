@@ -7,6 +7,7 @@
     import { xmasParticleOptions, xmasMode } from 'stores/main';
     import ProgressBar from './ProgressBar.svelte';
     import CommunityMembers from './panels/community/CommunityMembers.svelte';
+    import { memberListVisible } from 'stores/community';
 
     let ParticlesComponent: any;
 
@@ -42,7 +43,7 @@
         <svelte:component this={panels[$currentPanelId]} />
     </div>
 
-    {#if $currentPanelId == PanelTypes.Community}
+    {#if $currentPanelId == PanelTypes.Community && $memberListVisible}
         <CommunityMembers />
     {/if}
 </div>

@@ -1,6 +1,9 @@
 import { writable, type Writable } from 'svelte/store';
 
 interface ThemingOptions {
+    // Fronvo branding color
+    branding_color: string;
+
     // Fronvo background color
     bg_color: string;
 
@@ -57,9 +60,11 @@ interface ThemingOptions {
 }
 
 export const defaultTheme: ThemingOptions = {
+    branding_color: 'rgb(175, 120, 255)',
+
     bg_color: 'rgb(30, 30, 30)',
 
-    text_color: 'rgb(175, 120, 255)',
+    text_color: 'rgb(225, 225, 225)',
 
     accent_bg_color: 'rgba(22, 22, 22, 50%)',
 
@@ -90,16 +95,18 @@ export const defaultTheme: ThemingOptions = {
 
     button_background: 'rgb(35, 35, 35)',
 
-    seperator_background: 'rgb(40, 40, 40)',
+    seperator_background: 'rgb(40, 40, 40, 50%)',
 
     side_bg_color: 'rgb(25, 25, 25)',
     side_svg_bg_color: 'rgb(35, 35, 35)',
 };
 
 export const whiteTheme: ThemingOptions = {
+    branding_color: 'rgb(130, 70, 255)',
+
     bg_color: 'rgb(250, 250, 250)',
 
-    text_color: 'rgb(130, 70, 255)',
+    text_color: 'rgb(60, 60, 60)',
 
     accent_bg_color: 'rgb(240, 240, 240, 50%)',
 
@@ -130,10 +137,10 @@ export const whiteTheme: ThemingOptions = {
 
     button_background: 'rgb(240, 240, 240)',
 
-    seperator_background: 'rgb(240, 240, 240)',
+    seperator_background: 'rgb(240, 240, 240, 25%)',
 
     side_bg_color: 'rgb(248, 248, 248)',
-    side_svg_bg_color: 'rgb(250, 250, 250)',
+    side_svg_bg_color: 'rgb(240, 240, 240)',
 };
 
 export const currentTheme: Writable<ThemingOptions> = writable(defaultTheme);

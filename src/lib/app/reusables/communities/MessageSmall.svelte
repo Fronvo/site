@@ -80,7 +80,7 @@
     .reply-container #reply-message {
         color: var(--text_color);
         margin: 0;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         overflow: hidden;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -111,7 +111,7 @@
         color: var(--profile_info_color);
         margin: 0;
         margin-left: 2px;
-        font-size: 1.3rem;
+        font-size: 1.2rem;
         white-space: pre-wrap;
         overflow: hidden;
         text-align: start;
@@ -124,11 +124,11 @@
         }
 
         .reply-container #reply-message {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         .message-container #content {
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
     }
 </style>

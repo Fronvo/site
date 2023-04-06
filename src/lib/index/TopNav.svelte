@@ -59,7 +59,7 @@
             rgb(102, 0, 255) 100%
         );
         color: white;
-        box-shadow: 0 0 2px var(--text_color);
+        box-shadow: 0 0 2px var(--branding_color);
     }
 
     .top-nav-container #try-1:hover {

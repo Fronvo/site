@@ -108,7 +108,6 @@
         </h1>
 
         <h1 id="creation-date">
-            •
             <!-- Updates every 15 seconds -->
             <Time
                 relative
@@ -184,9 +183,9 @@
     }
 
     .message-info-container #avatar {
-        width: 44px;
-        height: 44px;
-        border-radius: 5px;
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
         margin-right: 5px;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -200,7 +199,7 @@
     .message-info-container #username {
         color: var(--profile_info_color);
         margin: 0;
-        font-size: 1.45rem;
+        font-size: 1.3rem;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -215,9 +214,10 @@
     }
 
     .message-info-container #creation-date {
-        font-size: 1rem;
+        font-size: 0.9rem;
         margin: 0;
-        margin-left: 5px;
+        margin-left: 10px;
+        margin-top: 2px;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -225,7 +225,6 @@
         -ms-user-select: none;
         user-select: none;
         flex: 1;
-        text-align: start;
     }
 
     .message-info-container .menu-container {
@@ -243,7 +242,7 @@
     .reply-container #reply-message {
         color: var(--text_color);
         margin: 0;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         overflow: hidden;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -266,7 +265,7 @@
         color: var(--profile_info_color);
         margin: 0;
         margin-left: 2px;
-        font-size: 1.3rem;
+        font-size: 1.2rem;
         white-space: pre-wrap;
         overflow: hidden;
         text-align: start;
@@ -284,12 +283,12 @@
         }
 
         .message-container #avatar {
-            width: 36px;
-            height: 36px;
+            width: 34px;
+            height: 34px;
         }
 
         .message-info-container #username {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
 
         .message-info-container #username:hover {
@@ -297,15 +296,15 @@
         }
 
         .reply-container #reply-message {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         .message-container #content {
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
 
         .message-container #creation-date {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
         }
     }
 </style>

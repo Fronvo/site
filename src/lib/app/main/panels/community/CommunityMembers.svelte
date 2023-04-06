@@ -58,7 +58,7 @@
 <style>
     .members-container {
         position: sticky;
-        width: 20vw;
+        width: 17vw;
         min-width: 250px;
         height: 100vh;
         transition: 150ms background;
@@ -71,8 +71,8 @@
     }
 
     h1 {
-        font-size: 1.8rem;
-        padding: 15px;
+        font-size: 1.6rem;
+        padding: 20px;
         padding-bottom: 0;
         color: var(--profile_info_color);
         margin: 0;

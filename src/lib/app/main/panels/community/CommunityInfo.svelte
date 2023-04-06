@@ -1,21 +1,26 @@
 <script lang="ts">
-    import { communityData } from 'stores/community';
-    import { DropdownTypes, dropdownVisible } from 'stores/dropdowns';
+    import Bans from '$lib/svgs/Bans.svelte';
+    import Edit from '$lib/svgs/Edit.svelte';
+    import Leave from '$lib/svgs/Leave.svelte';
+    import Members from '$lib/svgs/Members.svelte';
+    import { communityData, memberListVisible } from 'stores/community';
     import { dataSaver } from 'stores/main';
-    import { dismissDropdown, showDropdown } from 'utilities/main';
+    import { ModalTypes } from 'stores/modals';
+    import { ourData } from 'stores/profile';
+    import { showModal } from 'utilities/main';
 
-    function showCommunityInfoDropdown(): void {
-        if ($dropdownVisible) {
-            dismissDropdown();
+    function toggleMembers() {
+        if (document.body.clientWidth < 850) {
+            showModal(ModalTypes.CommunityMembers);
         } else {
-            showDropdown(DropdownTypes.CommunityOptions);
+            $memberListVisible = !$memberListVisible;
         }
     }
 </script>
 
 {#if $communityData}
     <div class="info-container">
-        <div class="data-container" on:click={showCommunityInfoDropdown}>
+        <div class="data-container">
             <img
                 id="icon"
                 src={$communityData.icon && !$dataSaver
@@ -26,6 +31,14 @@
             />
             <h1 id="name">{$communityData?.name}</h1>
         </div>
+
+        {#if $communityData.ownerId == $ourData.profileId}
+            <Edit callback={() => showModal(ModalTypes.EditCommunity)} />
+            <Bans callback={() => showModal(ModalTypes.ShowBans)} />
+        {/if}
+
+        <Members callback={toggleMembers} />
+        <Leave callback={() => showModal(ModalTypes.LeaveCommunity)} />
     </div>
 {/if}
 
@@ -39,8 +52,11 @@
         z-index: 0;
         background: var(--side_bg_color);
         border-bottom: 1px solid var(--accent_shadow_color);
+        box-shadow: 0 0 5px var(--accent_shadow_color);
         transition: 150ms;
         width: 100%;
+        justify-content: center;
+        align-items: center;
     }
 
     .data-container {
@@ -49,29 +65,26 @@
         padding: 10px;
         transition: 150ms;
         border-radius: 10px;
-        cursor: pointer;
-    }
-
-    .data-container:hover {
-        background: var(--bg_color);
+        flex: 1;
     }
 
     #icon {
-        width: 48px;
-        height: 48px;
-        margin-right: 5px;
+        width: 44px;
+        height: 44px;
+        margin-right: 10px;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        border-radius: 5px;
+        border-radius: 20px;
     }
 
     #name {
         margin: 0;
-        font-size: 2rem;
+        font-size: 1.6rem;
+        letter-spacing: 0.5px;
         color: var(--profile_info_color);
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -97,7 +110,7 @@
         }
 
         #name {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
         }
     }
 </style>

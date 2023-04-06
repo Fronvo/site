@@ -137,13 +137,20 @@
         align-items: center;
         background: transparent;
         overflow: hidden;
-        padding: 12px;
-        padding-left: 20px;
         cursor: pointer;
+        padding-left: 5px;
+        padding-right: 20px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        margin: 10px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        border-radius: 10px;
+        width: max-content;
     }
 
     div:hover {
-        background: var(--bg_color);
+        background: var(--side_svg_bg_color);
     }
 
     div h1 {
@@ -163,7 +170,7 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        width: 48px;
+        width: 40px;
         border-radius: 10px;
         margin-right: 10px;
     }
@@ -179,18 +186,18 @@
         overflow: hidden;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
-        font-size: 1.5rem;
+        font-size: 1.3rem;
         color: var(--profile_info_color);
         width: 100%;
     }
 
     .bottom-container .status {
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         width: 100%;
     }
 
     .bottom-container .online {
-        color: rgb(0, 255, 0);
+        color: rgb(0, 232, 0);
     }
 
     .bottom-container .offline {

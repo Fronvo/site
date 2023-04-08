@@ -74,13 +74,16 @@
     }
 
     @media screen and (max-width: 850px) {
+        .lock-container {
+            margin-left: 25px;
+        }
+
         #username {
             font-size: 1.5rem;
         }
 
         #identifier {
             font-size: 1.3rem;
-            margin-left: 25px;
         }
     }
 </style>

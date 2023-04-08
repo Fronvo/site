@@ -108,7 +108,7 @@ export const whiteTheme: ThemingOptions = {
 
     text_color: 'rgb(60, 60, 60)',
 
-    accent_bg_color: 'rgb(240, 240, 240, 50%)',
+    accent_bg_color: 'rgb(230, 230, 230, 50%)',
 
     accent_shadow_color: 'rgb(230, 230, 230)',
 

@@ -62,13 +62,12 @@
 
     .send-container {
         width: 100%;
-        background: var(--side_bg_color);
+        background: var(--bg_color);
         position: sticky;
         padding-left: 15px;
         padding-right: 15px;
         padding-bottom: 25px;
         padding-top: 10px;
-        border-top: 1px solid var(--accent_shadow_color);
         right: 0;
         left: 0;
         bottom: 0;
@@ -88,14 +87,14 @@
         background: var(--accent_bg_color);
         font-size: 1.4rem;
         color: var(--profile_info_color);
-        border-radius: 5px;
-        min-height: 45px;
+        border-radius: 10px;
+        min-height: 40px;
         max-height: 400px;
         transition: none;
     }
 
     .reply-container {
-        background: var(--accent_bg_color);
+        border-top: 0 0 5px var(--accent_bg_color);
         display: flex;
         align-items: center;
         border-top-left-radius: 5px;
@@ -103,7 +102,7 @@
     }
 
     .reply-container #reply-name {
-        font-size: 1.4rem;
+        font-size: 1.2rem;
         margin: 0;
         padding: 5px;
         flex: 1;
@@ -119,14 +118,11 @@
             min-width: none;
             min-height: 100px;
             padding-bottom: 70px;
-            padding-left: 0;
-            padding-right: 0;
         }
 
         .send-container textarea {
             font-size: 1.1rem;
             min-height: 45px;
-            border-radius: 0;
         }
 
         .reply-container #reply-name {

@@ -14,15 +14,14 @@
     svg {
         width: 34px;
         height: 34px;
-        margin-left: 5px;
         cursor: default;
+        margin-left: 5px;
     }
 
     @media screen and (max-width: 850px) {
         svg {
             width: 30px;
             height: 30px;
-            margin-left: 20px;
         }
     }
 </style>

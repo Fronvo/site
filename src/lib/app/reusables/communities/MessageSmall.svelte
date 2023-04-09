@@ -2,6 +2,8 @@
     import DeleteChatOption from '$lib/svgs/DeleteChatOption.svelte';
     import Reply from '$lib/svgs/Reply.svelte';
     import type { CommunityMessage } from 'interfaces/all';
+    import { ourData } from 'stores/profile';
+    import Time from 'svelte-time/src/Time.svelte';
     import { fade } from 'svelte/transition';
 
     export let messageData: CommunityMessage;
@@ -10,18 +12,19 @@
     export let replyCallback = () => {};
     export let deleteCallback = () => {};
     export let animate = true;
-    export let highlight = false;
 </script>
 
 <div
     in:fade={{ duration: animate ? 250 : 0 }}
-    class={`message-container ${highlight ? 'highlight' : ''}`}
+    class={`message-container ${
+        messageData.ownerId == $ourData?.profileId ? 'own' : ''
+    }`}
 >
     {#if messageData.isReply}
         <div class="reply-container">
             {#if messageData.replyContent}
                 <h1 id="reply-message" class={`${messageData.messageId}-reply`}>
-                    > <span>{messageData.replyContent}</span>
+                    <span>{messageData.replyContent}</span>
                 </h1>
             {:else}
                 <h1 id="reply-name">
@@ -32,6 +35,10 @@
     {/if}
 
     <div class="message-info-container">
+        <h1 id="time">
+            <Time timestamp={messageData.creationDate} format={'HH:mm'} />
+        </h1>
+
         <h1 id="content" class={messageData.messageId}>
             {messageData.content}
         </h1>
@@ -54,33 +61,71 @@
     .message-container {
         display: flex;
         flex-direction: column;
+        width: 90%;
+        margin-bottom: 5px;
+    }
+
+    .own {
+        align-items: end;
         width: 100%;
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-
-    .message-container:hover {
-        background: var(--accent_bg_color);
-    }
-
-    .highlight {
-        background: var(--accent_bg_color);
-        border-left: 5px solid var(--accent_shadow_color);
+        margin-left: 0;
     }
 
     .message-info-container {
         display: flex;
-        align-items: center;
+        flex-direction: row;
     }
 
-    .message-info-container .menu-container {
+    .own .message-info-container {
+        flex-direction: row-reverse;
+    }
+
+    #time {
+        width: 45px;
+        margin-left: 5px;
+        margin-right: 5px;
+        font-size: 0.9rem;
         opacity: 0;
+        transition: 150ms;
+    }
+
+    .own #time {
+        margin-left: 5px;
+        margin-right: 0;
+        text-align: center;
+        align-self: center;
+    }
+
+    .message-container:hover #time {
+        opacity: 1;
+    }
+
+    .menu-container {
+        display: flex;
+        align-items: center;
+        cursor: default;
+        border-radius: 10px;
+        opacity: 0;
+    }
+
+    .message-container:hover .menu-container {
+        opacity: 1;
+    }
+
+    .reply-container {
+        background: var(--side_svg_bg_color);
+        padding: 5px;
+        border-radius: 10px;
+        margin-bottom: 5px;
+        min-width: min-content;
+        max-width: max-content;
+        margin-left: 55px;
     }
 
     .reply-container #reply-message {
         color: var(--text_color);
         margin: 0;
-        font-size: 1.1rem;
+        font-size: 1rem;
         overflow: hidden;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -89,33 +134,51 @@
         -ms-user-select: none;
         user-select: none;
         text-align: start;
+        max-width: 1000px;
+    }
+
+    .own .reply-container #reply-message {
+        text-align: end;
     }
 
     .reply-container #reply-message span {
         color: var(--profile_info_color);
     }
 
-    .message-container:hover .message-info-container .menu-container {
+    .message-container:hover .menu-container {
         opacity: 1;
     }
 
     .menu-container {
+        display: flex;
+        align-items: center;
         cursor: default;
-        border: 3px solid var(--button_background);
         border-radius: 10px;
-        background: var(--button_background);
-        transform: translateY(-25px);
+    }
+
+    .own .menu-container {
+        flex-direction: row-reverse;
+        margin-right: 5px;
     }
 
     .message-container #content {
         color: var(--profile_info_color);
         margin: 0;
-        margin-left: 2px;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         white-space: pre-wrap;
         overflow: hidden;
         text-align: start;
-        flex: 1;
+        background: var(--side_svg_bg_color);
+        padding: 10px;
+        border-radius: 10px;
+        border-top-left-radius: 0;
+    }
+
+    .own #content {
+        background: var(--branding_color);
+        color: white;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 0;
     }
 
     @media screen and (max-width: 850px) {
@@ -123,12 +186,16 @@
             margin-top: 60px;
         }
 
+        #time {
+            font-size: 0.7rem;
+        }
+
         .reply-container #reply-message {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .message-container #content {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
     }
 </style>

@@ -19,15 +19,20 @@
 
 <style>
     svg {
-        width: 34px;
-        height: 34px;
-        margin-right: 5px;
+        width: 36px;
+        height: 36px;
+        border-radius: 20px;
+        padding: 5px;
+    }
+
+    svg:hover {
+        background: var(--side_svg_bg_color);
     }
 
     @media screen and (max-width: 850px) {
         svg {
-            width: 30px;
-            height: 30px;
+            width: 32px;
+            height: 32px;
         }
     }
 </style>

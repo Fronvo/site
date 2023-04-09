@@ -60,7 +60,7 @@ interface ThemingOptions {
 }
 
 export const defaultTheme: ThemingOptions = {
-    branding_color: 'rgb(175, 120, 255)',
+    branding_color: 'rgb(150, 120, 255)',
 
     bg_color: 'rgb(30, 30, 30)',
 
@@ -95,14 +95,14 @@ export const defaultTheme: ThemingOptions = {
 
     button_background: 'rgb(35, 35, 35)',
 
-    seperator_background: 'rgb(40, 40, 40, 50%)',
+    seperator_background: 'rgb(40, 40, 40, 75%)',
 
     side_bg_color: 'rgb(25, 25, 25)',
     side_svg_bg_color: 'rgb(35, 35, 35)',
 };
 
 export const whiteTheme: ThemingOptions = {
-    branding_color: 'rgb(130, 70, 255)',
+    branding_color: 'rgb(190, 180, 255)',
 
     bg_color: 'rgb(250, 250, 250)',
 
@@ -137,7 +137,7 @@ export const whiteTheme: ThemingOptions = {
 
     button_background: 'rgb(240, 240, 240)',
 
-    seperator_background: 'rgb(240, 240, 240, 25%)',
+    seperator_background: 'rgb(240, 240, 240, 75%)',
 
     side_bg_color: 'rgb(248, 248, 248)',
     side_svg_bg_color: 'rgb(240, 240, 240)',

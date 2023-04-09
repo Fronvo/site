@@ -34,6 +34,8 @@
     import { PanelTypes } from 'stores/panels';
     import MessageSmall from '$lib/app/reusables/communities/MessageSmall.svelte';
     import InfiniteLoading from 'svelte-infinite-loading';
+    import Time from 'svelte-time/src/Time.svelte';
+    import { getDay, isSameDay } from 'date-fns';
 
     let unsubscribe: Unsubscriber;
 
@@ -406,7 +408,6 @@
                         deleteCallback={() =>
                             deleteMessage(message, profileData)}
                         animate={animationsEnabled}
-                        highlight={$replyingToId == message.messageId}
                     />
                 {:else}
                     <Message
@@ -421,8 +422,19 @@
                         deleteCallback={() =>
                             deleteMessage(message, profileData)}
                         animate={animationsEnabled}
-                        highlight={$replyingToId == message.messageId}
                     />
+                {/if}
+
+                <!-- Any author, different day (don't show if it's our day) -->
+                {#if !isSameDay(new Date(message.creationDate), new Date($messages[i - 1]?.message.creationDate)) && getDay(new Date()) != getDay(new Date(message.creationDate))}
+                    <h1 id="time-seperator">
+                        <hr />
+                        <Time
+                            timestamp={message.creationDate}
+                            format={'MMMM D, YYYY'}
+                        />
+                        <hr />
+                    </h1>
                 {/if}
             {/each}
 
@@ -460,9 +472,40 @@
         color: var(--profile_info_color);
     }
 
+    .chat-container #time-seperator {
+        display: flex;
+        margin: 0;
+        margin-top: 25px;
+        margin-bottom: 25px;
+        font-size: 1rem;
+        text-align: center;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    hr {
+        width: 40%;
+        height: 1px;
+        border: 1px solid var(--seperator_background);
+    }
+
     @media screen and (max-width: 700px) {
         .chat-container #chat-start {
             font-size: 1.2rem;
+        }
+
+        .chat-container #time-seperator {
+            font-size: 0.8rem;
+            text-align: center;
+        }
+
+        hr {
+            width: 35%;
+            margin-left: 10px;
         }
     }
 </style>

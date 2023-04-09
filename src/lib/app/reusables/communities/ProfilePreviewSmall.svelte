@@ -188,7 +188,8 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        width: 40px;
+        width: 48px;
+        height: 48px;
         border-radius: 10px;
         margin-right: 10px;
     }

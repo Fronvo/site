@@ -395,8 +395,8 @@
             </h1>
         {:else if $messages}
             {#each $messages as { message, profileData }, i}
-                <!-- Same author, less than 30 minutes ago -->
-                {#if $messages[i - 1]?.message.ownerId == profileData.profileId && getTimeDifferenceM(new Date(message.creationDate), new Date($messages[i - 1]?.message.creationDate)) < 30}
+                <!-- Same author, less than 15 minutes ago -->
+                {#if $messages[i - 1]?.message.ownerId == profileData.profileId && getTimeDifferenceM(new Date(message.creationDate), new Date($messages[i - 1]?.message.creationDate)) < 15}
                     <MessageSmall
                         messageData={message}
                         replyCondition={$chatRequestAccepted ||
@@ -425,13 +425,13 @@
                     />
                 {/if}
 
-                <!-- Any author, different day (don't show if it's our day) -->
-                {#if !isSameDay(new Date(message.creationDate), new Date($messages[i - 1]?.message.creationDate)) && getDay(new Date()) != getDay(new Date(message.creationDate))}
+                <!-- Any author, after 15 minutes -->
+                {#if getTimeDifferenceM(new Date(message.creationDate), new Date($messages[i - 1]?.message.creationDate)) >= 15}
                     <h1 id="time-seperator">
                         <hr />
                         <Time
                             timestamp={message.creationDate}
-                            format={'MMMM D, YYYY'}
+                            format={'MMMM D, HH:mm'}
                         />
                         <hr />
                     </h1>

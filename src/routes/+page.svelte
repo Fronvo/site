@@ -71,8 +71,7 @@
         width: 100%;
         height: fit-content;
         z-index: 1;
-        background: url(/images/fronvo-landing-scroll-bg.svg) no-repeat center
-            center scroll;
+        background-image: linear-gradient(95deg, black, green);
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;

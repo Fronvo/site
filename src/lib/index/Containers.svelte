@@ -5,25 +5,21 @@
 
     const fronvoContainer: FronvoContainer[] = [
         {
-            title: 'Truly private social media',
-            svg: 'free-convos',
+            title: 'Shitty social media',
         },
         {
-            title: 'Packed with features',
-            svg: 'many-features',
+            title: 'Packed with useless features',
         },
         {
-            title: 'Beat your addictions',
-            svg: 'beat-addictions',
+            title: 'Beat your meat to lolis',
         },
         {
-            title: "Focus on what's important",
-            svg: 'focus-important',
+            title: 'Focus on your life because this is a waste of time',
         },
     ];
 </script>
 
-{#each fronvoContainer as { title, svg }, index}
+{#each fronvoContainer as { title }, index}
     <div
         class={`container ${
             index == fronvoContainer.length - 1 ? 'last-container' : ''
@@ -41,12 +37,7 @@
             once
             animation={'slide-top 3s cubic-bezier(0.230, 1.000, 0.320, 1.000) both'}
         >
-            <img
-                class="svg"
-                src={`/svgs/containers/${svg}.svg`}
-                alt={`${svg} icon`}
-                draggable={false}
-            />
+            USELESS PLATFORM LMFAO PLEASE DONT LOGIN
         </Saos>
     </div>
 {/each}
@@ -70,37 +61,17 @@
         margin-right: 10px;
         margin-bottom: 10px;
         color: transparent;
-        background: linear-gradient(
-            90deg,
-            #ff81ea 10.42%,
-            #dbc2ff 54.68%,
-            #64c1ff 99.98%
-        );
+        background: linear-gradient(90deg, green, black);
         background-clip: text;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
     }
-
-    .container .svg {
-        border-radius: 15px;
-        transition: 400ms all;
-        border: 3px solid white;
-    }
-
-    .container .svg:hover {
-        transform: scale(1.1, 1.1);
-    }
-
     @media screen and (max-width: 850px) {
         .container #title {
             font-size: 2.5rem;
             margin-bottom: 10px;
             margin-right: 5px;
             margin-left: 5px;
-        }
-
-        .container .svg {
-            height: 180px;
         }
     }
 

@@ -13,6 +13,8 @@ const config = {
             tsconfigFile: true,
         },
     }),
+
+    onwarn: () => {},
 };
 
 export default config;

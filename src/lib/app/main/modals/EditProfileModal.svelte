@@ -1,45 +1,46 @@
 <script lang="ts">
-    import { dismissModal, setProgressBar } from 'utilities/main';
-    import { onMount } from 'svelte';
-    import Checkbox from 'svelte-checkbox';
-    import { writable, type Writable } from 'svelte/store';
     import ModalTemplate from '../ModalTemplate.svelte';
-    import { ourData, searchData } from 'stores/profile';
-    import { loadOurProfile, loadTargetProfile } from 'utilities/profile';
-    import { cachedAccountData, socket } from 'stores/main';
-    import { currentPanelId, PanelTypes } from 'stores/panels';
     import type { ModalData } from 'stores/modals';
-    import ErrorHeader from '$lib/app/reusables/all/ErrorHeader.svelte';
+    import ProfileAvatar from '$lib/app/reusables/profile/ProfileAvatar.svelte';
+    import ProfileBanner from '$lib/app/reusables/profile/ProfileBanner.svelte';
+    import ProfileIdentifier from '$lib/app/reusables/profile/ProfileIdentifier.svelte';
+    import ProfileBio from '$lib/app/reusables/profile/ProfileBio.svelte';
+    import {
+        dismissModal,
+        fetchUser,
+        getSavedAccounts,
+        setProgressBar,
+        updateCachedAccount,
+        updateSavedAccount,
+    } from 'utilities/main';
+    import { ourData } from 'stores/profile';
+    import { cachedAccountData, currentToken, socket } from 'stores/main';
+    import { writable } from 'svelte/store';
+    import { toast } from 'svelte-sonner';
 
-    let profileId = $ourData.profileId;
-    let username = $ourData.username;
-    let bio = $ourData.bio;
-    let avatar: Writable<string> = writable($ourData.avatar);
-    let banner: Writable<string> = writable($ourData.banner);
-    let isPrivate = $ourData.isPrivate;
+    const profileData = $ourData;
 
-    let canUpload = true;
-    let isUploading = false;
-    let errorMessage: string;
+    let profileId = writable(profileData.profileId);
+    let username = writable(profileData.username);
+    let bio = writable(profileData.bio);
+    let avatar = writable(profileData.avatar);
+    let banner = writable(profileData.banner);
 
     function uploadData(): void {
-        if (!canUpload || isUploading) return;
-
-        isUploading = true;
         setProgressBar(true);
 
         const updatedData = {};
 
-        if ($ourData.profileId != profileId) {
-            updatedData['profileId'] = profileId;
+        if ($ourData.profileId != $profileId) {
+            updatedData['profileId'] = $profileId;
         }
 
-        if ($ourData.username != username) {
-            updatedData['username'] = username;
+        if ($ourData.username != $username) {
+            updatedData['username'] = $username;
         }
 
-        if ($ourData.bio != bio) {
-            updatedData['bio'] = bio;
+        if ($ourData.bio != $bio) {
+            updatedData['bio'] = $bio;
         }
 
         if ($ourData.avatar != $avatar) {
@@ -47,178 +48,81 @@
         }
 
         if ($ourData.banner != $banner) {
-            updatedData['banner'] = $banner;
-        }
-
-        if ($ourData.isPrivate != isPrivate) {
-            updatedData['isPrivate'] = isPrivate;
+            updatedData['banner'] = banner;
         }
 
         socket.emit('updateProfileData', updatedData, async ({ err }) => {
             if (err) {
-                errorMessage = err.msg;
-                isUploading = false;
                 setProgressBar(false);
+                toast('Profile data updated');
 
                 return;
             }
 
-            await loadOurProfile($cachedAccountData);
+            $ourData = await fetchUser();
+            await updateCachedAccount(
+                $ourData.profileId,
+                $cachedAccountData,
+                $ourData
+            );
 
-            if (
-                $searchData?.profileId == $ourData.profileId &&
-                $currentPanelId == PanelTypes.Profile
-            ) {
-                await loadTargetProfile($ourData.profileId, $cachedAccountData);
+            // Update saved account, if any
+            if (getSavedAccounts().length > 0) {
+                updateSavedAccount($avatar, $username, $currentToken);
             }
 
             setProgressBar(false);
+            toast('Profile data updated');
 
             dismissModal();
         });
     }
 
-    function previewListener(
-        item: HTMLImageElement,
-        store: Writable<string>,
-        defaultSrc?: string
-    ): void {
-        item.onerror = () => {
-            canUpload = false;
-            item.src = `/svgs/profile/${
-                defaultSrc ? defaultSrc : 'avatar'
-            }.svg`;
-        };
-
-        store.subscribe((newStore) => {
-            if (newStore == undefined) return;
-
-            // Allow empty avatar url, reset it
-            if (newStore == '') {
-                // Reset state
-                canUpload = true;
-            }
-
-            // Check for avatar https, perform some client side validation on our own
-            else if (!newStore.match(/^(https:\/\/).+$/)) {
-                canUpload = false;
-            } else if (!canUpload) {
-                // Reset state
-                canUpload = true;
-            }
-        });
-    }
-
-    onMount(() => {
-        previewListener(
-            document.getElementById('avatar-preview') as HTMLImageElement,
-            avatar
-        );
-
-        previewListener(
-            document.getElementById('banner-preview') as HTMLImageElement,
-            banner,
-            'banner'
-        );
-    });
-
     const data: ModalData = {
-        title: 'Edit Profile',
-
+        title: '',
         actions: [
             {
-                title: 'Save',
+                title: 'Save changes',
                 callback: uploadData,
+                primary: true,
             },
             {
-                title: 'Discard',
+                title: 'Close',
                 callback: dismissModal,
             },
         ],
-
-        useSecondaryHr: true,
     };
 </script>
 
 <ModalTemplate {data}>
-    <ErrorHeader {errorMessage} />
+    <div class="profile-container">
+        <ProfileBanner editable={true} bind:banner={$banner} />
+        <ProfileAvatar editable={true} bind:avatar={$avatar} />
 
-    <h1 class="modal-header">Profile ID</h1>
-    <input class="modal-input" bind:value={profileId} maxlength={30} />
-
-    <h1 class="modal-header">Username</h1>
-    <input class="modal-input" bind:value={username} maxlength={30} />
-
-    <h1 class="modal-header">Bio</h1>
-    <textarea class="modal-input" bind:value={bio} maxlength={128} rows={4} />
-
-    <div class="modal-center">
-        <img
-            id="avatar-preview"
-            src={$avatar ? $avatar : '/svgs/profile/avatar.svg'}
-            alt="New avatar"
-            draggable={false}
-        />
-    </div>
-
-    <input class="modal-input" maxlength={512} bind:value={$avatar} />
-
-    <div>
-        <img
-            id="banner-preview"
-            src={$banner ? $banner : '/svgs/profile/banner.svg'}
-            alt="New banner"
-            draggable={false}
-        />
-    </div>
-
-    <input class="modal-input" maxlength={512} bind:value={$banner} />
-
-    <div class="modal-center">
-        <h1 class="modal-header">Private account</h1>
-        <Checkbox
-            bind:checked={isPrivate}
-            class="checkbox"
-            size="2.4rem"
-            primaryColor="var(--modal_checkbox_primary_color)"
-            secondaryColor="var(--modal_checkbox_secondary_color)"
-        />
+        <div class="secondary-container">
+            <ProfileIdentifier
+                editable={true}
+                bind:profileId={$profileId}
+                bind:username={$username}
+                status={$ourData.status}
+            />
+            <ProfileBio editable={true} bind:bio={$bio} />
+        </div>
     </div>
 </ModalTemplate>
 
 <style>
-    div {
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 5px;
+    .profile-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
     }
 
-    #avatar-preview {
-        width: 128px;
-        height: 128px;
-        border-radius: 10px;
-        margin-right: 10px;
-    }
-
-    #banner-preview {
-        width: 400px;
-        height: 230px;
-        border-radius: 5px;
-    }
-
-    textarea {
-        min-height: 150px;
-    }
-
-    @media screen and (max-width: 850px) {
-        #avatar-preview {
-            width: 64px;
-            height: 64px;
-        }
-
-        #banner-preview {
-            width: 250px;
-            height: 150px;
-        }
+    .secondary-container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        transform: translateY(-65px);
     }
 </style>

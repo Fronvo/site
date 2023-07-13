@@ -3,7 +3,6 @@
         currentModalId,
         modalAnimDuration,
         modals,
-        modalSide,
         modalVisible,
     } from 'stores/modals';
     import { fade } from 'svelte/transition';
@@ -11,7 +10,7 @@
 
 {#if $modalVisible}
     <div
-        class={`modal-container modal-side-${$modalSide}`}
+        class="modal-container"
         in:fade={{
             duration: modalAnimDuration * 0.5,
         }}
@@ -34,16 +33,8 @@
         align-items: center;
         justify-content: center;
         z-index: 3;
-        background: var(--modal_bg_color);
+        background: var(--modal_bg);
         overflow: hidden;
         overflow-x: hidden;
-    }
-
-    .modal-side-left {
-        justify-content: left;
-    }
-
-    .modal-side-right {
-        justify-content: right;
     }
 </style>

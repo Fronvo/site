@@ -1,17 +1,17 @@
+import type { Post } from 'interfaces/all';
 import { totalHomePosts, homePosts as posts } from 'stores/home';
 import { socket } from 'stores/main';
-import { getKey } from './global';
 
-export async function loadHomePosts(): Promise<void> {
+export async function loadHomePosts(): Promise<Post[]> {
     return new Promise((resolve) => {
         socket.emit(
-            getKey('token') ? 'fetchHomePosts' : 'fetchHomePostsGuest',
-            { from: '0', to: '15' },
+            'fetchHomePosts',
+            { from: '0', to: '20' },
             ({ homePosts, totalPosts }) => {
                 totalHomePosts.set(totalPosts);
                 posts.set(homePosts);
 
-                resolve();
+                resolve(homePosts);
             }
         );
     });

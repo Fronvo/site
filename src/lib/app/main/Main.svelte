@@ -1,68 +1,101 @@
 <script lang="ts">
-    import MainSideNav from '$lib/app/main/MainSideNav.svelte';
-    import Modal from '$lib/app/main/Modal.svelte';
-    import { currentPanelId, panels, PanelTypes } from 'stores/panels';
-    import { onMount } from 'svelte';
     import Dropdown from './Dropdown.svelte';
-    import { xmasParticleOptions, xmasMode } from 'stores/main';
     import ProgressBar from './ProgressBar.svelte';
-    import CommunityMembers from './panels/community/CommunityMembers.svelte';
-    import { memberListVisible } from 'stores/community';
+    import Modal from './Modal.svelte';
+    import { scale } from 'svelte/transition';
+    import AccountInfo from '../reusables/top/AccountInfo.svelte';
+    import RoomInfo from './rooms/RoomInfo.svelte';
+    import TopOptions from '../reusables/top/TopOptions.svelte';
+    import MessagesList from '../reusables/side/MessagesList.svelte';
+    import RoomChat from './rooms/RoomChat.svelte';
+    import RoomSend from './rooms/RoomSend.svelte';
+    import { currentRoomId } from 'stores/rooms';
+    import HomePosts from './home/HomePosts.svelte';
+    import { Toaster, toast } from 'svelte-sonner';
+    import { darkTheme, loginSucceeded } from 'stores/main';
+    import { onMount } from 'svelte';
+    import { ourData } from 'stores/profile';
 
-    let ParticlesComponent: any;
+    onMount(() => {
+        loginSucceeded.subscribe((state) => {
+            if (!state) return;
 
-    onMount(async () => {
-        const module = await import('svelte-particles');
-        ParticlesComponent = module.default;
+            toast(`Welcome back, ${$ourData.username}`);
+        });
     });
 </script>
 
-{#if $xmasMode}
-    <svelte:component
-        this={ParticlesComponent}
-        id="tsparticles"
-        options={$xmasParticleOptions}
-    />
-{/if}
-
-<!-- Loading indicator -->
 <ProgressBar />
 
-<!-- Smoothity-smooth modal auto-switching -->
-<Modal />
-
-<!-- Smoothity-smooth dropdown auto-switching -->
 <Dropdown />
 
-<div class="main-container">
-    <!-- Side nav which transforms into a Top nav on mobile -->
-    <MainSideNav />
+<Modal />
 
+<Toaster
+    theme={$darkTheme ? 'dark' : 'light'}
+    duration={2500}
+    richColors
+    visibleToasts={5}
+    toastOptions={{
+        style: 'background: var(--message); border-color: var(--secondary); border-radius: 10px; font-family: Manrope; font-size: 0.925rem;',
+        class: 'fronvo-toast',
+    }}
+    offset={'25px'}
+/>
+
+<div
+    class="main-container"
+    in:scale={{ start: 0.975, opacity: 0, duration: 750 }}
+>
     <div id="content">
-        <!-- Reactive panel switching -->
-        <svelte:component this={panels[$currentPanelId]} />
-    </div>
+        <div class="top-container">
+            <AccountInfo />
+            <RoomInfo />
+            <TopOptions />
+        </div>
 
-    {#if $currentPanelId == PanelTypes.Community && $memberListVisible}
-        <CommunityMembers />
-    {/if}
+        <div>
+            <div class="second-container">
+                <div>
+                    <MessagesList />
+                </div>
+
+                <div class="third-container">
+                    {#if $currentRoomId}
+                        <RoomChat />
+                        <RoomSend />
+                    {:else}
+                        <HomePosts />
+                    {/if}
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <style>
     .main-container {
         display: flex;
-        flex-direction: row;
-        justify-content: start;
+        flex-direction: column;
+        justify-content: center;
+        min-width: 955px;
     }
 
-    #content {
+    .top-container {
+        display: flex;
+        height: 0px;
+    }
+
+    .second-container {
+        height: 100vh;
         width: 100%;
-        justify-content: start;
+        display: flex;
+        flex-direction: row;
     }
 
-    @media screen and (max-width: 850px) {
-        .main-container {
-            flex-direction: column-reverse;
-        }
+    .third-container {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
     }
 </style>

@@ -6,22 +6,22 @@
 
 <style>
     span {
-        width: 128px;
-        height: calc(128px / 4);
+        width: 160px;
+        height: calc(25px);
         position: relative;
         display: block;
     }
 
     div {
-        width: calc(128px / 4);
-        height: calc(128px / 4);
+        width: calc(160px / 4);
+        height: calc(160px / 4);
         position: absolute;
         left: 0%;
-        top: 0;
-        border-radius: 2px;
-        background: var(--branding_color);
-        transform: translateX(-50%) rotate(45deg) scale(0);
+        border-radius: 10px;
+        background: var(--branding);
+        transform: translateX(-120%) rotate(45deg) scale(0);
         animation: diamonds 1.5s linear infinite;
+        box-shadow: 0 0 10px var(--branding);
     }
 
     div:nth-child(1) {
@@ -37,13 +37,14 @@
     }
 
     @keyframes diamonds {
-        50% {
-            left: 50%;
-            transform: translateX(-50%) rotate(45deg) scale(1);
+        25% {
+            left: 25%;
+            transform: translateX(-100%) rotate(45deg) scale(1);
         }
+
         100% {
-            left: 100%;
-            transform: translateX(-50%) rotate(45deg) scale(0);
+            left: 110%;
+            transform: translateX(-75%) rotate(45deg) scale(0);
         }
     }
 </style>

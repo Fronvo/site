@@ -1,88 +1,75 @@
-import CommunityMembers from '$lib/app/main/modals/CommunityMembers.svelte';
-import CreateCommunityModal from '$lib/app/main/modals/CreateCommunityModal.svelte';
-import CreatePostModal from '$lib/app/main/modals/CreatePostModal.svelte';
-import DeletePostModal from '$lib/app/main/modals/DeletePostModal.svelte';
-import EditCommunityModal from '$lib/app/main/modals/EditCommunityModal.svelte';
 import EditProfileModal from '$lib/app/main/modals/EditProfileModal.svelte';
-import SearchModal from '$lib/app/main/modals/SearchModal.svelte';
-import FollowInfoModal from '$lib/app/main/modals/FollowInfoModal.svelte';
-import JoinCommunityModal from '$lib/app/main/modals/JoinCommunityModal.svelte';
-import JoinFronvoModal from '$lib/app/main/modals/JoinFronvoModal.svelte';
-import LeaveCommunityModal from '$lib/app/main/modals/LeaveCommunityModal.svelte';
-import PostModal from '$lib/app/main/modals/PostModal.svelte';
-import ShowBansModal from '$lib/app/main/modals/ShowBansModal.svelte';
 import DeleteMessageModal from '$lib/app/main/modals/DeleteMessageModal.svelte';
 
-import type {
-    AccountPost,
-    CommunityMessage,
-    FronvoAccount,
-    HomePost,
-} from 'interfaces/all';
+import type { RoomMessage, FronvoAccount } from 'interfaces/all';
 import { writable, type Writable } from 'svelte/store';
+import CreateRoomModal from '$lib/app/main/modals/CreateRoomModal.svelte';
+import LeaveRoomModal from '$lib/app/main/modals/LeaveRoomModal.svelte';
+import ProfileModal from '$lib/app/main/modals/ProfileModal.svelte';
+import LogoutModal from '$lib/app/main/modals/LogoutModal.svelte';
+import StatusModal from '$lib/app/main/modals/StatusModal.svelte';
+import SwitchAccountsModal from '$lib/app/main/modals/SwitchAccountsModal.svelte';
+import AddAccountModal from '$lib/app/main/modals/AddAccountModal.svelte';
+import AddFriendModal from '$lib/app/main/modals/AddFriendModal.svelte';
+import MaxRoomsModal from '$lib/app/main/modals/MaxRoomsModal.svelte';
+import RemoveFriendModal from '$lib/app/main/modals/RemoveFriendModal.svelte';
+import AddMembersModal from '$lib/app/main/modals/AddMembersModal.svelte';
+import ImageModal from '$lib/app/main/modals/ImageModal.svelte';
+import CloseDmModal from '$lib/app/main/modals/CloseDMModal.svelte';
+import RemoveMemberModal from '$lib/app/main/modals/RemoveMemberModal.svelte';
 
 /****************************** Modals ******************************/
 export const modals = [
-    FollowInfoModal,
+    ProfileModal,
     EditProfileModal,
-    CreatePostModal,
-    PostModal,
-    SearchModal,
-    CreateCommunityModal,
-    JoinCommunityModal,
-    LeaveCommunityModal,
-    CommunityMembers,
-    EditCommunityModal,
+    CreateRoomModal,
+    LeaveRoomModal,
     DeleteMessageModal,
-    DeletePostModal,
-    JoinFronvoModal,
-    ShowBansModal,
+    LogoutModal,
+    StatusModal,
+    SwitchAccountsModal,
+    AddAccountModal,
+    AddFriendModal,
+    MaxRoomsModal,
+    RemoveFriendModal,
+    AddMembersModal,
+    ImageModal,
+    CloseDmModal,
+    RemoveMemberModal,
 ];
 /****************************** Modals ******************************/
 
 /****************************** Modal Exports ******************************/
 export enum ModalTypes {
-    FollowInfo,
+    Profile,
     EditProfile,
-    CreatePost,
-    ViewPost,
-    Search,
-    CreateCommunity,
-    JoinCommunity,
-    LeaveCommunity,
-    CommunityMembers,
-    EditCommunity,
+    CreateRoom,
+    LeaveRoom,
     DeleteMessage,
-    DeletePost,
-    JoinFronvo,
-    ShowBans,
+    Logout,
+    Status,
+    SwitchAccounts,
+    AddAccount,
+    AddFriend,
+    MaxRooms,
+    RemoveFriend,
+    AddMembers,
+    Image,
+    CloseDM,
+    RemoveMember,
 }
 
 export interface ModalActions {
     title: string;
     callback: () => void;
     danger?: boolean;
-}
-
-export type ModalSide = 'left' | 'right';
-
-export interface SideModalOptions {
-    side: 'left' | 'right';
+    primary?: boolean;
 }
 
 export interface ModalData {
-    titlePreSpan?: any;
-    titleIcon?: string;
-    titleDropdown?: any;
-    titleDropdownCondition?: () => boolean;
-    titleListener?: () => void;
-    titleListenerCondition?: () => boolean;
-    title: string;
+    title?: string;
     actions: ModalActions[];
-    sideModal?: SideModalOptions;
-    useInput?: boolean;
-    inputMaxLength?: number;
-    useSecondaryHr?: boolean;
+    showCloseOnly?: boolean;
 }
 /****************************** Modal Exports ******************************/
 
@@ -90,22 +77,17 @@ export interface ModalData {
 export const currentModalId = writable(-1);
 export const modalVisible = writable(false);
 export const modalAnimDuration = 300;
-export const modalSide: Writable<ModalSide> = writable();
-export const modalInput = writable('');
 /****************************** Modal settings ******************************/
 
-/****************************** FollowInfoModal ******************************/
-export const followModalInfo: Writable<string[]> = writable([]);
-export const followModalForFollowing = writable(false);
-/****************************** FollowInfoModal ******************************/
-
-/****************************** PostModal ******************************/
-export const postModalIndex = writable(-1);
-export const postModalInfo: Writable<AccountPost | HomePost> = writable();
-export const postModalForHome = writable(false);
-/****************************** PostModal ******************************/
+/****************************** ProfileModal ******************************/
+export const targetProfileModal: Writable<FronvoAccount> = writable();
+/****************************** ProfileModal ******************************/
 
 /****************************** DeleteMessageModal ******************************/
-export const targetMessageModal: Writable<CommunityMessage> = writable();
+export const targetMessageModal: Writable<RoomMessage> = writable();
 export const targetMessageModalProfile: Writable<FronvoAccount> = writable();
 /****************************** DeleteMessageModal ******************************/
+
+/****************************** ImageModal ******************************/
+export const targetImageModal: Writable<string> = writable();
+/****************************** ImageModal ******************************/

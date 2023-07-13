@@ -1,32 +1,37 @@
 <script lang="ts">
-    import type { FronvoAccount } from 'interfaces/all';
-    import ProfileActions from './ProfileActions.svelte';
-    import Private from '$lib/svgs/Private.svelte';
-
-    export let ourData: FronvoAccount;
-    export let data: FronvoAccount;
+    export let profileId: string;
+    export let username: string;
+    export let status: string;
+    export let editable = false;
+    export let mini = false;
+    export let preview = false;
 </script>
 
-<div class="identifier-container">
+<div
+    class={`identifier-container ${mini ? 'mini' : ''} ${
+        preview ? 'preview' : ''
+    } ${editable ? 'editable' : ''}`}
+>
     <div class="info-container">
         <div class="lock-container">
-            {#if data.isPrivate}
-                <Private />
+            {#if !editable}
+                <h1 id="username">
+                    {username}
+                </h1>
+            {:else}
+                <input maxlength={30} bind:value={username} />
             {/if}
-
-            <h1 id="username">
-                {data.username}
-            </h1>
         </div>
 
-        <h1 id="identifier">
-            @{data.profileId}
-        </h1>
+        <div class="secondary-container">
+            <h1 id="identifier">
+                @{profileId}
+            </h1>
+        </div>
+        {#if status}
+            <h1 id="status">{status}</h1>
+        {/if}
     </div>
-
-    {#if !data.isSelf}
-        <ProfileActions {data} {ourData} />
-    {/if}
 </div>
 
 <style>
@@ -34,7 +39,16 @@
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        margin-bottom: 0;
+        padding-bottom: 10px;
+        margin-left: 20px;
+    }
+
+    .editable {
+        transform: translateY(20px);
+    }
+
+    .mini {
+        margin-left: 10px;
     }
 
     .info-container {
@@ -51,19 +65,28 @@
     }
 
     #username {
-        font-size: 2.3rem;
+        font-size: 1.5rem;
         margin: 0;
         margin-right: 10px;
         margin-left: 10px;
-        color: var(--profile_info_color);
+        color: var(--text);
         display: -webkit-box;
         overflow: hidden;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
+    }
+
+    .mini #username {
+        font-size: 1.2rem;
+    }
+
+    .secondary-container {
+        display: flex;
+        align-items: center;
     }
 
     #identifier {
-        font-size: 1.7rem;
+        font-size: 1.05rem;
         margin: 0;
         margin-right: 10px;
         margin-left: 10px;
@@ -73,18 +96,38 @@
         -webkit-box-orient: vertical;
     }
 
-    @media screen and (max-width: 850px) {
-        .lock-container {
-            margin-left: 20px;
-        }
+    .mini #identifier {
+        font-size: 0.9rem;
+    }
 
-        #username {
-            font-size: 1.5rem;
-        }
+    #status {
+        margin: 0;
+        font-size: 0.9rem;
+        margin-top: 10px;
+        margin-left: 12px;
+        margin-right: 10px;
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        color: var(--branding);
+    }
 
-        #identifier {
-            font-size: 1.3rem;
-            margin-left: 30px;
-        }
+    input {
+        background: var(--primary);
+        border: 2px solid var(--primary);
+        transition: 150ms border;
+        font-size: 1.3rem;
+        margin: 0;
+        margin-right: 10px;
+        margin-left: 10px;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        color: var(--text);
+        height: 40px;
+    }
+
+    input:focus {
+        border: 2px solid var(--branding);
     }
 </style>

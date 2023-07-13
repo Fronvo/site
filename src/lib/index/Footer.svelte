@@ -1,57 +1,55 @@
 <script lang="ts">
-    import { fade } from 'svelte/transition';
+    import Github from '$lib/svgs/Github.svelte';
 </script>
 
-<div class="footer" in:fade={{ duration: 500 }}>
-    <div class="content">
-        <h1>Fronvo</h1>
+<div class="footer">
+    <h1>Fronvo</h1>
 
-        <img
-            src="/svgs/other/github.svg"
-            draggable={false}
-            alt="Github"
-            on:click={() => (location.href = 'https://github.com/fronvo/site')}
-        />
-    </div>
+    <Github />
 </div>
 
 <style>
     .footer {
-        background: rgba(255, 255, 255, 5%);
-        border-top-left-radius: 10px;
+        min-width: 800px;
+        max-width: 50%;
+        margin: auto;
+        position: fixed;
+        bottom: 0;
+        padding: 15px;
+        background: var(--i_primary);
+        box-shadow: 0 0 10px var(--i_shadow);
         border-top-right-radius: 10px;
-        padding: 10px;
+        border-top-left-radius: 10px;
+        right: 0;
+        left: 0;
         display: flex;
-        flex-direction: column;
-        margin-right: 25px;
-        margin-left: 25px;
-    }
-
-    .footer .content {
-        display: flex;
-        justify-content: center;
         align-items: center;
+        justify-content: center;
     }
 
-    .footer .content h1 {
-        color: white;
-        font-size: 3.5rem;
+    h1 {
+        color: var(--text);
+        font-size: 1.7rem;
         padding-right: 10px;
         margin: 0;
-        font-weight: 900;
-    }
-
-    .footer .content img {
-        cursor: pointer;
     }
 
     @media screen and (max-width: 850px) {
-        .footer .content h1 {
-            font-size: 2rem;
+        .footer {
+            min-width: initial;
+            max-width: initial;
+            width: 100%;
+            border-radius: 0;
         }
 
-        .footer .content img {
-            cursor: default;
+        h1 {
+            font-size: 1.3rem;
+        }
+    }
+
+    @media screen and (max-width: 600px) {
+        h1 {
+            font-size: 1.2rem;
         }
     }
 </style>

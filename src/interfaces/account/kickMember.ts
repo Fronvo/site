@@ -5,6 +5,7 @@
 import type { FronvoError } from 'interfaces/all';
 
 export interface KickMemberParams {
+    roomId: string;
     profileId: string;
 }
 

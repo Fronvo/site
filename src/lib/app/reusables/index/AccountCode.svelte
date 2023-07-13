@@ -6,16 +6,17 @@
     export let valueEntered: () => void;
 </script>
 
+<!-- Accessible from mobile in the /reset route, keep responsive -->
 <SvelteSegmentedInput
     bind:value
     on:valueEntered={valueEntered}
     {length}
     style={{
-        fontSize: document.body.clientWidth > 850 ? '2rem' : '1.5rem',
+        fontSize: '1.4rem',
         borderRadius: '0px',
         borderWidth: '3px',
         borderColorActive: 'rgb(255, 255, 255)',
-        textColor: 'var(--profile_info_color)',
+        textColor: 'var(--text)',
         inputWidth: '100%',
         padding: '10px 10px 10px 10px',
     }}

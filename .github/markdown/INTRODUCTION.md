@@ -18,8 +18,6 @@ How, you ask?
 
 -   Communities. Gather all your friends in one and start chatting!
 
--   Posts. Want to give an update to your followers? Post it on your profile and they will see it on their Home page.
-
 -   Ambient mode. Bring your profile to life with a custom banner (and illuminate it!)
 
 -   Finding the app theme, let's say, a little boring..? Make your own or use shared ones from the Theme Marketplace. (SOON)

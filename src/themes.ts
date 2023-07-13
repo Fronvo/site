@@ -1,146 +1,133 @@
 import { writable, type Writable } from 'svelte/store';
 
 interface ThemingOptions {
-    // Fronvo branding color
-    branding_color: string;
+    // Index pages
+    i_primary: string;
+    i_shadow: string;
 
-    // Fronvo background color
-    bg_color: string;
+    // Material-like colors
+    primary: string;
+    secondary: string;
 
-    // Header text color (accent)
-    text_color: string;
+    // Branding color
+    branding: string;
+    branding_darken: string;
+    branding_trans: string;
 
-    // SideNav background color (accent 2)
-    accent_bg_color: string;
+    // Background color
+    bg: string;
+    bg_trans: string;
 
-    // SideNav shadow color (accent 2.2)
-    accent_shadow_color: string;
+    // Text color
+    text: string;
+    text_gray: string;
 
-    // SVG strokes
-    svg_stroke: string;
+    // Button backgrounds
+    button: string;
 
-    // Modal background color
-    modal_bg_color: string;
+    // Not our messages
+    message: string;
+    message_shadow: string;
 
-    // Modal content background color
-    modal_content_bg_color: string;
+    // Posts
+    post: string;
 
-    // Modal content shadow bg color
-    modal_content_shadow_bg_color: string;
+    // Modals
+    modal_bg: string;
 
-    // Modal input background color
-    modal_input_bg_color: string;
+    modal_content_bg: string;
+    modal_content_shadow_bg: string;
 
-    // Modal checkbox primary color
-    modal_checkbox_primary_color: string;
+    modal_input_bg: string;
 
-    // Modal checkbox secondary color
-    modal_checkbox_secondary_color: string;
+    modal_checkbox_primary: string;
+    modal_checkbox_secondary: string;
 
-    // Highlighted profile info color
-    profile_info_color: string;
-
-    // Target sizes
     modal_header_size: string;
-    modal_header_size_850: string;
     modal_input_size: string;
-    modal_input_size_850: string;
-    modal_button_size: string;
-    modal_button_size_850: string;
-
-    // Buttons
-    button_background: string;
-
-    // Seperators
-    seperator_background: string;
-
-    // MainSideNav
-    side_bg_color: string;
-    side_svg_bg_color: string;
 }
 
+// TODO: ZORIN:     branding: 'rgb(0, 160, 255)',
+// branding_darken: 'rgb(0, 140, 255)',
+
 export const defaultTheme: ThemingOptions = {
-    branding_color: 'rgb(150, 120, 255)',
+    i_primary: 'rgb(27, 27, 27)',
+    i_shadow: 'rgb(15, 15, 15)',
 
-    bg_color: 'rgb(30, 30, 30)',
+    primary: 'rgb(45, 45, 45)',
+    secondary: 'rgb(60, 60, 60)',
 
-    text_color: 'rgb(225, 225, 225)',
+    branding: 'rgb(90, 150, 255)',
+    branding_darken: 'rgb(90, 130, 255)',
+    branding_trans: 'rgb(90, 150, 255, 10%)',
 
-    accent_bg_color: 'rgba(22, 22, 22, 50%)',
+    bg: 'rgb(30, 30, 30)',
+    bg_trans: 'rgb(30, 30, 30, 75%)',
 
-    accent_shadow_color: 'rgb(15, 15, 15)',
+    text: 'rgb(220, 220, 220)',
+    text_gray: 'rgb(180, 180, 180)',
 
-    svg_stroke: 'rgb(130, 64, 255)',
+    button: 'rgb(35, 35, 35)',
 
-    modal_bg_color: 'rgba(12, 12, 12, 75%)',
+    message: 'rgb(40, 40, 40)',
+    message_shadow: 'rgb(15, 15, 15)',
 
-    modal_content_bg_color: 'rgb(20, 20, 20)',
+    post: 'rgb(60, 60, 60, 15%)',
 
-    modal_content_shadow_bg_color: 'rgb(10, 10, 10)',
+    // Modals
+    modal_bg: 'rgba(8, 8, 8, 75%)',
 
-    modal_input_bg_color: 'rgba(35, 35, 35, 0.5)',
+    modal_content_bg: 'rgb(20, 20, 20)',
 
-    modal_checkbox_primary_color: 'white',
+    modal_content_shadow_bg: 'rgb(10, 10, 10)',
 
-    modal_checkbox_secondary_color: 'rgb(200, 200, 200)',
+    modal_input_bg: 'rgba(35, 35, 35, 0.5)',
 
-    profile_info_color: 'white',
+    modal_checkbox_primary: 'white',
 
-    modal_header_size: '1.5rem',
-    modal_header_size_850: '1.1rem',
-    modal_input_size: '1.4rem',
-    modal_input_size_850: '1.1rem',
-    modal_button_size: '1.4rem',
-    modal_button_size_850: '1rem',
+    modal_checkbox_secondary: 'rgb(200, 200, 200)',
 
-    button_background: 'rgb(35, 35, 35)',
-
-    seperator_background: 'rgb(40, 40, 40, 75%)',
-
-    side_bg_color: 'rgb(25, 25, 25)',
-    side_svg_bg_color: 'rgb(35, 35, 35)',
+    modal_header_size: '1.3rem',
+    modal_input_size: '1.3rem',
 };
 
 export const whiteTheme: ThemingOptions = {
-    branding_color: 'rgb(190, 180, 255)',
+    i_primary: 'rgb(245, 245, 245)',
+    i_shadow: 'rgb(210, 210, 210)',
 
-    bg_color: 'rgb(250, 250, 250)',
+    primary: 'rgb(235, 235, 235)',
+    secondary: 'rgb(225, 225, 225)',
 
-    text_color: 'rgb(60, 60, 60)',
+    branding: 'rgb(0, 130, 255)',
+    branding_darken: 'rgb(0, 110, 255)',
+    branding_trans: 'rgb(0, 130, 255, 10%)',
 
-    accent_bg_color: 'rgb(230, 230, 230, 50%)',
+    bg: 'rgb(250, 250, 250)',
+    bg_trans: 'rgb(250, 250, 250, 75%)',
 
-    accent_shadow_color: 'rgb(230, 230, 230)',
+    text: 'rgb(40, 40, 40)',
+    text_gray: 'rgb(100, 100, 100)',
 
-    svg_stroke: 'rgb(130, 64, 255)',
+    button: 'rgb(240, 240, 240)',
 
-    modal_bg_color: 'rgba(230, 230, 230, 75%)',
+    message: 'rgb(248, 248, 248)',
+    message_shadow: 'rgb(190, 190, 190)',
 
-    modal_content_bg_color: 'rgb(250, 250, 250)',
+    post: 'rgb(225, 225, 225, 20%)',
 
-    modal_content_shadow_bg_color: 'rgb(210, 210, 210)',
+    // Modals
+    modal_bg: 'rgba(100, 100, 100, 75%)',
 
-    modal_input_bg_color: 'rgb(240, 240, 240)',
+    modal_content_bg: 'rgb(250, 250, 250)',
+    modal_content_shadow_bg: 'rgb(210, 210, 210)',
 
-    modal_checkbox_primary_color: 'var(--profile_info_color)',
+    modal_input_bg: 'rgb(240, 240, 240)',
 
-    modal_checkbox_secondary_color: 'rgb(90, 90, 90)',
+    modal_checkbox_primary: 'var(--text)',
+    modal_checkbox_secondary: 'rgb(90, 90, 90)',
 
-    profile_info_color: 'rgb(40, 40, 40)',
-
-    modal_header_size: '1.5rem',
-    modal_header_size_850: '1.1rem',
-    modal_input_size: '1.4rem',
-    modal_input_size_850: '1.1rem',
-    modal_button_size: '1.4rem',
-    modal_button_size_850: '1rem',
-
-    button_background: 'rgb(240, 240, 240)',
-
-    seperator_background: 'rgb(240, 240, 240, 75%)',
-
-    side_bg_color: 'rgb(248, 248, 248)',
-    side_svg_bg_color: 'rgb(240, 240, 240)',
+    modal_header_size: '1.3rem',
+    modal_input_size: '1.3rem',
 };
 
 export const currentTheme: Writable<ThemingOptions> = writable(defaultTheme);

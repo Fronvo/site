@@ -6,18 +6,19 @@
 
 html {
     /* Save the user's eyes before onMount */
-    overflow-y: scroll;
+    overflow: hidden;
     height: 100vh;
 }
 
 body {
     margin: 0;
+    padding: 0;
     height: 100vh;
+    background: rgb(30, 30, 30);
 }
 
 svg {
     cursor: pointer;
-    transition: 150ms;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -28,27 +29,7 @@ svg {
     height: 36px;
 }
 
-a:focus {
-    outline-color: white;
-}
-
-h1 {
-    font-family: Nunito;
-    font-weight: 300;
-    color: var(--text_color);
-}
-
-button {
-    border: none;
-    border-radius: 5px;
-    color: var(--profile_info_color);
-    background: var(--button_background);
-    box-shadow: 0 0 5px var(--accent_shadow_color);
-    padding: 10px;
-    font-family: Nunito;
-    font-weight: 500;
-    cursor: pointer;
-    transition: 150ms all;
+img {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
     -khtml-user-select: none;
@@ -57,31 +38,51 @@ button {
     user-select: none;
 }
 
-button:hover {
-    color: var(--profile_info_color);
-    background: var(--bg_color);
+a:focus {
+    outline-color: white;
 }
 
-button:active {
-    transition: 50ms;
-    transform: scale(0.98);
+h1 {
+    font-family: 'Manrope';
+    font-weight: 300;
+    color: var(--text);
+}
+
+button {
+    border: none;
+    border-radius: 5px;
+    color: var(--text);
+    box-shadow: 0 0 5px var(--secondary);
+    background: var(--button);
+    padding: 10px;
+    font-family: 'Manrope';
+    font-weight: 500;
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    transition: 150ms opacity, transform 150ms;
+    outline: none;
+}
+
+button:hover {
+    color: var(--text);
+    background: var(--bg);
 }
 
 button:disabled {
     color: rgba(255, 255, 255, 80%);
 }
 
-button:focus {
-    outline-offset: 3px;
-}
-
 input,
 textarea {
     border: none;
     border-radius: 5px;
-    font-family: Nunito;
-    transition: 0.5s;
-    color: var(--text_color);
+    font-family: 'Manrope';
+    color: var(--text);
     padding: 5px;
 }
 
@@ -100,35 +101,24 @@ textarea:focus {
 }
 
 hr {
-    border: 1px solid var(--profile_info_color);
-}
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus input:-webkit-autofill::first-line,
-textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover,
-textarea:-webkit-autofill:focus textarea:-webkit-autofill::first-line,
-select:-webkit-autofill,
-select:-webkit-autofill:hover,
-select:-webkit-autofill:focus,
-select:-webkit-autofill::first-line {
-    -webkit-text-fill-color: var(--bg_color);
+    border: 1px solid var(--text);
+    transition: none;
 }
 
 ::-webkit-scrollbar {
-    width: 7px;
+    width: 3px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgb(179, 179, 179);
-    border-radius: 5px;
+    background: rgb(136, 136, 136);
+    border-radius: 20px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: rgb(146, 146, 146);
+    background: rgb(170, 170, 170);
 }
 
+/* Bare minimum phone essentials */
 @media screen and (max-width: 850px) {
     img {
         cursor: default;

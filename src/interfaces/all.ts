@@ -2,8 +2,6 @@
 // Interfaces for all kinds of files.
 // ******************** //
 
-import type { SvelteComponent } from 'svelte';
-
 export interface FronvoError {
     err: {
         msg: string;
@@ -23,13 +21,14 @@ export interface AccountPost {
     content: string;
     attachment?: string;
     creationDate: string;
+    totalLikes: number;
+    isLiked: boolean;
 }
 
-export interface HomePost {
+export interface Post {
     post: AccountPost;
     profileData: FronvoAccount;
 }
-
 export interface FronvoAccount {
     profileId: string;
     username: string;
@@ -38,53 +37,54 @@ export interface FronvoAccount {
     avatar: string;
     banner: string;
     creationDate: string;
-    following: string[];
-    followers: string[];
     isSelf: boolean;
-    isPrivate: boolean;
-    isFollower: boolean;
-    isInCommunity: boolean;
-    communityId: string;
-    isAdmin: boolean;
-    isDisabled: boolean;
-    totalPosts: number;
     online: boolean;
-    lastOnline: string;
+    totalPosts: number;
+    status?: string;
+    pendingFriendRequests?: string[];
+    friends: string[];
 }
 
-export interface Community {
-    communityId: string;
-    ownerId: string;
-    name: string;
-    creationDate: string;
+export interface SwitchedAccount {
+    avatar: string;
+    username: string;
+    token: string;
+}
+
+export interface Room {
+    roomId: string;
+    ownerId?: string;
+    name?: string;
+    creationDate?: string;
     icon?: string;
-    members: string[];
-    chatRequestsEnabled: boolean;
-    acceptedChatRequests: string[];
+    members?: string[];
     totalMessages: number;
+    lastMessage?: string;
+    lastMessageAt: string;
+    lastMessageFrom?: string;
+    isDM: boolean;
+    unreadCount: number;
+    dmUsers?: string[];
+    dmUserOnline?: boolean;
+    dmUser?: FronvoAccount;
 }
 
-export interface CommunityMessage {
+export interface RoomMessage {
     messageId: string;
     ownerId: string;
     content: string;
     creationDate: string;
     isReply: boolean;
     replyContent: string;
+    isImage: boolean;
+    attachment?: string;
+    isSpotify?: boolean;
+    spotifyEmbed?: string;
 }
 
-export interface CommunityMessageFinal extends CommunityMessage {
-    profileData: FronvoAccount;
-}
-
-export interface FronvoContainer {
+export interface Theme {
     title: string;
-    svg: string;
-}
-
-export interface MainSideItem {
-    title: string;
-    action: () => void;
-    svg: typeof SvelteComponent;
-    hideOnReveal?: boolean;
+    description: string;
+    icon: string;
+    creationDate: string;
 }

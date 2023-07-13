@@ -5,11 +5,10 @@
 import type { FronvoAccount, FronvoError } from 'interfaces/all';
 
 export interface UpdateProfileDataParams {
-    profileId?: string;
     username?: string;
     bio?: string;
     avatar?: string;
-    isPrivate?: boolean;
+    banner?: string;
 }
 
 export interface UpdateProfileDataResult extends FronvoError {

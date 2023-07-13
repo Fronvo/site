@@ -2,7 +2,7 @@
 // Interfaces for the fetchProfilePosts event file.
 // ******************** //
 
-import type { AccountPost, FronvoError } from 'interfaces/all';
+import type { FronvoError, Post } from 'interfaces/all';
 
 export interface FetchProfilePostsParams {
     profileId: string;
@@ -11,5 +11,6 @@ export interface FetchProfilePostsParams {
 }
 
 export interface FetchProfilePostsResult extends FronvoError {
-    profilePosts: AccountPost[];
+    totalPosts: number;
+    profilePosts: Post[];
 }

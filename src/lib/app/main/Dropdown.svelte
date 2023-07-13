@@ -1,57 +1,56 @@
 <script lang="ts">
     import {
         currentDropdownId,
-        dropdownAnimDuration,
         dropdownPosition,
         dropdowns,
         dropdownVisible,
     } from 'stores/dropdowns';
-    import { modalVisible } from 'stores/modals';
-    import { currentPanelId } from 'stores/panels';
     import { onDestroy, onMount } from 'svelte';
     import type { Unsubscriber } from 'svelte/store';
-    import { slide } from 'svelte/transition';
-    import { dismissDropdown } from 'utilities/main';
+    import { blur, scale, slide } from 'svelte/transition';
 
-    let dropdownElement: HTMLDivElement;
+    let element: HTMLDivElement;
     let unsubscribe: Unsubscriber;
-    let unsubscribe2: Unsubscriber;
-    let unsubscribe3: Unsubscriber;
 
     onMount(() => {
         unsubscribe = dropdownPosition.subscribe((newPosition) => {
             if ($dropdownVisible) return;
 
-            dropdownElement = document.getElementsByClassName(
-                'dropdown-container'
-            )[0] as HTMLDivElement;
-            dropdownElement.style.left = `${newPosition[0] + 10}px`;
-            dropdownElement.style.top = `${newPosition[1] + 5}px`;
-        });
+            element.style.opacity = '0';
 
-        unsubscribe2 = currentPanelId.subscribe(() => {
-            dismissDropdown();
-        });
+            element.style.left = `${newPosition[0]}px`;
+            element.style.top = `${newPosition[1]}px`;
 
-        unsubscribe3 = modalVisible.subscribe(() => {
-            dismissDropdown();
+            setTimeout(() => {
+                // Calculate dropdown height along with top position, get bounds
+                if (
+                    element.clientHeight + $dropdownPosition[1] >
+                    document.body.clientHeight - 64
+                ) {
+                    element.style.top = `${
+                        document.body.clientHeight - 64 - element.clientHeight
+                    }px`;
+                }
+
+                if ($dropdownPosition[1] < -30) {
+                    element.style.top = '0px';
+                }
+
+                element.style.opacity = '1';
+            }, 0);
         });
     });
 
     onDestroy(() => {
         unsubscribe();
-        unsubscribe2();
-        unsubscribe3();
     });
 </script>
 
-<div class="dropdown-container">
+<div bind:this={element} class="dropdown-container">
     {#if $dropdownVisible}
         <div
             class="item-container"
-            in:slide={{
-                duration: dropdownAnimDuration,
-            }}
+            transition:scale={{ duration: 150, start: 0.95, opacity: 0 }}
         >
             <svelte:component this={dropdowns[$currentDropdownId]} />
         </div>
@@ -65,13 +64,13 @@
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        z-index: 3;
+        z-index: 4;
+        border-radius: 10px;
     }
 
     .item-container {
-        background: var(--button_background);
-        box-shadow: 0 0 2px var(--accent_shadow_color);
-        border-radius: 5px;
+        border-radius: 20px;
         overflow: hidden;
+        padding: 5px;
     }
 </style>

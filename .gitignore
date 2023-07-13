@@ -6,5 +6,5 @@ node_modules/
 .svelte-kit/
 .vercel/
 
-# Lock file
-pnpm-lock.yaml
+# Other
+.env

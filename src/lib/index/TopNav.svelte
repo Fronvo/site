@@ -1,85 +1,82 @@
 <script lang="ts">
+    import Theme from '$lib/svgs/Theme.svelte';
     import { indexVisible } from 'stores/index';
-    import { fly } from 'svelte/transition';
-    import { redirectApp } from 'utilities/index';
 </script>
 
 {#if $indexVisible}
-    <div
-        transition:fly={{ y: -100, duration: 750, opacity: 0.5 }}
-        class="top-nav-container"
-    >
-        <h1 id="logo">Fronvo</h1>
+    <div class="top-nav-container">
+        <div class="logo-container">
+            <h1 id="logo">Fronvo</h1>
+            <h1 id="descriptor">Your privacy, for free.</h1>
+        </div>
 
-        <button id="try-1" on:click={redirectApp}>Try Fronvo online</button>
+        <Theme />
     </div>
 {/if}
 
 <style>
     .top-nav-container {
         position: fixed;
-        top: 20px;
+        top: 0;
         right: 0;
         left: 0;
-        display: flex;
-        border-radius: 24px;
-        padding: 20px;
-        align-items: center;
-        z-index: 1;
-        width: 90%;
+        min-width: 800px;
+        max-width: 50%;
         margin: auto;
-        background: rgba(133, 40, 255, 0.5);
-        transition: 300ms background;
-        backdrop-filter: blur(10px);
+        background: var(--i_primary);
+        box-shadow: 0 0 20px var(--i_shadow);
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        z-index: 1;
     }
 
-    .top-nav-container #logo {
-        color: white;
-        flex: 1;
-        font-size: 2.4rem;
-        padding: 0;
+    h1 {
         margin: 0;
-        display: initial;
-        cursor: default;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
+        color: var(--text);
+        font-weight: 300;
     }
 
-    .top-nav-container #try-1 {
-        font-size: 1.7rem;
-        background-size: 200% auto;
-        background-image: linear-gradient(
-            to right,
-            rgb(102, 0, 255) 0%,
-            rgb(146, 73, 255) 51%,
-            rgb(102, 0, 255) 100%
-        );
-        color: white;
-        box-shadow: 0 0 2px var(--branding_color);
+    .logo-container {
+        flex: 1;
     }
 
-    .top-nav-container #try-1:hover {
-        background-position: bottom center;
+    #logo {
+        flex: 1;
+        font-size: 1.8rem;
+    }
+
+    #descriptor {
+        font-size: 1.1rem;
+        color: var(--text);
     }
 
     @media screen and (max-width: 850px) {
         .top-nav-container {
-            right: 5px;
-            left: 5px;
-            padding: 10px;
+            min-width: initial;
+            max-width: initial;
+            width: 100%;
+            border-radius: 0;
         }
 
-        .top-nav-container #logo {
-            font-size: 1.5rem;
+        #logo {
+            font-size: 1.4rem;
         }
 
-        .top-nav-container #try-1 {
-            font-size: 1.3rem;
-            cursor: default;
+        #descriptor {
+            font-size: 0.9rem;
+        }
+    }
+
+    @media screen and (max-width: 600px) {
+        #logo {
+            font-size: 1.4rem;
+        }
+
+        #descriptor {
+            font-size: 0.8rem;
         }
     }
 </style>

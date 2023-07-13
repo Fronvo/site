@@ -2,71 +2,27 @@
 // Interfaces for the client to server events of Socket.IO
 // ******************** //
 
+import type { CreateRoomParams, CreateRoomResult } from './account/createRoom';
 import type {
-    CreateCommunityParams,
-    CreateCommunityResult,
-} from './account/createCommunity';
-import type { CreatePostParams, CreatePostResult } from './account/createPost';
-import type {
-    DeleteCommunityMessageParams,
-    DeleteCommunityMessageResult,
-} from './account/deleteCommunityMessage';
-import type { DeletePostParams, DeletePostResult } from './account/deletePost';
-import type {
-    FetchCommunityDataParams,
-    FetchCommunityDataResult,
-} from './account/fetchCommunityData';
-import type {
-    FetchCommunityMessagesParams,
-    FetchCommunityMessagesResult,
-} from './account/fetchCommunityMessages';
-import type {
-    FetchHomePostsParams,
-    FetchHomePostsResult,
-} from './account/fetchHomePosts';
+    FetchRoomMessagesParams,
+    FetchRoomMessagesResult,
+} from './account/fetchRoomMessages';
 import type {
     FetchProfileDataParams,
     FetchProfileDataResult,
 } from './account/fetchProfileData';
 import type { FetchProfileIdResult } from './account/fetchProfileId';
-import type {
-    FetchProfilePostsParams,
-    FetchProfilePostsResult,
-} from './account/fetchProfilePosts';
-import type {
-    FindProfilesParams,
-    FindProfilesResult,
-} from './account/findProfiles';
-import type {
-    FollowProfileParams,
-    FollowProfileResult,
-} from './account/followProfile';
-import type {
-    JoinCommunityParams,
-    JoinCommunityResult,
-} from './account/joinCommunity';
-import type { LeaveCommunityResult } from './account/leaveCommunity';
+import type { JoinRoomParams, JoinRoomResult } from './account/joinRoom';
+import type { LeaveRoomParams, LeaveRoomResult } from './account/leaveRoom';
 import type { LogoutResult } from './account/logout';
 import type {
-    SendCommunityMessageParams,
-    SendCommunityMessageResult,
-} from './account/sendCommunityMessage';
+    SendRoomMessageParams,
+    SendRoomMessageResult,
+} from './account/sendRoomMessage';
 import type {
-    ToggleDisableAccountParams,
-    ToggleDisableAccountResult,
-} from './account/toggleDisableAccount';
-import type {
-    UnfollowProfileParams,
-    UnfollowProfileResult,
-} from './account/unfollowProfile';
-import type {
-    UpdateChatRequestParams,
-    UpdateChatRequestResult,
-} from './account/updateChatRequest';
-import type {
-    UpdateCommunityDataParams,
-    UpdateCommunityDataResult,
-} from './account/updateCommunityData';
+    UpdateRoomDataParams,
+    UpdateRoomDataResult,
+} from './account/updateRoomData';
 import type {
     UpdateProfileDataParams,
     UpdateProfileDataResult,
@@ -94,21 +50,60 @@ import type {
     ResetPasswordVerifyParams,
     ResetPasswordVerifyResult,
 } from './noAccount/resetPasswordVerify';
-import type {
-    FetchHomePostsGuestParams,
-    FetchHomePostsGuestResult,
-} from './noAccount/fetchHomePostsGuest';
-import type {
-    FetchProfileDataGuestParams,
-    FetchProfileDataGuestResult,
-} from './noAccount/fetchProfileDataGuest';
 import type { KickMemberParams, KickMemberResult } from './account/kickMember';
-import type { BanMemberParams, BanMemberResult } from './account/banMember';
-import type { ShowBannedMembersResult } from './account/showBannedMembers';
 import type {
-    UnbanMemberParams,
-    UnbanMemberResult,
-} from './account/unbanMember';
+    UpdateProfileStatusParams,
+    UpdateProfileStatusResult,
+} from './account/updateProfileStatus';
+import type {
+    DeleteRoomMessageParams,
+    DeleteRoomMessageResult,
+} from './account/deleteRoomMessage';
+import type { FetchConvosResult } from './account/fetchConvos';
+import type {
+    StartTypingParams,
+    StartTypingResult,
+} from './account/startTyping';
+import type {
+    FinishTypingParams,
+    FinishTypingResult,
+} from './account/finishTyping';
+import type { AddFriendParams, AddFriendResult } from './account/addFriend';
+import type {
+    RejectFriendRequestParams,
+    RejectFriendRequestResult,
+} from './account/rejectFriendRequest';
+import type {
+    AcceptFriendRequestParams,
+    AcceptFriendRequestResult,
+} from './account/acceptFriendRequest';
+import type {
+    RemoveFriendParams,
+    RemoveFriendResult,
+} from './account/removeFriend';
+import type {
+    AddRoomMemberParams,
+    AddRoomMemberResult,
+} from './account/addRoomMember';
+import type {
+    RemoveRoomMemberParams,
+    RemoveRoomMemberResult,
+} from './account/removeRoomMember';
+import type { CreateDMParams, CreateDMResult } from './account/createDM';
+import type {
+    SendRoomImageParams,
+    SendRoomImageResult,
+} from './account/sendRoomImage';
+import type {
+    FetchProfilePostsParams,
+    FetchProfilePostsResult,
+} from './account/fetchProfilePosts';
+import type {
+    FetchHomePostsParams,
+    FetchHomePostsResult,
+} from './account/fetchHomePosts';
+import type { CloseDMParams, CloseDMResult } from './account/closeDM';
+import type { LikePostParams, LikePostResult } from './account/likePost';
 
 export interface ClientToServerEvents {
     register: (
@@ -148,92 +143,97 @@ export interface ClientToServerEvents {
         {}: UpdateProfileDataParams,
         callback?: ({}: UpdateProfileDataResult) => void
     ) => void;
-    createPost: (
-        {}: CreatePostParams,
-        callback?: ({}: CreatePostResult) => void
+    createRoom: (
+        {}: CreateRoomParams,
+        callback?: ({}: CreateRoomResult) => void
     ) => void;
-    fetchProfilePosts: (
-        {}: FetchProfilePostsParams,
-        callback?: ({}: FetchProfilePostsResult) => void
+    joinRoom: (
+        {}: JoinRoomParams,
+        callback?: ({}: JoinRoomResult) => void
     ) => void;
-    deletePost: (
-        {}: DeletePostParams,
-        callback?: ({}: DeletePostResult) => void
+    updateRoomData: (
+        {}: UpdateRoomDataParams,
+        callback?: ({}: UpdateRoomDataResult) => void
     ) => void;
-    followProfile: (
-        {}: FollowProfileParams,
-        callback?: ({}: FollowProfileResult) => void
+    leaveRoom: (
+        {}: LeaveRoomParams,
+        callback?: ({}: LeaveRoomResult) => void
     ) => void;
-    unfollowProfile: (
-        {}: UnfollowProfileParams,
-        callback?: ({}: UnfollowProfileResult) => void
+    sendRoomMessage: (
+        {}: SendRoomMessageParams,
+        callback?: ({}: SendRoomMessageResult) => void
     ) => void;
-    findProfiles: (
-        {}: FindProfilesParams,
-        callback?: ({}: FindProfilesResult) => void
+    fetchRoomMessages: (
+        {}: FetchRoomMessagesParams,
+        callback?: ({}: FetchRoomMessagesResult) => void
     ) => void;
-    fetchHomePosts: (
-        {}: FetchHomePostsParams,
-        callback?: ({}: FetchHomePostsResult) => void
-    ) => void;
-    createCommunity: (
-        {}: CreateCommunityParams,
-        callback?: ({}: CreateCommunityResult) => void
-    ) => void;
-    joinCommunity: (
-        {}: JoinCommunityParams,
-        callback?: ({}: JoinCommunityResult) => void
-    ) => void;
-    fetchCommunityData: (
-        {}: FetchCommunityDataParams,
-        callback?: ({}: FetchCommunityDataResult) => void
-    ) => void;
-    updateCommunityData: (
-        {}: UpdateCommunityDataParams,
-        callback?: ({}: UpdateCommunityDataResult) => void
-    ) => void;
-    leaveCommunity: (callback?: ({}: LeaveCommunityResult) => void) => void;
-    sendCommunityMessage: (
-        {}: SendCommunityMessageParams,
-        callback?: ({}: SendCommunityMessageResult) => void
-    ) => void;
-    fetchCommunityMessages: (
-        {}: FetchCommunityMessagesParams,
-        callback?: ({}: FetchCommunityMessagesResult) => void
-    ) => void;
-    deleteCommunityMessage: (
-        {}: DeleteCommunityMessageParams,
-        callback?: ({}: DeleteCommunityMessageResult) => void
-    ) => void;
-    updateChatRequest: (
-        {}: UpdateChatRequestParams,
-        callback?: ({}: UpdateChatRequestResult) => void
-    ) => void;
-    toggleDisableAccount: (
-        {}: ToggleDisableAccountParams,
-        callback?: ({}: ToggleDisableAccountResult) => void
-    ) => void;
-    fetchHomePostsGuest: (
-        {}: FetchHomePostsGuestParams,
-        callback?: ({}: FetchHomePostsGuestResult) => void
-    ) => void;
-    fetchProfileDataGuest: (
-        {}: FetchProfileDataGuestParams,
-        callback?: ({}: FetchProfileDataGuestResult) => void
+    deleteRoomMessage: (
+        {}: DeleteRoomMessageParams,
+        callback?: ({}: DeleteRoomMessageResult) => void
     ) => void;
     kickMember: (
         {}: KickMemberParams,
         callback?: ({}: KickMemberResult) => void
     ) => void;
-    banMember: (
-        {}: BanMemberParams,
-        callback?: ({}: BanMemberResult) => void
+    updateProfileStatus: (
+        {}: UpdateProfileStatusParams,
+        callback?: ({}: UpdateProfileStatusResult) => void
     ) => void;
-    showBannedMembers: (
-        callback?: ({}: ShowBannedMembersResult) => void
+    fetchConvos: (callback?: ({}: FetchConvosResult) => void) => void;
+    startTyping: (
+        {}: StartTypingParams,
+        callback?: ({}: StartTypingResult) => void
     ) => void;
-    unbanMember: (
-        {}: UnbanMemberParams,
-        callback?: ({}: UnbanMemberResult) => void
+    finishTyping: (
+        {}: FinishTypingParams,
+        callback?: ({}: FinishTypingResult) => void
+    ) => void;
+    addFriend: (
+        {}: AddFriendParams,
+        callback?: ({}: AddFriendResult) => void
+    ) => void;
+    removeFriend: (
+        {}: RemoveFriendParams,
+        callback?: ({}: RemoveFriendResult) => void
+    ) => void;
+    rejectFriendRequest: (
+        {}: RejectFriendRequestParams,
+        callback?: ({}: RejectFriendRequestResult) => void
+    ) => void;
+    acceptFriendRequest: (
+        {}: AcceptFriendRequestParams,
+        callback?: ({}: AcceptFriendRequestResult) => void
+    ) => void;
+    addRoomMember: (
+        {}: AddRoomMemberParams,
+        callback?: ({}: AddRoomMemberResult) => void
+    ) => void;
+    removeRoomMember: (
+        {}: RemoveRoomMemberParams,
+        callback?: ({}: RemoveRoomMemberResult) => void
+    ) => void;
+    createDM: (
+        {}: CreateDMParams,
+        callback?: ({}: CreateDMResult) => void
+    ) => void;
+    sendRoomImage: (
+        {}: SendRoomImageParams,
+        callback?: ({}: SendRoomImageResult) => void
+    ) => void;
+    fetchProfilePosts: (
+        {}: FetchProfilePostsParams,
+        callback?: ({}: FetchProfilePostsResult) => void
+    ) => void;
+    fetchHomePosts: (
+        {}: FetchHomePostsParams,
+        callback?: ({}: FetchHomePostsResult) => void
+    ) => void;
+    closeDM: (
+        {}: CloseDMParams,
+        callback?: ({}: CloseDMResult) => void
+    ) => void;
+    likePost: (
+        {}: LikePostParams,
+        callback?: ({}: LikePostResult) => void
     ) => void;
 }

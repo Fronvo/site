@@ -3,14 +3,25 @@ import type { ClientToServerEvents } from 'interfaces/c2s';
 import type { ServerToClientEvents } from 'interfaces/s2c';
 import type { Socket } from 'socket.io-client';
 import { writable, type Writable } from 'svelte/store';
+import type { TopPanels } from 'types/all';
 
 /****************************** Fronvo client ******************************/
+// export let SERVER_URL = 'ws://localhost:3001';
+export let SERVER_URL = 'wss://fronvosrv.fly.dev';
+
 export let socket: Socket<ServerToClientEvents, ClientToServerEvents>;
+export let secondarySocket: Socket<ServerToClientEvents, ClientToServerEvents>;
 
 export function setSocket(
     socketVar: Socket<ServerToClientEvents, ClientToServerEvents>
 ): void {
     socket = socketVar;
+}
+
+export function setSecondarySocket(
+    socketVar: Socket<ServerToClientEvents, ClientToServerEvents>
+): void {
+    secondarySocket = socketVar;
 }
 /****************************** Fronvo client ******************************/
 
@@ -22,80 +33,26 @@ export const fronvoTitle = writable('');
 export const showLayout = writable(false);
 /****************************** Fronvo layout ******************************/
 
-/****************************** Fronvo SideNav ******************************/
-export const sideNavRevealed = writable(true);
-/****************************** Fronvo SideNav ******************************/
-
+/****************************** Fronvo token ******************************/
+export const currentToken: Writable<string> = writable();
+/****************************** Fronvo layout ******************************/
 /****************************** Fronvo dark theme ******************************/
 export const darkTheme = writable(undefined);
 /****************************** Fronvo dark theme ******************************/
 
-/****************************** Fronvo data saver ******************************/
-export const dataSaver = writable(false);
-/****************************** Fronvo data saver ******************************/
-
-/****************************** Fronvo chistmas mode ******************************/
-export const xmasMode = writable(false);
-export const xmasParticleOptions = writable({
-    particles: {
-        color: {
-            value: '#ffffff',
-        },
-
-        move: {
-            enable: true,
-            direction: 'bottom',
-            speed: 2,
-        },
-
-        number: {
-            density: {
-                enable: true,
-                area: 500,
-            },
-            value: 4,
-        },
-
-        opacity: {
-            value: 1,
-        },
-
-        shape: {
-            type: 'circle',
-        },
-
-        size: {
-            value: 5,
-        },
-
-        // wobbly wobbly right left
-        wobble: {
-            enable: true,
-            distance: 18,
-            speed: 3,
-        },
-
-        // size randomness
-        zIndex: {
-            value: { min: 0, max: 100 },
-        },
-    },
-});
-/****************************** Fronvo christmas mode ******************************/
-
 /****************************** Fronvo login state ******************************/
 export const loginSucceeded: Writable<boolean> = writable();
 /****************************** Fronvo login state ******************************/
-
-/****************************** Fronvo guest mode ******************************/
-export const guestMode: Writable<boolean> = writable();
-/****************************** Fronvo guest mode ******************************/
 
 /****************************** Fronvo loading state ******************************/
 export const progressBarVisible = writable(false);
 /****************************** Fronvo loading state ******************************/
 
 /****************************** Fronvo caching ******************************/
-export const queuedAccounts: Writable<string[]> = writable([]);
 export const cachedAccountData: Writable<FronvoAccount[]> = writable([]);
 /****************************** Fronvo caching ******************************/
+
+/****************************** Fronvo other ******************************/
+export const currentTopPanel: Writable<TopPanels> = writable();
+export const currentFriendsPanel: Writable<0 | 1> = writable(0);
+/****************************** Fronvo other ******************************/

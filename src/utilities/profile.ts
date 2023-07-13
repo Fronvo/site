@@ -1,93 +1,83 @@
-import { goto } from '$app/navigation';
 import type { FronvoAccount } from 'interfaces/all';
-import { PanelTypes } from 'stores/panels';
-import {
-    ourData,
-    ourPosts,
-    pendingSearchId,
-    searchData,
-    searchPosts,
-} from 'stores/profile';
-import { getKey } from './global';
-import {
-    fetchPosts,
-    fetchUser,
-    findCachedAccount,
-    setProgressBar,
-    switchPanel,
-    updateCachedAccount,
-} from './main';
+import { ourData } from 'stores/profile';
+import { fetchUser, updateCachedAccount } from './main';
 
-export async function loadOurProfile(
+export async function loadProfile(
     cachedData: FronvoAccount[]
 ): Promise<FronvoAccount> {
-    if (!getKey('token')) return;
-
     const tempOurData = await fetchUser();
 
     // Force default value, we just want to cache our profile
     await updateCachedAccount(tempOurData.profileId, cachedData, tempOurData);
 
     ourData.set(tempOurData);
-    ourPosts.set(await fetchPosts(tempOurData.profileId));
+
+    await loadFriends(tempOurData, cachedData);
+    await loadPendingFriends(tempOurData, cachedData);
 
     return tempOurData;
 }
 
-export async function loadTargetProfile(
-    profileId: string,
-    cachedData: FronvoAccount[],
-    preventReload?: boolean
+export async function loadFriends(
+    ourData: FronvoAccount,
+    cachedData: FronvoAccount[]
 ): Promise<void> {
-    // Will also create if not found in cache
-    const data = await findCachedAccount(profileId, cachedData);
-
-    // Invalid profile id
-    if (!data) {
-        pendingSearchId.set(undefined);
-
-        goto('/home', {
-            replaceState: true,
-        });
-
-        switchPanel(PanelTypes.Home);
-
-        return;
-    }
-
-    setProgressBar(true);
-
-    pendingSearchId.set(data.profileId);
-
-    searchData.set(data);
-    !preventReload && searchPosts.set(undefined);
-
-    if (preventReload) {
-        setProgressBar(false);
-        return;
-    }
-
-    // Guest mode check
-    if (data.totalPosts) {
-        if (
-            data.totalPosts != 0 ||
-            !data.isPrivate ||
-            data.isFollower ||
-            data.isSelf
-        ) {
-            searchPosts.set(await fetchPosts(data.profileId));
-        } else {
-            searchPosts.set([]);
+    return new Promise(async (resolve) => {
+        if (ourData.friends.length == 0) {
+            resolve();
+            return;
         }
-    } else {
-        searchPosts.set([]);
-    }
 
-    goto(`/@${data.profileId}`, {
-        replaceState: true,
+        // Just put every friend in cache before finishing up
+        const finishedReqs = [];
+
+        for (const friendIndex in ourData.friends) {
+            updateCachedAccount(ourData.friends[friendIndex], cachedData).then(
+                () => {
+                    finishedReqs.push(ourData.friends[friendIndex]);
+
+                    checkLoadingDone();
+                }
+            );
+        }
+
+        function checkLoadingDone() {
+            if (finishedReqs.length == ourData.friends.length) {
+                resolve();
+            }
+        }
     });
+}
 
-    switchPanel(PanelTypes.Profile);
+export async function loadPendingFriends(
+    ourData: FronvoAccount,
+    cachedData: FronvoAccount[]
+): Promise<void> {
+    return new Promise(async (resolve) => {
+        if (ourData.pendingFriendRequests.length == 0) {
+            resolve();
+            return;
+        }
 
-    setProgressBar(false);
+        const finishedReqs = [];
+
+        // Same as above
+        for (const pendingFriendIndex in ourData.pendingFriendRequests) {
+            updateCachedAccount(
+                ourData.pendingFriendRequests[pendingFriendIndex],
+                cachedData
+            ).then(() => {
+                finishedReqs.push(
+                    ourData.pendingFriendRequests[pendingFriendIndex]
+                );
+                checkLoadingDone();
+            });
+        }
+
+        function checkLoadingDone() {
+            if (finishedReqs.length == ourData.pendingFriendRequests.length) {
+                resolve();
+            }
+        }
+    });
 }

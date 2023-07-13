@@ -1,5 +1,5 @@
 <script lang="ts">
-    import Message from '$lib/app/reusables/communities/Message.svelte';
+    import Message from '$lib/app/reusables/rooms/Message.svelte';
     import { socket } from 'stores/main';
     import {
         targetMessageModal,
@@ -8,19 +8,38 @@
     } from 'stores/modals';
     import { dismissModal, setProgressBar } from 'utilities/main';
     import ModalTemplate from '../ModalTemplate.svelte';
+    import { currentRoomId } from 'stores/rooms';
+    import { toast } from 'svelte-sonner';
 
     function deleteMessage(): void {
-        // Will recieve result in CommunityChat listener if successful
+        // Will recieve result in RoomChat listener if successful
         setProgressBar(true);
 
-        socket.emit('deleteCommunityMessage', {
-            messageId: $targetMessageModal.messageId,
-        });
+        socket.emit(
+            'deleteRoomMessage',
+            {
+                roomId: $currentRoomId,
+                messageId: $targetMessageModal.messageId,
+            },
+            async ({ err }) => {
+                if (err) return;
+
+                if ($targetMessageModal.isImage) {
+                    await fetch('/api/remove', {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            icon: $targetMessageModal.attachment,
+                        }),
+                    });
+                }
+
+                toast('Message deleted');
+            }
+        );
     }
 
     const data: ModalData = {
-        title: 'Delete Message',
-
+        title: 'Delete message',
         actions: [
             {
                 title: 'Delete',
@@ -32,8 +51,6 @@
                 callback: dismissModal,
             },
         ],
-
-        useSecondaryHr: true,
     };
 </script>
 

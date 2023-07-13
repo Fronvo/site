@@ -1,21 +1,21 @@
 <script lang="ts">
-    import { guestMode, socket } from 'stores/main';
-    import type { AccountPost, FronvoAccount } from 'interfaces/all';
-    import { setProgressBar } from 'utilities/main';
+    import { socket } from 'stores/main';
+    import type { Post as PostInterface, FronvoAccount } from 'interfaces/all';
     import Post from '../all/Post.svelte';
-    import { ourData } from 'stores/profile';
-    import LoadMore from '../all/LoadMore.svelte';
+    import InfiniteLoading from 'svelte-infinite-loading';
 
     export let data: FronvoAccount;
-    export let posts: AccountPost[];
+    export let small = false;
 
-    let isLoadingMore = false;
+    let posts: PostInterface[] = [];
 
-    function loadMore(): void {
-        if (isLoadingMore) return;
+    let previousEmpty = false;
 
-        isLoadingMore = true;
-        setProgressBar(true);
+    function loadMore({ detail: { loaded } }): void {
+        if (previousEmpty) {
+            loaded();
+            return;
+        }
 
         socket.emit(
             'fetchProfilePosts',
@@ -25,72 +25,103 @@
                 to: (posts.length + 10).toString(),
             },
             ({ profilePosts }) => {
+                if (profilePosts.length == 0) {
+                    previousEmpty = true;
+
+                    loaded();
+                }
+
                 const tempPosts = posts;
                 tempPosts.push(...profilePosts);
 
                 posts = tempPosts;
 
-                isLoadingMore = false;
-                setProgressBar(false);
+                loaded();
+            }
+        );
+    }
+
+    function showPosts(): void {
+        socket.emit(
+            'fetchProfilePosts',
+            {
+                profileId: data.profileId,
+                from: '0',
+                to: '10',
+            },
+            ({ err, profilePosts }) => {
+                if (err) return;
+
+                posts = profilePosts;
             }
         );
     }
 </script>
 
-{#if !$guestMode && posts}
-    <div class="posts-container">
-        {#if data.totalPosts > 0 && (!data.isPrivate || data.isFollower || data.isSelf)}
-            <h1 id="counter">
-                <span>{data.totalPosts}</span> post{data.totalPosts > 1
-                    ? 's'
-                    : ''}
-            </h1>
+<div class="posts-container">
+    <h1 id="descriptor">
+        <span>{data.totalPosts} posts</span>
+    </h1>
 
-            {#each posts as postData}
-                <Post
-                    profileData={data}
-                    {postData}
-                    hideOptions={data.profileId != $ourData.profileId}
-                />
-            {/each}
+    {#if posts.length > 0}
+        {#each posts as post}
+            <Post {post} {small} />
+        {/each}
 
-            {#if posts.length < data.totalPosts}
-                <LoadMore callback={loadMore} />
-            {/if}
+        {#if !previousEmpty}
+            <InfiniteLoading
+                distance={1000}
+                on:infinite={loadMore}
+                direction="bottom"
+            >
+                <div slot="noMore" />
+                <div slot="noResults" />
+                <div slot="error" />
+                <div slot="spinner" />
+            </InfiniteLoading>
         {/if}
-    </div>
-{/if}
+    {:else}
+        <button class="modal-button" on:click={showPosts}>Show posts</button>
+    {/if}
+</div>
 
 <style>
     .posts-container {
-        margin-top: 5px;
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
-        align-items: center;
-        justify-content: center;
+        margin-left: 32px;
+        padding-bottom: 10px;
+        margin-right: 10px;
+        padding-top: 5px;
+        border-top: 1px solid var(--primary);
+        height: 100%;
     }
 
-    .posts-container #counter {
+    #descriptor {
         margin: 0;
+        margin-top: 5px;
+        font-size: 0.75rem;
+        font-weight: 900;
+        text-align: start;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        font-size: 1.5rem;
-        border-bottom: 5px solid var(--branding_color);
-        padding: 10px;
     }
 
-    .posts-container #counter span {
-        color: var(--profile_info_color);
+    button {
+        font-size: 0.9rem;
+        margin-top: 5px;
+        box-shadow: none;
+        transition: 150ms;
     }
 
-    @media screen and (max-width: 850px) {
-        .posts-container #counter {
-            font-size: 1.2rem;
-        }
+    button:hover {
+        background: var(--secondary);
     }
 </style>

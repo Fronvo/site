@@ -12,64 +12,56 @@
 </script>
 
 <div class="dropdown-container">
-    {#each actions as { title, callback, condition, useHr }}
-        {#if typeof condition != 'undefined'}
-            {#if condition}
-                <button on:click={() => runCallback(callback)}>{title}</button>
-
-                {#if useHr}
-                    <hr />
+    {#each actions as { title, callback, condition, icon, justifyStart }}
+        {#if typeof condition == 'undefined' || (typeof condition != 'undefined' && condition)}
+            <button
+                class={`${justifyStart ? 'start' : 'center'}`}
+                on:click={() => runCallback(callback)}
+            >
+                {#if icon}
+                    <svelte:component this={icon} />
                 {/if}
-            {/if}
-        {:else}
-            <button on:click={() => runCallback(callback)}>{title}</button>
 
-            {#if useHr}
-                <hr />
-            {/if}
+                {title}</button
+            >
         {/if}
     {/each}
 </div>
 
 <style>
-    hr {
-        width: 30%;
-        opacity: 25%;
-        height: 1px;
-        padding: 0;
-        margin: 0;
-        align-self: center;
-    }
-
     .dropdown-container {
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        justify-content: start;
+        border: 2px solid var(--secondary);
+        border-radius: 10px;
+        overflow: hidden;
     }
 
-    .dropdown-container button {
-        font-size: 1.1rem;
-        width: 100%;
-        border: none;
-        border-radius: none;
+    button {
+        display: flex;
+        align-items: center;
+        font-size: 0.95rem;
         box-shadow: none;
-        background: transparent;
         transition: none;
+        padding: 8px;
         border-radius: 0;
     }
 
-    .dropdown-container button:hover {
-        color: var(--profile_info_color);
-        background: var(--bg_color);
+    .start {
+        justify-content: start;
     }
 
-    .dropdown-container button:active {
+    .center {
+        justify-content: center;
+    }
+
+    button:hover {
+        background: var(--branding_darken);
+        color: white;
+    }
+
+    button:active {
         transform: none;
-    }
-
-    @media screen and (max-width: 850px) {
-        .dropdown-container button {
-            font-size: 0.9rem;
-        }
     }
 </style>

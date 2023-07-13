@@ -58,7 +58,6 @@
     }
 </script>
 
-<!-- TODO: Connections (spotify only i think 10/6 20:17) next to avatar, below banner -->
 <div
     class={`top-container ${editable ? 'editable' : ''} ${mini ? 'mini' : ''} ${
         preview ? 'preview' : ''

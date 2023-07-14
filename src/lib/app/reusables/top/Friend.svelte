@@ -182,12 +182,6 @@
         cursor: pointer;
         width: 100%;
         padding: 8px;
-        transition: 150ms;
-    }
-
-    .friend-container:active {
-        transform: scale(0.975) translateX(-20px);
-        opacity: 0.5;
     }
 
     .badge-container {

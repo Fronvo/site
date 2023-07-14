@@ -148,16 +148,14 @@
         padding: 7px;
         margin: 10px;
         margin-right: 0;
-        transition: 150ms;
+        transition: 75ms;
     }
 
     .info-container:active {
-        transform: scale(0.975);
         opacity: 0.5;
     }
 
     .preview .info-container:active {
-        transform: none;
         opacity: 1;
     }
 

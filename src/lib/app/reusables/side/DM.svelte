@@ -111,7 +111,11 @@
                     dmData.unreadCount += 1;
                 }
 
-                if (newMessageData.message.isSpotify) {
+                if (newMessageData.message.isTenor) {
+                    dmData.lastMessage =
+                        newMessageData.profileData.username + ' sent a GIF';
+                    dmData.lastMessageFrom = '';
+                } else if (newMessageData.message.isSpotify) {
                     dmData.lastMessage =
                         newMessageData.profileData.username +
                         ' shared a Spotify song';

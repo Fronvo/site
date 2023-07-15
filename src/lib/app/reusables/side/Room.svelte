@@ -94,7 +94,11 @@
                     roomData.unreadCount += 1;
                 }
 
-                if (newMessageData.message.isSpotify) {
+                if (newMessageData.message.isTenor) {
+                    roomData.lastMessage =
+                        newMessageData.profileData.username + ' sent a GIF';
+                    roomData.lastMessageFrom = '';
+                } else if (newMessageData.message.isSpotify) {
                     roomData.lastMessage =
                         newMessageData.profileData.username +
                         ' shared a Spotify song';

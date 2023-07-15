@@ -80,6 +80,8 @@ export interface RoomMessage {
     attachment?: string;
     isSpotify?: boolean;
     spotifyEmbed?: string;
+    isTenor?: boolean;
+    tenorUrl?: string;
 }
 
 export interface Theme {

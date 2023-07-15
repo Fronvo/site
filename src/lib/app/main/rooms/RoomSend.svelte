@@ -325,7 +325,8 @@
                         DropdownTypes.Gif,
                         document.getElementById('gif'),
                         'top',
-                        -100
+                        -325,
+                        -525
                     )}
             />
 

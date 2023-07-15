@@ -87,7 +87,7 @@
     function showImage(): void {
         if (isPreview) return;
 
-        $targetImageModal = messageData.attachment;
+        $targetImageModal = messageData.attachment || messageData.tenorUrl;
 
         showModal(ModalTypes.Image);
     }
@@ -201,11 +201,21 @@
             </h1>
         {/if}
 
-        {#if !messageData.isImage && !messageData.isSpotify}
-            <h1 bind:this={content} id="content">
-                {messageData.content}
-            </h1>
-        {:else if !messageData.isSpotify}
+        {#if messageData.isTenor}
+            <img
+                bind:this={image}
+                id="attachment"
+                src={messageData.tenorUrl}
+                draggable={false}
+                alt={'Tenor GIF'}
+                on:click={showImage}
+                on:keydown={showImage}
+            />
+        {:else if messageData.isSpotify}
+            <div id="spotify">
+                {@html `<iframe style="border-radius: 5px" src="${messageData.spotifyEmbed}" width="400" height="80" frameBorder="0" loading="lazy"></iframe>`}
+            </div>
+        {:else if messageData.isImage}
             <img
                 bind:this={image}
                 id="attachment"
@@ -216,14 +226,14 @@
                 on:keydown={showImage}
             />
         {:else}
-            <div id="spotify">
-                {@html `<iframe style="border-radius: 5px" src="${messageData.spotifyEmbed}" width="400" height="80" frameBorder="0" loading="lazy"></iframe>`}
-            </div>
+            <h1 bind:this={content} id="content">
+                {messageData.content}
+            </h1>
         {/if}
 
         {#if !hideOptions}
             <div class="menu-container">
-                {#if !messageData.isImage && !messageData.isSpotify}
+                {#if !messageData.isImage && !messageData.isSpotify && !messageData.isTenor}
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="32"

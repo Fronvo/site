@@ -16,7 +16,7 @@
 </script>
 
 <ModalTemplate {data}>
-    <h1 class="modal-header">You have created over 20 rooms.</h1>
+    <h1 class="modal-header">You have created over 5 rooms.</h1>
 
     <InfoHeader
         marginLeft={'50px'}
@@ -26,7 +26,7 @@
 
 <style>
     h1 {
-        width: 80%;
+        width: 78%;
         text-align: start;
     }
 </style>

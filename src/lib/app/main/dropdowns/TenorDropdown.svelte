@@ -126,6 +126,7 @@
                 on:keydown={() => sendGif(gif.media_formats.tinygif.url)}
                 in:scale={{ duration: 250, delay: i + i * 25 }}
                 src={gif.media_formats.tinygif.url}
+                alt="Tenor GIF"
                 draggable={false}
             />
         {/each}

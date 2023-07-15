@@ -55,7 +55,7 @@
                     fetch(
                         `https://tenor.googleapis.com/v2/search?q=${
                             search.value
-                        }&limit=50&key=${import.meta.env.VITE_TENOR_KEY}`
+                        }&limit=26&key=${import.meta.env.VITE_TENOR_KEY}`
                     ).then(async (data) => {
                         const res = await data.json();
 
@@ -178,8 +178,10 @@
     .gif-container {
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        align-items: start;
+        justify-content: start;
         width: 50%;
+        height: 100%;
     }
 
     input {

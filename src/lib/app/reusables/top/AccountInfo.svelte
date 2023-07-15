@@ -147,16 +147,7 @@
         padding: 7px;
         margin: 10px;
         margin-right: 0;
-        transition: 75ms;
         cursor: pointer;
-    }
-
-    .info-container:active {
-        opacity: 0.5;
-    }
-
-    .preview .info-container:active {
-        opacity: 1;
     }
 
     .preview .info-container {

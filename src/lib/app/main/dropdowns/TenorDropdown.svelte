@@ -137,14 +137,14 @@
     .search-container {
         display: flex;
         align-items: center;
-        background: var(--primary);
+        background: var(--message);
         border-radius: 10px;
         width: 95%;
         align-self: center;
         margin-top: 10px;
         height: 40px;
         padding-left: 5px;
-        padding-right: 5px;
+        padding-right: 10px;
     }
 
     .gifs-container {
@@ -159,15 +159,15 @@
     }
 
     input {
-        font-size: 1.1rem;
-        background: var(--primary);
+        font-size: 1rem;
+        background: transparent;
         width: 150px;
         flex: 1;
     }
 
     svg {
-        width: 18px;
-        height: 18px;
+        width: 20px;
+        height: 20px;
         cursor: default;
     }
 

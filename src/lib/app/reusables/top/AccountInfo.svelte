@@ -101,7 +101,6 @@
         z-index: 1;
         transition: 75ms;
         box-shadow: 0 -5px 10px var(--message_shadow);
-        cursor: pointer;
     }
 
     .preview {
@@ -149,6 +148,7 @@
         margin: 10px;
         margin-right: 0;
         transition: 75ms;
+        cursor: pointer;
     }
 
     .info-container:active {
@@ -164,6 +164,7 @@
         margin: 0;
         padding: 0;
         margin-right: 80px;
+        cursor: default;
     }
 
     .info-container:hover {

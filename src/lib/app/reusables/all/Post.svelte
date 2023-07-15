@@ -156,7 +156,7 @@
 
     <div class="wrapper">
         <div class="post-info-container">
-            <h1 id="name">{profileData.username}</h1>
+            <h1 id="name">{profileData.profileId}</h1>
 
             <h1 id="time">{lastMessageSuffix}</h1>
         </div>
@@ -203,7 +203,6 @@
         padding-left: 15px;
         padding-right: 15px;
         transition: 150ms background;
-        cursor: pointer;
     }
 
     .post-container:hover {
@@ -222,8 +221,8 @@
     }
 
     #avatar {
-        width: 44px;
-        height: 44px;
+        width: 40px;
+        height: 40px;
         border-radius: 30px;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -254,7 +253,7 @@
 
     #name {
         margin: 0;
-        font-size: 1.1rem;
+        font-size: 1rem;
         margin-left: 7px;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -262,8 +261,9 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        font-weight: 600;
+        font-weight: 900;
         flex: 1;
+        margin-bottom: 3px;
     }
 
     .small #name {

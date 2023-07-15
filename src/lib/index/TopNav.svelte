@@ -36,7 +36,7 @@
     h1 {
         margin: 0;
         color: var(--text);
-        font-weight: 300;
+        font-weight: 500;
     }
 
     .logo-container {

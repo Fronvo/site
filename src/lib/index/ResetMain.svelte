@@ -69,7 +69,7 @@
         box-shadow: 0 0 5px #0e62ff;
         font-size: 1.4rem;
         border-radius: 15px;
-        font-weight: 300;
+        font-weight: 500;
         color: white;
     }
 

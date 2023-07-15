@@ -112,7 +112,7 @@
 
             if ($currentRoomId == roomId) {
                 setTimeout(() => {
-                    if (chat.scrollHeight - chat.scrollTop < 5000) {
+                    if (!$showScrollBottom) {
                         chat.scrollTo({
                             behavior: 'smooth',
                             top: chat.scrollHeight,

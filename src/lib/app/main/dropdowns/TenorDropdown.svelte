@@ -173,10 +173,10 @@
     }
 
     img {
-        width: 45%;
-        margin: 2.5%;
+        width: 47%;
+        margin: 1.5%;
         height: 150px;
-        border-radius: 10px;
+        border-radius: 5px;
         transition: 150ms;
         cursor: pointer;
     }

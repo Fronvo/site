@@ -55,7 +55,7 @@
                     fetch(
                         `https://tenor.googleapis.com/v2/search?q=${
                             search.value
-                        }&limit=20&key=${import.meta.env.VITE_TENOR_KEY}`
+                        }&limit=50&key=${import.meta.env.VITE_TENOR_KEY}`
                     ).then(async (data) => {
                         const res = await data.json();
 
@@ -120,16 +120,31 @@
             </div>
         {/if}
 
-        {#each gifs as gif, i}
-            <img
-                on:click={() => sendGif(gif.media_formats.tinygif.url)}
-                on:keydown={() => sendGif(gif.media_formats.tinygif.url)}
-                in:scale={{ duration: 250, delay: i + i * 25 }}
-                src={gif.media_formats.tinygif.url}
-                alt="Tenor GIF"
-                draggable={false}
-            />
-        {/each}
+        <div class="gif-container">
+            {#each gifs.slice(0, Math.ceil(gifs.length / 2)) as gif, i}
+                <img
+                    on:click={() => sendGif(gif.media_formats.tinygif.url)}
+                    on:keydown={() => sendGif(gif.media_formats.tinygif.url)}
+                    in:scale={{ duration: 250, delay: i + i * 25 }}
+                    src={gif.media_formats.tinygif.url}
+                    alt="Tenor GIF"
+                    draggable={false}
+                />
+            {/each}
+        </div>
+
+        <div class="gif-container">
+            {#each gifs.slice(Math.ceil(gifs.length / 2) + 1, gifs.length) as gif, i}
+                <img
+                    on:click={() => sendGif(gif.media_formats.tinygif.url)}
+                    on:keydown={() => sendGif(gif.media_formats.tinygif.url)}
+                    in:scale={{ duration: 250, delay: i + i * 25 }}
+                    src={gif.media_formats.tinygif.url}
+                    alt="Tenor GIF"
+                    draggable={false}
+                />
+            {/each}
+        </div>
     </div>
 </DropdownTemplateEmpty>
 
@@ -153,10 +168,18 @@
         align-items: center;
         justify-content: center;
         flex-wrap: wrap;
-        width: 400px;
+        width: 500px;
         height: 500px;
+        padding-right: 10px;
         margin-top: 10px;
         overflow: auto;
+    }
+
+    .gif-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: 50%;
     }
 
     input {
@@ -173,16 +196,17 @@
     }
 
     img {
-        width: 47%;
-        margin: 1.5%;
-        height: 150px;
         border-radius: 5px;
         transition: 150ms;
         cursor: pointer;
+        width: 95%;
+        margin-left: 10px;
+        margin-bottom: 10px;
+        border: 2.5px solid var(--bg);
     }
 
     img:hover {
-        opacity: 0.75;
+        border: 2.5px solid var(--branding);
     }
 
     img:active {

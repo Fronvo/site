@@ -36,7 +36,6 @@ interface ThemingOptions {
     modal_bg: string;
 
     modal_content_bg: string;
-    modal_content_shadow_bg: string;
 
     modal_input_bg: string;
 
@@ -54,34 +53,32 @@ export const defaultTheme: ThemingOptions = {
     i_primary: 'rgb(27, 27, 27)',
     i_shadow: 'rgb(15, 15, 15)',
 
-    primary: 'rgb(40, 40, 40)',
-    secondary: 'rgb(55, 55, 55)',
+    primary: 'rgb(30, 30, 30)',
+    secondary: 'rgb(45, 45, 45)',
 
     branding: 'rgb(90, 150, 255)',
     branding_darken: 'rgb(90, 130, 255)',
     branding_trans: 'rgb(90, 150, 255, 10%)',
 
-    bg: 'rgb(25, 25, 25)',
-    bg_trans: 'rgb(25, 25, 25, 75%)',
+    bg: 'rgb(20, 20, 20)',
+    bg_trans: 'rgb(20, 20, 20, 75%)',
 
     text: 'rgb(220, 220, 220)',
-    text_gray: 'rgb(180, 180, 180)',
+    text_gray: 'rgb(160, 160, 160)',
 
-    button: 'rgb(30, 30, 30)',
+    button: 'rgb(25, 25, 25)',
 
-    message: 'rgb(35, 35, 35)',
-    message_shadow: 'rgb(10, 10, 10)',
+    message: 'rgb(30, 30, 30)',
+    message_shadow: 'rgb(5, 5, 5)',
 
-    post: 'rgb(60, 60, 60, 15%)',
+    post: 'rgb(50, 50, 50, 15%)',
 
     // Modals
-    modal_bg: 'rgba(6, 6, 6, 75%)',
+    modal_bg: 'rgba(4, 4, 4, 75%)',
 
-    modal_content_bg: 'rgb(15, 15, 15)',
+    modal_content_bg: 'rgb(13, 13, 13)',
 
-    modal_content_shadow_bg: 'rgb(5, 5, 5)',
-
-    modal_input_bg: 'rgba(30, 30, 30, 0.5)',
+    modal_input_bg: 'rgba(25, 25, 25, 0.5)',
 
     modal_checkbox_primary: 'white',
 
@@ -119,7 +116,6 @@ export const whiteTheme: ThemingOptions = {
     modal_bg: 'rgba(100, 100, 100, 75%)',
 
     modal_content_bg: 'rgb(250, 250, 250)',
-    modal_content_shadow_bg: 'rgb(210, 210, 210)',
 
     modal_input_bg: 'rgb(240, 240, 240)',
 

@@ -15,6 +15,6 @@
     h1 {
         color: red;
         margin: 0;
-        width: 100%;
+        width: 75%;
     }
 </style>

@@ -4,8 +4,8 @@
     import { homePosts as homePostsStore } from 'stores/home';
     import InfiniteLoading from 'svelte-infinite-loading';
     import { currentRoomId } from 'stores/rooms';
-    import { ourData } from 'stores/profile';
-    import { fade, fly, scale, slide } from 'svelte/transition';
+    import { fade } from 'svelte/transition';
+    import CreatePost from './CreatePost.svelte';
 
     let welcomeText: string;
 
@@ -55,13 +55,14 @@
 <div class="home-container" in:fade={{ duration: 150 }}>
     <div class="top-container">
         <h1 id="welcomer">
-            {$homePostsStore.length > 0 ? 'Your feed' : welcomeText},
-            <span>@{$ourData.profileId}</span>
+            {welcomeText}
         </h1>
     </div>
 
     {#if $homePostsStore.length != 0}
         <div class="posts-container">
+            <CreatePost />
+
             {#if $homePostsStore && !$currentRoomId}
                 {#each $homePostsStore as post}
                     <Post {post} />
@@ -80,6 +81,8 @@
             {/if}
         </div>
     {:else}
+        <CreatePost />
+
         <div class="empty">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -121,28 +124,20 @@
         user-select: none;
     }
 
-    h1 span {
-        color: var(--branding);
-        font-size: 1.6rem;
-    }
-
     .top-container {
         display: flex;
         align-items: center;
         justify-content: center;
-        width: 100%;
+        width: 50%;
+        max-width: 1000px;
         position: fixed;
         right: 0;
         left: 0;
         background: var(--bg_trans);
         height: 65px;
-        margin: 0;
+        margin: auto;
         backdrop-filter: blur(10px);
-    }
-
-    #welcomer {
-        font-size: 1.7rem;
-        margin: 0;
+        z-index: 1;
     }
 
     .home-container {
@@ -155,13 +150,12 @@
     }
 
     .posts-container {
-        padding-top: 65px;
         display: flex;
         flex-direction: column;
     }
 
     .empty {
-        height: calc(100vh - 40px);
+        height: calc(55vh);
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -194,7 +188,8 @@
 
         .top-container {
             width: 80%;
-            min-width: 750px;
+            max-width: 575px;
+            right: 200px;
         }
     }
 </style>

@@ -33,7 +33,6 @@ export interface FronvoAccount {
     profileId: string;
     username: string;
     bio: string;
-    email?: string;
     avatar: string;
     banner: string;
     creationDate: string;

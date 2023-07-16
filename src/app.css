@@ -90,9 +90,14 @@ textarea {
     resize: none;
 }
 
+textarea::placeholder {
+    color: var(--text_gray);
+}
+
 input:disabled,
 textarea:disabled {
     background: rgba(255, 255, 255, 85%);
+    color: var(--text_gray);
 }
 
 input:focus,

@@ -248,7 +248,7 @@
     }
 
     function scrollListener(): void {
-        if (chat.scrollHeight - chat.scrollTop > 2500 && canShowScroll) {
+        if (chat.scrollHeight - chat.scrollTop > 1750 && canShowScroll) {
             $showScrollBottom = true;
         } else {
             $showScrollBottom = false;

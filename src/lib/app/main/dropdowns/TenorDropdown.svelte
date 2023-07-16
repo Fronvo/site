@@ -9,11 +9,19 @@
 
     interface Gif {
         media_formats: {
+            gif: {
+                url: string;
+            };
+
             mediumgif: {
                 url: string;
             };
 
             tinygif: {
+                url: string;
+            };
+
+            nanogif: {
                 url: string;
             };
         };

@@ -213,6 +213,8 @@
         width: 600px;
         justify-content: start;
         align-items: start;
+        border: none;
+        border-bottom: 1px solid var(--primary);
     }
 
     .small:hover {

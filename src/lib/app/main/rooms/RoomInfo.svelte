@@ -335,10 +335,11 @@
 
     input:disabled {
         background: transparent;
+        color: var(--text);
     }
 
     input:disabled:hover {
-        border: 2px solid var(--bg);
+        border: 2px solid transparent;
     }
 
     svg {

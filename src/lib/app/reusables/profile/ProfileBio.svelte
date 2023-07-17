@@ -10,8 +10,6 @@
             editable ? 'editable' : ''
         }`}
     >
-        <h1 id="descriptor">Bio</h1>
-
         {#if !editable}
             <h1 id="bio">
                 {bio}
@@ -30,8 +28,6 @@
         margin-left: 32px;
         padding-bottom: 10px;
         margin-right: 10px;
-        padding-top: 5px;
-        border-top: 1px solid var(--primary);
     }
 
     .editable {
@@ -41,26 +37,6 @@
     .mini {
         margin-left: 22px;
         max-width: 315px;
-    }
-
-    #descriptor {
-        margin: 0;
-        margin-top: 5px;
-        font-size: 0.75rem;
-        font-weight: 900;
-        text-align: start;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
-
-    .mini #descriptor {
-        font-size: 0.75rem;
     }
 
     #bio {

@@ -225,6 +225,7 @@
         font-size: 1rem;
         box-shadow: none;
         border-radius: 15px;
+        color: white;
     }
 
     button:hover {

@@ -81,7 +81,7 @@
             </InfiniteLoading>
         {/if}
     {:else}
-        <button class="modal-button" on:click={showPosts}>Show posts</button>
+        <button class="modal-button" on:click={showPosts}>Reveal posts</button>
     {/if}
 </div>
 
@@ -94,14 +94,13 @@
         padding-bottom: 10px;
         margin-right: 10px;
         padding-top: 5px;
-        border-top: 1px solid var(--primary);
         height: 100%;
     }
 
     #descriptor {
         margin: 0;
         margin-top: 5px;
-        font-size: 0.75rem;
+        font-size: 0.8rem;
         font-weight: 900;
         text-align: start;
         text-transform: uppercase;
@@ -112,13 +111,20 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+        text-align: center;
+        width: max-content;
+        margin: auto;
+        padding-bottom: 5px;
+        border-bottom: 2px solid var(--branding);
     }
 
     button {
         font-size: 0.9rem;
-        margin-top: 5px;
         box-shadow: none;
         transition: 150ms;
+        width: max-content;
+        margin: auto;
+        margin-top: 10px;
     }
 
     button:hover {

@@ -28,9 +28,6 @@
                 @{profileId}
             </h1>
         </div>
-        {#if status}
-            <h1 id="status">{status}</h1>
-        {/if}
     </div>
 </div>
 
@@ -98,19 +95,6 @@
 
     .mini #identifier {
         font-size: 0.9rem;
-    }
-
-    #status {
-        margin: 0;
-        font-size: 0.9rem;
-        margin-top: 10px;
-        margin-left: 12px;
-        margin-right: 10px;
-        display: -webkit-box;
-        overflow: hidden;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-        color: var(--branding);
     }
 
     input {

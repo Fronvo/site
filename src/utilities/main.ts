@@ -143,7 +143,7 @@ export async function performLogin(
                     loginSucceeded.set(true);
                     clearInterval(interval);
                 }
-            }, 20);
+            }, 10);
         }
 
         socket.emit('isLoggedIn', async ({ loggedIn }) => {
@@ -166,12 +166,9 @@ export async function performLogin(
 
                                 resolve();
                             } else {
-                                removeKey('token');
-                                removeKey('savedAccounts');
+                                localStorage.clear();
 
-                                goto('/', {
-                                    replaceState: true,
-                                });
+                                location.href = '/';
                             }
                         }
                     );

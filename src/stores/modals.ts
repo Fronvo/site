@@ -1,7 +1,7 @@
 import EditProfileModal from '$lib/app/main/modals/EditProfileModal.svelte';
 import DeleteMessageModal from '$lib/app/main/modals/DeleteMessageModal.svelte';
 
-import type { RoomMessage, FronvoAccount } from 'interfaces/all';
+import type { RoomMessage, FronvoAccount, Post } from 'interfaces/all';
 import { writable, type Writable } from 'svelte/store';
 import CreateRoomModal from '$lib/app/main/modals/CreateRoomModal.svelte';
 import LeaveRoomModal from '$lib/app/main/modals/LeaveRoomModal.svelte';
@@ -17,6 +17,9 @@ import AddMembersModal from '$lib/app/main/modals/AddMembersModal.svelte';
 import ImageModal from '$lib/app/main/modals/ImageModal.svelte';
 import CloseDmModal from '$lib/app/main/modals/CloseDMModal.svelte';
 import RemoveMemberModal from '$lib/app/main/modals/RemoveMemberModal.svelte';
+import RequestDataModal from '$lib/app/main/modals/RequestDataModal.svelte';
+import DeleteAccountModal from '$lib/app/main/modals/DeleteAccountModal.svelte';
+import DeletePostModal from '$lib/app/main/modals/DeletePostModal.svelte';
 
 /****************************** Modals ******************************/
 export const modals = [
@@ -36,6 +39,9 @@ export const modals = [
     ImageModal,
     CloseDmModal,
     RemoveMemberModal,
+    RequestDataModal,
+    DeleteAccountModal,
+    DeletePostModal,
 ];
 /****************************** Modals ******************************/
 
@@ -57,6 +63,9 @@ export enum ModalTypes {
     Image,
     CloseDM,
     RemoveMember,
+    RequestData,
+    DeleteAccount,
+    DeletePost,
 }
 
 export interface ModalActions {
@@ -87,6 +96,10 @@ export const targetProfileModal: Writable<FronvoAccount> = writable();
 export const targetMessageModal: Writable<RoomMessage> = writable();
 export const targetMessageModalProfile: Writable<FronvoAccount> = writable();
 /****************************** DeleteMessageModal ******************************/
+
+/****************************** DeletePostModal ******************************/
+export const targetPostModal: Writable<Post> = writable();
+/****************************** DeletePostModal ******************************/
 
 /****************************** ImageModal ******************************/
 export const targetImageModal: Writable<string> = writable();

@@ -1,7 +1,6 @@
 <script lang="ts">
     export let profileId: string;
     export let username: string;
-    export let status: string;
     export let editable = false;
     export let mini = false;
     export let preview = false;

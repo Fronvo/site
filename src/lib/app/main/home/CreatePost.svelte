@@ -1,10 +1,14 @@
 <script lang="ts">
+    import { cachedAccountData, socket } from 'stores/main';
     import { ourData } from 'stores/profile';
     import { onMount } from 'svelte';
     import { toast } from 'svelte-sonner';
     import { setProgressBar } from 'utilities/main';
+    import { loadProfile } from 'utilities/profile';
 
     let content = '';
+    let attachment = '';
+    let gif = '';
 
     let input: HTMLTextAreaElement;
     let share: HTMLButtonElement;
@@ -21,14 +25,31 @@
 
         setProgressBar(true);
 
-        setTimeout(() => {
-            setProgressBar(false);
+        socket.emit(
+            'sharePost',
+            {
+                content,
+                attachment,
+                gif,
+            },
+            ({ err }) => {
+                if (err) {
+                    input.disabled = false;
+                    share.disabled = false;
 
-            input.disabled = false;
-            share.disabled = false;
+                    setProgressBar(false);
+                } else {
+                    input.value = '';
+                    input.disabled = false;
 
-            toast('BETA feature not completed');
-        }, 2500);
+                    setProgressBar(false);
+
+                    loadProfile($cachedAccountData);
+
+                    toast('Post shared to your friends!');
+                }
+            }
+        );
     }
 
     onMount(() => {

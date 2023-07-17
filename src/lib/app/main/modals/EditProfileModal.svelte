@@ -1,6 +1,5 @@
 <script lang="ts">
     import ModalTemplate from '../ModalTemplate.svelte';
-    import type { ModalData } from 'stores/modals';
     import ProfileAvatar from '$lib/app/reusables/profile/ProfileAvatar.svelte';
     import ProfileBanner from '$lib/app/reusables/profile/ProfileBanner.svelte';
     import ProfileIdentifier from '$lib/app/reusables/profile/ProfileIdentifier.svelte';
@@ -17,6 +16,7 @@
     import { cachedAccountData, currentToken, socket } from 'stores/main';
     import { writable } from 'svelte/store';
     import { toast } from 'svelte-sonner';
+    import type { ModalData } from 'stores/modals';
 
     const profileData = $ourData;
 
@@ -104,7 +104,6 @@
                 editable={true}
                 bind:profileId={$profileId}
                 bind:username={$username}
-                status={$ourData.status}
             />
             <ProfileBio editable={true} bind:bio={$bio} />
         </div>

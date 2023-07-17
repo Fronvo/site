@@ -104,6 +104,13 @@ import type {
 } from './account/fetchHomePosts';
 import type { CloseDMParams, CloseDMResult } from './account/closeDM';
 import type { LikePostParams, LikePostResult } from './account/likePost';
+import type { RequestDataResult } from './account/requestData';
+import type { SharePostParams, SharePostResult } from './account/sharePost';
+import type { DeletePostParams, DeletePostResult } from './account/deletePost';
+import type {
+    DeleteAccountParams,
+    DeleteAccountResult,
+} from './account/deleteAccount';
 
 export interface ClientToServerEvents {
     register: (
@@ -235,5 +242,18 @@ export interface ClientToServerEvents {
     likePost: (
         {}: LikePostParams,
         callback?: ({}: LikePostResult) => void
+    ) => void;
+    requestData: (callback?: ({}: RequestDataResult) => void) => void;
+    deleteAccount: (
+        {}: DeleteAccountParams,
+        callback?: ({}: DeleteAccountResult) => void
+    ) => void;
+    sharePost: (
+        {}: SharePostParams,
+        callback?: ({}: SharePostResult) => void
+    ) => void;
+    deletePost: (
+        {}: DeletePostParams,
+        callback?: ({}: DeletePostResult) => void
     ) => void;
 }

@@ -1,10 +1,11 @@
 <script lang="ts">
     import type { Post } from 'interfaces/all';
     import { ourData } from 'stores/profile';
-    import { showModal } from 'utilities/main';
+    import { showDropdown, showModal } from 'utilities/main';
     import {
         ModalTypes,
         targetImageModal,
+        targetPostModal,
         targetProfileModal,
     } from 'stores/modals';
     import {
@@ -18,15 +19,18 @@
     import Like from '$lib/svgs/Like.svelte';
     import { onMount } from 'svelte';
     import { socket } from 'stores/main';
+    import { DropdownTypes } from 'stores/dropdowns';
 
     export let post: Post;
     export let small = false;
+    export let preview = false;
 
     let profileData = post.profileData;
     let postData = post.post;
 
-    let lastMessageSuffix: string;
+    let dateSuffix: string;
 
+    let settings: SVGSVGElement;
     let likes: HTMLHeadingElement;
 
     function updateSuffix(date: string): void {
@@ -45,17 +49,17 @@
         const seconds = differenceInSeconds(new Date(), date2);
 
         if (years > 0) {
-            lastMessageSuffix = `${years} y`;
+            dateSuffix = `${years} y`;
         } else if (months > 0) {
-            lastMessageSuffix = `${months} mo`;
+            dateSuffix = `${months} mo`;
         } else if (days > 0) {
-            lastMessageSuffix = `${days} d`;
+            dateSuffix = `${days} d`;
         } else if (hours > 0) {
-            lastMessageSuffix = `${hours} h`;
+            dateSuffix = `${hours} h`;
         } else if (minutes > 0) {
-            lastMessageSuffix = `${minutes} m`;
+            dateSuffix = `${minutes} m`;
         } else {
-            lastMessageSuffix = `${seconds} s`;
+            dateSuffix = `${seconds} s`;
         }
     }
 
@@ -75,6 +79,12 @@
                 likes.style.transform = 'translateY(0px)';
             }, 250);
         }, 0);
+    }
+
+    function showPostSettings(): void {
+        $targetPostModal = post;
+
+        showDropdown(DropdownTypes.PostSettings, settings, 'bottom', -30);
     }
 
     function showProfileModal(): void {
@@ -129,7 +139,9 @@
     $: updateSuffix(postData.creationDate);
 </script>
 
-<div class={`post-container ${small ? 'small' : ''}`}>
+<div
+    class={`post-container ${small ? 'small' : ''} ${preview ? 'preview' : ''}`}
+>
     {#if profileData.avatar}
         <img
             id="avatar"
@@ -158,7 +170,23 @@
         <div class="post-info-container">
             <h1 id="name">{profileData.profileId}</h1>
 
-            <h1 id="time">{lastMessageSuffix}</h1>
+            <h1 id="time">{dateSuffix}</h1>
+
+            {#if postData.author == $ourData.profileId && !preview}
+                <svg
+                    bind:this={settings}
+                    on:click={showPostSettings}
+                    on:keydown={showPostSettings}
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    ><path
+                        fill="var(--text)"
+                        d="M7 12a2 2 0 1 1-4 0a2 2 0 0 1 4 0Zm7 0a2 2 0 1 1-4 0a2 2 0 0 1 4 0Zm7 0a2 2 0 1 1-4 0a2 2 0 0 1 4 0Z"
+                    /></svg
+                >
+            {/if}
         </div>
 
         <div class="post-wrapper">
@@ -222,6 +250,10 @@
         cursor: default;
     }
 
+    .preview {
+        border: none;
+    }
+
     #avatar {
         width: 40px;
         height: 40px;
@@ -283,6 +315,25 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+    }
+
+    svg {
+        width: 30px;
+        height: 30px;
+        padding: 5px;
+        border-radius: 15px;
+        margin-left: 10px;
+        z-index: 1;
+        transition: 75ms;
+    }
+
+    svg:hover {
+        background: var(--primary);
+    }
+
+    svg:active {
+        transform: scale(0.975);
+        opacity: 0.75;
     }
 
     .wrapper {

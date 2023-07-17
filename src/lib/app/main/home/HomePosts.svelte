@@ -1,13 +1,30 @@
 <script lang="ts">
     import Post from '$lib/app/reusables/all/Post.svelte';
     import { socket } from 'stores/main';
-    import { homePosts as homePostsStore } from 'stores/home';
+    import { homePosts as homePostsStore, totalHomePosts } from 'stores/home';
     import InfiniteLoading from 'svelte-infinite-loading';
     import { currentRoomId } from 'stores/rooms';
     import { fade } from 'svelte/transition';
     import CreatePost from './CreatePost.svelte';
+    import { onMount } from 'svelte';
+    import { toast } from 'svelte-sonner';
+    import { ourData } from 'stores/profile';
 
     let welcomeText: string;
+
+    function reloadPosts(): void {
+        socket.emit(
+            'fetchHomePosts',
+            {
+                from: '0',
+                to: '20',
+            },
+            ({ homePosts, totalPosts }) => {
+                $homePostsStore = homePosts;
+                $totalHomePosts = totalPosts;
+            }
+        );
+    }
 
     function updateWelcomeText(): void {
         const hour = new Date().getHours();
@@ -48,6 +65,19 @@
             }
         );
     }
+
+    onMount(() => {
+        socket.off('postShared');
+        socket.off('postRemoved');
+
+        socket.on('postShared', ({ author }) => {
+            if (author == $ourData.profileId) return;
+
+            toast(`${author} just shared a post!`);
+        });
+
+        socket.on('postRemoved', reloadPosts);
+    });
 
     $: updateWelcomeText();
 </script>

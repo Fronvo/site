@@ -25,7 +25,6 @@
             {editable}
             profileId={profileData.profileId}
             username={profileData.username}
-            status={profileData.status}
         />
         <ProfileBio {editable} bio={profileData.bio} />
 

@@ -50,7 +50,7 @@ interface ThemingOptions {
 // branding_darken: 'rgb(0, 140, 255)',
 
 export const defaultTheme: ThemingOptions = {
-    i_primary: 'rgb(27, 27, 27)',
+    i_primary: 'rgb(21, 21, 21)',
     i_shadow: 'rgb(15, 15, 15)',
 
     primary: 'rgb(30, 30, 30)',
@@ -84,8 +84,8 @@ export const defaultTheme: ThemingOptions = {
 
     modal_checkbox_secondary: 'rgb(200, 200, 200)',
 
-    modal_header_size: '1.3rem',
-    modal_input_size: '1.3rem',
+    modal_header_size: '1.2rem',
+    modal_input_size: '1.2rem',
 };
 
 export const whiteTheme: ThemingOptions = {
@@ -122,8 +122,8 @@ export const whiteTheme: ThemingOptions = {
     modal_checkbox_primary: 'var(--text)',
     modal_checkbox_secondary: 'rgb(90, 90, 90)',
 
-    modal_header_size: '1.3rem',
-    modal_input_size: '1.3rem',
+    modal_header_size: '1.2rem',
+    modal_input_size: '1.2rem',
 };
 
 export const currentTheme: Writable<ThemingOptions> = writable(defaultTheme);

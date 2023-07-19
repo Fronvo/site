@@ -74,6 +74,8 @@
             if (author == $ourData.profileId) return;
 
             toast(`${author} just shared a post!`);
+
+            reloadPosts();
         });
 
         socket.on('postRemoved', reloadPosts);

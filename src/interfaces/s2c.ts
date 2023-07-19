@@ -32,7 +32,7 @@ import type { ProfileStatusUpdatedResult } from './account/profileStatusUpdated'
 import type { RoomCreatedResult } from './account/roomCreated';
 import type { RoomAddedResult } from './account/roomAdded';
 import type { RoomRemovedResult } from './account/roomRemoved';
-import type { PostLikesChangedResult } from './account/postLikeCountChanged';
+import type { PostLikesChangedResult } from './account/postLikesChanged';
 import type { PostRemovedResult } from './account/postRemoved';
 import type { PostSharedResult } from './account/postShared';
 

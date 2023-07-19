@@ -8,13 +8,30 @@
     import ResetMain from '$lib/index/ResetMain.svelte';
     import { redirectApp } from 'utilities/index';
     import { performLogin } from 'utilities/main';
+    import { goto } from '$app/navigation';
 
     let mountReady = false;
 
     onMount(async () => {
+        // No mobile
+        const val = window.navigator.userAgent.toLowerCase();
+
+        // Block access to mobile, get the app
+        if (val.includes('android') || val.includes('iphone')) {
+            goto('/', {
+                replaceState: true,
+            });
+
+            return;
+        }
+
         // Remove for registered users
         if (getKey('token')) {
             redirectApp();
+
+            goto('/', {
+                replaceState: true,
+            });
 
             await performLogin(getKey('token'), $cachedAccountData);
             return;

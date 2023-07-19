@@ -8,6 +8,7 @@
         targetTenorCallback,
     } from 'stores/modals';
     import { ourData } from 'stores/profile';
+    import { currentRoomId } from 'stores/rooms';
     import { onMount } from 'svelte';
     import { toast } from 'svelte-sonner';
     import { scale } from 'svelte/transition';
@@ -185,13 +186,16 @@
                         },
                         ({ profilePosts, err }) => {
                             if (!err) {
-                                $homePosts = [...profilePosts].concat(
-                                    $homePosts
-                                );
+                                setTimeout(() => {
+                                    const tempPosts = $homePosts;
+                                    $homePosts = [];
 
-                                $homePosts = $homePosts;
-
-                                console.log($homePosts);
+                                    setTimeout(() => {
+                                        $homePosts = [...profilePosts].concat(
+                                            tempPosts
+                                        );
+                                    }, 0);
+                                }, 0);
                             }
                         }
                     );
@@ -324,6 +328,7 @@
 
         {#if gif || attachment}
             <svg
+                id="clear"
                 xmlns="http://www.w3.org/2000/svg"
                 width="32"
                 height="32"
@@ -453,6 +458,7 @@
     }
 
     button:hover {
+        color: white;
         background: var(--branding_darken);
     }
 
@@ -481,5 +487,9 @@
 
     svg:hover {
         background: var(--branding_trans);
+    }
+
+    #clear:hover {
+        background: rgba(255, 0, 0, 0.15);
     }
 </style>

@@ -21,6 +21,7 @@ interface ThemingOptions {
     // Text color
     text: string;
     text_gray: string;
+    text_gray_secondary: string;
 
     // Button backgrounds
     button: string;
@@ -64,7 +65,8 @@ export const defaultTheme: ThemingOptions = {
     bg_trans: 'rgb(20, 20, 20, 75%)',
 
     text: 'rgb(220, 220, 220)',
-    text_gray: 'rgb(160, 160, 160)',
+    text_gray: 'rgb(150, 150, 150)',
+    text_gray_secondary: 'rgb(100, 100, 100)',
 
     button: 'rgb(25, 25, 25)',
 
@@ -104,6 +106,7 @@ export const whiteTheme: ThemingOptions = {
 
     text: 'rgb(40, 40, 40)',
     text_gray: 'rgb(100, 100, 100)',
+    text_gray_secondary: 'rgb(100, 100, 100)',
 
     button: 'rgb(240, 240, 240)',
 

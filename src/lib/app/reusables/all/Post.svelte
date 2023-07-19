@@ -303,7 +303,7 @@
         margin: 0;
         font-size: 0.9rem;
         margin-left: 5px;
-        color: var(--text_gray);
+        color: var(--text_gray_secondary);
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;

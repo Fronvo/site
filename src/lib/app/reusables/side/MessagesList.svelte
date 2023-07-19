@@ -86,7 +86,7 @@
         width: 275px;
         height: calc(100vh - 65px);
         transform: translateY(65px);
-        box-shadow: 0 5px 10px var(--message_shadow);
+        box-shadow: 0 5px 4px var(--message_shadow);
     }
 
     .message-container {

@@ -237,7 +237,7 @@
         width: 275px;
         border-left: 1px solid var(--primary);
         height: 100vh;
-        box-shadow: 0 0 10px var(--message_shadow);
+        box-shadow: 0 0 4px var(--message_shadow);
         z-index: 1;
     }
 

@@ -111,6 +111,7 @@ import type {
     DeleteAccountParams,
     DeleteAccountResult,
 } from './account/deleteAccount';
+import type { FetchTenorParams, FetchTenorResult } from './account/fetchTenor';
 
 export interface ClientToServerEvents {
     register: (
@@ -255,5 +256,9 @@ export interface ClientToServerEvents {
     deletePost: (
         {}: DeletePostParams,
         callback?: ({}: DeletePostResult) => void
+    ) => void;
+    fetchTenor: (
+        {}: FetchTenorParams,
+        callback?: ({}: FetchTenorResult) => void
     ) => void;
 }

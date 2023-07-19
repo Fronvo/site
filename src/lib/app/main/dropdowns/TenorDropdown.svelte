@@ -2,33 +2,13 @@
     import { onMount } from 'svelte';
     import DropdownTemplateEmpty from '../DropdownTemplateEmpty.svelte';
     import { fade, scale } from 'svelte/transition';
-    import { socket } from 'stores/main';
-    import { currentRoomId } from 'stores/rooms';
     import { targetTenorCallback } from 'stores/modals';
+    import { socket } from 'stores/main';
+    import type { TenorGifs } from 'interfaces/account/fetchTenor';
 
     let search: HTMLInputElement;
 
-    interface Gif {
-        media_formats: {
-            gif: {
-                url: string;
-            };
-
-            mediumgif: {
-                url: string;
-            };
-
-            tinygif: {
-                url: string;
-            };
-
-            nanogif: {
-                url: string;
-            };
-        };
-    }
-
-    let gifs: Gif[] = [];
+    let gifsP: TenorGifs[] = [];
     let showEmpty = true;
 
     onMount(() => {
@@ -54,24 +34,20 @@
                 }, 0);
 
                 setTimeout(() => {
+                    console.log(oldVal, search.value);
+
                     if (oldVal != search.value || oldVal == '') {
-                        gifs = [];
+                        gifsP = [];
                         return;
                     }
 
-                    gifs = [];
+                    gifsP = [];
 
-                    fetch(
-                        `https://tenor.googleapis.com/v2/search?q=${
-                            search.value
-                        }&limit=26&key=${import.meta.env.VITE_TENOR_KEY}`
-                    ).then(async (data) => {
-                        const res = await data.json();
-
-                        if (res.results) {
-                            gifs = res.results as [];
+                    socket.emit('fetchTenor', { q: oldVal }, ({ gifs }) => {
+                        if (gifs.length > 0) {
+                            gifsP = gifs;
                         } else {
-                            gifs = [];
+                            gifsP = [];
                         }
                     });
                 }, 250);
@@ -86,7 +62,7 @@
 
 <DropdownTemplateEmpty>
     <div class="search-container">
-        <input bind:this={search} placeholder="Search Tenor" />
+        <input maxlength={64} bind:this={search} placeholder="Search Tenor" />
 
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -103,7 +79,7 @@
     </div>
 
     <div class="gifs-container">
-        {#if gifs.length == 0 && showEmpty}
+        {#if gifsP.length == 0 && showEmpty}
             <div class="empty" in:fade>
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -127,12 +103,12 @@
         {/if}
 
         <div class="gif-container">
-            {#each gifs.slice(0, Math.ceil(gifs.length / 2)) as gif, i}
+            {#each gifsP.slice(0, Math.ceil(gifsP.length / 2)) as { gif_tiny }, i}
                 <img
-                    on:click={() => sendGif(gif.media_formats.tinygif.url)}
-                    on:keydown={() => sendGif(gif.media_formats.tinygif.url)}
+                    on:click={() => sendGif(gif_tiny)}
+                    on:keydown={() => sendGif(gif_tiny)}
                     in:scale={{ duration: 250, delay: i + i * 25 }}
-                    src={gif.media_formats.tinygif.url}
+                    src={gif_tiny}
                     alt="Tenor GIF"
                     draggable={false}
                 />
@@ -140,12 +116,12 @@
         </div>
 
         <div class="gif-container">
-            {#each gifs.slice(Math.ceil(gifs.length / 2) + 1, gifs.length) as gif, i}
+            {#each gifsP.slice(Math.ceil(gifsP.length / 2) + 1, gifsP.length) as { gif_tiny }, i}
                 <img
-                    on:click={() => sendGif(gif.media_formats.tinygif.url)}
-                    on:keydown={() => sendGif(gif.media_formats.tinygif.url)}
+                    on:click={() => sendGif(gif_tiny)}
+                    on:keydown={() => sendGif(gif_tiny)}
                     in:scale={{ duration: 250, delay: i + i * 25 }}
-                    src={gif.media_formats.tinygif.url}
+                    src={gif_tiny}
                     alt="Tenor GIF"
                     draggable={false}
                 />

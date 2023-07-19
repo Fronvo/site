@@ -6,6 +6,8 @@
     import { toast } from 'svelte-sonner';
     import { loadProfile } from 'utilities/profile';
     import Post from '$lib/app/reusables/all/Post.svelte';
+    import { homePosts } from 'stores/home';
+    import { loadHomePosts } from 'utilities/home';
 
     function deletePost(): void {
         // Will recieve result in RoomChat listener if successful
@@ -22,6 +24,12 @@
                 loadProfile($cachedAccountData);
 
                 toast('Post deleted');
+
+                if ($homePosts.includes($targetPostModal)) {
+                    $homePosts = [];
+
+                    loadHomePosts();
+                }
 
                 dismissModal();
             }

@@ -119,7 +119,7 @@
             }, 0);
         };
 
-        showDropdown(DropdownTypes.Gif, gifElement, 'bottom', 0, 12);
+        showDropdown(DropdownTypes.Gif, gifElement, 'bottom', -25, 12);
     }
 
     function showImage(): void {
@@ -138,6 +138,12 @@
         attachment = '';
         attachmentBase64 = '';
         gif = '';
+
+        setTimeout(() => {
+            if (content.length == 0) {
+                share.disabled = true;
+            }
+        }, 0);
     }
 
     async function sharePost(): Promise<void> {

@@ -37,7 +37,10 @@
             let file = Array.from(input.files)[0];
 
             // 3MB
-            if (file.size > 3000000) return;
+            if (file.size > 3000000) {
+                toast('Image is above 3MB.');
+                return;
+            }
 
             if (isAcceptedImage(file.type)) {
                 // One of each
@@ -56,10 +59,51 @@
                 });
 
                 reader.readAsDataURL(file);
+            } else {
+                toast('Unsupported file type.');
             }
         };
 
         input.click();
+    }
+
+    function setupImagePasting(): void {
+        setTimeout(() => {
+            if (!input) return;
+
+            input.addEventListener('paste', (ev) => {
+                if (ev.clipboardData.files.length > 0) {
+                    const file = ev.clipboardData.files[0];
+
+                    // 3MB
+                    if (file.size > 3000000) {
+                        toast('Image is above 3MB.');
+                        return;
+                    }
+
+                    if (isAcceptedImage(file.type)) {
+                        // One of each
+                        gif = '';
+
+                        attachment = window.URL.createObjectURL(file);
+
+                        const reader = new FileReader();
+
+                        reader.addEventListener('load', async () => {
+                            attachmentBase64 = reader.result;
+
+                            setTimeout(() => {
+                                share.disabled = false;
+                            }, 0);
+                        });
+
+                        reader.readAsDataURL(file);
+                    } else {
+                        toast('Unsupported file type.');
+                    }
+                }
+            });
+        }, 0);
     }
 
     function addGif(): void {
@@ -161,8 +205,10 @@
             input.style.height = '55px';
             input.style.height = `${input.scrollHeight}px`;
 
-            input.onkeydown = () => {
+            input.onkeydown = (ev) => {
                 setTimeout(() => {
+                    if (ev.ctrlKey) return;
+
                     if (content.length > 0) {
                         share.disabled = false;
                     } else {
@@ -173,6 +219,8 @@
                     input.style.height = `${input.scrollHeight}px`;
                 }, 0);
             };
+
+            setupImagePasting();
         }
 
         if (share) {

@@ -27,6 +27,7 @@
     import Gif from '$lib/svgs/Gif.svelte';
     import { DropdownTypes } from 'stores/dropdowns';
     import { targetTenorCallback } from 'stores/modals';
+    import { toast } from 'svelte-sonner';
 
     let content: HTMLTextAreaElement;
     let typingE: HTMLDivElement;
@@ -39,7 +40,6 @@
     let cantMessageReason: string;
 
     let typingSent = false;
-    let pasteInited = false;
     let typing: Writable<string[]> = writable([]);
 
     function adjustCanMessage(): void {
@@ -82,10 +82,6 @@
     }
 
     function setupImagePasting(): void {
-        if (pasteInited) return;
-
-        pasteInited = true;
-
         setTimeout(() => {
             if (!content) return;
 
@@ -94,7 +90,10 @@
                     const file = ev.clipboardData.files[0];
 
                     // 3MB
-                    if (file.size > 3000000) return;
+                    if (file.size > 3000000) {
+                        toast('Image is above 3MB.');
+                        return;
+                    }
 
                     if (isAcceptedImage(file.type)) {
                         const reader = new FileReader();
@@ -108,6 +107,8 @@
                         });
 
                         reader.readAsDataURL(file);
+                    } else {
+                        toast('Unsupported file type.');
                     }
                 }
             });
@@ -124,7 +125,10 @@
             let file = Array.from(input.files)[0];
 
             // 3MB
-            if (file.size > 3000000) return;
+            if (file.size > 3000000) {
+                toast('Image is above 3MB.');
+                return;
+            }
 
             if (isAcceptedImage(file.type)) {
                 const reader = new FileReader();
@@ -138,6 +142,8 @@
                 });
 
                 reader.readAsDataURL(file);
+            } else {
+                toast('Unsupported file type.');
             }
         };
 

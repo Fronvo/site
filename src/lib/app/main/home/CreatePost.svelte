@@ -1,23 +1,101 @@
 <script lang="ts">
+    import { DropdownTypes } from 'stores/dropdowns';
+    import { homePosts } from 'stores/home';
     import { cachedAccountData, socket } from 'stores/main';
+    import {
+        ModalTypes,
+        targetImageModal,
+        targetTenorCallback,
+    } from 'stores/modals';
     import { ourData } from 'stores/profile';
     import { onMount } from 'svelte';
     import { toast } from 'svelte-sonner';
-    import { setProgressBar } from 'utilities/main';
+    import { scale } from 'svelte/transition';
+    import {
+        isAcceptedImage,
+        setProgressBar,
+        showDropdown,
+        showModal,
+    } from 'utilities/main';
     import { loadProfile } from 'utilities/profile';
+    import { uploadImage } from 'utilities/rooms';
 
     let content = '';
     let attachment = '';
+    let attachmentBase64: any;
     let gif = '';
 
     let input: HTMLTextAreaElement;
     let share: HTMLButtonElement;
+    let gifElement: SVGSVGElement;
 
-    function addImage(): void {}
+    function addImage(): void {
+        let input = document.createElement('input');
+        input.type = 'file';
 
-    function addGif(): void {}
+        input.onchange = async (_) => {
+            let file = Array.from(input.files)[0];
 
-    function sharePost(): void {
+            // 3MB
+            if (file.size > 3000000) return;
+
+            if (isAcceptedImage(file.type)) {
+                // One of each
+                gif = '';
+
+                attachment = window.URL.createObjectURL(file);
+
+                const reader = new FileReader();
+
+                reader.addEventListener('load', async () => {
+                    attachmentBase64 = reader.result;
+
+                    setTimeout(() => {
+                        share.disabled = false;
+                    }, 0);
+                });
+
+                reader.readAsDataURL(file);
+            }
+        };
+
+        input.click();
+    }
+
+    function addGif(): void {
+        $targetTenorCallback = (url: string) => {
+            // One of each
+            attachment = '';
+
+            gif = url;
+
+            setTimeout(() => {
+                share.disabled = false;
+            }, 0);
+        };
+
+        showDropdown(DropdownTypes.Gif, gifElement, 'bottom', 0, 12);
+    }
+
+    function showImage(): void {
+        $targetImageModal = attachment;
+
+        showModal(ModalTypes.Image);
+    }
+
+    function showGif(): void {
+        $targetImageModal = gif;
+
+        showModal(ModalTypes.Image);
+    }
+
+    function resetMedia(): void {
+        attachment = '';
+        attachmentBase64 = '';
+        gif = '';
+    }
+
+    async function sharePost(): Promise<void> {
         if (input.disabled) return;
 
         input.disabled = true;
@@ -29,7 +107,9 @@
             'sharePost',
             {
                 content,
-                attachment,
+                attachment: attachmentBase64
+                    ? await uploadImage(attachmentBase64)
+                    : '',
                 gif,
             },
             ({ err }) => {
@@ -42,11 +122,35 @@
                     input.value = '';
                     input.disabled = false;
 
+                    gif = '';
+                    attachment = '';
+                    attachmentBase64 = '';
+
                     setProgressBar(false);
 
                     loadProfile($cachedAccountData);
 
                     toast('Post shared to your friends!');
+
+                    socket.emit(
+                        'fetchProfilePosts',
+                        {
+                            profileId: $ourData.profileId,
+                            from: '0',
+                            to: '1',
+                        },
+                        ({ profilePosts, err }) => {
+                            if (!err) {
+                                $homePosts = [...profilePosts].concat(
+                                    $homePosts
+                                );
+
+                                $homePosts = $homePosts;
+
+                                console.log($homePosts);
+                            }
+                        }
+                    );
                 }
             }
         );
@@ -108,6 +212,28 @@
         />
     </div>
 
+    {#if attachment}
+        <img
+            in:scale={{ duration: 250, start: 0.95 }}
+            id="media-img"
+            src={attachment}
+            alt="Post attachment"
+            draggable={false}
+            on:click={showImage}
+            on:keydown={showImage}
+        />
+    {:else if gif}
+        <img
+            in:scale={{ duration: 250, start: 0.95 }}
+            id="media-img"
+            src={gif}
+            alt="Post GIF"
+            draggable={false}
+            on:click={showGif}
+            on:keydown={showGif}
+        />
+    {/if}
+
     <div class="bottom-container">
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -125,6 +251,7 @@
         >
 
         <svg
+            bind:this={gifElement}
             id="gif"
             xmlns="http://www.w3.org/2000/svg"
             width="32"
@@ -146,6 +273,23 @@
                 /></g
             ></svg
         >
+
+        {#if gif || attachment}
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                on:click={resetMedia}
+                on:keydown={resetMedia}
+                ><path
+                    fill="red"
+                    fill-rule="evenodd"
+                    d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2s10 4.477 10 10ZM8.97 8.97a.75.75 0 0 1 1.06 0L12 10.94l1.97-1.97a.75.75 0 0 1 1.06 1.06L13.06 12l1.97 1.97a.75.75 0 0 1-1.06 1.06L12 13.06l-1.97 1.97a.75.75 0 0 1-1.06-1.06L10.94 12l-1.97-1.97a.75.75 0 0 1 0-1.06Z"
+                    clip-rule="evenodd"
+                /></svg
+            >
+        {/if}
 
         <span id="placeholder" />
 
@@ -205,6 +349,17 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+        transition: 150ms;
+    }
+
+    #media-img {
+        max-height: 600px;
+        border-radius: 20px;
+        border: 1px solid var(--primary);
+        cursor: pointer;
+        margin-top: 10px;
+        margin-left: 50px;
+        max-width: 515px;
         transition: 150ms;
     }
 

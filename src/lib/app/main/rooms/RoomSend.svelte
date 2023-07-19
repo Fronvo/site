@@ -26,6 +26,7 @@
     import { fade } from 'svelte/transition';
     import Gif from '$lib/svgs/Gif.svelte';
     import { DropdownTypes } from 'stores/dropdowns';
+    import { targetTenorCallback } from 'stores/modals';
 
     let content: HTMLTextAreaElement;
     let typingE: HTMLDivElement;
@@ -141,6 +142,23 @@
         };
 
         input.click();
+    }
+
+    function showGifPicker(): void {
+        $targetTenorCallback = (url: string) => {
+            socket.emit('sendRoomMessage', {
+                roomId: $currentRoomId,
+                message: url,
+            });
+        };
+
+        showDropdown(
+            DropdownTypes.Gif,
+            document.getElementById('gif'),
+            'top',
+            -425,
+            -525
+        );
     }
 
     onMount(() => {
@@ -319,16 +337,7 @@
                 lang="en"
             />
 
-            <Gif
-                callback={() =>
-                    showDropdown(
-                        DropdownTypes.Gif,
-                        document.getElementById('gif'),
-                        'top',
-                        -425,
-                        -525
-                    )}
-            />
+            <Gif callback={showGifPicker} />
 
             {#if $sendContent.trim().length > 0}
                 <Send

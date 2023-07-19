@@ -63,24 +63,6 @@
         }
     }
 
-    function updateLikes(newLikes: number): void {
-        setTimeout(() => {
-            if (!likes) return;
-
-            likes.style.transform = `translateY(${
-                postData.isLiked ? '-' : ''
-            }5px)`;
-
-            setTimeout(() => {
-                likes.textContent = `${newLikes}`;
-            }, 100);
-
-            setTimeout(() => {
-                likes.style.transform = 'translateY(0px)';
-            }, 250);
-        }, 0);
-    }
-
     function showPostSettings(): void {
         $targetPostModal = post;
 
@@ -107,20 +89,24 @@
         showModal(ModalTypes.Image);
     }
 
+    function showGif(): void {
+        if (small) return;
+
+        $targetImageModal = postData.gif;
+
+        showModal(ModalTypes.Image);
+    }
+
     function likePost(): void {
         // Simulate
         if (postData.isLiked) {
             postData.isLiked = false;
 
             postData.totalLikes -= 1;
-
-            updateLikes(postData.totalLikes);
         } else {
             postData.isLiked = true;
 
             postData.totalLikes += 1;
-
-            updateLikes(postData.totalLikes);
         }
 
         socket.emit('likePost', {
@@ -131,7 +117,7 @@
     onMount(() => {
         socket.on('postLikesChanged', ({ postId, likes }) => {
             if (postData.postId == postId) {
-                likes != postData.totalLikes && updateLikes(likes);
+                postData.totalLikes = likes;
             }
         });
     });
@@ -204,6 +190,15 @@
                     alt={'Post attachment'}
                     on:click={showImage}
                     on:keydown={showImage}
+                />
+            {:else if postData.gif}
+                <img
+                    id="attachment"
+                    src={postData.gif}
+                    draggable={false}
+                    alt={'Post GIF'}
+                    on:click={showGif}
+                    on:keydown={showGif}
                 />
             {/if}
         </div>

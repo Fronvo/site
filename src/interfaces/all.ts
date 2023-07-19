@@ -20,6 +20,7 @@ export interface AccountPost {
     author: string;
     content?: string;
     attachment?: string;
+    gif?: string;
     creationDate: string;
     totalLikes: number;
     isLiked: boolean;

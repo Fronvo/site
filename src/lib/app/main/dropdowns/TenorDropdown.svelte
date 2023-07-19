@@ -4,6 +4,7 @@
     import { fade, scale } from 'svelte/transition';
     import { socket } from 'stores/main';
     import { currentRoomId } from 'stores/rooms';
+    import { targetTenorCallback } from 'stores/modals';
 
     let search: HTMLInputElement;
 
@@ -79,10 +80,7 @@
     });
 
     function sendGif(url: string): void {
-        socket.emit('sendRoomMessage', {
-            roomId: $currentRoomId,
-            message: url,
-        });
+        $targetTenorCallback(url);
     }
 </script>
 

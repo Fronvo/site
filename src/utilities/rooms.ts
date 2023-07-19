@@ -71,6 +71,18 @@ export function sendMessage(
     replyingToId.set(undefined);
 }
 
+export async function uploadImage(file: any): Promise<string> {
+    return await (
+        await fetch('/api/upload', {
+            method: 'POST',
+            body: JSON.stringify({
+                file,
+                noTransform: true,
+            }),
+        })
+    ).json();
+}
+
 export async function sendImage(
     roomId: string,
     sendingImage: boolean,
@@ -81,21 +93,11 @@ export async function sendImage(
     sendingImageStore.set(true);
     setProgressBar(true);
 
-    const attachment = await (
-        await fetch('/api/upload', {
-            method: 'POST',
-            body: JSON.stringify({
-                file,
-                noTransform: true,
-            }),
-        })
-    ).json();
-
     socket.emit(
         'sendRoomImage',
         {
             roomId,
-            attachment,
+            attachment: await uploadImage(file),
         },
         () => {
             setProgressBar(false);

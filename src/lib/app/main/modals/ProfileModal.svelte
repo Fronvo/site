@@ -38,7 +38,7 @@
                     );
                 } else {
                     // Most logical error
-                    toast.error('Friend request has already been sent');
+                    toast('Friend request has already been sent');
                 }
             }
         );

@@ -104,3 +104,7 @@ export const targetPostModal: Writable<Post> = writable();
 /****************************** ImageModal ******************************/
 export const targetImageModal: Writable<string> = writable();
 /****************************** ImageModal ******************************/
+
+/****************************** TenorModal ******************************/
+export const targetTenorCallback: Writable<(url: string) => void> = writable();
+/****************************** TenorModal ******************************/

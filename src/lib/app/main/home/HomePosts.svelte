@@ -20,8 +20,12 @@
                 to: '20',
             },
             ({ homePosts, totalPosts }) => {
-                $homePostsStore = homePosts;
-                $totalHomePosts = totalPosts;
+                $homePostsStore = [];
+
+                setTimeout(() => {
+                    $homePostsStore = homePosts;
+                    $totalHomePosts = totalPosts;
+                }, 0);
             }
         );
     }

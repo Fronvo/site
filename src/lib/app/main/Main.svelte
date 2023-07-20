@@ -12,7 +12,7 @@
     import { currentRoomId } from 'stores/rooms';
     import HomePosts from './home/HomePosts.svelte';
     import { Toaster, toast } from 'svelte-sonner';
-    import { darkTheme, loginSucceeded } from 'stores/main';
+    import { darkTheme, loginSucceeded, socket } from 'stores/main';
     import { onMount } from 'svelte';
     import { ourData } from 'stores/profile';
 
@@ -21,6 +21,10 @@
             if (!state) return;
 
             toast(`Welcome back, ${$ourData.username}`);
+        });
+
+        socket.on('onlineStatusUpdated', ({ online, profileId }) => {
+            if (online) toast(`${profileId} is now online.`);
         });
     });
 </script>

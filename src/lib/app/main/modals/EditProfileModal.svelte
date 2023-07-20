@@ -17,6 +17,7 @@
     import { writable } from 'svelte/store';
     import { toast } from 'svelte-sonner';
     import type { ModalData } from 'stores/modals';
+    import ModalTemplatePro from '../ModalTemplatePRO.svelte';
 
     const profileData = $ourData;
 
@@ -94,25 +95,47 @@
     };
 </script>
 
-<ModalTemplate {data}>
-    <div class="profile-container">
-        <ProfileBanner editable={true} bind:banner={$banner} />
-        <ProfileAvatar
-            editable={true}
-            bind:avatar={$avatar}
-            isPRO={profileData.isPRO}
-        />
-
-        <div class="secondary-container">
-            <ProfileIdentifier
+{#if $ourData.isPRO}
+    <ModalTemplatePro {data}>
+        <div class="profile-container">
+            <ProfileBanner editable={true} bind:banner={$banner} />
+            <ProfileAvatar
                 editable={true}
-                bind:profileId={$profileId}
-                bind:username={$username}
+                bind:avatar={$avatar}
+                isPRO={profileData.isPRO}
             />
-            <ProfileBio editable={true} bind:bio={$bio} />
+
+            <div class="secondary-container">
+                <ProfileIdentifier
+                    editable={true}
+                    bind:profileId={$profileId}
+                    bind:username={$username}
+                />
+                <ProfileBio editable={true} bind:bio={$bio} />
+            </div>
         </div>
-    </div>
-</ModalTemplate>
+    </ModalTemplatePro>
+{:else}
+    <ModalTemplate {data}>
+        <div class="profile-container">
+            <ProfileBanner editable={true} bind:banner={$banner} />
+            <ProfileAvatar
+                editable={true}
+                bind:avatar={$avatar}
+                isPRO={profileData.isPRO}
+            />
+
+            <div class="secondary-container">
+                <ProfileIdentifier
+                    editable={true}
+                    bind:profileId={$profileId}
+                    bind:username={$username}
+                />
+                <ProfileBio editable={true} bind:bio={$bio} />
+            </div>
+        </div>
+    </ModalTemplate>
+{/if}
 
 <style>
     .profile-container {

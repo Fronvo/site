@@ -10,6 +10,7 @@
     import ProfilePreviewLarge from '$lib/app/reusables/all/ProfilePreviewLarge.svelte';
     import { socket } from 'stores/main';
     import { toast } from 'svelte-sonner';
+    import ModalTemplatePro from '../ModalTemplatePRO.svelte';
 
     const profileData = $targetProfileModal;
     const isSelf = profileData.profileId == $ourData.profileId;
@@ -74,6 +75,12 @@
     };
 </script>
 
-<ModalTemplate {data}>
-    <ProfilePreviewLarge {profileData} />
-</ModalTemplate>
+{#if $targetProfileModal.isPRO}
+    <ModalTemplatePro {data}>
+        <ProfilePreviewLarge {profileData} />
+    </ModalTemplatePro>
+{:else}
+    <ModalTemplate {data}>
+        <ProfilePreviewLarge {profileData} />
+    </ModalTemplate>
+{/if}

@@ -18,7 +18,12 @@
 
 <div class={`profile-container ${preview ? 'preview' : ''}`}>
     <ProfileBanner {preview} {editable} banner={profileData.banner} />
-    <ProfileAvatar {preview} {editable} avatar={profileData.avatar} />
+    <ProfileAvatar
+        {preview}
+        {editable}
+        avatar={profileData.avatar}
+        isPRO={profileData.isPRO}
+    />
 
     <div class={`secondary-container ${preview ? 'preview' : ''}`}>
         <ProfileIdentifier

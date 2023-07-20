@@ -11,7 +11,12 @@
 
 <div class="profile-container">
     <ProfileBanner mini {editable} banner={profileData.banner} />
-    <ProfileAvatar mini {editable} avatar={profileData.avatar} />
+    <ProfileAvatar
+        mini
+        {editable}
+        avatar={profileData.avatar}
+        isPRO={profileData.isPRO}
+    />
 
     <div class="secondary-container">
         <ProfileIdentifier

@@ -97,7 +97,11 @@
 <ModalTemplate {data}>
     <div class="profile-container">
         <ProfileBanner editable={true} bind:banner={$banner} />
-        <ProfileAvatar editable={true} bind:avatar={$avatar} />
+        <ProfileAvatar
+            editable={true}
+            bind:avatar={$avatar}
+            isPRO={profileData.isPRO}
+        />
 
         <div class="secondary-container">
             <ProfileIdentifier

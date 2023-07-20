@@ -1,10 +1,21 @@
 <script lang="ts">
-    import { targetImageModal, type ModalData } from 'stores/modals';
+    import {
+        targetImageModal,
+        type ModalData,
+        ModalTypes,
+    } from 'stores/modals';
     import ModalTemplate from '../ModalTemplate.svelte';
-    import { dismissModal } from 'utilities/main';
+    import { dismissModal, showModal } from 'utilities/main';
+    import { ourData } from 'stores/profile';
 
     const data: ModalData = {
         actions: [
+            {
+                title: 'Improve quality',
+                callback: () => showModal(ModalTypes.GoPRO),
+                pro: true,
+                condition: !$ourData.isPRO,
+            },
             {
                 title: 'Open in new tab',
                 callback: () => window.open($targetImageModal, '_blank'),

@@ -12,6 +12,7 @@
     import { onMount } from 'svelte';
     import { toast } from 'svelte-sonner';
     import { scale } from 'svelte/transition';
+    import { Errors } from 'types/all';
     import {
         isAcceptedImage,
         setProgressBar,
@@ -159,7 +160,7 @@
             {
                 content,
                 attachment: attachmentBase64
-                    ? await uploadImage(attachmentBase64)
+                    ? await uploadImage(attachmentBase64, $ourData.isPRO)
                     : '',
                 gif,
             },
@@ -169,6 +170,10 @@
                     share.disabled = false;
 
                     setProgressBar(false);
+
+                    if (err.code == Errors.DO_AGAIN) {
+                        showModal(ModalTypes.GoPRO);
+                    }
                 } else {
                     input.value = '';
                     input.disabled = false;

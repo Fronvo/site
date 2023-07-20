@@ -43,6 +43,7 @@ export interface FronvoAccount {
     status?: string;
     pendingFriendRequests?: string[];
     friends: string[];
+    isPRO?: boolean;
 }
 
 export interface SwitchedAccount {
@@ -88,5 +89,8 @@ export interface Theme {
     title: string;
     description: string;
     icon: string;
-    creationDate: string;
+    brandingWhite?: string;
+    brandingDarkenWhite?: string;
+    brandingDark?: string;
+    brandingDarkenDark?: string;
 }

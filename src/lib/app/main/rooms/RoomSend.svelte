@@ -102,7 +102,8 @@
                             await sendImage(
                                 $currentRoomId,
                                 $sendingImage,
-                                reader.result
+                                reader.result,
+                                $ourData.isPRO
                             );
                         });
 
@@ -137,7 +138,8 @@
                     await sendImage(
                         $currentRoomId,
                         $sendingImage,
-                        reader.result
+                        reader.result,
+                        $ourData.isPRO
                     );
                 });
 

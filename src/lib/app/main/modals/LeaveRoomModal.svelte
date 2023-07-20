@@ -42,6 +42,7 @@
                             method: 'POST',
                             body: JSON.stringify({
                                 icon: $currentRoomData.icon,
+                                isPRO: $ourData.isPRO,
                             }),
                         });
 
@@ -54,6 +55,7 @@
                                     method: 'POST',
                                     body: JSON.stringify({
                                         icon: message.message.attachment,
+                                        isPRO: $ourData.isPRO,
                                     }),
                                 });
                             }

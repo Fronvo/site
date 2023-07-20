@@ -6,19 +6,27 @@ export async function POST({ request }) {
     const requestParsed = await request.json();
 
     let icon = requestParsed['icon'] as string;
+    let isPRO = requestParsed['isPRO'] as boolean;
+
+    const targetEndpoint = !isPRO
+        ? import.meta.env.VITE_IMAGEKIT2_ENDPOINT
+        : import.meta.env.VITE_IMAGEKIT_ENDPOINT;
 
     const imagekit = new Imagekit({
-        urlEndpoint: import.meta.env.VITE_IMAGEKIT_ENDPOINT,
-        publicKey: import.meta.env.VITE_IMAGEKIT_PUBLIC,
-        privateKey: import.meta.env.VITE_IMAGEKIT_PRIVATE,
+        urlEndpoint: targetEndpoint,
+        publicKey: !isPRO
+            ? import.meta.env.VITE_IMAGEKIT2_PUBLIC
+            : import.meta.env.VITE_IMAGEKIT_PUBLIC,
+        privateKey: !isPRO
+            ? import.meta.env.VITE_IMAGEKIT2_PRIVATE
+            : import.meta.env.VITE_IMAGEKIT_PRIVATE,
     });
 
     // Delete previous icon
-    if (!icon.includes(import.meta.env.VITE_IMAGEKIT_ENDPOINT))
-        return json('INVALID');
+    if (!icon.includes(targetEndpoint)) return json('INVALID');
 
     icon = icon
-        .replace(import.meta.env.VITE_IMAGEKIT_ENDPOINT + '/', '')
+        .replace(targetEndpoint + '/', '')
         .replace(/\?updatedAt=[a-z0-9]+/, '')
         .replace(/\?tr=[a-zA-Z0-9%-]+/, '');
 

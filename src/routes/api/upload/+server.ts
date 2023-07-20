@@ -10,11 +10,18 @@ export async function POST({ request }) {
     const width = requestParsed['width'] as number;
     const height = requestParsed['height'] as number;
     const noTransform = requestParsed['noTransform'] as boolean;
+    const isPRO = requestParsed['isPRO'] as boolean;
 
     const imagekit = new Imagekit({
-        urlEndpoint: import.meta.env.VITE_IMAGEKIT_ENDPOINT,
-        publicKey: import.meta.env.VITE_IMAGEKIT_PUBLIC,
-        privateKey: import.meta.env.VITE_IMAGEKIT_PRIVATE,
+        urlEndpoint: !isPRO
+            ? import.meta.env.VITE_IMAGEKIT2_ENDPOINT
+            : import.meta.env.VITE_IMAGEKIT_ENDPOINT,
+        publicKey: !isPRO
+            ? import.meta.env.VITE_IMAGEKIT2_PUBLIC
+            : import.meta.env.VITE_IMAGEKIT_PUBLIC,
+        privateKey: !isPRO
+            ? import.meta.env.VITE_IMAGEKIT2_PRIVATE
+            : import.meta.env.VITE_IMAGEKIT_PRIVATE,
     });
 
     const result = await imagekit.upload({

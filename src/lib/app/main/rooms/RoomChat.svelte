@@ -238,7 +238,12 @@
                     const reader = new FileReader();
 
                     reader.addEventListener('load', async () => {
-                        sendImage($currentRoomId, $sendingImage, reader.result);
+                        sendImage(
+                            $currentRoomId,
+                            $sendingImage,
+                            reader.result,
+                            $ourData.isPRO
+                        );
                     });
 
                     reader.readAsDataURL(file);

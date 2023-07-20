@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { dismissModal, setProgressBar } from 'utilities/main';
+    import { dismissModal, setProgressBar, showModal } from 'utilities/main';
     import ModalTemplate from '../ModalTemplate.svelte';
-    import type { ModalData } from 'stores/modals';
+    import { ModalTypes, type ModalData } from 'stores/modals';
     import { socket } from 'stores/main';
     import InfoHeader from '$lib/app/reusables/all/InfoHeader.svelte';
     import { onMount } from 'svelte';
@@ -38,6 +38,8 @@
                     if (err.code == Errors.INVALID_REGEX) {
                         errorMessage =
                             'Identifier contains invalid characters.';
+                    } else if (err.code == Errors.OVER_FRIENDS_LIMIT) {
+                        showModal(ModalTypes.MaxFriends);
                     } else {
                         errorMessage = err.msg;
                     }

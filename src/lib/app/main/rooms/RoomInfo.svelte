@@ -67,6 +67,7 @@
                             method: 'POST',
                             body: JSON.stringify({
                                 file: reader.result,
+                                isPRO: $ourData.isPRO,
                             }),
                         })
                     ).json();

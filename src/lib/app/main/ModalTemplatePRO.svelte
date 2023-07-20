@@ -50,6 +50,7 @@
         max-height: 95%;
         background: var(--modal_content_bg);
         border: 1px solid var(--bg);
+        box-shadow: 0 0 5px rgb(0, 175, 175);
         min-width: 550px;
         max-width: 90vw;
         overflow-x: hidden;

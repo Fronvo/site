@@ -1,7 +1,8 @@
 <script lang="ts">
     import { socket } from 'stores/main';
+    import { ModalTypes } from 'stores/modals';
     import { ourData } from 'stores/profile';
-    import { isAcceptedImage, setProgressBar } from 'utilities/main';
+    import { isAcceptedImage, setProgressBar, showModal } from 'utilities/main';
 
     export let banner: string;
     export let editable = false;
@@ -12,6 +13,12 @@
 
     function changeBanner(): void {
         if (!editable || uploading) return;
+
+        if (!$ourData.isPRO) {
+            showModal(ModalTypes.GoPRO);
+
+            return;
+        }
 
         let input = document.createElement('input');
         input.type = 'file';
@@ -39,6 +46,7 @@
                                 file: reader.result,
                                 width: 650,
                                 height: 225,
+                                isPRO: $ourData.isPRO,
                             }),
                         })
                     ).json();

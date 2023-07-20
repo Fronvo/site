@@ -12,6 +12,7 @@ import {
 } from 'stores/rooms';
 import { socket } from 'stores/main';
 import { setProgressBar } from './main';
+
 export async function fetchConvos(): Promise<Room[]> {
     return new Promise((resolve) => {
         socket.emit('fetchConvos', ({ convos }) => {
@@ -71,13 +72,14 @@ export function sendMessage(
     replyingToId.set(undefined);
 }
 
-export async function uploadImage(file: any): Promise<string> {
+export async function uploadImage(file: any, isPRO: boolean): Promise<string> {
     return await (
         await fetch('/api/upload', {
             method: 'POST',
             body: JSON.stringify({
                 file,
                 noTransform: true,
+                isPRO,
             }),
         })
     ).json();
@@ -86,7 +88,8 @@ export async function uploadImage(file: any): Promise<string> {
 export async function sendImage(
     roomId: string,
     sendingImage: boolean,
-    file: any
+    file: any,
+    isPRO: boolean
 ): Promise<void> {
     if (sendingImage) return;
 
@@ -97,7 +100,7 @@ export async function sendImage(
         'sendRoomImage',
         {
             roomId,
-            attachment: await uploadImage(file),
+            attachment: await uploadImage(file, isPRO),
         },
         () => {
             setProgressBar(false);

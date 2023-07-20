@@ -6,13 +6,12 @@
     import { ourData } from 'stores/profile';
 
     const data: ModalData = {
-        title: 'Max rooms reached',
+        title: 'Max friends reached',
         actions: [
             {
-                title: 'Unlock more',
+                title: 'Add more',
                 callback: () => showModal(ModalTypes.GoPRO),
                 pro: true,
-                condition: !$ourData.isPRO,
             },
             {
                 title: 'Dismiss',
@@ -24,12 +23,12 @@
 
 <ModalTemplate {data}>
     <h1 class="modal-header">
-        You have already created {$ourData.isPRO ? 20 : 5} rooms.
+        You already have over {$ourData.isPRO ? 100 : 15} friends.
     </h1>
 
     <InfoHeader
         marginLeft={'50px'}
-        text={'Try deleting some of your existing ones.'}
+        text={'Try removing some of your existing ones.'}
     />
 </ModalTemplate>
 

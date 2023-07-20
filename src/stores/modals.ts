@@ -20,6 +20,9 @@ import RemoveMemberModal from '$lib/app/main/modals/RemoveMemberModal.svelte';
 import RequestDataModal from '$lib/app/main/modals/RequestDataModal.svelte';
 import DeleteAccountModal from '$lib/app/main/modals/DeleteAccountModal.svelte';
 import DeletePostModal from '$lib/app/main/modals/DeletePostModal.svelte';
+import GoProModal from '$lib/app/main/modals/GoPROModal.svelte';
+import GoPayModal from '$lib/app/main/modals/GoPayModal.svelte';
+import MaxFriendsModal from '$lib/app/main/modals/MaxFriendsModal.svelte';
 
 /****************************** Modals ******************************/
 export const modals = [
@@ -42,6 +45,9 @@ export const modals = [
     RequestDataModal,
     DeleteAccountModal,
     DeletePostModal,
+    GoProModal,
+    GoPayModal,
+    MaxFriendsModal,
 ];
 /****************************** Modals ******************************/
 
@@ -66,13 +72,18 @@ export enum ModalTypes {
     RequestData,
     DeleteAccount,
     DeletePost,
+    GoPRO,
+    GoPay,
+    MaxFriends,
 }
 
 export interface ModalActions {
     title: string;
     callback: () => void;
+    condition?: boolean;
     danger?: boolean;
     primary?: boolean;
+    pro?: boolean;
 }
 
 export interface ModalData {

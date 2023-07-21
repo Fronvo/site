@@ -12,10 +12,6 @@ import type {
     RegisterVerifyResult,
 } from './noAccount/registerVerify';
 import type {
-    ResetPasswordFinalParams,
-    ResetPasswordFinalResult,
-} from './noAccount/resetPasswordFinal';
-import type {
     ResetPasswordVerifyParams,
     ResetPasswordVerifyResult,
 } from './noAccount/resetPasswordVerify';
@@ -45,11 +41,6 @@ export interface ServerToClientEvents {
     resetPasswordVerify: (
         {}: ResetPasswordVerifyParams,
         callback?: ({}: ResetPasswordVerifyResult) => void
-    ) => void;
-
-    resetPasswordFinal: (
-        {}: ResetPasswordFinalParams,
-        callback?: ({}: ResetPasswordFinalResult) => void
     ) => void;
 
     newRoomMessage: ({}: NewRoomMessageResult) => void;

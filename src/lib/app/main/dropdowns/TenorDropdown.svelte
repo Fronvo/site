@@ -34,8 +34,6 @@
                 }, 0);
 
                 setTimeout(() => {
-                    console.log(oldVal, search.value);
-
                     if (oldVal != search.value || oldVal == '') {
                         gifsP = [];
                         return;
@@ -50,7 +48,7 @@
                             gifsP = [];
                         }
                     });
-                }, 250);
+                }, 200);
             };
         }
     });

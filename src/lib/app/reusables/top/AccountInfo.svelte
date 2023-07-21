@@ -219,6 +219,10 @@
             border-right: 0;
         }
 
+        svg {
+            margin-right: 0;
+        }
+
         img {
             margin-right: 0;
         }

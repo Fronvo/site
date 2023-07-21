@@ -1,7 +1,7 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
     import ErrorHeader from '$lib/app/reusables/all/ErrorHeader.svelte';
-    import { keepLoggedIn, promotedToVerify, verifyCode } from 'stores/index';
+    import { keepLoggedIn, promotedToVerify } from 'stores/index';
     import { cachedAccountData, currentToken, socket } from 'stores/main';
     import { onMount } from 'svelte';
     import Checkbox from 'svelte-checkbox';
@@ -271,16 +271,16 @@
         color: white;
     }
 
-    #download-btn {
-        visibility: hidden;
-    }
-
     button:active {
         opacity: 0.7;
     }
 
     button:disabled {
         opacity: 0.75;
+    }
+
+    #download-btn {
+        visibility: hidden;
     }
 
     #download-btn {

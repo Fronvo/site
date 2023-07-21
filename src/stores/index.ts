@@ -4,4 +4,5 @@ import { writable } from 'svelte/store';
 export const indexVisible = writable(true);
 export const keepLoggedIn = writable(false);
 export const promotedToVerify = writable(false);
+export const promotedToRVerify = writable(false);
 /****************************** Homepage ******************************/

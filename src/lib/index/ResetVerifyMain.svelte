@@ -5,59 +5,68 @@
     import { socket } from 'stores/main';
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
-    import { initSocket } from 'utilities/main';
 
-    let email: string;
+    let code: string;
+    let password: string;
     let errorMessage: string;
 
     let mountReady = false;
 
-    function join(): void {
-        if (!email) return;
+    function reset(): void {
+        if (!code || !password) return;
 
         socket.emit(
-            'resetPassword',
+            'resetPasswordVerify',
             {
-                email: email ? email : '',
+                code: code ? code : '',
+                password: password ? password : '',
             },
-            ({ err }) => {
+            async ({ err }) => {
                 if (err) {
                     errorMessage = err.msg;
-
                     return;
                 }
 
-                $promotedToRVerify = true;
+                $promotedToRVerify = false;
 
-                goto('/rverify', {
+                goto('/', {
                     replaceState: true,
                 });
             }
         );
     }
 
-    onMount(() => {
-        initSocket();
-
-        mountReady = true;
-    });
+    onMount(() => (mountReady = true));
 </script>
 
 {#if mountReady}
     <div class="main-container" in:fade={{ duration: 250 }}>
-        <h1 id="descriptor">Reset password</h1>
+        <h1 id="descriptor">Account setup</h1>
 
         <ErrorHeader {errorMessage} />
 
+        <h1 id="info">
+            Enter the 6-digit verification code sent to your email
+        </h1>
         <input
-            bind:value={email}
+            bind:value={code}
             class="modal-input"
             type="text"
-            placeholder="Email address"
+            placeholder="Verification code"
+            maxlength={6}
+        />
+
+        <h1 id="info">Choose your new password</h1>
+
+        <input
+            bind:value={password}
+            class="modal-input"
+            type="password"
+            maxlength={90}
         />
 
         <div class="choices-container">
-            <button id="reset" on:click={join}>Send email</button>
+            <button id="reset" on:click={reset}>Reset password</button>
         </div>
     </div>
 {/if}
@@ -83,6 +92,21 @@
         font-size: 2.5rem;
         margin: 0;
         color: var(--text);
+    }
+
+    #info {
+        margin: 0;
+        margin-top: 30px;
+        font-size: 1.2rem;
+    }
+
+    h1 {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
 
     input {
@@ -112,16 +136,7 @@
         box-shadow: 0 0 5px #0e62ff;
         font-size: 1.4rem;
         border-radius: 15px;
-        font-weight: 300;
-        color: white;
-    }
-
-    button:hover {
-        background: #0e62ff;
-        box-shadow: 0 0 5px #0e62ff;
-        font-size: 1.4rem;
-        border-radius: 15px;
-        font-weight: 300;
+        font-weight: 500;
         color: white;
     }
 
@@ -134,7 +149,7 @@
     }
 
     #reset {
-        width: 150px;
+        width: 200px;
         margin-right: 15px;
     }
 </style>

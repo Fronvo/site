@@ -3,11 +3,15 @@
     import type { Post as PostInterface, FronvoAccount } from 'interfaces/all';
     import Post from '../all/Post.svelte';
     import InfiniteLoading from 'svelte-infinite-loading';
+    import { onMount } from 'svelte';
+    import { fade, slide } from 'svelte/transition';
 
     export let data: FronvoAccount;
     export let small = false;
 
     let posts: PostInterface[] = [];
+    let loadFinished = false;
+    let reveal = false;
 
     let previousEmpty = false;
 
@@ -53,37 +57,49 @@
                 if (err) return;
 
                 posts = profilePosts;
+
+                loadFinished = true;
             }
         );
     }
+
+    onMount(showPosts);
 </script>
 
-<div class="posts-container">
-    <h1 id="descriptor">
-        <span>{data.totalPosts} posts</span>
-    </h1>
-
-    {#if posts.length > 0}
-        {#each posts as post}
-            <Post {post} {small} />
-        {/each}
-
-        {#if !previousEmpty}
-            <InfiniteLoading
-                distance={1000}
-                on:infinite={loadMore}
-                direction="bottom"
-            >
-                <div slot="noMore" />
-                <div slot="noResults" />
-                <div slot="error" />
-                <div slot="spinner" />
-            </InfiniteLoading>
+{#if loadFinished && posts?.length != 0}
+    <div class="posts-container" transition:slide>
+        {#if reveal}
+            <h1 id="descriptor">
+                <span>{data.totalPosts} posts</span>
+            </h1>
         {/if}
-    {:else}
-        <button class="modal-button" on:click={showPosts}>Reveal posts</button>
-    {/if}
-</div>
+
+        {#if reveal}
+            <div transition:fade={{ duration: 250 }}>
+                {#each posts as post}
+                    <Post {post} {small} />
+                {/each}
+
+                {#if !previousEmpty}
+                    <InfiniteLoading
+                        distance={1000}
+                        on:infinite={loadMore}
+                        direction="bottom"
+                    >
+                        <div slot="noMore" />
+                        <div slot="noResults" />
+                        <div slot="error" />
+                        <div slot="spinner" />
+                    </InfiniteLoading>
+                {/if}
+            </div>
+        {:else if posts.length > 0}
+            <button class="modal-button" on:click={() => (reveal = true)}
+                >Reveal posts</button
+            >
+        {/if}
+    </div>
+{/if}
 
 <style>
     .posts-container {
@@ -119,7 +135,7 @@
     }
 
     button {
-        font-size: 0.9rem;
+        font-size: 1rem;
         box-shadow: none;
         transition: 150ms;
         width: max-content;

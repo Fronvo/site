@@ -43,10 +43,6 @@ import type {
     ResetPasswordResult,
 } from './noAccount/resetPassword';
 import type {
-    ResetPasswordFinalParams,
-    ResetPasswordFinalResult,
-} from './noAccount/resetPasswordFinal';
-import type {
     ResetPasswordVerifyParams,
     ResetPasswordVerifyResult,
 } from './noAccount/resetPasswordVerify';
@@ -112,6 +108,15 @@ import type {
     DeleteAccountResult,
 } from './account/deleteAccount';
 import type { FetchTenorParams, FetchTenorResult } from './account/fetchTenor';
+import type {
+    FetchThemesParams,
+    FetchThemesResult,
+} from './account/fetchThemes';
+import type { ApplyThemeParams, ApplyThemeResult } from './account/applyTheme';
+import type {
+    CreateThemeParams,
+    CreateThemeResult,
+} from './account/createTheme';
 
 export interface ClientToServerEvents {
     register: (
@@ -141,11 +146,6 @@ export interface ClientToServerEvents {
     resetPasswordVerify: (
         {}: ResetPasswordVerifyParams,
         callback?: ({}: ResetPasswordVerifyResult) => void
-    ) => void;
-
-    resetPasswordFinal: (
-        {}: ResetPasswordFinalParams,
-        callback?: ({}: ResetPasswordFinalResult) => void
     ) => void;
     updateProfileData: (
         {}: UpdateProfileDataParams,
@@ -260,5 +260,17 @@ export interface ClientToServerEvents {
     fetchTenor: (
         {}: FetchTenorParams,
         callback?: ({}: FetchTenorResult) => void
+    ) => void;
+    fetchThemes: (
+        {}: FetchThemesParams,
+        callback?: ({}: FetchThemesResult) => void
+    ) => void;
+    applyTheme: (
+        {}: ApplyThemeParams,
+        callback?: ({}: ApplyThemeResult) => void
+    ) => void;
+    createTheme: (
+        {}: CreateThemeParams,
+        callback?: ({}: CreateThemeResult) => void
     ) => void;
 }

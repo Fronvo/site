@@ -1,6 +1,7 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import ErrorHeader from '$lib/app/reusables/all/ErrorHeader.svelte';
-    import { keepLoggedIn } from 'stores/index';
+    import { keepLoggedIn, promotedToVerify, verifyCode } from 'stores/index';
     import { cachedAccountData, currentToken, socket } from 'stores/main';
     import { onMount } from 'svelte';
     import Checkbox from 'svelte-checkbox';
@@ -102,6 +103,12 @@
                 if (err) {
                     errorMessage = err.msg;
                     return;
+                } else {
+                    $promotedToVerify = true;
+
+                    goto('/verify', {
+                        replaceState: true,
+                    });
                 }
             }
         );

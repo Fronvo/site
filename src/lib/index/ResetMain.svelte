@@ -85,44 +85,4 @@
         width: 150px;
         margin-right: 15px;
     }
-
-    @media screen and (max-width: 850px) {
-        #descriptor {
-            font-size: 2.2rem;
-        }
-
-        input {
-            font-size: 1.15rem;
-        }
-
-        button {
-            font-size: 1.3rem;
-        }
-
-        #reset {
-            width: 130px;
-        }
-    }
-
-    @media screen and (max-width: 600px) {
-        #descriptor {
-            font-size: 1.6rem;
-        }
-
-        input {
-            font-size: 0.9rem;
-        }
-
-        .choices-container {
-            margin-top: 10px;
-        }
-
-        button {
-            font-size: 0.9rem;
-        }
-
-        #reset {
-            width: 110px;
-        }
-    }
 </style>

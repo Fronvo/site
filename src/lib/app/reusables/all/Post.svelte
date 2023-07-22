@@ -31,7 +31,6 @@
     let dateSuffix: string;
 
     let settings: SVGSVGElement;
-    let likes: HTMLHeadingElement;
 
     function updateSuffix(date: string): void {
         const date2 = new Date(date);
@@ -46,8 +45,6 @@
 
         const minutes = differenceInMinutes(new Date(), date2);
 
-        const seconds = differenceInSeconds(new Date(), date2);
-
         if (years > 0) {
             dateSuffix = `${years} y`;
         } else if (months > 0) {
@@ -59,7 +56,7 @@
         } else if (minutes > 0) {
             dateSuffix = `${minutes} m`;
         } else {
-            dateSuffix = `${seconds} s`;
+            dateSuffix = 'now';
         }
     }
 
@@ -206,7 +203,7 @@
         <div class="action-container">
             <Like callback={likePost} liked={postData.isLiked} />
 
-            <h1 bind:this={likes} id="likes">{postData.totalLikes}</h1>
+            <h1 id="likes">{postData.totalLikes}</h1>
         </div>
     </div>
 </div>

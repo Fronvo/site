@@ -47,8 +47,6 @@
 
         const minutes = differenceInMinutes(new Date(), date2);
 
-        const seconds = differenceInSeconds(new Date(), date2);
-
         if (years > 0) {
             lastMessageSuffix = `${years}y`;
         } else if (months > 0) {
@@ -60,7 +58,7 @@
         } else if (minutes > 0) {
             lastMessageSuffix = `${minutes}m`;
         } else {
-            lastMessageSuffix = `${seconds}s`;
+            lastMessageSuffix = 'now';
         }
     }
 

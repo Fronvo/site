@@ -184,7 +184,7 @@
             <img
                 id="avatar"
                 src={dmUser?.avatar}
-                alt={`${dmUser?.avatar}\'s avatar'`}
+                alt={`${dmUser?.username}\'s avatar'`}
             />
         {:else}
             <svg
@@ -206,7 +206,9 @@
     </div>
 
     <div class="info-container">
-        <h1 bind:this={nameElement} id="name">{dmUser?.username}</h1>
+        <h1 bind:this={nameElement} id="name">
+            {dmUser?.username ? dmUser.username : 'Deleted user'}
+        </h1>
 
         <div class="last-wrapper">
             {#if isTyping}

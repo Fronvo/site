@@ -44,7 +44,12 @@
 
     function adjustCanMessage(): void {
         if ($currentRoomData.isDM) {
-            if (!$ourData.friends.includes($currentRoomData.dmUser.profileId)) {
+            if (!$currentRoomData.dmUser.username) {
+                canMessage = false;
+                cantMessageReason = 'This user has been deleted';
+            } else if (
+                !$ourData.friends.includes($currentRoomData.dmUser.profileId)
+            ) {
                 canMessage = false;
                 cantMessageReason = "This user isn't your friend anymore";
             } else {

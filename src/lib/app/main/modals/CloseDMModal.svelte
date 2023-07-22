@@ -48,7 +48,9 @@
 
 <ModalTemplate {data}>
     <h1 class="modal-header">
-        Close your chat with <b>{$currentRoomData?.dmUser.username}</b>?
+        Close your chat with <b
+            >{$currentRoomData?.dmUser.username || 'Deleted user'}</b
+        >?
     </h1>
 
     <InfoHeader

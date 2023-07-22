@@ -1,9 +1,5 @@
 <script lang="ts">
-    import {
-        currentRoomData,
-        currentRoomLoaded,
-        currentRoomMessages,
-    } from 'stores/rooms';
+    import { currentRoomData, currentRoomLoaded } from 'stores/rooms';
     import { onDestroy, onMount } from 'svelte';
     import type { Unsubscriber } from 'svelte/store';
 
@@ -12,7 +8,9 @@
 
     function setName(): void {
         if ($currentRoomData.isDM) {
-            name = $currentRoomData.dmUser.username;
+            name = $currentRoomData.dmUser.username
+                ? $currentRoomData.dmUser.username
+                : 'Deleted user';
         } else {
             name = $currentRoomData.name;
         }

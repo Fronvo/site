@@ -12,6 +12,7 @@
 <div class="profile-container">
     <ProfileBanner mini {editable} banner={profileData.banner} />
     <ProfileAvatar
+        profileId={profileData.profileId}
         mini
         {editable}
         avatar={profileData.avatar}

@@ -5,6 +5,7 @@
     import { ourData } from 'stores/profile';
     import { isAcceptedImage, showDropdown, showModal } from 'utilities/main';
 
+    export let profileId: string;
     export let avatar: string;
     export let isPRO: boolean;
     export let editable = false;
@@ -131,9 +132,15 @@
         >
     {/if}
 
-    {#if editable}
-        <span />
+    <span />
 
+    {#if !$ourData.isPRO}
+        <button id="pro-btn" on:click={() => showModal(ModalTypes.GoPRO)}
+            >Go PRO</button
+        >
+    {/if}
+
+    {#if editable}
         <svg
             bind:this={settings}
             on:click={showSettings}
@@ -237,5 +244,17 @@
 
     #pro:hover {
         background: transparent;
+    }
+
+    #pro-btn {
+        transform: translateY(-20px) translateX(-20px);
+        background: rgb(0, 175, 175);
+        color: white;
+        box-shadow: 0 0 10px rgb(0, 175, 175);
+        transition: 150ms;
+    }
+
+    #pro-btn:hover {
+        background: rgb(0, 155, 155);
     }
 </style>

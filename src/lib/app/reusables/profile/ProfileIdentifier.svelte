@@ -15,7 +15,7 @@
         <div class="lock-container">
             {#if !editable}
                 <h1 id="username">
-                    {username}
+                    {username ? username : 'Deleted user'}
                 </h1>
             {:else}
                 <input maxlength={30} bind:value={username} />
@@ -24,7 +24,7 @@
 
         <div class="secondary-container">
             <h1 id="identifier">
-                @{profileId}
+                @{profileId ? profileId : 'deleted user'}
             </h1>
         </div>
     </div>

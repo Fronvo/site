@@ -100,6 +100,7 @@
         <div class="profile-container">
             <ProfileBanner editable={true} bind:banner={$banner} />
             <ProfileAvatar
+                profileId={profileData.profileId}
                 editable={true}
                 bind:avatar={$avatar}
                 isPRO={profileData.isPRO}
@@ -120,6 +121,7 @@
         <div class="profile-container">
             <ProfileBanner editable={true} bind:banner={$banner} />
             <ProfileAvatar
+                profileId={profileData.profileId}
                 editable={true}
                 bind:avatar={$avatar}
                 isPRO={profileData.isPRO}

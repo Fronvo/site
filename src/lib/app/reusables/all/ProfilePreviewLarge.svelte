@@ -10,28 +10,30 @@
     export let profileData: FronvoAccount;
 
     let accessible =
-        profileData.isSelf || $ourData.friends.includes(profileData.profileId);
+        profileData?.isSelf ||
+        $ourData.friends.includes(profileData?.profileId);
 
     export let editable = false;
     export let preview = false;
 </script>
 
 <div class={`profile-container ${preview ? 'preview' : ''}`}>
-    <ProfileBanner {preview} {editable} banner={profileData.banner} />
+    <ProfileBanner {preview} {editable} banner={profileData?.banner} />
     <ProfileAvatar
+        profileId={profileData?.profileId}
         {preview}
         {editable}
-        avatar={profileData.avatar}
-        isPRO={profileData.isPRO}
+        avatar={profileData?.avatar}
+        isPRO={profileData?.isPRO}
     />
 
     <div class={`secondary-container ${preview ? 'preview' : ''}`}>
         <ProfileIdentifier
             {editable}
-            profileId={profileData.profileId}
-            username={profileData.username}
+            profileId={profileData?.profileId}
+            username={profileData?.username}
         />
-        <ProfileBio {editable} bio={profileData.bio} />
+        <ProfileBio {editable} bio={profileData?.bio} />
 
         {#if !preview && accessible}
             <ProfilePosts data={profileData} small />

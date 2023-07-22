@@ -24,7 +24,9 @@
         });
 
         socket.on('onlineStatusUpdated', ({ online, profileId }) => {
-            if (online) toast(`${profileId} is now online.`);
+            if ($ourData.friends.includes(profileId)) {
+                if (online) toast(`${profileId} is now online.`);
+            }
         });
     });
 </script>

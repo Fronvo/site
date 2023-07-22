@@ -310,7 +310,7 @@
                                 : $roomData.dmUsers[0],
                             $cachedAccountData
                         )
-                    ).username
+                    )?.username || 'Deleted user'
                 );
             } else {
                 setTitle($roomData.name);

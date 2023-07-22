@@ -31,6 +31,8 @@
 
     async function changeImage(): Promise<void> {
         if ($roomData.isDM) {
+            if ($nameP == 'Deleted user') return;
+
             $targetProfileModal = await findCachedAccount(
                 $roomData.dmUsers[0] != $ourData.profileId
                     ? $roomData.dmUsers[0]
@@ -135,7 +137,7 @@
             if (!state) return;
 
             if ($roomData.isDM) {
-                $nameP = $roomData.dmUser.username;
+                $nameP = $roomData.dmUser.username || 'Deleted user';
                 $roomData.icon = $roomData.dmUser.avatar;
 
                 setTimeout(() => {

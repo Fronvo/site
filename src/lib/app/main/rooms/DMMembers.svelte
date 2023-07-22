@@ -42,9 +42,7 @@
 </script>
 
 <div class="members-container" in:fade={{ duration: 150 }}>
-    {#if profileData}
-        <ProfilePreviewLarge preview {profileData} />
-    {/if}
+    <ProfilePreviewLarge preview {profileData} />
 
     <hr />
 

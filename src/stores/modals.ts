@@ -3,7 +3,6 @@ import DeleteMessageModal from '$lib/app/main/modals/DeleteMessageModal.svelte';
 
 import type { RoomMessage, FronvoAccount, Post } from 'interfaces/all';
 import { writable, type Writable } from 'svelte/store';
-import CreateRoomModal from '$lib/app/main/modals/CreateRoomModal.svelte';
 import LeaveRoomModal from '$lib/app/main/modals/LeaveRoomModal.svelte';
 import ProfileModal from '$lib/app/main/modals/ProfileModal.svelte';
 import LogoutModal from '$lib/app/main/modals/LogoutModal.svelte';
@@ -28,7 +27,6 @@ import MaxFriendsModal from '$lib/app/main/modals/MaxFriendsModal.svelte';
 export const modals = [
     ProfileModal,
     EditProfileModal,
-    CreateRoomModal,
     LeaveRoomModal,
     DeleteMessageModal,
     LogoutModal,
@@ -55,7 +53,6 @@ export const modals = [
 export enum ModalTypes {
     Profile,
     EditProfile,
-    CreateRoom,
     LeaveRoom,
     DeleteMessage,
     Logout,

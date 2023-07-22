@@ -200,7 +200,7 @@
             >
         {/if}
 
-        {#if onlineP}
+        {#if onlineP && $ourData.friends.includes(dmUser.profileId)}
             <div class="indicator" />
         {/if}
     </div>
@@ -211,7 +211,7 @@
         <div class="last-wrapper">
             {#if isTyping}
                 <h1 id="last">Typing...</h1>
-            {:else if onlineP && dmData.unreadCount == 0}
+            {:else if onlineP && $ourData.friends.includes(dmUser.profileId) && dmData.unreadCount == 0}
                 <h1 id="last">Online now</h1>
             {:else if dmData.lastMessage}
                 <h1 id="last" class={`${dmData.unreadCount > 0 ? 'mark' : ''}`}>

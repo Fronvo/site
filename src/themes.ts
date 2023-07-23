@@ -45,6 +45,10 @@ interface ThemingOptions {
 
     modal_header_size: string;
     modal_input_size: string;
+
+    // PRO
+    pro: string;
+    pro_darken: string;
 }
 
 // TODO: ZORIN:     branding: 'rgb(0, 160, 255)',
@@ -88,6 +92,9 @@ export const defaultTheme: ThemingOptions = {
 
     modal_header_size: '1.2rem',
     modal_input_size: '1.2rem',
+
+    pro: 'rgb(0, 175, 175)',
+    pro_darken: 'rgb(0, 150, 150)',
 };
 
 export const whiteTheme: ThemingOptions = {
@@ -127,6 +134,9 @@ export const whiteTheme: ThemingOptions = {
 
     modal_header_size: '1.2rem',
     modal_input_size: '1.2rem',
+
+    pro: 'rgb(0, 200, 200)',
+    pro_darken: 'rgb(0, 185, 185)',
 };
 
 export const currentTheme: Writable<ThemingOptions> = writable(defaultTheme);

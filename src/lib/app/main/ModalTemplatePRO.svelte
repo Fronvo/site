@@ -1,6 +1,6 @@
 <script lang="ts">
     import { modalAnimDuration, type ModalData } from 'stores/modals';
-    import { fly } from 'svelte/transition';
+    import { blur } from 'svelte/transition';
 
     export let data: ModalData;
 
@@ -11,7 +11,7 @@
 
 <div
     class={`modal-container ${!data.title ? 'title-less' : ''}`}
-    transition:fly={{ duration: modalAnimDuration }}
+    transition:blur={{ amount: 5, opacity: 0.5, duration: modalAnimDuration }}
 >
     {#if data.title}
         <h1 id="title">{data.title}</h1>
@@ -49,8 +49,8 @@
         min-height: 200px;
         max-height: 95%;
         background: var(--modal_content_bg);
-        border: 1px solid var(--bg);
-        box-shadow: 0 0 5px rgb(0, 175, 175);
+        border: 2px solid var(--pro);
+        box-shadow: 0 0 15px var(--pro);
         min-width: 550px;
         max-width: 90vw;
         overflow-x: hidden;
@@ -141,12 +141,12 @@
     }
 
     .pro {
-        background: rgb(0, 175, 175);
+        background: var(--pro);
         color: white;
-        box-shadow: 0 0 10px rgb(0, 175, 175);
+        box-shadow: 0 0 10px var(--pro);
     }
 
     .pro:hover {
-        background: rgb(0, 155, 155);
+        background: var(--pro_darken);
     }
 </style>

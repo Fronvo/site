@@ -4,7 +4,7 @@
     import Post from '../all/Post.svelte';
     import InfiniteLoading from 'svelte-infinite-loading';
     import { onMount } from 'svelte';
-    import { fade, slide } from 'svelte/transition';
+    import { fade, scale, slide } from 'svelte/transition';
 
     export let data: FronvoAccount;
     export let small = false;
@@ -58,7 +58,9 @@
 
                 posts = profilePosts;
 
-                loadFinished = true;
+                setTimeout(() => {
+                    loadFinished = true;
+                }, 200);
             }
         );
     }
@@ -67,7 +69,7 @@
 </script>
 
 {#if loadFinished && posts?.length != 0}
-    <div class="posts-container" transition:slide>
+    <div class="posts-container" transition:slide={{ duration: 250 }}>
         {#if reveal}
             <h1 id="descriptor">
                 <span>{data.totalPosts} posts</span>

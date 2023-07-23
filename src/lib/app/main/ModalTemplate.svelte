@@ -140,12 +140,12 @@
     }
 
     .pro {
-        background: rgb(0, 175, 175);
+        background: var(--pro);
         color: white;
-        box-shadow: 0 0 10px rgb(0, 175, 175);
+        box-shadow: 0 0 10px var(--pro);
     }
 
     .pro:hover {
-        background: rgb(0, 155, 155);
+        background: var(--pro_darken);
     }
 </style>

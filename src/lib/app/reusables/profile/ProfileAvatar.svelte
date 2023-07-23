@@ -200,6 +200,7 @@
         height: 90px;
         background: var(--bg);
         margin-left: 15px;
+        margin-bottom: 5px;
     }
 
     .mini img {

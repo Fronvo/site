@@ -157,6 +157,7 @@
 
             {#if postData.author == $ourData.profileId && !preview}
                 <svg
+                    class="action"
                     bind:this={settings}
                     on:click={showPostSettings}
                     on:keydown={showPostSettings}
@@ -309,7 +310,7 @@
         user-select: none;
     }
 
-    svg {
+    .action {
         width: 30px;
         height: 30px;
         padding: 5px;
@@ -319,11 +320,11 @@
         transition: 75ms;
     }
 
-    svg:hover {
+    .action:hover {
         background: var(--primary);
     }
 
-    svg:active {
+    .action:active {
         transform: scale(0.975);
         opacity: 0.75;
     }

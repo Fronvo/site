@@ -299,6 +299,7 @@
 
     <div class="bottom-container">
         <svg
+            class="action"
             xmlns="http://www.w3.org/2000/svg"
             width="32"
             height="32"
@@ -315,6 +316,7 @@
 
         <svg
             bind:this={gifElement}
+            class="action"
             id="gif"
             xmlns="http://www.w3.org/2000/svg"
             width="32"
@@ -339,6 +341,7 @@
 
         {#if gif || attachment}
             <svg
+                class="action"
                 id="clear"
                 xmlns="http://www.w3.org/2000/svg"
                 width="32"
@@ -486,7 +489,7 @@
         background: var(--branding);
     }
 
-    svg {
+    .action {
         width: 34px;
         height: 34px;
         padding: 6px;
@@ -496,7 +499,7 @@
         border-radius: 15px;
     }
 
-    svg:hover {
+    .action:hover {
         background: var(--branding_trans);
     }
 

@@ -17,7 +17,13 @@
     import { writable, type Unsubscriber, type Writable } from 'svelte/store';
     import { sendImage, sendMessage } from 'utilities/rooms';
     import RoomScrollBottom from './RoomScrollBottom.svelte';
-    import { cachedAccountData, lastSendAt, socket } from 'stores/main';
+    import {
+        cachedAccountData,
+        disabledIn30,
+        lastSendAt,
+        lastSendsIn30,
+        socket,
+    } from 'stores/main';
     import {
         findCachedAccount,
         isAcceptedImage,
@@ -35,6 +41,7 @@
     let unsubscribe2: Unsubscriber;
     let unsubscribe3: Unsubscriber;
     let unsubscribe4: Unsubscriber;
+    let unsubscribe5: Unsubscriber;
 
     let canMessage: boolean;
     let cantMessageReason: string;
@@ -68,6 +75,11 @@
             }
         }
 
+        if ($disabledIn30) {
+            canMessage = false;
+            cantMessageReason = 'Too many messages in a short period of time.';
+        }
+
         setTimeout(() => {
             if (!content) return;
 
@@ -94,9 +106,8 @@
                 if (ev.clipboardData.files.length > 0) {
                     const file = ev.clipboardData.files[0];
 
-                    // 3MB
-                    if (file.size > 3000000) {
-                        toast('Image is above 3MB.');
+                    if (file.size > ($ourData.isPRO ? 3000000 : 1000000)) {
+                        toast(`Image is above ${$ourData.isPRO ? 3 : 1}MB.`);
                         return;
                     }
 
@@ -108,7 +119,8 @@
                                 $currentRoomId,
                                 $sendingImage,
                                 reader.result,
-                                $ourData.isPRO
+                                $ourData.isPRO,
+                                $lastSendsIn30
                             );
                         });
 
@@ -130,9 +142,8 @@
         input.onchange = async (_) => {
             let file = Array.from(input.files)[0];
 
-            // 3MB
-            if (file.size > 3000000) {
-                toast('Image is above 3MB.');
+            if (file.size > ($ourData.isPRO ? 3000000 : 1000000)) {
+                toast(`Image is above ${$ourData.isPRO ? 3 : 1}MB.`);
                 return;
             }
 
@@ -144,7 +155,8 @@
                         $currentRoomId,
                         $sendingImage,
                         reader.result,
-                        $ourData.isPRO
+                        $ourData.isPRO,
+                        $lastSendsIn30
                     );
                 });
 
@@ -264,10 +276,13 @@
                             $sendContent,
                             $replyingTo,
                             $replyingToId,
-                            $lastSendAt
+                            $lastSendAt,
+                            $lastSendsIn30
                         );
 
                         ev.preventDefault();
+
+                        adjustCanMessage();
                     }
                 };
             }, 0);
@@ -277,6 +292,12 @@
             if (!content) return;
 
             adjustCanMessage();
+        });
+
+        unsubscribe5 = disabledIn30.subscribe(() => {
+            setTimeout(() => {
+                content && adjustCanMessage();
+            }, 0);
         });
 
         typing.subscribe((val) => {
@@ -325,6 +346,7 @@
         unsubscribe2();
         unsubscribe3();
         unsubscribe4();
+        unsubscribe5();
     });
 </script>
 
@@ -361,7 +383,8 @@
                             $sendContent,
                             $replyingTo,
                             $replyingToId,
-                            $lastSendAt
+                            $lastSendAt,
+                            $lastSendsIn30
                         )}
                 />
             {/if}

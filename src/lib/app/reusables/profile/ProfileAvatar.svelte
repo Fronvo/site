@@ -3,7 +3,12 @@
     import { socket } from 'stores/main';
     import { ModalTypes } from 'stores/modals';
     import { ourData } from 'stores/profile';
-    import { isAcceptedImage, showDropdown, showModal } from 'utilities/main';
+    import {
+        isAcceptedImage,
+        setProgressBar,
+        showDropdown,
+        showModal,
+    } from 'utilities/main';
 
     export let profileId: string;
     export let avatar: string;
@@ -12,10 +17,12 @@
     export let mini = false;
     export let preview = false;
 
+    let uploading = false;
+
     let settings: SVGSVGElement;
 
     function changeAvatar(): void {
-        if (!editable) return;
+        if (!editable || uploading) return;
 
         let input = document.createElement('input');
         input.type = 'file';
@@ -23,13 +30,16 @@
         input.onchange = async (_) => {
             let file = Array.from(input.files)[0];
 
-            // 3MB
-            if (file.size > 3000000) return;
+            if (file.size > ($ourData.isPRO ? 3000000 : 1000000)) {
+                return;
+            }
 
             if (isAcceptedImage(file.type)) {
                 const reader = new FileReader();
 
                 reader.addEventListener('load', async () => {
+                    setProgressBar(true);
+
                     let previousIcon = avatar;
 
                     const newIcon = await (
@@ -55,6 +65,9 @@
                             icon: previousIcon,
                         }),
                     });
+
+                    setProgressBar(false);
+                    uploading = false;
                 });
 
                 reader.readAsDataURL(file);
@@ -120,7 +133,7 @@
                     fill: var(--primary);
                 }
                 .b {
-                    fill: #00c6ff;
+                    fill: var(--pro);
                 }
             </style><path
                 class="a"

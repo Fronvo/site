@@ -66,6 +66,7 @@
                 primary: !$ourData.friends.includes(profileData.profileId),
                 danger:
                     !isSelf && $ourData.friends.includes(profileData.profileId),
+                pro: isSelf && $ourData.isPRO,
             },
             {
                 title: 'Close',

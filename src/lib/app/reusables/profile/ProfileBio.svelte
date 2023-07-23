@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { ourData } from 'stores/profile';
+
     export let bio: string;
     export let editable = false;
     export let mini = false;
@@ -15,7 +17,11 @@
                 {bio}
             </h1>
         {:else}
-            <textarea maxlength={128} bind:value={bio} />
+            <textarea
+                class={`${$ourData.isPRO ? 'pro' : ''}`}
+                maxlength={128}
+                bind:value={bio}
+            />
         {/if}
     </div>
 {/if}
@@ -75,5 +81,9 @@
 
     textarea:focus {
         border: 2px solid var(--branding);
+    }
+
+    .pro:focus {
+        border: 2px solid var(--pro);
     }
 </style>

@@ -57,4 +57,6 @@ export const currentTopPanel: Writable<TopPanels> = writable();
 export const currentFriendsPanel: Writable<0 | 1> = writable(0);
 
 export const lastSendAt: Writable<string> = writable();
+export const lastSendsIn30: Writable<number> = writable(0);
+export const disabledIn30: Writable<boolean> = writable(false);
 /****************************** Fronvo other ******************************/

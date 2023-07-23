@@ -31,11 +31,17 @@
     } from 'stores/modals';
     import type { RoomMessage, FronvoAccount } from 'interfaces/all';
     import Message from '$lib/app/reusables/rooms/Message.svelte';
-    import { cachedAccountData, fronvoTitle, socket } from 'stores/main';
+    import {
+        cachedAccountData,
+        fronvoTitle,
+        lastSendsIn30,
+        socket,
+    } from 'stores/main';
     import InfiniteLoading from 'svelte-infinite-loading';
     import type { Unsubscriber } from 'svelte/store';
     import type { NewRoomMessageResult } from 'interfaces/account/newRoomMessage';
     import RoomChatStart from '$lib/app/reusables/rooms/RoomChatStart.svelte';
+    import { toast } from 'svelte-sonner';
 
     let chat: HTMLDivElement;
     let unsubscribe: Unsubscriber;
@@ -231,8 +237,10 @@
             if (e.dataTransfer.files.length > 0) {
                 const file = e.dataTransfer.files[0];
 
-                // 3MB
-                if (file.size > 3000000) return;
+                if (file.size > ($ourData.isPRO ? 3000000 : 1000000)) {
+                    toast(`Image is above ${$ourData.isPRO ? 3 : 1}MB.`);
+                    return;
+                }
 
                 if (isAcceptedImage(file.type)) {
                     const reader = new FileReader();
@@ -242,7 +250,8 @@
                             $currentRoomId,
                             $sendingImage,
                             reader.result,
-                            $ourData.isPRO
+                            $ourData.isPRO,
+                            $lastSendsIn30
                         );
                     });
 

@@ -85,7 +85,8 @@
             {
                 title: 'Save changes',
                 callback: uploadData,
-                primary: true,
+                primary: !$ourData.isPRO,
+                pro: $ourData.isPRO,
             },
             {
                 title: 'Close',

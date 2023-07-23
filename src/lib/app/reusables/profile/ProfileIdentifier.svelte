@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { ourData } from 'stores/profile';
+
     export let profileId: string;
     export let username: string;
     export let editable = false;
@@ -18,7 +20,11 @@
                     {username ? username : 'Deleted user'}
                 </h1>
             {:else}
-                <input maxlength={30} bind:value={username} />
+                <input
+                    class={`${$ourData.isPRO ? 'pro' : ''}`}
+                    maxlength={30}
+                    bind:value={username}
+                />
             {/if}
         </div>
 
@@ -112,5 +118,9 @@
 
     input:focus {
         border: 2px solid var(--branding);
+    }
+
+    .pro:focus {
+        border: 2px solid var(--pro);
     }
 </style>

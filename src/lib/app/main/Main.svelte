@@ -12,9 +12,17 @@
     import { currentRoomId } from 'stores/rooms';
     import HomePosts from './home/HomePosts.svelte';
     import { Toaster, toast } from 'svelte-sonner';
-    import { darkTheme, loginSucceeded, socket } from 'stores/main';
+    import {
+        darkTheme,
+        disabledIn30,
+        lastSendsIn30,
+        loginSucceeded,
+        socket,
+    } from 'stores/main';
     import { onMount } from 'svelte';
     import { ourData } from 'stores/profile';
+    import { differenceInMinutes } from 'date-fns';
+    import { getKey } from 'utilities/global';
 
     onMount(() => {
         loginSucceeded.subscribe((state) => {
@@ -28,6 +36,21 @@
                 if (online) toast(`${profileId} is now online.`);
             }
         });
+
+        setInterval(() => {
+            if ($lastSendsIn30 != -1) {
+                $lastSendsIn30 = 0;
+            }
+
+            if (
+                differenceInMinutes(
+                    new Date(),
+                    new Date(getKey('disabledIn30Time'))
+                ) < 15
+            ) {
+                $disabledIn30 = false;
+            }
+        }, 30000);
     });
 </script>
 

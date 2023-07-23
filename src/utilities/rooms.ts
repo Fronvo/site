@@ -10,10 +10,16 @@ import {
     currentRoomLoaded,
     sendingImage as sendingImageStore,
 } from 'stores/rooms';
-import { socket, lastSendAt as lastSendAtStore } from 'stores/main';
+import {
+    socket,
+    lastSendAt as lastSendAtStore,
+    lastSendsIn30 as lastSendsIn30Store,
+    disabledIn30,
+} from 'stores/main';
 import { setProgressBar } from './main';
 import { differenceInSeconds } from 'date-fns';
 import { toast } from 'svelte-sonner';
+import { setKey } from './global';
 
 export async function fetchConvos(): Promise<Room[]> {
     return new Promise((resolve) => {
@@ -61,8 +67,24 @@ export function sendMessage(
     content: string,
     replyingToP: string,
     replyingToIdP: string,
-    lastSendAt: string
+    lastSendAt: string,
+    lastSendsIn30: number
 ): void {
+    if (lastSendsIn30 >= 12) {
+        lastSendsIn30Store.set(-1);
+        toast('Try again in 15 minutes.');
+
+        setKey('disabledIn30Time', new Date());
+        disabledIn30.set(true);
+
+        setTimeout(() => {
+            lastSendsIn30Store.set(0);
+            disabledIn30.set(false);
+        }, 60 * 15 * 10);
+
+        return;
+    }
+
     if (content.trim().length == 0) return;
 
     if (differenceInSeconds(new Date(), new Date(lastSendAt)) < 1) {
@@ -72,6 +94,7 @@ export function sendMessage(
     }
 
     lastSendAtStore.set(new Date().toString());
+    lastSendsIn30Store.set(lastSendsIn30 + 1);
 
     socket.emit('sendRoomMessage', {
         roomId,
@@ -102,9 +125,12 @@ export async function sendImage(
     roomId: string,
     sendingImage: boolean,
     file: any,
-    isPRO: boolean
+    isPRO: boolean,
+    lastSendsIn30: number
 ): Promise<void> {
     if (sendingImage) return;
+
+    lastSendsIn30Store.set(lastSendsIn30 + 3);
 
     sendingImageStore.set(true);
     setProgressBar(true);

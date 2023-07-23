@@ -26,8 +26,9 @@
         input.onchange = async (_) => {
             let file = Array.from(input.files)[0];
 
-            // 3MB
-            if (file.size > 3000000) return;
+            if (file.size > 3000000) {
+                return;
+            }
 
             if (isAcceptedImage(file.type)) {
                 uploading = true;

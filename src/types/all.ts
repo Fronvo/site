@@ -1,4 +1,9 @@
-export type LocalKeys = 'token' | 'darkTheme' | 'revealNav' | 'savedAccounts';
+export type LocalKeys =
+    | 'token'
+    | 'darkTheme'
+    | 'revealNav'
+    | 'savedAccounts'
+    | 'disabledIn30Time';
 
 export enum Errors {
     UNKNOWN = 1,

@@ -38,8 +38,7 @@
         input.onchange = async (_) => {
             let file = Array.from(input.files)[0];
 
-            // 3MB
-            if (file.size > 3000000) {
+            if (file.size > ($ourData.isPRO ? 3000000 : 1000000)) {
                 toast('Image is above 3MB.');
                 return;
             }
@@ -77,9 +76,8 @@
                 if (ev.clipboardData.files.length > 0) {
                     const file = ev.clipboardData.files[0];
 
-                    // 3MB
-                    if (file.size > 3000000) {
-                        toast('Image is above 3MB.');
+                    if (file.size > ($ourData.isPRO ? 3000000 : 1000000)) {
+                        toast(`Image is above ${$ourData.isPRO ? 3 : 1}MB.`);
                         return;
                     }
 

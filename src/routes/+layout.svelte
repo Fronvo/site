@@ -15,18 +15,25 @@
     import { fade } from 'svelte/transition';
     import {
         darkTheme,
+        disabledIn30,
         fronvoTitle,
         loginSucceeded,
         showLayout,
     } from 'stores/main';
     import { goto } from '$app/navigation';
     import { dropdownAnimationFinished } from 'stores/dropdowns';
+    import { differenceInMinutes } from 'date-fns';
 
     let mountReady = false;
 
     function setupVars(): void {
         // Try our best to default to dark
         $darkTheme = !getKey('darkTheme') || getKey('darkTheme') == 'true';
+        $disabledIn30 =
+            differenceInMinutes(
+                new Date(),
+                new Date(getKey('disabledIn30Time'))
+            ) < 15;
     }
 
     function setupTheming(): void {

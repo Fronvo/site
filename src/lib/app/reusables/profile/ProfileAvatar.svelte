@@ -134,7 +134,7 @@
 
     <span />
 
-    {#if !$ourData.isPRO}
+    {#if !$ourData.isPRO && profileId == $ourData.profileId}
         <button id="pro-btn" on:click={() => showModal(ModalTypes.GoPRO)}
             >Go PRO</button
         >

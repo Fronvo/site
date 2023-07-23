@@ -17,7 +17,7 @@
     import { writable, type Unsubscriber, type Writable } from 'svelte/store';
     import { sendImage, sendMessage } from 'utilities/rooms';
     import RoomScrollBottom from './RoomScrollBottom.svelte';
-    import { cachedAccountData, socket } from 'stores/main';
+    import { cachedAccountData, lastSendAt, socket } from 'stores/main';
     import {
         findCachedAccount,
         isAcceptedImage,
@@ -263,7 +263,8 @@
                             $currentRoomId,
                             $sendContent,
                             $replyingTo,
-                            $replyingToId
+                            $replyingToId,
+                            $lastSendAt
                         );
 
                         ev.preventDefault();
@@ -359,7 +360,8 @@
                             $currentRoomId,
                             $sendContent,
                             $replyingTo,
-                            $replyingToId
+                            $replyingToId,
+                            $lastSendAt
                         )}
                 />
             {/if}

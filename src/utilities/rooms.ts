@@ -10,8 +10,10 @@ import {
     currentRoomLoaded,
     sendingImage as sendingImageStore,
 } from 'stores/rooms';
-import { socket } from 'stores/main';
+import { socket, lastSendAt as lastSendAtStore } from 'stores/main';
 import { setProgressBar } from './main';
+import { differenceInSeconds } from 'date-fns';
+import { toast } from 'svelte-sonner';
 
 export async function fetchConvos(): Promise<Room[]> {
     return new Promise((resolve) => {
@@ -58,8 +60,19 @@ export function sendMessage(
     roomId: string,
     content: string,
     replyingToP: string,
-    replyingToIdP: string
+    replyingToIdP: string,
+    lastSendAt: string
 ): void {
+    if (content.trim().length == 0) return;
+
+    if (differenceInSeconds(new Date(), new Date(lastSendAt)) < 1) {
+        toast('Slow down.');
+
+        return;
+    }
+
+    lastSendAtStore.set(new Date().toString());
+
     socket.emit('sendRoomMessage', {
         roomId,
         message: content,

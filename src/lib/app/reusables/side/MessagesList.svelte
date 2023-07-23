@@ -102,8 +102,9 @@
         flex-direction: column;
         overflow: auto;
         overflow-x: hidden;
-        height: calc(100% - 50px);
+        height: calc(100% - 55px);
         margin-top: 5px;
+        padding-bottom: 10px;
     }
 
     #title {

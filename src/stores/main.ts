@@ -55,4 +55,6 @@ export const cachedAccountData: Writable<FronvoAccount[]> = writable([]);
 /****************************** Fronvo other ******************************/
 export const currentTopPanel: Writable<TopPanels> = writable();
 export const currentFriendsPanel: Writable<0 | 1> = writable(0);
+
+export const lastSendAt: Writable<string> = writable();
 /****************************** Fronvo other ******************************/

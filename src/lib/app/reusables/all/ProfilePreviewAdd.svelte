@@ -73,7 +73,7 @@
             >
         {/if}
 
-        {#if !profileData.online}
+        {#if profileData.online}
             <div class="indicator" />
         {/if}
     </div>

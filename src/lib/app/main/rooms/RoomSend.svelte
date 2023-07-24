@@ -170,6 +170,8 @@
     }
 
     function showGifPicker(): void {
+        if (!canMessage) return;
+
         $targetTenorCallback = (url: string) => {
             socket.emit('sendRoomMessage', {
                 roomId: $currentRoomId,

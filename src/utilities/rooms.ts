@@ -73,6 +73,7 @@ export function sendMessage(
     if (lastSendsIn30 >= 12) {
         lastSendsIn30Store.set(-1);
         toast('Try again in 15 minutes.');
+        sendContent.set('');
 
         setKey('disabledIn30Time', new Date());
         disabledIn30.set(true);

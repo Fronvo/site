@@ -108,10 +108,7 @@ import type {
     DeleteAccountResult,
 } from './account/deleteAccount';
 import type { FetchTenorParams, FetchTenorResult } from './account/fetchTenor';
-import type {
-    FetchThemesParams,
-    FetchThemesResult,
-} from './account/fetchThemes';
+import type { FetchThemesResult } from './account/fetchThemes';
 import type { ApplyThemeParams, ApplyThemeResult } from './account/applyTheme';
 import type {
     CreateThemeParams,
@@ -261,10 +258,7 @@ export interface ClientToServerEvents {
         {}: FetchTenorParams,
         callback?: ({}: FetchTenorResult) => void
     ) => void;
-    fetchThemes: (
-        {}: FetchThemesParams,
-        callback?: ({}: FetchThemesResult) => void
-    ) => void;
+    fetchThemes: (callback?: ({}: FetchThemesResult) => void) => void;
     applyTheme: (
         {}: ApplyThemeParams,
         callback?: ({}: ApplyThemeResult) => void

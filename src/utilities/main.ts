@@ -4,6 +4,7 @@ import type {
     Post,
     Room,
     SwitchedAccount,
+    Theme,
 } from 'interfaces/all';
 import { io } from 'socket.io-client';
 import {
@@ -41,6 +42,13 @@ import {
     currentRoomMessages,
 } from 'stores/rooms';
 import { loadHomePosts } from './home';
+import {
+    applyThemeLocally,
+    checkAndApplyLocalTheme,
+    loadThemes,
+    resetLocalTheme,
+} from './themes';
+import { currentTheme, defaultTheme, whiteTheme } from '../themes';
 
 // Preserve modal state
 let modalStateVisible: boolean;
@@ -127,6 +135,30 @@ export async function performLogin(
 
             loadProfile(cachedAccountData).then((data) => {
                 profileData = data;
+
+                if (profileData.isPRO) {
+                    loadThemes();
+                } else {
+                    resetLocalTheme();
+                }
+
+                if (profileData.appliedTheme) {
+                    applyThemeLocally(
+                        profileData.appliedTheme,
+                        profileData.bW,
+                        profileData.bDW,
+                        profileData.bD,
+                        profileData.bDD
+                    );
+
+                    currentTheme.set(undefined);
+
+                    currentTheme.set(
+                        !getKey('darkTheme') || getKey('darkTheme') == 'true'
+                            ? defaultTheme
+                            : whiteTheme
+                    );
+                }
             });
 
             loadRoomsData().then((convos) => {

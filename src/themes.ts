@@ -12,7 +12,6 @@ interface ThemingOptions {
     // Branding color
     branding: string;
     branding_darken: string;
-    branding_trans: string;
 
     // Background color
     bg: string;
@@ -51,9 +50,6 @@ interface ThemingOptions {
     pro_darken: string;
 }
 
-// TODO: ZORIN:     branding: 'rgb(0, 160, 255)',
-// branding_darken: 'rgb(0, 140, 255)',
-
 export const defaultTheme: ThemingOptions = {
     i_primary: 'rgb(21, 21, 21)',
     i_shadow: 'rgb(15, 15, 15)',
@@ -63,7 +59,6 @@ export const defaultTheme: ThemingOptions = {
 
     branding: 'rgb(90, 150, 255)',
     branding_darken: 'rgb(90, 130, 255)',
-    branding_trans: 'rgb(90, 150, 255, 10%)',
 
     bg: 'rgb(20, 20, 20)',
     bg_trans: 'rgb(20, 20, 20, 75%)',
@@ -106,7 +101,6 @@ export const whiteTheme: ThemingOptions = {
 
     branding: 'rgb(0, 130, 255)',
     branding_darken: 'rgb(0, 110, 255)',
-    branding_trans: 'rgb(0, 130, 255, 10%)',
 
     bg: 'rgb(250, 250, 250)',
     bg_trans: 'rgb(250, 250, 250, 75%)',

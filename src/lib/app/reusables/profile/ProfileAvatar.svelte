@@ -172,7 +172,7 @@
                     r="10"
                     stroke="var(--branding)"
                     stroke-width="1.5"
-                    opacity=".5"
+                    opacity=".8"
                 /></g
             ></svg
         >

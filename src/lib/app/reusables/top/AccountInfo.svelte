@@ -201,6 +201,7 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+        font-weight: 600;
     }
 
     input {

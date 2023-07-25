@@ -1,0 +1,119 @@
+<script lang="ts">
+    import type { Theme } from 'interfaces/all';
+    import { darkTheme, socket } from 'stores/main';
+    import { ourData } from 'stores/profile';
+    import { setProgressBar } from 'utilities/main';
+    import { applyThemeLocally } from 'utilities/themes';
+
+    export let theme: Theme;
+
+    let color = `#${$darkTheme ? theme.brandingDark : theme.brandingWhite}`;
+
+    function applyTheme(): void {
+        if ($ourData.appliedTheme == theme.title) return;
+
+        setProgressBar(true);
+
+        socket.emit(
+            'applyTheme',
+            {
+                title: theme.title,
+            },
+            ({ err }) => {
+                if (!err) {
+                    applyThemeLocally(
+                        theme.title,
+                        theme.brandingWhite,
+                        theme.brandingDarkenWhite,
+                        theme.brandingDark,
+                        theme.brandingDarkenDark
+                    );
+
+                    location.href = '';
+                }
+
+                setProgressBar(false);
+            }
+        );
+    }
+</script>
+
+<div class="theme-container" on:click={applyTheme} on:keydown={applyTheme}>
+    <div id="icon" style={`background: ${color}`} />
+
+    <div class="bottom-container">
+        <h1 id="title">{theme.title}</h1>
+
+        {#if $ourData.appliedTheme == theme.title}
+            <h1 id="active">Active</h1>
+        {/if}
+    </div>
+</div>
+
+<style>
+    .theme-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        align-items: center;
+        background: transparent;
+        cursor: pointer;
+        width: 100%;
+        padding: 8px;
+        cursor: pointer;
+    }
+
+    div:hover {
+        background: var(--primary);
+    }
+
+    div h1 {
+        margin: 0;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    #icon {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 30px;
+        margin-right: 8px;
+    }
+
+    #title {
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        font-size: 1.2rem;
+        color: var(--text);
+        font-weight: 600;
+    }
+
+    #icon {
+        padding: 0;
+        margin-right: 12px;
+    }
+
+    .bottom-container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #active {
+        margin: 0;
+        font-size: 0.9rem;
+        color: var(--branding);
+        font-weight: 600;
+    }
+</style>

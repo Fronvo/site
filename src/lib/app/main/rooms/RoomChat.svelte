@@ -385,7 +385,6 @@
                 </InfiniteLoading>
             {/if}
 
-            <!-- TODO: Virtual list -->
             {#each $messages as { message, profileData }, i}
                 <Message
                     {i}

@@ -1,5 +1,6 @@
 <script lang="ts">
     import { modalAnimDuration, type ModalData } from 'stores/modals';
+    import { ourData } from 'stores/profile';
     import { blur } from 'svelte/transition';
 
     export let data: ModalData;
@@ -10,7 +11,9 @@
 </script>
 
 <div
-    class={`modal-container ${!data.title ? 'title-less' : ''}`}
+    class={`modal-container ${!data.title ? 'title-less' : ''} ${
+        $ourData.appliedTheme ? 'themed' : ''
+    }`}
     transition:blur={{ amount: 5, opacity: 0.5, duration: modalAnimDuration }}
 >
     {#if data.title}
@@ -148,5 +151,20 @@
 
     .pro:hover {
         background: var(--pro_darken);
+    }
+
+    .themed {
+        border: 2px solid var(--branding);
+        box-shadow: 0 0 5px var(--branding);
+    }
+
+    .themed .pro {
+        background: var(--branding);
+        color: white;
+        box-shadow: 0 0 10px var(--branding);
+    }
+
+    .themed .pro:hover {
+        background: var(--branding_darken);
     }
 </style>

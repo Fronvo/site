@@ -31,12 +31,15 @@
         height: 34px;
         padding: 5px;
         margin-right: 5px;
-        margin-left: 5px;
         border-radius: 15px;
-        margin-bottom: 3px;
+        transition: 150ms;
     }
 
     svg:hover {
-        background: var(--secondary);
+        transform: scale(0.95);
+    }
+
+    svg:active {
+        transform: scale(0.9);
     }
 </style>

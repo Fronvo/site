@@ -136,6 +136,7 @@
             <h1 id="status">{profileData?.status}</h1>
         {/if}
     </div>
+
     {#if pending}
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -199,10 +200,6 @@
         border: 3px solid var(--bg);
     }
 
-    .indicator:hover {
-        background: rgb(56, 212, 42);
-    }
-
     .pending {
         cursor: default;
     }
@@ -217,6 +214,10 @@
 
     div:hover {
         background: var(--primary);
+    }
+
+    .indicator:hover {
+        background: rgb(56, 212, 42);
     }
 
     div h1 {
@@ -298,5 +299,6 @@
         overflow: hidden;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
+        font-weight: 600;
     }
 </style>

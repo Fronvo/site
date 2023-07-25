@@ -5,7 +5,7 @@
 import type { FronvoError } from 'interfaces/all';
 
 export interface ApplyThemeParams {
-    themeId: string;
+    title: string;
 }
 
 export interface ApplyThemeResult extends FronvoError {}

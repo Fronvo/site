@@ -3,7 +3,11 @@ export type LocalKeys =
     | 'darkTheme'
     | 'revealNav'
     | 'savedAccounts'
-    | 'disabledIn30Time';
+    | 'disabledIn30Time'
+    | 'bW'
+    | 'bDW'
+    | 'bD'
+    | 'bDD';
 
 export enum Errors {
     UNKNOWN = 1,

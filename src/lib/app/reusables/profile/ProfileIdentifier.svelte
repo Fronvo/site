@@ -11,7 +11,7 @@
 <div
     class={`identifier-container ${mini ? 'mini' : ''} ${
         preview ? 'preview' : ''
-    } ${editable ? 'editable' : ''}`}
+    } ${editable ? 'editable' : ''} ${$ourData.appliedTheme ? 'themed' : ''}`}
 >
     <div class="info-container">
         <div class="lock-container">
@@ -122,5 +122,9 @@
 
     .pro:focus {
         border: 2px solid var(--pro);
+    }
+
+    .themed input:focus {
+        border: 2px solid var(--branding);
     }
 </style>

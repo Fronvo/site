@@ -10,7 +10,7 @@
     <div
         class={`bio-container ${mini ? 'mini' : ''} ${
             editable ? 'editable' : ''
-        }`}
+        } ${$ourData.appliedTheme ? 'themed' : ''}`}
     >
         {#if !editable}
             <h1 id="bio">
@@ -85,5 +85,9 @@
 
     .pro:focus {
         border: 2px solid var(--pro);
+    }
+
+    .themed textarea:focus {
+        border: 2px solid var(--branding);
     }
 </style>

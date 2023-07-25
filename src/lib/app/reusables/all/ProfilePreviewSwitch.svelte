@@ -3,6 +3,7 @@
     import { ModalTypes } from 'stores/modals';
     import { setKey } from 'utilities/global';
     import { removeSavedAcount, showModal } from 'utilities/main';
+    import { resetLocalTheme } from 'utilities/themes';
 
     export let avatar: string;
     export let username: string;
@@ -14,6 +15,8 @@
             if (!err) {
                 // Then, update localStorage and refresh fronvo
                 setKey('token', token);
+
+                resetLocalTheme();
 
                 location.href = '/';
             } else {

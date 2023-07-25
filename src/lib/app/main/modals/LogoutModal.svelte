@@ -7,6 +7,7 @@
     import InfoHeader from '$lib/app/reusables/all/InfoHeader.svelte';
     import ProfilePreviewLogout from '$lib/app/reusables/all/ProfilePreviewLogout.svelte';
     import { ourData } from 'stores/profile';
+    import { resetLocalTheme } from 'utilities/themes';
 
     function logout(): void {
         removeKey('token');
@@ -14,6 +15,8 @@
 
         socket.emit('logout', () => {
             location.href = '/';
+
+            resetLocalTheme();
         });
     }
 

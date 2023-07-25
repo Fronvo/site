@@ -32,6 +32,10 @@
     }
 
     svg:hover {
-        background: var(--secondary);
+        transform: scale(0.95);
+    }
+
+    svg:active {
+        transform: scale(0.9);
     }
 </style>

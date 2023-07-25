@@ -2,6 +2,7 @@ import PostSettingsDropdown from '$lib/app/main/dropdowns/PostSettingsDropdown.s
 import ProfileDropdown from '$lib/app/main/dropdowns/ProfileDropdown.svelte';
 import ProfileSettingsDropdown from '$lib/app/main/dropdowns/ProfileSettingsDropdown.svelte';
 import TenorDropdown from '$lib/app/main/dropdowns/TenorDropdown.svelte';
+import ThemeSettingsDropdown from '$lib/app/main/dropdowns/ThemeSettingsDropdown.svelte';
 import type { FronvoAccount } from 'interfaces/all';
 import { writable, type Writable } from 'svelte/store';
 
@@ -11,6 +12,7 @@ export const dropdowns = [
     TenorDropdown,
     ProfileSettingsDropdown,
     PostSettingsDropdown,
+    ThemeSettingsDropdown,
 ];
 /****************************** Dropdowns ******************************/
 
@@ -20,6 +22,7 @@ export enum DropdownTypes {
     Gif,
     ProfileSettings,
     PostSettings,
+    ThemeSettings,
 }
 
 export interface DropdownActions {

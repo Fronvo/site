@@ -340,7 +340,6 @@
         {#if gif || attachment}
             <svg
                 class="action"
-                id="clear"
                 xmlns="http://www.w3.org/2000/svg"
                 width="32"
                 height="32"
@@ -495,13 +494,14 @@
         margin-left: 2.5px;
         margin-bottom: 3px;
         border-radius: 15px;
+        transition: 150ms;
     }
 
     .action:hover {
-        background: var(--branding_trans);
+        transform: scale(0.95);
     }
 
-    #clear:hover {
-        background: rgba(255, 0, 0, 0.15);
+    .action:active {
+        transform: scale(0.9);
     }
 </style>

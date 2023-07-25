@@ -1,7 +1,7 @@
 import EditProfileModal from '$lib/app/main/modals/EditProfileModal.svelte';
 import DeleteMessageModal from '$lib/app/main/modals/DeleteMessageModal.svelte';
 
-import type { RoomMessage, FronvoAccount, Post } from 'interfaces/all';
+import type { RoomMessage, FronvoAccount, Post, Theme } from 'interfaces/all';
 import { writable, type Writable } from 'svelte/store';
 import LeaveRoomModal from '$lib/app/main/modals/LeaveRoomModal.svelte';
 import ProfileModal from '$lib/app/main/modals/ProfileModal.svelte';
@@ -22,6 +22,8 @@ import DeletePostModal from '$lib/app/main/modals/DeletePostModal.svelte';
 import GoProModal from '$lib/app/main/modals/GoPROModal.svelte';
 import GoPayModal from '$lib/app/main/modals/GoPayModal.svelte';
 import MaxFriendsModal from '$lib/app/main/modals/MaxFriendsModal.svelte';
+import CreateThemeModal from '$lib/app/main/modals/CreateThemeModal.svelte';
+import DeleteThemeModal from '$lib/app/main/modals/DeleteThemeModal.svelte';
 
 /****************************** Modals ******************************/
 export const modals = [
@@ -46,6 +48,8 @@ export const modals = [
     GoProModal,
     GoPayModal,
     MaxFriendsModal,
+    CreateThemeModal,
+    DeleteThemeModal,
 ];
 /****************************** Modals ******************************/
 
@@ -72,6 +76,8 @@ export enum ModalTypes {
     GoPRO,
     GoPay,
     MaxFriends,
+    CreateTheme,
+    DeleteTheme,
 }
 
 export interface ModalActions {
@@ -116,3 +122,7 @@ export const targetImageModal: Writable<string> = writable();
 /****************************** TenorModal ******************************/
 export const targetTenorCallback: Writable<(url: string) => void> = writable();
 /****************************** TenorModal ******************************/
+
+/****************************** DeleteTheme ******************************/
+export const targetTheme: Writable<Theme> = writable();
+/****************************** DeleteTheme ******************************/

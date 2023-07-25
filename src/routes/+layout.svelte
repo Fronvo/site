@@ -23,6 +23,7 @@
     import { goto } from '$app/navigation';
     import { dropdownAnimationFinished } from 'stores/dropdowns';
     import { differenceInMinutes } from 'date-fns';
+    import { checkAndApplyLocalTheme } from 'utilities/themes';
 
     let mountReady = false;
 
@@ -37,6 +38,8 @@
     }
 
     function setupTheming(): void {
+        checkAndApplyLocalTheme();
+
         darkTheme.subscribe((dark) => {
             if (typeof dark == 'undefined') {
                 return;

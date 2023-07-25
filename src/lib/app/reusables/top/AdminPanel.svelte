@@ -1,5 +1,9 @@
+<script>
+    import CreateThemeButton from '../side/CreateThemeButton.svelte';
+</script>
+
 <div class="admin-container">
-    <h1>Admin</h1>
+    <CreateThemeButton />
 </div>
 
 <style>

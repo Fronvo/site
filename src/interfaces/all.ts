@@ -44,6 +44,11 @@ export interface FronvoAccount {
     pendingFriendRequests?: string[];
     friends: string[];
     isPRO?: boolean;
+    appliedTheme?: string;
+    bW?: string;
+    bDW?: string;
+    bD?: string;
+    bDD?: string;
 }
 
 export interface SwitchedAccount {
@@ -87,8 +92,6 @@ export interface RoomMessage {
 
 export interface Theme {
     title: string;
-    description: string;
-    icon: string;
     brandingWhite?: string;
     brandingDarkenWhite?: string;
     brandingDark?: string;

@@ -6,8 +6,6 @@ import type { FronvoError } from 'interfaces/all';
 
 export interface CreateThemeParams {
     title: string;
-    description: string;
-    icon: string;
     brandingWhite: string;
     brandingDarkenWhite: string;
     brandingDark: string;

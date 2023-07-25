@@ -1,4 +1,8 @@
-<div class="dropdown-container">
+<script>
+    import { ourData } from 'stores/profile';
+</script>
+
+<div class={`dropdown-container ${$ourData.appliedTheme ? 'themed' : ''}`}>
     <slot />
 </div>
 
@@ -12,5 +16,10 @@
         box-shadow: 0 0 5px var(--pro);
         border-radius: 10px;
         overflow: hidden;
+    }
+
+    .themed {
+        border: 2px solid var(--branding);
+        box-shadow: 0 0 5px var(--branding);
     }
 </style>

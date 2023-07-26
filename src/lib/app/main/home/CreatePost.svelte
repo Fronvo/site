@@ -8,11 +8,9 @@
         targetTenorCallback,
     } from 'stores/modals';
     import { ourData } from 'stores/profile';
-    import { currentRoomId } from 'stores/rooms';
     import { onMount } from 'svelte';
     import { toast } from 'svelte-sonner';
     import { scale } from 'svelte/transition';
-    import { Errors } from 'types/all';
     import {
         isAcceptedImage,
         setProgressBar,

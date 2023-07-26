@@ -6,7 +6,6 @@
     import InfoHeader from '$lib/app/reusables/all/InfoHeader.svelte';
     import { onMount } from 'svelte';
     import ErrorHeader from '$lib/app/reusables/all/ErrorHeader.svelte';
-    import { Errors } from 'types/all';
     import { toast } from 'svelte-sonner';
 
     let element: HTMLInputElement;

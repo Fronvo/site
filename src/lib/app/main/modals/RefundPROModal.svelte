@@ -6,6 +6,8 @@
     import { toast } from 'svelte-sonner';
     import type { ModalData } from 'stores/modals';
     import { loadProfile } from 'utilities/profile';
+    import { themes } from 'stores/themes';
+    import { resetLocalTheme } from 'utilities/themes';
 
     async function refundPRO(): Promise<void> {
         setProgressBar(true);
@@ -18,6 +20,8 @@
         });
 
         await loadProfile($cachedAccountData);
+        $themes = [];
+        resetLocalTheme();
 
         dismissModal();
 

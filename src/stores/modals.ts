@@ -24,6 +24,7 @@ import GoPayModal from '$lib/app/main/modals/GoPayModal.svelte';
 import MaxFriendsModal from '$lib/app/main/modals/MaxFriendsModal.svelte';
 import CreateThemeModal from '$lib/app/main/modals/CreateThemeModal.svelte';
 import DeleteThemeModal from '$lib/app/main/modals/DeleteThemeModal.svelte';
+import RefundProModal from '$lib/app/main/modals/RefundPROModal.svelte';
 
 /****************************** Modals ******************************/
 export const modals = [
@@ -50,6 +51,7 @@ export const modals = [
     MaxFriendsModal,
     CreateThemeModal,
     DeleteThemeModal,
+    RefundProModal,
 ];
 /****************************** Modals ******************************/
 
@@ -78,6 +80,7 @@ export enum ModalTypes {
     MaxFriends,
     CreateTheme,
     DeleteTheme,
+    RefundPRO,
 }
 
 export interface ModalActions {
@@ -92,7 +95,6 @@ export interface ModalActions {
 export interface ModalData {
     title?: string;
     actions: ModalActions[];
-    showCloseOnly?: boolean;
 }
 /****************************** Modal Exports ******************************/
 

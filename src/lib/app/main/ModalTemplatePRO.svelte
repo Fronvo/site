@@ -24,7 +24,7 @@
         <slot />
     </div>
 
-    {#if data.actions.length > 0 && !data.showCloseOnly}
+    {#if data.actions.length > 0}
         <div class="options-container">
             {#each data.actions as { title, callback, condition, danger, primary, pro }}
                 {#if typeof condition == 'undefined' || condition}

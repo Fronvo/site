@@ -28,7 +28,7 @@
         actions: [
             { title: 'Remove friend', callback: removeFriend, danger: true },
             {
-                title: 'Dismiss',
+                title: 'Cancel',
                 callback: dismissModal,
             },
         ],

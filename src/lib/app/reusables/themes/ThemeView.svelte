@@ -1,17 +1,29 @@
 <script lang="ts">
     import type { Theme } from 'interfaces/all';
     import { darkTheme, socket } from 'stores/main';
+    import { ModalTypes, targetTheme } from 'stores/modals';
     import { ourData } from 'stores/profile';
-    import { setProgressBar } from 'utilities/main';
+    import { getKey } from 'utilities/global';
+    import { setProgressBar, showModal } from 'utilities/main';
     import { applyThemeLocally } from 'utilities/themes';
 
     export let theme: Theme;
 
     let color = `#${$darkTheme ? theme.brandingDark : theme.brandingWhite}`;
 
-    function applyTheme(): void {
+    function decideApplyAction(): void {
         if ($ourData.appliedTheme == theme.title) return;
 
+        if (!getKey('token')) {
+            $targetTheme = theme;
+
+            showModal(ModalTypes.ThemeApply);
+        } else {
+            applyTheme();
+        }
+    }
+
+    function applyTheme(): void {
         setProgressBar(true);
 
         socket.emit(
@@ -38,7 +50,11 @@
     }
 </script>
 
-<div class="theme-container" on:click={applyTheme} on:keydown={applyTheme}>
+<div
+    class="theme-container"
+    on:click={decideApplyAction}
+    on:keydown={decideApplyAction}
+>
     <div id="icon" style={`background: ${color}`} />
 
     <div class="bottom-container">
@@ -84,8 +100,8 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        width: 40px;
-        height: 40px;
+        width: 38px;
+        height: 38px;
         border-radius: 30px;
         margin-right: 8px;
     }
@@ -95,7 +111,7 @@
         overflow: hidden;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         color: var(--text);
         font-weight: 600;
     }

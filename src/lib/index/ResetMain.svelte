@@ -36,6 +36,10 @@
         );
     }
 
+    function goBack(): void {
+        goto('/');
+    }
+
     onMount(() => {
         initSocket();
 
@@ -59,6 +63,23 @@
         <div class="choices-container">
             <button id="reset" on:click={join}>Send email</button>
         </div>
+
+        <h1 id="mixed" on:click={goBack} on:keydown={goBack}>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                ><g fill="var(--branding)"
+                    ><path
+                        d="M11.596 8.303L8.165 11.63a.499.499 0 0 0 0 .74l6.63 6.43c.414.401 1.205.158 1.205-.37v-5.723l-4.404-4.404Z"
+                    /><path
+                        d="M16 11.293V5.57c0-.528-.791-.771-1.205-.37l-2.482 2.406L16 11.293Z"
+                        opacity=".75"
+                    /></g
+                ></svg
+            >Back
+        </h1>
     </div>
 {/if}
 
@@ -136,5 +157,25 @@
     #reset {
         width: 150px;
         margin-right: 15px;
+    }
+
+    #mixed {
+        display: flex;
+        align-items: center;
+        font-size: 1.4rem;
+        margin: 0;
+        margin-top: 50px;
+        margin-right: 32px;
+        cursor: pointer;
+    }
+
+    #mixed:hover svg {
+        transform: translateX(-2.5px);
+    }
+
+    #mixed svg {
+        width: 36px;
+        height: 36px;
+        transition: 200ms;
     }
 </style>

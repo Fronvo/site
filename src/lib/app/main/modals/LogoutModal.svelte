@@ -14,9 +14,9 @@
         removeKey('savedAccounts');
 
         socket.emit('logout', () => {
-            location.href = '/';
-
             resetLocalTheme();
+
+            location.href = '/';
         });
     }
 

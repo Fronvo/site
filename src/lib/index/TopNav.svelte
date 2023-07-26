@@ -7,7 +7,7 @@
     <div class="top-nav-container">
         <div class="logo-container">
             <h1 id="logo">Fronvo</h1>
-            <h1 id="descriptor">Your privacy, for free.</h1>
+            <h1 id="descriptor">Your privacy, for real.</h1>
         </div>
 
         <Theme />

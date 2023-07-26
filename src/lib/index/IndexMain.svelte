@@ -42,19 +42,7 @@
     function adjustDownload(): void {
         const val = window.navigator.userAgent.toLowerCase();
 
-        if (val.includes('windows') || val.includes('win')) {
-            download.textContent = 'Get for Windows';
-
-            download.onclick = () => {
-                window
-                    .open(
-                        import.meta.env.VITE_WINDOWS_URL ||
-                            'https://github.com/Fronvo/desktop/releases/download/v0.4/Fronvo.Setup.0.4.0.exe',
-                        '_blank'
-                    )
-                    .focus();
-            };
-        } else if (val.includes('android')) {
+        if (val.includes('android')) {
             download.textContent = 'Get for Android';
 
             download.onclick = () => {
@@ -66,31 +54,11 @@
             }
 
             pcContainer.style.display = 'none';
-        } else if (val.includes('iphone')) {
-            download.textContent = 'Download unavailable';
 
-            download.disabled = true;
-
-            pcContainer.style.display = 'none';
-        } else if (val.includes('linux')) {
-            download.textContent = 'Get for Linux';
-
-            download.onclick = () => {
-                window
-                    .open(
-                        import.meta.env.VITE_LINUX_URL ||
-                            'https://github.com/Fronvo/desktop/releases/download/v0.4/fronvo-0.4.0.deb',
-                        '_blank'
-                    )
-                    .focus();
-            };
+            download.style.visibility = 'visible';
         } else {
-            download.textContent = 'Download unavailable';
-
-            download.disabled = true;
+            download.style.display = 'none';
         }
-
-        download.style.visibility = 'visible';
     }
 
     function register(): void {
@@ -186,7 +154,7 @@
             </div>
         </div>
 
-        <button bind:this={download} id="download-btn">Get for Windows</button>
+        <button bind:this={download} id="download-btn">Get for Android</button>
     </div>
 {/if}
 

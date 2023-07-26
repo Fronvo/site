@@ -169,7 +169,7 @@
 
                     setProgressBar(false);
 
-                    if (err.code == Errors.DO_AGAIN) {
+                    if (err.name == 'DO_AGAIN') {
                         showModal(ModalTypes.GoPRO);
                     }
                 } else {

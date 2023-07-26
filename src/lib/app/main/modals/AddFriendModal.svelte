@@ -35,10 +35,10 @@
             ({ err }) => {
                 if (err) {
                     // Prettify
-                    if (err.code == Errors.INVALID_REGEX) {
+                    if (err.name == 'INVALID_REGEX') {
                         errorMessage =
                             'Identifier contains invalid characters.';
-                    } else if (err.code == Errors.OVER_FRIENDS_LIMIT) {
+                    } else if (err.name == 'OVER_FRIENDS_LIMIT') {
                         showModal(ModalTypes.MaxFriends);
                     } else {
                         errorMessage = err.msg;

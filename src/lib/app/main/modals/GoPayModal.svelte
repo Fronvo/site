@@ -12,6 +12,7 @@
     import { cachedAccountData, currentToken, darkTheme } from 'stores/main';
     import { loadProfile } from 'utilities/profile';
     import { toast } from 'svelte-sonner';
+    import { loadThemes } from 'utilities/themes';
 
     let stripe = null;
     let clientSecret = null;
@@ -63,6 +64,7 @@
             });
 
             await loadProfile($cachedAccountData);
+            await loadThemes();
 
             dismissModal();
 

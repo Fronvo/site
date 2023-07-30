@@ -14,6 +14,8 @@
         'Finding friends..',
         'Waking up the server..',
         'Setting up the lighting..',
+        'Rare message displaying..',
+        'Fronvo was released on the 10th of August in 2023!',
     ];
 
     function choose(choices: string[]) {

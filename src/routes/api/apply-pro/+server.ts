@@ -14,14 +14,14 @@ export async function POST({ request }) {
     const token = (await requestParsed['token']) as string;
     const ch = (await requestParsed['ch']) as string;
 
-    if (!ch || !token) return json('UNKNOWN ERROR');
+    if (!ch || !token) return json(400);
 
     const client = io(SERVER_URL, {
         transports: ['websocket'],
         path: '/fronvo',
     });
 
-    async function applyPro(): Promise<string> {
+    async function applyPro(): Promise<number> {
         return new Promise((resolve) => {
             client.on('connect', () => {
                 client.emit(
@@ -51,7 +51,7 @@ export async function POST({ request }) {
                             }
 
                             if (!proCH) {
-                                return json('UNKNOWN ERROR');
+                                return json(400);
                             } else {
                                 client.emit(
                                     'applyPro',
@@ -63,9 +63,9 @@ export async function POST({ request }) {
                                         client.emit('logout');
 
                                         if (!err) {
-                                            resolve('OK');
+                                            resolve(200);
                                         } else {
-                                            resolve('UNKNOWN ERROR');
+                                            resolve(400);
                                         }
                                     }
                                 );

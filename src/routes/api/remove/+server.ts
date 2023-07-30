@@ -23,7 +23,7 @@ export async function POST({ request }) {
     });
 
     // Delete previous icon
-    if (!icon.includes(targetEndpoint)) return json('INVALID');
+    if (!icon.includes(targetEndpoint)) return json(400);
 
     icon = icon
         .replace(targetEndpoint + '/', '')
@@ -39,5 +39,5 @@ export async function POST({ request }) {
         await imagekit.deleteFile(prevResult[0].fileId);
     }
 
-    return json('OK');
+    return json(200);
 }

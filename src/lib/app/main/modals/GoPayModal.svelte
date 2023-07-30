@@ -27,7 +27,7 @@
     });
 
     async function createPaymentIntent() {
-        const response = await fetch('/create-payment-intent', {
+        const response = await fetch('/api/create-payment-intent', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',

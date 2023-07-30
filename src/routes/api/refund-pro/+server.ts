@@ -13,14 +13,14 @@ export async function POST({ request }) {
 
     const token = (await requestParsed['token']) as string;
 
-    if (!token) return json('UNKNOWN ERROR');
+    if (!token) return json(400);
 
     const client = io(SERVER_URL, {
         transports: ['websocket'],
         path: '/fronvo',
     });
 
-    async function refundPro(): Promise<string> {
+    async function refundPro(): Promise<number> {
         return new Promise((resolve) => {
             client.on('connect', () => {
                 client.emit(
@@ -54,20 +54,18 @@ export async function POST({ request }) {
                                                         client.emit('logout');
 
                                                         if (!err) {
-                                                            resolve('OK');
+                                                            resolve(200);
                                                         } else {
-                                                            resolve(
-                                                                'UNKNOWN ERROR'
-                                                            );
+                                                            resolve(400);
                                                         }
                                                     }
                                                 );
                                             }
                                         } catch (e) {
-                                            return json('UNKNOWN ERROR');
+                                            return json(400);
                                         }
                                     } else {
-                                        resolve('UNKNOWN ERROR');
+                                        resolve(400);
                                     }
                                 }
                             );

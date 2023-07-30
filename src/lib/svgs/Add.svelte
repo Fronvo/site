@@ -25,6 +25,7 @@
         margin-right: 5px;
         border-radius: 15px;
         transition: 150ms;
+        z-index: 1;
     }
 
     svg:hover {

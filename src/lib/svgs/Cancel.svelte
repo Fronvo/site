@@ -26,9 +26,8 @@
         height: 34px;
         padding: 5px;
         margin-right: 5px;
-        margin-left: 5px;
-        margin-bottom: 3px;
-        border-radius: 30px;
+        border-radius: 15px;
+        transition: 150ms;
     }
 
     svg:hover {

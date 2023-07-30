@@ -1,11 +1,7 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import { loadStripe } from '@stripe/stripe-js';
-    import {
-        Elements,
-        PaymentElement,
-        LinkAuthenticationElement,
-    } from 'svelte-stripe';
+    import { Elements, PaymentElement } from 'svelte-stripe';
     import ModalTemplatePro from '../ModalTemplatePRO.svelte';
     import type { ModalData } from 'stores/modals';
     import { dismissModal, setProgressBar } from 'utilities/main';
@@ -22,7 +18,6 @@
     onMount(async () => {
         stripe = await loadStripe(import.meta.env.VITE_STRIPE_PUBLIC);
 
-        // create payment intent server side
         clientSecret = await createPaymentIntent();
     });
 
@@ -99,9 +94,19 @@
             labels="floating"
             theme={$darkTheme ? 'night' : 'stripe'}
             bind:elements
+            variables={{
+                colorPrimary: 'rgb(0, 220, 220)',
+                colorBackground: $darkTheme
+                    ? 'rgb(30, 30, 30)'
+                    : 'rgb(250, 250, 250)',
+            }}
+            rules={{
+                '.Input': {
+                    border: $darkTheme ? 'rgb(30, 30, 30)' : 'rgb(20, 20, 20)',
+                },
+            }}
         >
             <form on:submit|preventDefault={submit}>
-                <LinkAuthenticationElement />
                 <PaymentElement />
             </form>
         </Elements>

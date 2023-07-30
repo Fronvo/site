@@ -112,10 +112,10 @@
     <div class="main-container" in:fade={{ duration: 250 }}>
         <h1 id="gradient">Join the most private social media</h1>
         <h1 id="descriptor">
-            Fronvo is the ultimate chance to reclaim your freedom from big tech.
+            Fronvo is the realest chance to reclaim your freedom from big tech.
         </h1>
 
-        <div bind:this={pcContainer} class="pc-container">
+        <div bind:this={pcContainer} class="credentials-container">
             <ErrorHeader {errorMessage} />
 
             <input
@@ -175,7 +175,7 @@
         z-index: 0;
     }
 
-    .pc-container {
+    .credentials-container {
         width: 400px;
         display: flex;
         flex-direction: column;
@@ -189,9 +189,9 @@
         text-align: center;
         background: linear-gradient(
             90deg,
-            #1b85ff 10.42%,
+            var(--pro) 10.42%,
             #0e62ff 54.68%,
-            #b700ff 99.98%
+            var(--pro) 100%
         );
         background-clip: text;
         -webkit-background-clip: text;
@@ -219,7 +219,7 @@
     }
 
     input:focus {
-        border: 2px solid #0e62ff;
+        border: 2px solid var(--pro);
     }
 
     .choices-container {
@@ -252,8 +252,8 @@
     }
 
     #download-btn {
-        background: #b700ff;
-        box-shadow: 0 0 5px #b700ff;
+        background: var(--pro);
+        box-shadow: 0 0 5px var(--pro);
         border-radius: 10px;
         margin-top: 30px;
         margin-right: 10px;

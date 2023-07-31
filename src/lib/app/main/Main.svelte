@@ -9,7 +9,7 @@
     import MessagesList from '../reusables/side/MessagesList.svelte';
     import RoomChat from './rooms/RoomChat.svelte';
     import RoomSend from './rooms/RoomSend.svelte';
-    import { currentRoomId } from 'stores/rooms';
+    import { currentRoomId, roomsList } from 'stores/rooms';
     import HomePosts from './home/HomePosts.svelte';
     import { Toaster, toast } from 'svelte-sonner';
     import {
@@ -23,6 +23,7 @@
     import { ourData } from 'stores/profile';
     import { differenceInMinutes } from 'date-fns';
     import { getKey } from 'utilities/global';
+    import { fetchConvos } from 'utilities/rooms';
 
     onMount(() => {
         loginSucceeded.subscribe((state) => {
@@ -36,6 +37,12 @@
                 if (online) toast(`${profileId} is now online.`);
             }
         });
+
+        socket.on('roomAdded', async () => ($roomsList = await fetchConvos()));
+        socket.on(
+            'roomRemoved',
+            async () => ($roomsList = await fetchConvos())
+        );
 
         setInterval(() => {
             if ($lastSendsIn30 != -1) {

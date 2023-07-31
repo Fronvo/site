@@ -31,6 +31,7 @@
     let isTyping: boolean;
 
     let nameElement: HTMLHeadingElement;
+    let indicator: HTMLDivElement;
 
     let unsubscribe: Unsubscriber;
 
@@ -83,9 +84,25 @@
         dmUser = dmData.dmUser;
         onlineP = dmUser.online;
 
+        setTimeout(() => {
+            if (onlineP) {
+                indicator.style.visibility = 'visible';
+            } else {
+                indicator.style.visibility = 'hidden';
+            }
+        }, 0);
+
         socket.on('onlineStatusUpdated', async ({ profileId, online }) => {
             if (dmUser.profileId == profileId) {
                 onlineP = online;
+
+                setTimeout(() => {
+                    if (online) {
+                        indicator.style.visibility = 'visible';
+                    } else {
+                        indicator.style.visibility = 'hidden';
+                    }
+                }, 0);
             }
         });
 
@@ -200,9 +217,7 @@
             >
         {/if}
 
-        {#if onlineP && $ourData.friends.includes(dmUser.profileId)}
-            <div class="indicator" />
-        {/if}
+        <div bind:this={indicator} class="indicator" />
     </div>
 
     <div class="info-container">
@@ -274,6 +289,7 @@
     .info-container {
         margin-left: 10px;
         flex: 1;
+        transform: translateX(-16px);
     }
 
     .badge-container {
@@ -282,12 +298,11 @@
     }
 
     .indicator {
-        position: fixed;
         background: rgb(56, 212, 42);
         width: 16px;
         height: 16px;
         border-radius: 30px;
-        transform: translateX(26px) translateY(16px);
+        transform: translateX(-17px) translateY(16px);
         border: 3px solid var(--bg);
     }
 

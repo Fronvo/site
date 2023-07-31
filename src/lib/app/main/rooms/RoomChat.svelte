@@ -275,12 +275,6 @@
 
         setProgressBar(false);
 
-        socket.on('roomAdded', async () => ($roomsList = await fetchConvos()));
-        socket.on(
-            'roomRemoved',
-            async () => ($roomsList = await fetchConvos())
-        );
-
         chat.scrollTop = chat.scrollHeight;
 
         currentRoomId.subscribe((state) => {

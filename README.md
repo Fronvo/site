@@ -19,7 +19,7 @@ cd site
 npm i
 ```
 
-Now fill out the required [.env](https://github.com/Fronvo/fronvo/blob/master/.env.example) file
+Now fill out the required **[.env](https://github.com/Fronvo/fronvo/blob/master/.env.example)** file
 
 After that:
 

@@ -9,14 +9,26 @@
 
 </h2>
 
-### Get started
+### Host locally
 
-**[Preview](https://github.com/Fronvo/site/blob/master/.github/markdown/PREVIEW.md)**
+Here's how to host the latest Fronvo site on your own:
+
+`git clone https://github.com/fronvo/site.git`
+
+`cd site`
+
+`npm i`
+
+Now fill out the required `.env` file
+
+After that:
+
+`npm run build && npm run preview`
+
+### Extras
 
 **[Introduction](https://github.com/Fronvo/site/blob/master/.github/markdown/INTRODUCTION.md)**
 
-**[Running](https://github.com/Fronvo/site/blob/master/.github/markdown/RUNNING.md)**
+**[Preview](https://github.com/Fronvo/site/blob/master/.github/markdown/PREVIEW.md)**
 
-**[Hosting](https://github.com/Fronvo/site/blob/master/.github/markdown/HOSTING.md)**
-
-**[Tools used](https://github.com/Fronvo/site/blob/master/.github/markdown/TOOLS.md)**
+**[Tools](https://github.com/Fronvo/site/blob/master/.github/markdown/TOOLS.md)**

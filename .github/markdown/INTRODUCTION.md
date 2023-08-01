@@ -16,10 +16,16 @@ How, you ask?
 
 ## Features
 
--   Communities. Gather all your friends in one and start chatting!
+-   Custom profile Banner to make your profile come to life.
 
--   Ambient mode. Bring your profile to life with a custom banner (and illuminate it!)
+-   Rooms. Add up to 15 of your Friends to one of those and start chit-chatting.
 
--   Finding the app theme, let's say, a little boring..? Make your own or use shared ones from the Theme Marketplace. (SOON)
+-   Add a custom status to inform everyone your Friends what you're up to.
+
+-   Share Images, GIFs & Spotify songs to all of your Friends.
+
+-   Use custom themes from the Theme Marketplace and spice up your experience.
 
 -   Want to feel even more secure? Self-host this site AND [the Fronvo server](https://github.com/Fronvo/server) to invite your friends, securely.
+
+-   Almost no other platform comes close to Fronvo's speed.

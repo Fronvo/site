@@ -1,4 +1,4 @@
-<p align='center'><a href='https://fronvo.vercel.app'><img src='https://raw.githubusercontent.com/Fronvo/server/master/.github/email/fronvo-logo-large.png' alt='Fronvo logo'><a/></p>
+<p align='center'><a href='https://fronvo.com'><img src='https://raw.githubusercontent.com/Fronvo/server/master/.github/email/fronvo-logo-large.png' alt='Fronvo logo'><a/></p>
 
 <h2 align='center'>
 

@@ -13,17 +13,19 @@
 
 Here's how to host the latest Fronvo site on your own:
 
-`git clone https://github.com/fronvo/site.git`
+```
+git clone https://github.com/fronvo/site.git
+cd site
+npm i
+```
 
-`cd site`
-
-`npm i`
-
-Now fill out the required `.env` file
+Now fill out the required [.env](https://github.com/Fronvo/fronvo/blob/master/.env.example) file
 
 After that:
 
-`npm run build && npm run preview`
+```
+npm run build && npm run preview
+```
 
 ### Extras
 

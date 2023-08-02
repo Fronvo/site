@@ -389,7 +389,9 @@
 
     #avatar {
         width: 36px;
+        min-width: 36px;
         height: 36px;
+        min-height: 36px;
         border-radius: 30px;
         margin-right: 5px;
         -webkit-touch-callout: none;
@@ -424,6 +426,7 @@
         margin: 0;
         font-size: 0.8rem;
         width: 36px;
+        min-width: 36px;
         margin-right: 5px;
         text-align: center;
         -webkit-touch-callout: none;

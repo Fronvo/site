@@ -3,6 +3,7 @@ import { writable, type Writable } from 'svelte/store';
 interface ThemingOptions {
     // Index pages
     i_primary: string;
+    i_bg: string;
     i_shadow: string;
 
     // Material-like colors
@@ -51,7 +52,8 @@ interface ThemingOptions {
 }
 
 export const defaultTheme: ThemingOptions = {
-    i_primary: 'rgb(21, 21, 21)',
+    i_primary: 'rgb(22, 22, 22)',
+    i_bg: 'rgb(27, 27, 27, 0.5)',
     i_shadow: 'rgb(15, 15, 15)',
 
     primary: 'rgb(30, 30, 30)',
@@ -94,6 +96,7 @@ export const defaultTheme: ThemingOptions = {
 
 export const whiteTheme: ThemingOptions = {
     i_primary: 'rgb(245, 245, 245)',
+    i_bg: 'rgb(240, 240, 240)',
     i_shadow: 'rgb(210, 210, 210)',
 
     primary: 'rgb(235, 235, 235)',

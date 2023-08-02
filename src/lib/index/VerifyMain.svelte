@@ -139,6 +139,7 @@
         padding-left: 20px;
         padding-right: 20px;
         color: var(--text);
+        background: var(--i_bg);
         border: 2px solid transparent;
         transition: 150ms border;
     }

@@ -16,6 +16,7 @@
         'Setting up the lighting..',
         'Rare message displaying..',
         'Fronvo was released on the 10th of August in 2023!',
+        'Ensuring encryption..',
     ];
 
     function choose(choices: string[]) {

@@ -49,6 +49,9 @@ interface ThemingOptions {
     // PRO
     pro: string;
     pro_darken: string;
+
+    // Other
+    scrollbar: string;
 }
 
 export const defaultTheme: ThemingOptions = {
@@ -92,6 +95,8 @@ export const defaultTheme: ThemingOptions = {
 
     pro: 'rgb(0, 175, 175)',
     pro_darken: 'rgb(0, 150, 150)',
+
+    scrollbar: 'rgb(60, 60, 60)',
 };
 
 export const whiteTheme: ThemingOptions = {
@@ -134,6 +139,8 @@ export const whiteTheme: ThemingOptions = {
 
     pro: 'rgb(0, 200, 200)',
     pro_darken: 'rgb(0, 185, 185)',
+
+    scrollbar: 'rgb(180, 180, 180)',
 };
 
 export const currentTheme: Writable<ThemingOptions> = writable(defaultTheme);

@@ -115,12 +115,8 @@ hr {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: rgb(136, 136, 136);
-    border-radius: 20px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: rgb(170, 170, 170);
+    background: var(--scrollbar);
+    border-radius: 30px;
 }
 
 /* Bare minimum phone essentials */

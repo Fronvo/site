@@ -1,10 +1,8 @@
 <script lang="ts">
     import type { Theme } from 'interfaces/all';
     import { darkTheme, socket } from 'stores/main';
-    import { ModalTypes, targetTheme } from 'stores/modals';
     import { ourData } from 'stores/profile';
-    import { getKey } from 'utilities/global';
-    import { setProgressBar, showModal } from 'utilities/main';
+    import { setProgressBar } from 'utilities/main';
     import { applyThemeLocally } from 'utilities/themes';
 
     export let theme: Theme;
@@ -14,13 +12,7 @@
     function decideApplyAction(): void {
         if ($ourData.appliedTheme == theme.title) return;
 
-        if (!getKey('token')) {
-            $targetTheme = theme;
-
-            showModal(ModalTypes.ThemeApply);
-        } else {
-            applyTheme();
-        }
+        applyTheme();
     }
 
     function applyTheme(): void {
@@ -34,14 +26,13 @@
             ({ err }) => {
                 if (!err) {
                     applyThemeLocally(
-                        theme.title,
                         theme.brandingWhite,
                         theme.brandingDarkenWhite,
                         theme.brandingDark,
                         theme.brandingDarkenDark
                     );
 
-                    location.href = '';
+                    $ourData.appliedTheme = theme.title;
                 }
 
                 setProgressBar(false);
@@ -57,13 +48,23 @@
 >
     <div id="icon" style={`background: ${color}`} />
 
-    <div class="bottom-container">
-        <h1 id="title">{theme.title}</h1>
+    <h1 id="title">{theme.title}</h1>
 
-        {#if $ourData.appliedTheme == theme.title}
-            <h1 id="active">Active</h1>
-        {/if}
-    </div>
+    {#if $ourData.appliedTheme == theme.title}
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            ><g fill="none" stroke="var(--branding)" stroke-width="1.5"
+                ><circle cx="12" cy="12" r="10" opacity=".5" /><path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="m8.5 12.5l2 2l5-5"
+                /></g
+            ></svg
+        >
+    {/if}
 </div>
 
 <style>
@@ -121,15 +122,9 @@
         margin-right: 12px;
     }
 
-    .bottom-container {
-        display: flex;
-        flex-direction: column;
-    }
-
-    #active {
-        margin: 0;
-        font-size: 0.9rem;
-        color: var(--branding);
-        font-weight: 600;
+    svg {
+        width: 28px;
+        height: 28px;
+        margin-left: 10px;
     }
 </style>

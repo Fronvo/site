@@ -62,22 +62,21 @@
                         }
                     }
 
-                    dismissModal(async () => {
-                        toast(
-                            isOwner()
-                                ? `Deleted ${$currentRoomData.name}`
-                                : `Left ${$currentRoomData.name}`
-                        );
+                    dismissModal();
+                    toast(
+                        isOwner()
+                            ? `Deleted ${$currentRoomData.name}`
+                            : `Left ${$currentRoomData.name}`
+                    );
 
-                        $currentRoomLoaded = false;
-                        $currentRoomId = undefined;
-                        $currentRoomData = undefined;
-                        $currentRoomMessages = [];
+                    $currentRoomLoaded = false;
+                    $currentRoomId = undefined;
+                    $currentRoomData = undefined;
+                    $currentRoomMessages = [];
 
-                        setTitle('Fronvo');
+                    setTitle('Fronvo');
 
-                        await loadRoomsData();
-                    });
+                    await loadRoomsData();
                 } else {
                     isLeaving = false;
                     setProgressBar(false);

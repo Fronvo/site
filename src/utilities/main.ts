@@ -144,7 +144,6 @@ export async function performLogin(
 
                 if (profileData.appliedTheme) {
                     applyThemeLocally(
-                        profileData.appliedTheme,
                         profileData.bW,
                         profileData.bDW,
                         profileData.bD,

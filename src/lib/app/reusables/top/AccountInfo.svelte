@@ -126,7 +126,9 @@
     img,
     svg {
         width: 38px;
+        min-width: 38px;
         height: 38px;
+        min-height: 38px;
         margin-right: 5px;
         -webkit-touch-callout: none;
         -webkit-user-select: none;

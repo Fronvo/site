@@ -2,6 +2,7 @@
     import type { Theme } from 'interfaces/all';
     import { darkTheme, socket } from 'stores/main';
     import { ourData } from 'stores/profile';
+    import { toast } from 'svelte-sonner';
     import { setProgressBar } from 'utilities/main';
     import { applyThemeLocally } from 'utilities/themes';
 
@@ -33,6 +34,8 @@
                     );
 
                     $ourData.appliedTheme = theme.title;
+
+                    toast(`Theme changed to ${theme.title}`);
                 }
 
                 setProgressBar(false);

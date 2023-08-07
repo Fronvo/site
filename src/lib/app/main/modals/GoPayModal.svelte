@@ -83,6 +83,8 @@
                 callback: processing ? () => {} : dismissModal,
             },
         ],
+
+        usePROShadow: true,
     };
 </script>
 

@@ -87,10 +87,12 @@ export interface ModalActions {
     danger?: boolean;
     primary?: boolean;
     pro?: boolean;
+    useProShadow?: boolean;
 }
 
 export interface ModalData {
     title?: string;
+    usePROShadow?: boolean;
     actions: ModalActions[];
 }
 /****************************** Modal Exports ******************************/

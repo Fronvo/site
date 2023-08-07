@@ -13,7 +13,7 @@
 <div
     class={`modal-container ${!data.title ? 'title-less' : ''} ${
         $ourData.appliedTheme ? 'themed' : ''
-    }`}
+    } ${data.usePROShadow ? 'shadowed' : ''}`}
     transition:blur={{ amount: 5, opacity: 0.5, duration: modalAnimDuration }}
 >
     {#if data.title}
@@ -52,8 +52,6 @@
         min-height: 200px;
         max-height: 95%;
         background: var(--modal_content_bg);
-        border: 2px solid var(--pro);
-        box-shadow: 0 0 15px var(--pro);
         min-width: 550px;
         max-width: 90vw;
         overflow-x: hidden;
@@ -62,6 +60,11 @@
 
     .title-less {
         padding-top: 0;
+    }
+
+    .shadowed {
+        border: 2px solid var(--pro);
+        box-shadow: 0 0 5px var(--pro);
     }
 
     #title {
@@ -151,11 +154,6 @@
 
     .pro:hover {
         background: var(--pro_darken);
-    }
-
-    .themed {
-        border: 2px solid var(--branding);
-        box-shadow: 0 0 5px var(--branding);
     }
 
     .themed .pro {

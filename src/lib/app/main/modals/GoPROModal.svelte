@@ -20,6 +20,8 @@
                 callback: dismissModal,
             },
         ],
+
+        usePROShadow: true,
     };
 </script>
 

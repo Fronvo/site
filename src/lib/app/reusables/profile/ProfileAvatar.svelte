@@ -222,6 +222,7 @@
 
     .editable #avatar {
         cursor: pointer;
+        z-index: 1;
     }
 
     .editable #avatar:hover {

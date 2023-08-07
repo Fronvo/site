@@ -64,6 +64,9 @@
                                 if (profileData.isPRO) {
                                     errorMessage =
                                         'This account is already a PRO.';
+
+                                    socket.emit('logout');
+
                                     return;
                                 } else {
                                     if ($keepLoggedIn) {

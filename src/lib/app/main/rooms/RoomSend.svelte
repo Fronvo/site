@@ -83,8 +83,6 @@
         setTimeout(() => {
             if (!content) return;
 
-            content.disabled = !canMessage;
-
             if (!canMessage) {
                 content.placeholder = cantMessageReason;
             } else {

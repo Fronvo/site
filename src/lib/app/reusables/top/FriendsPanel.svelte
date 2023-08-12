@@ -330,7 +330,7 @@
     .indicator {
         display: flex;
         width: 35px;
-        height: 4px;
+        height: 3px;
         border-radius: 30px;
         background: var(--branding);
         margin-bottom: 5px;

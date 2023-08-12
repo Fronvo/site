@@ -74,6 +74,8 @@
             <h1 id="descriptor">
                 <span>{data.totalPosts} posts</span>
             </h1>
+
+            <span id="indicator" />
         {/if}
 
         {#if reveal}
@@ -133,7 +135,14 @@
         width: max-content;
         margin: auto;
         padding-bottom: 5px;
-        border-bottom: 2px solid var(--branding);
+    }
+
+    #indicator {
+        width: 35px;
+        height: 3px;
+        background: var(--branding);
+        margin: auto;
+        border-radius: 30px;
     }
 
     button {

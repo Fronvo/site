@@ -42,6 +42,8 @@
             }
         );
     }
+
+    $: color = `#${$darkTheme ? theme.brandingDark : theme.brandingWhite}`;
 </script>
 
 <div

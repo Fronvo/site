@@ -44,6 +44,13 @@
             async () => ($roomsList = await fetchConvos())
         );
 
+        setTimeout(() => {
+            socket.on(
+                'newRoomMessage',
+                async () => ($roomsList = await fetchConvos())
+            );
+        }, 500);
+
         setInterval(() => {
             if ($lastSendsIn30 != -1) {
                 $lastSendsIn30 = 0;

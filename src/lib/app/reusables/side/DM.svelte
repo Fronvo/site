@@ -273,11 +273,6 @@
         background: var(--primary);
     }
 
-    .dm-container:active {
-        transform: scale(0.975);
-        opacity: 0.5;
-    }
-
     .active {
         background: var(--primary);
     }

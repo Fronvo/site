@@ -2,7 +2,7 @@
     import Dropdown from './Dropdown.svelte';
     import ProgressBar from './ProgressBar.svelte';
     import Modal from './Modal.svelte';
-    import { scale } from 'svelte/transition';
+    import { fade } from 'svelte/transition';
     import AccountInfo from '../reusables/top/AccountInfo.svelte';
     import RoomInfo from './rooms/RoomInfo.svelte';
     import TopOptions from '../reusables/top/TopOptions.svelte';
@@ -86,10 +86,7 @@
     offset={'25px'}
 />
 
-<div
-    class="main-container"
-    in:scale={{ start: 0.975, opacity: 0, duration: 750 }}
->
+<div class="main-container" in:fade={{ duration: 500 }}>
     <div id="content">
         <div class="top-container">
             <AccountInfo />

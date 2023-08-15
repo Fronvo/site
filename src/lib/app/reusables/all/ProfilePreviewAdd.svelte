@@ -27,12 +27,8 @@
                 setProgressBar(false);
                 added = true;
 
-                if (!err) {
-                    toast(
-                        `${profileData.username} added to ${$currentRoomData.name}`
-                    );
-                } else {
-                    toast.error('An error has occured');
+                if (err) {
+                    toast('An error has occured');
                 }
             }
         );

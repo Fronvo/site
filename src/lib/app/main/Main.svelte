@@ -44,12 +44,11 @@
             async () => ($roomsList = await fetchConvos())
         );
 
-        setTimeout(() => {
-            socket.on(
-                'newRoomMessage',
-                async () => ($roomsList = await fetchConvos())
-            );
-        }, 500);
+        socket.on('newRoomMessage', async () => {
+            setTimeout(async () => {
+                $roomsList = await fetchConvos();
+            }, 500);
+        });
 
         setInterval(() => {
             if ($lastSendsIn30 != -1) {

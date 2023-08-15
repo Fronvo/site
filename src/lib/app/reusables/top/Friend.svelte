@@ -24,7 +24,7 @@
                 setProgressBar(false);
 
                 if (err) {
-                    toast.error('An error has occured');
+                    toast('An error has occured');
                 }
             }
         );
@@ -44,7 +44,7 @@
                 if (!err) {
                     toast('Friend request declined');
                 } else {
-                    toast.error('An error has occured');
+                    toast('An error has occured');
                 }
             }
         );

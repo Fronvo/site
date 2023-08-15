@@ -92,7 +92,14 @@
                     roomData.unreadCount += 1;
                 }
 
-                if (newMessageData.message.isTenor) {
+                if (newMessageData.message.isNotification) {
+                    roomData.lastMessage =
+                        newMessageData.message.notificationText.replace(
+                            $ourData.profileId,
+                            'You'
+                        );
+                    roomData.lastMessageFrom = '';
+                } else if (newMessageData.message.isTenor) {
                     roomData.lastMessage =
                         newMessageData.profileData.username + ' sent a GIF';
                     roomData.lastMessageFrom = '';
@@ -184,7 +191,9 @@
                             'You'
                         )}:
                     {/if}
-                    {roomData.lastMessage.replace($ourData.username, 'You')}
+                    {roomData.lastMessage
+                        .replace($ourData.username, 'You')
+                        .replace($ourData.profileId, 'You')}
                 </h1>
 
                 <h1

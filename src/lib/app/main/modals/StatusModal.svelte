@@ -28,7 +28,7 @@
 
                     toast(`Status changed to ${$status}`);
                 } else {
-                    toast.error('An error has occured');
+                    toast('An error has occured');
                 }
 
                 dismissModal();

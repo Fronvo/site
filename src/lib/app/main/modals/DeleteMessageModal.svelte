@@ -12,7 +12,7 @@
     import { toast } from 'svelte-sonner';
 
     function deleteMessage(): void {
-        // Will recieve result in RoomChat listener if successful
+        // Will receive result in RoomChat listener if successful
         setProgressBar(true);
 
         socket.emit(
@@ -23,15 +23,6 @@
             },
             async ({ err }) => {
                 if (err) return;
-
-                if ($targetMessageModal.isImage) {
-                    await fetch('/api/remove', {
-                        method: 'POST',
-                        body: JSON.stringify({
-                            icon: $targetMessageModal.attachment,
-                        }),
-                    });
-                }
 
                 toast('Message deleted');
             }

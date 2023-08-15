@@ -134,11 +134,11 @@
         $replyingToId == messageData.messageId && !isPreview ? 'highlight' : ''
     }`}
 >
-    {#if !skipContext}
+    {#if !skipContext && !(messageData.ownerId == 'fronvo' && messageData.isNotification)}
         <h1 id="name">{profileData.username}</h1>
     {/if}
 
-    {#if messageData.isReply && !messageData.isImage}
+    {#if messageData.isReply}
         <div class="reply-container">
             <div class="wrapper">
                 <svg
@@ -169,7 +169,7 @@
     {/if}
 
     <div class="message-info-container">
-        {#if !skipContext}
+        {#if !skipContext && !(messageData.ownerId == 'fronvo' && messageData.isNotification)}
             {#if profileData.avatar}
                 <img
                     bind:this={avatar}
@@ -201,7 +201,14 @@
             </h1>
         {/if}
 
-        {#if messageData.isTenor}
+        {#if messageData.isNotification}
+            <h1 id="notification">
+                {messageData.notificationText.replace(
+                    $ourData.profileId,
+                    'You'
+                )}
+            </h1>
+        {:else if messageData.isTenor}
             <img
                 bind:this={image}
                 id="attachment"
@@ -231,7 +238,7 @@
             </h1>
         {/if}
 
-        {#if !hideOptions}
+        {#if !hideOptions && !messageData.isNotification}
             <div class="menu-container">
                 {#if !messageData.isImage && !messageData.isSpotify && !messageData.isTenor}
                     <svg
@@ -512,5 +519,21 @@
 
     #spotify {
         margin-left: 5px;
+    }
+
+    #notification {
+        margin: 0;
+        font-size: 0.9rem;
+        text-align: center;
+        width: 100%;
+        margin-top: 10px;
+        margin-bottom: 10px;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        font-weight: 500;
     }
 </style>

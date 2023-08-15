@@ -37,7 +37,7 @@
             let file = Array.from(input.files)[0];
 
             if (file.size > ($ourData.isPRO ? 3000000 : 1000000)) {
-                toast('Image is above 3MB.');
+                toast(`Image is above ${$ourData.isPRO ? 3 : 1}MB.`);
                 return;
             }
 

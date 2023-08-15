@@ -3,12 +3,14 @@
     import { socket } from 'stores/main';
     import { ModalTypes } from 'stores/modals';
     import { ourData } from 'stores/profile';
+    import { toast } from 'svelte-sonner';
     import {
         isAcceptedImage,
         setProgressBar,
         showDropdown,
         showModal,
     } from 'utilities/main';
+    import { uploadImage } from 'utilities/rooms';
 
     export let profileId: string;
     export let avatar: string;
@@ -31,6 +33,7 @@
             let file = Array.from(input.files)[0];
 
             if (file.size > ($ourData.isPRO ? 3000000 : 1000000)) {
+                toast(`Image is above ${$ourData.isPRO ? 3 : 1}MB.`);
                 return;
             }
 
@@ -40,17 +43,10 @@
                 reader.addEventListener('load', async () => {
                     setProgressBar(true);
 
-                    let previousIcon = avatar;
-
-                    const newIcon = await (
-                        await fetch('/api/upload', {
-                            method: 'POST',
-                            body: JSON.stringify({
-                                file: reader.result,
-                                isPRO: $ourData.isPRO,
-                            }),
-                        })
-                    ).json();
+                    const newIcon = await uploadImage(
+                        reader.result,
+                        $ourData.isPRO
+                    );
 
                     socket.emit('updateProfileData', {
                         avatar: newIcon,
@@ -58,13 +54,6 @@
 
                     avatar = newIcon;
                     $ourData.avatar = newIcon;
-
-                    await fetch('/api/remove', {
-                        method: 'POST',
-                        body: JSON.stringify({
-                            icon: previousIcon,
-                        }),
-                    });
 
                     setProgressBar(false);
                     uploading = false;

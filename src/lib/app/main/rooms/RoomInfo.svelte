@@ -19,6 +19,7 @@
     import { ourData } from 'stores/profile';
     import { ModalTypes, targetProfileModal } from 'stores/modals';
     import { toast } from 'svelte-sonner';
+    import { uploadImage } from 'utilities/rooms';
 
     let nameP = writable($roomData?.name);
 
@@ -62,34 +63,18 @@
                     isUpdating = true;
                     setProgressBar(true);
 
-                    let previousIcon = $currentRoomData.icon;
-
-                    const newIcon = await (
-                        await fetch('/api/upload', {
-                            method: 'POST',
-                            body: JSON.stringify({
-                                file: reader.result,
-                                isPRO: $ourData.isPRO,
-                            }),
-                        })
-                    ).json();
+                    const newIcon = await uploadImage(
+                        reader.result,
+                        $ourData.isPRO
+                    );
 
                     socket.emit('updateRoomData', {
                         roomId: $currentRoomId,
                         icon: newIcon,
                     });
 
-                    await fetch('/api/remove', {
-                        method: 'POST',
-                        body: JSON.stringify({
-                            icon: previousIcon,
-                        }),
-                    });
-
                     isUpdating = false;
                     setProgressBar(false);
-
-                    toast(`${$currentRoomData.name}'s image updated`);
                 });
 
                 reader.readAsDataURL(file);
@@ -123,8 +108,6 @@
                     $nameP = $roomData.name;
                 } else {
                     $roomData.name = $nameP;
-
-                    toast(`Room name updated to ${$nameP}`);
                 }
 
                 isUpdating = false;

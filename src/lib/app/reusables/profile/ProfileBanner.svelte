@@ -2,7 +2,9 @@
     import { socket } from 'stores/main';
     import { ModalTypes } from 'stores/modals';
     import { ourData } from 'stores/profile';
+    import { toast } from 'svelte-sonner';
     import { isAcceptedImage, setProgressBar, showModal } from 'utilities/main';
+    import { uploadImage } from 'utilities/rooms';
 
     export let banner: string;
     export let editable = false;
@@ -27,6 +29,7 @@
             let file = Array.from(input.files)[0];
 
             if (file.size > 3000000) {
+                toast(`Image is above 3MB.`);
                 return;
             }
 
@@ -38,19 +41,12 @@
                 reader.addEventListener('load', async () => {
                     setProgressBar(true);
 
-                    let previousIcon = banner;
-
-                    const newIcon = await (
-                        await fetch('/api/upload', {
-                            method: 'POST',
-                            body: JSON.stringify({
-                                file: reader.result,
-                                width: 650,
-                                height: 225,
-                                isPRO: $ourData.isPRO,
-                            }),
-                        })
-                    ).json();
+                    const newIcon = await uploadImage(
+                        reader.result,
+                        $ourData.isPRO,
+                        650,
+                        225
+                    );
 
                     socket.emit('updateProfileData', {
                         banner: newIcon,
@@ -58,13 +54,6 @@
 
                     banner = newIcon;
                     $ourData.banner = newIcon;
-
-                    await fetch('/api/remove', {
-                        method: 'POST',
-                        body: JSON.stringify({
-                            icon: previousIcon,
-                        }),
-                    });
 
                     setProgressBar(false);
                     uploading = false;

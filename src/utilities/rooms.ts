@@ -109,14 +109,21 @@ export function sendMessage(
     replyingToId.set(undefined);
 }
 
-export async function uploadImage(file: any, isPRO: boolean): Promise<string> {
+export async function uploadImage(
+    file: any,
+    isPRO: boolean,
+    width?: number,
+    height?: number
+): Promise<string> {
     return await (
         await fetch('/api/upload', {
             method: 'POST',
             body: JSON.stringify({
                 file,
-                noTransform: true,
+                noTransform: !width && !height,
                 isPRO,
+                width,
+                height,
             }),
         })
     ).json();

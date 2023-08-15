@@ -24,7 +24,7 @@
                         `Removed ${$targetProfileModal.username} from ${$currentRoomData.name}`
                     );
                 } else {
-                    toast.error(`An error has occured`);
+                    toast(`An error has occured`);
                 }
 
                 dismissModal();

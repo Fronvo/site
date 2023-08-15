@@ -37,31 +37,6 @@
             },
             async ({ err }) => {
                 if (!err) {
-                    if (isOwner()) {
-                        fetch('/api/remove', {
-                            method: 'POST',
-                            body: JSON.stringify({
-                                icon: $currentRoomData.icon,
-                                isPRO: $ourData.isPRO,
-                            }),
-                        });
-
-                        // Delete all room message images too
-                        for (const messageIndex in $currentRoomMessages) {
-                            const message = $currentRoomMessages[messageIndex];
-
-                            if (message.message.isImage) {
-                                fetch('/api/remove', {
-                                    method: 'POST',
-                                    body: JSON.stringify({
-                                        icon: message.message.attachment,
-                                        isPRO: $ourData.isPRO,
-                                    }),
-                                });
-                            }
-                        }
-                    }
-
                     dismissModal();
                     toast(
                         isOwner()

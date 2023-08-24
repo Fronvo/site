@@ -11,14 +11,6 @@
     import type { Unsubscriber } from 'svelte/store';
     import { onDestroy } from 'svelte';
     import { loadRoomMessages } from 'utilities/rooms';
-    import {
-        differenceInYears,
-        differenceInDays,
-        differenceInHours,
-        differenceInSeconds,
-        differenceInMonths,
-        differenceInMinutes,
-    } from 'date-fns';
     import { ourData } from 'stores/profile';
 
     export let roomData: Room;
@@ -26,36 +18,6 @@
     let nameElement: HTMLHeadingElement;
 
     let unsubscribe: Unsubscriber;
-
-    let lastMessageSuffix: string;
-
-    function updateSuffix(date: string): void {
-        const date2 = new Date(date);
-
-        const years = differenceInYears(new Date(), date2);
-
-        const months = differenceInMonths(new Date(), date2);
-
-        const days = differenceInDays(new Date(), date2);
-
-        const hours = differenceInHours(new Date(), date2);
-
-        const minutes = differenceInMinutes(new Date(), date2);
-
-        if (years > 0) {
-            lastMessageSuffix = `${years}y`;
-        } else if (months > 0) {
-            lastMessageSuffix = `${months}mo`;
-        } else if (days > 0) {
-            lastMessageSuffix = `${days}d`;
-        } else if (hours > 0) {
-            lastMessageSuffix = `${hours}h`;
-        } else if (minutes > 0) {
-            lastMessageSuffix = `${minutes}m`;
-        } else {
-            lastMessageSuffix = `now`;
-        }
-    }
 
     async function enterRoom(): Promise<void> {
         if ($currentRoomId == roomData.roomId) return;
@@ -73,10 +35,6 @@
     }
 
     onMount(() => {
-        updateSuffix(roomData.lastMessageAt);
-
-        setInterval(() => updateSuffix(roomData.lastMessageAt), 1000);
-
         socket.on('roomDataUpdated', ({ roomId, name, icon }) => {
             if (roomData.roomId == roomId) {
                 roomData.name = name;
@@ -92,37 +50,7 @@
                     roomData.unreadCount += 1;
                 }
 
-                if (newMessageData.message.isNotification) {
-                    roomData.lastMessage =
-                        newMessageData.message.notificationText.replace(
-                            $ourData.profileId,
-                            'You'
-                        );
-                    roomData.lastMessageFrom = '';
-                } else if (newMessageData.message.isTenor) {
-                    roomData.lastMessage =
-                        newMessageData.profileData.username + ' sent a GIF';
-                    roomData.lastMessageFrom = '';
-                } else if (newMessageData.message.isSpotify) {
-                    roomData.lastMessage =
-                        newMessageData.profileData.username +
-                        ' shared a Spotify song';
-                    roomData.lastMessageFrom = '';
-                } else if (newMessageData.message.isImage) {
-                    roomData.lastMessage =
-                        newMessageData.profileData.username + ' sent an image';
-                    roomData.lastMessageFrom = '';
-                } else {
-                    roomData.lastMessage = newMessageData.message.content;
-                    roomData.lastMessageFrom =
-                        newMessageData.profileData.username;
-                }
-
-                roomData.lastMessageAt = newMessageData.message.creationDate;
-
                 roomData = roomData;
-
-                updateSuffix(newMessageData.message.creationDate);
             }
         });
 
@@ -178,32 +106,6 @@
 
     <div class="info-container">
         <h1 bind:this={nameElement} id="name">{roomData.name}</h1>
-
-        <div class="last-wrapper">
-            {#if roomData.lastMessage}
-                <h1
-                    id="last"
-                    class={`${roomData.unreadCount > 0 ? 'mark' : ''}`}
-                >
-                    {#if roomData.lastMessageFrom}
-                        {roomData.lastMessageFrom.replace(
-                            $ourData.username,
-                            'You'
-                        )}:
-                    {/if}
-                    {roomData.lastMessage
-                        .replace($ourData.username, 'You')
-                        .replace($ourData.profileId, 'You')}
-                </h1>
-
-                <h1
-                    id="last-end"
-                    class={`${roomData.unreadCount > 0 ? 'mark' : ''}`}
-                >
-                    {' '}•{' '}{lastMessageSuffix}
-                </h1>
-            {/if}
-        </div>
     </div>
 
     {#if roomData.unreadCount > 0 && $currentRoomId != roomData.roomId}
@@ -213,14 +115,11 @@
 
 <style>
     .room-container {
+        width: 100%;
         display: flex;
         align-items: center;
-        padding: 10px;
-        margin-left: 5px;
-        margin-right: 5px;
-        border-radius: 10px;
+        padding: 10px 5px 10px 10px;
         transition: 75ms;
-        margin-top: 2px;
         cursor: pointer;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -259,36 +158,6 @@
         font-weight: 500;
     }
 
-    .last-wrapper {
-        display: flex;
-        align-items: end;
-        margin-top: 5px;
-        max-width: 190px;
-    }
-
-    #last {
-        margin: 0;
-        font-size: 0.8rem;
-        display: -webkit-box;
-        overflow: hidden;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-        max-width: 155px;
-        color: var(--text_gray);
-        max-width: 80%;
-    }
-
-    #last-end {
-        margin: 0;
-        font-size: 0.75rem;
-        white-space: pre-wrap;
-        color: var(--text_gray);
-        display: -webkit-box;
-        overflow: hidden;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-    }
-
     .mark {
         font-weight: 900;
     }
@@ -314,6 +183,7 @@
     @media screen and (max-width: 1250px) {
         .room-container {
             width: max-content;
+            justify-content: center;
         }
 
         .info-container {

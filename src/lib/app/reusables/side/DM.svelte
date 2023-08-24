@@ -1,12 +1,4 @@
 <script lang="ts">
-    import {
-        differenceInDays,
-        differenceInHours,
-        differenceInMinutes,
-        differenceInMonths,
-        differenceInSeconds,
-        differenceInYears,
-    } from 'date-fns';
     import type { FronvoAccount, Room } from 'interfaces/all';
     import { socket } from 'stores/main';
     import { ourData } from 'stores/profile';
@@ -27,41 +19,10 @@
     let onlineP: boolean;
     let dmUser: FronvoAccount;
 
-    let lastMessageSuffix: string;
-    let isTyping: boolean;
-
     let nameElement: HTMLHeadingElement;
     let indicator: HTMLDivElement;
 
     let unsubscribe: Unsubscriber;
-
-    function updateSuffix(date: string): void {
-        const date2 = new Date(date);
-
-        const years = differenceInYears(new Date(), date2);
-
-        const months = differenceInMonths(new Date(), date2);
-
-        const days = differenceInDays(new Date(), date2);
-
-        const hours = differenceInHours(new Date(), date2);
-
-        const minutes = differenceInMinutes(new Date(), date2);
-
-        if (years > 0) {
-            lastMessageSuffix = `${years}y`;
-        } else if (months > 0) {
-            lastMessageSuffix = `${months}mo`;
-        } else if (days > 0) {
-            lastMessageSuffix = `${days}d`;
-        } else if (hours > 0) {
-            lastMessageSuffix = `${hours}h`;
-        } else if (minutes > 0) {
-            lastMessageSuffix = `${minutes}m`;
-        } else {
-            lastMessageSuffix = 'now';
-        }
-    }
 
     async function enterRoom(): Promise<void> {
         if ($currentRoomId == dmData.roomId) return;
@@ -77,10 +38,6 @@
     }
 
     onMount(async () => {
-        updateSuffix(dmData.lastMessageAt);
-
-        setInterval(() => updateSuffix(dmData.lastMessageAt), 1000);
-
         dmUser = dmData.dmUser;
         onlineP = dmUser.online;
 
@@ -126,46 +83,7 @@
                     dmData.unreadCount += 1;
                 }
 
-                if (newMessageData.message.isNotification) {
-                    dmData.lastMessage =
-                        newMessageData.message.notificationText;
-                    dmData.lastMessageFrom = '';
-                } else if (newMessageData.message.isTenor) {
-                    dmData.lastMessage =
-                        newMessageData.profileData.username + ' sent a GIF';
-                    dmData.lastMessageFrom = '';
-                } else if (newMessageData.message.isSpotify) {
-                    dmData.lastMessage =
-                        newMessageData.profileData.username +
-                        ' shared a Spotify song';
-                    dmData.lastMessageFrom = '';
-                } else if (newMessageData.message.isImage) {
-                    dmData.lastMessage =
-                        newMessageData.profileData.username.replace(
-                            $ourData.username,
-                            'You'
-                        ) + ' sent an image';
-                } else {
-                    dmData.lastMessage = newMessageData.message.content;
-                }
-
-                dmData.lastMessageAt = newMessageData.message.creationDate;
-
                 dmData = dmData;
-
-                updateSuffix(newMessageData.message.creationDate);
-            }
-        });
-
-        socket.on('typingStarted', ({ roomId, profileId }) => {
-            if (roomId == dmData.roomId && profileId != $ourData.profileId) {
-                isTyping = true;
-            }
-        });
-
-        socket.on('typingEnded', ({ roomId, profileId }) => {
-            if (roomId == dmData.roomId && profileId != $ourData.profileId) {
-                isTyping = false;
             }
         });
 
@@ -228,25 +146,6 @@
         <h1 bind:this={nameElement} id="name">
             {dmUser?.username ? dmUser.username : 'Deleted user'}
         </h1>
-
-        <div class="last-wrapper">
-            {#if isTyping}
-                <h1 id="last">Typing...</h1>
-            {:else if onlineP && $ourData.friends.includes(dmUser.profileId) && dmData.unreadCount == 0}
-                <h1 id="last">Online now</h1>
-            {:else if dmData.lastMessage}
-                <h1 id="last" class={`${dmData.unreadCount > 0 ? 'mark' : ''}`}>
-                    {dmData.lastMessage.replace($ourData.username, 'You')}
-                </h1>
-
-                <h1
-                    id="last-end"
-                    class={`${dmData.unreadCount > 0 ? 'mark' : ''}`}
-                >
-                    {' '}•{' '}{lastMessageSuffix}
-                </h1>
-            {/if}
-        </div>
     </div>
 
     {#if dmData.unreadCount > 0 && $currentRoomId != dmData.roomId}
@@ -256,14 +155,11 @@
 
 <style>
     .dm-container {
+        width: 100%;
         display: flex;
         align-items: center;
-        padding: 10px;
-        margin-left: 5px;
-        margin-right: 5px;
-        border-radius: 10px;
+        padding: 10px 5px 10px 10px;
         transition: 75ms;
-        margin-top: 2px;
         cursor: pointer;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -317,36 +213,6 @@
         font-weight: 500;
     }
 
-    .last-wrapper {
-        display: flex;
-        align-items: end;
-        margin-top: 5px;
-        max-width: 190px;
-    }
-
-    #last {
-        margin: 0;
-        font-size: 0.8rem;
-        display: -webkit-box;
-        overflow: hidden;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-        max-width: 155px;
-        color: var(--text_gray);
-        max-width: 80%;
-    }
-
-    #last-end {
-        margin: 0;
-        font-size: 0.75rem;
-        white-space: pre-wrap;
-        color: var(--text_gray);
-        display: -webkit-box;
-        overflow: hidden;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-    }
-
     .mark {
         font-weight: 900;
     }
@@ -372,6 +238,7 @@
     @media screen and (max-width: 1250px) {
         .dm-container {
             width: max-content;
+            justify-content: center;
         }
 
         .info-container {

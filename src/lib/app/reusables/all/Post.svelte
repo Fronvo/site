@@ -13,13 +13,13 @@
         differenceInHours,
         differenceInMinutes,
         differenceInMonths,
-        differenceInSeconds,
         differenceInYears,
     } from 'date-fns';
     import Like from '$lib/svgs/Like.svelte';
     import { onMount } from 'svelte';
     import { socket } from 'stores/main';
     import { DropdownTypes } from 'stores/dropdowns';
+    import linkifyHtml from 'linkify-html';
 
     export let post: Post;
     export let small = false;
@@ -29,6 +29,7 @@
     let postData = post.post;
 
     let dateSuffix: string;
+    let showLinks = false;
 
     let settings: SVGSVGElement;
 
@@ -119,7 +120,17 @@
         });
     });
 
-    $: updateSuffix(postData.creationDate);
+    $: {
+        updateSuffix(postData.creationDate);
+
+        if (postData.content) {
+            // Sanitise first
+            showLinks =
+                postData.content.includes('https') &&
+                !postData.content.includes('<img') &&
+                !postData.content.includes('<svg');
+        }
+    }
 </script>
 
 <div
@@ -176,7 +187,16 @@
         <div class="post-wrapper">
             {#if postData.content}
                 <h1 id="content">
-                    {postData.content}
+                    {#if showLinks}
+                        {@html linkifyHtml(postData.content, {
+                            attributes: {
+                                class: 'link',
+                                target: '_blank',
+                            },
+                        })}
+                    {:else}
+                        {postData.content}
+                    {/if}
                 </h1>
             {/if}
 

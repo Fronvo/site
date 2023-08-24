@@ -115,12 +115,8 @@
     .dm-container {
         display: flex;
         align-items: center;
-        padding: 10px;
-        margin-left: 5px;
-        margin-right: 5px;
-        border-radius: 10px;
+        padding: 10px 5px 10px 10px;
         transition: 75ms;
-        margin-top: 2px;
         cursor: default;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -131,7 +127,7 @@
     }
 
     .info-container {
-        margin-left: 10px;
+        margin-left: 6px;
         flex: 1;
     }
 

@@ -273,6 +273,10 @@
         background: var(--primary);
     }
 
+    svg:active {
+        background: var(--secondary);
+    }
+
     .friends-container {
         display: flex;
         align-items: center;

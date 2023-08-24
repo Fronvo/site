@@ -43,24 +43,24 @@
         width: 42px;
         height: 42px;
         padding: 5px;
-        border: 2px solid var(--secondary);
+        border: 3px solid var(--secondary);
         border-radius: 10px;
         cursor: pointer;
         pointer-events: all;
         z-index: 2;
         transition: 150ms;
-        box-shadow: 0 0 10px var(--primary);
+        box-shadow: 0 0 30px var(--primary);
     }
 
     svg:hover {
-        border: 2px solid var(--branding);
+        border: 3px solid var(--branding);
         border-radius: 15px;
         box-shadow: 0 0 5px var(--branding);
     }
 
     .active {
-        border: 2px solid var(--branding);
+        border: 3px solid var(--branding);
         background: var(--branding);
-        box-shadow: 0 0 5px var(--branding);
+        box-shadow: 0 0 10px var(--branding);
     }
 </style>

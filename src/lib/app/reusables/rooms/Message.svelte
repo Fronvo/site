@@ -16,6 +16,7 @@
     } from 'stores/modals';
     import { DropdownTypes } from 'stores/dropdowns';
     import { toast } from 'svelte-sonner';
+    import linkifyHtml from 'linkify-html';
 
     export let i = -1;
     export let profileData: FronvoAccount;
@@ -30,6 +31,7 @@
     let skipContext: boolean;
     // Skip time if messages are sent less than 15 minutes ago
     let showTime: boolean;
+    let showLinks = false;
 
     let content: HTMLHeadingElement;
     let avatar: Element;
@@ -51,6 +53,12 @@
                 profileData.profileId &&
             !showTime &&
             !isPreview;
+
+        // Sanitise first
+        showLinks =
+            messageData.content.includes('https') &&
+            !messageData.content.includes('<img') &&
+            !messageData.content.includes('<svg');
 
         // Add missing margins if previous message is from the same user
         // (not ours)
@@ -234,7 +242,16 @@
             />
         {:else}
             <h1 bind:this={content} id="content">
-                {messageData.content}
+                {#if showLinks}
+                    {@html linkifyHtml(messageData.content, {
+                        attributes: {
+                            class: 'link',
+                            target: '_blank',
+                        },
+                    })}
+                {:else}
+                    {messageData.content}
+                {/if}
             </h1>
         {/if}
 
@@ -535,5 +552,9 @@
         -ms-user-select: none;
         user-select: none;
         font-weight: 500;
+    }
+
+    :global(.link) {
+        color: var(--branding);
     }
 </style>

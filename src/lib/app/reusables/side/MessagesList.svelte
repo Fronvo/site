@@ -103,8 +103,6 @@
         overflow: auto;
         overflow-x: hidden;
         height: calc(100% - 50px);
-        padding-top: 5px;
-        padding-bottom: 10px;
     }
 
     #title {

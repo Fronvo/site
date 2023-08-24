@@ -65,8 +65,6 @@ export interface Room {
     icon?: string;
     members?: string[];
     totalMessages: number;
-    lastMessage?: string;
-    lastMessageAt: string;
     lastMessageFrom?: string;
     isDM: boolean;
     unreadCount: number;

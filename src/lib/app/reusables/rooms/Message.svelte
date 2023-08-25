@@ -360,16 +360,17 @@
         color: var(--text);
         margin: 0;
         margin-left: 5px;
-        margin-top: 5px;
-        font-size: 0.8rem;
+        font-size: 0.95rem;
         white-space: pre-wrap;
         overflow: hidden;
         text-align: start;
-        background: var(--message);
+        background: var(--bg);
         padding: 5px;
+        padding-left: 10px;
         padding-right: 10px;
         border-radius: 5px;
-        box-shadow: 0 0 10px var(--message_shadow);
+        box-shadow: 0 0 20px var(--message_shadow);
+        border: 1px solid var(--primary);
     }
 
     #reply {
@@ -501,18 +502,17 @@
         white-space: pre-wrap;
         overflow: hidden;
         text-align: start;
-        background: var(--message);
+        background: var(--bg);
         padding: 8px;
         padding-left: 10px;
         padding-right: 10px;
         border-radius: 5px;
         box-shadow: 0 0 20px var(--message_shadow);
-        border: 2px solid var(--message);
+        border: 1px solid var(--primary);
     }
 
     .highlight #content {
-        box-shadow: none;
-        border: 2px solid var(--branding);
+        border: 1px solid var(--branding);
     }
 
     #attachment {

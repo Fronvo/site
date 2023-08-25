@@ -79,7 +79,7 @@
     richColors
     visibleToasts={5}
     toastOptions={{
-        style: 'background: var(--message); border-color: var(--secondary); border-radius: 10px; font-family: Manrope; font-size: 0.925rem;',
+        style: 'background: var(--bg); border-color: var(--secondary); border-radius: 10px; font-family: Manrope; font-size: 0.925rem;',
         class: 'fronvo-toast',
     }}
     offset={'25px'}

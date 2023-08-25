@@ -61,7 +61,7 @@
     }
 
     .loading-container h1 {
-        font-size: 1.6rem;
+        font-size: 1.5rem;
         margin-top: 50px;
     }
 </style>

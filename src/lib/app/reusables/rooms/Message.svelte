@@ -56,9 +56,9 @@
 
         // Sanitise first
         showLinks =
-            messageData.content.includes('https') &&
-            !messageData.content.includes('<img') &&
-            !messageData.content.includes('<svg');
+            messageData.content?.includes('https') &&
+            !messageData.content?.includes('<img') &&
+            !messageData.content?.includes('<svg');
 
         // Add missing margins if previous message is from the same user
         // (not ours)

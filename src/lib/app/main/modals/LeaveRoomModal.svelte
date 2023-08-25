@@ -104,7 +104,12 @@
             <h1 class="modal-header">
                 Type <b>{$roomData.name}</b> below to confirm
             </h1>
-            <input bind:this={input} bind:value={name} class="modal-input" />
+            <input
+                maxlength={15}
+                bind:this={input}
+                bind:value={name}
+                class="modal-input"
+            />
             <InfoHeader marginLeft={'55px'} text={"This can't be reversed."} />
         {/if}
     {/if}

@@ -32,7 +32,3 @@ export const showScrollBottom: Writable<boolean> = writable();
 /****************************** FollowInfoModal ******************************/
 export const targetMessageDropdown: Writable<RoomMessage> = writable();
 /****************************** FollowInfoModal ******************************/
-
-/****************************** EditableRoom ******************************/
-export const showEditableRoom = writable(false);
-/****************************** EditableRoom ******************************/

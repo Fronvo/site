@@ -256,6 +256,8 @@
                     {#each friendsInfo as profileData}
                         <Friend {profileData} />
                     {/each}
+
+                    <AddFriendButton />
                 {/if}
             </div>
         {:else}

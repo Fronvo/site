@@ -280,7 +280,7 @@
                             /></g
                         ></svg
                     >
-                    <h1>No pending requests</h1>
+                    <h1 id="pending-empty">No pending requests</h1>
                 </div>
             {/if}
 
@@ -388,5 +388,9 @@
         width: 128px;
         height: 128px;
         cursor: default;
+    }
+
+    #pending-empty {
+        margin-bottom: 70px;
     }
 </style>

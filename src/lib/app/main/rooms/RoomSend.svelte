@@ -438,7 +438,8 @@
         padding-bottom: 2.5px;
         padding-top: 2.5px;
         border-radius: 10px;
-        background: var(--primary);
+        background: var(--bg);
+        border: 2px solid var(--message);
     }
 
     textarea {

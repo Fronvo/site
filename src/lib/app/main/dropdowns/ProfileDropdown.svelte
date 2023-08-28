@@ -26,8 +26,6 @@
 
     function copyId(): void {
         navigator.clipboard.writeText($ourData.profileId);
-
-        toast('Copied ID to clipboard');
     }
 
     function switchAccounts(): void {

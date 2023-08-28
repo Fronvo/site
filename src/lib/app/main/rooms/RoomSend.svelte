@@ -85,8 +85,16 @@
 
             if (!canMessage) {
                 content.placeholder = cantMessageReason;
+
+                if (!$sendingImage) {
+                    setTimeout(() => {
+                        content.disabled = true;
+                    }, 0);
+                }
             } else {
                 content.placeholder = 'Send a message';
+
+                content.disabled = false;
             }
         }, 0);
     }

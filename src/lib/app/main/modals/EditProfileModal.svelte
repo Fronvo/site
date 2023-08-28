@@ -55,7 +55,7 @@
         socket.emit('updateProfileData', updatedData, async ({ err }) => {
             if (err) {
                 setProgressBar(false);
-                toast('Profile data updated');
+                toast('Profile updated');
 
                 return;
             }
@@ -73,7 +73,7 @@
             }
 
             setProgressBar(false);
-            toast('Profile data updated');
+            toast('Profile updated');
 
             dismissModal();
         });

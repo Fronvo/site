@@ -182,8 +182,6 @@
 
                     loadProfile($cachedAccountData);
 
-                    toast('Post shared to your friends!');
-
                     socket.emit(
                         'fetchProfilePosts',
                         {

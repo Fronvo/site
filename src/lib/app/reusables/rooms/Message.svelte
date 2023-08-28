@@ -102,8 +102,6 @@
 
     function copyContent(): void {
         navigator.clipboard.writeText(messageData.content);
-
-        toast('Copied message to clipboard');
     }
 </script>
 

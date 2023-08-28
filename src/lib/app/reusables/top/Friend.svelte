@@ -41,9 +41,7 @@
             ({ err }) => {
                 setProgressBar(false);
 
-                if (!err) {
-                    toast('Friend request declined');
-                } else {
+                if (err) {
                     toast('An error has occured');
                 }
             }

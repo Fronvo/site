@@ -23,8 +23,6 @@
 
                 loadProfile($cachedAccountData);
 
-                toast('Post deleted');
-
                 if ($homePosts.includes($targetPostModal)) {
                     $homePosts = [];
 

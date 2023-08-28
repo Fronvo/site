@@ -1,7 +1,7 @@
 <script lang="ts">
     import { fly, fade } from 'svelte/transition';
     import Dm from './DM.svelte';
-    import { roomsList } from 'stores/rooms';
+    import { currentRoomId, roomsList } from 'stores/rooms';
     import { onMount } from 'svelte';
     import { writable, type Writable } from 'svelte/store';
     import type { Room as RoomType } from 'interfaces/all';
@@ -16,6 +16,11 @@
     let allElement: HTMLHeadingElement;
     let pendingElement: HTMLHeadingElement;
     let indicator: HTMLDivElement;
+    let notificatorRooms: HTMLDivElement;
+    let notificatorDMs: HTMLDivElement;
+
+    let totalUnreadRooms = 0;
+    let totalUnreadDMs = 0;
 
     function moveIndicator(): void {
         if (activePanel == 0) {
@@ -35,13 +40,63 @@
     function showAll(): void {
         activePanel = 0;
 
+        setTimeout(() => {
+            notificatorRooms.style.display = 'none';
+
+            if (totalUnreadDMs > 0) {
+                notificatorDMs.style.display = 'initial';
+            }
+        }, 0);
+
         moveIndicator();
     }
 
     function showPending(): void {
         activePanel = 1;
 
+        setTimeout(() => {
+            notificatorDMs.style.display = 'none';
+
+            if (totalUnreadRooms > 0) {
+                notificatorRooms.style.display = 'initial';
+            }
+        }, 0);
+
         moveIndicator();
+    }
+
+    function updateNotificators(): void {
+        totalUnreadRooms = 0;
+        totalUnreadDMs = 0;
+
+        for (const roomIndex in $roomsList) {
+            const target = $roomsList[roomIndex];
+
+            if (target.unreadCount > 0) {
+                if (target.isDM) totalUnreadDMs += 1;
+                else totalUnreadRooms += 1;
+
+                setTimeout(() => {
+                    if (target.isDM) {
+                        notificatorDMs.style.display = 'initial';
+                    } else {
+                        notificatorRooms.style.display = 'initial';
+                    }
+                }, 0);
+            }
+        }
+
+        if (totalUnreadDMs == 0 && activePanel != 1) {
+            setTimeout(() => {
+                notificatorDMs.style.display = 'none';
+            }, 0);
+        }
+
+        if (totalUnreadRooms == 0 && activePanel != 0) {
+            setTimeout(() => {
+                notificatorRooms.style.display = 'none';
+            }, 0);
+        }
     }
 
     onMount(() => {
@@ -69,6 +124,20 @@
 
             $dms = $dms;
             $rooms = $rooms;
+
+            updateNotificators();
+
+            setTimeout(() => {
+                notificatorRooms.style.display = 'none';
+            }, 0);
+        });
+
+        currentRoomId.subscribe((state) => {
+            if (!state) return;
+
+            setTimeout(() => {
+                updateNotificators();
+            }, 1000);
         });
     });
 </script>
@@ -87,6 +156,8 @@
                     on:keydown={showAll}
                 >
                     Rooms
+
+                    <div bind:this={notificatorRooms} class="notificator" />
                 </h1>
 
                 <div class="wrapper-v2">
@@ -97,6 +168,8 @@
                     >
                         DMs
                     </h1>
+
+                    <div bind:this={notificatorDMs} class="notificator2" />
                 </div>
             </div>
 
@@ -190,7 +263,6 @@
         flex-direction: column;
         overflow: auto;
         overflow-x: hidden;
-        height: calc(100% - 50px);
     }
 
     .wrapper {
@@ -237,11 +309,35 @@
         display: flex;
         align-items: center;
         flex-direction: column;
+        overflow-y: auto;
+        height: calc(100vh - 65px - 48px);
     }
 
     .wrapper-v2 {
         display: flex;
         flex: 1;
+    }
+
+    .notificator {
+        position: absolute;
+        transform: translateX(2px) translateY(2px);
+        width: 8px;
+        height: 8px;
+        background: var(--branding);
+        box-shadow: 0 0 5px var(--branding);
+        border-radius: 20px;
+        pointer-events: none;
+    }
+
+    .notificator2 {
+        position: absolute;
+        transform: translateX(82px) translateY(5px);
+        width: 8px;
+        height: 8px;
+        background: var(--branding);
+        box-shadow: 0 0 5px var(--branding);
+        border-radius: 20px;
+        pointer-events: none;
     }
 
     .empty {

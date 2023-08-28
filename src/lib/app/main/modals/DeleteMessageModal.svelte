@@ -9,7 +9,6 @@
     import { dismissModal, setProgressBar } from 'utilities/main';
     import ModalTemplate from '../ModalTemplate.svelte';
     import { currentRoomId } from 'stores/rooms';
-    import { toast } from 'svelte-sonner';
 
     function deleteMessage(): void {
         // Will receive result in RoomChat listener if successful
@@ -23,8 +22,6 @@
             },
             async ({ err }) => {
                 if (err) return;
-
-                toast('Message deleted');
             }
         );
     }

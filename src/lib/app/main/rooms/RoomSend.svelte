@@ -447,7 +447,7 @@
         padding-top: 2.5px;
         border-radius: 10px;
         background: var(--bg);
-        border: 2px solid var(--message);
+        border: 2px solid var(--primary);
     }
 
     textarea {

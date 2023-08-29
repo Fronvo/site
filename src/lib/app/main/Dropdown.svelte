@@ -7,7 +7,7 @@
     } from 'stores/dropdowns';
     import { onDestroy, onMount } from 'svelte';
     import type { Unsubscriber } from 'svelte/store';
-    import { blur, scale, slide } from 'svelte/transition';
+    import { blur, fade, scale, slide } from 'svelte/transition';
 
     let element: HTMLDivElement;
     let unsubscribe: Unsubscriber;
@@ -48,10 +48,7 @@
 
 <div bind:this={element} class="dropdown-container">
     {#if $dropdownVisible}
-        <div
-            class="item-container"
-            transition:scale={{ duration: 150, start: 0.95, opacity: 0 }}
-        >
+        <div class="item-container" transition:fade={{ duration: 150 }}>
             <svelte:component this={dropdowns[$currentDropdownId]} />
         </div>
     {/if}

@@ -81,7 +81,6 @@
                     bind:value={editableStatus}
                     maxlength={20}
                     class="modal-input"
-                    placeholder="Status 😉"
                 />
             {/if}
         </div>

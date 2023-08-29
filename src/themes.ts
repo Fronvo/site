@@ -27,7 +27,6 @@ interface ThemingOptions {
     button: string;
 
     // Not our messages
-    message: string;
     message_shadow: string;
 
     // Posts
@@ -74,7 +73,6 @@ export const defaultTheme: ThemingOptions = {
 
     button: 'rgb(25, 25, 25)',
 
-    message: 'rgb(30, 30, 30)',
     message_shadow: 'rgb(5, 5, 5)',
 
     post: 'rgb(50, 50, 50, 15%)',
@@ -119,7 +117,6 @@ export const whiteTheme: ThemingOptions = {
 
     button: 'rgb(240, 240, 240)',
 
-    message: 'rgb(248, 248, 248)',
     message_shadow: 'rgb(190, 190, 190)',
 
     post: 'rgb(225, 225, 225, 20%)',

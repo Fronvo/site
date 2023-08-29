@@ -130,8 +130,7 @@
     .search-container {
         display: flex;
         align-items: center;
-        background: var(--message);
-        box-shadow: 0 0 2px var(--message_shadow);
+        border: 2px solid var(--primary);
         border-radius: 10px;
         width: 95%;
         align-self: center;

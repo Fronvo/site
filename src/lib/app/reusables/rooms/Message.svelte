@@ -359,16 +359,14 @@
         margin: 0;
         margin-left: 5px;
         font-size: 0.95rem;
-        white-space: pre-wrap;
         overflow: hidden;
         text-align: start;
-        background: var(--bg);
+        background: var(--primary);
         padding: 5px;
         padding-left: 10px;
         padding-right: 10px;
         border-radius: 5px;
-        box-shadow: 0 0 20px var(--message_shadow);
-        border: 1px solid var(--primary);
+        border: 2px solid var(--bg);
     }
 
     #reply {
@@ -500,17 +498,16 @@
         white-space: pre-wrap;
         overflow: hidden;
         text-align: start;
-        background: var(--bg);
+        background: var(--primary);
         padding: 8px;
         padding-left: 10px;
         padding-right: 10px;
         border-radius: 5px;
-        box-shadow: 0 0 20px var(--message_shadow);
-        border: 1px solid var(--primary);
+        border: 2px solid var(--primary);
     }
 
     .highlight #content {
-        border: 1px solid var(--branding);
+        border: 2px solid var(--branding);
     }
 
     #attachment {

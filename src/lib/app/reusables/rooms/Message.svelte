@@ -15,7 +15,6 @@
         targetProfileModal,
     } from 'stores/modals';
     import { DropdownTypes } from 'stores/dropdowns';
-    import { toast } from 'svelte-sonner';
     import linkifyHtml from 'linkify-html';
 
     export let i = -1;
@@ -361,12 +360,13 @@
         font-size: 0.95rem;
         overflow: hidden;
         text-align: start;
-        background: var(--primary);
+        background: transparent;
         padding: 5px;
         padding-left: 10px;
         padding-right: 10px;
-        border-radius: 5px;
-        border: 2px solid var(--bg);
+        margin-bottom: 2px;
+        border-radius: 15px;
+        border: 2px solid var(--primary);
     }
 
     #reply {
@@ -498,11 +498,11 @@
         white-space: pre-wrap;
         overflow: hidden;
         text-align: start;
-        background: var(--primary);
         padding: 8px;
         padding-left: 10px;
         padding-right: 10px;
-        border-radius: 5px;
+        background: var(--primary);
+        border-radius: 15px;
         border: 2px solid var(--primary);
     }
 

@@ -3,7 +3,6 @@
     import { type ModalData, targetPostModal } from 'stores/modals';
     import { dismissModal, setProgressBar } from 'utilities/main';
     import ModalTemplate from '../ModalTemplate.svelte';
-    import { toast } from 'svelte-sonner';
     import { loadProfile } from 'utilities/profile';
     import Post from '$lib/app/reusables/all/Post.svelte';
     import { homePosts } from 'stores/home';

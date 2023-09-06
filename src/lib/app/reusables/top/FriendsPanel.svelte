@@ -11,7 +11,6 @@
     import { findCachedAccount } from 'utilities/main';
     import Friend from './Friend.svelte';
     import { loadHomePosts } from 'utilities/home';
-    import { toast } from 'svelte-sonner';
 
     // Default to all, ignore pending amount
     let activePanel = $currentFriendsPanel;
@@ -134,8 +133,6 @@
 
             pendingLoadingFinished = true;
             loadPending();
-
-            toast(`@${profileId} wants to be your friend`);
         });
 
         socket.on('pendingFriendRemoved', ({ profileId }) => {
@@ -162,8 +159,6 @@
             loadFriends();
 
             loadHomePosts();
-
-            toast(`@${profileId} is now your friend`);
         });
 
         socket.on('friendRemoved', ({ profileId }) => {

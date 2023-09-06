@@ -7,7 +7,6 @@
     import { dismissModal, setProgressBar } from 'utilities/main';
     import { cachedAccountData, currentToken, darkTheme } from 'stores/main';
     import { loadProfile } from 'utilities/profile';
-    import { toast } from 'svelte-sonner';
     import { loadThemes } from 'utilities/themes';
 
     let stripe = null;
@@ -62,8 +61,6 @@
             await loadThemes();
 
             dismissModal();
-
-            toast('Welcome to the PRO club.');
         }
 
         setProgressBar(false);

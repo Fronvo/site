@@ -18,7 +18,6 @@ import {
 } from 'stores/main';
 import { setProgressBar } from './main';
 import { differenceInSeconds } from 'date-fns';
-import { toast } from 'svelte-sonner';
 import { setKey } from './global';
 
 export async function fetchConvos(): Promise<Room[]> {
@@ -72,7 +71,6 @@ export function sendMessage(
 ): void {
     if (lastSendsIn30 >= 12) {
         lastSendsIn30Store.set(-1);
-        toast('Try again in 15 minutes.');
         sendContent.set('');
 
         setKey('disabledIn30Time', new Date());
@@ -88,9 +86,7 @@ export function sendMessage(
 
     if (content.trim().length == 0) return;
 
-    if (differenceInSeconds(new Date(), new Date(lastSendAt)) < 1) {
-        toast('Slow down.');
-
+    if (differenceInSeconds(new Date(), new Date(lastSendAt)) < 0.25) {
         return;
     }
 

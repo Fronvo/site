@@ -9,7 +9,6 @@
     import { ourData } from 'stores/profile';
     import ProfilePreviewLarge from '$lib/app/reusables/all/ProfilePreviewLarge.svelte';
     import { socket } from 'stores/main';
-    import { toast } from 'svelte-sonner';
     import ModalTemplatePro from '../ModalTemplatePRO.svelte';
 
     const profileData = $targetProfileModal;
@@ -32,15 +31,6 @@
             { profileId: $targetProfileModal.profileId },
             ({ err }) => {
                 setProgressBar(false);
-
-                if (!err) {
-                    toast(
-                        `Friend request sent to @${$targetProfileModal.profileId}`
-                    );
-                } else {
-                    // Most logical error
-                    toast('Friend request has already been sent');
-                }
             }
         );
     }

@@ -6,7 +6,6 @@
     import InfoHeader from '$lib/app/reusables/all/InfoHeader.svelte';
     import { onMount } from 'svelte';
     import ErrorHeader from '$lib/app/reusables/all/ErrorHeader.svelte';
-    import { toast } from 'svelte-sonner';
 
     let element: HTMLInputElement;
 
@@ -46,8 +45,6 @@
                     setProgressBar(false);
                 } else {
                     dismissModal();
-
-                    toast(`Friend request sent to @${profileId}`);
                 }
             }
         );

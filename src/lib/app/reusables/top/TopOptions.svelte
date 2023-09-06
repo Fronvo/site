@@ -11,7 +11,6 @@
     import { onMount } from 'svelte';
     import { onDestroy } from 'svelte';
     import { TopPanels } from 'types/all';
-    import { toast } from 'svelte-sonner';
 
     let panels = [RoomPanel, FriendsPanel, MarketplacePanel, AdminPanel];
 
@@ -24,8 +23,6 @@
     function toggleTheme(): void {
         $darkTheme = !$darkTheme;
         setKey('darkTheme', $darkTheme);
-
-        toast(`Theme changed to ${$darkTheme ? 'dark' : 'light'}`);
     }
 
     onMount(() => {
@@ -244,7 +241,6 @@
         width: 275px;
         border-left: 1px solid var(--primary);
         height: 100vh;
-        box-shadow: 0 0 4px var(--message_shadow);
         z-index: 1;
     }
 

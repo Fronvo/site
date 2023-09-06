@@ -1,39 +1,9 @@
 <script lang="ts">
     import LoadingDiamonds from '$lib/svgs/LoadingDiamonds.svelte';
-    import { onMount } from 'svelte';
-
-    let loadingText: HTMLHeadingElement;
-
-    const intros = [
-        'Welcome back.',
-        'Glad to see you.',
-        'Securing your data..',
-        "Fronvo's birthday is on the 3rd of October!",
-        'What a pleasure to have you back!',
-        'Splashing the screen..',
-        'Finding friends..',
-        'Waking up the server..',
-        'Setting up the lighting..',
-        'Rare message displaying..',
-        'Fronvo was released on the 10th of August in 2023!',
-        'Ensuring encryption..',
-    ];
-
-    function choose(choices: string[]) {
-        var index = Math.floor(Math.random() * choices.length);
-
-        return choices[index];
-    }
-
-    onMount(() => {
-        loadingText.textContent = choose(intros) as string;
-    });
 </script>
 
 <div class="loading-container">
     <LoadingDiamonds />
-
-    <h1 bind:this={loadingText} id="loading-text">Placeholder</h1>
 </div>
 
 <style>
@@ -58,10 +28,5 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-    }
-
-    .loading-container h1 {
-        font-size: 1.5rem;
-        margin-top: 50px;
     }
 </style>

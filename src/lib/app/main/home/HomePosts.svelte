@@ -7,7 +7,6 @@
     import { fade } from 'svelte/transition';
     import CreatePost from './CreatePost.svelte';
     import { onMount } from 'svelte';
-    import { toast } from 'svelte-sonner';
     import { ourData } from 'stores/profile';
 
     let welcomeText: string;
@@ -76,8 +75,6 @@
 
         socket.on('postShared', ({ author }) => {
             if (author == $ourData.profileId) return;
-
-            toast(`${author} just shared a post!`);
 
             reloadPosts();
         });

@@ -435,6 +435,7 @@
         -ms-user-select: none;
         user-select: none;
         height: 65px;
+        background: var(--bg);
     }
 
     .wrapper {
@@ -445,8 +446,8 @@
         padding: 5px;
         padding-bottom: 2.5px;
         padding-top: 2.5px;
-        border-radius: 10px;
-        background: var(--bg);
+        border-radius: 15px;
+        background: var(--primary);
         border: 2px solid var(--primary);
     }
 

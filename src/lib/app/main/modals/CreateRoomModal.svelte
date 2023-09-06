@@ -6,7 +6,6 @@
     import InfoHeader from '$lib/app/reusables/all/InfoHeader.svelte';
     import { onMount } from 'svelte';
     import ErrorHeader from '$lib/app/reusables/all/ErrorHeader.svelte';
-    import { toast } from 'svelte-sonner';
     import { loadRoomsData } from 'utilities/rooms';
 
     let element: HTMLInputElement;
@@ -38,8 +37,6 @@
                     setProgressBar(false);
                 } else {
                     dismissModal();
-
-                    toast(`Created ${name}`);
 
                     await loadRoomsData();
                 }

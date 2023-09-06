@@ -4,7 +4,6 @@
     import { targetProfileModal, type ModalData } from 'stores/modals';
     import InfoHeader from '$lib/app/reusables/all/InfoHeader.svelte';
     import { socket } from 'stores/main';
-    import { toast } from 'svelte-sonner';
 
     function removeFriend(): void {
         setProgressBar(true);
@@ -14,9 +13,6 @@
             { profileId: $targetProfileModal.profileId },
             () => {
                 setProgressBar(false);
-                toast(
-                    `@${$targetProfileModal.profileId} has been removed from your friends`
-                );
 
                 dismissModal();
             }

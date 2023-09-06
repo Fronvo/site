@@ -11,33 +11,19 @@
     import RoomSend from './rooms/RoomSend.svelte';
     import { currentRoomId, roomsList } from 'stores/rooms';
     import HomePosts from './home/HomePosts.svelte';
-    import { Toaster, toast } from 'svelte-sonner';
     import {
         darkTheme,
         disabledIn30,
         lastSendsIn30,
-        loginSucceeded,
         socket,
     } from 'stores/main';
     import { onMount } from 'svelte';
-    import { ourData } from 'stores/profile';
     import { differenceInMinutes } from 'date-fns';
     import { getKey } from 'utilities/global';
     import { fetchConvos } from 'utilities/rooms';
+    import { Toaster } from 'svelte-sonner';
 
     onMount(() => {
-        loginSucceeded.subscribe((state) => {
-            if (!state) return;
-
-            toast(`Welcome back, ${$ourData.username}`);
-        });
-
-        socket.on('onlineStatusUpdated', ({ online, profileId }) => {
-            if ($ourData.friends.includes(profileId)) {
-                if (online) toast(`${profileId} is now online.`);
-            }
-        });
-
         socket.on('roomAdded', async () => ($roomsList = await fetchConvos()));
         socket.on(
             'roomRemoved',

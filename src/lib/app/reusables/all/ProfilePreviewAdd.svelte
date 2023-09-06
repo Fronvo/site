@@ -3,7 +3,6 @@
     import { socket } from 'stores/main';
     import { currentRoomData, currentRoomId } from 'stores/rooms';
     import { onMount } from 'svelte';
-    import { toast } from 'svelte-sonner';
     import { setProgressBar } from 'utilities/main';
 
     export let profileData: FronvoAccount;
@@ -26,10 +25,6 @@
             ({ err }) => {
                 setProgressBar(false);
                 added = true;
-
-                if (err) {
-                    toast('An error has occured');
-                }
             }
         );
     }

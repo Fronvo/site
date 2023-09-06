@@ -6,7 +6,6 @@
     import { dismissModal, setProgressBar } from 'utilities/main';
     import { socket } from 'stores/main';
     import { loadThemes } from 'utilities/themes';
-    import { toast } from 'svelte-sonner';
     import ThemeTitle from '$lib/app/reusables/themes/ThemeTitle.svelte';
 
     export let creating = true;
@@ -36,8 +35,6 @@
                     await loadThemes();
 
                     dismissModal();
-
-                    toast('Theme created');
                 }
 
                 setProgressBar(false);

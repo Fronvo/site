@@ -20,6 +20,8 @@
     import { socket } from 'stores/main';
     import { DropdownTypes } from 'stores/dropdowns';
     import linkifyHtml from 'linkify-html';
+    import Comment from '$lib/svgs/Comment.svelte';
+    import Share from '$lib/svgs/Share.svelte';
 
     export let post: Post;
     export let small = false;
@@ -224,7 +226,13 @@
         <div class="action-container">
             <Like callback={likePost} liked={postData.isLiked} />
 
-            <h1 id="likes">{postData.totalLikes}</h1>
+            <h1>{postData.totalLikes}</h1>
+
+            <Comment />
+
+            <h1>0</h1>
+
+            <Share />
         </div>
     </div>
 </div>
@@ -403,11 +411,11 @@
         margin-top: 5px;
     }
 
-    #likes {
+    .action-container h1 {
         margin: 0;
-        font-size: 1rem;
+        font-size: 0.95rem;
         text-align: center;
-        margin-right: 30px;
+        margin-right: 35px;
         color: var(--text_gray);
         -webkit-touch-callout: none;
         -webkit-user-select: none;

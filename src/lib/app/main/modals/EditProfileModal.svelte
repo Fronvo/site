@@ -15,7 +15,6 @@
     import { ourData } from 'stores/profile';
     import { cachedAccountData, currentToken, socket } from 'stores/main';
     import { writable } from 'svelte/store';
-    import { toast } from 'svelte-sonner';
     import type { ModalData } from 'stores/modals';
     import ModalTemplatePro from '../ModalTemplatePRO.svelte';
 
@@ -55,7 +54,6 @@
         socket.emit('updateProfileData', updatedData, async ({ err }) => {
             if (err) {
                 setProgressBar(false);
-                toast('Profile updated');
 
                 return;
             }
@@ -73,7 +71,6 @@
             }
 
             setProgressBar(false);
-            toast('Profile updated');
 
             dismissModal();
         });

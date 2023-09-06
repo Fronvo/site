@@ -5,7 +5,6 @@
     import { DropdownTypes } from 'stores/dropdowns';
     import { socket } from 'stores/main';
     import { onMount } from 'svelte';
-    import { toast } from 'svelte-sonner';
 
     export let profileData: FronvoAccount;
     export let pending = false;
@@ -20,12 +19,8 @@
             {
                 profileId: profileData.profileId,
             },
-            ({ err }) => {
+            () => {
                 setProgressBar(false);
-
-                if (err) {
-                    toast('An error has occured');
-                }
             }
         );
     }
@@ -38,12 +33,8 @@
             {
                 profileId: profileData.profileId,
             },
-            ({ err }) => {
+            () => {
                 setProgressBar(false);
-
-                if (err) {
-                    toast('An error has occured');
-                }
             }
         );
     }

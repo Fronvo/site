@@ -14,7 +14,6 @@
         roomsList,
     } from 'stores/rooms';
     import { loadRoomMessages, loadRoomsData } from 'utilities/rooms';
-    import { toast } from 'svelte-sonner';
 
     function viewProfile(): void {
         showModal(ModalTypes.Profile);
@@ -44,15 +43,6 @@
             { profileId: $targetProfileModal.profileId },
             ({ err }) => {
                 setProgressBar(false);
-
-                if (!err) {
-                    toast(
-                        `Friend request sent to @${$targetProfileModal.profileId}`
-                    );
-                } else {
-                    // Most logical error
-                    toast('Friend request has already been sent');
-                }
             }
         );
     }

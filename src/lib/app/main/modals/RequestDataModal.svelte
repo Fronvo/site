@@ -4,7 +4,6 @@
     import type { ModalData } from 'stores/modals';
     import InfoHeader from '$lib/app/reusables/all/InfoHeader.svelte';
     import { socket } from 'stores/main';
-    import { toast } from 'svelte-sonner';
 
     let isRequesting = false;
 
@@ -17,12 +16,8 @@
         socket.emit('requestData', ({ err }) => {
             if (err) {
                 dismissModal();
-
-                toast(err.msg);
             } else {
                 dismissModal();
-
-                toast('Your data has been sent!');
             }
         });
     }

@@ -7,7 +7,6 @@
     import AccountInfo from '$lib/app/reusables/top/AccountInfo.svelte';
     import { writable } from 'svelte/store';
     import InfoHeader from '$lib/app/reusables/all/InfoHeader.svelte';
-    import { toast } from 'svelte-sonner';
 
     let status = writable($ourData.status);
 
@@ -25,10 +24,6 @@
             ({ err }) => {
                 if (!err) {
                     $ourData.status = $status;
-
-                    toast(`Status changed to ${$status}`);
-                } else {
-                    toast('An error has occured');
                 }
 
                 dismissModal();

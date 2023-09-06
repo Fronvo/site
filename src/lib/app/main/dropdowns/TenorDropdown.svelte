@@ -158,7 +158,7 @@
         align-items: start;
         justify-content: start;
         width: 50%;
-        height: 100%;
+        height: 100vh;
     }
 
     input {

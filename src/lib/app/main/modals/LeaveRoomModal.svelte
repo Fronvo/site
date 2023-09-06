@@ -14,7 +14,6 @@
     import type { ModalData } from 'stores/modals';
     import InfoHeader from '$lib/app/reusables/all/InfoHeader.svelte';
     import { onMount } from 'svelte';
-    import { toast } from 'svelte-sonner';
 
     let isLeaving = false;
     let name: string;
@@ -38,11 +37,6 @@
             async ({ err }) => {
                 if (!err) {
                     dismissModal();
-                    toast(
-                        isOwner()
-                            ? `Deleted ${$currentRoomData.name}`
-                            : `Left ${$currentRoomData.name}`
-                    );
 
                     $currentRoomLoaded = false;
                     $currentRoomId = undefined;

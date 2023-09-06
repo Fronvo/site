@@ -18,7 +18,6 @@
     } from 'utilities/main';
     import { ourData } from 'stores/profile';
     import { ModalTypes, targetProfileModal } from 'stores/modals';
-    import { toast } from 'svelte-sonner';
     import { uploadImage } from 'utilities/rooms';
 
     let nameP = writable($roomData?.name);

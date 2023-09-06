@@ -3,7 +3,6 @@
     import ModalTemplate from '../ModalTemplate.svelte';
     import InfoHeader from '$lib/app/reusables/all/InfoHeader.svelte';
     import { cachedAccountData, currentToken } from 'stores/main';
-    import { toast } from 'svelte-sonner';
     import type { ModalData } from 'stores/modals';
     import { loadProfile } from 'utilities/profile';
     import { themes } from 'stores/themes';
@@ -24,8 +23,6 @@
         resetLocalTheme();
 
         dismissModal();
-
-        toast('You are no longer a PRO.');
     }
 
     const data: ModalData = {

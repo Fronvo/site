@@ -4,7 +4,6 @@
     import { targetProfileModal, type ModalData } from 'stores/modals';
     import InfoHeader from '$lib/app/reusables/all/InfoHeader.svelte';
     import { socket } from 'stores/main';
-    import { toast } from 'svelte-sonner';
     import { currentRoomData, currentRoomId } from 'stores/rooms';
 
     function removeMember(): void {
@@ -18,14 +17,6 @@
             },
             ({ err }) => {
                 setProgressBar(false);
-
-                if (!err) {
-                    toast(
-                        `Removed ${$targetProfileModal.username} from ${$currentRoomData.name}`
-                    );
-                } else {
-                    toast(`An error has occured`);
-                }
 
                 dismissModal();
             }

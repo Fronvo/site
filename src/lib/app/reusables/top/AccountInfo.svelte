@@ -99,7 +99,6 @@
         height: 65px;
         z-index: 1;
         transition: 75ms;
-        box-shadow: 0 -5px 4px var(--message_shadow);
     }
 
     .preview {

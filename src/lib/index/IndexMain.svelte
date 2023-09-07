@@ -43,7 +43,8 @@
         const val = window.navigator.userAgent.toLowerCase();
 
         if (val.includes('android')) {
-            download.textContent = 'Get for Android';
+            download.textContent = 'Get for Android (soon)';
+            download.disabled = true;
 
             download.onclick = () => {
                 window.location.href = 'market://details?id=com.fronvo';

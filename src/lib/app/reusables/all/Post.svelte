@@ -228,11 +228,11 @@
 
             <h1>{postData.totalLikes}</h1>
 
-            <Comment />
+            <!-- <Comment />
 
             <h1>0</h1>
 
-            <Share />
+            <Share /> -->
         </div>
     </div>
 </div>

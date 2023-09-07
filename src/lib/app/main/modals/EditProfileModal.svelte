@@ -80,7 +80,7 @@
         title: '',
         actions: [
             {
-                title: 'Save changes',
+                title: 'Update',
                 callback: uploadData,
                 primary: !$ourData.isPRO,
                 pro: $ourData.isPRO,

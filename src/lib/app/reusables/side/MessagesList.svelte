@@ -214,7 +214,7 @@
                 </div>
             {:else}
                 {#if $dms.length == 0}
-                    <div class="empty">
+                    <div class="empty" id="dms-empty">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="32"
@@ -364,6 +364,10 @@
         width: 128px;
         height: 128px;
         cursor: default;
+    }
+
+    #dms-empty {
+        padding-bottom: 48px;
     }
 
     @media screen and (max-width: 1250px) {

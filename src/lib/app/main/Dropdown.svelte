@@ -48,7 +48,7 @@
 
 <div bind:this={element} class="dropdown-container">
     {#if $dropdownVisible}
-        <div class="item-container" transition:fade={{ duration: 150 }}>
+        <div class="item-container">
             <svelte:component this={dropdowns[$currentDropdownId]} />
         </div>
     {/if}

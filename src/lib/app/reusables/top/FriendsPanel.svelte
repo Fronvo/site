@@ -18,7 +18,6 @@
 
     let allElement: HTMLHeadingElement;
     let pendingElement: HTMLHeadingElement;
-    let indicator: HTMLDivElement;
 
     let friendsInfo: FronvoAccount[] = [];
     let friendsLoadingFinished = false;
@@ -86,33 +85,12 @@
         }
     }
 
-    function moveIndicator(): void {
-        $currentFriendsPanel = activePanel;
-
-        if (activePanel == 0) {
-            indicator.style.marginLeft = `${allElement.clientWidth / 2 - 15}px`;
-        } else {
-            indicator.style.marginLeft = `${
-                allElement.clientWidth + pendingElement.clientWidth / 2 - 8
-            }px`;
-        }
-
-        setTimeout(() => {
-            indicator.style.transition =
-                'all 150ms cubic-bezier(0.3, 1, 0.5, 1)';
-        }, 150);
-    }
-
     function showAll(): void {
         activePanel = 0;
-
-        moveIndicator();
     }
 
     function showPending(): void {
         activePanel = 1;
-
-        moveIndicator();
     }
 
     onMount(() => {
@@ -172,24 +150,24 @@
 
             loadHomePosts();
         });
-
-        if (!indicator) return;
-
-        indicator.style.transition = 'none';
-
-        moveIndicator();
     });
 </script>
 
 {#if listVisible}
     <div class="friends-container">
         <div class="wrapper">
-            <h1 bind:this={allElement} on:click={showAll} on:keydown={showAll}>
+            <h1
+                class={`${activePanel == 0 ? 'active' : ''}`}
+                bind:this={allElement}
+                on:click={showAll}
+                on:keydown={showAll}
+            >
                 Friends
             </h1>
 
             <div class="wrapper-v2">
                 <h1
+                    class={`${activePanel == 1 ? 'active' : ''}`}
                     bind:this={pendingElement}
                     on:click={showPending}
                     on:keydown={showPending}
@@ -202,8 +180,6 @@
                 {/if}
             </div>
         </div>
-
-        <div bind:this={indicator} class="indicator" />
 
         {#if activePanel == 0}
             {#if $ourData.friends.length == 0}
@@ -345,6 +321,10 @@
     .wrapper-v2 {
         display: flex;
         flex: 1;
+    }
+
+    .active {
+        background: var(--primary);
     }
 
     .notificator {

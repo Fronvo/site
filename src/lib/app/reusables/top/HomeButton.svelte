@@ -48,7 +48,7 @@
         cursor: pointer;
         pointer-events: all;
         z-index: 2;
-        transition: 150ms;
+        transition: 50ms;
         box-shadow: 0 0 30px var(--primary);
     }
 

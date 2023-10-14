@@ -139,10 +139,6 @@
         $replyingToId == messageData.messageId && !isPreview ? 'highlight' : ''
     }`}
 >
-    {#if !skipContext && !(messageData.ownerId == 'fronvo' && messageData.isNotification)}
-        <h1 id="name">{profileData.username}</h1>
-    {/if}
-
     {#if messageData.isReply}
         <div class="reply-container">
             <div class="wrapper">
@@ -172,6 +168,12 @@
             </div>
         </div>
     {/if}
+
+    <div>
+        {#if !skipContext && !(messageData.ownerId == 'fronvo' && messageData.isNotification)}
+            <h1 id="name">{profileData.username}</h1>
+        {/if}
+    </div>
 
     <div class="message-info-container">
         {#if !skipContext && !(messageData.ownerId == 'fronvo' && messageData.isNotification)}
@@ -313,12 +315,25 @@
 <style>
     .message-container {
         display: flex;
+        align-items: start;
+        justify-content: start;
         flex-direction: column;
         width: 90%;
         margin-top: 0px;
         margin-left: 3.5%;
-        margin-bottom: 6px;
+        padding: 5px;
         cursor: default;
+        border-radius: 10px;
+        border-left: 2px solid transparent;
+    }
+
+    .message-container:hover {
+        background: var(--hover_darken);
+    }
+
+    .highlight {
+        border-left: 2px solid var(--branding);
+        background: var(--hover_darken);
     }
 
     .preview {
@@ -331,9 +346,9 @@
     #name {
         margin: 0;
         font-size: 0.9rem;
-        margin-left: calc(36px + 5px + 5px + 5px);
-        margin-bottom: 2px;
-        margin-top: 5px;
+        margin-left: calc(36px + 5px + 5px + 5px + 2.5px);
+        font-weight: 600;
+        flex: 1;
     }
 
     .reply-container {
@@ -402,6 +417,8 @@
     .message-info-container {
         display: flex;
         align-items: center;
+        justify-content: start;
+        flex: 1;
     }
 
     .preview .message-info-container {
@@ -409,10 +426,10 @@
     }
 
     #avatar {
-        width: 36px;
-        min-width: 36px;
-        height: 36px;
-        min-height: 36px;
+        width: 40px;
+        min-width: 40px;
+        height: 40px;
+        min-height: 40px;
         border-radius: 30px;
         margin-right: 5px;
         -webkit-touch-callout: none;
@@ -423,15 +440,11 @@
         user-select: none;
         justify-self: start;
         cursor: pointer;
-        transition: 150ms;
-    }
-
-    #avatar:hover {
-        opacity: 0.75;
+        transform: translateY(-16px);
     }
 
     #avatar:active {
-        transform: scale(0.975);
+        transform: translateY(-15px);
     }
 
     .preview #avatar {
@@ -446,8 +459,8 @@
         opacity: 0;
         margin: 0;
         font-size: 0.8rem;
-        width: 36px;
-        min-width: 36px;
+        width: 40px;
+        min-width: 40px;
         margin-right: 5px;
         text-align: center;
         -webkit-touch-callout: none;
@@ -458,7 +471,7 @@
         user-select: none;
     }
 
-    .message-info-container:hover #small-time {
+    .message-container:hover #small-time {
         opacity: 1;
     }
 
@@ -498,16 +511,9 @@
         white-space: pre-wrap;
         overflow: hidden;
         text-align: start;
-        padding: 8px;
-        padding-left: 10px;
-        padding-right: 10px;
-        background: var(--primary);
+        padding: 5px;
         border-radius: 15px;
-        border: 2px solid var(--primary);
-    }
-
-    .highlight #content {
-        border: 2px solid var(--branding);
+        flex: 1;
     }
 
     #attachment {

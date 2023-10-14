@@ -29,8 +29,8 @@
 
         nameElement.style.fontWeight = '300';
 
-        $currentRoomId = dmData.roomId;
         $currentRoomMessages = await loadRoomMessages(dmData.roomId);
+        $currentRoomId = dmData.roomId;
         $currentRoomData = dmData;
 
         $currentRoomLoaded = false;
@@ -153,11 +153,11 @@
 
 <style>
     .dm-container {
-        width: 100%;
+        width: 90%;
         display: flex;
         align-items: center;
-        padding: 10px 5px 10px 10px;
-        transition: 75ms;
+        padding: 5px;
+        margin-top: 4px;
         cursor: pointer;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -165,6 +165,7 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+        border-radius: 10px;
     }
 
     .dm-container:hover {

@@ -4,7 +4,7 @@
     import Post from '../all/Post.svelte';
     import InfiniteLoading from 'svelte-infinite-loading';
     import { onMount } from 'svelte';
-    import { fade, scale, slide } from 'svelte/transition';
+    import { slide } from 'svelte/transition';
 
     export let data: FronvoAccount;
     export let small = false;
@@ -79,7 +79,7 @@
         {/if}
 
         {#if reveal}
-            <div transition:fade={{ duration: 250 }}>
+            <div>
                 {#each posts as post}
                     <Post {post} {small} />
                 {/each}

@@ -1,6 +1,6 @@
 <script lang="ts">
     import { modalAnimDuration, type ModalData } from 'stores/modals';
-    import { fly } from 'svelte/transition';
+    import { fly, scale } from 'svelte/transition';
 
     export let data: ModalData;
 
@@ -11,7 +11,7 @@
 
 <div
     class={`modal-container ${!data.title ? 'title-less' : ''}`}
-    transition:fly={{ duration: modalAnimDuration }}
+    transition:scale={{ duration: modalAnimDuration, start: 0.7 }}
 >
     {#if data.title}
         <h1 id="title">{data.title}</h1>

@@ -405,9 +405,10 @@
         min-width: 550px;
         padding-top: calc(65px);
         height: calc(100vh);
+        padding-bottom: 10px;
         overflow-y: scroll;
         overflow-x: hidden;
-        transition: 200ms opacity;
+        transition: none;
         opacity: 0;
     }
 

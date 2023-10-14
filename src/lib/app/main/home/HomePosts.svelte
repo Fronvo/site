@@ -85,7 +85,7 @@
     $: updateWelcomeText();
 </script>
 
-<div class="home-container" in:fade={{ duration: 150 }}>
+<div class="home-container">
     <div class="top-container">
         <h1 id="welcomer">
             {welcomeText}
@@ -149,6 +149,7 @@
         font-size: 1.7rem;
         text-align: center;
         margin-top: 10px;
+        font-weight: 500;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;

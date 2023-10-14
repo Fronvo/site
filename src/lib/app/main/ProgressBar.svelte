@@ -4,7 +4,7 @@
 </script>
 
 {#if $progressBarVisible}
-    <div transition:slide={{ duration: 250 }} class="progress" />
+    <div transition:slide={{ duration: 125 }} class="progress" />
 {/if}
 
 <style>

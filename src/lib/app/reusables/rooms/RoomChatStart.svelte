@@ -88,7 +88,6 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        transition: 150ms;
         border: 2px solid var(--bg);
         cursor: default;
     }

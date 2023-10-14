@@ -1,7 +1,7 @@
 <script lang="ts">
     import { modalAnimDuration, type ModalData } from 'stores/modals';
     import { ourData } from 'stores/profile';
-    import { blur } from 'svelte/transition';
+    import { blur, scale } from 'svelte/transition';
 
     export let data: ModalData;
 
@@ -14,7 +14,7 @@
     class={`modal-container ${!data.title ? 'title-less' : ''} ${
         $ourData.appliedTheme ? 'themed' : ''
     } ${data.usePROShadow ? 'shadowed' : ''}`}
-    transition:blur={{ amount: 5, opacity: 0.5, duration: modalAnimDuration }}
+    transition:scale={{ duration: modalAnimDuration, start: 0.7 }}
 >
     {#if data.title}
         <h1 id="title">{data.title}</h1>

@@ -250,6 +250,7 @@
         flex: 1;
         background: var(--bg_trans);
         backdrop-filter: blur(5px);
+        border-bottom: 1px solid var(--primary);
     }
 
     .empty {
@@ -283,10 +284,6 @@
         cursor: pointer;
         border: 2px solid transparent;
         opacity: 0;
-    }
-
-    #icon:hover {
-        border: 2px solid var(--branding);
     }
 
     input {

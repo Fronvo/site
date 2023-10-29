@@ -28,11 +28,7 @@
         z-index: 1;
     }
 
-    svg:hover {
-        transform: scale(0.95);
-    }
-
     svg:active {
-        transform: scale(0.9);
+        transform: scale(0.95);
     }
 </style>

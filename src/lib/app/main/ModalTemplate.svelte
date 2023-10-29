@@ -11,7 +11,7 @@
 
 <div
     class={`modal-container ${!data.title ? 'title-less' : ''}`}
-    transition:scale={{ duration: modalAnimDuration, start: 0.7 }}
+    transition:scale={{ duration: modalAnimDuration, start: 0.85 }}
 >
     {#if data.title}
         <h1 id="title">{data.title}</h1>
@@ -108,6 +108,7 @@
         align-items: center;
         justify-content: center;
         background: var(--primary);
+        box-shadow: 0 0 10px var(--primary);
         transition: 150ms;
     }
 
@@ -132,6 +133,7 @@
 
     .primary {
         background: var(--branding);
+        box-shadow: 0 0 5px var(--branding);
         color: white;
     }
 

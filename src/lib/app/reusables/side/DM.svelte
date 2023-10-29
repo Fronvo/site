@@ -166,6 +166,7 @@
         -ms-user-select: none;
         user-select: none;
         border-radius: 10px;
+        transition: 150ms;
     }
 
     .dm-container:hover {

@@ -105,7 +105,7 @@ export const whiteTheme: ThemingOptions = {
     i_bg: 'rgb(240, 240, 240)',
     i_shadow: 'rgb(210, 210, 210)',
 
-    primary: 'rgb(240, 240, 240)',
+    primary: 'rgb(235, 235, 235)',
     secondary: 'rgb(225, 225, 225)',
 
     branding: 'rgb(0, 130, 255)',
@@ -125,7 +125,7 @@ export const whiteTheme: ThemingOptions = {
     post: 'rgb(225, 225, 225, 20%)',
 
     // Modals
-    modal_bg: 'rgba(100, 100, 100, 75%)',
+    modal_bg: 'rgba(30, 30, 30, 75%)',
 
     modal_content_bg: 'rgb(250, 250, 250)',
 

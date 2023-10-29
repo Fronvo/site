@@ -140,7 +140,7 @@
                 <Checkbox
                     bind:checked={$keepLoggedIn}
                     class="checkbox"
-                    size="1.5rem"
+                    size="1.8rem"
                     primaryColor="var(--modal_checkbox_primary)"
                     secondaryColor="var(--modal_checkbox_secondary)"
                 />

@@ -68,10 +68,6 @@
         animation-timing-function: ease-in-out;
     }
 
-    .bottom-container:hover {
-        box-shadow: none;
-    }
-
     .bottom-container:active {
         background: var(--branding_darken);
     }

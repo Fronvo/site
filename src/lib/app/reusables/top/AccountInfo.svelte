@@ -98,7 +98,7 @@
         border-bottom: 1px solid var(--primary);
         height: 65px;
         z-index: 1;
-        transition: 75ms;
+        transition: 150ms;
     }
 
     .preview {

@@ -316,6 +316,7 @@
         display: flex;
         align-items: center;
         flex-direction: column;
+        margin-top: 5px;
     }
 
     .wrapper-v2 {

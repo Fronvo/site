@@ -493,11 +493,7 @@
         transition: 150ms;
     }
 
-    .action:hover {
-        transform: scale(0.95);
-    }
-
     .action:active {
-        transform: scale(0.9);
+        transform: scale(0.95);
     }
 </style>

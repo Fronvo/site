@@ -92,7 +92,7 @@
                     }, 0);
                 }
             } else {
-                content.placeholder = 'Send a message';
+                content.placeholder = `Send a text`;
 
                 content.disabled = false;
             }
@@ -225,7 +225,7 @@
                 if (!content) return;
 
                 if (!val) {
-                    content.placeholder = 'Send a message';
+                    content.placeholder = 'Send a text';
                 } else {
                     if (val == $ourData.username) {
                         val = 'yourself';
@@ -373,7 +373,7 @@
 
             <textarea
                 bind:this={content}
-                placeholder={`Send a message`}
+                placeholder={'Send a text'}
                 id="textarea-content"
                 bind:value={$sendContent}
                 maxlength={500}
@@ -446,7 +446,7 @@
         padding: 5px;
         padding-bottom: 2.5px;
         padding-top: 2.5px;
-        border-radius: 15px;
+        border-radius: 5px;
         background: var(--primary);
         border: 2px solid var(--primary);
     }

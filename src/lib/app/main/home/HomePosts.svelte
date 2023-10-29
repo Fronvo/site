@@ -85,7 +85,7 @@
     $: updateWelcomeText();
 </script>
 
-<div class="home-container">
+<div class="home-container" in:fade={{ duration: 200 }}>
     <div class="top-container">
         <h1 id="welcomer">
             {welcomeText}

@@ -44,7 +44,7 @@ a:focus {
 
 h1 {
     font-family: 'Manrope';
-    font-weight: 600;
+    font-weight: 400;
     color: var(--text);
 }
 
@@ -56,7 +56,7 @@ button {
     background: var(--button);
     padding: 10px;
     font-family: 'Manrope';
-    font-weight: 600;
+    font-weight: 400;
     cursor: pointer;
     -webkit-touch-callout: none;
     -webkit-user-select: none;

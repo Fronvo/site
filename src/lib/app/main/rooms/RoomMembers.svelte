@@ -138,6 +138,7 @@
     }
 
     h1 {
+        font-weight: 600;
         margin: 0;
         font-size: 0.9rem;
         text-transform: uppercase;

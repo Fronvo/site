@@ -137,18 +137,6 @@
                 !document.hasFocus() &&
                 !$fronvoTitle.includes('(1)')
             ) {
-                var link = document.querySelector("link[rel~='icon']");
-                if (!link) {
-                    link = document.createElement('link');
-
-                    // @ts-ignore
-                    link.rel = 'icon';
-                    document.head.appendChild(link);
-                }
-
-                // @ts-ignore
-                link.href = '/favicon-notif.png';
-
                 setTitle(`(1) ${$fronvoTitle}`);
             }
         }

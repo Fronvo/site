@@ -3,8 +3,8 @@
     import { onMount } from 'svelte';
     import { currentToken, showLayout } from 'stores/main';
     import { goto } from '$app/navigation';
-    import MobileProFinalMain from '$lib/index/MobileProFinalMain.svelte';
-    import InlineTopNav from '$lib/index/InlineTopNav.svelte';
+    import MobileProFinalMain from '$lib/app/index/AppMobileProFinalMain.svelte';
+    import AppInlineTopNav from '$lib/app/index/AppInlineTopNav.svelte';
 
     let mountReady = false;
 
@@ -32,7 +32,7 @@
 {#if mountReady && $indexVisible}
     <div class="mobile-container">
         {#if $indexVisible}
-            <InlineTopNav />
+            <AppInlineTopNav />
 
             <MobileProFinalMain />
         {/if}

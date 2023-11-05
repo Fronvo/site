@@ -10,11 +10,18 @@
 
 <style>
     .footer {
-        width: 100%;
+        min-width: 800px;
+        max-width: 50%;
         margin: auto;
+        position: fixed;
+        bottom: 0;
         padding: 15px;
         background: var(--i_primary);
         box-shadow: 0 0 10px var(--i_shadow);
+        border-top-right-radius: 10px;
+        border-top-left-radius: 10px;
+        right: 0;
+        left: 0;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -28,6 +35,13 @@
     }
 
     @media screen and (max-width: 850px) {
+        .footer {
+            min-width: initial;
+            max-width: initial;
+            width: 100%;
+            border-radius: 0;
+        }
+
         h1 {
             font-size: 1.3rem;
         }

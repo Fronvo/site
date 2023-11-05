@@ -1,14 +1,14 @@
 <script lang="ts">
-    import TopNav from '$lib/index/TopNav.svelte';
     import { indexVisible, promotedToVerify } from 'stores/index';
     import { onMount } from 'svelte';
     import { getKey } from 'utilities/global';
     import { cachedAccountData, showLayout } from 'stores/main';
-    import Footer from '$lib/index/Footer.svelte';
     import { redirectApp } from 'utilities/index';
     import { performLogin } from 'utilities/main';
     import { goto } from '$app/navigation';
-    import VerifyMain from '$lib/index/VerifyMain.svelte';
+    import AppTopNav from '$lib/app/index/AppTopNav.svelte';
+    import AppFooter from '$lib/app/index/AppFooter.svelte';
+    import AppVerifyMain from '$lib/app/index/AppVerifyMain.svelte';
 
     let mountReady = false;
 
@@ -55,11 +55,11 @@
 {#if mountReady && $indexVisible}
     <div class="index-container">
         {#if $indexVisible}
-            <TopNav />
+            <AppTopNav />
 
-            <VerifyMain />
+            <AppVerifyMain />
 
-            <Footer />
+            <AppFooter />
         {/if}
     </div>
 {/if}

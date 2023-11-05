@@ -35,7 +35,7 @@
 
                     setProgressBar(false);
                     dismissModal(() => {
-                        location.href = '/';
+                        location.href = '/app';
                     });
                 }
             }

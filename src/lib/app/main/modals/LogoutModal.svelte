@@ -16,7 +16,7 @@
         socket.emit('logout', () => {
             resetLocalTheme();
 
-            location.href = '/';
+            location.href = '/app';
         });
     }
 

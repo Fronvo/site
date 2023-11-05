@@ -18,7 +18,7 @@
 
                 resetLocalTheme();
 
-                location.href = '/';
+                location.href = '/app';
             } else {
                 // Token is invalid, remove
                 remove();

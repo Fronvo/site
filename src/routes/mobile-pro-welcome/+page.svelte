@@ -1,11 +1,11 @@
 <script lang="ts">
-    import TopNav from '$lib/index/TopNav.svelte';
     import { indexVisible } from 'stores/index';
     import { onMount } from 'svelte';
     import { currentToken, showLayout } from 'stores/main';
-    import Footer from '$lib/index/Footer.svelte';
     import { goto } from '$app/navigation';
-    import MobileProWelcomeMain from '$lib/index/MobileProWelcomeMain.svelte';
+    import MobileProWelcomeMain from '$lib/app/index/AppMobileProWelcomeMain.svelte';
+    import AppTopNav from '$lib/app/index/AppTopNav.svelte';
+    import AppFooter from '$lib/app/index/AppFooter.svelte';
 
     let mountReady = false;
 
@@ -33,11 +33,11 @@
 {#if mountReady && $indexVisible}
     <div class="mobile-container">
         {#if $indexVisible}
-            <TopNav />
+            <AppTopNav />
 
             <MobileProWelcomeMain />
 
-            <Footer />
+            <AppFooter />
         {/if}
     </div>
 {/if}

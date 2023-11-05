@@ -1,44 +1,30 @@
 <script lang="ts">
-    import { indexVisible, promotedToRVerify } from 'stores/index';
+    import { indexVisible } from 'stores/index';
     import { onMount } from 'svelte';
     import { getKey } from 'utilities/global';
-    import { cachedAccountData, showLayout } from 'stores/main';
+    import { cachedAccountData, currentToken, showLayout } from 'stores/main';
     import { redirectApp } from 'utilities/index';
     import { performLogin } from 'utilities/main';
-    import { goto } from '$app/navigation';
-    import AppResetVerifyMain from '$lib/app/index/AppResetVerifyMain.svelte';
     import AppTopNav from '$lib/app/index/AppTopNav.svelte';
+    import AppMain from '$lib/app/index/AppMain.svelte';
     import AppFooter from '$lib/app/index/AppFooter.svelte';
 
     let mountReady = false;
 
     onMount(async () => {
-        // No mobile
-        const val = window.navigator.userAgent.toLowerCase();
-
-        // Block access to mobile, get the app
-        if (
-            val.includes('android') ||
-            val.includes('iphone') ||
-            !$promotedToRVerify
-        ) {
-            goto('/', {
-                replaceState: true,
-            });
-
-            return;
-        }
-
-        // Remove for registered users
+        // Remove homepage for registered users
         if (getKey('token')) {
-            redirectApp();
+            const val = window.navigator.userAgent.toLowerCase();
 
-            goto('/', {
-                replaceState: true,
-            });
+            // Block access to mobile, get the app
+            if (!(val.includes('android') || val.includes('iphone'))) {
+                redirectApp();
 
-            await performLogin(getKey('token'), $cachedAccountData);
-            return;
+                $currentToken = getKey('token');
+
+                await performLogin(getKey('token'), $cachedAccountData);
+                return;
+            }
         }
 
         // Disable __layout in index
@@ -57,7 +43,7 @@
         {#if $indexVisible}
             <AppTopNav />
 
-            <AppResetVerifyMain />
+            <AppMain />
 
             <AppFooter />
         {/if}

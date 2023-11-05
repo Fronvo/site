@@ -5,81 +5,69 @@
     import { socket } from 'stores/main';
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
-    import { initSocket } from 'utilities/main';
 
-    let email: string;
+    let code: string;
+    let password: string;
     let errorMessage: string;
 
     let mountReady = false;
 
-    function join(): void {
-        if (!email) return;
+    function reset(): void {
+        if (!code || !password) return;
 
         socket.emit(
-            'resetPassword',
+            'resetPasswordVerify',
             {
-                email: email ? email : '',
+                code: code ? code : '',
+                password: password ? password : '',
             },
-            ({ err }) => {
+            async ({ err }) => {
                 if (err) {
                     errorMessage = err.msg;
-
                     return;
                 }
 
-                $promotedToRVerify = true;
+                $promotedToRVerify = false;
 
-                goto('/rverify', {
+                goto('/app', {
                     replaceState: true,
                 });
             }
         );
     }
 
-    function goBack(): void {
-        goto('/');
-    }
-
-    onMount(() => {
-        initSocket();
-
-        mountReady = true;
-    });
+    onMount(() => (mountReady = true));
 </script>
 
 {#if mountReady}
     <div class="main-container" in:fade={{ duration: 250 }}>
-        <h1 id="descriptor">Reset password</h1>
+        <h1 id="descriptor">Account setup</h1>
 
         <ErrorHeader {errorMessage} />
 
+        <h1 id="info">
+            Enter the 6-digit verification code sent to your email
+        </h1>
         <input
-            bind:value={email}
+            bind:value={code}
             class="modal-input"
             type="text"
-            placeholder="Email address"
+            placeholder="Verification code"
+            maxlength={6}
+        />
+
+        <h1 id="info">Choose your new password</h1>
+
+        <input
+            bind:value={password}
+            class="modal-input"
+            type="password"
+            maxlength={90}
         />
 
         <div class="choices-container">
-            <button id="reset" on:click={join}>Send email</button>
+            <button id="reset" on:click={reset}>Reset password</button>
         </div>
-
-        <h1 id="mixed" on:click={goBack} on:keydown={goBack}>
-            <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="32"
-                height="32"
-                viewBox="0 0 24 24"
-                ><g fill="var(--branding)"
-                    ><path
-                        d="M11.596 8.303L8.165 11.63a.499.499 0 0 0 0 .74l6.63 6.43c.414.401 1.205.158 1.205-.37v-5.723l-4.404-4.404Z"
-                    /><path
-                        d="M16 11.293V5.57c0-.528-.791-.771-1.205-.37l-2.482 2.406L16 11.293Z"
-                        opacity=".75"
-                    /></g
-                ></svg
-            >Back
-        </h1>
     </div>
 {/if}
 
@@ -104,6 +92,21 @@
         font-size: 2.5rem;
         margin: 0;
         color: var(--text);
+    }
+
+    #info {
+        margin: 0;
+        margin-top: 30px;
+        font-size: 1.2rem;
+    }
+
+    h1 {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
 
     input {
@@ -134,16 +137,7 @@
         box-shadow: 0 0 5px #0e62ff;
         font-size: 1.4rem;
         border-radius: 15px;
-        font-weight: 300;
-        color: white;
-    }
-
-    button:hover {
-        background: #0e62ff;
-        box-shadow: 0 0 5px #0e62ff;
-        font-size: 1.4rem;
-        border-radius: 15px;
-        font-weight: 300;
+        font-weight: 500;
         color: white;
     }
 
@@ -156,27 +150,7 @@
     }
 
     #reset {
-        width: 150px;
+        width: 200px;
         margin-right: 15px;
-    }
-
-    #mixed {
-        display: flex;
-        align-items: center;
-        font-size: 1.4rem;
-        margin: 0;
-        margin-top: 50px;
-        margin-right: 32px;
-        cursor: pointer;
-    }
-
-    #mixed:hover svg {
-        transform: translateX(-2.5px);
-    }
-
-    #mixed svg {
-        width: 36px;
-        height: 36px;
-        transition: 200ms;
     }
 </style>

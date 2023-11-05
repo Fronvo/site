@@ -16,10 +16,17 @@
 
 <style>
     .top-nav-container {
-        width: 100%;
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        min-width: 800px;
+        max-width: 50%;
         margin: auto;
         background: var(--i_primary);
         box-shadow: 0 0 20px var(--i_shadow);
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
         display: flex;
         align-items: center;
         padding: 15px;
@@ -47,6 +54,13 @@
     }
 
     @media screen and (max-width: 850px) {
+        .top-nav-container {
+            min-width: initial;
+            max-width: initial;
+            width: 100%;
+            border-radius: 0;
+        }
+
         #logo {
             font-size: 1.4rem;
         }

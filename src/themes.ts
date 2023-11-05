@@ -55,7 +55,7 @@ interface ThemingOptions {
 }
 
 export const defaultTheme: ThemingOptions = {
-    i_primary: 'rgb(22, 22, 22)',
+    i_primary: 'rgb(22, 22, 22, 0.25)',
     i_bg: 'rgb(27, 27, 27, 0.5)',
     i_shadow: 'rgb(15, 15, 15)',
 
@@ -101,7 +101,7 @@ export const defaultTheme: ThemingOptions = {
 };
 
 export const whiteTheme: ThemingOptions = {
-    i_primary: 'rgb(245, 245, 245)',
+    i_primary: 'rgb(245, 245, 245, 0.25)',
     i_bg: 'rgb(240, 240, 240)',
     i_shadow: 'rgb(210, 210, 210)',
 

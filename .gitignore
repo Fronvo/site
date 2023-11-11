@@ -1,0 +1,10 @@
+# Node
+node_modules/
+.DS_Store
+
+# SvelteKit
+.svelte-kit/
+.vercel/
+
+# Other
+.env

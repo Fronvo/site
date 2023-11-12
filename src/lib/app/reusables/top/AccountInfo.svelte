@@ -4,11 +4,9 @@
     import { ourData } from 'stores/profile';
     import { onMount } from 'svelte';
     import { showDropdown } from 'utilities/main';
-    import HomeButton from './HomeButton.svelte';
 
     export let preview = false;
     export let editable = false;
-    export let editableStatus: string = '';
     export let editableCallback = () => {};
 
     let element: HTMLInputElement;
@@ -117,6 +115,7 @@
     #status {
         margin: 0;
         font-size: 0.9rem;
+        font-weight: 600;
         transform: translateX(-10px);
         white-space: nowrap;
         max-width: 100px;

@@ -67,31 +67,37 @@
     }
 </script>
 
-<img
-    class={`${editable ? 'editable' : ''} ${mini ? 'mini' : ''} ${
-        preview ? 'preview' : ''
-    }`}
-    src={banner ? banner : '/images/banner.png'}
-    alt="Banner"
-    draggable={false}
-    on:click={changeBanner}
-    on:keydown={changeBanner}
-/>
+{#if $ourData.banner}
+    <img
+        class={`${editable ? 'editable' : ''} ${mini ? 'mini' : ''} ${
+            preview ? 'preview' : ''
+        }`}
+        src={banner ? banner : ''}
+        alt="Banner"
+        draggable={false}
+        on:click={changeBanner}
+        on:keydown={changeBanner}
+    />
+{:else}
+    <span
+        class={`${editable ? 'editable' : ''} ${mini ? 'mini' : ''} ${
+            preview ? 'preview' : ''
+        }`}
+    />
+{/if}
 
 <style>
-    img {
+    img,
+    span {
         width: 100%;
         height: 185px;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
         transition: 150ms;
+        background: rgb(0, 0, 0);
     }
 
     .mini {
-        width: 350px;
-        height: 120px;
-        border-top-left-radius: 10px;
-        border-top-right-radius: 10px;
+        width: 310px;
+        height: 65px;
     }
 
     .editable {

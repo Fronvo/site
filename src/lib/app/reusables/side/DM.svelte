@@ -7,6 +7,7 @@
         currentRoomId,
         currentRoomLoaded,
         currentRoomMessages,
+        dmsFilter,
         roomsList,
     } from 'stores/rooms';
     import { onDestroy, onMount } from 'svelte';
@@ -111,40 +112,48 @@
         $currentRoomId != dmData.roomId ? dmData.unreadCount : 0;
 </script>
 
-<div
-    class={`dm-container ${$currentRoomId == dmData.roomId ? 'active' : ''}`}
-    on:click={enterRoom}
-    on:keydown={enterRoom}
->
-    <div class="badge-container">
-        {#if dmUser?.avatar}
-            <img
-                id="avatar"
-                src={dmUser?.avatar}
-                alt={`${dmUser?.username}\'s avatar'`}
-            />
-        {:else}
-            <img
-                src="/images/avatar.svg"
-                draggable={false}
-                alt="Avatar"
-                id="avatar"
-            />
-        {/if}
+{#if dmUser}
+    {#if $dmsFilter.trim().length == 0 || dmUser.username
+            ?.toLowerCase()
+            .includes($dmsFilter.toLowerCase()) || dmUser.profileId?.includes($dmsFilter.toLowerCase())}
+        <div
+            class={`dm-container ${
+                $currentRoomId == dmData.roomId ? 'active' : ''
+            }`}
+            on:click={enterRoom}
+            on:keydown={enterRoom}
+        >
+            <div class="badge-container">
+                {#if dmUser?.avatar}
+                    <img
+                        id="avatar"
+                        src={dmUser?.avatar}
+                        alt={`${dmUser?.username}\'s avatar'`}
+                    />
+                {:else}
+                    <img
+                        src="/images/avatar.svg"
+                        draggable={false}
+                        alt="Avatar"
+                        id="avatar"
+                    />
+                {/if}
 
-        <div bind:this={indicator} class="indicator" />
-    </div>
+                <div bind:this={indicator} class="indicator" />
+            </div>
 
-    <div class="info-container">
-        <h1 bind:this={nameElement} id="name">
-            {dmUser?.username ? dmUser.username : 'Deleted user'}
-        </h1>
-    </div>
+            <div class="info-container">
+                <h1 bind:this={nameElement} id="name">
+                    {dmUser?.username ? dmUser.username : 'Deleted user'}
+                </h1>
+            </div>
 
-    {#if dmData.unreadCount > 0 && $currentRoomId != dmData.roomId}
-        <h1 id="unread">{dmData.unreadCount}</h1>
+            {#if dmData.unreadCount > 0 && $currentRoomId != dmData.roomId}
+                <h1 id="unread">{dmData.unreadCount}</h1>
+            {/if}
+        </div>
     {/if}
-</div>
+{/if}
 
 <style>
     .dm-container {
@@ -152,7 +161,6 @@
         display: flex;
         align-items: center;
         padding: 5px;
-        margin-top: 4px;
         cursor: pointer;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -160,20 +168,20 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        border-radius: 10px;
-        transition: 150ms;
+        border-radius: 5px;
+        margin-bottom: 5px;
     }
 
     .dm-container:hover {
-        background: var(--primary);
+        background: var(--secondary);
     }
 
     .active {
-        background: var(--primary);
+        background: var(--tertiary);
     }
 
     .active:hover {
-        background: var(--secondary);
+        background: var(--tertiary);
     }
 
     .info-container {
@@ -198,7 +206,7 @@
     }
 
     #name {
-        font-size: 1rem;
+        font-size: 0.95rem;
         margin: 0;
         white-space: pre-wrap;
         display: -webkit-box;
@@ -207,6 +215,7 @@
         -webkit-box-orient: vertical;
         letter-spacing: 0.1px;
         font-weight: 500;
+        color: rgb(179, 180, 184);
     }
 
     .mark {
@@ -214,8 +223,8 @@
     }
 
     #avatar {
-        width: 44px;
-        height: 44px;
+        width: 36px;
+        height: 36px;
         border-radius: 30px;
     }
 
@@ -229,20 +238,5 @@
         padding: 5px;
         color: white;
         font-weight: 900;
-    }
-
-    @media screen and (max-width: 1250px) {
-        .dm-container {
-            width: max-content;
-            justify-content: center;
-        }
-
-        .info-container {
-            display: none;
-        }
-
-        #unread {
-            display: none;
-        }
     }
 </style>

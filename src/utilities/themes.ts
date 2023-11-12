@@ -20,9 +20,6 @@ export function applyThemeLocally(
     bD: string,
     bDD: string
 ): void {
-    defaultTheme.branding = `#${bD}`;
-    defaultTheme.branding_darken = `#${bDD}`;
-
     currentTheme.set(undefined);
     currentTheme.set(defaultTheme);
 
@@ -43,13 +40,6 @@ export function applyThemeLocally(
             ? `#${bDD}`
             : `#${bDW}`
     );
-}
-
-export function checkAndApplyLocalTheme(): void {
-    if (!getKey('bW')) return;
-
-    defaultTheme.branding = `#${getKey('bD')}`;
-    defaultTheme.branding_darken = `#${getKey('bDD')}`;
 }
 
 export function resetLocalTheme(): void {

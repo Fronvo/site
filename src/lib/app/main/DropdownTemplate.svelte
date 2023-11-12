@@ -33,8 +33,7 @@
         display: flex;
         flex-direction: column;
         justify-content: start;
-        border: 2px solid var(--secondary);
-        border-radius: 10px;
+        border-radius: 5px;
         overflow: hidden;
     }
 

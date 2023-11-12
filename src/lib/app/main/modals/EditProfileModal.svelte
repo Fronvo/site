@@ -97,12 +97,7 @@
     <ModalTemplatePro {data}>
         <div class="profile-container">
             <ProfileBanner editable={true} bind:banner={$banner} />
-            <ProfileAvatar
-                profileId={profileData.profileId}
-                editable={true}
-                bind:avatar={$avatar}
-                isPRO={profileData.isPRO}
-            />
+            <ProfileAvatar editable={true} bind:avatar={$avatar} />
 
             <div class="secondary-container">
                 <ProfileIdentifier
@@ -110,7 +105,7 @@
                     bind:profileId={$profileId}
                     bind:username={$username}
                 />
-                <ProfileBio editable={true} bind:bio={$bio} />
+                <ProfileBio bind:bio={$bio} />
             </div>
         </div>
     </ModalTemplatePro>
@@ -118,12 +113,7 @@
     <ModalTemplate {data}>
         <div class="profile-container">
             <ProfileBanner editable={true} bind:banner={$banner} />
-            <ProfileAvatar
-                profileId={profileData.profileId}
-                editable={true}
-                bind:avatar={$avatar}
-                isPRO={profileData.isPRO}
-            />
+            <ProfileAvatar editable={true} bind:avatar={$avatar} />
 
             <div class="secondary-container">
                 <ProfileIdentifier
@@ -131,7 +121,7 @@
                     bind:profileId={$profileId}
                     bind:username={$username}
                 />
-                <ProfileBio editable={true} bind:bio={$bio} />
+                <ProfileBio bind:bio={$bio} />
             </div>
         </div>
     </ModalTemplate>

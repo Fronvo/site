@@ -9,6 +9,7 @@ import {
     currentRoomId,
     currentRoomLoaded,
     sendingImage as sendingImageStore,
+    dmsList,
 } from 'stores/rooms';
 import {
     socket,
@@ -56,7 +57,22 @@ export async function loadRoomsData(): Promise<Room[]> {
     // Load convos data
     const convos = await fetchConvos();
 
-    roomsList.set(convos);
+    const dms: Room[] = [];
+    const rooms: Room[] = [];
+
+    for (const convoObj in convos) {
+        const convo = convos[convoObj];
+
+        if (convo.isDM) {
+            dms.push(convo);
+        } else {
+            rooms.push(convo);
+        }
+    }
+
+    // Re-init because we can't dynamically update
+    dmsList.set(dms);
+    roomsList.set(rooms);
 
     return convos;
 }

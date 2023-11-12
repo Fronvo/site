@@ -21,7 +21,7 @@
     }
 
     const data: ModalData = {
-        title: 'Logout from Fronvo?',
+        title: 'Logout from Fronvo',
         actions: [
             {
                 title: 'Logout',

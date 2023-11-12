@@ -1,16 +1,10 @@
 <script lang="ts">
     import Dropdown from './Dropdown.svelte';
-    import ProgressBar from './ProgressBar.svelte';
     import Modal from './Modal.svelte';
-    import { fade, scale } from 'svelte/transition';
+    import { fade } from 'svelte/transition';
     import AccountInfo from '../reusables/top/AccountInfo.svelte';
-    import RoomInfo from './rooms/RoomInfo.svelte';
-    import TopOptions from '../reusables/top/TopOptions.svelte';
     import MessagesList from '../reusables/side/MessagesList.svelte';
-    import RoomChat from './rooms/RoomChat.svelte';
-    import RoomSend from './rooms/RoomSend.svelte';
-    import { currentRoomId, roomsList } from 'stores/rooms';
-    import HomePosts from './home/HomePosts.svelte';
+    import { roomsList } from 'stores/rooms';
     import {
         darkTheme,
         disabledIn30,
@@ -27,7 +21,8 @@
     import DownloadFronvoButton from '../reusables/side/DownloadFronvoButton.svelte';
     import SearchBar from '../reusables/all/SearchBar.svelte';
     import SecondaryOptions from '../reusables/top/SecondaryOptions.svelte';
-    import { sineIn, sineOut } from 'svelte/easing';
+    import { sineOut } from 'svelte/easing';
+    import ServersList from '../reusables/side/ServersList.svelte';
 
     onMount(() => {
         socket.on('roomAdded', async () => ($roomsList = await fetchConvos()));
@@ -78,13 +73,12 @@
 <div class="main-container" in:fade={{ duration: 300, easing: sineOut }}>
     <div class="first-container">
         <HomeButton />
+        <ServersList />
         <CreateServerButton />
         <DownloadFronvoButton />
     </div>
 
     <div class="second-container">
-        <SearchBar />
-
         <span class="seperator" />
 
         <SecondaryOptions />

@@ -48,7 +48,7 @@
         flex-direction: column;
         align-items: center;
         overflow: hidden;
-        border-radius: 10px;
+        border-radius: 5px;
         min-height: 200px;
         max-height: 95%;
         background: var(--modal_content_bg);

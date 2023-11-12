@@ -86,9 +86,8 @@
 
         actions: [
             {
-                title: 'Add account',
+                title: 'Login',
                 callback: login,
-                primary: true,
             },
             {
                 title: 'Back',
@@ -124,6 +123,7 @@
         padding: 5px;
         padding-left: 10px;
         padding-right: 10px;
+        background: var(--bg);
         color: var(--text);
         border: 2px solid transparent;
         transition: 150ms border;

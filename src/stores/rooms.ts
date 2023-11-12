@@ -2,6 +2,9 @@ import type { FronvoAccount, RoomMessage, Room } from 'interfaces/all';
 import { writable, type Writable } from 'svelte/store';
 
 /****************************** Room ******************************/
+export const dmsList: Writable<Room[]> = writable([]);
+export const dmsFilter: Writable<string> = writable('');
+
 export const roomsList: Writable<Room[]> = writable([]);
 
 export const currentRoomId: Writable<string> = writable();

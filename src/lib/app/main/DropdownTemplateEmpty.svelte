@@ -7,9 +7,9 @@
         display: flex;
         flex-direction: column;
         justify-content: start;
-        border: 1px solid var(--primary);
-        border-radius: 10px;
-        background: var(--bg);
+        border-radius: 5px;
+        background: var(--primary);
+        box-shadow: 0 0 10px var(--bg);
         overflow: hidden;
     }
 </style>

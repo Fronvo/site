@@ -80,8 +80,8 @@
         cursor: default;
         width: 75%;
         padding: 8px;
-        border-radius: 5px;
-        margin-bottom: 10px;
+        background: var(--bg);
+        border-top: 2px solid var(--primary);
     }
 
     div h1 {
@@ -97,22 +97,22 @@
     button {
         font-size: 1rem;
         box-shadow: none;
-        transition: 150ms;
+        transition: 125ms;
+        background: transparent;
     }
 
     #login {
-        background: var(--branding);
         color: white;
         margin-right: 10px;
+        background: var(--branding);
     }
 
     #login:hover {
-        background: var(--branding_darken);
+        filter: brightness(90%);
     }
 
     #remove:hover {
         color: red;
-        background: var(--button);
     }
 
     #avatar {
@@ -147,7 +147,8 @@
 
     #indicator {
         text-align: start;
-        font-size: 1rem;
+        font-size: 0.8rem;
+        font-weight: 700;
         color: var(--branding);
         display: -webkit-box;
         overflow: hidden;

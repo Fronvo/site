@@ -49,12 +49,7 @@
 </script>
 
 <ModalTemplate {data}>
-    <AccountInfo
-        preview
-        editable
-        bind:editableStatus={$status}
-        editableCallback={setStatus}
-    />
+    <AccountInfo preview editable editableCallback={setStatus} />
 
     <InfoHeader
         marginLeft={'55px'}

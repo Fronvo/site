@@ -13,7 +13,6 @@ interface ThemingOptions {
 
     // Branding color
     branding: string;
-    branding_darken: string;
 
     // Background color
     bg: string;
@@ -64,8 +63,7 @@ export const defaultTheme: ThemingOptions = {
     secondary: 'rgb(43, 45, 49)',
     tertiary: 'rgb(49, 51, 56)',
 
-    branding: 'rgb(90, 150, 255)',
-    branding_darken: 'rgb(90, 130, 255)',
+    branding: 'rgb(88, 101, 242)',
 
     bg: 'rgb(20, 20, 20)',
     bg_trans: 'rgb(20, 20, 20, 75%)',

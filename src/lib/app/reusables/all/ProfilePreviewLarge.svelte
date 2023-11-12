@@ -19,13 +19,7 @@
 
 <div class={`profile-container ${preview ? 'preview' : ''}`}>
     <ProfileBanner {preview} {editable} banner={profileData?.banner} />
-    <ProfileAvatar
-        profileId={profileData?.profileId}
-        {preview}
-        {editable}
-        avatar={profileData?.avatar}
-        isPRO={profileData?.isPRO}
-    />
+    <ProfileAvatar {preview} {editable} avatar={profileData?.avatar} />
 
     <div class={`secondary-container ${preview ? 'preview' : ''}`}>
         <ProfileIdentifier
@@ -33,7 +27,7 @@
             profileId={profileData?.profileId}
             username={profileData?.username}
         />
-        <ProfileBio {editable} bio={profileData?.bio} />
+        <ProfileBio bio={profileData?.bio} />
 
         {#if !preview && accessible}
             <ProfilePosts data={profileData} small />

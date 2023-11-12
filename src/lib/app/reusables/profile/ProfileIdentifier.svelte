@@ -30,7 +30,7 @@
 
         <div class="secondary-container">
             <h1 id="identifier">
-                @{profileId ? profileId : 'deleted user'}
+                {profileId ? profileId : 'deleted user'}
             </h1>
         </div>
     </div>
@@ -41,6 +41,7 @@
         display: flex;
         align-items: center;
         justify-content: flex-start;
+        padding-top: 10px;
         padding-bottom: 10px;
         margin-left: 20px;
     }
@@ -69,13 +70,14 @@
     #username {
         font-size: 1.5rem;
         margin: 0;
-        margin-right: 10px;
-        margin-left: 10px;
+        margin-left: 5px;
+        margin-right: 5px;
         color: var(--text);
         display: -webkit-box;
         overflow: hidden;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
+        font-weight: 600;
     }
 
     .mini #username {
@@ -90,8 +92,9 @@
     #identifier {
         font-size: 1.05rem;
         margin: 0;
-        margin-right: 10px;
-        margin-left: 10px;
+        font-weight: 600;
+        margin-right: 5px;
+        margin-left: 5px;
         display: -webkit-box;
         overflow: hidden;
         -webkit-line-clamp: 1;

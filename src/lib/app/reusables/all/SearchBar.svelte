@@ -1,5 +1,13 @@
+<script lang="ts">
+    import { dmsFilter } from 'stores/rooms';
+</script>
+
 <div class="search-container">
-    <h1>Find or start a conversation</h1>
+    <input
+        maxlength={20}
+        bind:value={$dmsFilter}
+        placeholder="Search for people"
+    />
 </div>
 
 <style>
@@ -9,19 +17,25 @@
         align-items: center;
         background: var(--bg);
         border-radius: 5px;
-        width: 93%;
+        width: 85%;
         min-height: 30px;
         margin: 10px;
-        margin-top: 15px;
+        margin-bottom: 0;
+        margin-top: 10px;
         cursor: pointer;
         text-align: center;
         user-select: none;
     }
 
-    .search-container h1 {
+    .search-container input {
         margin: 0;
         font-size: 0.9rem;
-        margin-left: 10px;
+        margin-left: 5px;
+        background: var(--bg);
+        color: white;
+    }
+
+    .search-container input::placeholder {
         color: rgb(129, 133, 141);
     }
 </style>

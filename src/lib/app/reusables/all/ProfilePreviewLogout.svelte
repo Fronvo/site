@@ -27,7 +27,7 @@
     {/if}
 
     <div class="bottom-container">
-        <h1 id="username">{profileData?.username}</h1>
+        <h1 id="username">{profileData?.profileId}</h1>
     </div>
 </div>
 
@@ -45,6 +45,7 @@
         margin-bottom: 10px;
         border: 2px solid var(--primary);
         border-radius: 10px;
+        background: var(--bg);
     }
 
     div h1 {

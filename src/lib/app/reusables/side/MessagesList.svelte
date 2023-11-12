@@ -1,14 +1,9 @@
 <script lang="ts">
     import { fly, fade } from 'svelte/transition';
     import Dm from './DM.svelte';
-    import { currentRoomId, roomsList } from 'stores/rooms';
-    import { onMount } from 'svelte';
-    import { writable, type Writable } from 'svelte/store';
-    import type { Room as RoomType } from 'interfaces/all';
-    import Room from './Room.svelte';
-    import CreateRoomButton from './CreateServerButton.svelte';
-    import CreateServerButton from './CreateServerButton.svelte';
+    import { dmsList } from 'stores/rooms';
     import RoomPlaceholder from '../rooms/RoomPlaceholder.svelte';
+    import SearchBar from '../all/SearchBar.svelte';
 </script>
 
 <div
@@ -20,11 +15,20 @@
         <h1>Direct messages</h1>
     </div>
 
+    {#if $dmsList.length > 0}
+        <SearchBar />
+    {/if}
+
     <div class="list-container">
-        {#each { length: 10 } as _, i}
-            <RoomPlaceholder opacity={1.2 - 1 + (1 - (i + 2) / 10)} />
-            <!-- <RoomPlaceholder opacity={1} /> -->
-        {/each}
+        {#if $dmsList.length == 0}
+            {#each { length: 20 } as _, i}
+                <RoomPlaceholder opacity={1.4 - 1 + (1 - (i + 2) / 10)} />
+            {/each}
+        {:else}
+            {#each $dmsList as dmData}
+                <Dm {dmData} />
+            {/each}
+        {/if}
     </div>
 </div>
 
@@ -33,10 +37,11 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 235px;
+        width: 240px;
         height: 100%;
         margin-top: 5px;
         flex: 1;
+        overflow-y: auto;
     }
 
     .dm-container {
@@ -68,5 +73,6 @@
         margin-top: 10px;
         background: var(--primary);
         border-bottom-left-radius: 10px;
+        overflow: hidden;
     }
 </style>

@@ -1,6 +1,7 @@
 <script lang="ts">
     import { modalAnimDuration, type ModalData } from 'stores/modals';
-    import { fly, scale } from 'svelte/transition';
+    import { bounceInOut } from 'svelte/easing';
+    import { scale } from 'svelte/transition';
 
     export let data: ModalData;
 
@@ -11,7 +12,11 @@
 
 <div
     class={`modal-container ${!data.title ? 'title-less' : ''}`}
-    transition:scale={{ duration: modalAnimDuration, start: 0.85 }}
+    transition:scale={{
+        duration: modalAnimDuration * 0.5,
+        start: 0.8,
+        easing: bounceInOut,
+    }}
 >
     {#if data.title}
         <h1 id="title">{data.title}</h1>
@@ -45,15 +50,17 @@
         flex-direction: column;
         align-items: center;
         overflow: hidden;
-        border-radius: 10px;
+        border-radius: 5px;
         min-height: 200px;
         max-height: 95%;
-        background: var(--modal_content_bg);
+        background: var(--primary);
         border: 1px solid var(--bg);
+        border-radius: 5px;
         min-width: 550px;
         max-width: 90vw;
         overflow-x: hidden;
-        padding-top: 5px;
+        padding-top: 20px;
+        padding-bottom: 20px;
     }
 
     .title-less {
@@ -62,6 +69,7 @@
 
     #title {
         font-size: 1.6rem;
+        font-weight: 600;
         margin: 0;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -99,6 +107,7 @@
     button {
         width: 150px;
         font-size: 1.05rem;
+        font-weight: 600;
         margin-left: 10px;
         margin-right: 10px;
         background: transparent;
@@ -114,12 +123,7 @@
 
     button:hover {
         opacity: 1;
-        background: var(--secondary);
-    }
-
-    button:active {
-        transform: scale(0.975);
-        opacity: 0.5;
+        text-decoration: underline;
     }
 
     .danger {
@@ -129,6 +133,7 @@
 
     .danger:hover {
         background: rgb(187, 4, 4);
+        text-decoration: none;
     }
 
     .primary {

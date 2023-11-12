@@ -1,11 +1,13 @@
 <script lang="ts">
-    export let bio: string;
+    import Time from 'svelte-time/src/Time.svelte';
+
+    export let since: string;
 </script>
 
 <div class="since-container">
-    <h1 id="top">About me</h1>
+    <h1 id="top">Fronvo member since</h1>
 
-    <h1 id="bio">{bio}</h1>
+    <h1 id="since"><Time timestamp={since} /></h1>
 </div>
 
 <style>
@@ -25,7 +27,7 @@
         margin-bottom: 3px;
     }
 
-    .since-container #bio {
+    .since-container #since {
         margin: 0;
         font-size: 0.85rem;
         margin-bottom: 10px;

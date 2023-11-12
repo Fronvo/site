@@ -43,9 +43,8 @@
         width: 48px;
         height: 48px;
         padding: 10px;
-        margin-top: 10px;
         background: var(--secondary);
-        border-radius: 20px;
+        border-radius: 30px;
         cursor: pointer;
         pointer-events: all;
         z-index: 2;

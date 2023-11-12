@@ -13,13 +13,13 @@
 {#if mountReady}
     <div class="loading-container">
         <img
-            in:fly={{ y: 100, duration: 500, easing: sineInOut }}
+            in:fade={{ duration: 250 }}
             src="favicon.png"
             alt="Fronvo logo"
             draggable={false}
         />
 
-        <h1 in:fade={{ duration: 500 }}>By Fronvo</h1>
+        <h1 in:fade={{ duration: 250 }}>By Fronvo</h1>
     </div>
 {/if}
 
@@ -41,11 +41,11 @@
         top: 0;
         bottom: 0;
         margin: auto;
-        width: 128px;
-        height: 128px;
+        width: 110px;
+        height: 110px;
         border-radius: 30px;
         animation-name: glowing;
-        animation-duration: 1250ms;
+        animation-duration: 750ms;
         animation-fill-mode: both;
         animation-iteration-count: infinite;
         animation-direction: alternate-reverse;
@@ -54,6 +54,7 @@
     h1 {
         position: fixed;
         bottom: 0;
+        font-size: 1.3rem;
     }
 
     @media screen and (max-width: 850px) {
@@ -63,7 +64,7 @@
         }
 
         h1 {
-            font-size: 1.5rem;
+            font-size: 1.1rem;
         }
     }
 
@@ -74,13 +75,13 @@
         }
 
         h1 {
-            font-size: 1.2rem;
+            font-size: 0.9rem;
         }
     }
 
     @keyframes glowing {
         0% {
-            box-shadow: 0 0 25px var(--pro);
+            box-shadow: 0 0 15px var(--pro);
         }
     }
 </style>

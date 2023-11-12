@@ -9,6 +9,7 @@ interface ThemingOptions {
     // Material-like colors
     primary: string;
     secondary: string;
+    tertiary: string;
 
     // Branding color
     branding: string;
@@ -59,8 +60,9 @@ export const defaultTheme: ThemingOptions = {
     i_bg: 'rgb(27, 27, 27, 0.5)',
     i_shadow: 'rgb(15, 15, 15)',
 
-    primary: 'rgb(30, 30, 30)',
-    secondary: 'rgb(45, 45, 45)',
+    primary: 'rgb(30, 31, 34)',
+    secondary: 'rgb(43, 45, 49)',
+    tertiary: 'rgb(49, 51, 56)',
 
     branding: 'rgb(90, 150, 255)',
     branding_darken: 'rgb(90, 130, 255)',
@@ -98,51 +100,6 @@ export const defaultTheme: ThemingOptions = {
     scrollbar: 'rgb(60, 60, 60)',
 
     hover_darken: 'rgb(0, 0, 0, 0.1)',
-};
-
-export const whiteTheme: ThemingOptions = {
-    i_primary: 'rgb(245, 245, 245, 0.25)',
-    i_bg: 'rgb(240, 240, 240)',
-    i_shadow: 'rgb(210, 210, 210)',
-
-    primary: 'rgb(235, 235, 235)',
-    secondary: 'rgb(225, 225, 225)',
-
-    branding: 'rgb(0, 130, 255)',
-    branding_darken: 'rgb(0, 110, 255)',
-
-    bg: 'rgb(250, 250, 250)',
-    bg_trans: 'rgb(250, 250, 250, 75%)',
-
-    text: 'rgb(40, 40, 40)',
-    text_gray: 'rgb(100, 100, 100)',
-    text_gray_secondary: 'rgb(100, 100, 100)',
-
-    button: 'rgb(240, 240, 240)',
-
-    message_shadow: 'rgb(190, 190, 190)',
-
-    post: 'rgb(225, 225, 225, 20%)',
-
-    // Modals
-    modal_bg: 'rgba(30, 30, 30, 75%)',
-
-    modal_content_bg: 'rgb(250, 250, 250)',
-
-    modal_input_bg: 'rgb(240, 240, 240)',
-
-    modal_checkbox_primary: 'var(--text)',
-    modal_checkbox_secondary: 'rgb(90, 90, 90)',
-
-    modal_header_size: '1.2rem',
-    modal_input_size: '1.2rem',
-
-    pro: 'rgb(0, 200, 200)',
-    pro_darken: 'rgb(0, 185, 185)',
-
-    scrollbar: 'rgb(180, 180, 180)',
-
-    hover_darken: 'rgb(160, 160, 160, 0.1)',
 };
 
 export const currentTheme: Writable<ThemingOptions> = writable(defaultTheme);

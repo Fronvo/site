@@ -42,13 +42,8 @@ import {
     currentRoomMessages,
 } from 'stores/rooms';
 import { loadHomePosts } from './home';
-import {
-    applyThemeLocally,
-    checkAndApplyLocalTheme,
-    loadThemes,
-    resetLocalTheme,
-} from './themes';
-import { currentTheme, defaultTheme, whiteTheme } from '../themes';
+import { applyThemeLocally, loadThemes, resetLocalTheme } from './themes';
+import { currentTheme, defaultTheme } from '../themes';
 
 // Preserve modal state
 let modalStateVisible: boolean;
@@ -152,11 +147,7 @@ export async function performLogin(
 
                     currentTheme.set(undefined);
 
-                    currentTheme.set(
-                        !getKey('darkTheme') || getKey('darkTheme') == 'true'
-                            ? defaultTheme
-                            : whiteTheme
-                    );
+                    currentTheme.set(defaultTheme);
                 }
             });
 

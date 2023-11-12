@@ -9,7 +9,6 @@
 <style>
     .options-container {
         height: 100%;
-        border-right: 1px solid var(--primary);
         width: 275px;
     }
 </style>

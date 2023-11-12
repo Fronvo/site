@@ -239,7 +239,6 @@
         flex-direction: column;
         align-items: center;
         width: 275px;
-        border-left: 1px solid var(--primary);
         height: 100vh;
         z-index: 1;
     }
@@ -250,7 +249,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        border-bottom: 1px solid var(--primary);
     }
 
     #content {

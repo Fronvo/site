@@ -10,7 +10,7 @@
     } from 'utilities/main';
     import { getKey } from 'utilities/global';
     import '../app.css';
-    import { currentTheme, defaultTheme, whiteTheme } from '../themes';
+    import { currentTheme, defaultTheme } from '../themes';
     import FronvoLoading from '$lib/app/FronvoLoading.svelte';
     import { fade } from 'svelte/transition';
     import {
@@ -45,13 +45,10 @@
                 return;
             }
 
-            currentTheme.set(dark ? defaultTheme : whiteTheme);
+            currentTheme.set(defaultTheme);
 
             // Hacky but works for background color
-            document.documentElement.style.setProperty(
-                '--bg',
-                dark ? defaultTheme.bg : whiteTheme.bg
-            );
+            document.documentElement.style.setProperty('--bg', defaultTheme.bg);
         });
     }
 

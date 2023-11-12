@@ -31,217 +31,115 @@
 
         $targetProfileModal = $ourData;
 
-        showDropdown(DropdownTypes.Profile, container, 'bottom', 30, 25);
+        showDropdown(DropdownTypes.Profile, container, 'top');
 
         $dropdownForAccountInfo = true;
     }
 </script>
 
-<div
-    class={`account-container ${preview ? 'preview' : ''} ${
-        editable ? 'editable' : ''
-    }`}
->
-    {#if !preview && !editable}
-        <HomeButton />
-    {/if}
-
+<div class="account-container">
     <div
-        class="info-container"
-        bind:this={container}
         on:click={showProfileDropdown}
         on:keydown={showProfileDropdown}
+        class="main-container"
+        bind:this={container}
     >
-        {#if $ourData.avatar}
-            <img alt="Avatar" src={$ourData.avatar} draggable={false} />
-        {:else}
-            <img
-                src="/images/avatar.svg"
-                draggable={false}
-                alt="Avatar"
-                id="avatar"
-            />
-        {/if}
+        <img
+            src={$ourData.avatar ? $ourData.avatar : '/images/avatar.svg'}
+            draggable={false}
+            alt={`${$ourData.profileId}\'s avatar'`}
+        />
 
-        <div class="wrapper">
+        <span class="indicator" />
+
+        <div class="name-container">
             <h1 id="name">{$ourData.username}</h1>
-
-            {#if $ourData.status && !editable}
-                <h1 id="status">{$ourData.status}</h1>
-            {/if}
-
-            {#if editable}
-                <input
-                    bind:this={element}
-                    bind:value={editableStatus}
-                    maxlength={20}
-                    class="modal-input"
-                />
-            {/if}
+            <h1 id="status">Online</h1>
         </div>
     </div>
+
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="32"
+        height="32"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        ><path
+            fill-rule="evenodd"
+            d="M12.428 2c-1.114 0-2.129.6-4.157 1.802l-.686.406C5.555 5.41 4.542 6.011 3.985 7c-.557.99-.557 2.19-.557 4.594v.812c0 2.403 0 3.605.557 4.594c.557.99 1.57 1.59 3.6 2.791l.686.407C10.299 21.399 11.314 22 12.428 22c1.114 0 2.128-.6 4.157-1.802l.686-.407c2.028-1.2 3.043-1.802 3.6-2.791c.557-.99.557-2.19.557-4.594v-.812c0-2.403 0-3.605-.557-4.594c-.557-.99-1.572-1.59-3.6-2.792l-.686-.406C14.555 2.601 13.542 2 12.428 2Zm-3.75 10a3.75 3.75 0 1 1 7.5 0a3.75 3.75 0 0 1-7.5 0Z"
+            clip-rule="evenodd"
+        /></svg
+    >
 </div>
 
 <style>
     .account-container {
         display: flex;
         align-items: center;
-        padding: 5px;
-        padding-left: 10px;
-        width: 275px;
-        border-right: 1px solid var(--primary);
-        border-bottom: 1px solid var(--primary);
-        height: 65px;
+        width: 235px;
+        background: var(--primary);
         z-index: 1;
         transition: 150ms;
-    }
-
-    .preview {
-        border: none;
-        box-shadow: none;
-        cursor: default;
-    }
-
-    .preview .info-container {
-        text-align: start;
-        margin-left: 5px;
-    }
-
-    .preview img {
-        width: 38px;
-        height: 38px;
-    }
-
-    .editable {
-        width: max-content;
-    }
-
-    img,
-    svg {
-        width: 38px;
-        min-width: 38px;
-        height: 38px;
-        min-height: 38px;
-        margin-right: 5px;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
+        padding: 5px;
         user-select: none;
-        border-radius: 30px;
     }
 
-    .info-container {
+    .main-container {
         display: flex;
         align-items: center;
-        height: 100%;
+        padding: 5px;
+        border-radius: 3px;
         flex: 1;
-        max-width: 225px;
-        border-radius: 10px;
-        padding: 7px;
-        margin: 10px;
-        margin-right: 0;
+        margin-right: 10px;
         cursor: pointer;
     }
 
-    .preview .info-container {
-        max-width: 100%;
-        margin: 0;
-        padding: 0;
-        margin-right: 80px;
-        cursor: default;
+    .main-container:hover {
+        background: var(--secondary);
     }
 
-    .info-container:hover {
-        background: var(--primary);
+    img {
+        width: 36px;
+        height: 36px;
+        border-radius: 30px;
     }
 
-    .preview .info-container:hover {
-        background: transparent;
+    .indicator {
+        width: 18px;
+        height: 18px;
+        background: rgb(72, 202, 113);
+        border-radius: 50px;
+        border: 4px solid var(--primary);
+        transform: translateY(12px) translateX(-16px);
     }
 
-    .wrapper {
-        display: flex;
-        flex-direction: column;
-    }
-
-    #name {
-        margin: 0;
-        font-size: 1.1rem;
-        overflow: hidden;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
-
-    .preview #name {
-        margin-left: 5px;
-    }
-
+    #name,
     #status {
         margin: 0;
         font-size: 0.9rem;
-        display: -webkit-box;
+        transform: translateX(-10px);
+        white-space: nowrap;
+        max-width: 100px;
         overflow: hidden;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-        color: var(--branding);
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        font-weight: 600;
+        text-overflow: ellipsis;
     }
 
-    input {
-        font-size: 1.15rem;
-        width: 300px;
+    #status {
+        font-size: 0.8rem;
+        color: rgb(153, 158, 168);
     }
 
-    @media screen and (max-width: 1250px) {
-        .account-container {
-            flex-direction: column;
-            height: max-content;
-            justify-content: center;
-            align-items: center;
-            width: max-content;
-            border-bottom: 0;
-            border-right: 0;
-        }
+    svg {
+        fill: rgb(129, 133, 141);
+        width: 40px;
+        height: 40px;
+        padding: 8px;
+        margin-right: 5px;
+    }
 
-        svg {
-            margin-right: 0;
-        }
-
-        img {
-            margin-right: 0;
-        }
-
-        #name {
-            display: none;
-        }
-
-        .preview #name {
-            display: initial;
-        }
-
-        #status {
-            display: none;
-        }
-
-        .info-container {
-            justify-content: center;
-            align-items: center;
-            align-self: center;
-            justify-self: center;
-            width: 60px;
-            margin-left: 0;
-        }
+    svg:hover {
+        fill: rgb(207, 215, 230);
+        background: var(--secondary);
+        border-radius: 5px;
     }
 </style>

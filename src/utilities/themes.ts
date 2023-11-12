@@ -1,7 +1,7 @@
 import type { Theme } from 'interfaces/all';
 import { socket } from 'stores/main';
 import { themes as themesStore } from 'stores/themes';
-import { currentTheme, defaultTheme, whiteTheme } from '../themes';
+import { currentTheme, defaultTheme } from '../themes';
 import { getKey, removeKey, setKey } from './global';
 
 export async function loadThemes(): Promise<Theme[]> {
@@ -23,15 +23,8 @@ export function applyThemeLocally(
     defaultTheme.branding = `#${bD}`;
     defaultTheme.branding_darken = `#${bDD}`;
 
-    whiteTheme.branding = `#${bW}`;
-    whiteTheme.branding_darken = `#${bDW}`;
-
     currentTheme.set(undefined);
-    currentTheme.set(
-        !getKey('darkTheme') || getKey('darkTheme') == 'true'
-            ? defaultTheme
-            : whiteTheme
-    );
+    currentTheme.set(defaultTheme);
 
     setKey('bW', bW);
     setKey('bDW', bDW);
@@ -57,9 +50,6 @@ export function checkAndApplyLocalTheme(): void {
 
     defaultTheme.branding = `#${getKey('bD')}`;
     defaultTheme.branding_darken = `#${getKey('bDD')}`;
-
-    whiteTheme.branding = `#${getKey('bW')}`;
-    whiteTheme.branding_darken = `#${getKey('bDW')}`;
 }
 
 export function resetLocalTheme(): void {

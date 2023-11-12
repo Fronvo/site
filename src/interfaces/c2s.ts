@@ -114,6 +114,7 @@ import type {
     CreateThemeParams,
     CreateThemeResult,
 } from './account/createTheme';
+import type { CanPostResult } from './account/canPost';
 
 export interface ClientToServerEvents {
     register: (
@@ -267,4 +268,5 @@ export interface ClientToServerEvents {
         {}: CreateThemeParams,
         callback?: ({}: CreateThemeResult) => void
     ) => void;
+    canPost: (callback?: ({}: CanPostResult) => void) => void;
 }

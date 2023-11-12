@@ -151,62 +151,64 @@
 
         setProgressBar(true);
 
-        socket.emit(
-            'sharePost',
-            {
-                content,
-                attachment: attachmentBase64
-                    ? await uploadImage(attachmentBase64, $ourData.isPRO)
-                    : '',
-                gif,
-            },
-            ({ err }) => {
-                if (err) {
-                    input.disabled = false;
-                    share.disabled = false;
+        socket.emit('canPost', async ({ canPost }) => {
+            if (!canPost) {
+                input.disabled = false;
+                share.disabled = false;
 
-                    setProgressBar(false);
+                setProgressBar(false);
+                showModal(ModalTypes.GoPRO);
+            } else {
+                socket.emit(
+                    'sharePost',
+                    {
+                        content,
+                        attachment: attachmentBase64
+                            ? await uploadImage(
+                                  attachmentBase64,
+                                  $ourData.isPRO
+                              )
+                            : '',
+                        gif,
+                    },
+                    () => {
+                        input.value = '';
+                        input.disabled = false;
 
-                    if (err.name == 'DO_AGAIN') {
-                        showModal(ModalTypes.GoPRO);
-                    }
-                } else {
-                    input.value = '';
-                    input.disabled = false;
+                        gif = '';
+                        attachment = '';
+                        attachmentBase64 = '';
 
-                    gif = '';
-                    attachment = '';
-                    attachmentBase64 = '';
+                        setProgressBar(false);
 
-                    setProgressBar(false);
+                        loadProfile($cachedAccountData);
 
-                    loadProfile($cachedAccountData);
-
-                    socket.emit(
-                        'fetchProfilePosts',
-                        {
-                            profileId: $ourData.profileId,
-                            from: '0',
-                            to: '1',
-                        },
-                        ({ profilePosts, err }) => {
-                            if (!err) {
-                                setTimeout(() => {
-                                    const tempPosts = $homePosts;
-                                    $homePosts = [];
-
+                        socket.emit(
+                            'fetchProfilePosts',
+                            {
+                                profileId: $ourData.profileId,
+                                from: '0',
+                                to: '1',
+                            },
+                            ({ profilePosts, err }) => {
+                                if (!err) {
                                     setTimeout(() => {
-                                        $homePosts = [...profilePosts].concat(
-                                            tempPosts
-                                        );
+                                        const tempPosts = $homePosts;
+                                        $homePosts = [];
+
+                                        setTimeout(() => {
+                                            $homePosts = [
+                                                ...profilePosts,
+                                            ].concat(tempPosts);
+                                        }, 0);
                                     }, 0);
-                                }, 0);
+                                }
                             }
-                        }
-                    );
-                }
+                        );
+                    }
+                );
             }
-        );
+        });
     }
 
     onMount(() => {

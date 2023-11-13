@@ -1,7 +1,7 @@
 <script lang="ts">
     import { cachedAccountData, socket } from 'stores/main';
     import { type ModalData, targetPostModal } from 'stores/modals';
-    import { dismissModal, setProgressBar } from 'utilities/main';
+    import { dismissModal } from 'utilities/main';
     import ModalTemplate from '../ModalTemplate.svelte';
     import { loadProfile } from 'utilities/profile';
     import Post from '$lib/app/reusables/all/Post.svelte';
@@ -10,7 +10,6 @@
 
     function deletePost(): void {
         // Will recieve result in RoomChat listener if successful
-        setProgressBar(true);
 
         socket.emit(
             'deletePost',

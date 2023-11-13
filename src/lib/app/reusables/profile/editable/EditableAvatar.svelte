@@ -1,28 +1,17 @@
 <script lang="ts">
-    import { DropdownTypes } from 'stores/dropdowns';
     import { socket } from 'stores/main';
-    import { ModalTypes, targetProfileModal } from 'stores/modals';
     import { ourData } from 'stores/profile';
     import { toast } from 'svelte-sonner';
-    import {
-        isAcceptedImage,
-        setProgressBar,
-        showDropdown,
-        showModal,
-    } from 'utilities/main';
+    import type { Writable } from 'svelte/store';
+    import { isAcceptedImage } from 'utilities/main';
     import { uploadImage } from 'utilities/rooms';
-
-    export let avatar: string;
-    export let editable = false;
-    export let mini = false;
-    export let preview = false;
 
     let uploading = false;
 
-    let settings: SVGSVGElement;
+    export let avatar: Writable<string>;
 
     function changeAvatar(): void {
-        if (!editable || uploading) return;
+        if (uploading) return;
 
         let input = document.createElement('input');
         input.type = 'file';
@@ -39,8 +28,6 @@
                 const reader = new FileReader();
 
                 reader.addEventListener('load', async () => {
-                    setProgressBar(true);
-
                     const newIcon = await uploadImage(
                         reader.result,
                         $ourData.isPRO
@@ -50,10 +37,9 @@
                         avatar: newIcon,
                     });
 
-                    avatar = newIcon;
+                    $avatar = newIcon;
                     $ourData.avatar = newIcon;
 
-                    setProgressBar(false);
                     uploading = false;
                 });
 
@@ -63,34 +49,22 @@
 
         input.click();
     }
-
-    function showSettings(): void {
-        showDropdown(DropdownTypes.ProfileSettings, settings, 'bottom', -40);
-    }
-
-    function viewProfile(): void {
-        $targetProfileModal = $ourData;
-
-        showModal(ModalTypes.Profile);
-    }
 </script>
 
-<div
-    class={`top-container ${editable ? 'editable' : ''} ${mini ? 'mini' : ''} ${
-        preview ? 'preview' : ''
-    }`}
->
-    {#if avatar}
+<div class="top-container">
+    {#if $ourData.avatar}
         <img
+            on:click={changeAvatar}
+            on:keydown={changeAvatar}
             id="avatar"
-            on:click={viewProfile}
-            on:keydown={viewProfile}
-            src={avatar}
-            alt={`${avatar}`}
+            src={$ourData.avatar}
+            alt={`${$ourData.username}\'s avatar'`}
             draggable={false}
         />
     {:else}
         <img
+            on:click={changeAvatar}
+            on:keydown={changeAvatar}
             src="/images/avatar.svg"
             draggable={false}
             alt="Avatar"
@@ -108,16 +82,17 @@
     }
 
     img {
-        border: 20px solid var(--modal_content_bg);
+        border: 20px solid var(--primary);
     }
 
     #avatar {
-        width: 100px;
-        height: 100px;
+        width: 128px;
+        height: 128px;
+        border: 7px solid var(--primary);
         border-radius: 100px;
         transition: 150ms;
         margin-left: 20px;
-        transform: translateY(-40px);
+        transform: translateY(-80px);
         background: var(--modal_content_bg);
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -129,33 +104,6 @@
     }
 
     #avatar:hover {
-        filter: brightness(60%);
-    }
-
-    .mini #avatar {
-        width: 90px;
-        height: 90px;
-        background: var(--bg);
-        margin-left: 15px;
-        margin-bottom: 5px;
-    }
-
-    .mini img {
-        border: 5px solid var(--primary);
-    }
-
-    .editable #avatar {
-        cursor: pointer;
-        z-index: 1;
-    }
-
-    .editable #avatar:hover {
-        opacity: 0.75;
-    }
-
-    .preview #avatar {
-        width: 80px;
-        height: 80px;
-        border: 5px solid var(--bg);
+        filter: brightness(80%);
     }
 </style>

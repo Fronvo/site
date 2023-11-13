@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { dismissModal, setProgressBar, setTitle } from 'utilities/main';
+    import { dismissModal, setTitle } from 'utilities/main';
     import ModalTemplate from '../ModalTemplate.svelte';
     import InfoHeader from '$lib/app/reusables/all/InfoHeader.svelte';
     import { socket } from 'stores/main';
@@ -13,13 +13,10 @@
     import { loadRoomsData } from 'utilities/rooms';
 
     function closeDM(): void {
-        setProgressBar(true);
-
         socket.emit(
             'closeDM',
             { roomId: $currentRoomData.roomId },
             async () => {
-                setProgressBar(false);
                 dismissModal();
 
                 $currentRoomLoaded = false;

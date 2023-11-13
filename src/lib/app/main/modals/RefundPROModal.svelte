@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { dismissModal, setProgressBar } from 'utilities/main';
+    import { dismissModal } from 'utilities/main';
     import ModalTemplate from '../ModalTemplate.svelte';
     import InfoHeader from '$lib/app/reusables/all/InfoHeader.svelte';
     import { cachedAccountData, currentToken } from 'stores/main';
@@ -9,8 +9,6 @@
     import { resetLocalTheme } from 'utilities/themes';
 
     async function refundPRO(): Promise<void> {
-        setProgressBar(true);
-
         await fetch('/api/refund-pro', {
             method: 'POST',
             body: JSON.stringify({

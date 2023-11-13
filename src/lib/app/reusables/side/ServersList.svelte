@@ -1,14 +1,9 @@
 <script lang="ts">
-    import { fly, fade } from 'svelte/transition';
     import { roomsList } from 'stores/rooms';
     import Room from './Server.svelte';
 </script>
 
-<div
-    class="messages-container"
-    in:fly={{ duration: 250 }}
-    out:fade={{ duration: 50 }}
->
+<div class="servers-container">
     <div class="list-container">
         {#if $roomsList.length != 0}
             {#each $roomsList as roomData}
@@ -19,7 +14,7 @@
 </div>
 
 <style>
-    .messages-container {
+    .servers-container {
         display: flex;
         flex-direction: column;
         align-items: center;

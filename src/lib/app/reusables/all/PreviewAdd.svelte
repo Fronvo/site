@@ -3,7 +3,6 @@
     import { socket } from 'stores/main';
     import { currentRoomData, currentRoomId } from 'stores/rooms';
     import { onMount } from 'svelte';
-    import { setProgressBar } from 'utilities/main';
 
     export let profileData: FronvoAccount;
 
@@ -14,16 +13,13 @@
 
         added = true;
 
-        setProgressBar(true);
-
         socket.emit(
             'addRoomMember',
             {
                 roomId: $currentRoomId,
                 profileId: profileData.profileId,
             },
-            ({ err }) => {
-                setProgressBar(false);
+            () => {
                 added = true;
             }
         );

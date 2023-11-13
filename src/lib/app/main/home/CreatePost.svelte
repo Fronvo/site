@@ -11,12 +11,7 @@
     import { onMount } from 'svelte';
     import { toast } from 'svelte-sonner';
     import { scale } from 'svelte/transition';
-    import {
-        isAcceptedImage,
-        setProgressBar,
-        showDropdown,
-        showModal,
-    } from 'utilities/main';
+    import { isAcceptedImage, showDropdown, showModal } from 'utilities/main';
     import { loadProfile } from 'utilities/profile';
     import { uploadImage } from 'utilities/rooms';
 
@@ -149,8 +144,6 @@
         input.disabled = true;
         share.disabled = true;
 
-        setProgressBar(true);
-
         socket.emit(
             'sharePost',
             {
@@ -165,8 +158,6 @@
                     input.disabled = false;
                     share.disabled = false;
 
-                    setProgressBar(false);
-
                     if (err.name == 'DO_AGAIN') {
                         showModal(ModalTypes.GoPRO);
                     }
@@ -177,8 +168,6 @@
                     gif = '';
                     attachment = '';
                     attachmentBase64 = '';
-
-                    setProgressBar(false);
 
                     loadProfile($cachedAccountData);
 

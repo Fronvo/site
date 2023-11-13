@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { FronvoAccount } from 'interfaces/all';
-    import ProfilePreviewLarge from '$lib/app/reusables/all/ProfilePreviewLarge.svelte';
+    import ProfilePreviewLarge from '$lib/app/reusables/all/PreviewLarge.svelte';
     import { findCachedAccount } from 'utilities/main';
     import { currentRoomData, currentRoomLoaded } from 'stores/rooms';
     import { ourData } from 'stores/profile';
@@ -10,6 +10,7 @@
     import { onDestroy } from 'svelte';
     import { fade } from 'svelte/transition';
     import CloseDmButton from '$lib/app/reusables/rooms/CloseDMButton.svelte';
+    import PreviewSmall from '$lib/app/reusables/all/PreviewSmall.svelte';
 
     let profileData: FronvoAccount;
 
@@ -42,7 +43,7 @@
 </script>
 
 <div class="members-container" in:fade={{ duration: 150 }}>
-    <ProfilePreviewLarge preview {profileData} />
+    <PreviewSmall {profileData} />
 
     <hr />
 

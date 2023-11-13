@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { dismissModal, setProgressBar } from 'utilities/main';
+    import { dismissModal } from 'utilities/main';
     import ModalTemplate from '../ModalTemplate.svelte';
     import type { ModalData } from 'stores/modals';
     import InfoHeader from '$lib/app/reusables/all/InfoHeader.svelte';
@@ -16,7 +16,6 @@
         if (isDeleting || deleteStr != 'delete my account') return;
 
         isDeleting = true;
-        setProgressBar(true);
 
         socket.emit(
             'deleteAccount',
@@ -25,15 +24,12 @@
             },
             ({ err }) => {
                 if (err) {
-                    setProgressBar(false);
-
                     isDeleting = false;
 
                     errorMessage = err.msg;
                 } else {
                     localStorage.clear();
 
-                    setProgressBar(false);
                     dismissModal(() => {
                         location.href = '/app';
                     });

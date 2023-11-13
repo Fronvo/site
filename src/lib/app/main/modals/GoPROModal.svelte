@@ -1,7 +1,7 @@
 <script lang="ts">
     import { dismissModal, showModal } from 'utilities/main';
     import { ModalTypes, type ModalData } from 'stores/modals';
-    import ModalTemplatePro from '../ModalTemplatePRO.svelte';
+    import ModalTemplate from '../ModalTemplate.svelte';
 
     function goPRO(): void {
         showModal(ModalTypes.GoPay);
@@ -13,19 +13,16 @@
             {
                 title: 'Join the club',
                 callback: goPRO,
-                pro: true,
             },
             {
                 title: 'Cancel',
                 callback: dismissModal,
             },
         ],
-
-        usePROShadow: true,
     };
 </script>
 
-<ModalTemplatePro {data}>
+<ModalTemplate {data}>
     <div class="benefit">
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -169,7 +166,7 @@
         >
         <h1>Exclusive PRO palette</h1>
     </div>
-</ModalTemplatePro>
+</ModalTemplate>
 
 <style>
     .benefit {

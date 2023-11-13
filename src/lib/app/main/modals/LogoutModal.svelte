@@ -5,7 +5,7 @@
     import { removeKey } from 'utilities/global';
     import { socket } from 'stores/main';
     import InfoHeader from '$lib/app/reusables/all/InfoHeader.svelte';
-    import ProfilePreviewLogout from '$lib/app/reusables/all/ProfilePreviewLogout.svelte';
+    import ProfilePreviewLogout from '$lib/app/reusables/all/PreviewLogout.svelte';
     import { ourData } from 'stores/profile';
     import { resetLocalTheme } from 'utilities/themes';
 

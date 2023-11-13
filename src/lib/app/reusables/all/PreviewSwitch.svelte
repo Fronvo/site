@@ -108,7 +108,7 @@
     }
 
     #login:hover {
-        filter: brightness(90%);
+        background: var(--branding_darken);
     }
 
     #remove:hover {

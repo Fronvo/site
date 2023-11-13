@@ -11,7 +11,6 @@
             {
                 title: 'Add more',
                 callback: () => showModal(ModalTypes.GoPRO),
-                pro: true,
             },
             {
                 title: 'Dismiss',

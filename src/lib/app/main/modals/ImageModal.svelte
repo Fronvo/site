@@ -13,7 +13,6 @@
             {
                 title: 'Improve quality',
                 callback: () => showModal(ModalTypes.GoPRO),
-                pro: true,
                 condition: !$ourData.isPRO,
             },
             {

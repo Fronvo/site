@@ -1,16 +1,15 @@
 <script lang="ts">
     import type { FronvoAccount } from 'interfaces/all';
-    import ProfileBanner from '../profile/ProfileBanner.svelte';
-    import ProfileAvatar from '../profile/ProfileAvatar.svelte';
-    import ProfileIdentifier from '../profile/ProfileIdentifier.svelte';
-    import ProfileBio from '../profile/ProfileBio.svelte';
-    import ProfileSince from '../profile/ProfileSince.svelte';
     import { showModal } from 'utilities/main';
     import { ModalTypes } from 'stores/modals';
     import { ourData } from 'stores/profile';
+    import SmallBanner from '../profile/small/SmallBanner.svelte';
+    import SmallAvatar from '../profile/small/SmallAvatar.svelte';
+    import SmallSince from '../profile/small/SmallSince.svelte';
+    import SmallBio from '../profile/small/SmallBio.svelte';
+    import SmallIdentifier from '../profile/small/SmallIdentifier.svelte';
 
     export let profileData: FronvoAccount;
-    export let editable = false;
 
     function editProfile(): void {
         showModal(ModalTypes.EditProfile);
@@ -34,26 +33,24 @@
 </script>
 
 <div class="profile-container">
-    <ProfileBanner mini {editable} banner={profileData.banner} />
-    <ProfileAvatar mini {editable} avatar={profileData.avatar} />
+    <SmallBanner />
+    <SmallAvatar avatar={profileData.avatar} />
 
     <div class="secondary-container">
-        <ProfileIdentifier
-            mini
-            {editable}
+        <SmallIdentifier
             profileId={profileData.profileId}
             username={profileData.username}
         />
 
         <span class="seperator" />
 
-        <ProfileBio bio={profileData.bio} />
-
         {#if profileData.bio}
+            <SmallBio bio={profileData.bio} />
+
             <span class="seperator" />
         {/if}
 
-        <ProfileSince since={profileData.creationDate} />
+        <SmallSince since={profileData.creationDate} />
 
         <span class="seperator" />
 

@@ -4,7 +4,6 @@
     import { onMount } from 'svelte';
     import { loadStripe } from '@stripe/stripe-js';
     import { Elements, PaymentElement } from 'svelte-stripe';
-    import { setProgressBar } from 'utilities/main';
     import { currentToken, darkTheme } from 'stores/main';
     import { goto } from '$app/navigation';
 
@@ -43,8 +42,6 @@
     async function pay() {
         if (processing) return;
 
-        setProgressBar(true);
-
         processing = true;
 
         const result = await stripe.confirmPayment({
@@ -68,8 +65,6 @@
                 replaceState: true,
             });
         }
-
-        setProgressBar(false);
     }
 </script>
 
@@ -80,7 +75,7 @@
                 {stripe}
                 {clientSecret}
                 labels="floating"
-                theme={$darkTheme ? 'night' : 'stripe'}
+                theme={'night'}
                 bind:elements
                 variables={{
                     colorPrimary: 'rgb(0, 220, 220)',

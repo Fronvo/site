@@ -4,7 +4,7 @@
     import type { ModalData } from 'stores/modals';
     import InfoHeader from '$lib/app/reusables/all/InfoHeader.svelte';
     import { ourData } from 'stores/profile';
-    import ProfilePreviewAdd from '$lib/app/reusables/all/ProfilePreviewAdd.svelte';
+    import ProfilePreviewAdd from '$lib/app/reusables/all/PreviewAdd.svelte';
     import { cachedAccountData } from 'stores/main';
     import { writable, type Writable } from 'svelte/store';
     import type { FronvoAccount } from 'interfaces/all';

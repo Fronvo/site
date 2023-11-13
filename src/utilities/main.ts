@@ -4,7 +4,6 @@ import type {
     Post,
     Room,
     SwitchedAccount,
-    Theme,
 } from 'interfaces/all';
 import { io } from 'socket.io-client';
 import {
@@ -19,7 +18,6 @@ import {
 import {
     fronvoTitle,
     loginSucceeded,
-    progressBarVisible,
     secondarySocket,
     SERVER_URL,
     setSecondarySocket,
@@ -33,7 +31,7 @@ import {
     modalVisible,
 } from 'stores/modals';
 import { loadRoomsData } from './rooms';
-import { getKey, removeKey, setKey } from './global';
+import { getKey, setKey } from './global';
 import { loadProfile } from './profile';
 import {
     currentRoomData,
@@ -240,7 +238,6 @@ export function showModal(newModal: ModalTypes): void {
 
 export function dismissModal(callback?: Function): void {
     // Pending operations
-    setProgressBar(false);
 
     dropdownProfileData.set(undefined);
 
@@ -322,10 +319,6 @@ export function dismissDropdown(callback?: Function): void {
 
 export function setTitle(title: string): void {
     fronvoTitle.set(title);
-}
-
-export function setProgressBar(state: boolean): void {
-    progressBarVisible.set(state);
 }
 
 export async function findCachedAccount(

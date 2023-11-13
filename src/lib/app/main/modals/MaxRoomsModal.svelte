@@ -11,7 +11,6 @@
             {
                 title: 'Unlock more',
                 callback: () => showModal(ModalTypes.GoPRO),
-                pro: true,
                 condition: !$ourData.isPRO,
             },
             {

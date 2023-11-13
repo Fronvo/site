@@ -22,7 +22,6 @@ import DeletePostModal from '$lib/app/main/modals/DeletePostModal.svelte';
 import GoProModal from '$lib/app/main/modals/GoPROModal.svelte';
 import GoPayModal from '$lib/app/main/modals/GoPayModal.svelte';
 import MaxFriendsModal from '$lib/app/main/modals/MaxFriendsModal.svelte';
-import CreateThemeModal from '$lib/app/main/modals/CreateThemeModal.svelte';
 import RefundProModal from '$lib/app/main/modals/RefundPROModal.svelte';
 import CreateRoomModal from '$lib/app/main/modals/CreateRoomModal.svelte';
 
@@ -49,7 +48,6 @@ export const modals = [
     GoProModal,
     GoPayModal,
     MaxFriendsModal,
-    CreateThemeModal,
     RefundProModal,
     CreateRoomModal,
 ];
@@ -78,7 +76,6 @@ export enum ModalTypes {
     GoPRO,
     GoPay,
     MaxFriends,
-    CreateTheme,
     RefundPRO,
     CreateRoom,
 }
@@ -89,14 +86,12 @@ export interface ModalActions {
     condition?: boolean;
     danger?: boolean;
     primary?: boolean;
-    pro?: boolean;
     useProShadow?: boolean;
 }
 
 export interface ModalData {
     title?: string;
-    usePROShadow?: boolean;
-    actions: ModalActions[];
+    actions?: ModalActions[];
 }
 /****************************** Modal Exports ******************************/
 

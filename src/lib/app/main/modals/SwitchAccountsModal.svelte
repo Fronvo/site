@@ -6,7 +6,7 @@
     } from 'utilities/main';
     import ModalTemplate from '../ModalTemplate.svelte';
     import { ModalTypes, type ModalData } from 'stores/modals';
-    import ProfilePreviewSwitch from '$lib/app/reusables/all/ProfilePreviewSwitch.svelte';
+    import ProfilePreviewSwitch from '$lib/app/reusables/all/PreviewSwitch.svelte';
     import type { SwitchedAccount } from 'interfaces/all';
     import { getKey } from 'utilities/global';
     import { currentToken, setSecondarySocket } from 'stores/main';

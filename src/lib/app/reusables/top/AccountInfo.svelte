@@ -52,7 +52,7 @@
 
         <div class="name-container">
             <h1 id="name">{$ourData.username}</h1>
-            <h1 id="status">Online</h1>
+            <h1 id="status">{$ourData.status ? $ourData.status : 'Online'}</h1>
         </div>
     </div>
 
@@ -80,13 +80,14 @@
         transition: 150ms;
         padding: 5px;
         user-select: none;
+        border-radius: 10px;
     }
 
     .main-container {
         display: flex;
         align-items: center;
         padding: 5px;
-        border-radius: 3px;
+        border-radius: 10px;
         flex: 1;
         margin-right: 10px;
         cursor: pointer;
@@ -134,11 +135,11 @@
         height: 40px;
         padding: 8px;
         margin-right: 5px;
+        border-radius: 10px;
     }
 
     svg:hover {
         fill: rgb(207, 215, 230);
         background: var(--secondary);
-        border-radius: 5px;
     }
 </style>

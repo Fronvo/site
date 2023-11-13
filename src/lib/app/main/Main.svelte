@@ -1,7 +1,7 @@
 <script lang="ts">
     import Dropdown from './Dropdown.svelte';
     import Modal from './Modal.svelte';
-    import { fade } from 'svelte/transition';
+    import { fade, fly } from 'svelte/transition';
     import AccountInfo from '../reusables/top/AccountInfo.svelte';
     import MessagesList from '../reusables/side/MessagesList.svelte';
     import { roomsList } from 'stores/rooms';
@@ -21,8 +21,15 @@
     import DownloadFronvoButton from '../reusables/side/DownloadFronvoButton.svelte';
     import SearchBar from '../reusables/all/SearchBar.svelte';
     import SecondaryOptions from '../reusables/top/SecondaryOptions.svelte';
-    import { sineOut } from 'svelte/easing';
+    import {
+        quartInOut,
+        quartOut,
+        quintOut,
+        sineInOut,
+        sineOut,
+    } from 'svelte/easing';
     import ServersList from '../reusables/side/ServersList.svelte';
+    import DiscoverBotsButton from '../reusables/side/DiscoverBotsButton.svelte';
 
     onMount(() => {
         socket.on('roomAdded', async () => ($roomsList = await fetchConvos()));
@@ -59,7 +66,7 @@
 <Modal />
 
 <Toaster
-    theme={$darkTheme ? 'dark' : 'light'}
+    theme={'dark'}
     duration={2500}
     richColors
     visibleToasts={5}
@@ -71,10 +78,14 @@
 />
 
 <div class="main-container" in:fade={{ duration: 300, easing: sineOut }}>
-    <div class="first-container">
+    <div
+        class="first-container"
+        in:fly={{ x: -75, duration: 300, easing: quintOut, opacity: 1 }}
+    >
         <HomeButton />
         <ServersList />
         <CreateServerButton />
+        <DiscoverBotsButton />
         <DownloadFronvoButton />
     </div>
 
@@ -112,13 +123,12 @@
     }
 
     .second-container {
-        height: 100vh;
+        height: calc(100vh - 3px);
         width: 235px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        background: var(--primary);
-        border-top-left-radius: 20px;
+        border-radius: 10px;
     }
 
     .third-container {
@@ -129,7 +139,7 @@
 
     .seperator {
         width: 100%;
-        height: 3px;
+        height: 4px;
         background: var(--bg);
     }
 </style>

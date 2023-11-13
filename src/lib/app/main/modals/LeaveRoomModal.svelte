@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { dismissModal, setProgressBar, setTitle } from 'utilities/main';
+    import { dismissModal, setTitle } from 'utilities/main';
     import { ourData } from 'stores/profile';
     import ModalTemplate from '../ModalTemplate.svelte';
     import { socket } from 'stores/main';
@@ -27,7 +27,6 @@
         if (isLeaving || (isOwner() && name != $roomData.name)) return;
 
         isLeaving = true;
-        setProgressBar(true);
 
         socket.emit(
             'leaveRoom',
@@ -48,7 +47,6 @@
                     await loadRoomsData();
                 } else {
                     isLeaving = false;
-                    setProgressBar(false);
                 }
             }
         );

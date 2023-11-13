@@ -1,10 +1,9 @@
 <script>
-    import ProfilePreviewSmall from '$lib/app/reusables/all/ProfilePreviewSmall.svelte';
     import { targetProfileModal } from 'stores/modals';
-
     import DropdownTemplateEmpty from '../DropdownTemplateEmpty.svelte';
+    import PreviewSmall from '$lib/app/reusables/all/PreviewSmall.svelte';
 </script>
 
 <DropdownTemplateEmpty>
-    <ProfilePreviewSmall profileData={$targetProfileModal} />
+    <PreviewSmall profileData={$targetProfileModal} />
 </DropdownTemplateEmpty>

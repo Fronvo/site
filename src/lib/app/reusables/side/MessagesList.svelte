@@ -11,10 +11,6 @@
     in:fly={{ duration: 250 }}
     out:fade={{ duration: 50 }}
 >
-    <div class="dm-container">
-        <h1>Direct messages</h1>
-    </div>
-
     {#if $dmsList.length > 0}
         <SearchBar />
     {/if}
@@ -37,31 +33,12 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 240px;
+        width: 100%;
         height: 100%;
-        margin-top: 5px;
         flex: 1;
         overflow-y: auto;
-    }
-
-    .dm-container {
-        width: 190px;
-        height: 20px;
-        display: flex;
-        margin-top: 5px;
-    }
-
-    .dm-container h1 {
-        margin: 0;
-        font-size: 0.8rem;
-        text-transform: uppercase;
-        color: rgb(163, 167, 177);
-        user-select: none;
-        font-weight: 600;
-    }
-
-    .dm-container:hover h1 {
-        color: white;
+        border-radius: 10px;
+        background: var(--primary);
     }
 
     .list-container {

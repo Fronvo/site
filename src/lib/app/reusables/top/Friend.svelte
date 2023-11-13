@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { FronvoAccount } from 'interfaces/all';
     import { targetProfileModal } from 'stores/modals';
-    import { setProgressBar, showDropdown } from 'utilities/main';
+    import { showDropdown } from 'utilities/main';
     import { DropdownTypes } from 'stores/dropdowns';
     import { socket } from 'stores/main';
     import { onMount } from 'svelte';
@@ -12,30 +12,22 @@
     let container: HTMLDivElement;
 
     function acceptFriend(): void {
-        setProgressBar(true);
-
         socket.emit(
             'acceptFriendRequest',
             {
                 profileId: profileData.profileId,
             },
-            () => {
-                setProgressBar(false);
-            }
+            () => {}
         );
     }
 
     function rejectFriend(): void {
-        setProgressBar(true);
-
         socket.emit(
             'rejectFriendRequest',
             {
                 profileId: profileData.profileId,
             },
-            () => {
-                setProgressBar(false);
-            }
+            () => {}
         );
     }
 

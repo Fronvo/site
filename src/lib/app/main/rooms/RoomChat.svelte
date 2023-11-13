@@ -19,7 +19,6 @@
         dismissModal,
         findCachedAccount,
         isAcceptedImage,
-        setProgressBar,
         setTitle,
         showModal,
     } from 'utilities/main';
@@ -260,8 +259,6 @@
     onMount(() => {
         chat.addEventListener('scroll', scrollListener);
         addDropListener();
-
-        setProgressBar(false);
 
         chat.scrollTop = chat.scrollHeight;
 

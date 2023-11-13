@@ -1,12 +1,12 @@
 <script lang="ts">
-    import { dismissModal, setProgressBar } from 'utilities/main';
+    import { dismissModal } from 'utilities/main';
     import ModalTemplate from '../ModalTemplate.svelte';
     import type { ModalData } from 'stores/modals';
     import { socket } from 'stores/main';
     import { ourData } from 'stores/profile';
-    import AccountInfo from '$lib/app/reusables/top/AccountInfo.svelte';
     import { writable } from 'svelte/store';
     import InfoHeader from '$lib/app/reusables/all/InfoHeader.svelte';
+    import StatusInput from '$lib/app/reusables/status/StatusInput.svelte';
 
     let status = writable($ourData.status);
 
@@ -15,8 +15,6 @@
             dismissModal();
             return;
         }
-
-        setProgressBar(true);
 
         socket.emit(
             'updateProfileStatus',
@@ -49,7 +47,7 @@
 </script>
 
 <ModalTemplate {data}>
-    <AccountInfo preview editable editableCallback={setStatus} />
+    <StatusInput {status} statusCallback={setStatus} />
 
     <InfoHeader
         marginLeft={'55px'}

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { dismissModal, setProgressBar } from 'utilities/main';
+    import { dismissModal } from 'utilities/main';
     import ModalTemplate from '../ModalTemplate.svelte';
     import type { ModalData } from 'stores/modals';
     import InfoHeader from '$lib/app/reusables/all/InfoHeader.svelte';
@@ -11,7 +11,6 @@
         if (isRequesting) return;
 
         isRequesting = true;
-        setProgressBar(true);
 
         socket.emit('requestData', ({ err }) => {
             if (err) {

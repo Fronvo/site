@@ -2,12 +2,12 @@
     import { onMount } from 'svelte';
     import { loadStripe } from '@stripe/stripe-js';
     import { Elements, PaymentElement } from 'svelte-stripe';
-    import ModalTemplatePro from '../ModalTemplatePRO.svelte';
     import type { ModalData } from 'stores/modals';
-    import { dismissModal, setProgressBar } from 'utilities/main';
+    import { dismissModal } from 'utilities/main';
     import { cachedAccountData, currentToken, darkTheme } from 'stores/main';
     import { loadProfile } from 'utilities/profile';
     import { loadThemes } from 'utilities/themes';
+    import ModalTemplate from '../ModalTemplate.svelte';
 
     let stripe = null;
     let clientSecret = null;
@@ -36,8 +36,6 @@
     async function submit() {
         if (processing) return;
 
-        setProgressBar(true);
-
         processing = true;
 
         const result = await stripe.confirmPayment({
@@ -62,8 +60,6 @@
 
             dismissModal();
         }
-
-        setProgressBar(false);
     }
 
     const data: ModalData = {
@@ -72,7 +68,6 @@
         actions: [
             {
                 title: !processing ? 'Pay' : 'Processing',
-                pro: true,
                 callback: submit,
             },
             {
@@ -80,18 +75,16 @@
                 callback: processing ? () => {} : dismissModal,
             },
         ],
-
-        usePROShadow: true,
     };
 </script>
 
-<ModalTemplatePro {data}>
+<ModalTemplate {data}>
     {#if stripe && clientSecret}
         <Elements
             {stripe}
             {clientSecret}
             labels="floating"
-            theme={$darkTheme ? 'night' : 'stripe'}
+            theme={'night'}
             bind:elements
             variables={{
                 colorPrimary: 'rgb(0, 220, 220)',
@@ -110,4 +103,4 @@
             </form>
         </Elements>
     {/if}
-</ModalTemplatePro>
+</ModalTemplate>

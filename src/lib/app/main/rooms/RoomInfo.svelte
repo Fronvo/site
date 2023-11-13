@@ -12,7 +12,6 @@
     import {
         findCachedAccount,
         isAcceptedImage,
-        setProgressBar,
         setTitle,
         showModal,
     } from 'utilities/main';
@@ -60,7 +59,6 @@
 
                 reader.addEventListener('load', async () => {
                     isUpdating = true;
-                    setProgressBar(true);
 
                     const newIcon = await uploadImage(
                         reader.result,
@@ -73,7 +71,6 @@
                     });
 
                     isUpdating = false;
-                    setProgressBar(false);
                 });
 
                 reader.readAsDataURL(file);

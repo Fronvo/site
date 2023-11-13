@@ -54,7 +54,7 @@
         height: 48px;
         padding: 6px;
         margin-top: 10px;
-        background: var(--secondary);
+        background: var(--primary);
         border-radius: 20px;
         cursor: pointer;
         pointer-events: all;

@@ -16,5 +16,8 @@
         color: red;
         margin: 0;
         text-align: center;
+        font-weight: 600;
+        margin-bottom: 20px;
+        font-size: 1rem;
     }
 </style>

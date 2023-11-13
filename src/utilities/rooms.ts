@@ -17,7 +17,6 @@ import {
     lastSendsIn30 as lastSendsIn30Store,
     disabledIn30,
 } from 'stores/main';
-import { setProgressBar } from './main';
 import { differenceInSeconds } from 'date-fns';
 import { setKey } from './global';
 
@@ -153,7 +152,6 @@ export async function sendImage(
     lastSendsIn30Store.set(lastSendsIn30 + 3);
 
     sendingImageStore.set(true);
-    setProgressBar(true);
 
     socket.emit(
         'sendRoomImage',
@@ -162,7 +160,6 @@ export async function sendImage(
             attachment: await uploadImage(file, isPRO),
         },
         () => {
-            setProgressBar(false);
             sendingImageStore.set(false);
         }
     );

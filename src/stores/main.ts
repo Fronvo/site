@@ -44,10 +44,6 @@ export const darkTheme = writable(undefined);
 export const loginSucceeded: Writable<boolean> = writable();
 /****************************** Fronvo login state ******************************/
 
-/****************************** Fronvo loading state ******************************/
-export const progressBarVisible = writable(false);
-/****************************** Fronvo loading state ******************************/
-
 /****************************** Fronvo caching ******************************/
 export const cachedAccountData: Writable<FronvoAccount[]> = writable([]);
 /****************************** Fronvo caching ******************************/

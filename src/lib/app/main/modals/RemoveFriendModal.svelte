@@ -1,19 +1,15 @@
 <script lang="ts">
-    import { dismissModal, setProgressBar } from 'utilities/main';
+    import { dismissModal } from 'utilities/main';
     import ModalTemplate from '../ModalTemplate.svelte';
     import { targetProfileModal, type ModalData } from 'stores/modals';
     import InfoHeader from '$lib/app/reusables/all/InfoHeader.svelte';
     import { socket } from 'stores/main';
 
     function removeFriend(): void {
-        setProgressBar(true);
-
         socket.emit(
             'removeFriend',
             { profileId: $targetProfileModal.profileId },
             () => {
-                setProgressBar(false);
-
                 dismissModal();
             }
         );

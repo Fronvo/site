@@ -20,8 +20,9 @@
     async function enterRoom(): Promise<void> {
         if ($currentRoomId == roomData.roomId) return;
 
-        $currentRoomMessages = await loadRoomMessages(roomData.roomId);
         $currentRoomId = roomData.roomId;
+
+        $currentRoomMessages = await loadRoomMessages(roomData.roomId);
         $currentRoomData = roomData;
 
         $currentRoomLoaded = false;
@@ -108,7 +109,7 @@
     }
 
     #avatar:hover {
-        border-radius: 10px;
+        border-radius: 15px;
     }
 
     #avatar:active {
@@ -134,7 +135,7 @@
     }
 
     .active {
-        border-radius: 10px;
+        border-radius: 15px;
         background: var(--branding);
     }
 </style>

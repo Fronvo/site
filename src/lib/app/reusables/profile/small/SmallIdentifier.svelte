@@ -3,29 +3,14 @@
 
     export let profileId: string;
     export let username: string;
-    export let editable = false;
-    export let mini = false;
-    export let preview = false;
 </script>
 
-<div
-    class={`identifier-container ${mini ? 'mini' : ''} ${
-        preview ? 'preview' : ''
-    } ${editable ? 'editable' : ''} ${$ourData.appliedTheme ? 'themed' : ''}`}
->
+<div class="identifier-container">
     <div class="info-container">
         <div class="lock-container">
-            {#if !editable}
-                <h1 id="username">
-                    {username ? username : 'Deleted user'}
-                </h1>
-            {:else}
-                <input
-                    class={`${$ourData.isPRO ? 'pro' : ''}`}
-                    maxlength={30}
-                    bind:value={username}
-                />
-            {/if}
+            <h1 id="username">
+                {username ? username : 'Deleted user'}
+            </h1>
         </div>
 
         <div class="secondary-container">
@@ -33,6 +18,10 @@
                 {profileId ? profileId : 'deleted user'}
             </h1>
         </div>
+
+        {#if $ourData.status}
+            <h1 id="status">{$ourData.status}</h1>
+        {/if}
     </div>
 </div>
 
@@ -43,14 +32,6 @@
         justify-content: flex-start;
         padding-top: 10px;
         padding-bottom: 10px;
-        margin-left: 20px;
-    }
-
-    .editable {
-        transform: translateY(20px);
-    }
-
-    .mini {
         margin-left: 10px;
     }
 
@@ -78,9 +59,6 @@
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
         font-weight: 600;
-    }
-
-    .mini #username {
         font-size: 1.2rem;
     }
 
@@ -99,35 +77,18 @@
         overflow: hidden;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
-    }
-
-    .mini #identifier {
         font-size: 0.9rem;
     }
 
-    input {
-        background: var(--primary);
-        border: 2px solid var(--primary);
-        transition: 150ms border;
-        font-size: 1.3rem;
+    #status {
+        font-size: 0.9rem;
         margin: 0;
-        margin-right: 10px;
-        margin-left: 10px;
-        margin-top: 5px;
-        margin-bottom: 10px;
-        color: var(--text);
-        height: 40px;
-    }
-
-    input:focus {
-        border: 2px solid var(--branding);
-    }
-
-    .pro:focus {
-        border: 2px solid var(--pro);
-    }
-
-    .themed input:focus {
-        border: 2px solid var(--branding);
+        margin-right: 5px;
+        margin-left: 5px;
+        margin-top: 10px;
+        display: -webkit-box;
+        overflow: hidden;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
     }
 </style>

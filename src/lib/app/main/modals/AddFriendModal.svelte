@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { dismissModal, setProgressBar, showModal } from 'utilities/main';
+    import { dismissModal, showModal } from 'utilities/main';
     import ModalTemplate from '../ModalTemplate.svelte';
     import { ModalTypes, type ModalData } from 'stores/modals';
     import { socket } from 'stores/main';
@@ -25,8 +25,6 @@
             return;
         }
 
-        setProgressBar(true);
-
         socket.emit(
             'addFriend',
             { profileId: profileId ? profileId : '' },
@@ -41,8 +39,6 @@
                     } else {
                         errorMessage = err.msg;
                     }
-
-                    setProgressBar(false);
                 } else {
                     dismissModal();
                 }

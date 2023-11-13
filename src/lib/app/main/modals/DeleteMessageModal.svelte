@@ -6,13 +6,12 @@
         targetMessageModalProfile,
         type ModalData,
     } from 'stores/modals';
-    import { dismissModal, setProgressBar } from 'utilities/main';
+    import { dismissModal } from 'utilities/main';
     import ModalTemplate from '../ModalTemplate.svelte';
     import { currentRoomId } from 'stores/rooms';
 
     function deleteMessage(): void {
         // Will receive result in RoomChat listener if successful
-        setProgressBar(true);
 
         socket.emit(
             'deleteRoomMessage',

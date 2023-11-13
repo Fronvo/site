@@ -17,21 +17,7 @@
         <h1>Dashboard</h1></button
     >
 
-    <button
-        ><svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="32"
-            height="32"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            ><g
-                ><circle cx="12" cy="6" r="4" /><path
-                    d="M20 17.5c0 2.485 0 4.5-8 4.5s-8-2.015-8-4.5S7.582 13 12 13s8 2.015 8 4.5Z"
-                /></g
-            ></svg
-        >
-        <h1>Friends</h1></button
-    >
+    <!-- TODO: Customised page of Stripe Fronvo -->
     <button
         ><svg
             id="nitro"
@@ -50,16 +36,19 @@
 
 <style>
     .secondary-container {
+        width: 100%;
         display: flex;
         flex-direction: column;
         margin-top: 5px;
-        margin-bottom: 5px;
+        border-radius: 10px;
+        padding: 5px;
+        background: var(--primary);
     }
 
     button {
         display: flex;
         align-items: center;
-        width: 215px;
+        width: 98%;
         height: 45px;
         background: transparent;
         box-shadow: none;
@@ -67,6 +56,7 @@
         text-align: start;
         transition: none;
         margin-bottom: 2px;
+        border-radius: 10px;
     }
 
     button:hover {

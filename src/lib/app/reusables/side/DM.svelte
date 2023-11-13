@@ -28,10 +28,11 @@
     async function enterRoom(): Promise<void> {
         if ($currentRoomId == dmData.roomId) return;
 
+        $currentRoomId = dmData.roomId;
+
         nameElement.style.fontWeight = '300';
 
         $currentRoomMessages = await loadRoomMessages(dmData.roomId);
-        $currentRoomId = dmData.roomId;
         $currentRoomData = dmData;
 
         $currentRoomLoaded = false;
@@ -115,7 +116,11 @@
 {#if dmUser}
     {#if $dmsFilter.trim().length == 0 || dmUser.username
             ?.toLowerCase()
-            .includes($dmsFilter.toLowerCase()) || dmUser.profileId?.includes($dmsFilter.toLowerCase())}
+            .includes($dmsFilter
+                    .trim()
+                    .toLowerCase()) || dmUser.profileId?.includes($dmsFilter
+                .trim()
+                .toLowerCase())}
         <div
             class={`dm-container ${
                 $currentRoomId == dmData.roomId ? 'active' : ''
@@ -168,7 +173,7 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        border-radius: 5px;
+        border-radius: 10px;
         margin-bottom: 5px;
     }
 
@@ -200,8 +205,8 @@
         width: 16px;
         height: 16px;
         border-radius: 30px;
-        transform: translateX(-17px) translateY(16px);
-        border: 3px solid var(--bg);
+        transform: translateX(-17px) translateY(14px);
+        border: 3px solid var(--primary);
         visibility: hidden;
     }
 

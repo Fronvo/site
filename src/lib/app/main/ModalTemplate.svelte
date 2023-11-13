@@ -12,9 +12,10 @@
 
 <div
     class={`modal-container ${!data.title ? 'title-less' : ''}`}
+    style={``}
     transition:scale={{
         duration: modalAnimDuration * 0.5,
-        start: 0.8,
+        start: 0.85,
         easing: bounceInOut,
     }}
 >
@@ -26,14 +27,14 @@
         <slot />
     </div>
 
-    {#if data.actions.length > 0}
+    {#if data.actions?.length > 0}
         <div class="options-container">
-            {#each data.actions as { title, callback, condition, danger, primary, pro }}
+            {#each data.actions as { title, callback, condition, danger, primary }}
                 {#if typeof condition == 'undefined' || condition}
                     <button
                         class={`${danger ? 'danger' : ''} ${
                             primary ? 'primary' : ''
-                        } ${pro ? 'pro' : ''}`}
+                        }`}
                         on:click={() => runCallback(callback)}
                     >
                         {title}</button
@@ -54,13 +55,12 @@
         min-height: 200px;
         max-height: 95%;
         background: var(--primary);
-        border: 1px solid var(--bg);
         border-radius: 5px;
         min-width: 550px;
         max-width: 90vw;
         overflow-x: hidden;
-        padding-top: 20px;
-        padding-bottom: 20px;
+        padding-top: 15px;
+        padding-bottom: 10px;
     }
 
     .title-less {
@@ -144,15 +144,6 @@
 
     .primary:hover {
         background: var(--branding_darken);
-    }
-
-    .pro {
-        background: var(--pro);
-        color: white;
-        box-shadow: 0 0 10px var(--pro);
-    }
-
-    .pro:hover {
-        background: var(--pro_darken);
+        text-decoration: none;
     }
 </style>

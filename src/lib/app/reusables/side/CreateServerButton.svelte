@@ -1,12 +1,4 @@
 <script lang="ts">
-    import {
-        currentRoomData,
-        currentRoomId,
-        currentRoomLoaded,
-        currentRoomMessages,
-    } from 'stores/rooms';
-    import { setTitle } from 'utilities/main';
-
     function createServer(): void {}
 </script>
 
@@ -44,7 +36,7 @@
         height: 48px;
         padding: 10px;
         background: var(--secondary);
-        border-radius: 30px;
+        border-radius: 20px;
         cursor: pointer;
         pointer-events: all;
         z-index: 2;

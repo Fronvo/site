@@ -92,6 +92,7 @@ export interface ModalActions {
 export interface ModalData {
     title?: string;
     actions?: ModalActions[];
+    transparent?: boolean;
 }
 /****************************** Modal Exports ******************************/
 
@@ -99,6 +100,7 @@ export interface ModalData {
 export const currentModalId = writable(-1);
 export const modalVisible = writable(false);
 export const modalAnimDuration = 300;
+export const modalLoading = writable(false);
 /****************************** Modal settings ******************************/
 
 /****************************** ProfileModal ******************************/

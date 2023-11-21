@@ -1,7 +1,6 @@
 <script lang="ts">
     import { fetchConvos, loadRoomsData, sendImage } from 'utilities/rooms';
     import {
-        sendContent,
         replyingTo,
         replyingToId,
         showScrollBottom,
@@ -39,8 +38,8 @@
     import InfiniteLoading from 'svelte-infinite-loading';
     import type { Unsubscriber } from 'svelte/store';
     import type { NewRoomMessageResult } from 'interfaces/account/newRoomMessage';
-    import RoomChatStart from '$lib/app/reusables/rooms/RoomChatStart.svelte';
     import { toast } from 'svelte-sonner';
+    import { scale } from 'svelte/transition';
 
     let chat: HTMLDivElement;
     let unsubscribe: Unsubscriber;
@@ -320,10 +319,12 @@
 </script>
 
 {#if $messages}
-    <div bind:this={chat} class="chat-container">
+    <div
+        bind:this={chat}
+        class="chat-container"
+        transition:scale={{ duration: 1000, start: 0.975 }}
+    >
         {#if $roomData}
-            <RoomChatStart />
-
             {#if $messages.length != 0 && $messages.length < 20}
                 <div class="placeholder">
                     <h1 id="name">placeholder</h1>
@@ -384,17 +385,18 @@
     .chat-container {
         display: flex;
         flex-direction: column;
-        align-self: center;
         justify-content: start;
-        width: calc(100vw - 275px - 275px);
-        min-width: 550px;
-        padding-top: calc(65px);
-        height: calc(100vh);
-        padding-bottom: 10px;
+        width: 100%;
+        max-width: 100%;
+        margin-top: 4px;
+        min-height: calc(100vh - 130px);
         overflow-y: scroll;
         overflow-x: hidden;
         transition: none;
         opacity: 0;
+        background: var(--primary);
+        border-radius: 10px;
+        padding-bottom: 10px;
     }
 
     .placeholder {
@@ -404,12 +406,5 @@
         margin-left: 20px;
         height: 100vh;
         flex: 1;
-    }
-
-    @media screen and (max-width: 1250px) {
-        .chat-container {
-            width: calc(100vw - 275px - 275px + 200px);
-            min-width: 600px;
-        }
     }
 </style>

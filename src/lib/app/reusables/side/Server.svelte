@@ -78,17 +78,18 @@
         id="avatar"
         src={roomData.icon}
         alt={`${roomData.name}\'s avatar'`}
+        draggable={false}
     />
 {:else}
     <span
         class={`placeholder ${
-            $currentRoomId == roomData.roomId ? 'active' : ''
+            $currentRoomId == roomData.roomId ? 'placeholder-active' : ''
         }`}
         on:click={enterRoom}
         on:keydown={enterRoom}
         id="avatar"
     >
-        <h1>{roomData.name[0] + roomData.name[1]}</h1></span
+        <h1>{roomData.name[0]}{roomData.name[1] || ''}</h1></span
     >
 {/if}
 
@@ -105,7 +106,7 @@
     }
 
     img {
-        border-radius: 20px;
+        border-radius: 25px;
     }
 
     #avatar:hover {
@@ -121,11 +122,10 @@
         align-items: center;
         justify-content: center;
         background: var(--primary);
-        border-radius: 20px;
+        border-radius: 25px;
     }
 
-    .placeholder:hover,
-    .active {
+    .placeholder:hover {
         background: var(--branding);
     }
 
@@ -136,6 +136,10 @@
 
     .active {
         border-radius: 15px;
+    }
+
+    .placeholder-active {
         background: var(--branding);
+        border-radius: 15px;
     }
 </style>

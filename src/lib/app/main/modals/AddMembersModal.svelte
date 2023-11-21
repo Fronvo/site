@@ -53,6 +53,7 @@
             {
                 title: 'Done',
                 callback: dismissModal,
+                primary: true,
             },
         ],
     };

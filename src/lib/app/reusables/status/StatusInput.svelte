@@ -66,14 +66,21 @@
         margin: 0;
         font-size: 1.1rem;
         font-weight: 600;
+        margin-bottom: 2px;
     }
 
     input {
         height: 40px;
         background: var(--bg);
+        border: 2px solid var(--bg);
         font-size: 1.1rem;
         width: 100%;
         border-radius: 2px;
         padding-left: 10px;
+        transition: 250ms;
+    }
+
+    input:focus {
+        border: 2px solid var(--branding);
     }
 </style>

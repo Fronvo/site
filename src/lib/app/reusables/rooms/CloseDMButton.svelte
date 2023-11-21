@@ -34,10 +34,11 @@
         border-radius: 0;
         background: transparent;
         transform: translateY(-40px);
+        transition: 150ms;
     }
 
     button:hover {
-        background: var(--primary);
+        background: var(--secondary);
     }
 
     svg {

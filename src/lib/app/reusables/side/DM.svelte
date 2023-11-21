@@ -134,6 +134,7 @@
                         id="avatar"
                         src={dmUser?.avatar}
                         alt={`${dmUser?.username}\'s avatar'`}
+                        draggable={false}
                     />
                 {:else}
                     <img
@@ -175,6 +176,7 @@
         user-select: none;
         border-radius: 10px;
         margin-bottom: 5px;
+        transition: 250ms;
     }
 
     .dm-container:hover {
@@ -211,7 +213,7 @@
     }
 
     #name {
-        font-size: 0.95rem;
+        font-size: 1rem;
         margin: 0;
         white-space: pre-wrap;
         display: -webkit-box;
@@ -219,8 +221,7 @@
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
         letter-spacing: 0.1px;
-        font-weight: 500;
-        color: rgb(179, 180, 184);
+        color: var(--gray);
     }
 
     .mark {

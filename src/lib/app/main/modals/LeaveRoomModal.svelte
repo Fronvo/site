@@ -11,11 +11,10 @@
         currentRoomData as roomData,
     } from 'stores/rooms';
     import { loadRoomsData } from 'utilities/rooms';
-    import type { ModalData } from 'stores/modals';
+    import { modalLoading, type ModalData } from 'stores/modals';
     import InfoHeader from '$lib/app/reusables/all/InfoHeader.svelte';
     import { onMount } from 'svelte';
 
-    let isLeaving = false;
     let name: string;
     let input: HTMLInputElement;
 
@@ -24,9 +23,9 @@
     }
 
     function leaveRoom(): void {
-        if (isLeaving || (isOwner() && name != $roomData.name)) return;
+        if ($modalLoading || (isOwner() && name != $roomData.name)) return;
 
-        isLeaving = true;
+        $modalLoading = true;
 
         socket.emit(
             'leaveRoom',
@@ -46,7 +45,7 @@
 
                     await loadRoomsData();
                 } else {
-                    isLeaving = false;
+                    $modalLoading = false;
                 }
             }
         );
@@ -65,7 +64,7 @@
     });
 
     const data: ModalData = {
-        title: `${isOwner() ? 'Delete' : 'Leave'} room`,
+        title: `${isOwner() ? 'Delete' : 'Leave'} server`,
         actions: [
             {
                 title: `${isOwner() ? 'Delete' : 'Leave'}`,
@@ -73,7 +72,7 @@
                 danger: true,
             },
             {
-                title: 'Cancel',
+                title: 'Dismiss',
                 callback: dismissModal,
             },
         ],
@@ -82,41 +81,62 @@
 
 <ModalTemplate {data}>
     {#if $roomData}
-        {#if !isOwner()}
-            <h1 class="modal-header">
-                Leave the
-                <span>{$roomData?.name}</span> room?
-            </h1>
+        <span class="placeholder">
+            <h1>
+                {Array.from($roomData.name)[0] || '?'}{Array.from(
+                    $roomData.name
+                )[1] || ''}
+            </h1></span
+        >
 
-            <InfoHeader
-                marginLeft={'55px'}
-                text={'You can be added to this room later.'}
-            />
-        {:else}
-            <h1 class="modal-header">
-                Type <b>{$roomData.name}</b> below to confirm
-            </h1>
+        {#if isOwner()}
             <input
                 maxlength={15}
                 bind:this={input}
                 bind:value={name}
                 class="modal-input"
+                placeholder={`Type ${$roomData.name}`}
             />
-            <InfoHeader marginLeft={'55px'} text={"This can't be reversed."} />
         {/if}
     {/if}
 </ModalTemplate>
 
 <style>
-    h1 {
-        width: 75%;
-        text-align: start;
-        font-size: 1.2rem;
-        margin-bottom: 5px;
+    .placeholder {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--bg);
+        border-radius: 80px;
+        width: 100px;
+        height: 100px;
+        margin: 0;
+        padding: 0;
+        transition: 125ms;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        user-select: none;
     }
 
-    h1 b {
-        letter-spacing: 1px;
-        font-size: 1.1rem;
+    .placeholder h1 {
+        font-size: 1.3rem;
+        font-weight: 600;
+    }
+
+    h1 {
+        width: 75%;
+        text-align: center;
+        font-size: 1.2rem;
+    }
+
+    input {
+        background: var(--bg);
+        border-radius: 3px;
+        border: 2px solid var(--bg);
+        transition: 250ms;
+    }
+
+    input:focus {
+        border: 2px solid red;
     }
 </style>

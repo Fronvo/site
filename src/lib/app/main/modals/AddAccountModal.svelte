@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { ModalTypes, type ModalData } from 'stores/modals';
+    import { ModalTypes, type ModalData, modalLoading } from 'stores/modals';
     import {
         addSavedAccount,
         fetchUser,
@@ -20,18 +20,17 @@
     let email: string;
     let password: string;
     let errorMessage: string;
-    let loggingIn: boolean;
 
     function login(): void {
-        if (!email || !password || loggingIn) return;
+        if (!email || !password || $modalLoading) return;
 
-        loggingIn = true;
+        $modalLoading = true;
 
         secondarySocket.emit(
             'login',
             { email: email || '', password: password || '' },
             async ({ err, token }) => {
-                loggingIn = false;
+                $modalLoading = false;
 
                 if (err) {
                     errorMessage = err.msg;

@@ -65,21 +65,9 @@
         });
     }
 
-    const data: ModalData = {
-        actions: [
-            {
-                title: 'Save changes',
-                callback: uploadData,
-                primary: true,
-            },
-            {
-                title: 'Cancel',
-                callback: dismissModal,
-            },
-        ],
-    };
+    const data: ModalData = {};
 </script>
 
 <ModalTemplate {data}>
-    <PreviewEditable {avatar} {username} {bio} />
+    <PreviewEditable updateCallback={uploadData} {avatar} {username} {bio} />
 </ModalTemplate>

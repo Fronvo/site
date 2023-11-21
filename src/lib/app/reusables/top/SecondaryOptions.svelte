@@ -57,6 +57,7 @@
         transition: none;
         margin-bottom: 2px;
         border-radius: 10px;
+        transition: 250ms;
     }
 
     button:hover {
@@ -76,11 +77,12 @@
         width: 28px;
         height: 28px;
         margin-right: 10px;
-        fill: rgb(163, 167, 177);
+        fill: var(--gray);
+        transition: 250ms;
     }
 
     button:hover svg {
-        fill: white;
+        fill: var(--gray_hover);
     }
 
     button:hover #nitro {

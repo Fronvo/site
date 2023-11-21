@@ -1,7 +1,7 @@
 <script lang="ts">
     import { dismissModal } from 'utilities/main';
     import ModalTemplate from '../ModalTemplate.svelte';
-    import type { ModalData } from 'stores/modals';
+    import { modalLoading, type ModalData } from 'stores/modals';
     import { removeKey } from 'utilities/global';
     import { socket } from 'stores/main';
     import InfoHeader from '$lib/app/reusables/all/InfoHeader.svelte';
@@ -10,6 +10,8 @@
     import { resetLocalTheme } from 'utilities/themes';
 
     function logout(): void {
+        $modalLoading = true;
+
         removeKey('token');
         removeKey('savedAccounts');
 

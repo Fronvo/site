@@ -7,7 +7,11 @@
         showScrollBottom,
     } from 'stores/rooms';
     import Time from 'svelte-time/src/Time.svelte';
-    import { differenceInMinutes, getDayOfYear } from 'date-fns';
+    import {
+        differenceInDays,
+        differenceInMinutes,
+        getDayOfYear,
+    } from 'date-fns';
     import { showDropdown, showModal } from 'utilities/main';
     import {
         ModalTypes,
@@ -125,7 +129,7 @@
                 <!-- Any other day -->
                 <Time
                     timestamp={messageData.creationDate}
-                    format={'DD/MM/YY HH:mm'}
+                    format={'MMM DD, YYYY'}
                 />
             {/if}
         </h1>
@@ -169,9 +173,28 @@
         </div>
     {/if}
 
-    <div>
+    <div class="top-container">
         {#if !skipContext && !(messageData.ownerId == 'fronvo' && messageData.isNotification)}
             <h1 id="name">{profileData.username}</h1>
+
+            <h1 id="small-time-2">
+                {#if differenceInDays(new Date(), new Date(messageData.creationDate)) == 0}
+                    Today at <Time
+                        timestamp={messageData.creationDate}
+                        format={'HH:mm'}
+                    />
+                {:else if differenceInDays(new Date(), new Date(messageData.creationDate)) == 1}
+                    Yesterday at <Time
+                        timestamp={messageData.creationDate}
+                        format={'HH:mm'}
+                    />
+                {:else}
+                    <Time
+                        timestamp={messageData.creationDate}
+                        format={'DD/MM/YYYY HH:mm'}
+                    />
+                {/if}
+            </h1>
         {/if}
     </div>
 
@@ -249,62 +272,6 @@
                 {/if}
             </h1>
         {/if}
-
-        {#if !hideOptions && !messageData.isNotification}
-            <div class="menu-container">
-                {#if !messageData.isImage && !messageData.isSpotify && !messageData.isTenor}
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="32"
-                        height="32"
-                        viewBox="0 0 24 24"
-                        on:click={replyCallback}
-                        on:keydown={replyCallback}
-                        ><path
-                            fill="var(--text)"
-                            fill-rule="evenodd"
-                            d="M10.03 6.47a.75.75 0 0 1 0 1.06l-3.72 3.72h8.19c.953 0 2.367.28 3.563 1.141c1.235.89 2.187 2.365 2.187 4.609a.75.75 0 0 1-1.5 0c0-1.756-.715-2.78-1.563-3.391c-.887-.639-1.974-.859-2.687-.859H6.31l3.72 3.72a.75.75 0 1 1-1.06 1.06l-5-5a.75.75 0 0 1 0-1.06l5-5a.75.75 0 0 1 1.06 0Z"
-                            clip-rule="evenodd"
-                        /></svg
-                    >
-                {/if}
-
-                {#if messageData.content}
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="32"
-                        height="32"
-                        viewBox="0 0 24 24"
-                        on:click={copyContent}
-                        on:keydown={copyContent}
-                        ><g fill="var(--text)"
-                            ><path
-                                d="M6.6 11.397c0-2.726 0-4.089.843-4.936c.844-.847 2.201-.847 4.917-.847h2.88c2.715 0 4.072 0 4.916.847c.844.847.844 2.21.844 4.936v4.82c0 2.726 0 4.089-.844 4.936c-.843.847-2.201.847-4.916.847h-2.88c-2.716 0-4.073 0-4.917-.847c-.843-.847-.843-2.21-.843-4.936v-4.82Z"
-                            /><path
-                                d="M4.172 3.172C3 4.343 3 6.229 3 10v2c0 3.771 0 5.657 1.172 6.828c.617.618 1.433.91 2.62 1.048c-.192-.84-.192-1.996-.192-3.66v-4.819c0-2.726 0-4.089.843-4.936c.844-.847 2.201-.847 4.917-.847h2.88c1.652 0 2.8 0 3.638.19c-.138-1.193-.43-2.012-1.05-2.632C16.657 2 14.771 2 11 2C7.229 2 5.343 2 4.172 3.172Z"
-                                opacity=".5"
-                            /></g
-                        ></svg
-                    >
-                {/if}
-
-                <!-- Only the message author / room owner can delete messages -->
-                {#if deleteCondition}
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="32"
-                        height="32"
-                        viewBox="0 0 24 24"
-                        on:click={deleteCallback}
-                        on:keydown={deleteCallback}
-                        ><path
-                            fill="var(--text)"
-                            d="M2.75 6.167c0-.46.345-.834.771-.834h2.665c.529-.015.996-.378 1.176-.916l.03-.095l.115-.372c.07-.228.131-.427.217-.605c.338-.702.964-1.189 1.687-1.314c.184-.031.377-.031.6-.031h3.478c.223 0 .417 0 .6.031c.723.125 1.35.612 1.687 1.314c.086.178.147.377.217.605l.115.372l.03.095c.18.538.74.902 1.27.916h2.57c.427 0 .772.373.772.834c0 .46-.345.833-.771.833H3.52c-.426 0-.771-.373-.771-.833ZM11.607 22h.787c2.707 0 4.06 0 4.941-.863c.88-.864.97-2.28 1.15-5.111l.26-4.081c.098-1.537.147-2.305-.295-2.792c-.442-.487-1.187-.487-2.679-.487H8.23c-1.491 0-2.237 0-2.679.487c-.441.487-.392 1.255-.295 2.792l.26 4.08c.18 2.833.27 4.248 1.15 5.112C7.545 22 8.9 22 11.607 22Z"
-                        /></svg
-                    >
-                {/if}
-            </div>
-        {/if}
     </div>
 </div>
 
@@ -314,13 +281,16 @@
         align-items: start;
         justify-content: start;
         flex-direction: column;
-        width: 90%;
+        width: 97.5%;
+        margin-left: 2%;
         margin-top: 0px;
-        margin-left: 3.5%;
-        padding: 5px;
         cursor: default;
-        border-radius: 10px;
         border-left: 2px solid transparent;
+        padding-left: 10px;
+        padding-bottom: 5px;
+        padding-top: 2px;
+        transition: 250ms;
+        border-radius: 10px;
     }
 
     .message-container:hover {
@@ -339,12 +309,26 @@
         margin-bottom: 20px;
     }
 
+    .top-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 5px;
+    }
+
     #name {
         margin: 0;
-        font-size: 0.9rem;
-        margin-left: calc(36px + 5px + 5px + 5px + 2.5px);
-        font-weight: 600;
-        flex: 1;
+        font-size: 1rem;
+        margin-left: calc(36px + 5px + 5px + 5px);
+        font-weight: 500;
+        letter-spacing: 0.2px;
+    }
+
+    #small-time-2 {
+        margin: 0;
+        font-size: 0.8rem;
+        color: var(--gray);
+        margin-left: 10px;
     }
 
     .reply-container {
@@ -377,7 +361,7 @@
         padding-right: 10px;
         margin-bottom: 2px;
         border-radius: 15px;
-        border: 2px solid var(--primary);
+        border: 2px solid var(--secondary);
     }
 
     #reply {
@@ -393,14 +377,16 @@
     }
 
     hr {
-        border-color: var(--primary);
-        width: 38%;
+        border-color: var(--secondary);
+        width: 40%;
         overflow: hidden;
     }
 
     #time {
         margin: 0;
         font-size: 0.8rem;
+        font-weight: 800;
+        align-self: center;
         margin: auto;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -412,9 +398,9 @@
 
     .message-info-container {
         display: flex;
-        align-items: center;
+        align-items: start;
         justify-content: start;
-        flex: 1;
+        transform: translateY(-2px);
     }
 
     .preview .message-info-container {
@@ -422,10 +408,10 @@
     }
 
     #avatar {
-        width: 40px;
-        min-width: 40px;
-        height: 40px;
-        min-height: 40px;
+        width: 42px;
+        min-width: 42px;
+        height: 42px;
+        min-height: 42px;
         border-radius: 30px;
         margin-right: 5px;
         -webkit-touch-callout: none;
@@ -455,9 +441,13 @@
         opacity: 0;
         margin: 0;
         font-size: 0.8rem;
-        width: 40px;
-        min-width: 40px;
+        width: 42px;
+        min-width: 42px;
         margin-right: 5px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         text-align: center;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -507,13 +497,12 @@
         white-space: pre-wrap;
         overflow: hidden;
         text-align: start;
-        padding: 5px;
-        border-radius: 15px;
-        flex: 1;
+        padding-top: 5px;
+        z-index: 1;
     }
 
     #attachment {
-        max-width: 600px;
+        max-width: 100%;
         max-height: 300px;
         border-radius: 10px;
         cursor: pointer;

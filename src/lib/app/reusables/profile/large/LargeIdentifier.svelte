@@ -1,8 +1,7 @@
 <script lang="ts">
-    import { ourData } from 'stores/profile';
-
     export let profileId: string;
     export let username: string;
+    export let status: string;
 </script>
 
 <div class="identifier-container">
@@ -19,8 +18,8 @@
             </h1>
         </div>
 
-        {#if $ourData.status}
-            <h1 id="status">{$ourData.status}</h1>
+        {#if status}
+            <h1 id="status">{status}</h1>
         {/if}
     </div>
 </div>

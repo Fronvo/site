@@ -13,7 +13,7 @@
         width="32"
         height="32"
         viewBox="0 0 24 24"
-        ><g fill="var(--branding)"
+        ><g fill="var(--pro)"
             ><path
                 fill-rule="evenodd"
                 d="M1.818 5.272a.75.75 0 0 1 .91.546l.382 1.528a6.709 6.709 0 0 0 4.975 4.904H16a4.124 4.124 0 0 1 4.096 3.642l.649 5.52a.75.75 0 1 1-1.49.176l-.65-5.52A2.624 2.624 0 0 0 16 13.75H7.918l-.08-.018A8.209 8.209 0 0 1 1.654 7.71l-.382-1.528a.75.75 0 0 1 .545-.91Z"
@@ -28,17 +28,18 @@
 
 <style>
     button {
-        width: 100%;
+        width: 95%;
         display: flex;
         align-items: center;
         font-size: 1rem;
         box-shadow: none;
-        border-radius: 0;
+        border-radius: 10px;
         background: transparent;
+        transition: 150ms;
     }
 
     button:hover {
-        background: var(--primary);
+        background: var(--secondary);
     }
 
     svg {

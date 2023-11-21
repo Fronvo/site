@@ -13,7 +13,7 @@
     import type { Unsubscriber } from 'svelte/store';
     import RoomMember from '$lib/app/reusables/rooms/RoomMember.svelte';
     import InviteButton from '$lib/app/reusables/rooms/InviteButton.svelte';
-    import LeaveRoomButton from '$lib/app/reusables/rooms/LeaveRoomButton.svelte';
+    import LeaveRoomButton from '$lib/app/reusables/rooms/LeaveServerButton.svelte';
     import { loadRoomsData } from 'utilities/rooms';
     import { ourData } from 'stores/profile';
     import { fade } from 'svelte/transition';
@@ -109,8 +109,6 @@
 
 <div class="members-container" in:fade={{ duration: 150 }}>
     {#if loadingFinished}
-        <h1>{memberInfo.length} member{memberInfo.length != 1 ? 's' : ''}</h1>
-
         {#each memberInfo as profileData}
             <RoomMember {profileData} />
         {/each}
@@ -137,22 +135,10 @@
         height: calc(100vh - 65px);
     }
 
-    h1 {
-        font-weight: 600;
-        margin: 0;
-        font-size: 0.9rem;
-        text-transform: uppercase;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
-
     hr {
         width: 100%;
-        height: 1px;
-        border: 1px solid var(--primary);
+        height: 5px;
+        background: var(--bg);
+        border: 1px solid var(--bg);
     }
 </style>

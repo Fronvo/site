@@ -4,12 +4,12 @@
     import { currentRoomData } from 'stores/rooms';
     import { showModal } from 'utilities/main';
 
-    function leaveRoom(): void {
+    function leaveServer(): void {
         showModal(ModalTypes.LeaveRoom);
     }
 </script>
 
-<button on:click={leaveRoom}>
+<button on:click={leaveServer}>
     <svg
         xmlns="http://www.w3.org/2000/svg"
         width="32"
@@ -23,22 +23,23 @@
             stroke-width="1.5"
             d="M20 12H4m0 0l6-6m-6 6l6 6"
         /></svg
-    >{$currentRoomData?.ownerId == $ourData.profileId ? 'Delete' : 'Leave'} room</button
+    >{$currentRoomData?.ownerId == $ourData.profileId ? 'Delete' : 'Leave'} server</button
 >
 
 <style>
     button {
-        width: 100%;
+        width: 95%;
         display: flex;
         align-items: center;
         font-size: 1rem;
         box-shadow: none;
-        border-radius: 0;
+        border-radius: 10px;
         background: transparent;
+        transition: 150ms;
     }
 
     button:hover {
-        background: var(--primary);
+        background: var(--secondary);
     }
 
     svg {

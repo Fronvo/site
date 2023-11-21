@@ -1,8 +1,15 @@
 <script lang="ts">
-    function createServer(): void {}
+    import { ModalTypes } from 'stores/modals';
+    import { showModal } from 'utilities/main';
+
+    function createServer(): void {
+        showModal(ModalTypes.CreateRoom);
+    }
 </script>
 
 <div>
+    <span class="seperator" />
+
     <svg
         on:click={createServer}
         on:keydown={createServer}
@@ -18,8 +25,6 @@
             /></g
         ></svg
     >
-
-    <span class="seperator" />
 </div>
 
 <style>
@@ -35,13 +40,13 @@
         width: 48px;
         height: 48px;
         padding: 10px;
+        margin-top: 10px;
         background: var(--secondary);
         border-radius: 20px;
         cursor: pointer;
         pointer-events: all;
         z-index: 2;
         transition: 125ms;
-        margin-bottom: 10px;
         stroke: rgb(72, 202, 113);
     }
 

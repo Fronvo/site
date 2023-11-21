@@ -130,8 +130,10 @@
         align-items: center;
         background: transparent;
         cursor: pointer;
-        width: 100%;
+        width: 95%;
         padding: 8px;
+        border-radius: 10px;
+        transition: 150ms;
     }
 
     .badge-container {
@@ -150,7 +152,7 @@
     }
 
     div:hover {
-        background: var(--primary);
+        background: var(--secondary);
     }
 
     .indicator:hover {
@@ -183,6 +185,7 @@
     .bottom-container {
         display: flex;
         flex-direction: column;
+        transition: 150ms;
     }
 
     .top-container {
@@ -207,7 +210,7 @@
 
     #status {
         font-size: 0.9rem;
-        color: var(--branding);
+        color: var(--gray);
         display: -webkit-box;
         overflow: hidden;
         -webkit-line-clamp: 1;

@@ -8,8 +8,13 @@ interface ThemingOptions {
 
     // Material-like colors
     primary: string;
+
     secondary: string;
     tertiary: string;
+
+    // Gray primaries
+    gray: string;
+    gray_hover: string;
 
     // Branding color
     branding: string;
@@ -64,6 +69,9 @@ export const defaultTheme: ThemingOptions = {
     secondary: 'rgb(43, 45, 49)',
     tertiary: 'rgb(49, 51, 56)',
 
+    gray: 'rgb(175, 179, 187)',
+    gray_hover: 'rgb(207, 215, 230)',
+
     branding: 'rgb(88, 101, 242)',
     branding_darken: 'rgb(73, 83, 197)',
 
@@ -99,7 +107,7 @@ export const defaultTheme: ThemingOptions = {
 
     scrollbar: 'rgb(60, 60, 60)',
 
-    hover_darken: 'rgb(0, 0, 0, 0.1)',
+    hover_darken: 'rgb(33, 36, 39)',
 };
 
 export const currentTheme: Writable<ThemingOptions> = writable(defaultTheme);

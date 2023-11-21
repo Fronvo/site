@@ -1,7 +1,7 @@
 <script lang="ts">
     import { dismissModal } from 'utilities/main';
     import ModalTemplate from '../ModalTemplate.svelte';
-    import type { ModalData } from 'stores/modals';
+    import { modalLoading, type ModalData } from 'stores/modals';
     import { socket } from 'stores/main';
     import { ourData } from 'stores/profile';
     import { writable } from 'svelte/store';
@@ -15,6 +15,8 @@
             dismissModal();
             return;
         }
+
+        $modalLoading = true;
 
         socket.emit(
             'updateProfileStatus',
@@ -48,9 +50,4 @@
 
 <ModalTemplate {data}>
     <StatusInput {status} statusCallback={setStatus} />
-
-    <InfoHeader
-        marginLeft={'55px'}
-        text={'It will be cleared automatically after 24 hours'}
-    />
 </ModalTemplate>

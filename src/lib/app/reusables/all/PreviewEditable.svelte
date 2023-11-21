@@ -8,10 +8,11 @@
     export let avatar: Writable<string>;
     export let username: Writable<string>;
     export let bio: Writable<string>;
+    export let updateCallback: () => void;
 </script>
 
 <div class="profile-container">
-    <EditableBanner />
+    <EditableBanner {updateCallback} />
     <EditableAvatar {avatar} />
 
     <div class="secondary-container">

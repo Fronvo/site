@@ -81,6 +81,7 @@
         padding: 5px;
         user-select: none;
         border-radius: 10px;
+        transition: 250ms;
     }
 
     .main-container {
@@ -91,6 +92,7 @@
         flex: 1;
         margin-right: 10px;
         cursor: pointer;
+        transition: 250ms;
     }
 
     .main-container:hover {
@@ -126,20 +128,21 @@
 
     #status {
         font-size: 0.8rem;
-        color: rgb(153, 158, 168);
+        color: var(--gray);
     }
 
     svg {
-        fill: rgb(129, 133, 141);
+        fill: var(--gray);
         width: 40px;
         height: 40px;
         padding: 8px;
         margin-right: 5px;
         border-radius: 10px;
+        transition: 250ms;
     }
 
     svg:hover {
-        fill: rgb(207, 215, 230);
+        fill: var(--gray_hover);
         background: var(--secondary);
     }
 </style>

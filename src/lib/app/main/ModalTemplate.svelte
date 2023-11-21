@@ -1,7 +1,11 @@
 <script lang="ts">
-    import { modalAnimDuration, type ModalData } from 'stores/modals';
+    import {
+        modalAnimDuration,
+        modalLoading,
+        type ModalData,
+    } from 'stores/modals';
     import { bounceInOut } from 'svelte/easing';
-    import { scale } from 'svelte/transition';
+    import { fade, scale } from 'svelte/transition';
 
     export let data: ModalData;
 
@@ -11,11 +15,13 @@
 </script>
 
 <div
-    class={`modal-container ${!data.title ? 'title-less' : ''}`}
+    class={`modal-container ${!data.title ? 'title-less' : ''} ${
+        data.transparent ? 'transparent' : ''
+    }`}
     style={``}
     transition:scale={{
         duration: modalAnimDuration * 0.5,
-        start: 0.85,
+        start: 0.9,
         easing: bounceInOut,
     }}
 >
@@ -34,10 +40,23 @@
                     <button
                         class={`${danger ? 'danger' : ''} ${
                             primary ? 'primary' : ''
-                        }`}
-                        on:click={() => runCallback(callback)}
+                        } ${$modalLoading && primary ? 'loading' : ''}`}
+                        on:click={() => !$modalLoading && runCallback(callback)}
                     >
-                        {title}</button
+                        {#if (primary || danger) && $modalLoading}
+                            <div
+                                class="loading"
+                                in:scale={{
+                                    duration: 125,
+                                    opacity: 0,
+                                    start: 0.75,
+                                }}
+                            >
+                                <span /><span /><span />
+                            </div>
+                        {:else}
+                            {title}
+                        {/if}</button
                     >
                 {/if}
             {/each}
@@ -65,6 +84,10 @@
 
     .title-less {
         padding-top: 0;
+    }
+
+    .transparent {
+        background: transparent;
     }
 
     #title {
@@ -106,6 +129,7 @@
 
     button {
         width: 150px;
+        height: 44px;
         font-size: 1.05rem;
         font-weight: 600;
         margin-left: 10px;
@@ -138,12 +162,54 @@
 
     .primary {
         background: var(--branding);
-        box-shadow: 0 0 5px var(--branding);
         color: white;
     }
 
     .primary:hover {
         background: var(--branding_darken);
         text-decoration: none;
+    }
+
+    .loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 44px;
+        cursor: not-allowed;
+    }
+
+    .loading span {
+        width: 6px;
+        height: 6px;
+        border-radius: 30px;
+        background: white;
+        margin-left: 5px;
+        margin-right: 5px;
+        animation-name: loading;
+        animation-duration: 900ms;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+    }
+
+    .loading span:nth-child(1) {
+        animation-delay: 50ms;
+    }
+
+    .loading span:nth-child(2) {
+        animation-delay: 75ms;
+    }
+
+    .loading span:nth-child(3) {
+        animation-delay: 100ms;
+    }
+
+    @keyframes loading {
+        45% {
+            transform: translateY(-2px);
+        }
+
+        100% {
+            transform: translateY(2px);
+        }
     }
 </style>

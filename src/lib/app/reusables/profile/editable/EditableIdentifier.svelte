@@ -46,7 +46,7 @@
 
     input {
         width: 95%;
-        height: 40px;
+        height: 35px;
         background: var(--primary);
         border: 2px solid var(--primary);
         transition: 150ms;

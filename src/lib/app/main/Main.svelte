@@ -1,10 +1,15 @@
 <script lang="ts">
     import Dropdown from './Dropdown.svelte';
     import Modal from './Modal.svelte';
-    import { fade, fly } from 'svelte/transition';
+    import { fade, fly, scale } from 'svelte/transition';
     import AccountInfo from '../reusables/top/AccountInfo.svelte';
     import MessagesList from '../reusables/side/MessagesList.svelte';
-    import { roomsList } from 'stores/rooms';
+    import {
+        currentRoomData,
+        currentRoomId,
+        currentRoomLoaded,
+        roomsList,
+    } from 'stores/rooms';
     import {
         darkTheme,
         disabledIn30,
@@ -19,7 +24,6 @@
     import HomeButton from '../reusables/top/HomeButton.svelte';
     import CreateServerButton from '../reusables/side/CreateServerButton.svelte';
     import DownloadFronvoButton from '../reusables/side/DownloadFronvoButton.svelte';
-    import SearchBar from '../reusables/all/SearchBar.svelte';
     import SecondaryOptions from '../reusables/top/SecondaryOptions.svelte';
     import {
         quartInOut,
@@ -30,6 +34,11 @@
     } from 'svelte/easing';
     import ServersList from '../reusables/side/ServersList.svelte';
     import DiscoverBotsButton from '../reusables/side/DiscoverBotsButton.svelte';
+    import RoomChat from './rooms/RoomChat.svelte';
+    import RoomSend from './rooms/RoomSend.svelte';
+    import RoomInfo from './rooms/RoomInfo.svelte';
+    import DmMembers from './rooms/DMMembers.svelte';
+    import RoomMembers from './rooms/RoomMembers.svelte';
 
     onMount(() => {
         socket.on('roomAdded', async () => ($roomsList = await fetchConvos()));
@@ -38,11 +47,8 @@
             async () => ($roomsList = await fetchConvos())
         );
 
-        socket.on('newRoomMessage', async () => {
-            setTimeout(async () => {
-                $roomsList = await fetchConvos();
-            }, 500);
-        });
+        // TODO: Servers by user join date / custom, not last msg, change room types to servers, server side
+        // TODO: Requires db change too, old fronvo used rooms and not servers, might need to port whole db to servers or just keep as seperate v2 instance, different paltforms maybe
 
         setInterval(() => {
             if ($lastSendsIn30 != -1) {
@@ -89,7 +95,7 @@
         <DownloadFronvoButton />
     </div>
 
-    <div class="second-container">
+    <div class="second-container" in:scale={{ duration: 300, start: 0.975 }}>
         <span class="seperator" />
 
         <SecondaryOptions />
@@ -102,6 +108,34 @@
 
         <AccountInfo />
     </div>
+
+    {#if $currentRoomLoaded}
+        <div class="third-container" in:scale={{ duration: 300, start: 0.975 }}>
+            <!-- TODO: Else for Dashboard, Turbo -->
+            <RoomInfo />
+
+            <span class="seperator" />
+
+            <RoomChat />
+
+            <span class="seperator" />
+
+            <RoomSend />
+        </div>
+    {/if}
+
+    {#if $currentRoomLoaded}
+        <div
+            class="fourth-container"
+            in:scale={{ duration: 300, start: 0.975 }}
+        >
+            {#if $currentRoomData.isDM}
+                <DmMembers />
+            {:else}
+                <RoomMembers />
+            {/if}
+        </div>
+    {/if}
 </div>
 
 <style>
@@ -109,22 +143,29 @@
         display: flex;
         flex-direction: row;
         min-width: 955px;
-        margin-left: 10px;
     }
 
     .first-container {
         width: 60px;
-        padding: 5px;
-        padding-right: 15px;
+        min-width: 60px;
         height: 100vh;
+        padding: 5px;
+        margin-left: 5px;
         display: flex;
         flex-direction: column;
         align-items: center;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+
+    .first-container::-webkit-scrollbar {
+        display: none;
     }
 
     .second-container {
         height: calc(100vh - 3px);
         width: 235px;
+        margin-left: 5px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -132,9 +173,25 @@
     }
 
     .third-container {
-        height: 100vh;
+        width: 100%;
+        height: calc(100vh - 15px);
+        margin-left: 5px;
+        margin-right: 5px;
         display: flex;
         flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin-top: 10px;
+    }
+
+    .fourth-container {
+        display: flex;
+        flex-direction: column;
+        margin-top: 10px;
+        margin-bottom: 13px;
+        background: var(--primary);
+        border-radius: 10px;
+        margin-right: 10px;
     }
 
     .seperator {

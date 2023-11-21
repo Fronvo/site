@@ -1,9 +1,8 @@
 <script lang="ts">
     import { dismissModal, showModal } from 'utilities/main';
     import ModalTemplate from '../ModalTemplate.svelte';
-    import { ModalTypes, type ModalData } from 'stores/modals';
+    import { ModalTypes, type ModalData, modalLoading } from 'stores/modals';
     import { socket } from 'stores/main';
-    import InfoHeader from '$lib/app/reusables/all/InfoHeader.svelte';
     import { onMount } from 'svelte';
     import ErrorHeader from '$lib/app/reusables/all/ErrorHeader.svelte';
     import { loadRoomsData } from 'utilities/rooms';
@@ -11,14 +10,16 @@
     let element: HTMLInputElement;
 
     let errorMessage: string;
-    let name: string;
+    let name = '';
 
     function createRoom(): void {
-        if (!name) return;
+        if (!name || $modalLoading) return;
 
         if (name.trim().length == 0) {
             return;
         }
+
+        $modalLoading = true;
 
         socket.emit(
             'createRoom',
@@ -30,6 +31,8 @@
                         showModal(ModalTypes.MaxRooms);
                     } else {
                         errorMessage = err.msg;
+
+                        $modalLoading = false;
                     }
                 } else {
                     dismissModal();
@@ -51,7 +54,7 @@
     });
 
     const data: ModalData = {
-        title: 'Create a room',
+        title: 'Create server',
         actions: [
             {
                 title: 'Create',
@@ -71,17 +74,10 @@
     <ErrorHeader size={'1.2rem'} {errorMessage} />
 
     <div class="friend-container">
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="32"
-            height="32"
-            viewBox="0 0 24 24"
-            ><g fill="none" stroke="var(--branding)" stroke-width="1.5"
-                ><path
-                    d="M2 12.204c0-2.289 0-3.433.52-4.381c.518-.949 1.467-1.537 3.364-2.715l2-1.241C9.889 2.622 10.892 2 12 2c1.108 0 2.11.622 4.116 1.867l2 1.241c1.897 1.178 2.846 1.766 3.365 2.715c.519.948.519 2.092.519 4.38v1.522c0 3.9 0 5.851-1.172 7.063C19.657 22 17.771 22 14 22h-4c-3.771 0-5.657 0-6.828-1.212C2 19.576 2 17.626 2 13.725v-1.521Z"
-                    opacity=".5"
-                /><path stroke-linecap="round" d="M12 15v3" /></g
-            ></svg
+        <span class="placeholder">
+            <h1>
+                {Array.from(name)[0] || '?'}{Array.from(name)[1] || ''}
+            </h1></span
         >
         <input
             bind:this={element}
@@ -90,23 +86,43 @@
             maxlength={15}
         />
     </div>
-
-    <InfoHeader
-        marginLeft={'50px'}
-        text={'You can invite your friends to this room later on'}
-    />
 </ModalTemplate>
 
 <style>
     .friend-container {
         display: flex;
+        flex-direction: column;
         align-items: center;
     }
 
-    svg {
-        width: 36px;
-        height: 36px;
-        margin-right: 5px;
-        margin-bottom: 5px;
+    input {
+        background: var(--bg);
+        border: 2px solid var(--bg);
+        transition: 150ms;
+    }
+
+    input:focus {
+        border: 2px solid var(--branding);
+    }
+
+    .placeholder {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: var(--bg);
+        border-radius: 80px;
+        width: 100px;
+        height: 100px;
+        margin: 0;
+        padding: 0;
+        transition: 125ms;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        user-select: none;
+    }
+
+    .placeholder h1 {
+        font-size: 1.3rem;
+        font-weight: 600;
     }
 </style>

@@ -174,49 +174,43 @@
     {#if $currentRoomData}
         <div class={`info-container ${!$currentRoomId ? 'empty' : ''}`}>
             <div class="data-container" in:fade={{ duration: 150 }}>
-                {#if $roomData.icon}
-                    <img
-                        id="icon"
-                        bind:this={icon}
-                        src={`${$roomData?.icon}`}
-                        alt={`${$roomData?.name}'s icon'`}
-                        draggable={false}
-                        on:click={changeImage}
-                        on:keydown={changeImage}
-                    />
-                {:else if $roomData.isDM}
-                    <svg
-                        id="icon"
-                        bind:this={icon}
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="32"
-                        height="32"
-                        viewBox="0 0 256 256"
-                        on:click={changeImage}
-                        on:keydown={changeImage}
-                        ><path
-                            fill="var(--branding)"
-                            d="M128 24a104 104 0 1 0 104 104A104.11 104.11 0 0 0 128 24ZM74.08 197.5a64 64 0 0 1 107.84 0a87.83 87.83 0 0 1-107.84 0ZM96 120a32 32 0 1 1 32 32a32 32 0 0 1-32-32Zm97.76 66.41a79.66 79.66 0 0 0-36.06-28.75a48 48 0 1 0-59.4 0a79.66 79.66 0 0 0-36.06 28.75a88 88 0 1 1 131.52 0Z"
-                        /></svg
-                    >
+                {#if $roomData.isDM}
+                    {#if $roomData.icon}
+                        <img
+                            id="icon"
+                            bind:this={icon}
+                            on:click={changeImage}
+                            on:keydown={changeImage}
+                            src={$roomData.icon}
+                            draggable={false}
+                            alt="Avatar"
+                        />
+                    {:else}
+                        <img
+                            id="icon"
+                            bind:this={icon}
+                            on:click={changeImage}
+                            on:keydown={changeImage}
+                            src="/images/avatar.svg"
+                            draggable={false}
+                            alt="Avatar"
+                        />
+                    {/if}
                 {:else}
                     <svg
-                        id="icon"
                         bind:this={icon}
                         xmlns="http://www.w3.org/2000/svg"
                         width="32"
                         height="32"
                         viewBox="0 0 24 24"
-                        on:click={changeImage}
-                        on:keydown={changeImage}
-                        ><g fill="var(--branding)"
-                            ><path
-                                d="M2 12.204c0-2.289 0-3.433.52-4.381c.518-.949 1.467-1.537 3.364-2.715l2-1.241C9.889 2.622 10.892 2 12 2c1.108 0 2.11.622 4.116 1.867l2 1.241c1.897 1.178 2.846 1.766 3.365 2.715c.519.948.519 2.092.519 4.38v1.522c0 3.9 0 5.851-1.172 7.063C19.657 22 17.771 22 14 22h-4c-3.771 0-5.657 0-6.828-1.212C2 19.576 2 17.626 2 13.725v-1.521Z"
-                                opacity=".5"
-                            /><path
-                                d="M11.25 18a.75.75 0 0 0 1.5 0v-3a.75.75 0 0 0-1.5 0v3Z"
-                            /></g
-                        ></svg
+                        ><path
+                            fill="none"
+                            stroke="var(--gray)"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="1.5"
+                            d="M10 3L5 21M19 3l-5 18m8-12H4m16 7H2"
+                        /></svg
                     >
                 {/if}
 
@@ -235,19 +229,16 @@
 
 <style>
     .info-container {
-        top: 0;
+        width: 100%;
+        min-width: 100%;
+        height: calc((45px + 45px + 10px + 3px) * 0.5);
         display: flex;
-        padding: 5px;
-        padding-right: 0;
-        z-index: 1;
-        height: 65px;
-        justify-content: center;
-        align-items: center;
-        padding-right: 10px;
+        flex-direction: column;
+        border-radius: 10px;
+        padding: 10px;
+        background: var(--primary);
+        user-select: none;
         flex: 1;
-        background: var(--bg_trans);
-        backdrop-filter: blur(5px);
-        border-bottom: 1px solid var(--primary);
     }
 
     .empty {
@@ -257,19 +248,21 @@
     .data-container {
         display: flex;
         align-items: center;
-        padding: 10px;
         border-radius: 10px;
         width: max-content;
+        height: 100%;
     }
 
     .placeholder {
+        width: 100%;
+        min-width: 100%;
         flex: 1;
         z-index: 1;
     }
 
     #icon {
-        width: 42px;
-        height: 42px;
+        width: 36px;
+        height: 36px;
         border-radius: 30px;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -286,7 +279,6 @@
     input {
         margin: 0;
         font-size: 1.3rem;
-        margin-left: 5px;
         color: var(--text);
         width: 200px;
         border: 2px solid transparent;
@@ -323,5 +315,8 @@
 
     svg {
         padding: 2px;
+        cursor: default;
+        fill: var(--gray);
+        stroke: var(--gray);
     }
 </style>

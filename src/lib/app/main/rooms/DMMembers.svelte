@@ -42,13 +42,15 @@
     });
 </script>
 
-<div class="members-container" in:fade={{ duration: 150 }}>
-    <PreviewSmall {profileData} />
+{#if profileData}
+    <div class="members-container" in:fade={{ duration: 150 }}>
+        <PreviewSmall {profileData} />
 
-    <hr />
+        <hr />
 
-    <CloseDmButton />
-</div>
+        <CloseDmButton />
+    </div>
+{/if}
 
 <style>
     .members-container {
@@ -59,12 +61,15 @@
         z-index: 2;
         overflow: auto;
         height: calc(100vh - 65px);
+        overflow: hidden;
     }
 
     hr {
+        margin-top: 20px;
         width: 100%;
-        height: 1px;
-        border: 1px solid var(--primary);
+        height: 5px;
+        background: var(--bg);
+        border: 1px solid var(--bg);
         transform: translateY(-40px);
     }
 </style>

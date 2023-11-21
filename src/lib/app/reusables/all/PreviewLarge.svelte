@@ -17,6 +17,7 @@
         <LargeIdentifier
             profileId={profileData?.profileId}
             username={profileData?.username}
+            status={profileData?.status}
         />
 
         {#if profileData?.bio}

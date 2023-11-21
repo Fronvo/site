@@ -27,6 +27,7 @@ import {
 import {
     currentModalId,
     modalAnimDuration,
+    modalLoading,
     ModalTypes,
     modalVisible,
 } from 'stores/modals';
@@ -248,6 +249,10 @@ export function dismissModal(callback?: Function): void {
         modalVisible.set(false);
 
         // Finally, set timeout to reset for callback
+        setTimeout(() => {
+            modalLoading.set(false);
+        }, modalAnimDuration + 50);
+
         if (callback) {
             setTimeout(() => {
                 callback();

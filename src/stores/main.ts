@@ -7,7 +7,7 @@ import type { TopPanels } from 'types/all';
 
 /****************************** Fronvo client ******************************/
 // export let SERVER_URL = 'ws://localhost:3001';
-export let SERVER_URL = 'wss://fronvosrv.fly.dev';
+export let SERVER_URL = 'wss://srv2.fly.dev';
 
 export let socket: Socket<ServerToClientEvents, ClientToServerEvents>;
 export let secondarySocket: Socket<ServerToClientEvents, ClientToServerEvents>;

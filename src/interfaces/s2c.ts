@@ -2,10 +2,10 @@
 // Interfaces for the server to client events of Socket.IO
 // ******************** //
 
-import type { RoomMessageDeletedResult } from './account/roomMessageDeleted';
+import type { MessageDeletedResult } from './account/messageDeleted';
 import type { MemberJoinedResult } from './account/memberJoined';
 import type { MemberLeftResult } from './account/memberLeft';
-import type { NewRoomMessageResult } from './account/newRoomMessage';
+import type { NewMessageResult } from './account/newMessage';
 import type { OnlineStatusUpdatedParams } from './account/onlineStatusUpdated';
 import type {
     RegisterVerifyParams,
@@ -43,9 +43,9 @@ export interface ServerToClientEvents {
         callback?: ({}: ResetPasswordVerifyResult) => void
     ) => void;
 
-    newRoomMessage: ({}: NewRoomMessageResult) => void;
+    newMessage: ({}: NewMessageResult) => void;
 
-    roomMessageDeleted: ({}: RoomMessageDeletedResult) => void;
+    messageDeleted: ({}: MessageDeletedResult) => void;
 
     roomCreated: ({}: RoomCreatedResult) => void;
 

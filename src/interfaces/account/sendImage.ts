@@ -1,12 +1,12 @@
 // ******************** //
-// Interfaces for the sendRoomImage event file.
+// Interfaces for the sendImage event file.
 // ******************** //
 
 import type { FronvoError } from 'interfaces/all';
 
-export interface SendRoomImageParams {
+export interface SendImageParams {
     roomId: string;
     attachment: string;
 }
 
-export interface SendRoomImageResult extends FronvoError {}
+export interface SendImageResult extends FronvoError {}

@@ -12,6 +12,7 @@
                 title: 'Unlock more',
                 callback: () => showModal(ModalTypes.GoPRO),
                 condition: !$ourData.isPRO,
+                primary: true,
             },
             {
                 title: 'Dismiss',

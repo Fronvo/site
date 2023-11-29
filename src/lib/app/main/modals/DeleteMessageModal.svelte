@@ -14,7 +14,7 @@
         // Will receive result in RoomChat listener if successful
 
         socket.emit(
-            'deleteRoomMessage',
+            'deleteMessage',
             {
                 roomId: $currentRoomId,
                 messageId: $targetMessageModal.messageId,

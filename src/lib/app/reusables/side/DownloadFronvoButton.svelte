@@ -37,18 +37,18 @@
         height: 48px;
         padding: 10px;
         margin-top: 10px;
-        background: var(--secondary);
+        background: var(--primary);
         border-radius: 20px;
         cursor: pointer;
         pointer-events: all;
         z-index: 2;
         transition: 125ms;
         margin-bottom: 10px;
-        stroke: rgb(72, 202, 113);
+        stroke: var(--pro);
     }
 
     svg:hover {
-        background: rgb(72, 202, 113);
+        background: var(--pro);
         stroke: white;
         border-radius: 15px;
     }

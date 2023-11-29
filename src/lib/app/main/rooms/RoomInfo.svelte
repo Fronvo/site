@@ -8,7 +8,6 @@
     import { writable, type Unsubscriber } from 'svelte/store';
     import { onDestroy, onMount } from 'svelte';
     import { cachedAccountData, socket } from 'stores/main';
-    import { fade } from 'svelte/transition';
     import {
         findCachedAccount,
         isAcceptedImage,
@@ -22,9 +21,6 @@
     let nameP = writable($roomData?.name);
 
     let isUpdating = false;
-
-    let input: HTMLInputElement;
-    let icon: HTMLElement | SVGSVGElement;
 
     let unsubscribe: Unsubscriber;
 
@@ -80,37 +76,6 @@
         input.click();
     }
 
-    function changeName(): void {
-        if ($nameP.length == 0) {
-            $nameP = $roomData.name;
-        }
-
-        if ($nameP == $roomData.name || isUpdating) {
-            return;
-        }
-
-        isUpdating = true;
-
-        input.blur();
-
-        socket.emit(
-            'updateRoomData',
-            {
-                roomId: $currentRoomId,
-                name: $nameP,
-            },
-            ({ err }) => {
-                if (err) {
-                    $nameP = $roomData.name;
-                } else {
-                    $roomData.name = $nameP;
-                }
-
-                isUpdating = false;
-            }
-        );
-    }
-
     onMount(() => {
         unsubscribe = currentRoomLoaded.subscribe(async (state) => {
             if (!state) return;
@@ -118,32 +83,9 @@
             if ($roomData.isDM) {
                 $nameP = $roomData.dmUser.username || 'Deleted user';
                 $roomData.icon = $roomData.dmUser.avatar;
-
-                setTimeout(() => {
-                    input.disabled = true;
-                }, 0);
             } else {
                 $nameP = $roomData.name;
             }
-
-            setTimeout(() => {
-                input.style.opacity = '1';
-                icon.style.opacity = '1';
-
-                input.onblur = () => {
-                    changeName();
-                };
-
-                input.onkeyup = (ev) => {
-                    if (ev.key == 'Enter') {
-                        changeName();
-                    }
-                };
-
-                if (!$roomData.isDM) {
-                    input.disabled = false;
-                }
-            }, 0);
         });
 
         socket.on('roomDataUpdated', ({ roomId, name, icon }) => {
@@ -152,17 +94,9 @@
                 $roomData.name = name;
                 $roomData.icon = icon;
 
-                updateIconOpacity();
-
-                setTitle(name);
+                setTitle(`Fronvo | ${name}`);
             }
         });
-
-        function updateIconOpacity(): void {
-            setTimeout(() => {
-                icon.style.opacity = '1';
-            }, 0);
-        }
     });
 
     onDestroy(() => {
@@ -173,12 +107,11 @@
 <div class="placeholder">
     {#if $currentRoomData}
         <div class={`info-container ${!$currentRoomId ? 'empty' : ''}`}>
-            <div class="data-container" in:fade={{ duration: 150 }}>
+            <div class="data-container">
                 {#if $roomData.isDM}
                     {#if $roomData.icon}
                         <img
                             id="icon"
-                            bind:this={icon}
                             on:click={changeImage}
                             on:keydown={changeImage}
                             src={$roomData.icon}
@@ -188,7 +121,6 @@
                     {:else}
                         <img
                             id="icon"
-                            bind:this={icon}
                             on:click={changeImage}
                             on:keydown={changeImage}
                             src="/images/avatar.svg"
@@ -198,7 +130,6 @@
                     {/if}
                 {:else}
                     <svg
-                        bind:this={icon}
                         xmlns="http://www.w3.org/2000/svg"
                         width="32"
                         height="32"
@@ -214,12 +145,7 @@
                     >
                 {/if}
 
-                <input
-                    bind:this={input}
-                    bind:value={$nameP}
-                    placeholder="Room name"
-                    maxlength={15}
-                />
+                <h1>{$currentRoomData.name}</h1>
             </div>
 
             <div class="placeholder" />
@@ -231,14 +157,14 @@
     .info-container {
         width: 100%;
         min-width: 100%;
-        height: calc((45px + 45px + 10px + 3px) * 0.5);
+        height: 53px;
         display: flex;
         flex-direction: column;
-        border-radius: 10px;
-        padding: 10px;
-        background: var(--primary);
+        padding: 15px;
+        margin-top: 1px;
         user-select: none;
-        flex: 1;
+        border-bottom: 1px solid rgb(23, 23, 23);
+        box-shadow: 0 0 10px rgb(25, 25, 25);
     }
 
     .empty {
@@ -248,7 +174,6 @@
     .data-container {
         display: flex;
         align-items: center;
-        border-radius: 10px;
         width: max-content;
         height: 100%;
     }
@@ -256,13 +181,12 @@
     .placeholder {
         width: 100%;
         min-width: 100%;
-        flex: 1;
         z-index: 1;
     }
 
     #icon {
-        width: 36px;
-        height: 36px;
+        width: 32px;
+        height: 32px;
         border-radius: 30px;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -273,14 +197,14 @@
         transition: 150ms;
         cursor: pointer;
         border: 2px solid transparent;
-        opacity: 0;
     }
 
-    input {
+    h1 {
         margin: 0;
-        font-size: 1.3rem;
-        color: var(--text);
-        width: 200px;
+        font-size: 1rem;
+        font-weight: 600;
+        padding-left: 5px;
+        color: white;
         border: 2px solid transparent;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -293,27 +217,16 @@
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
         background: transparent;
-        opacity: 0;
     }
 
-    input:hover {
-        border: 2px solid var(--secondary);
-    }
-
-    input:focus {
-        border: 2px solid var(--branding);
-    }
-
-    input:disabled {
+    h1:disabled {
         background: transparent;
         color: var(--text);
     }
 
-    input:disabled:hover {
-        border: 2px solid transparent;
-    }
-
     svg {
+        width: 28px;
+        height: 28px;
         padding: 2px;
         cursor: default;
         fill: var(--gray);

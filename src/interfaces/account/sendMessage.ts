@@ -1,13 +1,13 @@
 // ******************** //
-// Interfaces for the sendRoomMessage event file.
+// Interfaces for the sendMessage event file.
 // ******************** //
 
 import type { FronvoError } from 'interfaces/all';
 
-export interface SendRoomMessageParams {
+export interface SendMessageParams {
     roomId: string;
     message: string;
     replyId?: string;
 }
 
-export interface SendRoomMessageResult extends FronvoError {}
+export interface SendMessageResult extends FronvoError {}

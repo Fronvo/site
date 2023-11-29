@@ -12,6 +12,7 @@
         roomsList,
         currentRoomData,
         sendingImage,
+        isInServer,
     } from 'stores/rooms';
     import { onDestroy, onMount } from 'svelte';
     import {
@@ -37,9 +38,11 @@
     } from 'stores/main';
     import InfiniteLoading from 'svelte-infinite-loading';
     import type { Unsubscriber } from 'svelte/store';
-    import type { NewRoomMessageResult } from 'interfaces/account/newRoomMessage';
+    import type { NewMessageResult } from 'interfaces/account/newMessage';
     import { toast } from 'svelte-sonner';
     import { scale } from 'svelte/transition';
+    import RoomStart from '$lib/app/reusables/rooms/RoomStart.svelte';
+    import PropMessages from '$lib/app/reusables/rooms/PropMessages.svelte';
 
     let chat: HTMLDivElement;
     let unsubscribe: Unsubscriber;
@@ -47,13 +50,15 @@
     let previousEmpty = false;
 
     async function loadMore({ detail: { loaded } }): Promise<void> {
+        console.log(`loadMore previousEmpty: ${previousEmpty}`);
+
         if (previousEmpty) {
             loaded();
             return;
         }
 
         socket.emit(
-            'fetchRoomMessages',
+            'fetchMessages',
             {
                 roomId: $currentRoomId,
                 from: $messages.length.toString(),
@@ -111,7 +116,7 @@
         function messageListener({
             roomId,
             newMessageData,
-        }: NewRoomMessageResult): void {
+        }: NewMessageResult): void {
             if ($messages.includes(newMessageData)) return;
 
             if ($currentRoomId == roomId) {
@@ -139,13 +144,13 @@
             }
         }
 
-        socket.off('newRoomMessage', messageListener);
+        socket.off('newMessage', messageListener);
 
-        socket.on('newRoomMessage', messageListener);
+        socket.on('newMessage', messageListener);
     }
 
     function attachDeletedMessageListener(): void {
-        socket.on('roomMessageDeleted', ({ messageId, roomId }) => {
+        socket.on('messageDeleted', ({ messageId, roomId }) => {
             if (roomId != $currentRoomId) return;
 
             for (const messageIndex in $messages) {
@@ -188,6 +193,7 @@
                     $currentRoomId = undefined;
                     $currentRoomData = undefined;
                     $currentRoomMessages = [];
+                    $isInServer = false;
 
                     setTitle('Fronvo');
 
@@ -300,7 +306,7 @@
                     )?.username || 'Deleted user'
                 );
             } else {
-                setTitle($roomData.name);
+                setTitle(`Fronvo | ${$roomData.name}`);
             }
 
             // Put here, check conditions each new room
@@ -324,34 +330,13 @@
         class="chat-container"
         transition:scale={{ duration: 1000, start: 0.975 }}
     >
-        {#if $roomData}
-            {#if $messages.length != 0 && $messages.length < 20}
-                <div class="placeholder">
-                    <h1 id="name">placeholder</h1>
-                </div>
-                <div class="placeholder">
-                    <h1 id="name">placeholder</h1>
-                </div>
-                <div class="placeholder">
-                    <h1 id="name">placeholder</h1>
-                </div>
-                <div class="placeholder">
-                    <h1 id="name">placeholder</h1>
-                </div>
-                <div class="placeholder">
-                    <h1 id="name">placeholder</h1>
-                </div>
-                <div class="placeholder">
-                    <h1 id="name">placeholder</h1>
-                </div>
-                <div class="placeholder">
-                    <h1 id="name">placeholder</h1>
-                </div>
-                <div class="placeholder">
-                    <h1 id="name">placeholder</h1>
-                </div>
-            {/if}
+        <RoomStart />
 
+        {#if $messages.length == 0 && !previousEmpty}
+            <PropMessages />
+        {/if}
+
+        {#if $roomData}
             {#if !previousEmpty && canShowScroll}
                 <InfiniteLoading
                     distance={1500}
@@ -388,23 +373,10 @@
         justify-content: start;
         width: 100%;
         max-width: 100%;
-        margin-top: 4px;
-        min-height: calc(100vh - 130px);
+        height: calc(100vh);
         overflow-y: scroll;
         overflow-x: hidden;
         transition: none;
         opacity: 0;
-        background: var(--primary);
-        border-radius: 10px;
-        padding-bottom: 10px;
-    }
-
-    .placeholder {
-        visibility: hidden;
-        display: flex;
-        align-items: start;
-        margin-left: 20px;
-        height: 100vh;
-        flex: 1;
     }
 </style>

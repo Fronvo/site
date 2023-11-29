@@ -8,6 +8,7 @@
         currentRoomId,
         currentRoomLoaded,
         currentRoomMessages,
+        isInServer,
         currentRoomData as roomData,
     } from 'stores/rooms';
     import { loadRoomsData } from 'utilities/rooms';
@@ -40,6 +41,7 @@
                     $currentRoomId = undefined;
                     $currentRoomData = undefined;
                     $currentRoomMessages = [];
+                    $isInServer = false;
 
                     setTitle('Fronvo');
 

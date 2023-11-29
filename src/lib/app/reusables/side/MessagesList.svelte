@@ -1,16 +1,11 @@
 <script lang="ts">
-    import { fly, fade } from 'svelte/transition';
     import Dm from './DM.svelte';
     import { dmsList } from 'stores/rooms';
     import RoomPlaceholder from '../rooms/RoomPlaceholder.svelte';
     import SearchBar from '../all/SearchBar.svelte';
 </script>
 
-<div
-    class="messages-container"
-    in:fly={{ duration: 250 }}
-    out:fade={{ duration: 50 }}
->
+<div class="messages-container">
     {#if $dmsList.length > 0}
         <SearchBar />
     {/if}
@@ -37,7 +32,6 @@
         height: 100%;
         flex: 1;
         overflow-y: auto;
-        border-radius: 10px;
         background: var(--primary);
     }
 

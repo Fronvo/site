@@ -94,8 +94,6 @@
 
     {#if $homePostsStore.length != 0}
         <div class="posts-container">
-            <CreatePost />
-
             {#if $homePostsStore && !$currentRoomId}
                 {#each $homePostsStore as post}
                     <Post {post} />
@@ -114,8 +112,6 @@
             {/if}
         </div>
     {:else}
-        <CreatePost />
-
         <div class="empty">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -158,26 +154,9 @@
         user-select: none;
     }
 
-    .top-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 50%;
-        max-width: 1000px;
-        position: fixed;
-        right: 0;
-        left: 0;
-        background: var(--bg_trans);
-        height: 65px;
-        margin: auto;
-        backdrop-filter: blur(10px);
-        z-index: 1;
-    }
-
     .home-container {
         display: flex;
         flex-direction: column;
-        width: calc(100vw - 275px - 275px);
         min-width: 550px;
         height: calc(100vh);
         overflow-x: hidden;

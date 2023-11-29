@@ -4,9 +4,9 @@
 
 import type { CreateRoomParams, CreateRoomResult } from './account/createRoom';
 import type {
-    FetchRoomMessagesParams,
-    FetchRoomMessagesResult,
-} from './account/fetchRoomMessages';
+    FetchMessagesParams,
+    FetchMessagesResult,
+} from './account/fetchMessages';
 import type {
     FetchProfileDataParams,
     FetchProfileDataResult,
@@ -16,9 +16,9 @@ import type { JoinRoomParams, JoinRoomResult } from './account/joinRoom';
 import type { LeaveRoomParams, LeaveRoomResult } from './account/leaveRoom';
 import type { LogoutResult } from './account/logout';
 import type {
-    SendRoomMessageParams,
-    SendRoomMessageResult,
-} from './account/sendRoomMessage';
+    SendMessageParams,
+    SendMessageResult,
+} from './account/sendMessage';
 import type {
     UpdateRoomDataParams,
     UpdateRoomDataResult,
@@ -52,9 +52,9 @@ import type {
     UpdateProfileStatusResult,
 } from './account/updateProfileStatus';
 import type {
-    DeleteRoomMessageParams,
-    DeleteRoomMessageResult,
-} from './account/deleteRoomMessage';
+    DeleteMessageParams,
+    DeleteMessageResult,
+} from './account/deleteMessage';
 import type { FetchConvosResult } from './account/fetchConvos';
 import type {
     StartTypingParams,
@@ -86,10 +86,7 @@ import type {
     RemoveRoomMemberResult,
 } from './account/removeRoomMember';
 import type { CreateDMParams, CreateDMResult } from './account/createDM';
-import type {
-    SendRoomImageParams,
-    SendRoomImageResult,
-} from './account/sendRoomImage';
+import type { SendImageParams, SendImageResult } from './account/sendImage';
 import type {
     FetchProfilePostsParams,
     FetchProfilePostsResult,
@@ -114,6 +111,7 @@ import type {
     CreateThemeParams,
     CreateThemeResult,
 } from './account/createTheme';
+import type { CanPostResult } from './account/canPost';
 
 export interface ClientToServerEvents {
     register: (
@@ -164,17 +162,17 @@ export interface ClientToServerEvents {
         {}: LeaveRoomParams,
         callback?: ({}: LeaveRoomResult) => void
     ) => void;
-    sendRoomMessage: (
-        {}: SendRoomMessageParams,
-        callback?: ({}: SendRoomMessageResult) => void
+    sendMessage: (
+        {}: SendMessageParams,
+        callback?: ({}: SendMessageResult) => void
     ) => void;
-    fetchRoomMessages: (
-        {}: FetchRoomMessagesParams,
-        callback?: ({}: FetchRoomMessagesResult) => void
+    fetchMessages: (
+        {}: FetchMessagesParams,
+        callback?: ({}: FetchMessagesResult) => void
     ) => void;
-    deleteRoomMessage: (
-        {}: DeleteRoomMessageParams,
-        callback?: ({}: DeleteRoomMessageResult) => void
+    deleteMessage: (
+        {}: DeleteMessageParams,
+        callback?: ({}: DeleteMessageResult) => void
     ) => void;
     kickMember: (
         {}: KickMemberParams,
@@ -221,9 +219,9 @@ export interface ClientToServerEvents {
         {}: CreateDMParams,
         callback?: ({}: CreateDMResult) => void
     ) => void;
-    sendRoomImage: (
-        {}: SendRoomImageParams,
-        callback?: ({}: SendRoomImageResult) => void
+    sendImage: (
+        {}: SendImageParams,
+        callback?: ({}: SendImageResult) => void
     ) => void;
     fetchProfilePosts: (
         {}: FetchProfilePostsParams,
@@ -267,4 +265,5 @@ export interface ClientToServerEvents {
         {}: CreateThemeParams,
         callback?: ({}: CreateThemeResult) => void
     ) => void;
+    canPost: (callback?: ({}: CanPostResult) => void) => void;
 }

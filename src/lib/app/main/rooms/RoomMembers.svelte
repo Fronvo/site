@@ -7,6 +7,7 @@
         currentRoomId,
         currentRoomLoaded,
         currentRoomMessages,
+        isInServer,
         currentRoomData as roomData,
     } from 'stores/rooms';
     import { cachedAccountData, socket } from 'stores/main';
@@ -83,6 +84,7 @@
                     $currentRoomId = undefined;
                     $currentRoomData = undefined;
                     $currentRoomMessages = [];
+                    $isInServer = false;
 
                     setTitle('Fronvo');
 
@@ -107,19 +109,12 @@
     });
 </script>
 
-<div class="members-container" in:fade={{ duration: 150 }}>
+<div class="members-container">
     {#if loadingFinished}
+        <h1>Online -- {memberInfo.length}</h1>
         {#each memberInfo as profileData}
             <RoomMember {profileData} />
         {/each}
-
-        <hr />
-
-        {#if memberInfo.length < 10}
-            <InviteButton />
-        {/if}
-
-        <LeaveRoomButton />
     {/if}
 </div>
 
@@ -128,17 +123,23 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 275px;
-        padding-top: 10px;
-        z-index: 2;
+        width: 240px;
+        z-index: 1;
         overflow: auto;
         height: calc(100vh - 65px);
+        overflow: hidden;
+        margin-top: 10px;
+        user-select: none;
     }
 
-    hr {
+    h1 {
         width: 100%;
-        height: 5px;
-        background: var(--bg);
-        border: 1px solid var(--bg);
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin: 0;
+        margin-left: 30px;
+        margin-bottom: 5px;
+        color: var(--gray);
+        text-transform: uppercase;
     }
 </style>

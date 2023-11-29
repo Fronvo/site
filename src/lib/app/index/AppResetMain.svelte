@@ -37,7 +37,7 @@
     }
 
     function goBack(): void {
-        goto('/app');
+        goto('/');
     }
 
     onMount(() => {

@@ -126,14 +126,6 @@
         margin-right: 8px;
     }
 
-    svg {
-        width: 36px;
-        height: 36px;
-        border-radius: 30px;
-        padding: 5px;
-        cursor: default;
-    }
-
     #avatar {
         padding: 0;
     }

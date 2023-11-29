@@ -1,8 +1,8 @@
 // ******************** //
-// Interfaces for the roomMessageDeleted event.
+// Interfaces for the messageDeleted event.
 // ******************** //
 
-export interface RoomMessageDeletedResult {
+export interface MessageDeletedResult {
     roomId: string;
     messageId: string;
 }

@@ -26,7 +26,7 @@
         isAcceptedImage,
         showDropdown,
     } from 'utilities/main';
-    import { fade, slide } from 'svelte/transition';
+    import { slide } from 'svelte/transition';
     import { DropdownTypes } from 'stores/dropdowns';
     import { targetTenorCallback } from 'stores/modals';
     import { toast } from 'svelte-sonner';
@@ -179,7 +179,7 @@
         if (!canMessage) return;
 
         $targetTenorCallback = (url: string) => {
-            socket.emit('sendRoomMessage', {
+            socket.emit('sendMessage', {
                 roomId: $currentRoomId,
                 message: url,
             });
@@ -351,7 +351,7 @@
 </script>
 
 {#if $currentRoomLoaded}
-    <div class="send-container" in:fade={{ duration: 150 }}>
+    <div class="send-container">
         {#if $showScrollBottom}
             <RoomScrollBottom />
         {/if}
@@ -394,7 +394,7 @@
 
             <textarea
                 bind:this={content}
-                placeholder={`Message ${$currentRoomData.name}`}
+                placeholder={`Message #${$currentRoomData.name}`}
                 id="textarea-content"
                 bind:value={$sendContent}
                 maxlength={500}
@@ -422,7 +422,6 @@
 
             {#if $sendContent.trim().length > 0}
                 <svg
-                    id="important"
                     xmlns="http://www.w3.org/2000/svg"
                     width="32"
                     height="32"
@@ -470,7 +469,7 @@
         background: transparent;
         display: flex;
         flex-direction: column;
-        width: 100%;
+        width: 97.5%;
         max-width: 100%;
         align-items: center;
         justify-content: end;
@@ -480,11 +479,13 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        min-height: 48px;
-        background: var(--bg);
-        border-radius: 10px;
-        margin-bottom: 8px;
-        flex: 1;
+        height: 42px;
+        margin: 10px;
+        margin-bottom: 20px;
+        padding-left: 10px;
+        padding-right: 10px;
+        border-radius: 7px;
+        background: var(--secondary);
     }
 
     .wrapper {
@@ -492,20 +493,19 @@
         align-items: center;
         justify-content: center;
         width: 100%;
-        min-height: 45px;
-        padding: 10px;
-        padding-bottom: 2.5px;
-        padding-top: 2.5px;
-        border-radius: 10px;
-        background: var(--primary);
-        border: 2px solid var(--primary);
+        height: 64px;
     }
 
     textarea {
         background: transparent;
-        font-size: 1.05rem;
+        font-size: 0.9rem;
+        margin-top: 3px;
         height: 34px;
         flex: 1;
+    }
+
+    textarea::placeholder {
+        opacity: 0.5;
     }
 
     textarea:disabled {
@@ -518,19 +518,10 @@
         padding: 5px;
         margin-right: 5px;
         border-radius: 15px;
-        transition: 150ms;
         fill: var(--gray);
     }
 
     svg:hover {
         fill: var(--gray_hover);
-    }
-
-    #important {
-        fill: var(--branding);
-    }
-
-    #important:hover {
-        fill: var(--branding_darken);
     }
 </style>

@@ -13,6 +13,7 @@
             {
                 title: 'Join the club',
                 callback: goPRO,
+                primary: true,
             },
             {
                 title: 'Cancel',

@@ -44,17 +44,21 @@
     $: {
         // Skip time if messages are sent less than 15 minutes ago
         showTime =
-            differenceInMinutes(
+            differenceInDays(
                 new Date(messageData.creationDate),
                 new Date($roomMessages[i - 1]?.message.creationDate)
-            ) >= 15 ||
+            ) >= 1 ||
             (typeof $roomMessages[i - 1] == 'undefined' && !isPreview);
 
-        // Skip context if same account
+        // Skip context if same account, less than 15 minutes ago
         skipContext =
             $roomMessages[i - 1]?.profileData.profileId ==
                 profileData.profileId &&
             !showTime &&
+            differenceInMinutes(
+                new Date(messageData.creationDate),
+                new Date($roomMessages[i - 1]?.message.creationDate)
+            ) < 15 &&
             !isPreview;
 
         // Sanitise first
@@ -110,34 +114,18 @@
 
 {#if showTime}
     <div class="time-container">
-        <hr />
-
         <h1 id="time">
-            <!-- Same day -->
-            {#if getDayOfYear(new Date(messageData.creationDate)) == getDayOfYear(new Date())}
-                Today at <Time
-                    timestamp={messageData.creationDate}
-                    format={'HH:mm'}
-                />
-            {:else if getDayOfYear(new Date(messageData.creationDate)) == getDayOfYear(new Date()) - 1}
-                <!-- Previous day -->
-                Yesterday at <Time
-                    timestamp={messageData.creationDate}
-                    format={'HH:mm'}
-                />
-            {:else}
-                <!-- Any other day -->
-                <Time
-                    timestamp={messageData.creationDate}
-                    format={'MMM DD, YYYY'}
-                />
-            {/if}
+            <!-- Any other day -->
+            <Time
+                timestamp={messageData.creationDate}
+                format={'MMMM DD, YYYY'}
+            />
         </h1>
-
-        <hr />
     </div>
 {/if}
 
+<!-- TODO: Remake entire message layout, need to have extra options inline as content -->
+<!-- Also need to remove extra padding below avatar, keep spotify etc as is just content -->
 <div
     class={`message-container ${isPreview ? 'preview' : ''} ${
         $replyingToId == messageData.messageId && !isPreview ? 'highlight' : ''
@@ -289,7 +277,6 @@
         padding-left: 10px;
         padding-bottom: 5px;
         padding-top: 2px;
-        transition: 250ms;
         border-radius: 10px;
     }
 
@@ -372,35 +359,34 @@
 
     .time-container {
         display: flex;
-        margin-top: 15px;
-        margin-bottom: 15px;
-    }
-
-    hr {
-        border-color: var(--secondary);
-        width: 40%;
+        align-items: start;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        margin-left: 3%;
         overflow: hidden;
+        border-bottom: 1px solid var(--tertiary);
     }
 
     #time {
+        position: relative;
+        display: inline-block;
         margin: 0;
         font-size: 0.8rem;
-        font-weight: 800;
-        align-self: center;
-        margin: auto;
+        font-weight: 600;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+        bottom: 5px;
+        margin-left: 5px;
     }
 
     .message-info-container {
         display: flex;
         align-items: start;
         justify-content: start;
-        transform: translateY(-2px);
     }
 
     .preview .message-info-container {
@@ -494,6 +480,7 @@
         margin: 0;
         margin-left: 5px;
         font-size: 0.95rem;
+        font-weight: 400;
         white-space: pre-wrap;
         overflow: hidden;
         text-align: start;

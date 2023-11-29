@@ -54,9 +54,9 @@
         bottom: 80px;
         height: 48px;
         width: 48px;
-        background: var(--branding);
-        box-shadow: 0 0 5px var(--branding_darken);
-        border: 2px solid var(--branding);
+        background: var(--pro);
+        box-shadow: 0 0 5px var(--pro);
+        border: 2px solid var(--pro);
         border-radius: 15px;
         padding: 5px;
         transition: 150ms;
@@ -69,7 +69,7 @@
     }
 
     .bottom-container:active {
-        background: var(--branding_darken);
+        opacity: 0.75;
     }
 
     @keyframes float {

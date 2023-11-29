@@ -31,7 +31,7 @@
                     localStorage.clear();
 
                     dismissModal(() => {
-                        location.href = '/app';
+                        location.href = '/';
                     });
                 }
             }

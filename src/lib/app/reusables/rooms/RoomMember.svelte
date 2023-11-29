@@ -22,7 +22,7 @@
             $targetProfileModal = profileData;
         }
 
-        showDropdown(DropdownTypes.Profile, container, 'left', -30, 10);
+        showDropdown(DropdownTypes.Profile, container, 'left', 0, 10);
     }
 
     onMount(() => {
@@ -130,10 +130,10 @@
         align-items: center;
         background: transparent;
         cursor: pointer;
-        width: 95%;
-        padding: 8px;
-        border-radius: 10px;
-        transition: 150ms;
+        width: 92%;
+        height: 46px;
+        padding: 4px;
+        border-radius: 6px;
     }
 
     .badge-container {
@@ -151,7 +151,7 @@
         border: 3px solid var(--bg);
     }
 
-    div:hover {
+    .member-container:hover {
         background: var(--secondary);
     }
 
@@ -185,7 +185,6 @@
     .bottom-container {
         display: flex;
         flex-direction: column;
-        transition: 150ms;
     }
 
     .top-container {
@@ -198,18 +197,18 @@
         overflow: hidden;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
-        font-size: 1.05rem;
-        color: var(--text);
+        font-size: 1rem;
+        color: var(--gray);
     }
 
     .top-container svg {
-        width: 20px;
-        height: 20px;
+        width: 18px;
+        height: 18px;
         margin-left: 5px;
     }
 
     #status {
-        font-size: 0.9rem;
+        font-size: 0.75rem;
         color: var(--gray);
         display: -webkit-box;
         overflow: hidden;

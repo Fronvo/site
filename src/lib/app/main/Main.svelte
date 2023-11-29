@@ -6,16 +6,11 @@
     import MessagesList from '../reusables/side/MessagesList.svelte';
     import {
         currentRoomData,
-        currentRoomId,
         currentRoomLoaded,
+        isInServer,
         roomsList,
     } from 'stores/rooms';
-    import {
-        darkTheme,
-        disabledIn30,
-        lastSendsIn30,
-        socket,
-    } from 'stores/main';
+    import { disabledIn30, lastSendsIn30, socket } from 'stores/main';
     import { onMount } from 'svelte';
     import { differenceInMinutes } from 'date-fns';
     import { getKey } from 'utilities/global';
@@ -25,20 +20,15 @@
     import CreateServerButton from '../reusables/side/CreateServerButton.svelte';
     import DownloadFronvoButton from '../reusables/side/DownloadFronvoButton.svelte';
     import SecondaryOptions from '../reusables/top/SecondaryOptions.svelte';
-    import {
-        quartInOut,
-        quartOut,
-        quintOut,
-        sineInOut,
-        sineOut,
-    } from 'svelte/easing';
+    import { quintInOut } from 'svelte/easing';
     import ServersList from '../reusables/side/ServersList.svelte';
-    import DiscoverBotsButton from '../reusables/side/DiscoverBotsButton.svelte';
     import RoomChat from './rooms/RoomChat.svelte';
     import RoomSend from './rooms/RoomSend.svelte';
     import RoomInfo from './rooms/RoomInfo.svelte';
     import DmMembers from './rooms/DMMembers.svelte';
     import RoomMembers from './rooms/RoomMembers.svelte';
+    import ServerPanel from '../reusables/side/ServerPanel.svelte';
+    import Dashboard from './dashboard/Dashboard.svelte';
 
     onMount(() => {
         socket.on('roomAdded', async () => ($roomsList = await fetchConvos()));
@@ -83,52 +73,41 @@
     offset={'25px'}
 />
 
-<div class="main-container" in:fade={{ duration: 300, easing: sineOut }}>
-    <div
-        class="first-container"
-        in:fly={{ x: -75, duration: 300, easing: quintOut, opacity: 1 }}
-    >
+<div class="main-container" in:fade={{ duration: 300, easing: quintInOut }}>
+    <div class="first-container">
         <HomeButton />
         <ServersList />
         <CreateServerButton />
-        <DiscoverBotsButton />
         <DownloadFronvoButton />
     </div>
 
-    <div class="second-container" in:scale={{ duration: 300, start: 0.975 }}>
-        <span class="seperator" />
+    <div class="second-container">
+        {#if !$isInServer}
+            <SecondaryOptions />
 
-        <SecondaryOptions />
-
-        <span class="seperator" />
-
-        <MessagesList />
-
-        <span class="seperator" />
+            <MessagesList />
+        {:else}
+            <ServerPanel />
+        {/if}
 
         <AccountInfo />
     </div>
 
-    {#if $currentRoomLoaded}
-        <div class="third-container" in:scale={{ duration: 300, start: 0.975 }}>
+    <div class="third-container">
+        {#if $currentRoomLoaded}
             <!-- TODO: Else for Dashboard, Turbo -->
             <RoomInfo />
 
-            <span class="seperator" />
-
             <RoomChat />
 
-            <span class="seperator" />
-
             <RoomSend />
-        </div>
-    {/if}
+        {:else}
+            <Dashboard />
+        {/if}
+    </div>
 
     {#if $currentRoomLoaded}
-        <div
-            class="fourth-container"
-            in:scale={{ duration: 300, start: 0.975 }}
-        >
+        <div class="fourth-container">
             {#if $currentRoomData.isDM}
                 <DmMembers />
             {:else}
@@ -163,40 +142,27 @@
     }
 
     .second-container {
-        height: calc(100vh - 3px);
-        width: 235px;
+        height: calc(100vh);
+        min-width: 235px;
         margin-left: 5px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        border-radius: 10px;
+        background: var(--primary);
     }
 
     .third-container {
         width: 100%;
-        height: calc(100vh - 15px);
-        margin-left: 5px;
-        margin-right: 5px;
+        height: calc(100vh);
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
-        margin-top: 10px;
+        background: rgb(35, 36, 39);
     }
 
     .fourth-container {
         display: flex;
         flex-direction: column;
-        margin-top: 10px;
-        margin-bottom: 13px;
         background: var(--primary);
-        border-radius: 10px;
-        margin-right: 10px;
-    }
-
-    .seperator {
-        width: 100%;
-        height: 4px;
-        background: var(--bg);
     }
 </style>

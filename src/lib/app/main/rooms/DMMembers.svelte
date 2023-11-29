@@ -1,6 +1,5 @@
 <script lang="ts">
     import type { FronvoAccount } from 'interfaces/all';
-    import ProfilePreviewLarge from '$lib/app/reusables/all/PreviewLarge.svelte';
     import { findCachedAccount } from 'utilities/main';
     import { currentRoomData, currentRoomLoaded } from 'stores/rooms';
     import { ourData } from 'stores/profile';
@@ -43,10 +42,8 @@
 </script>
 
 {#if profileData}
-    <div class="members-container" in:fade={{ duration: 150 }}>
+    <div class="members-container">
         <PreviewSmall {profileData} />
-
-        <hr />
 
         <CloseDmButton />
     </div>
@@ -57,19 +54,10 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        width: 275px;
+        width: 240px;
         z-index: 2;
         overflow: auto;
         height: calc(100vh - 65px);
         overflow: hidden;
-    }
-
-    hr {
-        margin-top: 20px;
-        width: 100%;
-        height: 5px;
-        background: var(--bg);
-        border: 1px solid var(--bg);
-        transform: translateY(-40px);
     }
 </style>

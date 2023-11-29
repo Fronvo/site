@@ -174,7 +174,7 @@ export async function performLogin(
                 resolve();
             } else {
                 if (!currentToken) {
-                    goto('/app', {
+                    goto('/', {
                         replaceState: true,
                     });
                 } else {

@@ -107,7 +107,7 @@ export const defaultTheme: ThemingOptions = {
 
     scrollbar: 'rgb(60, 60, 60)',
 
-    hover_darken: 'rgb(33, 36, 39)',
+    hover_darken: 'rgb(30, 33, 36)',
 };
 
 export const currentTheme: Writable<ThemingOptions> = writable(defaultTheme);

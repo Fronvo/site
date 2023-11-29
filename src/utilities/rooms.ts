@@ -10,6 +10,7 @@ import {
     currentRoomLoaded,
     sendingImage as sendingImageStore,
     dmsList,
+    isInServer,
 } from 'stores/rooms';
 import {
     socket,
@@ -36,11 +37,11 @@ export async function loadRoomMessages(roomId: string): Promise<
 > {
     return new Promise((resolve) => {
         socket.emit(
-            'fetchRoomMessages',
+            'fetchMessages',
             {
                 roomId,
                 from: '0',
-                to: '40',
+                to: '50',
             },
             ({ roomMessages }) => resolve(roomMessages)
         );
@@ -52,6 +53,7 @@ export async function loadRoomsData(): Promise<Room[]> {
     currentRoomData.set(undefined);
     currentRoomMessages.set([]);
     currentRoomLoaded.set(false);
+    isInServer.set(false);
 
     // Load convos data
     const convos = await fetchConvos();
@@ -108,7 +110,7 @@ export function sendMessage(
     lastSendAtStore.set(new Date().toString());
     lastSendsIn30Store.set(lastSendsIn30 + 1);
 
-    socket.emit('sendRoomMessage', {
+    socket.emit('sendMessage', {
         roomId,
         message: content,
         replyId: replyingToP ? replyingToIdP : '',
@@ -154,7 +156,7 @@ export async function sendImage(
     sendingImageStore.set(true);
 
     socket.emit(
-        'sendRoomImage',
+        'sendImage',
         {
             roomId,
             attachment: await uploadImage(file, isPRO),

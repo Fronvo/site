@@ -29,7 +29,7 @@
 
                 $promotedToRVerify = false;
 
-                goto('/app', {
+                goto('/', {
                     replaceState: true,
                 });
             }

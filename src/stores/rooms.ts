@@ -7,6 +7,9 @@ export const dmsFilter: Writable<string> = writable('');
 
 export const roomsList: Writable<Room[]> = writable([]);
 
+export const serversList: Writable<Room[]> = writable([]);
+export const isInServer: Writable<boolean> = writable(false);
+
 export const currentRoomId: Writable<string> = writable();
 export const currentRoomData: Writable<Partial<Room>> = writable();
 export const currentRoomMessages: Writable<

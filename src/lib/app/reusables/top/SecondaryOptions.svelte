@@ -1,5 +1,9 @@
+<script>
+    import { currentRoomData } from 'stores/rooms';
+</script>
+
 <div class="secondary-container">
-    <button
+    <button class={`${$currentRoomData == undefined ? 'active' : ''}`}
         ><svg
             xmlns="http://www.w3.org/2000/svg"
             width="32"
@@ -39,10 +43,9 @@
         width: 100%;
         display: flex;
         flex-direction: column;
-        margin-top: 5px;
-        border-radius: 10px;
         padding: 5px;
         background: var(--primary);
+        margin-top: 5px;
     }
 
     button {
@@ -57,11 +60,14 @@
         transition: none;
         margin-bottom: 2px;
         border-radius: 10px;
-        transition: 250ms;
     }
 
     button:hover {
         background: var(--secondary);
+    }
+
+    .active {
+        background: var(--tertiary);
     }
 
     button:active {

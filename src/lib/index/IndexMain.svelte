@@ -6,7 +6,7 @@
     let mountReady = false;
 
     function gotoApp(): void {
-        goto('/app');
+        goto('/');
     }
 
     onMount(() => {

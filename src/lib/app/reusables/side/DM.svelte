@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import type { FronvoAccount, Room } from 'interfaces/all';
     import { socket } from 'stores/main';
     import { ourData } from 'stores/profile';
@@ -37,6 +38,8 @@
 
         $currentRoomLoaded = false;
         $currentRoomLoaded = true;
+
+        goto(`/dm/${dmData.roomId}`);
     }
 
     onMount(async () => {
@@ -70,12 +73,12 @@
                     dmData.name = username;
                     dmData.icon = avatar;
 
-                    setTitle(username);
+                    setTitle(`Fronvo ${username}`);
                 }
             }
         );
 
-        socket.on('newRoomMessage', ({ roomId, newMessageData }) => {
+        socket.on('newMessage', ({ roomId, newMessageData }) => {
             if (roomId == dmData.roomId) {
                 if (
                     newMessageData.profileData.profileId != $ourData.profileId

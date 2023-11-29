@@ -1,9 +1,12 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import {
         currentRoomData,
         currentRoomId,
         currentRoomLoaded,
         currentRoomMessages,
+        isInServer,
+        roomsList,
     } from 'stores/rooms';
     import { setTitle } from 'utilities/main';
 
@@ -12,6 +15,9 @@
         $currentRoomData = undefined;
         $currentRoomMessages = [];
         $currentRoomLoaded = false;
+        $isInServer = false;
+
+        goto('/');
 
         setTitle('Fronvo');
     }
@@ -37,7 +43,9 @@
         /></svg
     >
 
-    <span class="seperator" />
+    {#if $roomsList.length > 0}
+        <span class="seperator" />
+    {/if}
 </div>
 
 <style>
@@ -55,17 +63,16 @@
         padding: 6px;
         margin-top: 10px;
         background: var(--primary);
-        border-radius: 20px;
+        border-radius: 25px;
         cursor: pointer;
         pointer-events: all;
         z-index: 2;
         transition: 125ms;
-        margin-bottom: 10px;
     }
 
     svg:hover {
         border-radius: 15px;
-        background: rgb(72, 202, 113);
+        background: var(--pro);
     }
 
     svg:active {
@@ -74,14 +81,15 @@
 
     .active {
         border-radius: 15px;
-        background: rgb(72, 202, 113);
-        box-shadow: 0 0 10px rgb(72, 202, 113);
+        background: var(--pro);
+        box-shadow: 0 0 10px var(--pro);
     }
 
     .seperator {
         width: 75%;
         margin: auto;
         height: 2px;
+        margin-top: 12px;
         background: var(--tertiary);
     }
 </style>

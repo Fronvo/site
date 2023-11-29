@@ -18,7 +18,6 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-top: 5px;
     }
 
     .list-container {
@@ -26,7 +25,7 @@
         flex-direction: column;
         align-items: center;
         width: 235px;
-        margin-top: 10px;
+        margin-top: 12px;
         border-bottom-left-radius: 10px;
     }
 </style>

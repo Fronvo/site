@@ -1,15 +1,32 @@
 <script lang="ts">
     import { indexVisible } from 'stores/index';
     import { onMount } from 'svelte';
-    import { showLayout } from 'stores/main';
-    import IndexMain from '$lib/index/IndexMain.svelte';
-    import TopNav from '$lib/index/TopNav.svelte';
-    import Footer from '$lib/index/Footer.svelte';
-    import BlurredBackground from '$lib/index/BlurredBackground.svelte';
+    import { getKey } from 'utilities/global';
+    import { cachedAccountData, currentToken, showLayout } from 'stores/main';
+    import { redirectApp } from 'utilities/index';
+    import { performLogin } from 'utilities/main';
+    import AppTopNav from '$lib/app/index/AppTopNav.svelte';
+    import AppMain from '$lib/app/index/AppMain.svelte';
+    import AppFooter from '$lib/app/index/AppFooter.svelte';
 
     let mountReady = false;
 
     onMount(async () => {
+        // Remove homepage for registered users
+        if (getKey('token')) {
+            const val = window.navigator.userAgent.toLowerCase();
+
+            // Block access to mobile, get the app
+            if (!(val.includes('android') || val.includes('iphone'))) {
+                redirectApp();
+
+                $currentToken = getKey('token');
+
+                await performLogin(getKey('token'), $cachedAccountData);
+                return;
+            }
+        }
+
         // Disable __layout in index
         $showLayout = false;
 
@@ -24,23 +41,18 @@
 {#if mountReady && $indexVisible}
     <div class="index-container">
         {#if $indexVisible}
-            <BlurredBackground />
+            <AppTopNav />
 
-            <TopNav />
+            <AppMain />
 
-            <IndexMain />
-
-            <Footer />
+            <AppFooter />
         {/if}
     </div>
 {/if}
 
 <style>
     .index-container {
-        display: flex;
-        flex-direction: column;
         width: 100%;
         height: 100vh;
-        overflow: auto;
     }
 </style>

@@ -6,12 +6,12 @@
         currentRoomId,
         currentRoomLoaded,
         currentRoomMessages,
+        isInServer,
     } from 'stores/rooms';
     import { onMount } from 'svelte';
     import type { Unsubscriber } from 'svelte/store';
     import { onDestroy } from 'svelte';
-    import { loadRoomMessages } from 'utilities/rooms';
-    import { ourData } from 'stores/profile';
+    import { goto } from '$app/navigation';
 
     export let roomData: Room;
 
@@ -21,14 +21,15 @@
         if ($currentRoomId == roomData.roomId) return;
 
         $currentRoomId = roomData.roomId;
-
-        $currentRoomMessages = await loadRoomMessages(roomData.roomId);
         $currentRoomData = roomData;
+
+        $isInServer = true;
 
         $currentRoomLoaded = false;
         $currentRoomLoaded = true;
+        $currentRoomMessages = [];
 
-        roomData.unreadCount = 0;
+        goto(`/server/${roomData.roomId}`);
     }
 
     onMount(() => {
@@ -38,36 +39,11 @@
                 roomData.icon = icon;
             }
         });
-
-        socket.on('newRoomMessage', ({ roomId, newMessageData }) => {
-            if (roomId == roomData.roomId) {
-                if (
-                    newMessageData.profileData.profileId != $ourData.profileId
-                ) {
-                    roomData.unreadCount += 1;
-                }
-
-                roomData = roomData;
-            }
-        });
-
-        unsubscribe = currentRoomLoaded.subscribe((state) => {
-            if (!state) return;
-
-            if ($currentRoomId == roomData.roomId) {
-                roomData.unreadCount = 0;
-            }
-        });
     });
 
     onDestroy(() => {
         if (unsubscribe) unsubscribe();
     });
-
-    $: {
-        roomData.unreadCount =
-            $currentRoomId != roomData.roomId ? roomData.unreadCount : 0;
-    }
 </script>
 
 {#if roomData.icon}
@@ -126,7 +102,7 @@
     }
 
     .placeholder:hover {
-        background: var(--branding);
+        background: var(--pro);
     }
 
     .placeholder h1 {
@@ -139,7 +115,7 @@
     }
 
     .placeholder-active {
-        background: var(--branding);
+        background: var(--pro);
         border-radius: 15px;
     }
 </style>

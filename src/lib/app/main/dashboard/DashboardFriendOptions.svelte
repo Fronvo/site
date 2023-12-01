@@ -1,5 +1,6 @@
 <script lang="ts">
     import { ModalTypes } from 'stores/modals';
+    import { ourData } from 'stores/profile';
     import { quintInOut } from 'svelte/easing';
     import { fly } from 'svelte/transition';
     import { showModal } from 'utilities/main';
@@ -19,6 +20,10 @@
         opacity: 0,
     }}
 >
+    {#if $ourData.pendingFriendRequests.length > 0}
+        <button>{$ourData.pendingFriendRequests.length} Pending</button>
+    {/if}
+
     <button on:click={addFriend}>Add friend</button>
 </div>
 
@@ -45,7 +50,6 @@
         font-size: 1rem;
         font-weight: 600;
         transition: 150ms;
-        border-radius: 15px;
     }
 
     button:nth-child(1) {
@@ -53,7 +57,7 @@
         border-bottom-left-radius: 15px;
     }
 
-    button:nth-child(3) {
+    button:nth-child(2) {
         border-top-right-radius: 15px;
         border-bottom-right-radius: 15px;
     }

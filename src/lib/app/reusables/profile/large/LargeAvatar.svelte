@@ -23,14 +23,10 @@
         width: 100%;
     }
 
-    img {
-        border: 20px solid var(--primary);
-    }
-
     #avatar {
         width: 128px;
         height: 128px;
-        border: 7px solid var(--primary);
+        border: 7px solid transparent;
         border-radius: 100px;
         transition: 150ms;
         margin-left: 20px;

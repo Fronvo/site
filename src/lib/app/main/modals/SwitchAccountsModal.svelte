@@ -45,12 +45,12 @@
     {#if savedAccounts.length == 0}
         <ProfilePreviewSwitch
             avatar={$ourData.avatar}
-            username={$ourData.username}
+            profileId={$ourData.profileId}
             token={$currentToken}
         />
     {:else}
-        {#each savedAccounts as { avatar, username, token }}
-            <ProfilePreviewSwitch {avatar} {username} {token} />
+        {#each savedAccounts as { avatar, profileId, token }}
+            <ProfilePreviewSwitch {avatar} {profileId} {token} />
         {/each}
     {/if}
 

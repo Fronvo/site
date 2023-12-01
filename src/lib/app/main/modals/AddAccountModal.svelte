@@ -58,7 +58,7 @@
                             $ourData,
                             $currentToken,
                             targetUser.avatar,
-                            targetUser.username,
+                            targetUser.profileId,
                             token
                         );
 
@@ -126,7 +126,7 @@
         padding: 5px;
         padding-left: 10px;
         padding-right: 10px;
-        background: var(--bg);
+        background: rgb(0, 0, 0, 0.4);
         color: var(--text);
         border: 2px solid transparent;
         transition: 150ms border;

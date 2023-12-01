@@ -1,92 +1,13 @@
 <script lang="ts">
-    import Post from '$lib/app/reusables/dashboard/PostProfile.svelte';
-    import { socket } from 'stores/main';
-    import {
-        dashboardPosts as dashboardPostsStore,
-        totalDashboardPosts,
-    } from 'stores/dashboard';
-    import InfiniteLoading from 'svelte-infinite-loading';
+    import { dashboardPosts as dashboardPostsStore } from 'stores/dashboard';
     import { fade } from 'svelte/transition';
-    import { onMount } from 'svelte';
-    import { ourData } from 'stores/profile';
-    import PropPost from '$lib/app/reusables/dashboard/PropPost.svelte';
     import { sineInOut } from 'svelte/easing';
     import PropFriend from '$lib/app/reusables/dashboard/PropFriend.svelte';
-
-    function reloadPosts(): void {
-        socket.emit(
-            'fetchHomePosts',
-            {
-                from: '0',
-                to: '20',
-            },
-            ({ homePosts, totalPosts }) => {
-                $dashboardPostsStore = [];
-
-                setTimeout(() => {
-                    $dashboardPostsStore = homePosts;
-                    $totalDashboardPosts = totalPosts;
-                }, 0);
-            }
-        );
-    }
-
-    async function loadMore({ detail: { loaded, complete } }): Promise<void> {
-        socket.emit(
-            'fetchHomePosts',
-            {
-                from: $dashboardPostsStore.length.toString(),
-                to: ($dashboardPostsStore.length + 15).toString(),
-            },
-            ({ homePosts }) => {
-                if (homePosts.length == 0) {
-                    complete();
-                } else {
-                    const tempPosts = $dashboardPostsStore;
-                    tempPosts.push(...homePosts);
-
-                    $dashboardPostsStore = tempPosts;
-
-                    loaded();
-                }
-            }
-        );
-    }
-
-    onMount(() => {
-        socket.off('postShared');
-        socket.off('postRemoved');
-
-        socket.on('postShared', ({ author }) => {
-            if (author == $ourData.profileId) return;
-
-            reloadPosts();
-        });
-
-        socket.on('postRemoved', reloadPosts);
-    });
 </script>
 
 <div class="home-container" in:fade={{ duration: 200, easing: sineInOut }}>
     {#if $dashboardPostsStore.length != 0}
-        <div class="friends-container">
-            {#if $dashboardPostsStore}
-                {#each $dashboardPostsStore as post}
-                    <Post {post} />
-                {/each}
-
-                <InfiniteLoading
-                    distance={1000}
-                    on:infinite={loadMore}
-                    direction="bottom"
-                >
-                    <div slot="noMore" />
-                    <div slot="noResults" />
-                    <div slot="error" />
-                    <div slot="spinner" />
-                </InfiniteLoading>
-            {/if}
-        </div>
+        <div class="friends-container" />
     {:else}
         <div class="empty">
             <div class="banner">

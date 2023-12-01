@@ -6,7 +6,7 @@
     import { resetLocalTheme } from 'utilities/themes';
 
     export let avatar: string;
-    export let username: string;
+    export let profileId: string;
     export let token: string;
 
     function login(): void {
@@ -34,29 +34,15 @@
 </script>
 
 <div class="switch-container">
-    {#if avatar}
-        <img
-            id="avatar"
-            src={avatar}
-            alt={`${username}'s avatar`}
-            draggable={false}
-        />
-    {:else}
-        <svg
-            id="avatar"
-            xmlns="http://www.w3.org/2000/svg"
-            width="32"
-            height="32"
-            viewBox="0 0 256 256"
-            ><path
-                fill="var(--branding)"
-                d="M128 24a104 104 0 1 0 104 104A104.11 104.11 0 0 0 128 24ZM74.08 197.5a64 64 0 0 1 107.84 0a87.83 87.83 0 0 1-107.84 0ZM96 120a32 32 0 1 1 32 32a32 32 0 0 1-32-32Zm97.76 66.41a79.66 79.66 0 0 0-36.06-28.75a48 48 0 1 0-59.4 0a79.66 79.66 0 0 0-36.06 28.75a88 88 0 1 1 131.52 0Z"
-            /></svg
-        >
-    {/if}
+    <img
+        id="avatar"
+        src={avatar ? avatar : '/images/avatar.svg'}
+        alt={`${profileId}'s avatar`}
+        draggable={false}
+    />
 
     <div class="bottom-container">
-        <h1 id="username">{username}</h1>
+        <h1 id="username">{profileId}</h1>
 
         <!-- Only valid comparison -->
         {#if token == $currentToken}

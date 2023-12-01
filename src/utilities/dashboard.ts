@@ -10,13 +10,13 @@ import { socket } from 'stores/main';
 export async function loadHomePosts(): Promise<Post[]> {
     return new Promise((resolve) => {
         socket.emit(
-            'fetchHomePosts',
+            'fetchDashboard',
             { from: '0', to: '20' },
-            ({ homePosts, totalPosts }) => {
+            ({ dashboard, totalPosts }) => {
                 totalDashboardPosts.set(totalPosts);
-                dashPosts.set(homePosts);
+                dashPosts.set(dashboard);
 
-                resolve(homePosts);
+                resolve(dashboard);
             }
         );
     });

@@ -1,7 +1,7 @@
 <script lang="ts">
     import { dismissModal, showModal } from 'utilities/main';
     import ModalTemplate from '../ModalTemplate.svelte';
-    import { ModalTypes, type ModalData } from 'stores/modals';
+    import { ModalTypes, type ModalData, modalLoading } from 'stores/modals';
     import { socket } from 'stores/main';
     import InfoHeader from '$lib/app/reusables/all/InfoHeader.svelte';
     import { onMount } from 'svelte';
@@ -13,7 +13,7 @@
     let profileId: string;
 
     function addFriend(): void {
-        if (!profileId) return;
+        if (!profileId || $modalLoading) return;
 
         if (profileId.trim().length == 0) {
             return;
@@ -24,6 +24,8 @@
             errorMessage = 'Must be atleast 5 characters.';
             return;
         }
+
+        $modalLoading = true;
 
         socket.emit(
             'addFriend',
@@ -38,6 +40,8 @@
                         showModal(ModalTypes.MaxFriends);
                     } else {
                         errorMessage = err.msg;
+
+                        $modalLoading = false;
                     }
                 } else {
                     dismissModal();

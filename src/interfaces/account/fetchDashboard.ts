@@ -1,15 +1,15 @@
 // ******************** //
-// Interfaces for the fetchHomePosts event file.
+// Interfaces for the fetchDashboard event file.
 // ******************** //
 
 import type { FronvoError, Post } from 'interfaces/all';
 
-export interface FetchHomePostsParams {
+export interface FetchDashboardParams {
     from: string;
     to: string;
 }
 
-export interface FetchHomePostsResult extends FronvoError {
+export interface FetchDashboardResult extends FronvoError {
     totalPosts: number;
-    homePosts: Post[];
+    dashboard: Post[];
 }

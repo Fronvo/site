@@ -53,7 +53,7 @@ export interface FronvoAccount {
 
 export interface SwitchedAccount {
     avatar: string;
-    username: string;
+    profileId: string;
     token: string;
 }
 

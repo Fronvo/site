@@ -1,4 +1,3 @@
-import PostSettingsDropdown from '$lib/app/main/dropdowns/PostSettingsDropdown.svelte';
 import ProfileDropdown from '$lib/app/main/dropdowns/ProfileDropdown.svelte';
 import ProfileSettingsDropdown from '$lib/app/main/dropdowns/ProfileSettingsDropdown.svelte';
 import TenorDropdown from '$lib/app/main/dropdowns/TenorDropdown.svelte';
@@ -10,7 +9,6 @@ export const dropdowns = [
     ProfileDropdown,
     TenorDropdown,
     ProfileSettingsDropdown,
-    PostSettingsDropdown,
 ];
 /****************************** Dropdowns ******************************/
 
@@ -19,7 +17,6 @@ export enum DropdownTypes {
     Profile,
     Gif,
     ProfileSettings,
-    PostSettings,
 }
 
 export interface DropdownActions {

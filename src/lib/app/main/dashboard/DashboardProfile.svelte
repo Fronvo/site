@@ -1,7 +1,8 @@
 <script lang="ts">
+    import PostProfile from '$lib/app/reusables/dashboard/PostProfile.svelte';
     import Post from '$lib/app/reusables/dashboard/PostProfile.svelte';
     import PropPost from '$lib/app/reusables/dashboard/PropPost.svelte';
-    import { ourPosts } from 'stores/dashboard';
+    import { ourPosts, totalOurPosts } from 'stores/dashboard';
     import { socket } from 'stores/main';
     import { ModalTypes } from 'stores/modals';
     import { ourData } from 'stores/profile';
@@ -112,10 +113,16 @@
         >Share post</button
     >
 
+    {#if $totalOurPosts > 0}
+        <h1 id="total">
+            {$totalOurPosts} post{$totalOurPosts != 1 ? 's' : ''}
+        </h1>
+    {/if}
+
     {#if $ourPosts}
         <div class="posts-container">
             {#each $ourPosts as post}
-                <Post {post} />
+                <PostProfile {post} />
             {/each}
 
             <InfiniteLoading
@@ -199,6 +206,11 @@
         fill: white;
     }
 
+    #total {
+        font-size: 1.4rem;
+        margin-top: 20px;
+    }
+
     .posts-container {
         width: 60%;
         min-width: 600px;
@@ -207,7 +219,7 @@
         flex-direction: row;
         overflow-y: auto;
         flex-wrap: wrap;
-        padding-top: 30px;
+        padding-top: 10px;
         transform: translateX(45px);
     }
 

@@ -1,5 +1,6 @@
 <script lang="ts">
     import { activeDashboardTab } from 'stores/dashboard';
+    import { ourData } from 'stores/profile';
     import { DashboardOptions } from 'types/all';
 
     function changeToDashboard(): void {
@@ -30,7 +31,10 @@
         class={`${
             $activeDashboardTab == DashboardOptions.Friends ? 'active' : ''
         } `}
-        on:click={changeToFriends}>Friends</button
+        on:click={changeToFriends}
+        >Friends{$ourData.pendingFriendRequests.length > 0
+            ? `(${Math.min($ourData.pendingFriendRequests.length, 99)})`
+            : ''}</button
     >
     <button
         class={`${

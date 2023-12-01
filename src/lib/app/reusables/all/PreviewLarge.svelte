@@ -45,7 +45,7 @@
         display: flex;
         flex-direction: column;
         transform: translateY(-60px);
-        background: var(--bg);
+        background: rgb(0, 0, 0, 0.4);
         border-radius: 10px;
         padding-top: 10px;
         padding-bottom: 20px;

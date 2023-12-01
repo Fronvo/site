@@ -44,8 +44,8 @@
 
     #attachment {
         display: inline-block;
-        width: 200px;
-        height: 200px;
+        width: 250px;
+        height: 250px;
         background: var(--secondary);
         border-radius: 10px;
         margin-top: 5px;

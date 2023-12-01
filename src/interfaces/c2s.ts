@@ -92,9 +92,9 @@ import type {
     FetchProfilePostsResult,
 } from './account/fetchProfilePosts';
 import type {
-    FetchHomePostsParams,
-    FetchHomePostsResult,
-} from './account/fetchHomePosts';
+    FetchDashboardParams,
+    FetchDashboardResult,
+} from './account/fetchDashboard';
 import type { CloseDMParams, CloseDMResult } from './account/closeDM';
 import type { LikePostParams, LikePostResult } from './account/likePost';
 import type { RequestDataResult } from './account/requestData';
@@ -227,9 +227,9 @@ export interface ClientToServerEvents {
         {}: FetchProfilePostsParams,
         callback?: ({}: FetchProfilePostsResult) => void
     ) => void;
-    fetchHomePosts: (
-        {}: FetchHomePostsParams,
-        callback?: ({}: FetchHomePostsResult) => void
+    fetchDashboard: (
+        {}: FetchDashboardParams,
+        callback?: ({}: FetchDashboardResult) => void
     ) => void;
     closeDM: (
         {}: CloseDMParams,

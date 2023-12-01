@@ -381,7 +381,7 @@ export function addSavedAccount(
     ourData: FronvoAccount,
     currentToken: string,
     avatar: string,
-    username: string,
+    profileId: string,
     token: string
 ): void {
     const oldKey: SwitchedAccount[] = JSON.parse(getKey('savedAccounts', '[]'));
@@ -389,7 +389,7 @@ export function addSavedAccount(
     // First, add the active account if it's not added
     if (oldKey.length == 0) {
         oldKey.push({
-            username: ourData.username,
+            profileId: ourData.profileId,
             avatar: ourData.avatar,
             token: currentToken,
         });
@@ -407,7 +407,7 @@ export function addSavedAccount(
 
     // If we reached this stage, we can safely add the new account
     oldKey.push({
-        username,
+        profileId,
         avatar,
         token,
     });
@@ -418,7 +418,7 @@ export function addSavedAccount(
 
 export function updateSavedAccount(
     avatar: string,
-    username: string,
+    profileId: string,
     token: string
 ): void {
     const oldKey: SwitchedAccount[] = JSON.parse(getKey('savedAccounts', '[]'));
@@ -428,7 +428,7 @@ export function updateSavedAccount(
         // Every index, update the one we want aswell
         if (oldKey[savedIndex].token == token) {
             oldKey[savedIndex].avatar = avatar;
-            oldKey[savedIndex].username = username;
+            oldKey[savedIndex].profileId = profileId;
         }
 
         newKey.push(oldKey[savedIndex]);

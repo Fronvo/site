@@ -11,19 +11,20 @@
     import { ourData } from 'stores/profile';
     import PropPost from '$lib/app/reusables/dashboard/PropPost.svelte';
     import { sineInOut } from 'svelte/easing';
+    import PostDashboard from '$lib/app/reusables/dashboard/PostDashboard.svelte';
 
     function reloadPosts(): void {
         socket.emit(
-            'fetchHomePosts',
+            'fetchDashboard',
             {
                 from: '0',
                 to: '20',
             },
-            ({ homePosts, totalPosts }) => {
+            ({ dashboard, totalPosts }) => {
                 $dashboardPostsStore = [];
 
                 setTimeout(() => {
-                    $dashboardPostsStore = homePosts;
+                    $dashboardPostsStore = dashboard;
                     $totalDashboardPosts = totalPosts;
                 }, 0);
             }
@@ -32,17 +33,17 @@
 
     async function loadMore({ detail: { loaded, complete } }): Promise<void> {
         socket.emit(
-            'fetchHomePosts',
+            'fetchDashboard',
             {
                 from: $dashboardPostsStore.length.toString(),
                 to: ($dashboardPostsStore.length + 15).toString(),
             },
-            ({ homePosts }) => {
-                if (homePosts.length == 0) {
+            ({ dashboard }) => {
+                if (dashboard.length == 0) {
                     complete();
                 } else {
                     const tempPosts = $dashboardPostsStore;
-                    tempPosts.push(...homePosts);
+                    tempPosts.push(...dashboard);
 
                     $dashboardPostsStore = tempPosts;
 
@@ -71,7 +72,7 @@
         <div class="posts-container">
             {#if $dashboardPostsStore}
                 {#each $dashboardPostsStore as post}
-                    <Post {post} />
+                    <PostDashboard {post} />
                 {/each}
 
                 <InfiniteLoading
@@ -104,8 +105,8 @@
             </div>
 
             <div class="props">
-                {#each { length: 10 } as _, i}
-                    <PropPost opacity={1 - 1.1 + (1 - (i + 2.5) / 12.5)} />
+                {#each { length: 8 } as _, i}
+                    <PropPost opacity={1 - 1.2 + (1 - (i + 2.5) / 12.5)} />
                 {/each}
             </div>
         </div>
@@ -141,9 +142,10 @@
 
     .posts-container {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         overflow-y: auto;
         margin-top: 65px;
+        flex-wrap: wrap;
     }
 
     .empty {

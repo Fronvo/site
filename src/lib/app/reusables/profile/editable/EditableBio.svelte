@@ -32,8 +32,8 @@
         margin: 0;
         font-size: 0.85rem;
         margin-bottom: 10px;
-        background: var(--primary);
-        border: 2px solid var(--primary);
+        background: rgb(10, 10, 10, 0.4);
+        border: 2px solid var(--bg);
         transition: 150ms;
     }
 

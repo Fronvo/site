@@ -47,8 +47,8 @@
     input {
         width: 95%;
         height: 35px;
-        background: var(--primary);
-        border: 2px solid var(--primary);
+        background: rgb(10, 10, 10, 0.4);
+        border: 2px solid var(--bg);
         transition: 150ms;
         font-size: 1.5rem;
         margin: 0;
@@ -59,7 +59,7 @@
         overflow: hidden;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
-        font-weight: 600;
+        font-weight: 400;
     }
 
     input:focus {

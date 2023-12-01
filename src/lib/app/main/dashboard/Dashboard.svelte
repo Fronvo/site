@@ -5,7 +5,7 @@
     import DashboardProfile from './DashboardProfile.svelte';
     import DashboardPosts from './DashboardPosts.svelte';
     import DashboardFriends from './DashboardFriends.svelte';
-    import DashboardAddFriend from './DashboardAddFriend.svelte';
+    import DashboardFriendOptions from './DashboardFriendOptions.svelte';
 </script>
 
 <div class="dashboard-container">
@@ -17,7 +17,7 @@
         <DashboardProfile />
     {:else if $activeDashboardTab == DashboardOptions.Friends}
         <DashboardFriends />
-        <DashboardAddFriend />
+        <DashboardFriendOptions />
     {/if}
 </div>
 

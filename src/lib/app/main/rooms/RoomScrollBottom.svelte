@@ -54,9 +54,9 @@
         bottom: 80px;
         height: 48px;
         width: 48px;
-        background: var(--pro);
-        box-shadow: 0 0 5px var(--pro);
-        border: 2px solid var(--pro);
+        background: var(--branding);
+        box-shadow: 0 0 5px var(--branding);
+        border: 2px solid var(--branding);
         border-radius: 15px;
         padding: 5px;
         transition: 150ms;

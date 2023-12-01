@@ -38,8 +38,6 @@
 
         $currentRoomLoaded = false;
         $currentRoomLoaded = true;
-
-        goto(`/dm/${dmData.roomId}`);
     }
 
     onMount(async () => {

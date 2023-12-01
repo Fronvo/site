@@ -17,7 +17,7 @@
         $currentRoomLoaded = false;
         $isInServer = false;
 
-        goto('/');
+        goto('/app');
 
         setTitle('Fronvo');
     }
@@ -72,7 +72,7 @@
 
     svg:hover {
         border-radius: 15px;
-        background: var(--pro);
+        background: var(--branding);
     }
 
     svg:active {
@@ -81,8 +81,8 @@
 
     .active {
         border-radius: 15px;
-        background: var(--pro);
-        box-shadow: 0 0 10px var(--pro);
+        background: var(--branding);
+        box-shadow: 0 0 10px var(--branding);
     }
 
     .seperator {

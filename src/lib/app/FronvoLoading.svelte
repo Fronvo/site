@@ -81,7 +81,7 @@
 
     @keyframes glowing {
         0% {
-            box-shadow: 0 0 15px var(--pro);
+            box-shadow: 0 0 15px var(--branding);
         }
     }
 </style>

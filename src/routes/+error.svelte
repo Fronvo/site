@@ -57,7 +57,7 @@
     }
 
     .error-container #status-code {
-        color: var(--pro);
+        color: var(--branding);
         font-size: 7rem;
         margin-bottom: 10px;
         cursor: pointer;

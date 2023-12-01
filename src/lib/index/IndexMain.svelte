@@ -6,7 +6,7 @@
     let mountReady = false;
 
     function gotoApp(): void {
-        goto('/');
+        goto('/app');
     }
 
     onMount(() => {
@@ -73,6 +73,7 @@
 
     button {
         font-size: 1.8rem;
+        font-weight: 500;
         margin-top: 20px;
         background: #00e79a;
         box-shadow: 0 0 10px #00e79a;
@@ -92,7 +93,7 @@
         color: transparent;
         text-align: center;
         background: #00c986;
-        text-shadow: 0 0 60px var(--pro);
+        text-shadow: 0 0 60px var(--branding);
         background-clip: text;
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;

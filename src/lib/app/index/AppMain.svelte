@@ -190,9 +190,9 @@
         text-align: center;
         background: linear-gradient(
             90deg,
-            var(--pro) 10.42%,
+            var(--branding) 10.42%,
             #0e62ff 54.68%,
-            var(--pro) 100%
+            var(--branding) 100%
         );
         background-clip: text;
         -webkit-background-clip: text;
@@ -221,7 +221,7 @@
     }
 
     input:focus {
-        border: 2px solid var(--pro);
+        border: 2px solid var(--branding);
     }
 
     .choices-container {
@@ -254,8 +254,8 @@
     }
 
     #download-btn {
-        background: var(--pro);
-        box-shadow: 0 0 5px var(--pro);
+        background: var(--branding);
+        box-shadow: 0 0 5px var(--branding);
         border-radius: 10px;
         margin-top: 30px;
         margin-right: 10px;

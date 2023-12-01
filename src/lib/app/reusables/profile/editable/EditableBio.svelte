@@ -38,6 +38,6 @@
     }
 
     textarea:focus {
-        border: 2px solid var(--pro);
+        border: 2px solid var(--branding);
     }
 </style>

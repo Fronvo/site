@@ -128,8 +128,8 @@
     }
 
     button {
-        background: var(--pro);
-        box-shadow: 0 0 5px var(--pro);
+        background: var(--branding);
+        box-shadow: 0 0 5px var(--branding);
         font-size: 1.6rem;
         border-radius: 15px;
         font-weight: 300;
@@ -145,7 +145,7 @@
     }
 
     button:hover {
-        background: var(--pro);
+        background: var(--branding);
         color: white;
     }
 

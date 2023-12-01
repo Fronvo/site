@@ -196,7 +196,7 @@
         padding: 15px;
         cursor: pointer;
         transition: 125ms;
-        border: 2px solid var(--pro);
+        border: 2px solid var(--branding);
     }
 
     .option:hover {
@@ -217,7 +217,7 @@
     .option #decorator {
         width: 40px;
         height: 40px;
-        fill: var(--pro);
+        fill: var(--branding);
         margin-right: 10px;
     }
 
@@ -231,6 +231,6 @@
     .option #completed {
         width: 32px;
         height: 32px;
-        stroke: var(--pro);
+        stroke: var(--branding);
     }
 </style>

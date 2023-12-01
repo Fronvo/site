@@ -38,7 +38,7 @@
 
     svg {
         fill: white;
-        background: var(--pro);
+        background: var(--branding);
         border-top-right-radius: 10px;
         border-bottom-left-radius: 10px;
         padding: 5px;

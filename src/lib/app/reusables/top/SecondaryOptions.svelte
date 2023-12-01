@@ -84,7 +84,6 @@
         height: 28px;
         margin-right: 10px;
         fill: var(--gray);
-        transition: 250ms;
     }
 
     button:hover svg {
@@ -92,6 +91,6 @@
     }
 
     button:hover #nitro {
-        fill: rgb(72, 202, 113);
+        fill: var(--branding);
     }
 </style>

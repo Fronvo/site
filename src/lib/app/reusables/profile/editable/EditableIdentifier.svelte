@@ -63,7 +63,7 @@
     }
 
     input:focus {
-        border: 2px solid var(--pro);
+        border: 2px solid var(--branding);
     }
 
     .secondary-container {

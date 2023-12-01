@@ -51,10 +51,6 @@ interface ThemingOptions {
     modal_header_size: string;
     modal_input_size: string;
 
-    // PRO
-    pro: string;
-    pro_darken: string;
-
     // Other
     scrollbar: string;
     hover_darken: string;
@@ -72,8 +68,8 @@ export const defaultTheme: ThemingOptions = {
     gray: 'rgb(175, 179, 187)',
     gray_hover: 'rgb(207, 215, 230)',
 
-    branding: 'rgb(88, 101, 242)',
-    branding_darken: 'rgb(73, 83, 197)',
+    branding: 'rgb(0, 175, 175)',
+    branding_darken: 'rgb(0, 150, 150)',
 
     bg: 'rgb(20, 20, 20)',
     bg_trans: 'rgb(20, 20, 20, 75%)',
@@ -101,9 +97,6 @@ export const defaultTheme: ThemingOptions = {
 
     modal_header_size: '1.2rem',
     modal_input_size: '1.2rem',
-
-    pro: 'rgb(0, 175, 175)',
-    pro_darken: 'rgb(0, 150, 150)',
 
     scrollbar: 'rgb(60, 60, 60)',
 

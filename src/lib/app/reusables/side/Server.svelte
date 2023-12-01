@@ -28,8 +28,6 @@
         $currentRoomLoaded = false;
         $currentRoomLoaded = true;
         $currentRoomMessages = [];
-
-        goto(`/server/${roomData.roomId}`);
     }
 
     onMount(() => {
@@ -102,7 +100,7 @@
     }
 
     .placeholder:hover {
-        background: var(--pro);
+        background: var(--branding);
     }
 
     .placeholder h1 {
@@ -115,7 +113,7 @@
     }
 
     .placeholder-active {
-        background: var(--pro);
+        background: var(--branding);
         border-radius: 15px;
     }
 </style>

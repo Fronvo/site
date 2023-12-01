@@ -50,8 +50,6 @@
     let previousEmpty = false;
 
     async function loadMore({ detail: { loaded } }): Promise<void> {
-        console.log(`loadMore previousEmpty: ${previousEmpty}`);
-
         if (previousEmpty) {
             loaded();
             return;

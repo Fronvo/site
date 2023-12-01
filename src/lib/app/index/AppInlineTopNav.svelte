@@ -1,5 +1,4 @@
 <script lang="ts">
-    import Theme from '$lib/svgs/Theme.svelte';
     import { indexVisible } from 'stores/index';
 </script>
 
@@ -9,8 +8,6 @@
             <h1 id="logo">Fronvo</h1>
             <h1 id="descriptor">Your privacy, for real.</h1>
         </div>
-
-        <Theme />
     </div>
 {/if}
 

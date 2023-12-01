@@ -186,7 +186,7 @@
     .banner svg {
         width: 32px;
         height: 32px;
-        fill: var(--pro);
+        fill: var(--branding);
         margin-right: 10px;
     }
 

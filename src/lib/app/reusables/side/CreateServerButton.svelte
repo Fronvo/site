@@ -47,11 +47,11 @@
         pointer-events: all;
         z-index: 2;
         transition: 125ms;
-        stroke: var(--pro);
+        stroke: var(--branding);
     }
 
     svg:hover {
-        background: var(--pro);
+        background: var(--branding);
         stroke: white;
         border-radius: 15px;
     }

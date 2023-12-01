@@ -40,9 +40,9 @@
         text-align: center;
         background: linear-gradient(
             90deg,
-            var(--pro) 10.42%,
+            var(--branding) 10.42%,
             #0e62ff 54.68%,
-            var(--pro) 100%
+            var(--branding) 100%
         );
         background-clip: text;
         -webkit-background-clip: text;

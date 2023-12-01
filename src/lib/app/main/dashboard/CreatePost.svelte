@@ -487,7 +487,7 @@
     .action {
         display: flex;
         align-items: center;
-        background: var(--pro);
+        background: var(--branding);
         border-radius: 7px;
         padding: 8px;
         margin-right: 10px;
@@ -497,7 +497,7 @@
     }
 
     .action:hover {
-        box-shadow: 0 0 15px var(--pro);
+        box-shadow: 0 0 15px var(--branding);
     }
 
     .action:active {

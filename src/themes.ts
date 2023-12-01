@@ -89,7 +89,7 @@ export const defaultTheme: ThemingOptions = {
 
     modal_content_bg: 'rgb(13, 13, 13)',
 
-    modal_input_bg: 'rgba(25, 25, 25, 0.5)',
+    modal_input_bg: 'rgba(25, 25, 25, 0.25)',
 
     modal_checkbox_primary: 'white',
 

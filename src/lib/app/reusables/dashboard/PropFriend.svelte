@@ -7,8 +7,6 @@
         <span id="avatar" />
         <span id="name" />
     </div>
-
-    <span id="attachment" />
 </div>
 
 <style>
@@ -32,23 +30,14 @@
         height: 36px;
         background: var(--secondary);
         border-radius: 30px;
-        margin-right: 5px;
+        margin-right: 10px;
     }
 
     #name {
-        width: 150px;
+        width: 200px;
         height: 20px;
         border-radius: 30px;
         background: var(--secondary);
-    }
-
-    #attachment {
-        display: inline-block;
-        width: 200px;
-        height: 200px;
-        background: var(--secondary);
-        border-radius: 10px;
-        margin-top: 5px;
     }
 
     @keyframes shimmer {

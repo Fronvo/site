@@ -40,9 +40,10 @@ import {
     currentRoomLoaded,
     currentRoomMessages,
 } from 'stores/rooms';
-import { loadHomePosts } from './home';
+import { loadHomePosts, loadOurPosts } from './dashboard';
 import { applyThemeLocally, loadThemes, resetLocalTheme } from './themes';
 import { currentTheme, defaultTheme } from '../themes';
+import { dashboardPosts } from 'stores/dashboard';
 
 // Preserve modal state
 let modalStateVisible: boolean;
@@ -125,29 +126,15 @@ export async function performLogin(
         async function loadAccountData(): Promise<void> {
             let profileData: FronvoAccount;
             let rooms: Room[];
-            let homePosts: Post[];
+            let dashboardPosts: Post[];
+            let ourPosts: Post[];
 
             loadProfile(cachedAccountData).then((data) => {
                 profileData = data;
 
-                if (profileData.isPRO) {
-                    loadThemes();
-                } else {
-                    resetLocalTheme();
-                }
-
-                if (profileData.appliedTheme) {
-                    applyThemeLocally(
-                        profileData.bW,
-                        profileData.bDW,
-                        profileData.bD,
-                        profileData.bDD
-                    );
-
-                    currentTheme.set(undefined);
-
-                    currentTheme.set(defaultTheme);
-                }
+                loadOurPosts(profileData.profileId).then((posts) => {
+                    ourPosts = posts;
+                });
             });
 
             loadRoomsData().then((convos) => {
@@ -155,12 +142,12 @@ export async function performLogin(
             });
 
             loadHomePosts().then((posts) => {
-                homePosts = posts;
+                dashboardPosts = posts;
             });
 
             // instead of just using callbacks, login is very fast either way
             const interval = setInterval(() => {
-                if (profileData && rooms && homePosts) {
+                if (profileData && rooms && dashboardPosts && ourPosts) {
                     loginSucceeded.set(true);
                     clearInterval(interval);
                 }
@@ -189,7 +176,7 @@ export async function performLogin(
                             } else {
                                 localStorage.clear();
 
-                                location.href = '/';
+                                location.href = '/app';
                             }
                         }
                     );

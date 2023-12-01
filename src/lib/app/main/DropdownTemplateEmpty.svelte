@@ -7,9 +7,10 @@
         display: flex;
         flex-direction: column;
         justify-content: start;
-        border-radius: 0px;
-        background: var(--primary);
-        box-shadow: 0 0 5px var(--bg);
+        background: rgb(15, 15, 15, 0.5);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        border: 1px solid var(--primary);
         overflow: hidden;
     }
 </style>

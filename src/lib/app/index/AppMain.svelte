@@ -233,11 +233,11 @@
     }
 
     button {
-        background: #0e62ff;
-        box-shadow: 0 0 5px #0e62ff;
+        background: var(--branding);
+        box-shadow: 0 0 5px var(--branding);
         font-size: 1.6rem;
         border-radius: 15px;
-        font-weight: 300;
+        font-weight: 400;
         color: white;
     }
 

@@ -3,7 +3,6 @@ import type { ClientToServerEvents } from 'interfaces/c2s';
 import type { ServerToClientEvents } from 'interfaces/s2c';
 import type { Socket } from 'socket.io-client';
 import { writable, type Writable } from 'svelte/store';
-import type { TopPanels } from 'types/all';
 
 /****************************** Fronvo client ******************************/
 // export let SERVER_URL = 'ws://localhost:3001';
@@ -49,9 +48,6 @@ export const cachedAccountData: Writable<FronvoAccount[]> = writable([]);
 /****************************** Fronvo caching ******************************/
 
 /****************************** Fronvo other ******************************/
-export const currentTopPanel: Writable<TopPanels> = writable();
-export const currentFriendsPanel: Writable<0 | 1> = writable(0);
-
 export const lastSendAt: Writable<string> = writable();
 export const lastSendsIn30: Writable<number> = writable(0);
 export const disabledIn30: Writable<boolean> = writable(false);

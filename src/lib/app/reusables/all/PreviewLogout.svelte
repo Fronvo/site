@@ -45,7 +45,6 @@
         margin-bottom: 10px;
         border: 2px solid var(--primary);
         border-radius: 10px;
-        background: var(--bg);
     }
 
     div h1 {

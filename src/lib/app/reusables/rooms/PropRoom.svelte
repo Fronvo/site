@@ -11,8 +11,10 @@
     .room-container {
         display: flex;
         align-items: center;
-        width: 190px;
-        margin: 15px;
+        width: 100%;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        margin-left: 30px;
     }
 
     .img {
@@ -24,7 +26,7 @@
     }
 
     .name {
-        width: 130px;
+        width: 150px;
         height: 20px;
         background: var(--secondary);
         border-radius: 20px;

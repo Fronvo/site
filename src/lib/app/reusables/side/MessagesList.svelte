@@ -1,8 +1,8 @@
 <script lang="ts">
     import Dm from './DM.svelte';
     import { dmsList } from 'stores/rooms';
-    import RoomPlaceholder from '../rooms/RoomPlaceholder.svelte';
     import SearchBar from '../all/SearchBar.svelte';
+    import PropRoom from '../rooms/PropRoom.svelte';
 </script>
 
 <div class="messages-container">
@@ -13,7 +13,7 @@
     <div class="list-container">
         {#if $dmsList.length == 0}
             {#each { length: 20 } as _, i}
-                <RoomPlaceholder opacity={1.4 - 1 + (1 - (i + 2) / 10)} />
+                <PropRoom opacity={1.4 - 1 + (1 - (i + 2) / 10)} />
             {/each}
         {:else}
             {#each $dmsList as dmData}

@@ -17,6 +17,7 @@
     import { ourData } from 'stores/profile';
     import { ModalTypes, targetProfileModal } from 'stores/modals';
     import { uploadImage } from 'utilities/rooms';
+    import SearchBarChannel from '$lib/app/reusables/all/SearchBarChannel.svelte';
 
     let nameP = writable($roomData?.name);
 
@@ -146,9 +147,23 @@
                 {/if}
 
                 <h1>{$currentRoomData.name}</h1>
-            </div>
 
-            <div class="placeholder" />
+                <div class="spacer" />
+
+                <svg
+                    id="action"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    ><path
+                        d="M19.183 7.805L16.22 4.838c-2.027-2.03-3.04-3.043-4.129-2.803c-1.088.24-1.581 1.587-2.568 4.28l-.668 1.823c-.263.718-.395 1.077-.632 1.355a2.035 2.035 0 0 1-.36.332c-.296.213-.664.314-1.4.517c-1.66.458-2.491.687-2.804 1.23a1.528 1.528 0 0 0-.204.773c.004.627.613 1.236 1.83 2.455L6.7 16.216l-4.476 4.48a.764.764 0 0 0 1.08 1.08l4.475-4.48l1.466 1.468c1.226 1.226 1.839 1.84 2.47 1.84c.265 0 .526-.068.757-.2c.548-.313.778-1.149 1.239-2.822c.202-.735.303-1.102.515-1.399c.093-.129.201-.247.322-.352c.275-.238.632-.372 1.345-.64l1.844-.693c2.664-1 3.996-1.501 4.23-2.586c.235-1.086-.77-2.093-2.783-4.107Z"
+                    /></svg
+                >
+
+                <SearchBarChannel />
+            </div>
         </div>
     {/if}
 </div>
@@ -159,8 +174,8 @@
         min-width: 100%;
         height: 53px;
         display: flex;
-        flex-direction: column;
         padding: 15px;
+        padding-right: 10px;
         margin-top: 1px;
         user-select: none;
         border-bottom: 1px solid rgb(23, 23, 23);
@@ -174,7 +189,7 @@
     .data-container {
         display: flex;
         align-items: center;
-        width: max-content;
+        width: 100%;
         height: 100%;
     }
 
@@ -224,6 +239,11 @@
         color: var(--text);
     }
 
+    .spacer {
+        width: 100%;
+        flex: 1;
+    }
+
     svg {
         width: 28px;
         height: 28px;
@@ -231,5 +251,15 @@
         cursor: default;
         fill: var(--gray);
         stroke: var(--gray);
+    }
+
+    #action {
+        fill: var(--gray);
+        cursor: pointer;
+        margin-right: 10px;
+    }
+
+    #action:hover {
+        fill: white;
     }
 </style>

@@ -1,7 +1,7 @@
 <script lang="ts">
     import Dropdown from './Dropdown.svelte';
     import Modal from './Modal.svelte';
-    import { fade, fly, scale } from 'svelte/transition';
+    import { fade } from 'svelte/transition';
     import AccountInfo from '../reusables/top/AccountInfo.svelte';
     import MessagesList from '../reusables/side/MessagesList.svelte';
     import {
@@ -18,7 +18,6 @@
     import { Toaster } from 'svelte-sonner';
     import HomeButton from '../reusables/top/HomeButton.svelte';
     import CreateServerButton from '../reusables/side/CreateServerButton.svelte';
-    import DownloadFronvoButton from '../reusables/side/DownloadFronvoButton.svelte';
     import SecondaryOptions from '../reusables/top/SecondaryOptions.svelte';
     import { quintInOut } from 'svelte/easing';
     import ServersList from '../reusables/side/ServersList.svelte';
@@ -78,7 +77,6 @@
         <HomeButton />
         <ServersList />
         <CreateServerButton />
-        <DownloadFronvoButton />
     </div>
 
     <div class="second-container">

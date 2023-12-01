@@ -69,6 +69,7 @@
             {
                 title: !processing ? 'Pay' : 'Processing',
                 callback: submit,
+                primary: true,
             },
             {
                 title: 'Cancel',

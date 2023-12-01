@@ -281,7 +281,7 @@
     }
 
     .message-container:hover {
-        background: var(--hover_darken);
+        background: rgb(15, 15, 15, 0.1);
     }
 
     .highlight {
@@ -426,7 +426,7 @@
     #small-time {
         opacity: 0;
         margin: 0;
-        font-size: 0.8rem;
+        font-size: 0.75rem;
         width: 42px;
         min-width: 42px;
         margin-right: 5px;
@@ -495,11 +495,6 @@
         cursor: pointer;
         margin-left: 5px;
         transition: 150ms;
-    }
-
-    #attachment:active {
-        transform: scale(0.975);
-        opacity: 0.5;
     }
 
     .preview #attachment {

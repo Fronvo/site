@@ -130,10 +130,10 @@
         color: var(--text);
         border: 2px solid transparent;
         transition: 150ms border;
-        border-radius: 2px;
+        border-radius: 5px;
     }
 
     input:focus {
-        border: 2px solid #0e62ff;
+        border: 2px solid var(--branding);
     }
 </style>

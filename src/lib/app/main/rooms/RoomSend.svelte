@@ -498,8 +498,8 @@
 
     textarea {
         background: transparent;
-        font-size: 0.9rem;
-        margin-top: 3px;
+        font-size: 1rem;
+        margin-top: 2px;
         height: 34px;
         flex: 1;
     }

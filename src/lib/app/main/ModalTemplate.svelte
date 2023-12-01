@@ -73,8 +73,10 @@
         border-radius: 5px;
         min-height: 200px;
         max-height: 95%;
-        background: var(--primary);
-        border-radius: 5px;
+        background: rgb(15, 15, 15, 0.5);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        border: 1px solid var(--primary);
         min-width: 550px;
         max-width: 90vw;
         overflow-x: hidden;
@@ -140,8 +142,8 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background: var(--primary);
-        box-shadow: 0 0 10px var(--primary);
+        background: transparent;
+        box-shadow: none;
         transition: 150ms;
     }
 

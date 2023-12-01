@@ -20,12 +20,8 @@
     import { socket } from 'stores/main';
     import { DropdownTypes } from 'stores/dropdowns';
     import linkifyHtml from 'linkify-html';
-    import Comment from '$lib/svgs/Comment.svelte';
-    import Share from '$lib/svgs/Share.svelte';
 
     export let post: Post;
-    export let small = false;
-    export let preview = false;
 
     let profileData = post.profileData;
     let postData = post.post;
@@ -70,28 +66,20 @@
     }
 
     function showProfileModal(): void {
-        if (small) return;
+        if (profileData.profileId == $ourData.profileId) return;
 
-        if (profileData.profileId == $ourData.profileId) {
-            $targetProfileModal = $ourData;
-        } else {
-            $targetProfileModal = profileData;
-        }
+        $targetProfileModal = profileData;
 
         showModal(ModalTypes.Profile);
     }
 
     function showImage(): void {
-        if (small) return;
-
         $targetImageModal = postData.attachment;
 
         showModal(ModalTypes.Image);
     }
 
     function showGif(): void {
-        if (small) return;
-
         $targetImageModal = postData.gif;
 
         showModal(ModalTypes.Image);
@@ -135,170 +123,106 @@
     }
 </script>
 
-<div
-    class={`post-container ${small ? 'small' : ''} ${preview ? 'preview' : ''}`}
->
-    {#if profileData.avatar}
+<div class={`post-container`}>
+    <div class="post-info-container">
         <img
             id="avatar"
             draggable={false}
-            src={profileData.avatar}
+            src={profileData.avatar ? profileData.avatar : '/images/avatar.svg'}
             alt={`${profileData.username}'s avatar`}
             on:click={showProfileModal}
             on:keydown={showProfileModal}
         />
-    {:else}
-        <img
-            src="/images/avatar.svg"
-            draggable={false}
-            alt="Avatar"
-            id="avatar"
-            on:click={showProfileModal}
-            on:keydown={showProfileModal}
-        />{/if}
 
-    <div class="wrapper">
-        <div class="post-info-container">
-            <h1 id="name">{profileData.profileId}</h1>
+        <h1 id="name">{profileData.profileId}</h1>
 
-            <h1 id="time">{dateSuffix}</h1>
+        <h1 id="time">{dateSuffix}</h1>
 
-            {#if postData.author == $ourData.profileId && !preview}
-                <svg
-                    class="action"
-                    bind:this={settings}
-                    on:click={showPostSettings}
-                    on:keydown={showPostSettings}
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="32"
-                    height="32"
-                    viewBox="0 0 24 24"
-                    ><path
-                        fill="var(--text)"
-                        d="M7 12a2 2 0 1 1-4 0a2 2 0 0 1 4 0Zm7 0a2 2 0 1 1-4 0a2 2 0 0 1 4 0Zm7 0a2 2 0 1 1-4 0a2 2 0 0 1 4 0Z"
-                    /></svg
-                >
-            {/if}
-        </div>
+        {#if postData.author == $ourData.profileId}
+            <svg
+                class="action"
+                bind:this={settings}
+                on:click={showPostSettings}
+                on:keydown={showPostSettings}
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                ><path
+                    fill="var(--text)"
+                    d="M7 12a2 2 0 1 1-4 0a2 2 0 0 1 4 0Zm7 0a2 2 0 1 1-4 0a2 2 0 0 1 4 0Zm7 0a2 2 0 1 1-4 0a2 2 0 0 1 4 0Z"
+                /></svg
+            >
+        {/if}
+    </div>
 
-        <div class="post-wrapper">
-            {#if postData.content}
-                <h1 id="content">
-                    {#if showLinks}
-                        {@html linkifyHtml(postData.content, {
-                            attributes: {
-                                class: 'link',
-                                target: '_blank',
-                            },
-                        })}
-                    {:else}
-                        {postData.content}
-                    {/if}
-                </h1>
-            {/if}
+    <div class="post-wrapper">
+        {#if postData.content}
+            <h1 id="content">
+                {#if showLinks}
+                    {@html linkifyHtml(postData.content, {
+                        attributes: {
+                            class: 'link',
+                            target: '_blank',
+                        },
+                    })}
+                {:else}
+                    {postData.content}
+                {/if}
+            </h1>
+        {/if}
 
-            {#if postData.attachment}
-                <img
-                    id="attachment"
-                    src={postData.attachment}
-                    draggable={false}
-                    alt={'Post attachment'}
-                    on:click={showImage}
-                    on:keydown={showImage}
-                />
-            {:else if postData.gif}
-                <img
-                    id="attachment"
-                    src={postData.gif}
-                    draggable={false}
-                    alt={'Post GIF'}
-                    on:click={showGif}
-                    on:keydown={showGif}
-                />
-            {/if}
-        </div>
+        {#if postData.attachment}
+            <img
+                id="attachment"
+                src={postData.attachment}
+                draggable={false}
+                alt={'Post attachment'}
+                on:click={showImage}
+                on:keydown={showImage}
+            />
+        {:else if postData.gif}
+            <img
+                id="attachment"
+                src={postData.gif}
+                draggable={false}
+                alt={'Post GIF'}
+                on:click={showGif}
+                on:keydown={showGif}
+            />
+        {/if}
+    </div>
 
-        <div class="action-container">
-            <Like callback={likePost} liked={postData.isLiked} />
+    <div class="action-container">
+        <Like callback={likePost} liked={postData.isLiked} />
 
-            <h1>{postData.totalLikes}</h1>
-
-            <!-- <Comment />
-
-            <h1>0</h1>
-
-            <Share /> -->
-        </div>
+        <h1>{postData.totalLikes}</h1>
     </div>
 </div>
 
 <style>
     .post-container {
-        width: 600px;
+        width: 500px;
+        height: 500px;
         display: flex;
-        align-items: start;
-        align-self: center;
-        margin-top: 0px;
-        cursor: default;
-        padding-bottom: 5px;
-        padding-top: 10px;
-        border: 1px solid var(--primary);
-        border-top: none;
-        padding-left: 15px;
-        padding-right: 15px;
-        transition: 150ms background;
+        flex-direction: column;
+        margin-bottom: 30px;
+        margin-right: 20px;
+        margin-left: 20px;
+        flex: 1;
+        overflow: hidden;
     }
 
     .post-container:hover {
         background: var(--post);
     }
 
-    .small {
-        width: 600px;
-        justify-content: start;
-        align-items: start;
-        border: none;
-        border-bottom: 1px solid var(--primary);
-    }
-
-    .small:hover {
-        background: transparent;
-        cursor: default;
-    }
-
-    .preview {
-        border: none;
-    }
-
     #avatar {
-        width: 40px;
-        height: 40px;
+        width: 36px;
+        height: 36px;
         border-radius: 30px;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
+        margin-right: 5px;
         cursor: pointer;
-        transition: 150ms;
-    }
-
-    #avatar:hover {
-        opacity: 0.75;
-    }
-
-    #avatar:active {
-        transform: scale(0.975);
-    }
-
-    .small #avatar {
-        width: 40px;
-        height: 40px;
-    }
-
-    #avatar:hover {
-        opacity: 0.8;
     }
 
     #name {
@@ -314,10 +238,6 @@
         font-weight: 900;
         flex: 1;
         margin-bottom: 3px;
-    }
-
-    .small #name {
-        font-size: 1.05rem;
     }
 
     #time {
@@ -352,10 +272,6 @@
         opacity: 0.75;
     }
 
-    .wrapper {
-        flex: 1;
-    }
-
     .post-info-container {
         display: flex;
         align-items: center;
@@ -374,28 +290,19 @@
         margin-left: 7px;
     }
 
-    .small #content {
-        max-width: 525px;
-    }
-
     #attachment {
-        max-height: 600px;
-        border-radius: 20px;
+        max-width: 100%;
+        max-height: 100%;
+        border-radius: 5px;
         border: 1px solid var(--primary);
         cursor: pointer;
-        margin-top: 10px;
-        margin-left: 7px;
-        max-width: 515px;
+        margin-top: 5px;
         transition: 150ms;
+        object-fit: cover;
     }
 
     #attachment:active {
         opacity: 0.5;
-    }
-
-    .small #attachment {
-        max-width: 515px;
-        cursor: default;
     }
 
     .action-container {

@@ -18,7 +18,6 @@ import CloseDmModal from '$lib/app/main/modals/CloseDMModal.svelte';
 import RemoveMemberModal from '$lib/app/main/modals/RemoveMemberModal.svelte';
 import RequestDataModal from '$lib/app/main/modals/RequestDataModal.svelte';
 import DeleteAccountModal from '$lib/app/main/modals/DeleteAccountModal.svelte';
-import DeletePostModal from '$lib/app/main/modals/DeletePostModal.svelte';
 import GoProModal from '$lib/app/main/modals/GoPROModal.svelte';
 import GoPayModal from '$lib/app/main/modals/GoPayModal.svelte';
 import MaxFriendsModal from '$lib/app/main/modals/MaxFriendsModal.svelte';
@@ -44,7 +43,6 @@ export const modals = [
     RemoveMemberModal,
     RequestDataModal,
     DeleteAccountModal,
-    DeletePostModal,
     GoProModal,
     GoPayModal,
     MaxFriendsModal,
@@ -72,7 +70,6 @@ export enum ModalTypes {
     RemoveMember,
     RequestData,
     DeleteAccount,
-    DeletePost,
     GoPRO,
     GoPay,
     MaxFriends,

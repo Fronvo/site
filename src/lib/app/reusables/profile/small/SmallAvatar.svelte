@@ -49,7 +49,7 @@
     #avatar {
         width: 90px;
         height: 90px;
-        border: 5px solid var(--primary);
+        border: 5px solid rgb(22, 22, 22);
         border-radius: 100px;
         transition: 150ms;
         margin-left: 20px;

@@ -18,7 +18,7 @@
 
                 resetLocalTheme();
 
-                location.href = '/';
+                location.href = '/app';
             } else {
                 // Token is invalid, remove
                 remove();
@@ -80,8 +80,6 @@
         cursor: default;
         width: 75%;
         padding: 8px;
-        background: var(--bg);
-        border-top: 2px solid var(--primary);
     }
 
     div h1 {

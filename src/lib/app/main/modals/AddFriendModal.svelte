@@ -102,4 +102,14 @@
         font-size: 1.7rem;
         height: 50px;
     }
+
+    input {
+        font-weight: 600;
+        border: 2px solid transparent;
+        transition: 150ms;
+    }
+
+    input:focus {
+        border: 2px solid var(--branding);
+    }
 </style>

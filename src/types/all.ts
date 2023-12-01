@@ -9,9 +9,8 @@ export type LocalKeys =
     | 'bD'
     | 'bDD';
 
-export enum TopPanels {
-    Edit,
+export enum DashboardOptions {
+    Dashboard,
+    Profile,
     Friends,
-    Marketplace,
-    Admin,
 }

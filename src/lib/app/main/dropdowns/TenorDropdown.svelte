@@ -82,7 +82,7 @@
                     width="32"
                     height="32"
                     viewBox="0 0 24 24"
-                    ><g fill="none" stroke="var(--gray)" stroke-width="1.5"
+                    ><g fill="none" stroke="var(--branding)" stroke-width="1.5"
                         ><path
                             d="M19.562 7a2.132 2.132 0 0 0-2.1-2.5H6.538a2.132 2.132 0 0 0-2.1 2.5M17.5 4.5c.028-.26.043-.389.043-.496a2 2 0 0 0-1.787-1.993C15.65 2 15.52 2 15.26 2H8.74c-.26 0-.391 0-.497.011a2 2 0 0 0-1.787 1.993c0 .107.014.237.043.496"
                             opacity=".85"
@@ -130,11 +130,12 @@
     .search-container {
         display: flex;
         align-items: center;
-        border: 2px solid var(--primary);
-        border-radius: 10px;
-        width: 95%;
+        border: 2px solid var(--branding);
+        border-radius: 20px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        width: 100%;
         align-self: center;
-        margin-top: 10px;
         height: 40px;
         padding-left: 5px;
         padding-right: 10px;
@@ -148,7 +149,7 @@
         width: 500px;
         height: 500px;
         padding-right: 10px;
-        margin-top: 10px;
+        padding-top: 10px;
         overflow: auto;
     }
 
@@ -169,23 +170,24 @@
     }
 
     svg {
-        width: 20px;
-        height: 20px;
+        width: 22px;
+        height: 22px;
         cursor: default;
     }
 
     img {
         border-radius: 5px;
-        transition: 150ms;
+        transition: 250ms;
         cursor: pointer;
         width: 95%;
         margin-left: 10px;
         margin-bottom: 10px;
-        border: 2.5px solid var(--bg);
+        border: 2px solid transparent;
     }
 
     img:hover {
-        border: 2.5px solid var(--branding);
+        border: 2px solid var(--branding);
+        filter: brightness(90%);
     }
 
     img:active {

@@ -119,14 +119,7 @@
 
             if ($currentRoomId == roomId) {
                 setTimeout(() => {
-                    if (!$showScrollBottom) {
-                        chat.scrollTo({
-                            behavior: 'smooth',
-                            top: chat.scrollHeight,
-                        });
-                    } else {
-                        chat.scrollTop = chat.scrollHeight;
-                    }
+                    chat.scrollTop = chat.scrollHeight;
                 }, 0);
 
                 $messages.push(newMessageData);
@@ -287,6 +280,10 @@
                 setTimeout(() => {
                     // Load images
                     chat.style.opacity = '1';
+
+                    setTimeout(() => {
+                        chat.scrollTop = chat.scrollHeight;
+                    }, 250);
                 }, 0);
 
                 canShowScroll = true;

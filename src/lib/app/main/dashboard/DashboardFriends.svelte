@@ -3,11 +3,103 @@
     import { fade } from 'svelte/transition';
     import { sineInOut } from 'svelte/easing';
     import PropFriend from '$lib/app/reusables/dashboard/PropFriend.svelte';
+    import Friend from '$lib/app/reusables/top/Friend.svelte';
+    import { loadHomePosts } from 'utilities/dashboard';
+    import { ourData } from 'stores/profile';
+    import { cachedAccountData, socket } from 'stores/main';
+    import { onMount } from 'svelte';
+    import { findCachedAccount } from 'utilities/main';
+    import type { FronvoAccount } from 'interfaces/all';
+
+    let friendsInfo: FronvoAccount[] = [];
+    let friendsLoadingFinished = false;
+
+    async function loadFriends(): Promise<void> {
+        friendsInfo = [];
+
+        if ($ourData.friends.length == 0) {
+            friendsLoadingFinished = true;
+            return;
+        }
+
+        // Fetch all room members, notify UI once finished
+        for (const friendIndex in $ourData.friends) {
+            findCachedAccount(
+                $ourData.friends[friendIndex],
+                $cachedAccountData
+            ).then((data) => {
+                friendsInfo.push(data);
+
+                checkLoadingDone();
+            });
+        }
+
+        function checkLoadingDone(): void {
+            // Finish loading
+            if (friendsInfo.length == $ourData?.friends.length) {
+                friendsLoadingFinished = true;
+
+                friendsInfo = friendsInfo;
+            }
+        }
+    }
+
+    onMount(() => {
+        loadFriends();
+
+        socket.off('newFriendRequest');
+        socket.off('pendingFriendRemoved');
+        socket.off('friendAdded');
+        socket.off('friendRemoved');
+
+        // PENDING REQUESTS
+        socket.on('newFriendRequest', ({ profileId }) => {
+            $ourData.pendingFriendRequests.push(profileId);
+            $ourData = $ourData;
+        });
+
+        socket.on('pendingFriendRemoved', ({ profileId }) => {
+            $ourData.pendingFriendRequests.splice(
+                $ourData.pendingFriendRequests.indexOf(profileId),
+                1
+            );
+            $ourData = $ourData;
+        });
+
+        // FRIENDS
+        socket.on('friendAdded', ({ profileId }) => {
+            friendsLoadingFinished = false;
+
+            $ourData.friends.push(profileId);
+            $ourData = $ourData;
+
+            friendsLoadingFinished = true;
+            loadFriends();
+
+            loadHomePosts();
+        });
+
+        socket.on('friendRemoved', ({ profileId }) => {
+            friendsLoadingFinished = false;
+
+            $ourData.friends.splice($ourData.friends.indexOf(profileId), 1);
+            $ourData = $ourData;
+
+            friendsLoadingFinished = true;
+            loadFriends();
+
+            loadHomePosts();
+        });
+    });
 </script>
 
-<div class="home-container" in:fade={{ duration: 200, easing: sineInOut }}>
-    {#if $dashboardPostsStore.length != 0}
-        <div class="friends-container" />
+<div class="main-container" in:fade={{ duration: 200, easing: sineInOut }}>
+    {#if friendsLoadingFinished && $dashboardPostsStore.length != 0}
+        <div class="friends-container">
+            {#each friendsInfo as profileData}
+                <Friend {profileData} />
+            {/each}
+        </div>
     {:else}
         <div class="empty">
             <div class="banner">
@@ -49,7 +141,7 @@
         user-select: none;
     }
 
-    .home-container {
+    .main-container {
         display: flex;
         flex-direction: column;
         align-items: start;
@@ -67,6 +159,11 @@
         flex-direction: column;
         overflow-y: auto;
         margin-top: 65px;
+        width: 400px;
+        margin: auto;
+        margin-top: 0;
+        height: max-content;
+        border-radius: 10px;
     }
 
     .empty {

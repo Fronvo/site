@@ -1,5 +1,4 @@
 <script lang="ts">
-    import Post from '$lib/app/reusables/dashboard/PostProfile.svelte';
     import { socket } from 'stores/main';
     import {
         dashboardPosts as dashboardPostsStore,
@@ -12,6 +11,7 @@
     import PropPost from '$lib/app/reusables/dashboard/PropPost.svelte';
     import { sineInOut } from 'svelte/easing';
     import PostDashboard from '$lib/app/reusables/dashboard/PostDashboard.svelte';
+    import DashboardPostsEnd from './DashboardPostsEnd.svelte';
 
     function reloadPosts(): void {
         socket.emit(
@@ -85,6 +85,8 @@
                     <div slot="error" />
                     <div slot="spinner" />
                 </InfiniteLoading>
+
+                <DashboardPostsEnd />
             {/if}
         </div>
     {:else}
@@ -105,8 +107,8 @@
             </div>
 
             <div class="props">
-                {#each { length: 8 } as _, i}
-                    <PropPost opacity={1 - 1.2 + (1 - (i + 2.5) / 12.5)} />
+                {#each { length: 2 } as _, i}
+                    <PropPost opacity={1 - i * 0.75} />
                 {/each}
             </div>
         </div>
@@ -132,20 +134,19 @@
     .home-container {
         display: flex;
         flex-direction: column;
-        min-width: 550px;
-        height: calc(100vh);
-        overflow-x: hidden;
-        margin-top: 5px;
-        padding-top: 20px;
-        margin-left: 150px;
+        width: max-content;
+        height: 100%;
+        margin-left: 15px;
+        margin: auto;
     }
 
     .posts-container {
         display: flex;
-        flex-direction: row;
-        overflow-y: auto;
-        margin-top: 65px;
-        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 70px;
+        height: calc(100vh);
+        transform: translateY(-60px);
     }
 
     .empty {
@@ -160,18 +161,18 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+        margin-top: 5px;
+        padding-top: 15px;
     }
 
     .banner {
-        margin: auto;
+        width: 100%;
         display: flex;
         align-items: center;
         justify-content: center;
         padding: 10px;
-        border-radius: 7px;
-        margin: 15px;
-        margin-top: 0;
-        padding-top: 0;
+        margin-left: 160px;
+        margin-bottom: 10px;
     }
 
     .banner h1 {
@@ -181,17 +182,21 @@
     }
 
     .banner svg {
-        width: 32px;
-        height: 32px;
+        width: 30px;
+        height: 30px;
+        min-width: 30px;
+        min-height: 30px;
         fill: var(--branding);
         margin-right: 10px;
     }
 
     .props {
         display: flex;
-        flex-wrap: wrap;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
+        overflow: hidden;
+        height: 100%;
     }
 
     @media screen and (max-width: 1050px) {

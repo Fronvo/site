@@ -3,6 +3,7 @@ import type {
     FronvoAccount,
     Post,
     Room,
+    Server,
     SwitchedAccount,
 } from 'interfaces/all';
 import { io } from 'socket.io-client';
@@ -31,7 +32,7 @@ import {
     ModalTypes,
     modalVisible,
 } from 'stores/modals';
-import { loadRoomsData } from './rooms';
+import { loadRoomsData, loadServersData } from './rooms';
 import { getKey, setKey } from './global';
 import { loadProfile } from './profile';
 import {
@@ -41,9 +42,6 @@ import {
     currentRoomMessages,
 } from 'stores/rooms';
 import { loadHomePosts, loadOurPosts } from './dashboard';
-import { applyThemeLocally, loadThemes, resetLocalTheme } from './themes';
-import { currentTheme, defaultTheme } from '../themes';
-import { dashboardPosts } from 'stores/dashboard';
 
 // Preserve modal state
 let modalStateVisible: boolean;
@@ -126,6 +124,7 @@ export async function performLogin(
         async function loadAccountData(): Promise<void> {
             let profileData: FronvoAccount;
             let rooms: Room[];
+            let serversList: Server[];
             let dashboardPosts: Post[];
             let ourPosts: Post[];
 
@@ -141,13 +140,23 @@ export async function performLogin(
                 rooms = convos;
             });
 
+            loadServersData().then((servers) => {
+                serversList = servers;
+            });
+
             loadHomePosts().then((posts) => {
                 dashboardPosts = posts;
             });
 
             // instead of just using callbacks, login is very fast either way
             const interval = setInterval(() => {
-                if (profileData && rooms && dashboardPosts && ourPosts) {
+                if (
+                    profileData &&
+                    rooms &&
+                    serversList &&
+                    dashboardPosts &&
+                    ourPosts
+                ) {
                     loginSucceeded.set(true);
                     clearInterval(interval);
                 }

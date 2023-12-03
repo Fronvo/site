@@ -1,40 +1,44 @@
 <script lang="ts">
-    import type { Room } from 'interfaces/all';
+    import type { Server } from 'interfaces/all';
     import { socket } from 'stores/main';
     import {
         currentRoomData,
         currentRoomId,
         currentRoomLoaded,
         currentRoomMessages,
+        currentServerChannels,
+        currentServerId,
+        currentServerName,
         isInServer,
     } from 'stores/rooms';
     import { onMount } from 'svelte';
     import type { Unsubscriber } from 'svelte/store';
     import { onDestroy } from 'svelte';
-    import { goto } from '$app/navigation';
 
-    export let roomData: Room;
+    export let serverData: Server;
 
     let unsubscribe: Unsubscriber;
 
-    async function enterRoom(): Promise<void> {
-        if ($currentRoomId == roomData.roomId) return;
+    async function enterServer(): Promise<void> {
+        if ($currentRoomId == serverData.serverId) return;
 
-        $currentRoomId = roomData.roomId;
-        $currentRoomData = roomData;
+        // See last accessed channel with localStorage key
+        $currentRoomId = undefined;
+        $currentRoomData = undefined;
 
         $isInServer = true;
+        $currentServerId = serverData.serverId;
+        $currentServerName = serverData.name;
+        $currentServerChannels = serverData.channels;
 
-        $currentRoomLoaded = false;
-        $currentRoomLoaded = true;
         $currentRoomMessages = [];
     }
 
     onMount(() => {
         socket.on('roomDataUpdated', ({ roomId, name, icon }) => {
-            if (roomData.roomId == roomId) {
-                roomData.name = name;
-                roomData.icon = icon;
+            if (serverData.serverId == roomId) {
+                serverData.name = name;
+                serverData.icon = icon;
             }
         });
     });
@@ -44,26 +48,26 @@
     });
 </script>
 
-{#if roomData.icon}
+{#if serverData.icon}
     <img
-        class={`${$currentRoomId == roomData.roomId ? 'active' : ''}`}
-        on:click={enterRoom}
-        on:keydown={enterRoom}
+        class={`${$currentRoomId == serverData.serverId ? 'active' : ''}`}
+        on:click={enterServer}
+        on:keydown={enterServer}
         id="avatar"
-        src={roomData.icon}
-        alt={`${roomData.name}\'s avatar'`}
+        src={serverData.icon}
+        alt={`${serverData.name}\'s avatar'`}
         draggable={false}
     />
 {:else}
     <span
         class={`placeholder ${
-            $currentRoomId == roomData.roomId ? 'placeholder-active' : ''
+            $currentServerId == serverData.serverId ? 'placeholder-active' : ''
         }`}
-        on:click={enterRoom}
-        on:keydown={enterRoom}
+        on:click={enterServer}
+        on:keydown={enterServer}
         id="avatar"
     >
-        <h1>{roomData.name[0]}{roomData.name[1] || ''}</h1></span
+        <h1>{serverData.name[0]}{serverData.name[1] || ''}</h1></span
     >
 {/if}
 
@@ -115,5 +119,6 @@
     .placeholder-active {
         background: var(--branding);
         border-radius: 15px;
+        box-shadow: 0 0 10px var(--branding);
     }
 </style>

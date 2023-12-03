@@ -73,6 +73,26 @@ export interface Room {
     dmUser?: FronvoAccount;
 }
 
+export interface Server {
+    serverId: string;
+    ownerId?: string;
+    name?: string;
+    description?: string;
+    creationDate?: string;
+    icon?: string;
+    members?: string[];
+    channels?: Channel[];
+    roles?: string[];
+}
+
+export interface Channel {
+    serverId: string;
+    roomId?: string;
+    name?: string;
+    description?: string;
+    creationDate?: string;
+}
+
 export interface RoomMessage {
     messageId: string;
     ownerId: string;

@@ -41,7 +41,6 @@
         align-items: center;
         width: 235px;
         height: 100%;
-        margin-top: 10px;
         background: var(--primary);
         border-bottom-left-radius: 10px;
         overflow: hidden;

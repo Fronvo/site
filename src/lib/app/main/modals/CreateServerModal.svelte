@@ -5,14 +5,14 @@
     import { socket } from 'stores/main';
     import { onMount } from 'svelte';
     import ErrorHeader from '$lib/app/reusables/all/ErrorHeader.svelte';
-    import { loadRoomsData } from 'utilities/rooms';
+    import { loadServersData } from 'utilities/rooms';
 
     let element: HTMLInputElement;
 
     let errorMessage: string;
     let name = '';
 
-    function createRoom(): void {
+    function createServer(): void {
         if (!name || $modalLoading) return;
 
         if (name.trim().length == 0) {
@@ -22,13 +22,13 @@
         $modalLoading = true;
 
         socket.emit(
-            'createRoom',
+            'createServer',
             { name: name ? name : '' },
             async ({ err }) => {
                 if (err) {
                     // Prettify
                     if (err.name == 'OVER_LIMIT') {
-                        showModal(ModalTypes.MaxRooms);
+                        showModal(ModalTypes.MaxServers);
                     } else {
                         errorMessage = err.msg;
 
@@ -37,7 +37,7 @@
                 } else {
                     dismissModal();
 
-                    await loadRoomsData();
+                    await loadServersData();
                 }
             }
         );
@@ -48,17 +48,17 @@
 
         element.onkeyup = (ev) => {
             if (ev.key == 'Enter') {
-                createRoom();
+                createServer();
             }
         };
     });
 
     const data: ModalData = {
-        title: 'Create room',
+        title: 'Create server',
         actions: [
             {
                 title: 'Create',
-                callback: createRoom,
+                callback: createServer,
                 primary: true,
             },
 
@@ -99,6 +99,7 @@
         background: var(--bg);
         border: 2px solid var(--bg);
         transition: 150ms;
+        font-weight: 500;
     }
 
     input:focus {

@@ -5,6 +5,9 @@
         currentRoomId,
         currentRoomLoaded,
         currentRoomMessages,
+        currentServerChannels,
+        currentServerId,
+        currentServerName,
         isInServer,
         roomsList,
     } from 'stores/rooms';
@@ -16,6 +19,9 @@
         $currentRoomMessages = [];
         $currentRoomLoaded = false;
         $isInServer = false;
+        $currentServerId = undefined;
+        $currentServerName = undefined;
+        $currentServerChannels = [];
 
         goto('/app');
 
@@ -25,7 +31,7 @@
 
 <div>
     <svg
-        class={`${$currentRoomId == undefined ? 'active' : ''}`}
+        class={`${$currentRoomId == undefined && !$isInServer ? 'active' : ''}`}
         version="1.2"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 512 512"

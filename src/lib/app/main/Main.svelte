@@ -12,7 +12,7 @@
     } from 'stores/rooms';
     import { disabledIn30, lastSendsIn30, socket } from 'stores/main';
     import { onMount } from 'svelte';
-    import { differenceInMinutes } from 'date-fns';
+    import { differenceInMinutes, getDate, getMonth } from 'date-fns';
     import { getKey } from 'utilities/global';
     import { fetchConvos } from 'utilities/rooms';
     import { Toaster } from 'svelte-sonner';
@@ -28,6 +28,64 @@
     import RoomMembers from './rooms/RoomMembers.svelte';
     import ServerPanel from '../reusables/side/ServerPanel.svelte';
     import Dashboard from './dashboard/Dashboard.svelte';
+    import ServerNoRoom from '../reusables/rooms/ServerNoRoom.svelte';
+
+    let ParticlesComponent;
+
+    onMount(async () => {
+        const module = await import('svelte-particles');
+
+        ParticlesComponent = module.default;
+    });
+
+    let particlesConfig = {
+        particles: {
+            color: { value: '#fff' },
+
+            move: {
+                direction: 'bottom',
+                enable: true,
+                outModes: 'out',
+                speed: 2,
+            },
+
+            number: {
+                density: {
+                    enable: true,
+                    area: 800,
+                },
+                value: 400,
+            },
+
+            opacity: {
+                value: 0.7,
+            },
+
+            shape: {
+                type: 'circle',
+            },
+
+            size: {
+                value: 10,
+            },
+
+            wobble: {
+                enable: true,
+                distance: 10,
+                speed: 10,
+            },
+
+            zIndex: {
+                value: { min: 1, max: 100 },
+            },
+        },
+    };
+
+    let onParticlesLoaded = (event) => {
+        const particlesContainer = event.detail.particles;
+    };
+
+    let particlesInit = async (engine) => {};
 
     onMount(() => {
         socket.on('roomAdded', async () => ($roomsList = await fetchConvos()));
@@ -55,6 +113,17 @@
         }, 30000);
     });
 </script>
+
+<!-- TODO: smh, find in old implementation in v1 -->
+{#if new Date().getMonth() == 11}
+    <svelte:component
+        this={ParticlesComponent}
+        id="tsparticles"
+        options={particlesConfig}
+        on:particlesLoaded={onParticlesLoaded}
+        {particlesInit}
+    />
+{/if}
 
 <Dropdown />
 
@@ -92,13 +161,16 @@
     </div>
 
     <div class="third-container">
-        {#if $currentRoomLoaded}
-            <!-- TODO: Else for Dashboard, Turbo -->
-            <RoomInfo />
+        {#if $currentRoomLoaded || $isInServer}
+            {#if !$currentRoomData}
+                <ServerNoRoom />
+            {:else}
+                <RoomInfo />
 
-            <RoomChat />
+                <RoomChat />
 
-            <RoomSend />
+                <RoomSend />
+            {/if}
         {:else}
             <Dashboard />
         {/if}

@@ -13,9 +13,8 @@
 <div
     class="options-container"
     in:fly={{
-        y: 100,
+        y: 25,
         duration: 500,
-        delay: 100,
         easing: quintInOut,
         opacity: 0,
     }}
@@ -50,18 +49,8 @@
         font-size: 1rem;
         font-weight: 600;
         transition: 150ms;
+        border-radius: 15px;
     }
-
-    button:nth-child(1) {
-        border-top-left-radius: 15px;
-        border-bottom-left-radius: 15px;
-    }
-
-    button:nth-child(2) {
-        border-top-right-radius: 15px;
-        border-bottom-right-radius: 15px;
-    }
-
     button:hover {
         background: var(--branding);
     }

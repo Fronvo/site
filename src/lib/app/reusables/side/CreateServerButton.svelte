@@ -1,14 +1,17 @@
 <script lang="ts">
     import { ModalTypes } from 'stores/modals';
+    import { serversList } from 'stores/rooms';
     import { showModal } from 'utilities/main';
 
     function createServer(): void {
-        showModal(ModalTypes.CreateRoom);
+        showModal(ModalTypes.CreateServer);
     }
 </script>
 
 <div>
-    <span class="seperator" />
+    {#if $serversList.length > 0}
+        <span class="seperator" />
+    {/if}
 
     <svg
         on:click={createServer}
@@ -40,7 +43,6 @@
         width: 48px;
         height: 48px;
         padding: 10px;
-        margin-top: 10px;
         background: var(--primary);
         border-radius: 20px;
         cursor: pointer;
@@ -65,5 +67,6 @@
         margin: auto;
         height: 2px;
         background: var(--tertiary);
+        margin-bottom: 10px;
     }
 </style>

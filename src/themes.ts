@@ -52,7 +52,6 @@ interface ThemingOptions {
     modal_input_size: string;
 
     // Other
-    scrollbar: string;
     hover_darken: string;
 }
 
@@ -97,8 +96,6 @@ export const defaultTheme: ThemingOptions = {
 
     modal_header_size: '1.2rem',
     modal_input_size: '1.2rem',
-
-    scrollbar: 'rgb(60, 60, 60)',
 
     hover_darken: 'rgb(30, 33, 36)',
 };

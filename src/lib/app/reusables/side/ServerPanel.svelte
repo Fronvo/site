@@ -1,10 +1,11 @@
 <script lang="ts">
-    import { currentRoomData } from 'stores/rooms';
+    import { currentServerChannels, currentServerName } from 'stores/rooms';
+    import PropChannel from '../rooms/PropChannel.svelte';
 </script>
 
 <div class="server-container">
     <div class="top">
-        <h1>{$currentRoomData?.name}</h1>
+        <h1>{$currentServerName}</h1>
 
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -20,6 +21,14 @@
                 d="m19 9l-7 6l-7-6"
             /></svg
         >
+    </div>
+
+    <div class="channels">
+        {#if $currentServerChannels.length > 0}{:else}
+            {#each { length: 15 } as _, i}
+                <PropChannel opacity={1 - 0.8 + (1 - (i + 2.5) / 12.5)} />
+            {/each}
+        {/if}
     </div>
 </div>
 
@@ -58,5 +67,26 @@
         height: 22px;
         fill: var(--text);
         stroke: var(--text);
+    }
+
+    .channels {
+        width: 100%;
+        max-height: calc(100vh - 55px - 57px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+        padding-right: 10px;
+        padding-top: 15px;
+        overflow-y: scroll;
+    }
+
+    .channels::-webkit-scrollbar-thumb {
+        background: transparent;
+    }
+
+    .channels:hover.channels::-webkit-scrollbar-thumb {
+        background: var(--secondary);
     }
 </style>

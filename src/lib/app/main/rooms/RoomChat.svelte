@@ -62,7 +62,12 @@
                 from: $messages.length.toString(),
                 to: ($messages.length + 50).toString(),
             },
-            ({ roomMessages }) => {
+            ({ roomMessages, err }) => {
+                if (err) {
+                    loaded();
+                    return;
+                }
+
                 if (roomMessages.length == 0) {
                     previousEmpty = true;
 

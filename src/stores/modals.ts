@@ -23,6 +23,8 @@ import GoPayModal from '$lib/app/main/modals/GoPayModal.svelte';
 import MaxFriendsModal from '$lib/app/main/modals/MaxFriendsModal.svelte';
 import RefundProModal from '$lib/app/main/modals/RefundPROModal.svelte';
 import CreateRoomModal from '$lib/app/main/modals/CreateRoomModal.svelte';
+import CreateServerModal from '$lib/app/main/modals/CreateServerModal.svelte';
+import MaxServersModal from '$lib/app/main/modals/MaxServersModal.svelte';
 
 /****************************** Modals ******************************/
 export const modals = [
@@ -36,6 +38,7 @@ export const modals = [
     AddAccountModal,
     AddFriendModal,
     MaxRoomsModal,
+    MaxServersModal,
     RemoveFriendModal,
     AddMembersModal,
     ImageModal,
@@ -48,6 +51,7 @@ export const modals = [
     MaxFriendsModal,
     RefundProModal,
     CreateRoomModal,
+    CreateServerModal,
 ];
 /****************************** Modals ******************************/
 
@@ -63,6 +67,7 @@ export enum ModalTypes {
     AddAccount,
     AddFriend,
     MaxRooms,
+    MaxServers,
     RemoveFriend,
     AddMembers,
     Image,
@@ -75,6 +80,7 @@ export enum ModalTypes {
     MaxFriends,
     RefundPRO,
     CreateRoom,
+    CreateServer,
 }
 
 export interface ModalActions {

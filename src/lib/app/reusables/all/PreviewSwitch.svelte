@@ -89,6 +89,7 @@
         color: white;
         margin-right: 10px;
         background: var(--branding);
+        font-weight: 600;
     }
 
     #login:hover {

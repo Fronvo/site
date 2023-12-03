@@ -1,13 +1,13 @@
 <script lang="ts">
-    import { roomsList } from 'stores/rooms';
+    import { serversList } from 'stores/rooms';
     import Server from './Server.svelte';
 </script>
 
 <div class="servers-container">
     <div class="list-container">
-        {#if $roomsList.length != 0}
-            {#each $roomsList as roomData}
-                <Server {roomData} />
+        {#if $serversList.length != 0}
+            {#each $serversList as serverData}
+                <Server {serverData} />
             {/each}
         {/if}
     </div>

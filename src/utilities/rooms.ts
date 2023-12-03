@@ -1,4 +1,4 @@
-import type { FronvoAccount, Room, RoomMessage } from 'interfaces/all';
+import type { FronvoAccount, Room, RoomMessage, Server } from 'interfaces/all';
 import {
     sendContent,
     replyingTo,
@@ -11,6 +11,7 @@ import {
     sendingImage as sendingImageStore,
     dmsList,
     isInServer,
+    serversList,
 } from 'stores/rooms';
 import {
     socket,
@@ -25,6 +26,14 @@ export async function fetchConvos(): Promise<Room[]> {
     return new Promise((resolve) => {
         socket.emit('fetchConvos', ({ convos }) => {
             resolve(convos);
+        });
+    });
+}
+
+export async function fetchServers(): Promise<Server[]> {
+    return new Promise((resolve) => {
+        socket.emit('fetchServers', ({ servers }) => {
+            resolve(servers);
         });
     });
 }
@@ -76,6 +85,24 @@ export async function loadRoomsData(): Promise<Room[]> {
     roomsList.set(rooms);
 
     return convos;
+}
+
+export async function loadServersData(): Promise<Server[]> {
+    // Load servers data
+    const servers = await fetchServers();
+
+    const tempServerList: Server[] = [];
+
+    for (const serverObj in servers) {
+        const server = servers[serverObj];
+
+        tempServerList.push(server);
+    }
+
+    // Re-init because we can't dynamically update
+    serversList.set(tempServerList);
+
+    return servers;
 }
 
 export function sendMessage(

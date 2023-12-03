@@ -63,12 +63,7 @@
         background-size: cover;
         border-radius: 10px;
         cursor: pointer;
-        box-shadow: 0 0 4px black;
-        transition: 100ms filter, 100ms background;
-    }
-
-    .post-container:hover {
-        box-shadow: 0 0 2px black;
+        transition: 150ms filter, 150ms background;
     }
 
     .wrapper {
@@ -77,7 +72,7 @@
         justify-content: center;
         width: 100%;
         height: 100%;
-        transition: 200ms;
+        transition: 150ms;
         z-index: 1;
         opacity: 0;
         backdrop-filter: blur(15px) brightness(60%);

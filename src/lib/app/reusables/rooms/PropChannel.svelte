@@ -7,15 +7,13 @@
         <span id="avatar" />
         <span id="name" />
     </div>
-
-    <span id="attachment" />
 </div>
 
 <style>
     .prop-container {
         display: flex;
         flex-direction: column;
-        margin-bottom: 30px;
+        margin-bottom: 20px;
     }
 
     .top {
@@ -24,11 +22,11 @@
     }
 
     #avatar {
-        width: 36px;
-        height: 36px;
+        width: 26px;
+        height: 26px;
         background: var(--secondary);
-        border-radius: 30px;
-        margin-right: 5px;
+        border-radius: 10px;
+        margin-right: 10px;
     }
 
     #name {
@@ -36,15 +34,6 @@
         height: 20px;
         border-radius: 30px;
         background: var(--secondary);
-    }
-
-    #attachment {
-        display: inline-block;
-        width: 500px;
-        height: 500px;
-        background: var(--secondary);
-        border-radius: 10px;
-        margin-top: 5px;
     }
 
     @keyframes shimmer {

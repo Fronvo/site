@@ -112,6 +112,15 @@ import type {
     CreateThemeResult,
 } from './account/createTheme';
 import type { CanPostResult } from './account/canPost';
+import type {
+    CreateServerParams,
+    CreateServerResult,
+} from './account/createServer';
+import type {
+    DeleteServerParams,
+    DeleteServerResult,
+} from './account/deleteServer';
+import type { FetchServersResult } from './account/fetchServers';
 
 export interface ClientToServerEvents {
     register: (
@@ -266,4 +275,13 @@ export interface ClientToServerEvents {
         callback?: ({}: CreateThemeResult) => void
     ) => void;
     canPost: (callback?: ({}: CanPostResult) => void) => void;
+    createServer: (
+        {}: CreateServerParams,
+        callback?: ({}: CreateServerResult) => void
+    ) => void;
+    deleteServer: (
+        {}: DeleteServerParams,
+        callback?: ({}: DeleteServerResult) => void
+    ) => void;
+    fetchServers: (callback?: ({}: FetchServersResult) => void) => void;
 }

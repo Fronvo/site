@@ -1,4 +1,10 @@
-import type { FronvoAccount, RoomMessage, Room } from 'interfaces/all';
+import type {
+    FronvoAccount,
+    RoomMessage,
+    Room,
+    Server,
+    Channel,
+} from 'interfaces/all';
 import { writable, type Writable } from 'svelte/store';
 
 /****************************** Room ******************************/
@@ -7,8 +13,11 @@ export const dmsFilter: Writable<string> = writable('');
 
 export const roomsList: Writable<Room[]> = writable([]);
 
-export const serversList: Writable<Room[]> = writable([]);
+export const serversList: Writable<Server[]> = writable([]);
 export const isInServer: Writable<boolean> = writable(false);
+export const currentServerId: Writable<string> = writable();
+export const currentServerName: Writable<string> = writable();
+export const currentServerChannels: Writable<Channel[]> = writable([]);
 export const channelFilter: Writable<string> = writable('');
 
 export const currentRoomId: Writable<string> = writable();

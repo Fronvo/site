@@ -46,15 +46,20 @@
 
 <style>
     .options-container {
+        position: sticky;
+        top: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
         margin: auto;
         width: 325px;
         border: 2px solid var(--branding);
+        background: rgb(20, 20, 20, 0.5);
+        backdrop-filter: blur(10px);
         border-radius: 20px;
         margin-top: 10px;
         padding: 2px;
+        z-index: 1;
     }
 
     button {

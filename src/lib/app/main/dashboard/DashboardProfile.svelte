@@ -207,7 +207,7 @@
     }
 
     #total {
-        font-size: 1.4rem;
+        font-size: 1.3rem;
         margin-top: 20px;
     }
 

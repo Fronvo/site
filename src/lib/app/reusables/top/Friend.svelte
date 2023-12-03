@@ -1,48 +1,16 @@
 <script lang="ts">
     import type { FronvoAccount } from 'interfaces/all';
-    import { targetProfileModal } from 'stores/modals';
-    import { showDropdown } from 'utilities/main';
-    import { DropdownTypes } from 'stores/dropdowns';
+    import { ModalTypes, targetProfileModal } from 'stores/modals';
+    import { showModal } from 'utilities/main';
     import { socket } from 'stores/main';
     import { onMount } from 'svelte';
 
     export let profileData: FronvoAccount;
-    export let pending = false;
-
-    let container: HTMLDivElement;
-
-    function acceptFriend(): void {
-        socket.emit(
-            'acceptFriendRequest',
-            {
-                profileId: profileData.profileId,
-            },
-            () => {}
-        );
-    }
-
-    function rejectFriend(): void {
-        socket.emit(
-            'rejectFriendRequest',
-            {
-                profileId: profileData.profileId,
-            },
-            () => {}
-        );
-    }
 
     function showProfileModal(): void {
         $targetProfileModal = profileData;
 
-        showDropdown(DropdownTypes.Profile, container, 'left', -30, 10);
-    }
-
-    function showProfileModalNonPending(): void {
-        if (pending) return;
-
-        $targetProfileModal = profileData;
-
-        showDropdown(DropdownTypes.Profile, container, 'left', -30, 10);
+        showModal(ModalTypes.Profile);
     }
 
     onMount(() => {
@@ -74,31 +42,17 @@
 </script>
 
 <div
-    on:click={showProfileModalNonPending}
-    on:keydown={showProfileModalNonPending}
-    class={`friend-container ${pending ? 'pending' : ''}`}
-    bind:this={container}
+    on:click={showProfileModal}
+    on:keydown={showProfileModal}
+    class={`friend-container`}
 >
     <div class="badge-container">
-        {#if profileData.avatar}
-            <img
-                on:click={showProfileModal}
-                on:keydown={showProfileModal}
-                id="avatar"
-                src={profileData.avatar}
-                alt={`${profileData.username}'s avatar`}
-                draggable={false}
-            />
-        {:else}
-            <img
-                on:click={showProfileModal}
-                on:keydown={showProfileModal}
-                src="/images/avatar.svg"
-                draggable={false}
-                alt="Avatar"
-                id="avatar"
-            />
-        {/if}
+        <img
+            id="avatar"
+            src={profileData.avatar ? profileData.avatar : '/images/avatar.svg'}
+            alt={`${profileData.username}'s avatar`}
+            draggable={false}
+        />
 
         {#if profileData.online}
             <div class="indicator" />
@@ -108,45 +62,8 @@
     <div class="bottom-container">
         <h1 id="username">{profileData?.username}</h1>
 
-        {#if !pending}
-            <h1 id="status">{profileData?.status}</h1>
-        {/if}
+        <h1 id="status">{profileData?.status}</h1>
     </div>
-
-    {#if pending}
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="32"
-            height="32"
-            viewBox="0 0 16 16"
-            on:click={acceptFriend}
-            on:keydown={acceptFriend}
-            ><path
-                fill="none"
-                stroke="#1CCB00"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="1.5"
-                d="m2.75 8.75l3.5 3.5l7-7.5"
-            /></svg
-        >
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="32"
-            height="32"
-            viewBox="0 0 16 16"
-            on:click={rejectFriend}
-            on:keydown={rejectFriend}
-            ><path
-                fill="none"
-                stroke="red"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="1.5"
-                d="m11.25 4.75l-6.5 6.5m0-6.5l6.5 6.5"
-            /></svg
-        >
-    {/if}
 </div>
 
 <style>
@@ -157,8 +74,10 @@
         align-items: center;
         background: transparent;
         cursor: pointer;
-        width: 100%;
         padding: 8px;
+        overflow: hidden;
+        width: 100%;
+        border-bottom: 1px solid var(--primary);
     }
 
     .badge-container {
@@ -213,8 +132,8 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        width: 34px;
-        height: 34px;
+        width: 36px;
+        height: 36px;
         border-radius: 30px;
         margin-right: 8px;
     }
@@ -246,17 +165,6 @@
         -webkit-box-orient: vertical;
         font-size: 1.05rem;
         color: var(--text);
-    }
-
-    svg {
-        width: 36px;
-        height: 36px;
-        border-radius: 30px;
-        padding: 5px;
-    }
-
-    svg:hover {
-        background: var(--primary);
     }
 
     #avatar {

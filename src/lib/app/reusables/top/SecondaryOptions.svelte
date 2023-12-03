@@ -58,7 +58,7 @@
         font-size: 1rem;
         text-align: start;
         transition: none;
-        margin-bottom: 2px;
+        margin-bottom: 3px;
         border-radius: 10px;
     }
 

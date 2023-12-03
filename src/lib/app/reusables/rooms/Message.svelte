@@ -7,11 +7,7 @@
         showScrollBottom,
     } from 'stores/rooms';
     import Time from 'svelte-time/src/Time.svelte';
-    import {
-        differenceInDays,
-        differenceInMinutes,
-        getDayOfYear,
-    } from 'date-fns';
+    import { differenceInDays, differenceInMinutes } from 'date-fns';
     import { showDropdown, showModal } from 'utilities/main';
     import {
         ModalTypes,

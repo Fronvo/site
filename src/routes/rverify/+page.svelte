@@ -7,8 +7,7 @@
     import { performLogin } from 'utilities/main';
     import { goto } from '$app/navigation';
     import AppResetVerifyMain from '$lib/app/index/AppResetVerifyMain.svelte';
-    import AppTopNav from '$lib/app/index/AppTopNav.svelte';
-    import AppFooter from '$lib/app/index/AppFooter.svelte';
+    import BlurredBackground2 from '$lib/index/BlurredBackground2.svelte';
 
     let mountReady = false;
 
@@ -55,11 +54,9 @@
 {#if mountReady && $indexVisible}
     <div class="index-container">
         {#if $indexVisible}
-            <AppTopNav />
-
             <AppResetVerifyMain />
 
-            <AppFooter />
+            <BlurredBackground2 />
         {/if}
     </div>
 {/if}

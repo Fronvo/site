@@ -236,7 +236,7 @@
             <img
                 bind:this={image}
                 id="attachment"
-                src={messageData.attachment}
+                src={`${messageData.attachment}/tr:w-max:h-max:pr-true`}
                 draggable={false}
                 alt={'Message attachment'}
                 on:click={showImage}

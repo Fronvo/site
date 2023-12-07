@@ -12,7 +12,6 @@
     import '../app.css';
     import { currentTheme, defaultTheme } from '../themes';
     import FronvoLoading from '$lib/app/FronvoLoading.svelte';
-    import { fade } from 'svelte/transition';
     import {
         darkTheme,
         disabledIn30,
@@ -80,10 +79,10 @@
             }
         });
 
-        document.addEventListener('click', () => {
-            if ($dropdownAnimationFinished) {
-                dismissDropdown();
-            }
+        document.addEventListener('click', (ev) => {
+            if (!$dropdownAnimationFinished) return;
+
+            dismissDropdown();
         });
     }
 
@@ -105,9 +104,7 @@
     {#if mountReady}
         {#if $showLayout}
             {#if $loginSucceeded == undefined}
-                <div out:fade={{ duration: 250 }}>
-                    <FronvoLoading />
-                </div>
+                <FronvoLoading />
             {:else}
                 <Main />
             {/if}

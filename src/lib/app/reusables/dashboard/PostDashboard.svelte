@@ -18,7 +18,6 @@
 
     export let post: Post;
     let postContainer: HTMLDivElement;
-    let ambiency: HTMLDivElement;
 
     let postData = post.post;
     let profileData = post.profileData;
@@ -59,6 +58,10 @@
         showModal(ModalTypes.Image);
     }
 
+    function downloadImage(): void {
+        window.open(`${postData.attachment}?ik-attachment=true`);
+    }
+
     function showProfile(): void {
         $targetProfileModal = profileData;
 
@@ -93,11 +96,7 @@
     onMount(() => {
         setTimeout(() => {
             if (postContainer) {
-                postContainer.style.backgroundImage = `url(${postData.attachment})`;
-            }
-
-            if (ambiency) {
-                ambiency.style.backgroundImage = `url(${postData.attachment})`;
+                postContainer.style.backgroundImage = `url(${postData.attachment}/tr:w-1000:h-1000:pr-true)`;
             }
         }, 0);
     });
@@ -118,6 +117,21 @@
         <h1 id="name">{postData.author}</h1>
 
         <h1 id="time">• {dateSuffix}</h1>
+
+        <svg
+            on:click={downloadImage}
+            on:keydown={downloadImage}
+            xmlns="http://www.w3.org/2000/svg"
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            ><path
+                d="M12.553 16.506a.75.75 0 0 1-1.107 0l-4-4.375a.75.75 0 0 1 1.108-1.012l2.696 2.95V3a.75.75 0 0 1 1.5 0v11.068l2.697-2.95a.75.75 0 1 1 1.107 1.013l-4 4.375Z"
+            /><path
+                d="M3.75 15a.75.75 0 0 0-1.5 0v.055c0 1.367 0 2.47.117 3.337c.12.9.38 1.658.981 2.26c.602.602 1.36.86 2.26.982c.867.116 1.97.116 3.337.116h6.11c1.367 0 2.47 0 3.337-.116c.9-.122 1.658-.38 2.26-.982c.602-.602.86-1.36.982-2.26c.116-.867.116-1.97.116-3.337V15a.75.75 0 0 0-1.5 0c0 1.435-.002 2.436-.103 3.192c-.099.734-.28 1.122-.556 1.399c-.277.277-.665.457-1.4.556c-.755.101-1.756.103-3.191.103H9c-1.435 0-2.437-.002-3.192-.103c-.734-.099-1.122-.28-1.399-.556c-.277-.277-.457-.665-.556-1.4c-.101-.755-.103-1.756-.103-3.191Z"
+            /></svg
+        >
     </div>
 
     <div class="attachments">
@@ -128,8 +142,6 @@
             on:click={showImage}
             on:keydown={showImage}
         />
-
-        <div class="attachment-ambiency" bind:this={ambiency} />
     </div>
 
     <div class="action">
@@ -215,6 +227,13 @@
         font-size: 0.9rem;
         color: var(--gray);
         margin-top: 2px;
+        flex: 1;
+    }
+
+    .top svg {
+        width: 26px;
+        height: 26px;
+        fill: white;
     }
 
     .attachments {
@@ -239,15 +258,7 @@
         transition: 100ms filter, 100ms background;
         z-index: 1;
         cursor: pointer;
-    }
-
-    .attachment-ambiency {
-        width: 100%;
-        height: 100%;
-        z-index: 0;
-        filter: blur(10px);
-        /* TODO */
-        display: none;
+        display: inline-block;
     }
 
     h1 {
@@ -281,8 +292,7 @@
 
     #likes {
         font-size: 1rem;
-        font-weight: 700;
-        cursor: pointer;
-        margin-top: 2px;
+        font-weight: 600;
+        margin-top: 3px;
     }
 </style>

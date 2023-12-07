@@ -18,10 +18,12 @@
     onMount(() => {
         setTimeout(() => {
             if (postContainer) {
-                postContainer.style.backgroundImage = `url(${post.post.attachment})`;
+                postContainer.style.backgroundImage = `url(${post.post.attachment}/tr:w-600:h-600:pr-true)`;
             }
         }, 0);
     });
+
+    $: postData = post.post;
 </script>
 
 <div

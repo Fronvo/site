@@ -6,10 +6,20 @@
         modalVisible,
     } from 'stores/modals';
     import { fade } from 'svelte/transition';
+    import { dismissModal } from 'utilities/main';
+
+    let container: HTMLDivElement;
+
+    function clickListener(ev: MouseEvent | KeyboardEvent): void {
+        if (ev.target) {
+            if (ev.target == container) dismissModal();
+        }
+    }
 </script>
 
 {#if $modalVisible}
     <div
+        bind:this={container}
         class="modal-container"
         in:fade={{
             duration: modalAnimDuration * 0.5,
@@ -17,6 +27,8 @@
         out:fade={{
             duration: modalAnimDuration * 0.5,
         }}
+        on:click={clickListener}
+        on:keydown={clickListener}
     >
         <svelte:component this={modals[$currentModalId]} />
     </div>

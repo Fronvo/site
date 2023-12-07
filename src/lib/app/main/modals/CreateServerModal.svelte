@@ -96,8 +96,8 @@
     }
 
     input {
-        background: var(--bg);
-        border: 2px solid var(--bg);
+        background: rgb(20, 20, 20, 0.75);
+        border: 2px solid rgb(20, 20, 20, 0);
         transition: 150ms;
         font-weight: 500;
     }

@@ -1,7 +1,6 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
     import ErrorHeader from '$lib/app/reusables/all/ErrorHeader.svelte';
-    import { keepLoggedIn } from 'stores/index';
     import { currentToken, socket } from 'stores/main';
     import { onMount } from 'svelte';
     import { fade } from 'svelte/transition';
@@ -69,9 +68,7 @@
 
                                     return;
                                 } else {
-                                    if ($keepLoggedIn) {
-                                        setKey('token', token);
-                                    }
+                                    setKey('token', token);
 
                                     $currentToken = token;
 

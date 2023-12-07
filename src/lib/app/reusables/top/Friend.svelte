@@ -49,7 +49,9 @@
     <div class="badge-container">
         <img
             id="avatar"
-            src={profileData.avatar ? profileData.avatar : '/images/avatar.svg'}
+            src={profileData.avatar
+                ? `${profileData.avatar}/tr:w-72:h-72`
+                : '/images/avatar.svg'}
             alt={`${profileData.username}'s avatar`}
             draggable={false}
         />

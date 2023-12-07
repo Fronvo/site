@@ -1,19 +1,37 @@
 <script lang="ts">
-    import ErrorHeader from '$lib/app/reusables/all/ErrorHeader.svelte';
     import { cachedAccountData, currentToken, socket } from 'stores/main';
     import { onMount } from 'svelte';
-    import { fade } from 'svelte/transition';
+    import { quartOut } from 'svelte/easing';
+    import { fly } from 'svelte/transition';
     import { setKey } from 'utilities/global';
     import { redirectApp } from 'utilities/index';
-    import { performLogin } from 'utilities/main';
+    import { initSocket, performLogin } from 'utilities/main';
+
+    let codeInput: HTMLInputElement;
+    let identifierInput: HTMLInputElement;
 
     let code: string;
     let identifier: string;
-    let errorMessage: string;
 
     let mountReady = false;
 
-    function join(): void {
+    onMount(() => {
+        initSocket();
+
+        setTimeout(() => {
+            codeInput.addEventListener('keydown', (e) => {
+                if (e.key == 'Enter') verify();
+            });
+
+            identifierInput.addEventListener('keydown', (e) => {
+                if (e.key == 'Enter') verify();
+            });
+        }, 0);
+
+        mountReady = true;
+    });
+
+    function verify(): void {
         if (!code || !identifier) return;
 
         socket.emit(
@@ -24,7 +42,16 @@
             },
             async ({ err, token }) => {
                 if (err) {
-                    errorMessage = err.msg;
+                    if (err.msg.toLowerCase().includes('code')) {
+                        setTimeout(() => {
+                            codeInput.style.border = '2px solid red';
+                        }, 0);
+                    } else {
+                        setTimeout(() => {
+                            identifierInput.style.border = '2px solid red';
+                        }, 0);
+                    }
+
                     return;
                 }
 
@@ -38,142 +65,239 @@
             }
         );
     }
-
-    onMount(() => (mountReady = true));
 </script>
 
 {#if mountReady}
-    <div class="main-container" in:fade={{ duration: 250 }}>
-        <h1 id="descriptor">Account setup</h1>
+    <div
+        class="main-container"
+        in:fly={{
+            duration: 500,
+            y: 50,
+            opacity: 0,
+            easing: quartOut,
+            delay: 250,
+        }}
+    >
+        <h1 id="top">Account setup</h1>
+        <h1 id="descriptor">Check your email for a verification code.</h1>
 
-        <ErrorHeader {errorMessage} />
-
-        <h1 id="info">
-            Enter the 6-digit verification code sent to your email
-        </h1>
-        <input
-            bind:value={code}
-            class="modal-input"
-            type="text"
-            placeholder="Verification code"
-            maxlength={6}
-        />
-
-        <h1 id="info">Choose the identifier you will FOREVER use on Fronvo</h1>
-
-        <div class="single-line">
-            <h1>@</h1>
+        <div class="credentials-container">
+            <h1 id="input-descriptor">Verification code</h1>
             <input
-                bind:value={identifier}
+                bind:this={codeInput}
                 class="modal-input"
                 type="text"
-                maxlength={20}
+                maxlength={6}
+                bind:value={code}
             />
+
+            <h1 id="input-descriptor">Account handle</h1>
+
+            <div class="single">
+                <h1>@</h1>
+                <input
+                    bind:this={identifierInput}
+                    class="modal-input"
+                    bind:value={identifier}
+                />
+            </div>
         </div>
 
-        <div class="choices-container">
-            <button id="join" on:click={join}>Join Fronvo</button>
-        </div>
+        <button id="login" on:click={verify}>Verify</button>
     </div>
 {/if}
 
 <style>
     .main-container {
         position: fixed;
+        width: max-content;
         height: max-content;
         margin: auto;
         top: 0;
         right: 15px;
         left: 15px;
         bottom: 0;
+        padding: 30px;
+        padding-bottom: 20px;
+        border-radius: 5px;
         display: flex;
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
         z-index: 0;
-    }
-
-    #descriptor {
-        font-size: 2.5rem;
-        margin: 0;
-        color: var(--text);
-    }
-
-    #info {
-        margin: 0;
-        margin-top: 30px;
-        font-size: 1.2rem;
-    }
-
-    .single-line {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 20px;
-    }
-
-    h1 {
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
+        background: rgba(170, 170, 170, 0.25);
+        backdrop-filter: blur(15px);
+        box-shadow: 0 0 5px rgb(125, 125, 125, 0.25);
         user-select: none;
     }
 
-    .single-line h1 {
-        margin: 0;
-        font-size: 1.9rem;
+    .credentials-container {
+        width: 400px;
+        display: flex;
+        flex-direction: column;
+        align-items: start;
     }
 
-    .single-line input {
-        margin-left: 5px;
-        padding-left: 5px;
+    #top {
+        font-size: 3rem;
+        font-weight: 600;
+        text-align: center;
+        margin: 0;
+    }
+
+    #descriptor {
+        font-size: 1.25rem;
+        margin: 0;
+        margin-bottom: 30px;
+        color: var(--text);
+    }
+
+    #input-descriptor {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 800;
+        text-transform: uppercase;
     }
 
     input {
+        width: 450px;
         font-size: 1.3rem;
-        margin-top: 10px;
+        margin-top: 5px;
         padding: 7px;
-        padding-left: 20px;
-        padding-right: 20px;
-        color: var(--text);
-        background: var(--i_bg);
+        padding-left: 5px;
+        padding-right: 5px;
+        color: white;
+        background: rgba(200, 200, 200, 0.25);
+        backdrop-filter: blur(5px);
         border: 2px solid transparent;
         transition: 150ms border;
     }
 
     input:focus {
-        border: 2px solid #0e62ff;
-    }
-
-    .choices-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-top: 10px;
+        border: 2px solid var(--branding);
     }
 
     button {
-        background: #0e62ff;
-        box-shadow: 0 0 5px #0e62ff;
-        font-size: 1.4rem;
-        border-radius: 15px;
-        font-weight: 500;
+        width: 450px;
+        background: var(--branding);
+        box-shadow: none;
+        font-size: 1.6rem;
+        border-radius: 5px;
+        margin-top: 15px;
+        margin-left: 7px;
+        color: white;
+        padding: 8px;
+    }
+
+    button:hover {
+        background: var(--branding);
         color: white;
     }
 
     button:active {
-        opacity: 0.7;
+        opacity: 0.8;
     }
 
     button:disabled {
-        opacity: 0.75;
+        opacity: 0.5;
     }
 
-    #join {
-        width: 150px;
-        margin-right: 15px;
+    .single {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .single h1 {
+        margin: 0;
+        margin-bottom: 10px;
+    }
+
+    .single input {
+        width: calc(450px - 26px);
+    }
+
+    @media screen and (max-width: 1050px) {
+        .main-container {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .credentials-container {
+            width: initial;
+        }
+    }
+
+    @media screen and (max-width: 850px) {
+        #top {
+            font-size: 2.5rem;
+        }
+
+        #descriptor {
+            font-size: 1.1rem;
+        }
+
+        #input-descriptor {
+            font-size: 1rem;
+        }
+
+        input {
+            font-size: 1.15rem;
+            margin-left: 0;
+        }
+
+        button {
+            font-size: 1.4rem;
+        }
+
+        .single h1 {
+            font-size: 1.5rem;
+        }
+
+        .single input {
+            width: calc(450px - 26px);
+            margin-left: 5px;
+        }
+    }
+
+    @media screen and (max-width: 600px) {
+        #top {
+            font-size: 1.7rem;
+        }
+
+        #descriptor {
+            font-size: 0.8rem;
+        }
+
+        #input-descriptor {
+            font-size: 0.8rem;
+        }
+
+        input {
+            width: 300px;
+            font-size: 0.9rem;
+        }
+
+        button {
+            width: 300px;
+            font-size: 0.9rem;
+            margin-left: 0;
+            margin-right: 5px;
+        }
+
+        .single h1 {
+            font-size: 1.3rem;
+        }
+
+        .single input {
+            width: calc(300px - 23px);
+        }
     }
 </style>

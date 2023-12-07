@@ -53,9 +53,9 @@
         class={`${$currentRoomId == serverData.serverId ? 'active' : ''}`}
         on:click={enterServer}
         on:keydown={enterServer}
-        id="avatar"
+        id="icon"
         src={serverData.icon}
-        alt={`${serverData.name}\'s avatar'`}
+        alt={`${serverData.name}\'s icon'`}
         draggable={false}
     />
 {:else}
@@ -65,14 +65,14 @@
         }`}
         on:click={enterServer}
         on:keydown={enterServer}
-        id="avatar"
+        id="icon"
     >
         <h1>{serverData.name[0]}{serverData.name[1] || ''}</h1></span
     >
 {/if}
 
 <style>
-    #avatar {
+    #icon {
         width: 48px;
         height: 48px;
         cursor: pointer;
@@ -87,11 +87,11 @@
         border-radius: 25px;
     }
 
-    #avatar:hover {
+    #icon:hover {
         border-radius: 15px;
     }
 
-    #avatar:active {
+    #icon:active {
         transform: translateY(2px);
     }
 

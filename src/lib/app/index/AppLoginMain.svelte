@@ -1,16 +1,17 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
-    import { promotedToRVerify } from 'stores/index';
-    import { currentToken, socket } from 'stores/main';
+    import ErrorHeader from '$lib/app/reusables/all/ErrorHeader.svelte';
+    import { cachedAccountData, currentToken, socket } from 'stores/main';
     import { onMount } from 'svelte';
     import { quartOut } from 'svelte/easing';
     import { fly } from 'svelte/transition';
-    import { initSocket } from 'utilities/main';
+    import { setKey } from 'utilities/global';
+    import { redirectApp } from 'utilities/index';
+    import { initSocket, performLogin } from 'utilities/main';
 
-    let codeInput: HTMLInputElement;
+    let emailInput: HTMLInputElement;
     let passwordInput: HTMLInputElement;
 
-    let code: string;
+    let email: string;
     let password: string;
 
     let mountReady = false;
@@ -19,47 +20,55 @@
         initSocket();
 
         setTimeout(() => {
-            codeInput.addEventListener('keydown', (e) => {
-                if (e.key == 'Enter') reset();
+            emailInput.addEventListener('keydown', (e) => {
+                if (e.key == 'Enter') login();
             });
 
             passwordInput.addEventListener('keydown', (e) => {
-                if (e.key == 'Enter') reset();
+                if (e.key == 'Enter') login();
             });
         }, 0);
 
         mountReady = true;
     });
 
-    function reset(): void {
-        if (!code || !password) return;
+    function login(): void {
+        if (!email || !password) return;
+
+        setTimeout(() => {
+            emailInput.style.border = '2px solid transparent';
+            passwordInput.style.border = '2px solid transparent';
+        }, 0);
 
         socket.emit(
-            'resetPasswordVerify',
-            {
-                code: code ? code : '',
-                password: password ? password : '',
-            },
-            async ({ err }) => {
+            'login',
+            { email: email || '', password: password || '' },
+            async ({ err, token }) => {
                 if (err) {
-                    if (err.msg.toLowerCase().includes('code')) {
+                    if (err.msg.toLowerCase().includes('email')) {
                         setTimeout(() => {
-                            codeInput.style.border = '2px solid red';
+                            emailInput.style.border = '2px solid red';
                         }, 0);
-                    } else {
+                    } else if (err.msg.toLowerCase().includes('password')) {
                         setTimeout(() => {
                             passwordInput.style.border = '2px solid red';
+                        }, 0);
+                    } else if ((err.name = 'ACCOUNT_404')) {
+                        setTimeout(() => {
+                            emailInput.style.border = '2px solid red';
                         }, 0);
                     }
 
                     return;
                 }
 
-                $promotedToRVerify = false;
+                setKey('token', token);
 
-                goto('/login', {
-                    replaceState: true,
-                });
+                redirectApp();
+
+                $currentToken = token;
+
+                await performLogin(token, $cachedAccountData);
             }
         );
     }
@@ -76,20 +85,19 @@
             delay: 250,
         }}
     >
-        <h1 id="top">Account setup</h1>
-        <h1 id="descriptor">Check your email for a password reset code.</h1>
+        <h1 id="top">Welcome back to Fronvo</h1>
+        <h1 id="descriptor">Login to the safest social media below.</h1>
 
         <div class="credentials-container">
-            <h1 id="input-descriptor">Verification code</h1>
+            <h1 id="input-descriptor">Email address</h1>
             <input
-                bind:this={codeInput}
+                bind:this={emailInput}
                 class="modal-input"
                 type="text"
-                maxlength={6}
-                bind:value={code}
+                bind:value={email}
             />
 
-            <h1 id="input-descriptor">New password</h1>
+            <h1 id="input-descriptor">Password</h1>
             <input
                 bind:this={passwordInput}
                 class="modal-input"
@@ -98,7 +106,14 @@
             />
         </div>
 
-        <button id="login" on:click={reset}>Reset password</button>
+        <button id="login" on:click={login}>Login</button>
+
+        <div class="choices-container">
+            <h1>New to Fronvo? <a href="/app">Register</a></h1>
+            <h1>
+                Forgot your password? <a href="/reset">Reset password</a>
+            </h1>
+        </div>
     </div>
 {/if}
 
@@ -195,19 +210,22 @@
         opacity: 0.5;
     }
 
-    .single {
+    .choices-container {
         display: flex;
-        align-items: center;
-        justify-content: center;
+        flex-direction: column;
+        align-items: start;
+        margin-left: 5px;
+        margin-top: 20px;
     }
 
-    .single h1 {
+    .choices-container h1 {
         margin: 0;
-        margin-bottom: 10px;
+        font-size: 1.1rem;
+        margin-bottom: 15px;
     }
 
-    .single input {
-        width: calc(450px - 26px);
+    .choices-container a {
+        color: white;
     }
 
     @media screen and (max-width: 1050px) {
@@ -252,13 +270,8 @@
             font-size: 1.4rem;
         }
 
-        .single h1 {
-            font-size: 1.5rem;
-        }
-
-        .single input {
-            width: calc(450px - 26px);
-            margin-left: 5px;
+        .choices-container h1 {
+            font-size: 1rem;
         }
     }
 
@@ -287,12 +300,8 @@
             margin-right: 5px;
         }
 
-        .single h1 {
-            font-size: 1.3rem;
-        }
-
-        .single input {
-            width: calc(300px - 23px);
+        .choices-container h1 {
+            font-size: 0.7rem;
         }
     }
 </style>

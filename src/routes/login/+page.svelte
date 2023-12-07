@@ -1,13 +1,13 @@
 <script lang="ts">
-    import { indexVisible, promotedToVerify } from 'stores/index';
+    import { indexVisible } from 'stores/index';
     import { onMount } from 'svelte';
     import { getKey } from 'utilities/global';
     import { cachedAccountData, showLayout } from 'stores/main';
     import { redirectApp } from 'utilities/index';
     import { performLogin } from 'utilities/main';
     import { goto } from '$app/navigation';
-    import AppVerifyMain from '$lib/app/index/AppVerifyMain.svelte';
     import BlurredBackground2 from '$lib/index/BlurredBackground2.svelte';
+    import AppLoginMain from '$lib/app/index/AppLoginMain.svelte';
 
     let mountReady = false;
 
@@ -16,11 +16,7 @@
         const val = window.navigator.userAgent.toLowerCase();
 
         // Block access to mobile, get the app
-        if (
-            val.includes('android') ||
-            val.includes('iphone') ||
-            !$promotedToVerify
-        ) {
+        if (val.includes('android') || val.includes('iphone')) {
             goto('/', {
                 replaceState: true,
             });
@@ -54,7 +50,7 @@
 {#if mountReady && $indexVisible}
     <div class="index-container">
         {#if $indexVisible}
-            <AppVerifyMain />
+            <AppLoginMain />
 
             <BlurredBackground2 />
         {/if}

@@ -1,6 +1,6 @@
 <script>
     import { onMount } from 'svelte';
-    import { sineIn, sineInOut } from 'svelte/easing';
+    import { quartOut } from 'svelte/easing';
     import { fade, fly } from 'svelte/transition';
 
     let mountReady = false;
@@ -13,7 +13,13 @@
 {#if mountReady}
     <div class="loading-container">
         <img
-            in:fade={{ duration: 250 }}
+            transition:fly={{
+                y: 50,
+                opacity: 0.25,
+                duration: 500,
+                delay: 125,
+                easing: quartOut,
+            }}
             src="favicon.png"
             alt="Fronvo logo"
             draggable={false}
@@ -43,7 +49,7 @@
         margin: auto;
         width: 110px;
         height: 110px;
-        border-radius: 30px;
+        border-radius: 100px;
         animation-name: glowing;
         animation-duration: 750ms;
         animation-fill-mode: both;

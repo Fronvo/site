@@ -5,7 +5,7 @@
         type ModalData,
     } from 'stores/modals';
     import { bounceInOut } from 'svelte/easing';
-    import { fade, scale } from 'svelte/transition';
+    import { scale } from 'svelte/transition';
 
     export let data: ModalData;
 
@@ -82,6 +82,7 @@
         overflow-x: hidden;
         padding-top: 15px;
         padding-bottom: 10px;
+        z-index: 4;
     }
 
     .title-less {

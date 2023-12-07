@@ -18,9 +18,7 @@ export interface FronvoError {
 export interface AccountPost {
     postId: string;
     author: string;
-    content?: string;
     attachment?: string;
-    gif?: string;
     creationDate: string;
     totalLikes: number;
     isLiked: boolean;

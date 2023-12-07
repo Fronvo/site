@@ -6,12 +6,34 @@
     import DashboardPosts from './DashboardPosts.svelte';
     import DashboardFriends from './DashboardFriends.svelte';
     import DashboardFriendOptions from './DashboardFriendOptions.svelte';
+    import { onDestroy, onMount } from 'svelte';
+    import type { Unsubscriber } from 'svelte/store';
+
+    let dashboardContainer: HTMLDivElement;
+    let unsubscribe: Unsubscriber;
+
+    onMount(() => {
+        if (!dashboardContainer) return;
+
+        unsubscribe = activeDashboardTab.subscribe((activeTab) => {
+            if (!activeTab) return;
+
+            setTimeout(() => {
+                dashboardContainer.scrollTop = 0;
+            }, 0);
+        });
+    });
+
+    onDestroy(() => {
+        unsubscribe();
+    });
 </script>
 
 <div
     class={`dashboard-container ${
         $totalDashboardPosts == 0 ? 'overflow-hidden' : ''
     }`}
+    bind:this={dashboardContainer}
 >
     <DashboardViewOptions />
 
@@ -33,6 +55,7 @@
         padding-right: 17%;
         height: calc(100vh);
         background: var(--bg);
+        overflow-x: hidden;
         overflow-y: scroll;
     }
 

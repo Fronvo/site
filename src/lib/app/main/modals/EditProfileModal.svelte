@@ -1,14 +1,8 @@
 <script lang="ts">
     import ModalTemplate from '../ModalTemplate.svelte';
-    import {
-        dismissModal,
-        fetchUser,
-        getSavedAccounts,
-        updateCachedAccount,
-        updateSavedAccount,
-    } from 'utilities/main';
+    import { dismissModal } from 'utilities/main';
     import { ourData } from 'stores/profile';
-    import { cachedAccountData, currentToken, socket } from 'stores/main';
+    import { socket } from 'stores/main';
     import { writable } from 'svelte/store';
     import PreviewEditable from '$lib/app/reusables/all/PreviewEditable.svelte';
     import type { ModalData } from 'stores/modals';
@@ -49,17 +43,10 @@
                 return;
             }
 
-            $ourData = await fetchUser();
-            await updateCachedAccount(
-                $ourData.profileId,
-                $cachedAccountData,
-                $ourData
-            );
-
-            // Update saved account, if any
-            if (getSavedAccounts().length > 0) {
-                updateSavedAccount($avatar, $username, $currentToken);
-            }
+            $ourData = {
+                ...$ourData,
+                ...updatedData,
+            };
 
             dismissModal();
         });

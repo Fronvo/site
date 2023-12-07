@@ -5,9 +5,8 @@
     import { cachedAccountData, currentToken, showLayout } from 'stores/main';
     import { redirectApp } from 'utilities/index';
     import { performLogin } from 'utilities/main';
-    import AppTopNav from '$lib/app/index/AppTopNav.svelte';
-    import AppMain from '$lib/app/index/AppMain.svelte';
-    import AppFooter from '$lib/app/index/AppFooter.svelte';
+    import BlurredBackground2 from '$lib/index/BlurredBackground2.svelte';
+    import AppRegisterMain from '$lib/app/index/AppRegisterMain.svelte';
 
     let mountReady = false;
 
@@ -41,11 +40,9 @@
 {#if mountReady && $indexVisible}
     <div class="index-container">
         {#if $indexVisible}
-            <AppTopNav />
+            <AppRegisterMain />
 
-            <AppMain />
-
-            <AppFooter />
+            <BlurredBackground2 />
         {/if}
     </div>
 {/if}

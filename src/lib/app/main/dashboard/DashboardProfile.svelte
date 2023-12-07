@@ -73,6 +73,8 @@
 
                                     attachmentBase64 = '';
 
+                                    $ourPosts = [];
+
                                     loadOurPosts($ourData.profileId);
                                 }
                             );
@@ -91,7 +93,9 @@
 <div class="profile-container" in:fade={{ duration: 200, easing: sineInOut }}>
     <img
         id="avatar"
-        src={$ourData.avatar ? $ourData.avatar : '/images/avatar.svg'}
+        src={$ourData.avatar
+            ? `${$ourData.avatar}/tr:w-200:h-200`
+            : '/images/avatar.svg'}
         draggable={false}
         alt={`${$ourData.profileId}\'s avatar'`}
     />
@@ -160,6 +164,8 @@
     }
 
     #avatar {
+        min-width: 100px;
+        min-height: 100px;
         width: 100px;
         height: 100px;
         border-radius: 100px;
@@ -217,7 +223,6 @@
         display: flex;
         align-items: start;
         flex-direction: row;
-        overflow-y: auto;
         flex-wrap: wrap;
         padding-top: 10px;
         transform: translateX(45px);

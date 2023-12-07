@@ -43,7 +43,9 @@
         bind:this={container}
     >
         <img
-            src={$ourData.avatar ? $ourData.avatar : '/images/avatar.svg'}
+            src={$ourData.avatar
+                ? `${$ourData.avatar}/tr:w-72:h-72`
+                : '/images/avatar.svg'}
             draggable={false}
             alt={`${$ourData.profileId}\'s avatar'`}
         />
@@ -107,8 +109,12 @@
         height: 18px;
         background: rgb(72, 202, 113);
         border-radius: 50px;
-        border: 4px solid var(--primary);
+        border: 4px solid rgb(26, 27, 30);
         transform: translateY(12px) translateX(-16px);
+    }
+
+    .main-container:hover .indicator {
+        border: 4px solid var(--secondary);
     }
 
     #name {

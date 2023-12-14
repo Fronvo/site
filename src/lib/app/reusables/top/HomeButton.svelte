@@ -1,37 +1,11 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
-    import {
-        currentRoomData,
-        currentRoomId,
-        currentRoomLoaded,
-        currentRoomMessages,
-        currentServerChannels,
-        currentServerId,
-        currentServerName,
-        isInServer,
-        roomsList,
-    } from 'stores/rooms';
-    import { setTitle } from 'utilities/main';
-
-    function goHome(): void {
-        $currentRoomId = undefined;
-        $currentRoomData = undefined;
-        $currentRoomMessages = [];
-        $currentRoomLoaded = false;
-        $isInServer = false;
-        $currentServerId = undefined;
-        $currentServerName = undefined;
-        $currentServerChannels = [];
-
-        goto('/app');
-
-        setTitle('Fronvo');
-    }
+    import { isInServer, roomsList, serversList } from 'stores/rooms';
+    import { goHome } from 'utilities/rooms';
 </script>
 
 <div>
     <svg
-        class={`${$currentRoomId == undefined && !$isInServer ? 'active' : ''}`}
+        class={`${!$isInServer ? 'active' : ''}`}
         version="1.2"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 512 512"
@@ -49,9 +23,7 @@
         /></svg
     >
 
-    {#if $roomsList.length > 0}
-        <span class="seperator" />
-    {/if}
+    <span class="seperator" />
 </div>
 
 <style>

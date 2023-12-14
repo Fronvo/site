@@ -12,6 +12,9 @@ import {
     dmsList,
     isInServer,
     serversList,
+    currentServerName,
+    currentServerId,
+    currentServerChannels,
 } from 'stores/rooms';
 import {
     socket,
@@ -21,6 +24,8 @@ import {
 } from 'stores/main';
 import { differenceInSeconds } from 'date-fns';
 import { setKey } from './global';
+import { goto } from '$app/navigation';
+import { setTitle } from './main';
 
 export async function fetchConvos(): Promise<Room[]> {
     return new Promise((resolve) => {
@@ -192,4 +197,19 @@ export async function sendImage(
             sendingImageStore.set(false);
         }
     );
+}
+
+export function goHome(): void {
+    currentRoomId.set(undefined);
+    currentRoomData.set(undefined);
+    currentRoomMessages.set([]);
+    currentRoomLoaded.set(false);
+    isInServer.set(false);
+    currentServerId.set(undefined);
+    currentServerName.set(undefined);
+    currentServerChannels.set([]);
+
+    goto('/app');
+
+    setTitle('Fronvo');
 }

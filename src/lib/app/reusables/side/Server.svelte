@@ -119,6 +119,5 @@
     .placeholder-active {
         background: var(--branding);
         border-radius: 15px;
-        box-shadow: 0 0 10px var(--branding);
     }
 </style>

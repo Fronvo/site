@@ -195,21 +195,6 @@
         opacity: 0.5;
     }
 
-    .single {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .single h1 {
-        margin: 0;
-        margin-bottom: 10px;
-    }
-
-    .single input {
-        width: calc(450px - 26px);
-    }
-
     @media screen and (max-width: 1050px) {
         .main-container {
             width: 100%;
@@ -251,15 +236,6 @@
         button {
             font-size: 1.4rem;
         }
-
-        .single h1 {
-            font-size: 1.5rem;
-        }
-
-        .single input {
-            width: calc(450px - 26px);
-            margin-left: 5px;
-        }
     }
 
     @media screen and (max-width: 600px) {
@@ -285,14 +261,6 @@
             font-size: 0.9rem;
             margin-left: 0;
             margin-right: 5px;
-        }
-
-        .single h1 {
-            font-size: 1.3rem;
-        }
-
-        .single input {
-            width: calc(300px - 23px);
         }
     }
 </style>

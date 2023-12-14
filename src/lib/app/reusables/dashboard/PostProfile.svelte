@@ -74,10 +74,10 @@
         justify-content: center;
         width: 100%;
         height: 100%;
-        transition: 150ms;
+        transition: 125ms;
         z-index: 1;
         opacity: 0;
-        backdrop-filter: blur(15px) brightness(60%);
+        backdrop-filter: blur(15px) brightness(90%);
     }
 
     .post-container:hover .wrapper {

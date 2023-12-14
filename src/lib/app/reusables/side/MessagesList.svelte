@@ -1,23 +1,20 @@
 <script lang="ts">
     import Dm from './DM.svelte';
-    import { dmsList } from 'stores/rooms';
-    import SearchBar from '../all/SearchBar.svelte';
+    import { dmsList, roomsList } from 'stores/rooms';
     import PropRoom from '../rooms/PropRoom.svelte';
+
+    let combined = [...$roomsList, ...$dmsList];
 </script>
 
 <div class="messages-container">
-    {#if $dmsList.length > 0}
-        <SearchBar />
-    {/if}
-
     <div class="list-container">
-        {#if $dmsList.length == 0}
+        {#if $dmsList.length == 0 && $roomsList.length == 0}
             {#each { length: 20 } as _, i}
                 <PropRoom opacity={1.4 - 1 + (1 - (i + 2) / 10)} />
             {/each}
         {:else}
-            {#each $dmsList as dmData}
-                <Dm {dmData} />
+            {#each combined as room}
+                <Dm dmData={room} />
             {/each}
         {/if}
     </div>

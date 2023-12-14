@@ -1,9 +1,12 @@
 <script>
     import { currentRoomData } from 'stores/rooms';
+    import { goHome } from 'utilities/rooms';
 </script>
 
 <div class="secondary-container">
-    <button class={`${$currentRoomData == undefined ? 'active' : ''}`}
+    <button
+        on:click={goHome}
+        class={`${$currentRoomData == undefined ? 'active' : ''}`}
         ><svg
             xmlns="http://www.w3.org/2000/svg"
             width="32"

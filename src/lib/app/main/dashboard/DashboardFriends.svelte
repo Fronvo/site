@@ -10,6 +10,7 @@
     import { onMount } from 'svelte';
     import { findCachedAccount } from 'utilities/main';
     import type { FronvoAccount } from 'interfaces/all';
+    import CreateGroupButton from '$lib/app/reusables/dashboard/CreateGroupButton.svelte';
 
     let friendsInfo: FronvoAccount[] = [];
     let friendsLoadingFinished = false;
@@ -96,6 +97,10 @@
 <div class="main-container" in:fade={{ duration: 200, easing: sineInOut }}>
     {#if friendsLoadingFinished && $dashboardPostsStore.length != 0}
         <div class="friends-container">
+            {#if friendsInfo.length > 1}
+                <CreateGroupButton />
+            {/if}
+
             {#each friendsInfo as profileData}
                 <Friend {profileData} />
             {/each}

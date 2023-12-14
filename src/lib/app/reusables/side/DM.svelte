@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { goto } from '$app/navigation';
     import type { FronvoAccount, Room } from 'interfaces/all';
     import { socket } from 'stores/main';
     import { ourData } from 'stores/profile';
@@ -9,7 +8,7 @@
         currentRoomLoaded,
         currentRoomMessages,
         dmsFilter,
-        roomsList,
+        dmsList,
     } from 'stores/rooms';
     import { onDestroy, onMount } from 'svelte';
     import type { Unsubscriber } from 'svelte/store';
@@ -88,7 +87,7 @@
             }
         });
 
-        unsubscribe = roomsList.subscribe(() => {
+        unsubscribe = dmsList.subscribe(() => {
             if ($currentRoomId == dmData.roomId) {
                 dmData.unreadCount = 0;
             }
@@ -98,7 +97,7 @@
             }, 0);
         });
 
-        roomsList.subscribe(async (state) => {
+        dmsList.subscribe(async (state) => {
             if (!state) return;
 
             dmUser = dmData.dmUser;
@@ -164,10 +163,12 @@
 
 <style>
     .dm-container {
-        width: 90%;
+        width: 95%;
         display: flex;
         align-items: center;
         padding: 5px;
+        padding-left: 8px;
+        padding-right: 8px;
         cursor: pointer;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -177,7 +178,6 @@
         user-select: none;
         border-radius: 10px;
         margin-bottom: 5px;
-        transition: 250ms;
     }
 
     .dm-container:hover {

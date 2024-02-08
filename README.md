@@ -1,11 +1,5 @@
 <p align='center'><a href='https://fronvo.com'><img src='https://raw.githubusercontent.com/Fronvo/server/master/.github/email/fronvo-logo-large.png' alt='Fronvo logo'><a/></p>
 
-<h2 align='center'>
-
-<img src='https://raw.githubusercontent.com/Fronvo/site/master/.github/assets/intro.png' alt='Fronvo profile preview'>
-
-</h2>
-
 ### Host locally
 
 Here's how to host the latest Fronvo site on your own:
@@ -27,7 +21,5 @@ npm run build && npm run preview
 ### Extras
 
 **[Introduction](https://github.com/Fronvo/site/blob/master/.github/markdown/INTRODUCTION.md)**
-
-**[Preview](https://github.com/Fronvo/site/blob/master/.github/markdown/PREVIEW.md)**
 
 **[Tools](https://github.com/Fronvo/site/blob/master/.github/markdown/TOOLS.md)**

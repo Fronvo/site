@@ -1,4 +1,4 @@
-<p align='center'><a href='https://fronvo.com'><img src='https://raw.githubusercontent.com/Fronvo/server/v2/.github/email/fronvo-logo-large.png' alt='Fronvo logo'><a/></p>
+<p align='center'><a href='https://fronvo.com'><img src='https://github.com/Fronvo/server/blob/v2/.github/email/email-logo-large.png?raw=true' alt='Fronvo logo'><a/></p>
 
 ### Host locally
 

@@ -1,6 +1,5 @@
 <script lang="ts">
     import { activeDashboardTab, totalDashboardPosts } from 'stores/dashboard';
-    import DashboardViewOptions from './DashboardViewOptions.svelte';
     import { DashboardOptions } from 'types/all';
     import DashboardProfile from './DashboardProfile.svelte';
     import DashboardPosts from './DashboardPosts.svelte';
@@ -8,6 +7,7 @@
     import DashboardFriendOptions from './DashboardFriendOptions.svelte';
     import { onDestroy, onMount } from 'svelte';
     import type { Unsubscriber } from 'svelte/store';
+    import DashboardProfileOptions from './DashboardProfileOptions.svelte';
 
     let dashboardContainer: HTMLDivElement;
     let unsubscribe: Unsubscriber;
@@ -35,12 +35,11 @@
     }`}
     bind:this={dashboardContainer}
 >
-    <DashboardViewOptions />
-
     {#if $activeDashboardTab == DashboardOptions.Dashboard}
         <DashboardPosts />
     {:else if $activeDashboardTab == DashboardOptions.Profile}
         <DashboardProfile />
+        <DashboardProfileOptions />
     {:else if $activeDashboardTab == DashboardOptions.Friends}
         <DashboardFriends />
         <DashboardFriendOptions />
@@ -52,14 +51,33 @@
         display: flex;
         flex-direction: column;
         width: 100%;
-        padding-right: 17%;
+        padding-right: 20%;
         height: calc(100vh);
-        background: var(--bg);
         overflow-x: hidden;
         overflow-y: scroll;
+        z-index: 1;
     }
 
     .overflow-hidden {
         overflow: hidden;
+    }
+
+    .dashboard-container::-webkit-scrollbar {
+        width: 10px;
+    }
+
+    .dashboard-container::-webkit-scrollbar-thumb {
+        background: transparent;
+    }
+
+    .dashboard-container:hover.dashboard-container::-webkit-scrollbar-thumb {
+        background: var(--tertiary);
+        width: 6px;
+    }
+
+    @media screen and (max-width: 1050px) {
+        .dashboard-container {
+            padding-right: 10%;
+        }
     }
 </style>

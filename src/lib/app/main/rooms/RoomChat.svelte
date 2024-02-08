@@ -1,102 +1,110 @@
 <script lang="ts">
-    import { fetchConvos, loadRoomsData, sendImage } from 'utilities/rooms';
+    import {
+        getCachedMessages,
+        getRoomMessages,
+        isRoomCached,
+        removeCachedMessage,
+        removePendingMessage,
+        sendImage,
+        updateCachedMessages,
+    } from 'utilities/rooms';
     import {
         replyingTo,
         replyingToId,
-        showScrollBottom,
         currentRoomId,
         currentRoomData as roomData,
         currentRoomMessages as messages,
-        currentRoomMessages,
         currentRoomLoaded,
-        roomsList,
-        currentRoomData,
         sendingImage,
         isInServer,
+        currentServer,
+        currentChannel,
+        cachedRooms,
+        pendingMessages,
     } from 'stores/rooms';
     import { onDestroy, onMount } from 'svelte';
-    import {
-        dismissModal,
-        findCachedAccount,
-        isAcceptedImage,
-        setTitle,
-        showModal,
-    } from 'utilities/main';
+    import { isAcceptedImage, setTitle } from 'utilities/main';
     import { ourData } from 'stores/profile';
-    import {
-        ModalTypes,
-        targetMessageModal,
-        targetMessageModalProfile,
-    } from 'stores/modals';
-    import type { RoomMessage, FronvoAccount } from 'interfaces/all';
     import Message from '$lib/app/reusables/rooms/Message.svelte';
-    import {
-        cachedAccountData,
-        fronvoTitle,
-        lastSendsIn30,
-        socket,
-    } from 'stores/main';
+    import { fronvoTitle, lastSendsIn30, socket } from 'stores/main';
     import InfiniteLoading from 'svelte-infinite-loading';
     import type { Unsubscriber } from 'svelte/store';
     import type { NewMessageResult } from 'interfaces/account/newMessage';
     import { toast } from 'svelte-sonner';
     import { scale } from 'svelte/transition';
-    import RoomStart from '$lib/app/reusables/rooms/RoomStart.svelte';
     import PropMessages from '$lib/app/reusables/rooms/PropMessages.svelte';
 
     let chat: HTMLDivElement;
     let unsubscribe: Unsubscriber;
     let canShowScroll = false;
     let previousEmpty = false;
+    let isFirstLoad = true;
+    let hideMessages = true;
 
     async function loadMore({ detail: { loaded } }): Promise<void> {
         if (previousEmpty) {
             loaded();
+
             return;
-        }
+        } else {
+            const roomId = $currentChannel?.channelId || $currentRoomId;
+            const serverId = $currentServer?.serverId;
 
-        socket.emit(
-            'fetchMessages',
-            {
-                roomId: $currentRoomId,
-                from: $messages.length.toString(),
-                to: ($messages.length + 50).toString(),
-            },
-            ({ roomMessages, err }) => {
-                if (err) {
-                    loaded();
-                    return;
-                }
+            // Not in cache, try loading
+            if (
+                !isRoomCached(
+                    $currentChannel?.channelId || $currentRoomId,
+                    $cachedRooms
+                ) ||
+                !isFirstLoad
+            ) {
+                const msgs = await getRoomMessages(
+                    roomId,
+                    $messages.length,
+                    serverId
+                );
 
-                if (roomMessages.length == 0) {
+                if (msgs.length == 0) {
+                    isFirstLoad = false;
                     previousEmpty = true;
+
+                    updateCachedMessages(roomId, msgs, $cachedRooms);
 
                     loaded();
                 } else {
-                    $messages = roomMessages.concat($messages);
+                    $messages = msgs.concat($messages);
 
                     loaded();
+
+                    // Background update cache
+                    updateCachedMessages(roomId, $messages, $cachedRooms);
+
+                    setTimeout(() => {
+                        chat.scrollTop = chat.scrollHeight;
+
+                        hideMessages = false;
+                    }, 0);
                 }
+            } else {
+                isFirstLoad = false;
+
+                // Check cache first
+                const cachedMessages = getCachedMessages(roomId, $cachedRooms);
+
+                // In cache, load in place
+                $messages = cachedMessages;
+
+                if (cachedMessages.length == 0) {
+                    previousEmpty = true;
+                }
+
+                setTimeout(() => {
+                    chat.scrollTop = chat.scrollHeight;
+
+                    hideMessages = false;
+                }, 0);
             }
-        );
-    }
-
-    function deleteMessage(
-        message: RoomMessage,
-        profileData: FronvoAccount
-    ): void {
-        $targetMessageModal = message;
-        $targetMessageModalProfile = profileData;
-
-        showModal(ModalTypes.DeleteMessage);
-    }
-
-    function replyMessage(
-        message: RoomMessage,
-        profileData: FronvoAccount
-    ): void {
-        $replyingTo = profileData.username;
-        $replyingToId = message.messageId;
+        }
     }
 
     function attachNewMessageListener(): void {
@@ -113,7 +121,9 @@
             // @ts-ignore
             link.href = '/favicon.png';
 
-            setTitle($fronvoTitle.replace('(1) ', ''));
+            if ($fronvoTitle.includes('(1)')) {
+                setTitle($fronvoTitle.replace(`(1)`, ''), true);
+            }
         };
 
         function messageListener({
@@ -122,32 +132,66 @@
         }: NewMessageResult): void {
             if ($messages.includes(newMessageData)) return;
 
-            if ($currentRoomId == roomId) {
-                setTimeout(() => {
-                    chat.scrollTop = chat.scrollHeight;
-                }, 0);
+            if ($pendingMessages.includes(newMessageData.message.content)) {
+                for (const messageIndex in $messages) {
+                    let message = $messages[messageIndex];
 
+                    if (
+                        message.message.content ==
+                        newMessageData.message.content
+                    ) {
+                        message = {
+                            ...message,
+                            ...newMessageData,
+                        };
+
+                        $messages[messageIndex] = message;
+
+                        removePendingMessage(
+                            newMessageData.message.content,
+                            $pendingMessages
+                        );
+
+                        break;
+                    }
+                }
+            } else if (
+                ($currentChannel?.channelId || $currentRoomId) == roomId
+            ) {
                 $messages.push(newMessageData);
                 $messages = $messages;
-            }
 
-            if (
-                newMessageData.profileData.profileId != $ourData.profileId &&
-                !document.hasFocus() &&
-                !$fronvoTitle.includes('(1)')
-            ) {
-                setTitle(`(1) ${$fronvoTitle}`);
+                setTimeout(() => {
+                    chat.scrollTo({
+                        top: 99999999,
+                        behavior: 'smooth',
+                    });
+                }, 0);
+
+                if (
+                    newMessageData.profileData.profileId !=
+                        $ourData.profileId &&
+                    !document.hasFocus() &&
+                    !$fronvoTitle.includes('(1)')
+                ) {
+                    setTitle(`(1) ${$fronvoTitle}`, true);
+                }
             }
         }
-
-        socket.off('newMessage', messageListener);
 
         socket.on('newMessage', messageListener);
     }
 
     function attachDeletedMessageListener(): void {
         socket.on('messageDeleted', ({ messageId, roomId }) => {
-            if (roomId != $currentRoomId) return;
+            if (($currentChannel?.channelId || $currentRoomId) != roomId) {
+                setTimeout(() => {
+                    // Update cached room data
+                    removeCachedMessage(roomId, messageId, $cachedRooms);
+                }, 0);
+
+                return;
+            }
 
             for (const messageIndex in $messages) {
                 const targetMessage = $messages[messageIndex];
@@ -161,42 +205,14 @@
                     $messages.splice(Number(messageIndex), 1);
                     $messages = $messages;
 
-                    $roomData.totalMessages -= 1;
-
-                    // DeleteMessageModal
-                    if (
-                        $targetMessageModal?.messageId ==
-                        targetMessage.message.messageId
-                    ) {
-                        dismissModal();
+                    if ($messages.length == 0) {
+                        previousEmpty = false;
                     }
 
                     break;
                 }
             }
         });
-    }
-
-    function attachRoomDeletedListener(): void {
-        socket.off('roomDeleted');
-
-        if (!($ourData.profileId == $roomData?.ownerId)) {
-            socket.on('roomDeleted', async ({ roomId }) => {
-                if (roomId != $currentRoomId) {
-                    $roomsList = await fetchConvos();
-                } else {
-                    $currentRoomLoaded = false;
-                    $currentRoomId = undefined;
-                    $currentRoomData = undefined;
-                    $currentRoomMessages = [];
-                    $isInServer = false;
-
-                    setTitle('Fronvo');
-
-                    await loadRoomsData();
-                }
-            });
-        }
     }
 
     function addDropListener(): void {
@@ -225,8 +241,8 @@
             if (e.dataTransfer.files.length > 0) {
                 const file = e.dataTransfer.files[0];
 
-                if (file.size > ($ourData.isPRO ? 3000000 : 1000000)) {
-                    toast(`Image is above ${$ourData.isPRO ? 3 : 1}MB.`);
+                if (file.size > ($ourData.isTurbo ? 3000000 : 1000000)) {
+                    toast(`Image is above ${$ourData.isTurbo ? 3 : 1}MB.`);
                     return;
                 }
 
@@ -235,11 +251,12 @@
 
                     reader.addEventListener('load', async () => {
                         sendImage(
-                            $currentRoomId,
+                            $currentChannel?.channelId || $currentRoomId,
                             $sendingImage,
                             reader.result,
-                            $ourData.isPRO,
-                            $lastSendsIn30
+                            $ourData.isTurbo,
+                            $lastSendsIn30,
+                            $isInServer ? $currentServer.serverId : ''
                         );
                     });
 
@@ -249,16 +266,7 @@
         });
     }
 
-    function scrollListener(): void {
-        if (chat.scrollHeight - chat.scrollTop > 1750 && canShowScroll) {
-            $showScrollBottom = true;
-        } else {
-            $showScrollBottom = false;
-        }
-    }
-
     onMount(() => {
-        chat.addEventListener('scroll', scrollListener);
         addDropListener();
 
         chat.scrollTop = chat.scrollHeight;
@@ -268,13 +276,45 @@
 
             canShowScroll = false;
             previousEmpty = false;
+            isFirstLoad = true;
+            hideMessages = true;
 
             if (!chat) return;
 
             chat.style.opacity = '0';
         });
 
+        currentChannel.subscribe((state) => {
+            if (!state) return;
+
+            canShowScroll = false;
+            previousEmpty = false;
+            isFirstLoad = true;
+            hideMessages = true;
+
+            if (!chat) return;
+
+            chat.style.opacity = '0';
+        });
+
+        pendingMessages.subscribe((state) => {
+            if (!state) return;
+
+            hideMessages = false;
+
+            setTimeout(() => {
+                if (!chat) return;
+
+                chat.scrollTo({
+                    top: 99999999,
+                    behavior: 'smooth',
+                });
+            }, 0);
+        });
+
         unsubscribe = currentRoomLoaded.subscribe(async (val) => {
+            previousEmpty = false;
+
             if (!val) return;
 
             setTimeout(() => {
@@ -285,41 +325,17 @@
                 setTimeout(() => {
                     // Load images
                     chat.style.opacity = '1';
-
-                    setTimeout(() => {
-                        chat.scrollTop = chat.scrollHeight;
-                    }, 250);
                 }, 0);
 
                 canShowScroll = true;
             }, 0);
-
-            if ($roomData.isDM) {
-                setTitle(
-                    (
-                        await findCachedAccount(
-                            $roomData.dmUsers[0] == $ourData.profileId
-                                ? $roomData.dmUsers[1]
-                                : $roomData.dmUsers[0],
-                            $cachedAccountData
-                        )
-                    )?.username || 'Deleted user'
-                );
-            } else {
-                setTitle(`Fronvo | ${$roomData.name}`);
-            }
-
-            // Put here, check conditions each new room
-            // Reload listeners and messages
-            attachNewMessageListener();
-            attachDeletedMessageListener();
-            attachRoomDeletedListener();
         });
+
+        attachNewMessageListener();
+        attachDeletedMessageListener();
     });
 
     onDestroy(() => {
-        chat.removeEventListener('scroll', scrollListener);
-
         unsubscribe();
     });
 </script>
@@ -330,13 +346,11 @@
         class="chat-container"
         transition:scale={{ duration: 1000, start: 0.975 }}
     >
-        <RoomStart />
-
         {#if $messages.length == 0 && !previousEmpty}
             <PropMessages />
         {/if}
 
-        {#if $roomData}
+        {#if $roomData || $currentChannel}
             {#if !previousEmpty && canShowScroll}
                 <InfiniteLoading
                     distance={1500}
@@ -350,16 +364,16 @@
                 </InfiniteLoading>
             {/if}
 
+            <span class="placeholder" />
+
             {#each $messages as { message, profileData }, i}
                 <Message
                     {i}
                     {profileData}
                     messageData={message}
-                    deleteCondition={$roomData?.ownerId ==
-                        $ourData?.profileId ||
-                        message.ownerId == $ourData?.profileId}
-                    deleteCallback={() => deleteMessage(message, profileData)}
-                    replyCallback={() => replyMessage(message, profileData)}
+                    hideCondition={hideMessages}
+                    isPending={$pendingMessages.includes(message.content) &&
+                        i == $messages.length - 1}
                 />
             {/each}
         {/if}
@@ -370,13 +384,32 @@
     .chat-container {
         display: flex;
         flex-direction: column;
-        justify-content: start;
         width: 100%;
         max-width: 100%;
         height: calc(100vh);
+        padding-bottom: 20px;
+        padding-top: 20px;
         overflow-y: scroll;
         overflow-x: hidden;
         transition: none;
         opacity: 0;
+        z-index: 1;
+    }
+
+    .chat-container::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .chat-container::-webkit-scrollbar-thumb {
+        background: transparent;
+    }
+
+    .chat-container:hover.chat-container::-webkit-scrollbar-thumb {
+        background: var(--tertiary);
+        width: 10px;
+    }
+
+    .placeholder {
+        flex: 1;
     }
 </style>

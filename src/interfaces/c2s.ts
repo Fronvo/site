@@ -2,7 +2,6 @@
 // Interfaces for the client to server events of Socket.IO
 // ******************** //
 
-import type { CreateRoomParams, CreateRoomResult } from './account/createRoom';
 import type {
     FetchMessagesParams,
     FetchMessagesResult,
@@ -13,7 +12,6 @@ import type {
 } from './account/fetchProfileData';
 import type { FetchProfileIdResult } from './account/fetchProfileId';
 import type { JoinRoomParams, JoinRoomResult } from './account/joinRoom';
-import type { LeaveRoomParams, LeaveRoomResult } from './account/leaveRoom';
 import type { LogoutResult } from './account/logout';
 import type {
     SendMessageParams,
@@ -105,13 +103,6 @@ import type {
     DeleteAccountResult,
 } from './account/deleteAccount';
 import type { FetchTenorParams, FetchTenorResult } from './account/fetchTenor';
-import type { FetchThemesResult } from './account/fetchThemes';
-import type { ApplyThemeParams, ApplyThemeResult } from './account/applyTheme';
-import type {
-    CreateThemeParams,
-    CreateThemeResult,
-} from './account/createTheme';
-import type { CanPostResult } from './account/canPost';
 import type {
     CreateServerParams,
     CreateServerResult,
@@ -121,6 +112,48 @@ import type {
     DeleteServerResult,
 } from './account/deleteServer';
 import type { FetchServersResult } from './account/fetchServers';
+import type {
+    CreateChannelParams,
+    CreateChannelResult,
+} from './account/createChannel';
+import type {
+    FetchChannelMessagesParams,
+    FetchChannelMessagesResult,
+} from './account/fetchChannelMessages';
+import type {
+    SendChannelMessageParams,
+    SendChannelMessageResult,
+} from './account/sendChannelMessage';
+import type {
+    SendChannelImageParams,
+    SendChannelImageResult,
+} from './account/sendChannelImage';
+import type { JoinServerParams, JoinServerResult } from './account/joinServer';
+import type {
+    ToggleServerInvitesParams,
+    ToggleServerInvitesResult,
+} from './account/toggleServerInvites';
+import type {
+    RegenerateServerInviteParams,
+    RegenerateServerInviteResult,
+} from './account/regenerateServerInvite';
+import type {
+    DeleteChannelParams,
+    DeleteChannelResult,
+} from './account/deleteChannel';
+import type {
+    DeleteChannelMessageParams,
+    DeleteChannelMessageResult,
+} from './account/deleteChannelMessage';
+import type {
+    RenameChannelParams,
+    RenameChannelResult,
+} from './account/renameChannel';
+import type { SendPostParams, SendPostResult } from './account/sendPost';
+import type {
+    LeaveServerParams,
+    LeaveServerResult,
+} from './account/leaveServer';
 
 export interface ClientToServerEvents {
     register: (
@@ -155,22 +188,6 @@ export interface ClientToServerEvents {
         {}: UpdateProfileDataParams,
         callback?: ({}: UpdateProfileDataResult) => void
     ) => void;
-    createRoom: (
-        {}: CreateRoomParams,
-        callback?: ({}: CreateRoomResult) => void
-    ) => void;
-    joinRoom: (
-        {}: JoinRoomParams,
-        callback?: ({}: JoinRoomResult) => void
-    ) => void;
-    updateRoomData: (
-        {}: UpdateRoomDataParams,
-        callback?: ({}: UpdateRoomDataResult) => void
-    ) => void;
-    leaveRoom: (
-        {}: LeaveRoomParams,
-        callback?: ({}: LeaveRoomResult) => void
-    ) => void;
     sendMessage: (
         {}: SendMessageParams,
         callback?: ({}: SendMessageResult) => void
@@ -182,10 +199,6 @@ export interface ClientToServerEvents {
     deleteMessage: (
         {}: DeleteMessageParams,
         callback?: ({}: DeleteMessageResult) => void
-    ) => void;
-    kickMember: (
-        {}: KickMemberParams,
-        callback?: ({}: KickMemberResult) => void
     ) => void;
     updateProfileStatus: (
         {}: UpdateProfileStatusParams,
@@ -265,16 +278,6 @@ export interface ClientToServerEvents {
         {}: FetchTenorParams,
         callback?: ({}: FetchTenorResult) => void
     ) => void;
-    fetchThemes: (callback?: ({}: FetchThemesResult) => void) => void;
-    applyTheme: (
-        {}: ApplyThemeParams,
-        callback?: ({}: ApplyThemeResult) => void
-    ) => void;
-    createTheme: (
-        {}: CreateThemeParams,
-        callback?: ({}: CreateThemeResult) => void
-    ) => void;
-    canPost: (callback?: ({}: CanPostResult) => void) => void;
     createServer: (
         {}: CreateServerParams,
         callback?: ({}: CreateServerResult) => void
@@ -284,4 +287,52 @@ export interface ClientToServerEvents {
         callback?: ({}: DeleteServerResult) => void
     ) => void;
     fetchServers: (callback?: ({}: FetchServersResult) => void) => void;
+    createChannel: (
+        {}: CreateChannelParams,
+        callback?: ({}: CreateChannelResult) => void
+    ) => void;
+    fetchChannelMessages: (
+        {}: FetchChannelMessagesParams,
+        callback?: ({}: FetchChannelMessagesResult) => void
+    ) => void;
+    sendChannelMessage: (
+        {}: SendChannelMessageParams,
+        callback?: ({}: SendChannelMessageResult) => void
+    ) => void;
+    sendChannelImage: (
+        {}: SendChannelImageParams,
+        callback?: ({}: SendChannelImageResult) => void
+    ) => void;
+    joinServer: (
+        {}: JoinServerParams,
+        callback?: ({}: JoinServerResult) => void
+    ) => void;
+    toggleServerInvites: (
+        {}: ToggleServerInvitesParams,
+        callback?: ({}: ToggleServerInvitesResult) => void
+    ) => void;
+    regenerateServerInvite: (
+        {}: RegenerateServerInviteParams,
+        callback?: ({}: RegenerateServerInviteResult) => void
+    ) => void;
+    deleteChannel: (
+        {}: DeleteChannelParams,
+        callback?: ({}: DeleteChannelResult) => void
+    ) => void;
+    deleteChannelMessage: (
+        {}: DeleteChannelMessageParams,
+        callback?: ({}: DeleteChannelMessageResult) => void
+    ) => void;
+    renameChannel: (
+        {}: RenameChannelParams,
+        callback?: ({}: RenameChannelResult) => void
+    ) => void;
+    sendPost: (
+        {}: SendPostParams,
+        callback?: ({}: SendPostResult) => void
+    ) => void;
+    leaveServer: (
+        {}: LeaveServerParams,
+        callback?: ({}: LeaveServerResult) => void
+    ) => void;
 }

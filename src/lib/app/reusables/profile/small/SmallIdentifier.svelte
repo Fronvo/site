@@ -1,8 +1,7 @@
 <script lang="ts">
-    import { ourData } from 'stores/profile';
-
     export let profileId: string;
     export let username: string;
+    export let status: string;
 </script>
 
 <div class="identifier-container">
@@ -19,8 +18,8 @@
             </h1>
         </div>
 
-        {#if $ourData.status}
-            <h1 id="status">{$ourData.status}</h1>
+        {#if status}
+            <h1 id="status">{status}</h1>
         {/if}
     </div>
 </div>
@@ -30,8 +29,6 @@
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        padding-top: 10px;
-        padding-bottom: 10px;
         margin-left: 10px;
     }
 
@@ -53,13 +50,12 @@
         margin: 0;
         margin-left: 5px;
         margin-right: 5px;
-        color: var(--text);
+        color: white;
         display: -webkit-box;
         overflow: hidden;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
-        font-weight: 600;
-        font-size: 1.2rem;
+        font-weight: 700;
     }
 
     .secondary-container {
@@ -77,7 +73,7 @@
         overflow: hidden;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
-        font-size: 0.9rem;
+        color: white;
     }
 
     #status {
@@ -90,5 +86,6 @@
         overflow: hidden;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
+        color: white;
     }
 </style>

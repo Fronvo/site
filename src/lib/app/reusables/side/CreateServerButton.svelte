@@ -9,10 +9,6 @@
 </script>
 
 <div>
-    {#if $serversList.length > 0}
-        <span class="seperator" />
-    {/if}
-
     <svg
         on:click={createServer}
         on:keydown={createServer}
@@ -20,13 +16,8 @@
         width="32"
         height="32"
         viewBox="0 0 24 24"
-        stroke="currentColor"
-        ><g fill="none" stroke-width="1.5"
-            ><circle cx="12" cy="12" r="10" /><path
-                stroke-linecap="round"
-                d="M15 12h-3m0 0H9m3 0V9m0 3v3"
-            /></g
-        ></svg
+        fill="currentColor"
+        ><path d="M11.5 12.5H6v-1h5.5V6h1v5.5H18v1h-5.5V18h-1z" /></svg
     >
 </div>
 
@@ -49,24 +40,16 @@
         pointer-events: all;
         z-index: 2;
         transition: 125ms;
-        stroke: var(--branding);
+        stroke: white;
     }
 
     svg:hover {
-        background: var(--branding);
+        background: var(--tertiary);
         stroke: white;
         border-radius: 15px;
     }
 
     svg:active {
         transform: translateY(2px);
-    }
-
-    .seperator {
-        width: 75%;
-        margin: auto;
-        height: 2px;
-        background: var(--tertiary);
-        margin-bottom: 10px;
     }
 </style>

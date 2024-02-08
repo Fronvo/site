@@ -1,185 +1,100 @@
 <script lang="ts">
     import {
+        currentChannel,
         currentRoomData,
         currentRoomId,
-        currentRoomLoaded,
+        currentServer,
+        dmsShowProfile,
+        isInServer,
         currentRoomData as roomData,
     } from 'stores/rooms';
-    import { writable, type Unsubscriber } from 'svelte/store';
-    import { onDestroy, onMount } from 'svelte';
-    import { cachedAccountData, socket } from 'stores/main';
-    import {
-        findCachedAccount,
-        isAcceptedImage,
-        setTitle,
-        showModal,
-    } from 'utilities/main';
-    import { ourData } from 'stores/profile';
-    import { ModalTypes, targetProfileModal } from 'stores/modals';
-    import { uploadImage } from 'utilities/rooms';
-    import SearchBarChannel from '$lib/app/reusables/all/SearchBarChannel.svelte';
+    import { onMount } from 'svelte';
+    import { socket } from 'stores/main';
+    import { setTitle } from 'utilities/main';
 
-    let nameP = writable($roomData?.name);
-
-    let isUpdating = false;
-
-    let unsubscribe: Unsubscriber;
-
-    async function changeImage(): Promise<void> {
-        if ($roomData.isDM) {
-            if ($nameP == 'Deleted user') return;
-
-            $targetProfileModal = await findCachedAccount(
-                $roomData.dmUsers[0] != $ourData.profileId
-                    ? $roomData.dmUsers[0]
-                    : $roomData.dmUsers[1],
-                $cachedAccountData
-            );
-
-            showModal(ModalTypes.Profile);
-            return;
-        }
-
-        if (isUpdating) return;
-
-        let input = document.createElement('input');
-        input.type = 'file';
-
-        input.onchange = async (_) => {
-            let file = Array.from(input.files)[0];
-
-            // 2MB
-            if (file.size > 2000000) return;
-
-            if (isAcceptedImage(file.type)) {
-                const reader = new FileReader();
-
-                reader.addEventListener('load', async () => {
-                    isUpdating = true;
-
-                    const newIcon = await uploadImage(
-                        reader.result,
-                        $ourData.isPRO
-                    );
-
-                    socket.emit('updateRoomData', {
-                        roomId: $currentRoomId,
-                        icon: newIcon,
-                    });
-
-                    isUpdating = false;
-                });
-
-                reader.readAsDataURL(file);
-            }
-        };
-
-        input.click();
+    function toggleProfileview(): void {
+        $dmsShowProfile = !$dmsShowProfile;
     }
 
     onMount(() => {
-        unsubscribe = currentRoomLoaded.subscribe(async (state) => {
-            if (!state) return;
-
-            if ($roomData.isDM) {
-                $nameP = $roomData.dmUser.username || 'Deleted user';
-                $roomData.icon = $roomData.dmUser.avatar;
-            } else {
-                $nameP = $roomData.name;
-            }
-        });
-
-        socket.on('roomDataUpdated', ({ roomId, name, icon }) => {
+        socket.on('roomDataUpdated', ({ roomId, name }) => {
             if (roomId == $roomData.roomId) {
-                $nameP = name;
-                $roomData.name = name;
-                $roomData.icon = icon;
+                $currentChannel.name = name;
 
-                setTitle(`Fronvo | ${name}`);
+                setTitle(`${$currentServer.name} | #${name}`);
             }
         });
-    });
-
-    onDestroy(() => {
-        if (unsubscribe) unsubscribe();
     });
 </script>
 
 <div class="placeholder">
-    {#if $currentRoomData}
-        <div class={`info-container ${!$currentRoomId ? 'empty' : ''}`}>
-            <div class="data-container">
-                {#if $roomData.isDM}
-                    {#if $roomData.icon}
-                        <img
-                            id="icon"
-                            on:click={changeImage}
-                            on:keydown={changeImage}
-                            src={$roomData.icon}
-                            draggable={false}
-                            alt="Avatar"
-                        />
-                    {:else}
-                        <img
-                            id="icon"
-                            on:click={changeImage}
-                            on:keydown={changeImage}
-                            src="/images/avatar.svg"
-                            draggable={false}
-                            alt="Avatar"
-                        />
-                    {/if}
-                {:else}
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="32"
-                        height="32"
-                        viewBox="0 0 24 24"
-                        ><path
-                            fill="none"
-                            stroke="var(--gray)"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            stroke-width="1.5"
-                            d="M10 3L5 21M19 3l-5 18m8-12H4m16 7H2"
-                        /></svg
-                    >
-                {/if}
-
-                <h1>{$currentRoomData.name}</h1>
-
-                <div class="spacer" />
-
+    <div class={`info-container ${!$currentRoomId ? 'empty' : ''}`}>
+        <div class="data-container">
+            {#if !$isInServer}
+                <img
+                    id="icon"
+                    src={$currentRoomData?.dmUser.avatar
+                        ? `${$currentRoomData.dmUser.avatar}/tr:w-56:h-56`
+                        : '/images/avatar.svg'}
+                    draggable={false}
+                    alt="Avatar"
+                />
+            {:else}
                 <svg
-                    id="action"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    ><path
+                        fill="none"
+                        stroke="var(--gray)"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.5"
+                        d="M10 3L5 21M19 3l-5 18m8-12H4m16 7H2"
+                    /></svg
+                >
+            {/if}
+
+            <h1>
+                {$currentChannel?.name ||
+                    $currentRoomData?.dmUser.username ||
+                    'Deleted user'}
+            </h1>
+
+            <div class="spacer" />
+
+            {#if !$isInServer}
+                <svg
+                    on:click={toggleProfileview}
+                    on:keydown={toggleProfileview}
+                    id={`${$dmsShowProfile ? 'active' : ''}`}
                     xmlns="http://www.w3.org/2000/svg"
                     width="32"
                     height="32"
                     viewBox="0 0 24 24"
                     fill="currentColor"
                     ><path
-                        d="M19.183 7.805L16.22 4.838c-2.027-2.03-3.04-3.043-4.129-2.803c-1.088.24-1.581 1.587-2.568 4.28l-.668 1.823c-.263.718-.395 1.077-.632 1.355a2.035 2.035 0 0 1-.36.332c-.296.213-.664.314-1.4.517c-1.66.458-2.491.687-2.804 1.23a1.528 1.528 0 0 0-.204.773c.004.627.613 1.236 1.83 2.455L6.7 16.216l-4.476 4.48a.764.764 0 0 0 1.08 1.08l4.475-4.48l1.466 1.468c1.226 1.226 1.839 1.84 2.47 1.84c.265 0 .526-.068.757-.2c.548-.313.778-1.149 1.239-2.822c.202-.735.303-1.102.515-1.399c.093-.129.201-.247.322-.352c.275-.238.632-.372 1.345-.64l1.844-.693c2.664-1 3.996-1.501 4.23-2.586c.235-1.086-.77-2.093-2.783-4.107Z"
+                        fill-rule="evenodd"
+                        d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12S6.477 2 12 2s10 4.477 10 10Zm-7-3a3 3 0 1 1-6 0a3 3 0 0 1 6 0Zm-3 11.5a8.46 8.46 0 0 0 4.807-1.489c.604-.415.862-1.205.51-1.848C16.59 15.83 15.09 15 12 15c-3.09 0-4.59.83-5.318 2.163c-.351.643-.093 1.433.511 1.848A8.46 8.46 0 0 0 12 20.5Z"
+                        clip-rule="evenodd"
                     /></svg
                 >
-
-                <SearchBarChannel />
-            </div>
+            {/if}
         </div>
-    {/if}
+    </div>
 </div>
 
 <style>
     .info-container {
         width: 100%;
         min-width: 100%;
-        height: 53px;
+        height: 52px;
         display: flex;
         padding: 15px;
         padding-right: 10px;
         margin-top: 1px;
         user-select: none;
-        border-bottom: 1px solid rgb(23, 23, 23);
-        box-shadow: 0 0 10px rgb(25, 25, 25);
     }
 
     .empty {
@@ -200,8 +115,8 @@
     }
 
     #icon {
-        width: 32px;
-        height: 32px;
+        width: 28px;
+        height: 28px;
         border-radius: 30px;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -210,14 +125,14 @@
         -ms-user-select: none;
         user-select: none;
         transition: 150ms;
-        cursor: pointer;
+        cursor: default;
         border: 2px solid transparent;
     }
 
     h1 {
         margin: 0;
         font-size: 1rem;
-        font-weight: 600;
+        font-weight: 500;
         padding-left: 5px;
         color: white;
         border: 2px solid transparent;
@@ -245,21 +160,18 @@
     }
 
     svg {
-        width: 28px;
-        height: 28px;
+        width: 32px;
+        height: 32px;
         padding: 2px;
-        cursor: default;
-        fill: var(--gray);
-        stroke: var(--gray);
-    }
-
-    #action {
-        fill: var(--gray);
         cursor: pointer;
-        margin-right: 10px;
+        fill: var(--gray);
     }
 
-    #action:hover {
+    svg:hover {
+        fill: white;
+    }
+
+    #active {
         fill: white;
     }
 </style>

@@ -5,16 +5,10 @@
         width: 100vw;
         height: 100vh;
         position: fixed;
-        background: -webkit-linear-gradient(
-            25deg,
-            #000000,
-            #00ffa9,
-            #000000,
-            #00bafe,
-            #000000
-        );
-        opacity: 0.1;
-        top: 0;
+        background: url('/images/bg.jpg');
+        background-repeat: no-repeat;
+        background-size: cover;
         z-index: -1;
+        filter: blur(20px);
     }
 </style>

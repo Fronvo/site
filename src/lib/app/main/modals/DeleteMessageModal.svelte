@@ -5,24 +5,52 @@
         targetMessageModal,
         targetMessageModalProfile,
         type ModalData,
+        modalLoading,
     } from 'stores/modals';
     import { dismissModal } from 'utilities/main';
     import ModalTemplate from '../ModalTemplate.svelte';
-    import { currentRoomId } from 'stores/rooms';
+    import {
+        currentChannel,
+        currentRoomId,
+        currentServer,
+        isInServer,
+    } from 'stores/rooms';
 
     function deleteMessage(): void {
-        // Will receive result in RoomChat listener if successful
+        $modalLoading = true;
 
-        socket.emit(
-            'deleteMessage',
-            {
-                roomId: $currentRoomId,
-                messageId: $targetMessageModal.messageId,
-            },
-            async ({ err }) => {
-                if (err) return;
-            }
-        );
+        if (!$isInServer) {
+            socket.emit(
+                'deleteMessage',
+                {
+                    roomId: $currentRoomId,
+                    messageId: $targetMessageModal.messageId,
+                },
+                async ({ err }) => {
+                    if (err) {
+                        $modalLoading = false;
+                    } else {
+                        dismissModal();
+                    }
+                }
+            );
+        } else {
+            socket.emit(
+                'deleteChannelMessage',
+                {
+                    serverId: $currentServer.serverId,
+                    channelId: $currentChannel.channelId,
+                    messageId: $targetMessageModal.messageId,
+                },
+                async ({ err }) => {
+                    if (err) {
+                        $modalLoading = false;
+                    } else {
+                        dismissModal();
+                    }
+                }
+            );
+        }
     }
 
     const data: ModalData = {
@@ -45,7 +73,6 @@
     <Message
         messageData={$targetMessageModal}
         profileData={$targetMessageModalProfile}
-        hideOptions
         isPreview
     />
 </ModalTemplate>

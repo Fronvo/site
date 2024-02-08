@@ -13,7 +13,7 @@
 
 <div class="profile-container">
     <EditableBanner {updateCallback} />
-    <EditableAvatar {avatar} />
+    <EditableAvatar {avatar} online={true} />
 
     <div class="secondary-container">
         <EditableIdentifier {username} />
@@ -30,6 +30,8 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        background: var(--primary);
+        backdrop-filter: blur(10px);
     }
 
     .secondary-container {
@@ -37,7 +39,7 @@
         display: flex;
         flex-direction: column;
         transform: translateY(-60px);
-        background: rgb(0, 0, 0, 0.4);
+        background: rgb(100, 100, 100, 0.1);
         border-radius: 10px;
         padding-top: 10px;
         padding-bottom: 20px;

@@ -27,14 +27,22 @@
         width: 100%;
         height: 100px;
         transition: 150ms;
-        background: rgb(0, 0, 0, 0.5);
     }
 
     svg {
         fill: white;
-        background: var(--branding);
-        border-top-right-radius: 10px;
-        border-bottom-left-radius: 10px;
+        background: var(--primary);
         padding: 5px;
+        border-radius: 20px;
+        transition: 125ms;
+        transform: translateX(-10px) translateY(10px);
+    }
+
+    svg:hover {
+        background: var(--tertiary);
+    }
+
+    svg:active {
+        transform: translateX(-10px) translateY(10px) scale(0.95);
     }
 </style>

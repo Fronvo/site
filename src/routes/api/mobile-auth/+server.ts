@@ -3,7 +3,7 @@ import Imagekit from 'imagekit';
 
 /** @type {import('./$types').RequestHandler} */
 export async function GET() {
-    // PRO for mobile
+    // Turbo for mobile
     // Possibly rethink at the start to prevent overflows
     const imagekit = new Imagekit({
         urlEndpoint: import.meta.env.VITE_IMAGEKIT_ENDPOINT,

@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { dashboardPosts as dashboardPostsStore } from 'stores/dashboard';
     import { fade } from 'svelte/transition';
     import { sineInOut } from 'svelte/easing';
     import PropFriend from '$lib/app/reusables/dashboard/PropFriend.svelte';
@@ -8,9 +7,8 @@
     import { ourData } from 'stores/profile';
     import { cachedAccountData, socket } from 'stores/main';
     import { onMount } from 'svelte';
-    import { findCachedAccount } from 'utilities/main';
+    import { findCachedAccount, setTitle } from 'utilities/main';
     import type { FronvoAccount } from 'interfaces/all';
-    import CreateGroupButton from '$lib/app/reusables/dashboard/CreateGroupButton.svelte';
 
     let friendsInfo: FronvoAccount[] = [];
     let friendsLoadingFinished = false;
@@ -46,28 +44,13 @@
     }
 
     onMount(() => {
+        setTitle('Friends');
+
         loadFriends();
 
-        socket.off('newFriendRequest');
-        socket.off('pendingFriendRemoved');
         socket.off('friendAdded');
         socket.off('friendRemoved');
 
-        // PENDING REQUESTS
-        socket.on('newFriendRequest', ({ profileId }) => {
-            $ourData.pendingFriendRequests.push(profileId);
-            $ourData = $ourData;
-        });
-
-        socket.on('pendingFriendRemoved', ({ profileId }) => {
-            $ourData.pendingFriendRequests.splice(
-                $ourData.pendingFriendRequests.indexOf(profileId),
-                1
-            );
-            $ourData = $ourData;
-        });
-
-        // FRIENDS
         socket.on('friendAdded', ({ profileId }) => {
             friendsLoadingFinished = false;
 
@@ -78,6 +61,10 @@
             loadFriends();
 
             loadHomePosts();
+
+            socket.emit('createDM', {
+                profileId,
+            });
         });
 
         socket.on('friendRemoved', ({ profileId }) => {
@@ -95,12 +82,10 @@
 </script>
 
 <div class="main-container" in:fade={{ duration: 200, easing: sineInOut }}>
-    {#if friendsLoadingFinished && $dashboardPostsStore.length != 0}
-        <div class="friends-container">
-            {#if friendsInfo.length > 1}
-                <CreateGroupButton />
-            {/if}
+    {#if friendsLoadingFinished && friendsInfo.length != 0}
+        <h1 id="title">Friends</h1>
 
+        <div class="friends-container">
             {#each friendsInfo as profileData}
                 <Friend {profileData} />
             {/each}
@@ -136,7 +121,6 @@
         margin: 0;
         font-size: 1.7rem;
         text-align: center;
-        margin-top: 10px;
         font-weight: 500;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -144,6 +128,7 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
+        color: white;
     }
 
     .main-container {
@@ -156,19 +141,32 @@
         height: calc(100vh);
         overflow-x: hidden;
         margin-top: 5px;
-        padding-top: 20px;
+        padding-top: 10px;
     }
 
     .friends-container {
-        display: flex;
         flex-direction: column;
         overflow-y: auto;
-        margin-top: 65px;
-        width: 400px;
+        width: 350px;
         margin: auto;
         margin-top: 0;
         height: max-content;
         border-radius: 10px;
+    }
+
+    .friends-container::-webkit-scrollbar-thumb {
+        background: transparent;
+    }
+
+    .friends-container:hover.friends-container::-webkit-scrollbar-thumb {
+        background: var(--tertiary);
+    }
+
+    #title {
+        margin: auto;
+        margin-bottom: 10px;
+        margin-top: 0;
+        font-size: 1.5rem;
     }
 
     .empty {
@@ -206,7 +204,7 @@
     .banner svg {
         width: 32px;
         height: 32px;
-        fill: var(--branding);
+        fill: white;
         margin-right: 10px;
     }
 

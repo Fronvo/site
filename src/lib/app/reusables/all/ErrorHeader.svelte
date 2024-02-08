@@ -13,7 +13,7 @@
 
 <style>
     h1 {
-        color: red;
+        color: rgb(170, 0, 0);
         margin: 0;
         text-align: center;
         font-weight: 600;

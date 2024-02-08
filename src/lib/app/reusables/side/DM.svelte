@@ -1,6 +1,14 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import type { FronvoAccount, Room } from 'interfaces/all';
-    import { socket } from 'stores/main';
+    import {
+        DropdownTypes,
+        currentDropdownId,
+        dropdownDMRoom,
+        dropdownVisible,
+    } from 'stores/dropdowns';
+    import { mousePos, socket } from 'stores/main';
+    import { targetProfileModal } from 'stores/modals';
     import { ourData } from 'stores/profile';
     import {
         currentRoomData,
@@ -12,15 +20,13 @@
     } from 'stores/rooms';
     import { onDestroy, onMount } from 'svelte';
     import type { Unsubscriber } from 'svelte/store';
-    import { setTitle } from 'utilities/main';
-    import { loadRoomMessages } from 'utilities/rooms';
+    import { setTitle, showDropdownMouse } from 'utilities/main';
 
     export let dmData: Room;
 
     let onlineP = false;
     let dmUser: FronvoAccount;
 
-    let nameElement: HTMLHeadingElement;
     let indicator: HTMLDivElement;
 
     let unsubscribe: Unsubscriber;
@@ -28,38 +34,57 @@
     async function enterRoom(): Promise<void> {
         if ($currentRoomId == dmData.roomId) return;
 
-        $currentRoomId = dmData.roomId;
-
-        nameElement.style.fontWeight = '300';
-
-        $currentRoomMessages = await loadRoomMessages(dmData.roomId);
         $currentRoomData = dmData;
-
         $currentRoomLoaded = false;
         $currentRoomLoaded = true;
+        $currentRoomMessages = [];
+        $currentRoomId = dmData.roomId;
+
+        setTitle(`@${dmUser.profileId}`);
+
+        // Non-deleted users
+        if (dmUser.profileId) {
+            goto(`/@${dmUser.profileId}`);
+        }
+
+        dmData.unreadCount = 0;
+    }
+
+    function showOptions(): void {
+        $targetProfileModal = dmUser;
+        $dropdownDMRoom = dmData;
+
+        showDropdownMouse(DropdownTypes.DM, $mousePos);
+    }
+
+    function updateIndicator(): void {
+        setTimeout(() => {
+            if (!indicator) return;
+
+            if (onlineP) {
+                indicator.style.background = 'rgb(56, 212, 42)';
+                indicator.style.border = '2px solid var(--primary)';
+                indicator.style.visibility = 'visible';
+            } else {
+                indicator.style.visibility = 'hidden';
+            }
+        }, 0);
     }
 
     onMount(async () => {
         dmUser = dmData.dmUser;
         onlineP = dmUser.online;
 
-        setTimeout(() => {
-            if (onlineP) {
-                indicator.style.visibility = 'visible';
-            }
-        }, 0);
+        updateIndicator();
 
         socket.on('onlineStatusUpdated', async ({ profileId, online }) => {
             if (dmUser.profileId == profileId) {
+                dmUser.online = online;
                 onlineP = online;
 
-                setTimeout(() => {
-                    if (online) {
-                        indicator.style.visibility = 'visible';
-                    } else {
-                        indicator.style.visibility = 'hidden';
-                    }
-                }, 0);
+                dmUser = dmUser;
+
+                updateIndicator();
             }
         });
 
@@ -67,15 +92,26 @@
             'profileDataUpdated',
             async ({ profileId, username, avatar }) => {
                 if (dmUser.profileId == profileId) {
-                    dmData.name = username;
-                    dmData.icon = avatar;
+                    dmUser.username = username;
+                    dmUser.avatar = avatar;
 
-                    setTitle(`Fronvo ${username}`);
+                    dmData = dmData;
                 }
             }
         );
 
+        socket.on('profileStatusUpdated', ({ profileId, status }) => {
+            if (dmUser.profileId == profileId) {
+                dmUser.status = status;
+
+                dmUser = dmUser;
+            }
+        });
+
         socket.on('newMessage', ({ roomId, newMessageData }) => {
+            // Dont add unreads if were in already
+            if ($currentRoomId == roomId) return;
+
             if (roomId == dmData.roomId) {
                 if (
                     newMessageData.profileData.profileId != $ourData.profileId
@@ -94,14 +130,8 @@
 
             setTimeout(() => {
                 dmUser = dmData.dmUser;
+                onlineP = dmUser.online;
             }, 0);
-        });
-
-        dmsList.subscribe(async (state) => {
-            if (!state) return;
-
-            dmUser = dmData.dmUser;
-            onlineP = dmUser.online;
         });
     });
 
@@ -110,7 +140,7 @@
     });
 
     $: dmData.unreadCount =
-        $currentRoomId != dmData.roomId ? dmData.unreadCount : 0;
+        $currentRoomData != dmData.roomId ? dmData.unreadCount : 0;
 </script>
 
 {#if dmUser}
@@ -123,39 +153,48 @@
                 .toLowerCase())}
         <div
             class={`dm-container ${
-                $currentRoomId == dmData.roomId ? 'active' : ''
-            }`}
+                ($dropdownDMRoom?.roomId == dmData.roomId &&
+                    $currentDropdownId == DropdownTypes.DM &&
+                    $dropdownVisible) ||
+                $currentRoomId == dmData.roomId
+                    ? 'active'
+                    : ''
+            } ${dmData.unreadCount != 0 ? 'unread' : ''}`}
             on:click={enterRoom}
             on:keydown={enterRoom}
+            on:contextmenu={(ev) => {
+                showOptions();
+
+                ev.preventDefault();
+            }}
         >
             <div class="badge-container">
-                {#if dmUser?.avatar}
-                    <img
-                        id="avatar"
-                        src={dmUser?.avatar}
-                        alt={`${dmUser?.username}\'s avatar'`}
-                        draggable={false}
-                    />
-                {:else}
-                    <img
-                        src="/images/avatar.svg"
-                        draggable={false}
-                        alt="Avatar"
-                        id="avatar"
-                    />
-                {/if}
+                <img
+                    id="avatar"
+                    src={dmUser?.avatar
+                        ? `${dmUser?.avatar}/tr:w-64:h-64`
+                        : '/images/avatar.svg'}
+                    alt={`${dmUser?.username}\'s avatar'`}
+                    draggable={false}
+                />
 
                 <div bind:this={indicator} class="indicator" />
             </div>
 
             <div class="info-container">
-                <h1 bind:this={nameElement} id="name">
+                <h1 id="name">
                     {dmUser?.username ? dmUser.username : 'Deleted user'}
                 </h1>
+
+                {#if onlineP && dmUser.status}
+                    <h1 id="status">{dmUser.status}</h1>
+                {/if}
             </div>
 
             {#if dmData.unreadCount > 0 && $currentRoomId != dmData.roomId}
-                <h1 id="unread">{dmData.unreadCount}</h1>
+                <h1 id="unread">
+                    {dmData.unreadCount < 10 ? dmData.unreadCount : '9+'}
+                </h1>
             {/if}
         </div>
     {/if}
@@ -163,12 +202,11 @@
 
 <style>
     .dm-container {
-        width: 95%;
+        width: 100%;
+        height: 46px;
         display: flex;
         align-items: center;
         padding: 5px;
-        padding-left: 8px;
-        padding-right: 8px;
         cursor: pointer;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -176,23 +214,36 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        border-radius: 10px;
-        margin-bottom: 5px;
+        border-radius: 5px;
+        margin-bottom: 2px;
+        margin-left: 2px;
+        transition: 125ms;
     }
 
     .dm-container:hover {
-        background: var(--secondary);
+        background: var(--primary);
+    }
+
+    .dm-container:hover #name,
+    .dm-container:hover #status {
+        color: white;
     }
 
     .active {
-        background: var(--tertiary);
+        background: var(--secondary);
     }
 
     .active:hover {
-        background: var(--tertiary);
+        background: var(--primary);
+    }
+
+    .dm-container:active {
+        background: var(--secondary);
     }
 
     .info-container {
+        display: flex;
+        flex-direction: column;
         margin-left: 10px;
         flex: 1;
         transform: translateX(-16px);
@@ -204,25 +255,43 @@
     }
 
     .indicator {
-        background: rgb(56, 212, 42);
-        width: 16px;
-        height: 16px;
+        width: 10px;
+        height: 10px;
         border-radius: 30px;
-        transform: translateX(-17px) translateY(14px);
-        border: 3px solid var(--primary);
-        visibility: hidden;
+        transform: translateX(-10px) translateY(12px);
+        margin-right: 6px;
+        margin-bottom: 2px;
     }
 
     #name {
-        font-size: 1rem;
+        max-width: 130px;
+        font-size: 0.95rem;
         margin: 0;
-        white-space: pre-wrap;
-        display: -webkit-box;
         overflow: hidden;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
+        text-overflow: ellipsis;
         letter-spacing: 0.1px;
         color: var(--gray);
+        transition: 125ms;
+        font-weight: 600;
+    }
+
+    .active #name {
+        color: white;
+    }
+
+    .unread #name {
+        color: white;
+    }
+
+    #status {
+        margin: 0;
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--gray);
+    }
+
+    .active #status {
+        color: white;
     }
 
     .mark {
@@ -230,20 +299,19 @@
     }
 
     #avatar {
-        width: 36px;
-        height: 36px;
+        width: 32px;
+        height: 32px;
         border-radius: 30px;
     }
 
     #unread {
-        display: flex;
         font-size: 0.9rem;
-        margin: 0;
-        background: rgb(255, 33, 33);
-        box-shadow: 0 0 3px red;
-        border-radius: 5px;
-        padding: 5px;
-        color: white;
-        font-weight: 900;
+        background: white;
+        box-shadow: 0 0 5px white;
+        border-radius: 100px;
+        color: black;
+        font-weight: 700;
+        padding-right: 5px;
+        padding-left: 5px;
     }
 </style>

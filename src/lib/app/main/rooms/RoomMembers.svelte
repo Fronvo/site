@@ -3,30 +3,30 @@
     import { findCachedAccount, setTitle } from 'utilities/main';
     import { onDestroy, onMount } from 'svelte';
     import {
+        currentChannel,
         currentRoomData,
         currentRoomId,
         currentRoomLoaded,
         currentRoomMessages,
+        currentServer,
         isInServer,
         currentRoomData as roomData,
     } from 'stores/rooms';
     import { cachedAccountData, socket } from 'stores/main';
     import type { Unsubscriber } from 'svelte/store';
     import RoomMember from '$lib/app/reusables/rooms/RoomMember.svelte';
-    import InviteButton from '$lib/app/reusables/rooms/InviteButton.svelte';
-    import LeaveRoomButton from '$lib/app/reusables/rooms/LeaveServerButton.svelte';
     import { loadRoomsData } from 'utilities/rooms';
     import { ourData } from 'stores/profile';
-    import { fade } from 'svelte/transition';
 
     let memberInfo: FronvoAccount[] = [];
     let loadingFinished = false;
     let pending = false;
 
     let unsubscribe: Unsubscriber;
+    let unsubscribe2: Unsubscriber;
 
     async function loadRoomMembers(): Promise<void> {
-        if (!$roomData || pending) return;
+        if (pending) return;
 
         loadingFinished = false;
         pending = true;
@@ -34,9 +34,9 @@
         memberInfo = [];
 
         // Fetch all room members, notify UI once finished
-        for (const memberIndex in $roomData.members) {
+        for (const memberIndex in $currentServer.members) {
             findCachedAccount(
-                $roomData.members[memberIndex],
+                $currentServer.members[memberIndex],
                 $cachedAccountData
             ).then((data) => {
                 memberInfo.push(data);
@@ -46,8 +46,10 @@
         }
 
         function checkLoadingDone(): void {
+            if (!$currentServer) return;
+
             // Finish loading
-            if (memberInfo.length == $roomData?.members.length) {
+            if (memberInfo.length == $currentServer.members.length) {
                 loadingFinished = true;
                 pending = false;
 
@@ -60,6 +62,12 @@
         unsubscribe = currentRoomLoaded.subscribe(() => {
             loadRoomMembers();
         });
+
+        unsubscribe2 = currentServer.subscribe((server) => {
+            if (!server) return;
+
+            loadRoomMembers();
+        });
     });
 
     $: {
@@ -67,8 +75,8 @@
         socket.off('memberLeft');
 
         socket.on('memberJoined', async ({ roomId, profileId }) => {
-            if (roomId == $currentRoomId) {
-                $roomData?.members.push(profileId);
+            if (roomId == ($currentServer.serverId || $currentRoomId)) {
+                $currentServer.members.push(profileId);
                 $roomData = $roomData;
 
                 await loadRoomMembers();
@@ -77,7 +85,7 @@
         });
 
         socket.on('memberLeft', async ({ roomId, profileId }) => {
-            if (roomId == $currentRoomId) {
+            if (roomId == ($currentServer.serverId || $currentRoomId)) {
                 // Another client / kicked
                 if (profileId == $ourData.profileId) {
                     $currentRoomLoaded = false;
@@ -85,13 +93,15 @@
                     $currentRoomData = undefined;
                     $currentRoomMessages = [];
                     $isInServer = false;
+                    $currentServer = undefined;
+                    $currentChannel = undefined;
 
-                    setTitle('Fronvo');
+                    setTitle('');
 
                     await loadRoomsData();
                 } else {
-                    $roomData?.members.splice(
-                        $roomData?.members.indexOf(profileId),
+                    $currentServer.members.splice(
+                        $currentServer.members.indexOf(profileId),
                         1
                     );
 
@@ -106,12 +116,14 @@
 
     onDestroy(() => {
         unsubscribe && unsubscribe();
+        unsubscribe2 && unsubscribe2();
     });
 </script>
 
 <div class="members-container">
     {#if loadingFinished}
-        <h1>Online -- {memberInfo.length}</h1>
+        <h1>Members -- {memberInfo.length}</h1>
+
         {#each memberInfo as profileData}
             <RoomMember {profileData} />
         {/each}
@@ -120,25 +132,40 @@
 
 <style>
     .members-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
         width: 240px;
         z-index: 1;
         overflow: auto;
-        height: calc(100vh - 65px);
-        overflow: hidden;
-        margin-top: 10px;
+        height: 100vh;
+        overflow-y: scroll;
+        overflow-x: hidden;
+        padding-top: 10px;
+        padding-left: 10px;
+        padding-bottom: 10px;
         user-select: none;
+        background: var(--primary);
+    }
+
+    .members-container::-webkit-scrollbar {
+        width: 12px;
+    }
+
+    .members-container::-webkit-scrollbar-thumb {
+        background: transparent;
+        border: 4px solid var(--primary);
+    }
+
+    .members-container:hover.members-container::-webkit-scrollbar-thumb {
+        background: var(--bg);
+        width: 6px;
     }
 
     h1 {
         width: 100%;
         font-size: 0.8rem;
-        font-weight: 600;
+        font-weight: 700;
         margin: 0;
-        margin-left: 30px;
         margin-bottom: 5px;
+        margin-left: 5px;
         color: var(--gray);
         text-transform: uppercase;
     }

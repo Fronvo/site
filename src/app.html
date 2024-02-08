@@ -7,22 +7,25 @@
 
         <!-- General Meta -->
         <meta
-            content="Fronvo, FOSS, Free, Open, Source, Real, Way, Out"
+            content="Fronvo, All, In, One, FOSS, Right, Place, Instagram, Discord, Twitter, Snapchat"
             name="keywords"
         />
         <meta
             data-react-helmet="true"
-            content="Privacy at its finest."
+            content="Your favorite social media, merged into one. You're at the right place."
             name="description"
         />
-        <meta content="Shadofer" name="author" />
+        <meta content="Fronvo" name="author" />
 
         <!-- Open Graph -->
         <meta content="Fronvo" property="og:site_url" />
-        <meta content="Fronvo" property="og:title" />
+        <meta
+            content="Fronvo: The all in one social media."
+            property="og:title"
+        />
         <meta
             data-react-helmet="true"
-            content="Privacy at its finest."
+            content="Your favorite social media, merged into one. You're at the right place."
             property="og:description"
         />
         <meta content="website" property="og:type" />
@@ -36,7 +39,10 @@
 
         <!-- Twitter Card -->
         <meta content="summary_large_image" name="twitter:card" />
-        <meta content="Fronvo" name="twitter:title" />
+        <meta
+            content="Fronvo: The all in one social media."
+            name="twitter:title"
+        />
         <meta
             content="https://fronvo.com/images/fronvo-embed-icon.png"
             name="twitter:image"
@@ -66,10 +72,17 @@
             href="https://fonts.googleapis.com/css2?family=Manrope:wght@700&display=swap"
             rel="stylesheet"
         />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Manrope:wght@800&display=swap"
+            rel="stylesheet"
+        />
+
+        <!-- Dark Reader -->
+        <meta name="darkreader-lock" />
 
         %sveltekit.head%
     </head>
-    <body>
+    <body oncontextmenu="return false;">
         <div id="fronvo">%sveltekit.body%</div>
     </body>
 </html>

@@ -10,7 +10,8 @@
         actions: [
             {
                 title: 'Add more',
-                callback: () => showModal(ModalTypes.GoPRO),
+                callback: () => showModal(ModalTypes.GoTurbo),
+                condition: !$ourData.isTurbo,
             },
             {
                 title: 'Dismiss',
@@ -22,7 +23,7 @@
 
 <ModalTemplate {data}>
     <h1 class="modal-header">
-        You already have over {$ourData.isPRO ? 100 : 15} friends.
+        You already have over {$ourData.isTurbo ? 100 : 15} friends.
     </h1>
 
     <InfoHeader

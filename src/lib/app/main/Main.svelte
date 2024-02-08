@@ -1,20 +1,17 @@
 <script lang="ts">
     import Dropdown from './Dropdown.svelte';
     import Modal from './Modal.svelte';
-    import { fade } from 'svelte/transition';
-    import AccountInfo from '../reusables/top/AccountInfo.svelte';
+    import { fade, scale, slide } from 'svelte/transition';
     import MessagesList from '../reusables/side/MessagesList.svelte';
     import {
-        currentRoomData,
+        currentChannel,
         currentRoomLoaded,
         isInServer,
-        roomsList,
     } from 'stores/rooms';
-    import { disabledIn30, lastSendsIn30, socket } from 'stores/main';
+    import { disabledIn30, lastSendsIn30 } from 'stores/main';
     import { onMount } from 'svelte';
-    import { differenceInMinutes, getDate, getMonth } from 'date-fns';
+    import { differenceInMinutes } from 'date-fns';
     import { getKey } from 'utilities/global';
-    import { fetchConvos } from 'utilities/rooms';
     import { Toaster } from 'svelte-sonner';
     import HomeButton from '../reusables/top/HomeButton.svelte';
     import CreateServerButton from '../reusables/side/CreateServerButton.svelte';
@@ -29,6 +26,8 @@
     import ServerPanel from '../reusables/side/ServerPanel.svelte';
     import Dashboard from './dashboard/Dashboard.svelte';
     import ServerNoRoom from '../reusables/rooms/ServerNoRoom.svelte';
+    import JoinServerButton from '../reusables/side/JoinServerButton.svelte';
+    import RoomTyping from './rooms/RoomTyping.svelte';
 
     let ParticlesComponent;
 
@@ -88,15 +87,6 @@
     let particlesInit = async (engine) => {};
 
     onMount(() => {
-        socket.on('roomAdded', async () => ($roomsList = await fetchConvos()));
-        socket.on(
-            'roomRemoved',
-            async () => ($roomsList = await fetchConvos())
-        );
-
-        // TODO: Servers by user join date / custom, not last msg, change room types to servers, server side
-        // TODO: Requires db change too, old fronvo used rooms and not servers, might need to port whole db to servers or just keep as seperate v2 instance, different paltforms maybe
-
         setInterval(() => {
             if ($lastSendsIn30 != -1) {
                 $lastSendsIn30 = 0;
@@ -114,7 +104,6 @@
     });
 </script>
 
-<!-- TODO: smh, find in old implementation in v1 -->
 {#if new Date().getMonth() == 11}
     <svelte:component
         this={ParticlesComponent}
@@ -141,28 +130,32 @@
     offset={'25px'}
 />
 
-<div class="main-container" in:fade={{ duration: 300, easing: quintInOut }}>
+<div
+    class="main-container"
+    in:scale={{ duration: 750, easing: quintInOut, opacity: 0, start: 1.25 }}
+>
     <div class="first-container">
         <HomeButton />
         <ServersList />
         <CreateServerButton />
+        <JoinServerButton />
     </div>
 
     <div class="second-container">
         {#if !$isInServer}
-            <SecondaryOptions />
+            <div class="wrapper">
+                <SecondaryOptions />
 
-            <MessagesList />
+                <MessagesList />
+            </div>
         {:else}
             <ServerPanel />
         {/if}
-
-        <AccountInfo />
     </div>
 
     <div class="third-container">
         {#if $currentRoomLoaded || $isInServer}
-            {#if !$currentRoomData}
+            {#if $isInServer && !$currentChannel}
                 <ServerNoRoom />
             {:else}
                 <RoomInfo />
@@ -170,21 +163,21 @@
                 <RoomChat />
 
                 <RoomSend />
+
+                <RoomTyping />
             {/if}
         {:else}
             <Dashboard />
         {/if}
     </div>
 
-    {#if $currentRoomLoaded}
-        <div class="fourth-container">
-            {#if $currentRoomData.isDM}
-                <DmMembers />
-            {:else}
-                <RoomMembers />
-            {/if}
-        </div>
-    {/if}
+    <div class="fourth-container">
+        {#if $isInServer}
+            <RoomMembers />
+        {:else}
+            <DmMembers />
+        {/if}
+    </div>
 </div>
 
 <style>
@@ -192,19 +185,20 @@
         display: flex;
         flex-direction: row;
         min-width: 955px;
+        z-index: 1;
     }
 
     .first-container {
-        width: 60px;
-        min-width: 60px;
+        width: 64px;
+        min-width: 64px;
         height: 100vh;
-        padding: 5px;
-        margin-left: 5px;
         display: flex;
         flex-direction: column;
         align-items: center;
         overflow-x: hidden;
         overflow-y: scroll;
+        padding-bottom: 10px;
+        border-right: 1px solid var(--primary);
     }
 
     .first-container::-webkit-scrollbar {
@@ -214,10 +208,25 @@
     .second-container {
         height: calc(100vh);
         min-width: 235px;
-        margin-left: 5px;
         display: flex;
         flex-direction: column;
         align-items: center;
+        z-index: 1;
+        background: var(--primary);
+    }
+
+    .wrapper {
+        width: 235px;
+        height: calc(100vh);
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+
+    .wrapper::-webkit-scrollbar-thumb {
+        background: transparent;
+    }
+
+    .wrapper:hover.wrapper::-webkit-scrollbar-thumb {
         background: var(--primary);
     }
 
@@ -227,10 +236,10 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        background: rgb(35, 36, 39);
     }
 
     .fourth-container {
+        z-index: 1;
         display: flex;
         flex-direction: column;
         background: var(--primary);

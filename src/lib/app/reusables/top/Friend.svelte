@@ -1,11 +1,24 @@
 <script lang="ts">
     import type { FronvoAccount } from 'interfaces/all';
-    import { ModalTypes, targetProfileModal } from 'stores/modals';
-    import { showModal } from 'utilities/main';
-    import { socket } from 'stores/main';
+    import {
+        ModalTypes,
+        targetFriendModal,
+        targetProfileModal,
+    } from 'stores/modals';
+    import { showDropdownMouse, showModal } from 'utilities/main';
+    import { mousePos, socket } from 'stores/main';
     import { onMount } from 'svelte';
+    import {
+        DropdownTypes,
+        currentDropdownId,
+        dropdownVisible,
+    } from 'stores/dropdowns';
 
     export let profileData: FronvoAccount;
+
+    let onlineP = false;
+
+    let indicator: HTMLDivElement;
 
     function showProfileModal(): void {
         $targetProfileModal = profileData;
@@ -13,12 +26,38 @@
         showModal(ModalTypes.Profile);
     }
 
+    function showOptions(): void {
+        $targetFriendModal = profileData;
+
+        showDropdownMouse(DropdownTypes.Friend, $mousePos);
+    }
+
+    function updateIndicator(): void {
+        setTimeout(() => {
+            if (!indicator) return;
+
+            if (onlineP) {
+                indicator.style.background = 'rgb(56, 212, 42)';
+                indicator.style.border = '2px solid var(--primary)';
+                indicator.style.visibility = 'visible';
+            } else {
+                indicator.style.visibility = 'hidden';
+            }
+        }, 0);
+    }
+
     onMount(() => {
+        onlineP = profileData.online;
+
+        updateIndicator();
+
         socket.on('onlineStatusUpdated', ({ profileId, online }) => {
             if (profileId == profileData.profileId) {
                 profileData.online = online;
 
                 profileData = profileData;
+
+                updateIndicator();
             }
         });
 
@@ -44,7 +83,18 @@
 <div
     on:click={showProfileModal}
     on:keydown={showProfileModal}
-    class={`friend-container`}
+    class={`friend-container ${!profileData.online ? 'offline' : ''} ${
+        $targetFriendModal?.profileId == profileData.profileId &&
+        $currentDropdownId == DropdownTypes.Friend &&
+        $dropdownVisible
+            ? 'active'
+            : ''
+    }`}
+    on:contextmenu={(ev) => {
+        showOptions();
+
+        ev.preventDefault();
+    }}
 >
     <div class="badge-container">
         <img
@@ -56,15 +106,15 @@
             draggable={false}
         />
 
-        {#if profileData.online}
-            <div class="indicator" />
-        {/if}
+        <div bind:this={indicator} class="indicator" />
     </div>
 
     <div class="bottom-container">
         <h1 id="username">{profileData?.username}</h1>
 
-        <h1 id="status">{profileData?.status}</h1>
+        {#if profileData.status}
+            <h1 id="status">{profileData?.status}</h1>
+        {/if}
     </div>
 </div>
 
@@ -78,8 +128,11 @@
         cursor: pointer;
         padding: 8px;
         overflow: hidden;
-        width: 100%;
-        border-bottom: 1px solid var(--primary);
+        width: 350px;
+        height: 60px;
+        border-bottom: 1px solid rgb(255, 255, 255, 0.05);
+        pointer-events: all;
+        transition: 125ms;
     }
 
     .badge-container {
@@ -87,34 +140,9 @@
         align-items: center;
     }
 
-    .indicator {
-        position: fixed;
-        background: rgb(56, 212, 42);
-        width: 16px;
-        height: 16px;
-        border-radius: 30px;
-        transform: translateX(22px) translateY(12px);
-        border: 3px solid var(--bg);
-    }
-
-    .pending {
-        cursor: default;
-    }
-
-    .pending:hover {
-        background: transparent;
-    }
-
-    .pending div:hover {
-        background: transparent;
-    }
-
-    div:hover {
+    .friend-container:hover,
+    .active {
         background: var(--primary);
-    }
-
-    .indicator:hover {
-        background: rgb(56, 212, 42);
     }
 
     div h1 {
@@ -137,27 +165,19 @@
         width: 36px;
         height: 36px;
         border-radius: 30px;
-        margin-right: 8px;
     }
 
-    .pending #avatar {
-        margin: 0;
+    .offline #avatar {
+        opacity: 0.75;
+    }
+
+    .indicator {
+        width: 10px;
+        height: 10px;
         border-radius: 30px;
-        cursor: pointer;
-        pointer-events: all;
-        transition: 150ms;
-        width: 34px;
-        height: 34px;
-        border: 2px solid var(--bg);
-    }
-
-    .pending #avatar:hover {
-        border: 2px solid var(--branding);
-    }
-
-    .pending #username {
-        margin-left: 8px;
-        width: 130px;
+        transform: translateX(-10px) translateY(14px);
+        margin-right: 6px;
+        margin-bottom: 2px;
     }
 
     #username {
@@ -166,7 +186,13 @@
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
         font-size: 1.05rem;
-        color: var(--text);
+        color: white;
+        height: 23px;
+        font-weight: 500;
+    }
+
+    .offline #username {
+        opacity: 0.75;
     }
 
     #avatar {
@@ -176,15 +202,21 @@
     .bottom-container {
         display: flex;
         flex-direction: column;
+        flex: 1;
     }
 
     #status {
         font-size: 0.9rem;
-        color: var(--branding);
+        color: var(--gray);
         display: -webkit-box;
         overflow: hidden;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
         font-weight: 600;
+        height: 20px;
+    }
+
+    .offline #status {
+        display: none;
     }
 </style>

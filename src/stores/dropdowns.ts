@@ -1,22 +1,46 @@
-import ProfileDropdown from '$lib/app/main/dropdowns/ProfileDropdown.svelte';
-import ProfileSettingsDropdown from '$lib/app/main/dropdowns/ProfileSettingsDropdown.svelte';
-import TenorDropdown from '$lib/app/main/dropdowns/TenorDropdown.svelte';
-import type { FronvoAccount } from 'interfaces/all';
+import AccountDropdown from '$lib/app/main/dropdowns/AccountDropdown.svelte';
+import AccountExtrasDropdown from '$lib/app/main/dropdowns/AccountExtrasDropdown.svelte';
+import ChannelDropdown from '$lib/app/main/dropdowns/ChannelDropdown.svelte';
+import DmDropdown from '$lib/app/main/dropdowns/DMDropdown.svelte';
+import FriendDropdown from '$lib/app/main/dropdowns/FriendDropdown.svelte';
+import ImageDropdown from '$lib/app/main/dropdowns/ImageDropdown.svelte';
+import MessageDropdown from '$lib/app/main/dropdowns/MessageDropdown.svelte';
+import PendingDropdown from '$lib/app/main/dropdowns/PendingDropdown.svelte';
+import PostDropdown from '$lib/app/main/dropdowns/PostDropdown.svelte';
+import ServerSettingsDropdown from '$lib/app/main/dropdowns/ServerSettingsDropdown.svelte';
+import ServerTempSettingsDropdown from '$lib/app/main/dropdowns/ServerTempSettingsDropdown.svelte';
+import type { FronvoAccount, Room } from 'interfaces/all';
 import { writable, type Writable } from 'svelte/store';
 
 /****************************** Dropdowns ******************************/
 export const dropdowns = [
-    ProfileDropdown,
-    TenorDropdown,
-    ProfileSettingsDropdown,
+    ServerSettingsDropdown,
+    PostDropdown,
+    ChannelDropdown,
+    FriendDropdown,
+    ServerTempSettingsDropdown,
+    DmDropdown,
+    ImageDropdown,
+    PendingDropdown,
+    MessageDropdown,
+    AccountDropdown,
+    AccountExtrasDropdown,
 ];
 /****************************** Dropdowns ******************************/
 
 /****************************** Dropdown Exports ******************************/
 export enum DropdownTypes {
-    Profile,
-    Gif,
-    ProfileSettings,
+    ServerSettings,
+    Post,
+    Channel,
+    Friend,
+    ServerTempSettings,
+    DM,
+    Image,
+    Pending,
+    Message,
+    Account,
+    AccountExtras,
 }
 
 export interface DropdownActions {
@@ -37,8 +61,5 @@ export const dropdownPosition = writable([0, 0]);
 
 /****************************** DMDropdown ******************************/
 export const dropdownProfileData: Writable<FronvoAccount> = writable();
+export const dropdownDMRoom: Writable<Room> = writable();
 /****************************** DMDropdown ******************************/
-
-/****************************** ProfileDropdown ******************************/
-export const dropdownForAccountInfo: Writable<boolean> = writable(false);
-/****************************** ProfileDropdown ******************************/

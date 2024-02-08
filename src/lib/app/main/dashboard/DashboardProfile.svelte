@@ -1,21 +1,23 @@
 <script lang="ts">
     import PostProfile from '$lib/app/reusables/dashboard/PostProfile.svelte';
-    import Post from '$lib/app/reusables/dashboard/PostProfile.svelte';
     import PropPost from '$lib/app/reusables/dashboard/PropPost.svelte';
-    import { ourPosts, totalOurPosts } from 'stores/dashboard';
-    import { socket } from 'stores/main';
+    import { ourPosts } from 'stores/dashboard';
+    import { DropdownTypes } from 'stores/dropdowns';
+    import { mousePos, socket } from 'stores/main';
     import { ModalTypes } from 'stores/modals';
     import { ourData } from 'stores/profile';
+    import { onMount } from 'svelte';
     import InfiniteLoading from 'svelte-infinite-loading';
     import { sineInOut } from 'svelte/easing';
     import { fade } from 'svelte/transition';
-    import { loadOurPosts } from 'utilities/dashboard';
-    import { isAcceptedImage, showModal } from 'utilities/main';
-    import { uploadImage } from 'utilities/rooms';
-
-    let attachmentBase64: string | ArrayBuffer;
+    import { setTitle, showDropdownMouse, showModal } from 'utilities/main';
 
     async function loadMore({ detail: { loaded, complete } }): Promise<void> {
+        if ($ourData.totalPosts == $ourPosts.length) {
+            complete();
+            return;
+        }
+
         socket.emit(
             'fetchProfilePosts',
             {
@@ -38,90 +40,48 @@
         );
     }
 
-    function addImage(): void {
-        let input = document.createElement('input');
-        input.type = 'file';
-
-        input.onchange = async (_) => {
-            let file = Array.from(input.files)[0];
-
-            if (file.size > ($ourData.isPRO ? 3000000 : 1000000)) {
-                return;
-            }
-
-            if (isAcceptedImage(file.type)) {
-                const reader = new FileReader();
-
-                reader.addEventListener('load', async () => {
-                    attachmentBase64 = reader.result;
-
-                    socket.emit('canPost', async ({ canPost }) => {
-                        if (!canPost) {
-                            showModal(ModalTypes.GoPRO);
-                        } else {
-                            socket.emit(
-                                'sharePost',
-                                {
-                                    attachment: await uploadImage(
-                                        attachmentBase64,
-                                        $ourData.isPRO
-                                    ),
-                                },
-                                () => {
-                                    input.value = '';
-                                    input.disabled = false;
-
-                                    attachmentBase64 = '';
-
-                                    $ourPosts = [];
-
-                                    loadOurPosts($ourData.profileId);
-                                }
-                            );
-                        }
-                    });
-                });
-
-                reader.readAsDataURL(file);
-            }
-        };
-
-        input.click();
+    function editProfile(): void {
+        showModal(ModalTypes.EditProfile);
     }
+
+    function showOptions(): void {
+        showDropdownMouse(DropdownTypes.Account, $mousePos);
+    }
+
+    onMount(() => {
+        setTitle($ourData.username);
+    });
 </script>
 
-<div class="profile-container" in:fade={{ duration: 200, easing: sineInOut }}>
+<div class={`profile-container`} in:fade={{ duration: 200, easing: sineInOut }}>
     <img
         id="avatar"
         src={$ourData.avatar
-            ? `${$ourData.avatar}/tr:w-200:h-200`
+            ? `${$ourData.avatar}/tr:w-512:h-512`
             : '/images/avatar.svg'}
         draggable={false}
         alt={`${$ourData.profileId}\'s avatar'`}
     />
 
-    <h1 id="username">{$ourData.profileId}</h1>
+    <h1 id="username">{$ourData.username}</h1>
 
-    <button id="share" on:click={addImage}
-        ><svg
+    <div class="options">
+        <button on:click={editProfile}>Edit profile</button>
+
+        <svg
+            on:click={showOptions}
+            on:keydown={showOptions}
+            id="menu"
             xmlns="http://www.w3.org/2000/svg"
             width="32"
             height="32"
-            viewBox="0 0 24 24"
+            viewBox="0 0 20 20"
             fill="currentColor"
             ><path
-                fill-rule="evenodd"
-                d="M2 12c0-4.714 0-7.071 1.464-8.536C4.93 2 7.286 2 12 2c4.714 0 7.071 0 8.535 1.464C22 4.93 22 7.286 22 12c0 4.714 0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12Zm10 5.75a.75.75 0 0 0 .75-.75v-5.19l1.72 1.72a.75.75 0 1 0 1.06-1.06l-3-3a.75.75 0 0 0-1.06 0l-3 3a.75.75 0 1 0 1.06 1.06l1.72-1.72V17c0 .414.336.75.75.75Zm-4-10a.75.75 0 0 1 0-1.5h8a.75.75 0 0 1 0 1.5H8Z"
-                clip-rule="evenodd"
+                d="M10 12a2 2 0 1 1 0-4a2 2 0 0 1 0 4m0-6a2 2 0 1 1 0-4a2 2 0 0 1 0 4m0 12a2 2 0 1 1 0-4a2 2 0 0 1 0 4"
             /></svg
-        >Share post</button
-    >
-
-    {#if $totalOurPosts > 0}
-        <h1 id="total">
-            {$totalOurPosts} post{$totalOurPosts != 1 ? 's' : ''}
-        </h1>
-    {/if}
+        >
+    </div>
 
     {#if $ourPosts}
         <div class="posts-container">
@@ -164,11 +124,12 @@
     }
 
     #avatar {
-        min-width: 100px;
-        min-height: 100px;
-        width: 100px;
-        height: 100px;
+        min-width: 128px;
+        min-height: 128px;
+        width: 128px;
+        height: 128px;
         border-radius: 100px;
+        box-shadow: 0 0 5px black;
     }
 
     h1 {
@@ -176,56 +137,49 @@
     }
 
     #username {
-        font-size: 1.7rem;
+        font-size: 2rem;
         font-weight: 600;
+        color: white;
     }
 
-    #share {
+    .options {
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: none;
-        background: transparent;
-        border: 2px solid var(--branding);
-        border-radius: 10px;
-        font-size: 1.2rem;
-        transition: 150ms;
-        height: 50px;
-        font-weight: 600;
         margin-top: 15px;
+        margin-left: 30px;
     }
 
-    #share svg {
-        width: 30px;
-        height: 30px;
-        margin-right: 5px;
-        fill: var(--branding);
-        transition: 150ms;
+    button {
+        width: 200px;
+        font-size: 1.2rem;
+        font-weight: 500;
     }
 
-    #share:hover {
-        background: var(--branding);
-        box-shadow: 0 0 10px var(--branding);
+    .options svg {
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+        min-height: 32px;
+        margin-left: 5px;
+        fill: rgb(255, 255, 255, 0.6);
+        border-radius: 30px;
+        padding: 4px;
     }
 
-    #share:hover svg {
-        fill: white;
-    }
-
-    #total {
-        font-size: 1.3rem;
-        margin-top: 20px;
+    .options svg:hover {
+        background: var(--primary);
     }
 
     .posts-container {
-        width: 60%;
-        min-width: 600px;
+        width: 100%;
+        max-width: 770px;
         display: flex;
-        align-items: start;
         flex-direction: row;
         flex-wrap: wrap;
-        padding-top: 10px;
-        transform: translateX(45px);
+        margin-top: 25px;
+        margin-left: 10px;
+        padding-bottom: 100px;
     }
 
     .empty {
@@ -251,7 +205,9 @@
 
     @media screen and (max-width: 1050px) {
         .posts-container {
-            width: 90%;
+            width: 100%;
+            justify-content: center;
+            margin-left: 0;
         }
     }
 </style>

@@ -7,7 +7,6 @@
     import { redirectApp } from 'utilities/index';
     import { performLogin } from 'utilities/main';
     import { goto } from '$app/navigation';
-    import BlurredBackground2 from '$lib/index/BlurredBackground2.svelte';
 
     let mountReady = false;
 
@@ -51,8 +50,6 @@
     <div class="index-container">
         {#if $indexVisible}
             <AppResetMain />
-
-            <BlurredBackground2 />
         {/if}
     </div>
 {/if}

@@ -9,6 +9,9 @@
         'Hello there, lost traveller.',
         'Looking for something?',
         "This ain't it!",
+        'Sorry for that...',
+        'How did you end up here!?',
+        'Going back to base.',
     ];
 
     function choose(choices: string[]) {
@@ -57,7 +60,7 @@
     }
 
     .error-container #status-code {
-        color: var(--branding);
+        color: white;
         font-size: 7rem;
         margin-bottom: 10px;
         cursor: pointer;

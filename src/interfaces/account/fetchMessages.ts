@@ -10,9 +10,11 @@ export interface FetchMessagesParams {
     to: string;
 }
 
+export interface FetchedMessage {
+    message: RoomMessage;
+    profileData: FronvoAccount;
+}
+
 export interface FetchMessagesResult extends FronvoError {
-    roomMessages: {
-        message: RoomMessage;
-        profileData: FronvoAccount;
-    }[];
+    roomMessages: FetchedMessage[];
 }

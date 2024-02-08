@@ -4,10 +4,8 @@
     import { modalLoading, type ModalData } from 'stores/modals';
     import { removeKey } from 'utilities/global';
     import { socket } from 'stores/main';
-    import InfoHeader from '$lib/app/reusables/all/InfoHeader.svelte';
     import ProfilePreviewLogout from '$lib/app/reusables/all/PreviewLogout.svelte';
     import { ourData } from 'stores/profile';
-    import { resetLocalTheme } from 'utilities/themes';
 
     function logout(): void {
         $modalLoading = true;
@@ -16,8 +14,6 @@
         removeKey('savedAccounts');
 
         socket.emit('logout', () => {
-            resetLocalTheme();
-
             location.href = '/app';
         });
     }
@@ -40,8 +36,4 @@
 
 <ModalTemplate {data}>
     <ProfilePreviewLogout profileData={$ourData} />
-
-    <InfoHeader
-        text={'This will also remove all other accounts added in this browser'}
-    />
 </ModalTemplate>

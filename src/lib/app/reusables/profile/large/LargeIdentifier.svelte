@@ -50,12 +50,12 @@
         margin: 0;
         margin-left: 5px;
         margin-right: 5px;
-        color: var(--text);
+        color: white;
         display: -webkit-box;
         overflow: hidden;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
-        font-weight: 600;
+        font-weight: 700;
     }
 
     .secondary-container {
@@ -73,6 +73,7 @@
         overflow: hidden;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
+        color: white;
     }
 
     #status {
@@ -85,5 +86,6 @@
         overflow: hidden;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
+        color: white;
     }
 </style>

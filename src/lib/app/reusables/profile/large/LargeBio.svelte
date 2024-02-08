@@ -33,11 +33,14 @@
         font-weight: 800;
         text-transform: uppercase;
         margin-bottom: 3px;
+        color: white;
     }
 
     .since-container #bio {
         margin: 0;
         font-size: 0.85rem;
         white-space: pre-wrap;
+        color: white;
+        font-weight: 600;
     }
 </style>

@@ -9,7 +9,7 @@
 </script>
 
 <span>
-    {#if $targetProfileModal.profileId == $ourData.profileId}
+    {#if $targetProfileModal?.profileId == $ourData.profileId}
         <svg
             on:click={editProfile}
             on:keydown={editProfile}
@@ -33,14 +33,23 @@
         width: 100%;
         height: 100px;
         transition: 150ms;
-        background: rgb(0, 0, 0, 0.5);
+        background: transparent;
     }
 
     svg {
         fill: white;
-        background: var(--branding);
-        border-top-right-radius: 10px;
-        border-bottom-left-radius: 10px;
-        padding: 5px;
+        background: var(--primary);
+        padding: 7px;
+        border-radius: 20px;
+        transition: 125ms;
+        transform: translateX(-10px) translateY(10px);
+    }
+
+    svg:hover {
+        background: var(--tertiary);
+    }
+
+    svg:active {
+        transform: translateX(-10px) translateY(10px) scale(0.95);
     }
 </style>

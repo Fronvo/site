@@ -1,12 +1,20 @@
 <script lang="ts">
+    import { cachedAccountData } from 'stores/main';
     import { ModalTypes, targetProfileModal } from 'stores/modals';
-    import { ourData } from 'stores/profile';
-    import { showModal } from 'utilities/main';
+    import { currentRoomData } from 'stores/rooms';
+    import { findCachedAccount, showModal } from 'utilities/main';
 
+    export let profileId: string;
     export let avatar: string;
 
-    function viewProfile(): void {
-        $targetProfileModal = $ourData;
+    async function viewProfile(): Promise<void> {
+        // Deleted user
+        if (!$currentRoomData.dmUser.profileId) return;
+
+        $targetProfileModal = await findCachedAccount(
+            profileId,
+            $cachedAccountData
+        );
 
         showModal(ModalTypes.Profile);
     }
@@ -42,19 +50,13 @@
         width: 100%;
     }
 
-    img {
-        border: 20px solid var(--primary);
-    }
-
     #avatar {
-        width: 90px;
-        height: 90px;
-        border: 5px solid rgb(22, 22, 22);
+        width: 80px;
+        height: 80px;
         border-radius: 100px;
         transition: 150ms;
         margin-left: 20px;
         transform: translateY(-40px);
-        background: var(--modal_content_bg);
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;

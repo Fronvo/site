@@ -24,10 +24,12 @@
         font-weight: 800;
         text-transform: uppercase;
         margin-bottom: 3px;
+        color: white;
     }
 
     .since-container #since {
         margin: 0;
         font-size: 0.85rem;
+        color: white;
     }
 </style>

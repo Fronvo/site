@@ -1,16 +1,14 @@
 <script lang="ts">
     import ModalTemplate from '../ModalTemplate.svelte';
-    import {
-        targetProfileModal,
-        type ModalData,
-        ModalTypes,
-    } from 'stores/modals';
-    import { showModal } from 'utilities/main';
+    import { targetProfileModal, type ModalData } from 'stores/modals';
     import PreviewLarge from '$lib/app/reusables/all/PreviewLarge.svelte';
 
     const profileData = $targetProfileModal;
 
-    const data: ModalData = {};
+    const data: ModalData = {
+        noDecoration: true,
+        transparent: false,
+    };
 </script>
 
 <ModalTemplate {data}>

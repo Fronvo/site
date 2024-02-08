@@ -1,65 +1,110 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import { indexVisible } from 'stores/index';
+
+    function goRoot(): void {
+        goto('/');
+    }
 </script>
 
 {#if $indexVisible}
     <div class="top-nav-container">
-        <div class="logo-container">
-            <h1 id="logo">Fronvo</h1>
-            <h1 id="descriptor">Privacy at its finest.</h1>
+        <img
+            src={'favicon.png'}
+            on:click={goRoot}
+            on:keydown={goRoot}
+            alt="Logo"
+            draggable={false}
+        />
+        <h1 id="logo">Fronvo</h1>
+
+        <div class="options">
+            <a href="https://github.com/Fronvo"><h1>Source code</h1></a>
+            <a href="https://fronvo.instatus.com"><h1>Status</h1></a>
         </div>
     </div>
 {/if}
 
 <style>
     .top-nav-container {
-        width: 100%;
-        margin: auto;
-        background: var(--i_primary);
-        box-shadow: 0 0 20px var(--i_shadow);
         display: flex;
         align-items: center;
-        padding: 15px;
+        width: 100%;
+        position: fixed;
+        padding: 30px;
+        padding-left: 30px;
+        padding-right: 30px;
+        background: rgb(0, 0, 0, 0.1);
         z-index: 1;
+    }
+
+    img {
+        width: 36px;
+        height: 36px;
+        margin-right: 10px;
+        cursor: pointer;
     }
 
     h1 {
         margin: 0;
-        color: var(--text);
-        font-weight: 500;
-    }
-
-    .logo-container {
-        flex: 1;
+        color: white;
     }
 
     #logo {
-        flex: 1;
-        font-size: 1.8rem;
+        font-size: 2rem;
+        font-weight: 700;
     }
 
-    #descriptor {
-        font-size: 1.1rem;
-        color: var(--text);
+    .options {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: end;
+    }
+
+    .options a {
+        color: white;
+        text-decoration: none;
+    }
+
+    .options a:hover {
+        text-decoration: underline;
+    }
+
+    .options h1 {
+        margin: 0;
+        font-size: 1.3rem;
+        font-weight: 400;
+        margin-left: 15px;
+        margin-right: 15px;
+        color: white;
     }
 
     @media screen and (max-width: 850px) {
-        #logo {
-            font-size: 1.4rem;
-        }
-
-        #descriptor {
-            font-size: 0.9rem;
+        .top-nav-container {
+            padding: 20px;
         }
     }
 
     @media screen and (max-width: 600px) {
-        #logo {
-            font-size: 1.4rem;
+        .top-nav-container {
+            padding: 10px;
         }
 
-        #descriptor {
-            font-size: 0.8rem;
+        img {
+            width: 28px;
+            height: 28px;
+            margin-right: 5px;
+        }
+
+        #logo {
+            font-size: 1.6rem;
+        }
+
+        .options h1 {
+            font-size: 1rem;
+            margin-right: 10px;
+            margin-left: 10px;
         }
     }
 </style>

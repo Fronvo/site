@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { currentServerName } from 'stores/rooms';
+    import { currentServer } from 'stores/rooms';
 </script>
 
 <div class="no-container">
@@ -15,8 +15,14 @@
             clip-rule="evenodd"
         /></svg
     >
-    <h1 id="intro">Welcome to {$currentServerName}</h1>
-    <h1 id="descriptor">Start by creating a channel in this server</h1>
+    <h1 id="intro">Welcome to {$currentServer.name}</h1>
+    <h1 id="descriptor">
+        Start by {$currentServer?.channels.length > 0
+            ? 'selecting'
+            : 'creating'} a channel {$currentServer?.channels.length > 0
+            ? 'from'
+            : 'in'} this server
+    </h1>
 </div>
 
 <style>
@@ -28,8 +34,8 @@
         align-items: center;
         justify-content: center;
         user-select: none;
-        background: var(--bg);
-        padding-right: 200px;
+        background: rgb(15, 15, 15);
+        padding-right: 100px;
     }
 
     svg {

@@ -16,7 +16,6 @@
         flex-direction: column;
         align-items: start;
         margin-left: 15px;
-        margin-top: 10px;
     }
 
     .since-container #top {

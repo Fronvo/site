@@ -112,7 +112,7 @@
 <style>
     h1 {
         margin: 0;
-        color: rgb(197, 203, 212);
+        color: white;
         font-size: 1.1rem;
         font-weight: 600;
         text-align: start;
@@ -122,18 +122,18 @@
     input {
         width: 80%;
         font-size: 1.2rem;
+        font-weight: 500;
         margin-top: 5px;
         padding: 5px;
         padding-left: 10px;
         padding-right: 10px;
-        background: rgb(0, 0, 0, 0.4);
-        color: var(--text);
+        background: var(--primary);
         border: 2px solid transparent;
-        transition: 150ms border;
+        transition: 150ms;
         border-radius: 5px;
     }
 
     input:focus {
-        border: 2px solid var(--branding);
+        border: 2px solid var(--secondary);
     }
 </style>

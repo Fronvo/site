@@ -1,11 +1,40 @@
 <script lang="ts">
-    import { currentServerChannels, currentServerName } from 'stores/rooms';
+    import { currentServer } from 'stores/rooms';
     import PropChannel from '../rooms/PropChannel.svelte';
+    import { showDropdown } from 'utilities/main';
+    import {
+        DropdownTypes,
+        currentDropdownId,
+        dropdownVisible,
+    } from 'stores/dropdowns';
+    import ServerChannel from '../rooms/ServerChannel.svelte';
+
+    let dropdownElement: HTMLDivElement;
+
+    function showServerDropdown(): void {
+        showDropdown(
+            DropdownTypes.ServerSettings,
+            dropdownElement,
+            'bottom',
+            45,
+            20
+        );
+    }
 </script>
 
 <div class="server-container">
-    <div class="top">
-        <h1>{$currentServerName}</h1>
+    <div
+        class={`top ${
+            $currentDropdownId == DropdownTypes.ServerSettings &&
+            $dropdownVisible
+                ? 'active'
+                : ''
+        }`}
+        on:click={showServerDropdown}
+        on:keydown={showServerDropdown}
+        bind:this={dropdownElement}
+    >
+        <h1>{$currentServer.name}</h1>
 
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -24,7 +53,11 @@
     </div>
 
     <div class="channels">
-        {#if $currentServerChannels.length > 0}{:else}
+        {#if $currentServer.channels.length > 0}
+            {#each $currentServer.channels as channel}
+                <ServerChannel {channel} />
+            {/each}
+        {:else}
             {#each { length: 15 } as _, i}
                 <PropChannel opacity={1 - 0.8 + (1 - (i + 2.5) / 12.5)} />
             {/each}
@@ -45,15 +78,15 @@
         padding-left: 20px;
         padding-right: 15px;
         transition: 125ms;
-        border-bottom: 1px solid rgb(23, 23, 23);
-        box-shadow: 0 0 10px rgb(25, 25, 25);
+        border-bottom: 1px solid var(--primary);
         padding-top: 5px;
         padding-bottom: 5px;
         cursor: pointer;
     }
 
-    .top:hover {
-        background: var(--secondary);
+    .top:hover,
+    .active {
+        background: var(--primary);
     }
 
     .top h1 {
@@ -71,15 +104,13 @@
 
     .channels {
         width: 100%;
-        max-height: calc(100vh - 55px - 57px);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
+        height: calc(100vh - 55px);
         margin: auto;
         padding-right: 10px;
-        padding-top: 15px;
+        padding-top: 5px;
+        padding-bottom: 5px;
         overflow-y: scroll;
+        overflow-x: hidden;
     }
 
     .channels::-webkit-scrollbar-thumb {
@@ -87,6 +118,6 @@
     }
 
     .channels:hover.channels::-webkit-scrollbar-thumb {
-        background: var(--secondary);
+        background: var(--tertiary);
     }
 </style>

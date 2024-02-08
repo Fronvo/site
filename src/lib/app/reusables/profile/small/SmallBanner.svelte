@@ -2,9 +2,12 @@
 
 <style>
     span {
-        width: 310px;
-        height: 65px;
+        display: flex;
+        align-items: start;
+        justify-content: end;
+        width: 100%;
+        height: 100px;
         transition: 150ms;
-        background: rgb(0, 0, 0, 0.5);
+        background: rgb(0, 0, 0, 0.25);
     }
 </style>

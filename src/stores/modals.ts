@@ -1,57 +1,67 @@
 import EditProfileModal from '$lib/app/main/modals/EditProfileModal.svelte';
 import DeleteMessageModal from '$lib/app/main/modals/DeleteMessageModal.svelte';
 
-import type { RoomMessage, FronvoAccount, Post, Theme } from 'interfaces/all';
+import type {
+    RoomMessage,
+    FronvoAccount,
+    Post,
+    Theme,
+    Channel,
+} from 'interfaces/all';
 import { writable, type Writable } from 'svelte/store';
-import LeaveRoomModal from '$lib/app/main/modals/LeaveRoomModal.svelte';
 import ProfileModal from '$lib/app/main/modals/ProfileModal.svelte';
 import LogoutModal from '$lib/app/main/modals/LogoutModal.svelte';
 import StatusModal from '$lib/app/main/modals/StatusModal.svelte';
 import SwitchAccountsModal from '$lib/app/main/modals/SwitchAccountsModal.svelte';
 import AddAccountModal from '$lib/app/main/modals/AddAccountModal.svelte';
 import AddFriendModal from '$lib/app/main/modals/AddFriendModal.svelte';
-import MaxRoomsModal from '$lib/app/main/modals/MaxRoomsModal.svelte';
 import RemoveFriendModal from '$lib/app/main/modals/RemoveFriendModal.svelte';
-import AddMembersModal from '$lib/app/main/modals/AddMembersModal.svelte';
 import ImageModal from '$lib/app/main/modals/ImageModal.svelte';
-import CloseDmModal from '$lib/app/main/modals/CloseDMModal.svelte';
-import RemoveMemberModal from '$lib/app/main/modals/RemoveMemberModal.svelte';
 import RequestDataModal from '$lib/app/main/modals/RequestDataModal.svelte';
 import DeleteAccountModal from '$lib/app/main/modals/DeleteAccountModal.svelte';
-import GoProModal from '$lib/app/main/modals/GoPROModal.svelte';
+import GoTurboModal from '$lib/app/main/modals/GoTurboModal.svelte';
 import GoPayModal from '$lib/app/main/modals/GoPayModal.svelte';
 import MaxFriendsModal from '$lib/app/main/modals/MaxFriendsModal.svelte';
-import RefundProModal from '$lib/app/main/modals/RefundPROModal.svelte';
-import CreateRoomModal from '$lib/app/main/modals/CreateRoomModal.svelte';
+import RefundTurboModal from '$lib/app/main/modals/RefundTurboModal.svelte';
 import CreateServerModal from '$lib/app/main/modals/CreateServerModal.svelte';
 import MaxServersModal from '$lib/app/main/modals/MaxServersModal.svelte';
+import CreateChannelModal from '$lib/app/main/modals/CreateChannelModal.svelte';
+import JoinServerModal from '$lib/app/main/modals/JoinServerModal.svelte';
+import PendingFriendsModal from '$lib/app/main/modals/PendingFriendsModal.svelte';
+import DeletePostModal from '$lib/app/main/modals/DeletePostModal.svelte';
+import DeleteChannelModal from '$lib/app/main/modals/DeleteChannelModal.svelte';
+import InvitePeopleModal from '$lib/app/main/modals/InvitePeopleModal.svelte';
+import SharePostModal from '$lib/app/main/modals/SharePostModal.svelte';
+import LeaveServerModal from '$lib/app/main/modals/LeaveServerModal.svelte';
 
 /****************************** Modals ******************************/
 export const modals = [
     ProfileModal,
     EditProfileModal,
-    LeaveRoomModal,
     DeleteMessageModal,
     LogoutModal,
     StatusModal,
     SwitchAccountsModal,
     AddAccountModal,
     AddFriendModal,
-    MaxRoomsModal,
     MaxServersModal,
     RemoveFriendModal,
-    AddMembersModal,
     ImageModal,
-    CloseDmModal,
-    RemoveMemberModal,
     RequestDataModal,
     DeleteAccountModal,
-    GoProModal,
+    GoTurboModal,
     GoPayModal,
     MaxFriendsModal,
-    RefundProModal,
-    CreateRoomModal,
+    RefundTurboModal,
     CreateServerModal,
+    CreateChannelModal,
+    JoinServerModal,
+    PendingFriendsModal,
+    DeletePostModal,
+    DeleteChannelModal,
+    InvitePeopleModal,
+    SharePostModal,
+    LeaveServerModal,
 ];
 /****************************** Modals ******************************/
 
@@ -59,28 +69,30 @@ export const modals = [
 export enum ModalTypes {
     Profile,
     EditProfile,
-    LeaveRoom,
     DeleteMessage,
     Logout,
     Status,
     SwitchAccounts,
     AddAccount,
     AddFriend,
-    MaxRooms,
     MaxServers,
     RemoveFriend,
-    AddMembers,
     Image,
-    CloseDM,
-    RemoveMember,
     RequestData,
     DeleteAccount,
-    GoPRO,
+    GoTurbo,
     GoPay,
     MaxFriends,
-    RefundPRO,
-    CreateRoom,
+    RefundTurbo,
     CreateServer,
+    CreateChannel,
+    JoinServer,
+    PendingFriends,
+    DeletePost,
+    DeleteChannel,
+    InvitePeople,
+    SharePost,
+    LeaveServer,
 }
 
 export interface ModalActions {
@@ -96,6 +108,7 @@ export interface ModalData {
     title?: string;
     actions?: ModalActions[];
     transparent?: boolean;
+    noDecoration?: boolean;
 }
 /****************************** Modal Exports ******************************/
 
@@ -110,6 +123,10 @@ export const modalLoading = writable(false);
 export const targetProfileModal: Writable<FronvoAccount> = writable();
 /****************************** ProfileModal ******************************/
 
+/****************************** FriendDropdown, RemoveFriendModal ******************************/
+export const targetFriendModal: Writable<FronvoAccount> = writable();
+/****************************** FriendDropdown ******************************/
+
 /****************************** DeleteMessageModal ******************************/
 export const targetMessageModal: Writable<RoomMessage> = writable();
 export const targetMessageModalProfile: Writable<FronvoAccount> = writable();
@@ -118,6 +135,10 @@ export const targetMessageModalProfile: Writable<FronvoAccount> = writable();
 /****************************** DeletePostModal ******************************/
 export const targetPostModal: Writable<Post> = writable();
 /****************************** DeletePostModal ******************************/
+
+/****************************** ChannelDropdown ******************************/
+export const targetChannelModal: Writable<Channel> = writable();
+/****************************** ChannelDropdown ******************************/
 
 /****************************** ImageModal ******************************/
 export const targetImageModal: Writable<string> = writable();

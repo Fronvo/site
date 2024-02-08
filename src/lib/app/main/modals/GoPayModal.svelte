@@ -2,17 +2,15 @@
     import { onMount } from 'svelte';
     import { loadStripe } from '@stripe/stripe-js';
     import { Elements, PaymentElement } from 'svelte-stripe';
-    import type { ModalData } from 'stores/modals';
+    import { modalLoading, type ModalData } from 'stores/modals';
     import { dismissModal } from 'utilities/main';
     import { cachedAccountData, currentToken, darkTheme } from 'stores/main';
     import { loadProfile } from 'utilities/profile';
-    import { loadThemes } from 'utilities/themes';
     import ModalTemplate from '../ModalTemplate.svelte';
 
     let stripe = null;
     let clientSecret = null;
     let elements: any;
-    let processing = false;
 
     onMount(async () => {
         stripe = await loadStripe(import.meta.env.VITE_STRIPE_PUBLIC);
@@ -34,9 +32,7 @@
     }
 
     async function submit() {
-        if (processing) return;
-
-        processing = true;
+        $modalLoading = true;
 
         const result = await stripe.confirmPayment({
             elements,
@@ -45,9 +41,9 @@
 
         // Payment Status
         if (result.error) {
-            processing = false;
+            $modalLoading = false;
         } else {
-            await fetch('/api/apply-pro', {
+            await fetch('/api/apply-turbo', {
                 method: 'POST',
                 body: JSON.stringify({
                     token: $currentToken,
@@ -56,24 +52,23 @@
             });
 
             await loadProfile($cachedAccountData);
-            await loadThemes();
 
             dismissModal();
         }
     }
 
     const data: ModalData = {
-        title: 'Join PRO for 5€',
+        title: 'Join Turbo for 5€',
 
         actions: [
             {
-                title: !processing ? 'Pay' : 'Processing',
+                title: 'Pay',
                 callback: submit,
                 primary: true,
             },
             {
                 title: 'Cancel',
-                callback: processing ? () => {} : dismissModal,
+                callback: dismissModal,
             },
         ],
     };
@@ -85,17 +80,16 @@
             {stripe}
             {clientSecret}
             labels="floating"
-            theme={'night'}
+            theme={'stripe'}
             bind:elements
             variables={{
                 colorPrimary: 'rgb(0, 220, 220)',
-                colorBackground: $darkTheme
-                    ? 'rgb(30, 30, 30)'
-                    : 'rgb(250, 250, 250)',
+                colorBackground: 'rgb(240, 240, 240)',
+                colorIconCardError: 'rgb(240, 240, 240)',
             }}
             rules={{
                 '.Input': {
-                    border: $darkTheme ? 'rgb(30, 30, 30)' : 'rgb(20, 20, 20)',
+                    border: 'rgb(240, 240, 240)',
                 },
             }}
         >

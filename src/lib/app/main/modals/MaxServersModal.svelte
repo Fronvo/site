@@ -10,8 +10,8 @@
         actions: [
             {
                 title: 'Unlock more',
-                callback: () => showModal(ModalTypes.GoPRO),
-                condition: !$ourData.isPRO,
+                callback: () => showModal(ModalTypes.GoTurbo),
+                condition: !$ourData.isTurbo,
                 primary: true,
             },
             {
@@ -24,7 +24,7 @@
 
 <ModalTemplate {data}>
     <h1 class="modal-header">
-        You have already created {$ourData.isPRO ? 20 : 5} servers.
+        You have already created {$ourData.isTurbo ? 20 : 5} servers.
     </h1>
 
     <InfoHeader

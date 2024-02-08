@@ -49,9 +49,6 @@ h1 {
 button {
     border: none;
     border-radius: 5px;
-    color: var(--text);
-    box-shadow: 0 0 5px var(--secondary);
-    background: var(--button);
     padding: 10px;
     font-family: 'Manrope';
     font-weight: 400;
@@ -62,17 +59,27 @@ button {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    transition: 150ms opacity, transform 150ms;
+    backdrop-filter: blur(10px);
+    border-radius: 5px;
+    background: rgb(255, 255, 255, 0.075);
+    box-shadow: 0 0 100px rgb(15, 15, 15);
+    box-shadow: none;
+    transition: 150ms;
+    color: white;
     outline: none;
 }
 
 button:hover {
-    color: var(--text);
-    background: var(--bg);
+    background: rgb(255, 255, 255, 0.15);
+    color: white;
+}
+
+button:active {
+    opacity: 0.8;
 }
 
 button:disabled {
-    color: rgba(255, 255, 255, 80%);
+    opacity: 0.5;
 }
 
 input,
@@ -113,7 +120,7 @@ hr {
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--branding);
+    background: var(--tertiary);
     border-radius: 30px;
 }
 

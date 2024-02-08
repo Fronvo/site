@@ -53,10 +53,4 @@
             <ProfilePreviewSwitch {avatar} {profileId} {token} />
         {/each}
     {/if}
-
-    {#if !getKey('token')}
-        <InfoHeader
-            text={'Adding any account will save your credentials in this browser'}
-        />
-    {/if}
 </ModalTemplate>

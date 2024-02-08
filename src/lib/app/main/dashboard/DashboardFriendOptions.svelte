@@ -5,6 +5,10 @@
     import { fly } from 'svelte/transition';
     import { showModal } from 'utilities/main';
 
+    function pendingFriends(): void {
+        showModal(ModalTypes.PendingFriends);
+    }
+
     function addFriend(): void {
         showModal(ModalTypes.AddFriend);
     }
@@ -13,14 +17,16 @@
 <div
     class="options-container"
     in:fly={{
-        y: 25,
-        duration: 500,
+        y: 0,
+        duration: 400,
         easing: quintInOut,
         opacity: 0,
     }}
 >
     {#if $ourData.pendingFriendRequests.length > 0}
-        <button>{$ourData.pendingFriendRequests.length} Pending</button>
+        <button on:click={pendingFriends}
+            >{$ourData.pendingFriendRequests.length} Pending</button
+        >
     {/if}
 
     <button on:click={addFriend}>Add friend</button>
@@ -32,26 +38,18 @@
         align-items: center;
         justify-content: center;
         margin: auto;
-        width: 225px;
-        border: 2px solid var(--branding);
-        backdrop-filter: blur(10px);
-        background: rgb(30, 30, 30, 0.3);
-        border-radius: 20px;
-        margin-top: 10px;
-        margin-bottom: 30px;
-        padding: 2px;
+        width: 400px;
+        margin-bottom: 25px;
     }
 
     button {
         width: 100%;
-        background: transparent;
-        box-shadow: none;
+        max-width: 250px;
         font-size: 1rem;
         font-weight: 600;
         transition: 150ms;
-        border-radius: 15px;
-    }
-    button:hover {
-        background: var(--branding);
+        color: white;
+        margin-left: 10px;
+        margin-right: 10px;
     }
 </style>

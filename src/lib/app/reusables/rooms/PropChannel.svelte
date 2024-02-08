@@ -14,6 +14,8 @@
         display: flex;
         flex-direction: column;
         margin-bottom: 20px;
+        padding-top: 10px;
+        padding-left: 20px;
     }
 
     .top {

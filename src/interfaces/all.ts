@@ -41,12 +41,7 @@ export interface FronvoAccount {
     status?: string;
     pendingFriendRequests?: string[];
     friends: string[];
-    isPRO?: boolean;
-    appliedTheme?: string;
-    bW?: string;
-    bDW?: string;
-    bD?: string;
-    bDD?: string;
+    isTurbo?: boolean;
 }
 
 export interface SwitchedAccount {
@@ -57,14 +52,7 @@ export interface SwitchedAccount {
 
 export interface Room {
     roomId: string;
-    ownerId?: string;
-    name?: string;
-    creationDate?: string;
-    icon?: string;
-    members?: string[];
     totalMessages: number;
-    lastMessageFrom?: string;
-    isDM: boolean;
     unreadCount: number;
     dmUsers?: string[];
     dmUserOnline?: boolean;
@@ -75,19 +63,18 @@ export interface Server {
     serverId: string;
     ownerId?: string;
     name?: string;
-    description?: string;
-    creationDate?: string;
     icon?: string;
+    invite?: string;
+    invitesDisabled?: boolean;
+    creationDate?: string;
     members?: string[];
     channels?: Channel[];
     roles?: string[];
 }
 
 export interface Channel {
-    serverId: string;
-    roomId?: string;
+    channelId?: string;
     name?: string;
-    description?: string;
     creationDate?: string;
 }
 
@@ -104,8 +91,6 @@ export interface RoomMessage {
     spotifyEmbed?: string;
     isTenor?: boolean;
     tenorUrl?: string;
-    isNotification?: boolean;
-    notificationText?: string;
 }
 
 export interface Theme {

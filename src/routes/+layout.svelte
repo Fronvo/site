@@ -17,11 +17,34 @@
         disabledIn30,
         fronvoTitle,
         loginSucceeded,
+        mousePos,
         showLayout,
+        socket,
     } from 'stores/main';
     import { goto } from '$app/navigation';
     import { dropdownAnimationFinished } from 'stores/dropdowns';
     import { differenceInMinutes } from 'date-fns';
+    import {
+        currentServer,
+        serversList,
+        currentChannel,
+        currentRoomLoaded,
+        currentRoomId,
+        currentRoomData,
+        currentRoomMessages,
+        isInServer,
+        dmsList,
+        cachedRooms,
+        pendingProfileDMId,
+    } from 'stores/rooms';
+    import { ourPosts } from 'stores/dashboard';
+    import { ourData } from 'stores/profile';
+    import { loadHomePosts, loadOurPosts } from 'utilities/dashboard';
+    import { pushCachedMessage } from 'utilities/rooms';
+    import TopNav from '$lib/index/TopNav.svelte';
+    import Footer from '$lib/index/Footer.svelte';
+    import BlurredBackground from '$lib/index/BlurredBackground.svelte';
+    import BlurredBackground2 from '$lib/index/BlurredBackground2.svelte';
 
     let mountReady = false;
 
@@ -42,9 +65,6 @@
             }
 
             currentTheme.set(defaultTheme);
-
-            // Hacky but works for background color
-            document.documentElement.style.setProperty('--bg', defaultTheme.bg);
         });
     }
 
@@ -52,7 +72,7 @@
         // When layout is visible, perform socket actions
         showLayout.subscribe(async (state) => {
             // While loading, default to this
-            setTitle('Fronvo');
+            setTitle('');
 
             if (state) {
                 const val = window.navigator.userAgent.toLowerCase();
@@ -66,7 +86,42 @@
                     return;
                 }
 
-                initSocket();
+                initSocket(() => {
+                    $currentRoomLoaded = false;
+                    $currentRoomId = undefined;
+                    $currentRoomData = undefined;
+                    $currentRoomMessages = [];
+
+                    $isInServer = false;
+                    $currentServer = undefined;
+                    $currentChannel = undefined;
+
+                    setupHooks();
+
+                    loginSucceeded.subscribe((state) => {
+                        if (!state) return;
+
+                        if ($pendingProfileDMId) {
+                            for (const dmIndex in $dmsList) {
+                                const dm = $dmsList[dmIndex];
+
+                                if (
+                                    dm.dmUser.profileId == $pendingProfileDMId
+                                ) {
+                                    $currentRoomData = dm;
+                                    $currentRoomLoaded = false;
+                                    $currentRoomLoaded = true;
+                                    $currentRoomMessages = [];
+                                    $currentRoomId = dm.roomId;
+
+                                    setTitle(`@${dm.dmUser.profileId}`);
+
+                                    dm.unreadCount = 0;
+                                }
+                            }
+                        }
+                    });
+                });
             }
         });
     }
@@ -79,10 +134,268 @@
             }
         });
 
-        document.addEventListener('click', (ev) => {
+        document.addEventListener('click', () => {
             if (!$dropdownAnimationFinished) return;
 
             dismissDropdown();
+        });
+
+        document.addEventListener('mousemove', (ev) => {
+            $mousePos = [ev.clientX, ev.clientY];
+        });
+    }
+
+    function setupHooks(): void {
+        socket.on('newMessage', ({ newMessageData, roomId }) => {
+            // Not same channel / dm
+            if (($currentChannel?.channelId || $currentRoomId) != roomId) {
+                // Not ourselves
+                if (
+                    newMessageData.profileData.profileId != $ourData.profileId
+                ) {
+                    var audio = new Audio('/sounds/ping.mp3');
+                    audio.play();
+                }
+
+                setTimeout(() => {
+                    pushCachedMessage(roomId, newMessageData, $cachedRooms);
+                }, 0);
+            }
+        });
+
+        socket.on('postRemoved', async ({ postId }) => {
+            for (const postIndex in $ourPosts) {
+                const post = $ourPosts[postIndex].post;
+
+                if (post.postId == postId) {
+                    $ourPosts = [];
+
+                    await loadOurPosts($ourData.profileId);
+
+                    break;
+                }
+            }
+        });
+
+        socket.on('dmCreated', ({ dm }) => {
+            $dmsList.push(dm);
+
+            $dmsList = $dmsList;
+        });
+
+        // Can't be us, another client on the same profile
+        socket.on('dmHidden', ({ roomId }) => {
+            for (const dmIndex in $dmsList) {
+                const dm = $dmsList[dmIndex];
+
+                if (dm.roomId == roomId) {
+                    $dmsList.splice(Number(dmIndex), 1);
+
+                    $dmsList = $dmsList;
+
+                    break;
+                }
+            }
+        });
+
+        socket.on('pendingFriendRemoved', ({ profileId }) => {
+            $ourData.pendingFriendRequests.splice(
+                $ourData.pendingFriendRequests.indexOf(profileId),
+                1
+            );
+
+            $ourData = $ourData;
+        });
+
+        socket.on('newFriendRequest', ({ profileId }) => {
+            $ourData.pendingFriendRequests.push(profileId);
+
+            $ourData = $ourData;
+        });
+
+        socket.on('serverCreated', ({ serverId, name, invite }) => {
+            $serversList.push({
+                serverId,
+                name,
+                icon: '',
+                invite,
+                channels: [],
+                creationDate: new Date().toString(),
+                members: [$ourData.profileId],
+                ownerId: $ourData.profileId,
+                roles: [],
+            });
+
+            // Update realtime
+            $serversList = $serversList;
+        });
+
+        socket.on('serverJoined', ({ server }) => {
+            $serversList.push({
+                ...server,
+            });
+
+            // Update realtime
+            $serversList = $serversList;
+        });
+
+        socket.on('serverDeleted', ({ serverId }) => {
+            for (const serverIndex in $serversList) {
+                const server = $serversList[serverIndex];
+
+                if (server.serverId == serverId) {
+                    $serversList.splice(Number(serverIndex), 1);
+
+                    // Update realtime
+                    $serversList = $serversList;
+
+                    // Update current server too
+                    if ($currentServer?.serverId == server.serverId) {
+                        $isInServer = false;
+                        $currentServer = undefined;
+                        $currentChannel = undefined;
+                        $currentRoomLoaded = false;
+                    }
+
+                    break;
+                }
+            }
+        });
+
+        socket.on('channelCreated', ({ serverId, channelId, name }) => {
+            for (const serverIndex in $serversList) {
+                const server = $serversList[serverIndex];
+
+                if (server.serverId != serverId) continue;
+
+                server.channels.push({
+                    channelId,
+                    name,
+                    creationDate: new Date().toString(),
+                });
+
+                $serversList[serverIndex] = server;
+
+                // Update realtime
+                $serversList = $serversList;
+
+                // Update current server too
+                if ($currentServer?.serverId == server.serverId) {
+                    $currentServer = server;
+                }
+
+                break;
+            }
+        });
+
+        socket.on('channelRenamed', ({ serverId, channelId, name }) => {
+            for (const serverIndex in $serversList) {
+                const server = $serversList[serverIndex];
+
+                if (server.serverId != serverId) continue;
+
+                for (const channelIndex in server.channels) {
+                    const channel = server.channels[channelIndex];
+
+                    if (channel.channelId != channelId) continue;
+
+                    server.channels[channelIndex].name = name;
+
+                    // Update current channel
+                    if ($currentChannel?.channelId == channelId) {
+                        $currentChannel = undefined;
+                    }
+
+                    break;
+                }
+
+                $serversList[serverIndex] = server;
+
+                // Update realtime
+                $serversList = $serversList;
+
+                // Update current server too
+                if ($currentServer?.serverId == server.serverId) {
+                    $currentServer = server;
+                }
+
+                break;
+            }
+        });
+
+        socket.on('channelDeleted', ({ serverId, channelId }) => {
+            for (const serverIndex in $serversList) {
+                const server = $serversList[serverIndex];
+
+                if (server.serverId != serverId) continue;
+
+                for (const channelIndex in server.channels) {
+                    const channel = server.channels[channelIndex];
+
+                    if (channel.channelId != channelId) continue;
+
+                    server.channels.splice(Number(channelIndex), 1);
+
+                    break;
+                }
+
+                $serversList[serverIndex] = server;
+
+                // Update realtime
+                $serversList = $serversList;
+
+                // Update current server too
+                if ($currentServer?.serverId == server.serverId) {
+                    $currentServer = server;
+                }
+
+                // If current channel, reset view
+                if ($currentChannel?.channelId == channelId) {
+                    $currentChannel = undefined;
+                }
+
+                break;
+            }
+        });
+
+        socket.on('serverInvitesToggled', ({ serverId, enabled }) => {
+            for (const serverIndex in $serversList) {
+                const server = $serversList[serverIndex];
+
+                if (server.serverId == serverId) {
+                    $serversList[serverIndex].invitesDisabled = !enabled;
+
+                    // Update realtime
+                    $serversList = $serversList;
+
+                    // Update current server too
+                    if ($currentServer?.serverId == server.serverId) {
+                        $currentServer = server;
+                    }
+
+                    break;
+                }
+            }
+        });
+
+        socket.on('serverInviteRegenerated', ({ serverId, invite }) => {
+            for (const serverIndex in $serversList) {
+                const server = $serversList[serverIndex];
+
+                if (server.serverId == serverId) {
+                    $serversList[serverIndex].invite = invite;
+
+                    // Update realtime
+                    $serversList = $serversList;
+
+                    // Update current server too
+                    if ($currentServer?.serverId == server.serverId) {
+                        $currentServer = server;
+                    }
+
+                    break;
+                }
+            }
         });
     }
 
@@ -103,11 +416,19 @@
 <div use:themingVars={{ ...$currentTheme }}>
     {#if mountReady}
         {#if $showLayout}
+            <BlurredBackground2 />
+
             {#if $loginSucceeded == undefined}
                 <FronvoLoading />
             {:else}
                 <Main />
             {/if}
+        {:else}
+            <TopNav />
+
+            <BlurredBackground />
+
+            <Footer />
         {/if}
 
         <slot />
@@ -116,7 +437,7 @@
 
 <style>
     :global(body) {
-        background: var(--bg);
+        background: rgb(15, 15, 15);
     }
 
     /* Elegant theme feature */
@@ -132,8 +453,14 @@
 
     /* Links */
     :global(.link) {
+        text-decoration: none;
+        /* color: rgb(0, 162, 255); */
+        color: var(--gray);
+    }
+
+    :global(.link:hover) {
         text-decoration: underline;
-        color: var(--text);
+        /* color: rgb(0, 162, 255); */
     }
 
     /* Modal-related */

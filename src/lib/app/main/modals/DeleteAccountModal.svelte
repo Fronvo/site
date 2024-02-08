@@ -1,21 +1,17 @@
 <script lang="ts">
     import { dismissModal } from 'utilities/main';
     import ModalTemplate from '../ModalTemplate.svelte';
-    import type { ModalData } from 'stores/modals';
+    import { modalLoading, type ModalData } from 'stores/modals';
     import InfoHeader from '$lib/app/reusables/all/InfoHeader.svelte';
     import { socket } from 'stores/main';
     import ErrorHeader from '$lib/app/reusables/all/ErrorHeader.svelte';
 
     let errorMessage: string;
 
-    let isDeleting = false;
     let password: string;
-    let deleteStr: string;
 
     function deleteAccount(): void {
-        if (isDeleting || deleteStr != 'delete my account') return;
-
-        isDeleting = true;
+        $modalLoading = true;
 
         socket.emit(
             'deleteAccount',
@@ -24,9 +20,7 @@
             },
             ({ err }) => {
                 if (err) {
-                    isDeleting = false;
-
-                    errorMessage = err.msg;
+                    $modalLoading = false;
                 } else {
                     localStorage.clear();
 
@@ -57,45 +51,50 @@
 <ModalTemplate {data}>
     <ErrorHeader {errorMessage} size="1.2rem" />
 
-    <h1 class="modal-header">Enter your password below</h1>
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="32"
+        height="32"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        ><path
+            fill-rule="evenodd"
+            d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12s4.477 10 10 10s10-4.477 10-10ZM12 6.25a.75.75 0 0 1 .75.75v6a.75.75 0 0 1-1.5 0V7a.75.75 0 0 1 .75-.75ZM12 17a1 1 0 1 0 0-2a1 1 0 0 0 0 2Z"
+            clip-rule="evenodd"
+        /></svg
+    >
 
-    <input bind:value={password} class="modal-input" type="password" />
+    <h1 class="modal-header">This can't be undone.</h1>
 
-    <h1 class="modal-header">
-        Type <b>delete my account</b> below
-    </h1>
-
-    <input bind:value={deleteStr} class="modal-input" />
-
-    <InfoHeader marginLeft={'40px'} text={"This can't be undone!"} />
+    <input
+        placeholder="Password"
+        bind:value={password}
+        class="modal-input"
+        type="password"
+    />
 </ModalTemplate>
 
 <style>
-    h1 {
-        width: 80%;
-        text-align: start;
-        font-size: 1.2rem;
+    svg {
+        width: 128px;
+        height: 128px;
+        fill: white;
         margin-top: 10px;
+        cursor: default;
     }
 
-    h1 b {
-        letter-spacing: 1px;
-        font-size: 1.1rem;
+    h1 {
+        margin-bottom: 30px;
     }
 
     input {
-        width: 80%;
-        font-size: 1.1rem;
-        margin-top: 10px;
-        padding: 5px;
-        padding-left: 10px;
-        padding-right: 10px;
-        color: var(--text);
+        background: var(--primary);
         border: 2px solid transparent;
-        transition: 150ms border;
+        transition: 150ms;
+        font-weight: 500;
     }
 
     input:focus {
-        border: 2px solid #0e62ff;
+        border: 2px solid var(--secondary);
     }
 </style>

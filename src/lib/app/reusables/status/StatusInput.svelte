@@ -32,12 +32,7 @@
 
     <div class="secondary-container">
         <h1>{$ourData.username}</h1>
-        <input
-            bind:this={input}
-            bind:value={$status}
-            placeholder="Set a status"
-            maxlength={20}
-        />
+        <input bind:this={input} bind:value={$status} maxlength={20} />
     </div>
 </div>
 
@@ -71,16 +66,17 @@
 
     input {
         height: 40px;
-        background: var(--bg);
-        border: 2px solid var(--bg);
+        background: var(--primary);
+        border: 2px solid transparent;
         font-size: 1.1rem;
         width: 100%;
         border-radius: 2px;
         padding-left: 10px;
-        transition: 250ms;
+        transition: 150ms;
+        font-weight: 500;
     }
 
     input:focus {
-        border: 2px solid var(--branding);
+        border: 2px solid var(--secondary);
     }
 </style>

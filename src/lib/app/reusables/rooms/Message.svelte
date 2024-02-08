@@ -4,27 +4,32 @@
     import {
         replyingToId,
         currentRoomMessages as roomMessages,
-        showScrollBottom,
     } from 'stores/rooms';
     import Time from 'svelte-time/src/Time.svelte';
-    import { differenceInDays, differenceInMinutes } from 'date-fns';
-    import { showDropdown, showModal } from 'utilities/main';
+    import { differenceInMinutes } from 'date-fns';
+    import {
+        findCachedAccount,
+        showDropdown,
+        showDropdownMouse,
+        showModal,
+    } from 'utilities/main';
     import {
         ModalTypes,
         targetImageModal,
+        targetMessageModal,
+        targetMessageModalProfile,
         targetProfileModal,
     } from 'stores/modals';
     import { DropdownTypes } from 'stores/dropdowns';
     import linkifyHtml from 'linkify-html';
+    import { cachedAccountData, mousePos } from 'stores/main';
 
     export let i = -1;
     export let profileData: FronvoAccount;
     export let messageData: RoomMessage;
-    export let hideOptions = false;
-    export let deleteCondition = true;
-    export let deleteCallback = () => {};
-    export let replyCallback = () => {};
     export let isPreview = false;
+    export let hideCondition = false;
+    export let isPending = false;
 
     // Skip context if same account
     let skipContext: boolean;
@@ -32,18 +37,14 @@
     let showTime: boolean;
     let showLinks = false;
 
-    let content: HTMLHeadingElement;
     let avatar: Element;
     let image: HTMLImageElement;
 
-    // Only in preview
     $: {
         // Skip time if messages are sent less than 15 minutes ago
         showTime =
-            differenceInDays(
-                new Date(messageData.creationDate),
-                new Date($roomMessages[i - 1]?.message.creationDate)
-            ) >= 1 ||
+            new Date(messageData.creationDate).getDay() !=
+                new Date($roomMessages[i - 1]?.message.creationDate).getDay() ||
             (typeof $roomMessages[i - 1] == 'undefined' && !isPreview);
 
         // Skip context if same account, less than 15 minutes ago
@@ -55,7 +56,8 @@
                 new Date(messageData.creationDate),
                 new Date($roomMessages[i - 1]?.message.creationDate)
             ) < 15 &&
-            !isPreview;
+            !isPreview &&
+            !messageData.isReply;
 
         // Sanitise first
         showLinks =
@@ -63,18 +65,8 @@
             !messageData.content?.includes('<img') &&
             !messageData.content?.includes('<svg');
 
-        // Add missing margins if previous message is from the same user
-        // (not ours)
-        if (content) {
-            if (!isPreview && skipContext) {
-                content.style.marginLeft = '5px';
-            }
-        }
-
         if (image && !isPreview) {
             image.onload = () => {
-                if ($showScrollBottom) return;
-
                 const container =
                     document.getElementsByClassName('chat-container')[0];
 
@@ -83,16 +75,19 @@
         }
     }
 
-    function showProfileModal(): void {
+    async function showProfileModal(): Promise<void> {
         if (isPreview) return;
 
         if (profileData.profileId == $ourData.profileId) {
             $targetProfileModal = $ourData;
         } else {
-            $targetProfileModal = profileData;
+            $targetProfileModal = await findCachedAccount(
+                profileData.profileId,
+                $cachedAccountData
+            );
         }
 
-        showDropdown(DropdownTypes.Profile, avatar, 'right', 0, -175);
+        showModal(ModalTypes.Profile);
     }
 
     function showImage(): void {
@@ -103,13 +98,18 @@
         showModal(ModalTypes.Image);
     }
 
-    function copyContent(): void {
-        navigator.clipboard.writeText(messageData.content);
+    function showOptions(): void {
+        if (hideCondition || isPending || isPreview) return;
+
+        $targetMessageModal = messageData;
+        $targetMessageModalProfile = profileData;
+
+        showDropdownMouse(DropdownTypes.Message, $mousePos);
     }
 </script>
 
-{#if showTime}
-    <div class="time-container">
+{#if showTime && !isPreview}
+    <div class={`time-container ${hideCondition ? 'hide' : ''}`}>
         <h1 id="time">
             <!-- Any other day -->
             <Time
@@ -120,142 +120,139 @@
     </div>
 {/if}
 
-<!-- TODO: Remake entire message layout, need to have extra options inline as content -->
-<!-- Also need to remove extra padding below avatar, keep spotify etc as is just content -->
 <div
     class={`message-container ${isPreview ? 'preview' : ''} ${
         $replyingToId == messageData.messageId && !isPreview ? 'highlight' : ''
+    } ${!skipContext ? 'spaced' : 'skip'} ${hideCondition ? 'hide' : ''} ${
+        isPending ? 'pending' : ''
     }`}
+    on:contextmenu={(ev) => {
+        showOptions();
+
+        ev.preventDefault();
+    }}
 >
     {#if messageData.isReply}
         <div class="reply-container">
-            <div class="wrapper">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="32"
-                    height="32"
-                    viewBox="0 0 24 24"
-                    ><g
-                        fill="none"
-                        stroke="var(--text)"
-                        stroke-linecap="round"
-                        stroke-width="1.5"
-                        ><path
-                            stroke-linejoin="round"
-                            d="m9.5 7l-5 5l5 5"
-                        /><path
-                            d="M4.5 12h10c1.667 0 5 1 5 5"
-                            opacity=".5"
-                        /></g
-                    ></svg
-                >
+            <span id="start" />
+            <span id="mid" />
 
-                <h1 id="reply" class={`reply-${messageData.messageId}`}>
-                    {messageData.replyContent}
-                </h1>
+            <div class="wrapper">
+                <img
+                    src={profileData.avatar
+                        ? `${profileData.avatar}/tr:w-40:h-40`
+                        : '/images/avatar.svg'}
+                    draggable={false}
+                    alt={`${profileData.profileId}\'s avatar'`}
+                />
+                <h1 id="username">{profileData.username}</h1>
+                <h1 id="reply" class={`reply-${messageData.messageId}`}>hi</h1>
             </div>
         </div>
     {/if}
 
-    <div class="top-container">
-        {#if !skipContext && !(messageData.ownerId == 'fronvo' && messageData.isNotification)}
-            <h1 id="name">{profileData.username}</h1>
-
-            <h1 id="small-time-2">
-                {#if differenceInDays(new Date(), new Date(messageData.creationDate)) == 0}
-                    Today at <Time
-                        timestamp={messageData.creationDate}
-                        format={'HH:mm'}
-                    />
-                {:else if differenceInDays(new Date(), new Date(messageData.creationDate)) == 1}
-                    Yesterday at <Time
-                        timestamp={messageData.creationDate}
-                        format={'HH:mm'}
-                    />
-                {:else}
-                    <Time
-                        timestamp={messageData.creationDate}
-                        format={'DD/MM/YYYY HH:mm'}
-                    />
-                {/if}
-            </h1>
-        {/if}
-    </div>
-
-    <div class="message-info-container">
-        {#if !skipContext && !(messageData.ownerId == 'fronvo' && messageData.isNotification)}
-            {#if profileData.avatar}
-                <img
-                    bind:this={avatar}
-                    id="avatar"
-                    draggable={false}
-                    src={profileData.avatar}
-                    alt={`${profileData.username}'s avatar`}
-                    on:click={showProfileModal}
-                    on:keydown={showProfileModal}
-                />
-            {:else}
-                <img
-                    bind:this={avatar}
-                    id="avatar"
-                    draggable={false}
-                    src={'/images/avatar.svg'}
-                    alt={`${profileData.username}'s avatar`}
-                    on:click={showProfileModal}
-                    on:keydown={showProfileModal}
-                />
-            {/if}
-        {:else}
-            <h1 id="small-time">
-                <Time timestamp={messageData.creationDate} format={'HH:mm'} />
-            </h1>
-        {/if}
-
-        {#if messageData.isNotification}
-            <h1 id="notification">
-                {messageData.notificationText.replace(
-                    $ourData.profileId,
-                    'You'
-                )}
-            </h1>
-        {:else if messageData.isTenor}
+    <div class="info-container">
+        {#if !skipContext}
             <img
-                bind:this={image}
-                id="attachment"
-                src={messageData.tenorUrl}
+                bind:this={avatar}
+                on:click={showProfileModal}
+                on:keydown={showProfileModal}
+                id="avatar"
+                src={profileData.avatar
+                    ? `${profileData.avatar}/tr:w-80:h-80`
+                    : '/images/avatar.svg'}
                 draggable={false}
-                alt={'Tenor GIF'}
-                on:click={showImage}
-                on:keydown={showImage}
+                alt={`${profileData.profileId}\'s avatar'`}
             />
-        {:else if messageData.isSpotify}
-            <div id="spotify">
-                {@html `<iframe style="border-radius: 5px" src="${messageData.spotifyEmbed}" width="400" height="80" frameBorder="0" loading="lazy"></iframe>`}
+        {/if}
+
+        <div class="inner">
+            <div class="top-container">
+                {#if !skipContext}
+                    <h1 id="name">{profileData.username}</h1>
+
+                    <h1 id="small-time-2">
+                        {#if new Date().getDay() == new Date(messageData.creationDate).getDay()}
+                            Today at <Time
+                                timestamp={messageData.creationDate}
+                                format={'HH:mm'}
+                            />
+                        {:else if new Date().getDay() - 1 == new Date(messageData.creationDate).getDay()}
+                            Yesterday at <Time
+                                timestamp={messageData.creationDate}
+                                format={'HH:mm'}
+                            />
+                        {:else}
+                            <Time
+                                timestamp={messageData.creationDate}
+                                format={'DD/MM/YYYY HH:mm'}
+                            />
+                        {/if}
+                    </h1>
+                {/if}
             </div>
-        {:else if messageData.isImage}
-            <img
-                bind:this={image}
-                id="attachment"
-                src={`${messageData.attachment}/tr:w-max:h-max:pr-true`}
-                draggable={false}
-                alt={'Message attachment'}
-                on:click={showImage}
-                on:keydown={showImage}
-            />
-        {:else}
-            <h1 bind:this={content} id="content">
-                {#if showLinks}
-                    {@html linkifyHtml(messageData.content, {
-                        attributes: {
-                            class: 'link',
-                            target: '_blank',
-                        },
-                    })}
+
+            <div class="message-info-container">
+                {#if messageData.isTenor}
+                    <img
+                        bind:this={image}
+                        id="attachment"
+                        src={messageData.tenorUrl}
+                        draggable={false}
+                        alt={'Tenor GIF'}
+                        on:click={showImage}
+                        on:keydown={showImage}
+                    />
+                {:else if messageData.isSpotify}
+                    <div id="spotify">
+                        {@html `<iframe style="border-radius: 0px" src="${
+                            messageData.spotifyEmbed
+                        }" width="${
+                            document.body.clientWidth < 1000 ? 300 : 400
+                        }" height="80" frameBorder="0" loading="lazy"></iframe>`}
+                    </div>
+                {:else if messageData.isImage}
+                    <img
+                        bind:this={image}
+                        id="attachment"
+                        src={`${messageData.attachment}/tr:w-1000:h-1000:pr-true`}
+                        draggable={false}
+                        alt={'Message attachment'}
+                        on:click={showImage}
+                        on:keydown={showImage}
+                    />
                 {:else}
-                    {messageData.content}
+                    <h1 id="content">
+                        {#if showLinks}
+                            {@html linkifyHtml(messageData.content, {
+                                attributes: {
+                                    class: 'link',
+                                    target: '_blank',
+                                },
+                            })}
+                        {:else}
+                            {messageData.content}
+                        {/if}
+                    </h1>
                 {/if}
-            </h1>
-        {/if}
+
+                {#if !isPreview}
+                    <svg
+                        on:click={showOptions}
+                        on:keydown={showOptions}
+                        id="menu"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="32"
+                        height="32"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        ><path
+                            d="M10 12a2 2 0 1 1 0-4a2 2 0 0 1 0 4m0-6a2 2 0 1 1 0-4a2 2 0 0 1 0 4m0 12a2 2 0 1 1 0-4a2 2 0 0 1 0 4"
+                        /></svg
+                    >
+                {/if}
+            </div>
+        </div>
     </div>
 </div>
 
@@ -265,24 +262,23 @@
         align-items: start;
         justify-content: start;
         flex-direction: column;
-        width: 97.5%;
-        margin-left: 2%;
+        width: 100%;
+        max-width: 100%;
         margin-top: 0px;
         cursor: default;
         border-left: 2px solid transparent;
-        padding-left: 10px;
+        padding-left: calc(max(1.25%, 0px));
         padding-bottom: 5px;
-        padding-top: 2px;
-        border-radius: 10px;
+        user-select: none;
+        z-index: 1;
     }
 
-    .message-container:hover {
-        background: rgb(15, 15, 15, 0.1);
+    .hide {
+        visibility: hidden;
     }
 
     .highlight {
-        border-left: 2px solid var(--branding);
-        background: var(--hover_darken);
+        border-left: 2px solid white;
     }
 
     .preview {
@@ -292,40 +288,71 @@
         margin-bottom: 20px;
     }
 
+    .spaced {
+        margin-top: 15px;
+    }
+
+    .info-container {
+        display: flex;
+    }
+
+    .info-container .inner {
+        display: flex;
+        align-items: start;
+        flex-direction: column;
+        margin-left: 13px;
+    }
+
+    .skip .info-container .inner {
+        margin-left: calc(40px + 8px);
+    }
+
     .top-container {
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-bottom: 5px;
+        padding-bottom: 3px;
     }
 
     #name {
         margin: 0;
-        font-size: 1rem;
-        margin-left: calc(36px + 5px + 5px + 5px);
-        font-weight: 500;
-        letter-spacing: 0.2px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: white;
     }
 
     #small-time-2 {
         margin: 0;
-        font-size: 0.8rem;
+        font-size: 0.7rem;
+        font-weight: 600;
         color: var(--gray);
-        margin-left: 10px;
+        margin-left: 9px;
     }
 
     .reply-container {
         display: flex;
         align-items: center;
-        margin-left: calc(36px + 5px);
+        margin-left: calc(17px);
+        margin-bottom: 8px;
     }
 
-    .reply-container svg {
-        width: 20px;
-        height: 20px;
-        margin-right: 5px;
-        cursor: default;
-        rotate: 180deg;
+    .reply-container #start {
+        width: 2px;
+        height: 16px;
+        border: 1px solid var(--tertiary);
+        border-radius: 20px;
+        overflow: hidden;
+        transform: translateY(6px);
+    }
+
+    .reply-container #mid {
+        width: 30px;
+        height: 2px;
+        border: 1px solid var(--tertiary);
+        border-radius: 20px;
+        overflow: hidden;
+        margin-bottom: 10px;
+        transform: translateX(-2px) translateY(4px);
     }
 
     .reply-container .wrapper {
@@ -334,49 +361,62 @@
         justify-content: center;
         color: var(--text);
         margin: 0;
-        margin-left: 5px;
+        margin-left: 2px;
         font-size: 0.95rem;
         overflow: hidden;
         text-align: start;
         background: transparent;
-        padding: 5px;
-        padding-left: 10px;
-        padding-right: 10px;
-        margin-bottom: 2px;
         border-radius: 15px;
-        border: 2px solid var(--secondary);
     }
 
-    #reply {
-        color: var(--text);
+    .reply-container .wrapper img {
+        width: 20px;
+        height: 20px;
+        border-radius: 30px;
+        margin-right: 3px;
+        filter: brightness(75%);
+    }
+
+    .reply-container .wrapper #username {
         margin: 0;
-        font-size: 0.825rem;
+        font-size: 0.8rem;
+        margin-right: 5px;
+        color: var(--gray);
+        font-weight: 600;
+    }
+
+    .reply-container .wrapper #reply {
+        color: var(--gray);
+        margin: 0;
+        font-size: 0.8rem;
     }
 
     .time-container {
         display: flex;
-        align-items: start;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        margin-left: 3%;
-        overflow: hidden;
-        border-bottom: 1px solid var(--tertiary);
+        align-items: center;
+        justify-content: center;
+        margin-left: 1%;
+        border-bottom: 2px solid var(--primary);
     }
 
     #time {
         position: relative;
         display: inline-block;
         margin: 0;
-        font-size: 0.8rem;
-        font-weight: 600;
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: var(--gray);
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        bottom: 5px;
-        margin-left: 5px;
+        transform: translateY(8px);
+        background: var(--primary);
+        padding-left: 10px;
+        padding-right: 10px;
+        border-radius: 5px;
     }
 
     .message-info-container {
@@ -390,12 +430,11 @@
     }
 
     #avatar {
-        width: 42px;
-        min-width: 42px;
-        height: 42px;
-        min-height: 42px;
+        width: 40px;
+        min-width: 40px;
+        height: 40px;
+        min-height: 40px;
         border-radius: 30px;
-        margin-right: 5px;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
@@ -404,63 +443,14 @@
         user-select: none;
         justify-self: start;
         cursor: pointer;
-        transform: translateY(-16px);
     }
 
     #avatar:active {
-        transform: translateY(-15px);
+        transform: translateY(1px);
     }
 
     .preview #avatar {
         cursor: default;
-    }
-
-    .skip #avatar {
-        display: none;
-    }
-
-    #small-time {
-        opacity: 0;
-        margin: 0;
-        font-size: 0.75rem;
-        width: 42px;
-        min-width: 42px;
-        margin-right: 5px;
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        text-align: center;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
-
-    .message-container:hover #small-time {
-        opacity: 1;
-    }
-
-    .menu-container {
-        display: flex;
-        align-items: center;
-        cursor: default;
-        border-radius: 10px;
-        opacity: 0;
-        padding-left: 5px;
-    }
-
-    .menu-container svg {
-        width: 32px;
-        height: 32px;
-        border-radius: 20px;
-        padding: 5px;
-    }
-
-    .menu-container svg:hover {
-        background: var(--primary);
     }
 
     .message-container:hover .menu-container {
@@ -472,25 +462,45 @@
     }
 
     #content {
+        background: var(--primary);
+        padding: 5px;
+        padding-left: 10px;
+        padding-right: 10px;
+        border-radius: 5px;
         color: var(--text);
         margin: 0;
-        margin-left: 5px;
-        font-size: 0.95rem;
-        font-weight: 400;
+        font-size: 0.9rem;
+        font-weight: 500;
         white-space: pre-wrap;
         overflow: hidden;
         text-align: start;
-        padding-top: 5px;
-        z-index: 1;
+        user-select: text;
+        cursor: text;
+    }
+
+    .highlight #content {
+        background: white;
+        color: black;
+    }
+
+    .skip #content {
+        margin-left: 5px;
+    }
+
+    .pending #content {
+        opacity: 0.5;
     }
 
     #attachment {
         max-width: 100%;
-        max-height: 300px;
-        border-radius: 10px;
+        max-height: 200px;
+        border-radius: 5px;
         cursor: pointer;
-        margin-left: 5px;
         transition: 150ms;
+    }
+
+    .skip #attachment {
+        margin-left: 4px;
     }
 
     .preview #attachment {
@@ -498,27 +508,28 @@
         overflow: hidden;
     }
 
-    #spotify {
+    .skip #spotify {
         margin-left: 5px;
     }
 
-    #notification {
-        margin: 0;
-        font-size: 0.9rem;
-        text-align: center;
-        width: 100%;
-        margin-top: 10px;
-        margin-bottom: 10px;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-        font-weight: 500;
+    #menu {
+        width: 28px;
+        height: 28px;
+        min-width: 28px;
+        min-height: 28px;
+        margin: auto;
+        margin-left: 5px;
+        fill: rgb(255, 255, 255, 0.5);
+        opacity: 0;
+        border-radius: 30px;
+        padding: 4px;
     }
 
-    :global(.link) {
-        color: var(--branding);
+    #menu:hover {
+        background: var(--primary);
+    }
+
+    .message-container:hover #menu {
+        opacity: 1;
     }
 </style>

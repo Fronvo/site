@@ -1,11 +1,13 @@
 <script lang="ts">
     import ModalTemplate from '../ModalTemplate.svelte';
-    import { dismissModal } from 'utilities/main';
+    import { dismissModal, setTitle } from 'utilities/main';
     import { ourData } from 'stores/profile';
     import { socket } from 'stores/main';
     import { writable } from 'svelte/store';
     import PreviewEditable from '$lib/app/reusables/all/PreviewEditable.svelte';
     import type { ModalData } from 'stores/modals';
+    import { activeDashboardTab } from 'stores/dashboard';
+    import { DashboardOptions } from 'types/all';
 
     const profileData = $ourData;
 
@@ -22,8 +24,8 @@
             updatedData['profileId'] = $profileId;
         }
 
-        if ($ourData.username != $username) {
-            updatedData['username'] = $username;
+        if ($ourData.username != $username && $username.trim().length > 0) {
+            updatedData['username'] = $username.trim();
         }
 
         if ($ourData.bio != $bio) {
@@ -48,11 +50,18 @@
                 ...updatedData,
             };
 
+            if ($activeDashboardTab == DashboardOptions.Profile) {
+                setTitle($ourData.username);
+            }
+
             dismissModal();
         });
     }
 
-    const data: ModalData = {};
+    const data: ModalData = {
+        noDecoration: true,
+        transparent: false,
+    };
 </script>
 
 <ModalTemplate {data}>

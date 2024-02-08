@@ -1,5 +1,5 @@
 <script lang="ts">
-    import ErrorHeader from '$lib/app/reusables/all/ErrorHeader.svelte';
+    import { goto } from '$app/navigation';
     import { cachedAccountData, currentToken, socket } from 'stores/main';
     import { onMount } from 'svelte';
     import { quartOut } from 'svelte/easing';
@@ -66,6 +66,10 @@
 
                 redirectApp();
 
+                goto('/app', {
+                    replaceState: true,
+                });
+
                 $currentToken = token;
 
                 await performLogin(token, $cachedAccountData);
@@ -131,16 +135,13 @@
         padding-bottom: 20px;
         border-radius: 5px;
         display: flex;
+        align-items: center;
         flex-direction: column;
         z-index: 0;
-        background: rgba(170, 170, 170, 0.25);
-        backdrop-filter: blur(15px);
-        box-shadow: 0 0 5px rgb(125, 125, 125, 0.25);
         user-select: none;
     }
 
     .credentials-container {
-        width: 400px;
         display: flex;
         flex-direction: column;
         align-items: start;
@@ -151,13 +152,14 @@
         font-weight: 600;
         text-align: center;
         margin: 0;
+        color: white;
     }
 
     #descriptor {
         font-size: 1.25rem;
         margin: 0;
         margin-bottom: 30px;
-        color: var(--text);
+        color: white;
     }
 
     #input-descriptor {
@@ -165,6 +167,7 @@
         font-size: 1.1rem;
         font-weight: 800;
         text-transform: uppercase;
+        color: white;
     }
 
     input {
@@ -175,30 +178,31 @@
         padding-left: 5px;
         padding-right: 5px;
         color: white;
-        background: rgba(200, 200, 200, 0.25);
-        backdrop-filter: blur(5px);
+        background: rgb(255, 255, 255, 0.075);
         border: 2px solid transparent;
         transition: 150ms border;
     }
 
     input:focus {
-        border: 2px solid var(--branding);
+        border: 2px solid white;
     }
 
     button {
         width: 450px;
-        background: var(--branding);
-        box-shadow: none;
         font-size: 1.6rem;
-        border-radius: 5px;
         margin-top: 15px;
-        margin-left: 7px;
+        background: transparent;
+        backdrop-filter: blur(10px);
+        border-radius: 5px;
+        background: rgb(255, 255, 255, 0.075);
+        box-shadow: 0 0 100px rgb(15, 15, 15);
+        box-shadow: none;
+        transition: 150ms;
         color: white;
-        padding: 8px;
     }
 
     button:hover {
-        background: var(--branding);
+        background: rgb(255, 255, 255, 0.15);
         color: white;
     }
 
@@ -214,7 +218,6 @@
         display: flex;
         flex-direction: column;
         align-items: start;
-        margin-left: 5px;
         margin-top: 20px;
     }
 

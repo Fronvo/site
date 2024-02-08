@@ -34,7 +34,7 @@
     #avatar {
         width: 36px;
         height: 36px;
-        background: var(--secondary);
+        background: var(--primary);
         border-radius: 30px;
         margin-right: 5px;
     }
@@ -43,14 +43,14 @@
         width: 150px;
         height: 20px;
         border-radius: 30px;
-        background: var(--secondary);
+        background: var(--primary);
     }
 
     #attachment {
         display: inline-block;
         width: 250px;
         height: 250px;
-        background: var(--secondary);
+        background: var(--primary);
         border-radius: 10px;
         margin-top: 5px;
     }

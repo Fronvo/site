@@ -3,7 +3,6 @@
     import { ModalTypes } from 'stores/modals';
     import { setKey } from 'utilities/global';
     import { removeSavedAcount, showModal } from 'utilities/main';
-    import { resetLocalTheme } from 'utilities/themes';
 
     export let avatar: string;
     export let profileId: string;
@@ -15,8 +14,6 @@
             if (!err) {
                 // Then, update localStorage and refresh fronvo
                 setKey('token', token);
-
-                resetLocalTheme();
 
                 location.href = '/app';
             } else {
@@ -83,17 +80,24 @@
         box-shadow: none;
         transition: 125ms;
         background: transparent;
+        backdrop-filter: none;
+        font-weight: 500;
     }
 
     #login {
         color: white;
         margin-right: 10px;
-        background: var(--branding);
+        background: var(--primary);
+        backdrop-filter: blur(10px);
         font-weight: 600;
     }
 
     #login:hover {
-        background: var(--branding_darken);
+        background: var(--tertiary);
+    }
+
+    #remove {
+        color: white;
     }
 
     #remove:hover {
@@ -127,14 +131,14 @@
         -webkit-box-orient: vertical;
         font-size: 1.1rem;
         text-align: start;
-        color: var(--text);
+        color: white;
     }
 
     #indicator {
         text-align: start;
         font-size: 0.8rem;
         font-weight: 700;
-        color: var(--branding);
+        color: white;
         display: -webkit-box;
         overflow: hidden;
         -webkit-line-clamp: 1;

@@ -5,13 +5,18 @@
     import LargeIdentifier from '../profile/large/LargeIdentifier.svelte';
     import LargeBio from '../profile/large/LargeBio.svelte';
     import LargeSince from '../profile/large/LargeSince.svelte';
+    import { ourData } from 'stores/profile';
 
     export let profileData: FronvoAccount;
 </script>
 
 <div class="profile-container">
     <LargeBanner />
-    <LargeAvatar avatar={profileData?.avatar} />
+    <LargeAvatar
+        avatar={profileData?.avatar}
+        isSelf={$ourData.profileId == profileData.profileId}
+        isFriend={$ourData.friends.includes(profileData.profileId)}
+    />
 
     <div class="secondary-container">
         <LargeIdentifier
@@ -38,6 +43,8 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        background: var(--primary);
+        backdrop-filter: blur(10px);
     }
 
     .secondary-container {
@@ -45,7 +52,7 @@
         display: flex;
         flex-direction: column;
         transform: translateY(-60px);
-        background: rgb(0, 0, 0, 0.4);
+        background: rgb(100, 100, 100, 0.1);
         border-radius: 10px;
         padding-top: 10px;
         padding-bottom: 20px;

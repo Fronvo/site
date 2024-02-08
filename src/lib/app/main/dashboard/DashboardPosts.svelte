@@ -11,7 +11,7 @@
     import PropPost from '$lib/app/reusables/dashboard/PropPost.svelte';
     import { sineInOut } from 'svelte/easing';
     import PostDashboard from '$lib/app/reusables/dashboard/PostDashboard.svelte';
-    import DashboardPostsEnd from './DashboardPostsEnd.svelte';
+    import { setTitle } from 'utilities/main';
 
     function reloadPosts(): void {
         socket.emit(
@@ -54,21 +54,21 @@
     }
 
     onMount(() => {
+        setTitle('Homepage');
+
         socket.off('postShared');
-        socket.off('postRemoved');
 
         socket.on('postShared', ({ author }) => {
             if (author == $ourData.profileId) return;
 
             reloadPosts();
         });
-
-        socket.on('postRemoved', reloadPosts);
     });
 </script>
 
 <div class="home-container" in:fade={{ duration: 200, easing: sineInOut }}>
     {#if $dashboardPostsStore.length != 0}
+        <h1 id="title">Latest posts</h1>
         <div class="posts-container">
             {#if $dashboardPostsStore}
                 {#each $dashboardPostsStore as post}
@@ -85,8 +85,6 @@
                     <div slot="error" />
                     <div slot="spinner" />
                 </InfiniteLoading>
-
-                <DashboardPostsEnd />
             {/if}
         </div>
     {:else}
@@ -120,7 +118,6 @@
         margin: 0;
         font-size: 1.7rem;
         text-align: center;
-        margin-top: 10px;
         font-weight: 500;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -129,6 +126,7 @@
         -ms-user-select: none;
         user-select: none;
         padding-right: 150px;
+        color: white;
     }
 
     .home-container {
@@ -144,9 +142,17 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        padding-top: 70px;
         height: calc(100vh);
-        transform: translateY(-60px);
+        transform: translateY(-20px);
+    }
+
+    #title {
+        width: 100%;
+        font-size: 1.5rem;
+        text-align: center;
+        padding-right: 0;
+        margin: 0;
+        padding-top: 10px;
     }
 
     .empty {
@@ -162,7 +168,6 @@
         -ms-user-select: none;
         user-select: none;
         margin-top: 5px;
-        padding-top: 15px;
     }
 
     .banner {
@@ -178,7 +183,6 @@
     .banner h1 {
         margin: 0;
         font-size: 1.3rem;
-        text-align: center;
     }
 
     .banner svg {
@@ -186,8 +190,9 @@
         height: 30px;
         min-width: 30px;
         min-height: 30px;
-        fill: var(--branding);
+        fill: white;
         margin-right: 10px;
+        cursor: default;
     }
 
     .props {
@@ -200,8 +205,24 @@
     }
 
     @media screen and (max-width: 1050px) {
-        .home-container {
-            margin-left: 0;
+        .empty {
+            width: 100%;
+        }
+
+        .banner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 0px;
+            visibility: hidden;
+        }
+
+        .props {
+            margin-right: 50px;
+        }
+
+        .banner h1 {
+            font-size: 1.1rem;
         }
     }
 </style>

@@ -5,7 +5,6 @@
     import { socket } from 'stores/main';
     import { onMount } from 'svelte';
     import ErrorHeader from '$lib/app/reusables/all/ErrorHeader.svelte';
-    import { loadServersData } from 'utilities/rooms';
 
     let element: HTMLInputElement;
 
@@ -36,8 +35,6 @@
                     }
                 } else {
                     dismissModal();
-
-                    await loadServersData();
                 }
             }
         );
@@ -96,21 +93,21 @@
     }
 
     input {
-        background: rgb(20, 20, 20, 0.75);
-        border: 2px solid rgb(20, 20, 20, 0);
+        background: var(--primary);
+        border: 2px solid transparent;
         transition: 150ms;
         font-weight: 500;
     }
 
     input:focus {
-        border: 2px solid var(--branding);
+        border: 2px solid var(--secondary);
     }
 
     .placeholder {
         display: flex;
         align-items: center;
         justify-content: center;
-        background: var(--bg);
+        background: var(--primary);
         border-radius: 80px;
         width: 100px;
         height: 100px;

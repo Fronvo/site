@@ -9,6 +9,7 @@
     let uploading = false;
 
     export let avatar: Writable<string>;
+    export let online: boolean;
 
     function changeAvatar(): void {
         if (uploading) return;
@@ -19,8 +20,8 @@
         input.onchange = async (_) => {
             let file = Array.from(input.files)[0];
 
-            if (file.size > ($ourData.isPRO ? 3000000 : 1000000)) {
-                toast(`Image is above ${$ourData.isPRO ? 3 : 1}MB.`);
+            if (file.size > ($ourData.isTurbo ? 3000000 : 1000000)) {
+                toast(`Image is above ${$ourData.isTurbo ? 3 : 1}MB.`);
                 return;
             }
 
@@ -30,7 +31,7 @@
                 reader.addEventListener('load', async () => {
                     const newIcon = await uploadImage(
                         reader.result,
-                        $ourData.isPRO
+                        $ourData.isTurbo
                     );
 
                     socket.emit('updateProfileData', {
@@ -84,21 +85,16 @@
     #avatar {
         width: 128px;
         height: 128px;
-        border: 7px solid transparent;
         border-radius: 100px;
         transition: 150ms;
         margin-left: 20px;
         transform: translateY(-80px);
-        background: var(--modal_content_bg);
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-    }
-
-    #avatar:hover {
-        filter: brightness(80%);
+        cursor: pointer;
     }
 </style>

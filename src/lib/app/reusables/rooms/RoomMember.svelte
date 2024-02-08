@@ -1,18 +1,17 @@
 <script lang="ts">
     import type { FronvoAccount } from 'interfaces/all';
-    import { targetProfileModal } from 'stores/modals';
+    import { ModalTypes, targetProfileModal } from 'stores/modals';
     import { ourData } from 'stores/profile';
     import { onMount } from 'svelte';
     import type { Unsubscriber } from 'svelte/store';
     import { onDestroy } from 'svelte';
-    import { showDropdown } from 'utilities/main';
-    import { DropdownTypes } from 'stores/dropdowns';
+    import { showModal } from 'utilities/main';
+    import { dropdownVisible } from 'stores/dropdowns';
     import { socket } from 'stores/main';
-    import { currentRoomData } from 'stores/rooms';
+    import { currentServer } from 'stores/rooms';
 
     export let profileData: FronvoAccount;
 
-    let container: HTMLDivElement;
     let unsubscribe: Unsubscriber;
 
     function showProfileModal(): void {
@@ -22,7 +21,7 @@
             $targetProfileModal = profileData;
         }
 
-        showDropdown(DropdownTypes.Profile, container, 'left', 0, 10);
+        showModal(ModalTypes.Profile);
     }
 
     onMount(() => {
@@ -70,27 +69,24 @@
 <div
     on:click={showProfileModal}
     on:keydown={showProfileModal}
-    class="member-container"
-    bind:this={container}
+    class={`member-container ${!profileData.online ? 'offline' : ''}`}
 >
     <div class="badge-container">
         <img
             id="avatar"
-            src={profileData.avatar ? profileData.avatar : '/images/avatar.svg'}
+            src={profileData.avatar
+                ? `${profileData.avatar}/tr:w-64:h-64`
+                : '/images/avatar.svg'}
             alt={`${profileData.username}'s avatar`}
             draggable={false}
         />
-
-        {#if profileData.online}
-            <div class="indicator" />
-        {/if}
     </div>
 
     <div class="bottom-container">
         <div class="top-container">
             <h1 id="username">{profileData?.username}</h1>
 
-            {#if profileData.profileId == $currentRoomData?.ownerId}
+            {#if profileData.profileId == $currentServer.ownerId}
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="32"
@@ -104,7 +100,9 @@
             {/if}
         </div>
 
-        <h1 id="status">{profileData?.status}</h1>
+        {#if profileData.status}
+            <h1 id="status">{profileData?.status}</h1>
+        {/if}
     </div>
 </div>
 
@@ -116,10 +114,12 @@
         align-items: center;
         background: transparent;
         cursor: pointer;
-        width: 92%;
-        height: 46px;
+        width: 100%;
+        height: 48px;
         padding: 4px;
-        border-radius: 6px;
+        border-radius: 5px;
+        margin-bottom: 2px;
+        transition: 125ms;
     }
 
     .badge-container {
@@ -127,22 +127,17 @@
         align-items: center;
     }
 
-    .indicator {
-        position: fixed;
-        background: rgb(56, 212, 42);
-        width: 15px;
-        height: 15px;
-        border-radius: 30px;
-        transform: translateX(18px) translateY(11px);
-        border: 3px solid var(--bg);
-    }
-
     .member-container:hover {
         background: var(--secondary);
     }
 
-    .indicator:hover {
-        background: rgb(56, 212, 42);
+    .member-container:hover #avatar {
+        opacity: 1;
+    }
+
+    .member-container:hover #username {
+        opacity: 1;
+        color: white;
     }
 
     div h1 {
@@ -165,12 +160,18 @@
         width: 32px;
         height: 32px;
         border-radius: 30px;
-        margin-right: 8px;
+        margin-right: 20px;
+        transition: 125ms;
+    }
+
+    .offline #avatar {
+        opacity: 0.5;
     }
 
     .bottom-container {
         display: flex;
         flex-direction: column;
+        transform: translateX(-10px);
     }
 
     .top-container {
@@ -179,12 +180,18 @@
     }
 
     #username {
-        display: -webkit-box;
-        overflow: hidden;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
         font-size: 1rem;
+        height: 23px;
         color: var(--gray);
+        white-space: nowrap;
+        max-width: 140px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        transition: 125ms;
+    }
+
+    .offline #username {
+        opacity: 0.5;
     }
 
     .top-container svg {
@@ -194,11 +201,17 @@
     }
 
     #status {
+        height: 17px;
         font-size: 0.75rem;
+        font-weight: 600;
         color: var(--gray);
         display: -webkit-box;
         overflow: hidden;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
+    }
+
+    .offline #status {
+        display: none;
     }
 </style>

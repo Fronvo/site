@@ -5,7 +5,6 @@
     import { cachedAccountData, currentToken, showLayout } from 'stores/main';
     import { redirectApp } from 'utilities/index';
     import { performLogin } from 'utilities/main';
-    import BlurredBackground2 from '$lib/index/BlurredBackground2.svelte';
     import AppRegisterMain from '$lib/app/index/AppRegisterMain.svelte';
 
     let mountReady = false;
@@ -41,8 +40,6 @@
     <div class="index-container">
         {#if $indexVisible}
             <AppRegisterMain />
-
-            <BlurredBackground2 />
         {/if}
     </div>
 {/if}

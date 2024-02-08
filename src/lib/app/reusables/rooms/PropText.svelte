@@ -40,7 +40,7 @@
     #avatar {
         width: 36px;
         height: 36px;
-        background: var(--secondary);
+        background: var(--primary);
         border-radius: 30px;
         margin-right: 5px;
     }
@@ -49,7 +49,7 @@
         width: 150px;
         height: 20px;
         border-radius: 30px;
-        background: var(--secondary);
+        background: var(--primary);
     }
 
     .content {
@@ -62,7 +62,7 @@
         width: 125px;
         height: 20px;
         border-radius: 30px;
-        background: var(--secondary);
+        background: var(--primary);
         margin-top: 5px;
         margin-right: 5px;
     }
@@ -71,7 +71,7 @@
         width: 75px;
         height: 20px;
         border-radius: 30px;
-        background: var(--secondary);
+        background: var(--primary);
         margin-top: 5px;
         margin-right: 5px;
     }
@@ -80,7 +80,7 @@
         width: 50px;
         height: 20px;
         border-radius: 30px;
-        background: var(--secondary);
+        background: var(--primary);
         margin-top: 5px;
         margin-right: 5px;
     }

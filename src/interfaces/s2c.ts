@@ -15,8 +15,7 @@ import type {
     ResetPasswordVerifyParams,
     ResetPasswordVerifyResult,
 } from './noAccount/resetPasswordVerify';
-import type { RoomDeletedResult } from './account/roomDeleted';
-import type { RoomDataUpdatedResult } from './account/roomDataUpdated';
+import type { DmHiddenResult } from './account/dmHidden';
 import type { TypingStartedResult } from './account/typingStarted';
 import type { TypingEndedResult } from './account/typingEnded';
 import type { NewFriendRequestResult } from './account/newFriendRequest';
@@ -25,12 +24,18 @@ import type { PendingFriendRemovedResult } from './account/pendingFriendRemoved'
 import type { FriendAddedResult } from './account/friendAdded';
 import type { ProfileDataUpdatedResult } from './account/profileDataUpdated';
 import type { ProfileStatusUpdatedResult } from './account/profileStatusUpdated';
-import type { RoomCreatedResult } from './account/roomCreated';
-import type { RoomAddedResult } from './account/roomAdded';
-import type { RoomRemovedResult } from './account/roomRemoved';
+import type { DmCreatedResult } from './account/dmCreated';
 import type { PostLikesChangedResult } from './account/postLikesChanged';
 import type { PostRemovedResult } from './account/postRemoved';
 import type { PostSharedResult } from './account/postShared';
+import type { ServerCreatedResult } from './account/serverCreated';
+import type { ServerDeletedResult } from './account/serverDeleted';
+import type { ChannelCreatedResult } from './account/channelCreated';
+import type { ChannelDeletedResult } from './account/channelDeleted';
+import type { ServerJoinedResult } from './account/serverJoined';
+import type { ServerInvitesToggledResult } from './account/serverInvitesToggled';
+import type { ServerInviteRegeneratedResult } from './account/serverInviteRegenerated';
+import type { ChannelRenamedResult } from './account/channelRenamed';
 
 export interface ServerToClientEvents {
     registerVerify: (
@@ -47,21 +52,15 @@ export interface ServerToClientEvents {
 
     messageDeleted: ({}: MessageDeletedResult) => void;
 
-    roomCreated: ({}: RoomCreatedResult) => void;
+    dmCreated: ({}: DmCreatedResult) => void;
 
-    roomDeleted: ({}: RoomDeletedResult) => void;
-
-    roomAdded: ({}: RoomAddedResult) => void;
-
-    roomRemoved: ({}: RoomRemovedResult) => void;
+    dmHidden: ({}: DmHiddenResult) => void;
 
     memberJoined: ({}: MemberJoinedResult) => void;
 
     memberLeft: ({}: MemberLeftResult) => void;
 
     onlineStatusUpdated: ({}: OnlineStatusUpdatedParams) => void;
-
-    roomDataUpdated: ({}: RoomDataUpdatedResult) => void;
 
     typingStarted: ({}: TypingStartedResult) => void;
 
@@ -84,4 +83,20 @@ export interface ServerToClientEvents {
     postShared: ({}: PostSharedResult) => void;
 
     postRemoved: ({}: PostRemovedResult) => void;
+
+    serverCreated: ({}: ServerCreatedResult) => void;
+
+    serverJoined: ({}: ServerJoinedResult) => void;
+
+    serverDeleted: ({}: ServerDeletedResult) => void;
+
+    channelCreated: ({}: ChannelCreatedResult) => void;
+
+    channelRenamed: ({}: ChannelRenamedResult) => void;
+
+    channelDeleted: ({}: ChannelDeletedResult) => void;
+
+    serverInvitesToggled: ({}: ServerInvitesToggledResult) => void;
+
+    serverInviteRegenerated: ({}: ServerInviteRegeneratedResult) => void;
 }

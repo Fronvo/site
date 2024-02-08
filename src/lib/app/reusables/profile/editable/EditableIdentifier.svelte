@@ -1,14 +1,36 @@
 <script lang="ts">
+    import { DropdownTypes } from 'stores/dropdowns';
+    import { mousePos } from 'stores/main';
     import { ourData } from 'stores/profile';
     import type { Writable } from 'svelte/store';
+    import { showDropdownMouse } from 'utilities/main';
 
     export let username: Writable<string>;
+
+    function showOptions(): void {
+        showDropdownMouse(DropdownTypes.AccountExtras, $mousePos);
+    }
 </script>
 
 <div class="identifier-container">
     <div class="info-container">
         <div class="lock-container">
-            <input bind:value={$username} />
+            <input bind:value={$username} maxlength={30} />
+
+            <span />
+
+            <svg
+                on:click={showOptions}
+                on:keydown={showOptions}
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                ><path
+                    d="M10 12a2 2 0 1 1 0-4a2 2 0 0 1 0 4m0-6a2 2 0 1 1 0-4a2 2 0 0 1 0 4m0 12a2 2 0 1 1 0-4a2 2 0 0 1 0 4"
+                /></svg
+            >
         </div>
 
         <div class="secondary-container">
@@ -42,28 +64,49 @@
     .lock-container {
         display: flex;
         align-items: center;
+        width: 100%;
     }
 
     input {
-        width: 95%;
+        width: 200px;
         height: 35px;
-        background: rgb(10, 10, 10, 0.4);
-        border: 2px solid var(--bg);
+        background: var(--primary);
+        border: 2px solid transparent;
         transition: 150ms;
         font-size: 1.5rem;
         margin: 0;
         margin-right: 5px;
         margin-bottom: 5px;
-        color: var(--text);
+        color: white;
         display: -webkit-box;
         overflow: hidden;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
-        font-weight: 400;
+        font-weight: 500;
     }
 
     input:focus {
-        border: 2px solid var(--branding);
+        border: 2px solid var(--secondary);
+    }
+
+    .lock-container span {
+        flex: 1;
+    }
+
+    .lock-container svg {
+        width: 32px;
+        height: 32px;
+        min-width: 32px;
+        min-height: 32px;
+        margin-right: 5px;
+        transform: translateY(-2px);
+        fill: rgb(255, 255, 255, 0.6);
+        border-radius: 30px;
+        padding: 4px;
+    }
+
+    .lock-container svg:hover {
+        background: var(--primary);
     }
 
     .secondary-container {
@@ -81,6 +124,7 @@
         overflow: hidden;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
+        color: white;
     }
 
     #status {
@@ -93,5 +137,6 @@
         overflow: hidden;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
+        color: white;
     }
 </style>

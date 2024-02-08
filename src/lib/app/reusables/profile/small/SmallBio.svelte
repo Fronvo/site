@@ -25,22 +25,22 @@
         flex-direction: column;
         align-items: start;
         margin-left: 15px;
-        margin-top: 10px;
     }
 
     .since-container #top {
         margin: 0;
-        font-size: 0.75rem;
+        font-size: 0.9rem;
         font-weight: 800;
         text-transform: uppercase;
         margin-bottom: 3px;
+        color: white;
     }
 
     .since-container #bio {
         margin: 0;
         font-size: 0.85rem;
-        margin-bottom: 10px;
         white-space: pre-wrap;
-        max-lines: 5;
+        color: white;
+        font-weight: 600;
     }
 </style>

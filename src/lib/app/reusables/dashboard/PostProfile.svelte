@@ -1,8 +1,18 @@
 <script lang="ts">
     import type { Post } from 'interfaces/all';
-    import { ModalTypes, targetImageModal } from 'stores/modals';
+    import {
+        DropdownTypes,
+        currentDropdownId,
+        dropdownVisible,
+    } from 'stores/dropdowns';
+    import { mousePos } from 'stores/main';
+    import {
+        ModalTypes,
+        targetImageModal,
+        targetPostModal,
+    } from 'stores/modals';
     import { onMount } from 'svelte';
-    import { showModal } from 'utilities/main';
+    import { showDropdownMouse, showModal } from 'utilities/main';
 
     export let post: Post;
     let postContainer: HTMLDivElement;
@@ -13,6 +23,13 @@
         $targetImageModal = postData.attachment;
 
         showModal(ModalTypes.Image);
+    }
+
+    function showOptions(): void {
+        $targetImageModal = postData.attachment;
+        $targetPostModal = post;
+
+        showDropdownMouse(DropdownTypes.Post, $mousePos);
     }
 
     onMount(() => {
@@ -27,20 +44,35 @@
 </script>
 
 <div
-    class="post-container"
+    class={`post-container ${
+        $targetPostModal?.post == postData &&
+        $dropdownVisible &&
+        $currentDropdownId == DropdownTypes.Post
+            ? 'active'
+            : ''
+    }`}
     bind:this={postContainer}
     on:click={showImage}
     on:keydown={showImage}
+    on:contextmenu={(e) => {
+        showOptions();
+
+        e.preventDefault();
+    }}
 >
     <div class="wrapper">
         <svg
             xmlns="http://www.w3.org/2000/svg"
             width="32"
             height="32"
-            viewBox="0 0 24 24"
+            viewBox="0 0 48 48"
             fill="currentColor"
+            stroke="currentColor"
             ><path
-                d="M2 9.137C2 14 6.02 16.591 8.962 18.911C10 19.729 11 20.5 12 20.5s2-.77 3.038-1.59C17.981 16.592 22 14 22 9.138c0-4.863-5.5-8.312-10-3.636C7.5.825 2 4.274 2 9.137Z"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="4"
+                d="M15 8C8.925 8 4 12.925 4 19c0 11 13 21 20 23.326C31 40 44 30 44 19c0-6.075-4.925-11-11-11c-3.72 0-7.01 1.847-9 4.674A10.987 10.987 0 0 0 15 8"
             /></svg
         >
 
@@ -50,20 +82,19 @@
 
 <style>
     .post-container {
-        width: 200px;
-        height: 200px;
+        width: 250px;
+        height: 250px;
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: center;
-        margin-bottom: 30px;
-        margin-right: 20px;
-        margin-left: 20px;
+        margin-bottom: 3px;
+        margin-left: 2px;
+        margin-right: 2px;
         overflow: hidden;
         background-repeat: no-repeat;
         background-position: center;
         background-size: cover;
-        border-radius: 10px;
         cursor: pointer;
         transition: 150ms filter, 150ms background;
     }
@@ -75,27 +106,35 @@
         width: 100%;
         height: 100%;
         transition: 125ms;
-        z-index: 1;
         opacity: 0;
-        backdrop-filter: blur(15px) brightness(90%);
+        backdrop-filter: brightness(150%);
     }
 
     .post-container:hover .wrapper {
         opacity: 1;
     }
 
+    .active:hover .wrapper {
+        opacity: 0;
+    }
+
+    .active {
+        filter: brightness(120%);
+    }
+
     svg {
-        width: 36px;
-        height: 36px;
-        fill: red;
-        margin-right: 10px;
+        width: 32px;
+        height: 32px;
+        fill: white;
+        stroke: white;
+        margin-right: 5px;
     }
 
     h1 {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
+        font-weight: 700;
         color: white;
         margin: 0;
-        transform: translateY(-2px);
-        text-shadow: 0 0 10px black;
+        text-shadow: 0 0 5px black;
     }
 </style>

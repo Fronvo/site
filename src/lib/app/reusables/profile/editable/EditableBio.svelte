@@ -24,6 +24,7 @@
         font-weight: 800;
         text-transform: uppercase;
         margin-bottom: 3px;
+        color: white;
     }
 
     textarea {
@@ -32,12 +33,14 @@
         margin: 0;
         font-size: 0.85rem;
         margin-bottom: 10px;
-        background: rgb(10, 10, 10, 0.4);
-        border: 2px solid var(--bg);
+        background: var(--primary);
+        border: 2px solid transparent;
         transition: 150ms;
+        font-weight: 600;
+        color: white;
     }
 
     textarea:focus {
-        border: 2px solid var(--branding);
+        border: 2px solid var(--secondary);
     }
 </style>

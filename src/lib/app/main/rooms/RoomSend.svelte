@@ -1,52 +1,46 @@
 <script lang="ts">
     import { ourData } from 'stores/profile';
     import {
+        currentChannel,
         currentRoomData,
         currentRoomId,
         currentRoomLoaded,
+        currentRoomMessages,
+        currentServer,
+        isInServer,
+        pendingMessages,
         replyingTo,
         replyingToId,
         sendContent,
         sendingImage,
-        showScrollBottom,
     } from 'stores/rooms';
     import { onDestroy, onMount } from 'svelte';
-    import { writable, type Unsubscriber, type Writable } from 'svelte/store';
     import { sendImage, sendMessage } from 'utilities/rooms';
-    import RoomScrollBottom from './RoomScrollBottom.svelte';
     import {
-        cachedAccountData,
         disabledIn30,
         lastSendAt,
         lastSendsIn30,
         socket,
     } from 'stores/main';
-    import {
-        findCachedAccount,
-        isAcceptedImage,
-        showDropdown,
-    } from 'utilities/main';
+    import { isAcceptedImage, showDropdown } from 'utilities/main';
     import { slide } from 'svelte/transition';
     import { DropdownTypes } from 'stores/dropdowns';
     import { targetTenorCallback } from 'stores/modals';
     import { toast } from 'svelte-sonner';
     import { sineInOut } from 'svelte/easing';
+    import type { Unsubscriber } from 'svelte/motion';
 
     let content: HTMLTextAreaElement;
     let unsubscribe: Unsubscriber;
     let unsubscribe2: Unsubscriber;
     let unsubscribe3: Unsubscriber;
     let unsubscribe4: Unsubscriber;
-    let unsubscribe5: Unsubscriber;
 
     let canMessage: boolean;
     let cantMessageReason: string;
 
-    let typingSent = false;
-    let typing: Writable<string[]> = writable([]);
-
     function adjustCanMessage(): void {
-        if ($currentRoomData.isDM) {
+        if (!$isInServer) {
             if (!$currentRoomData.dmUser.username) {
                 canMessage = false;
                 cantMessageReason = 'This user has been deleted';
@@ -89,9 +83,9 @@
                 }
             } else {
                 content.placeholder = `Message ${
-                    $currentRoomData.isDM
+                    !$isInServer
                         ? '@' + $currentRoomData.dmUser.username
-                        : '#' + $currentRoomData.name
+                        : '#' + $currentChannel.name
                 }`;
 
                 content.disabled = false;
@@ -104,6 +98,21 @@
         $replyingToId = undefined;
     }
 
+    function sendMsg(): void {
+        sendMessage(
+            $currentChannel?.channelId || $currentRoomId,
+            $sendContent,
+            $replyingTo,
+            $replyingToId,
+            $lastSendAt,
+            $lastSendsIn30,
+            $currentRoomMessages,
+            $pendingMessages,
+            $ourData,
+            $isInServer ? $currentServer.serverId : ''
+        );
+    }
+
     function setupImagePasting(): void {
         setTimeout(() => {
             if (!content) return;
@@ -112,8 +121,8 @@
                 if (ev.clipboardData.files.length > 0) {
                     const file = ev.clipboardData.files[0];
 
-                    if (file.size > ($ourData.isPRO ? 3000000 : 1000000)) {
-                        toast(`Image is above ${$ourData.isPRO ? 3 : 1}MB.`);
+                    if (file.size > ($ourData.isTurbo ? 3000000 : 1000000)) {
+                        toast(`Image is above ${$ourData.isTurbo ? 3 : 1}MB.`);
                         return;
                     }
 
@@ -122,11 +131,12 @@
 
                         reader.addEventListener('load', async () => {
                             await sendImage(
-                                $currentRoomId,
+                                $currentChannel?.channelId || $currentRoomId,
                                 $sendingImage,
                                 reader.result,
-                                $ourData.isPRO,
-                                $lastSendsIn30
+                                $ourData.isTurbo,
+                                $lastSendsIn30,
+                                $isInServer ? $currentServer.serverId : ''
                             );
                         });
 
@@ -148,8 +158,8 @@
         input.onchange = async (_) => {
             let file = Array.from(input.files)[0];
 
-            if (file.size > ($ourData.isPRO ? 3000000 : 1000000)) {
-                toast(`Image is above ${$ourData.isPRO ? 3 : 1}MB.`);
+            if (file.size > ($ourData.isTurbo ? 3000000 : 1000000)) {
+                toast(`Image is above ${$ourData.isTurbo ? 3 : 1}MB.`);
                 return;
             }
 
@@ -158,11 +168,12 @@
 
                 reader.addEventListener('load', async () => {
                     await sendImage(
-                        $currentRoomId,
+                        $currentChannel?.channelId || $currentRoomId,
                         $sendingImage,
                         reader.result,
-                        $ourData.isPRO,
-                        $lastSendsIn30
+                        $ourData.isTurbo,
+                        $lastSendsIn30,
+                        $isInServer ? $currentServer.serverId : ''
                     );
                 });
 
@@ -179,46 +190,34 @@
         if (!canMessage) return;
 
         $targetTenorCallback = (url: string) => {
-            socket.emit('sendMessage', {
-                roomId: $currentRoomId,
-                message: url,
-            });
+            if (!$isInServer) {
+                socket.emit('sendMessage', {
+                    roomId: $currentRoomId,
+                    message: url,
+                });
+            } else {
+                socket.emit('sendChannelMessage', {
+                    serverId: $currentServer.serverId,
+                    channelId: $currentChannel.channelId,
+                    message: url,
+                });
+            }
         };
 
-        showDropdown(
-            DropdownTypes.Gif,
-            document.getElementById('gif'),
-            'top',
-            -425,
-            -525
-        );
+        // showDropdown(
+        //     DropdownTypes.Gif,
+        //     document.getElementById('gif'),
+        //     'top',
+        //     -425,
+        //     -525
+        // );
     }
 
     onMount(() => {
         socket.on('friendAdded', ({}) => adjustCanMessage());
         socket.on('friendRemoved', ({}) => adjustCanMessage());
 
-        unsubscribe = sendContent.subscribe((text) => {
-            if (text.length == 0) {
-                if (!typingSent) return;
-
-                typingSent = false;
-
-                socket.emit('finishTyping', {
-                    roomId: $currentRoomId,
-                });
-            } else {
-                if (typingSent) return;
-
-                typingSent = true;
-
-                socket.emit('startTyping', {
-                    roomId: $currentRoomId,
-                });
-            }
-        });
-
-        unsubscribe2 = replyingTo.subscribe((val) => {
+        unsubscribe = replyingTo.subscribe((val) => {
             if (!$currentRoomId) return;
 
             setTimeout(() => {
@@ -226,9 +225,9 @@
 
                 if (!val) {
                     content.placeholder = `Message ${
-                        $currentRoomData.isDM
+                        !$isInServer
                             ? '@' + $currentRoomData.dmUser.username
-                            : '#' + $currentRoomData.name
+                            : '#' + $currentChannel.name
                     }`;
                 } else {
                     if (val == $ourData.username) {
@@ -240,7 +239,7 @@
             }, 0);
         });
 
-        unsubscribe3 = currentRoomLoaded.subscribe((state) => {
+        unsubscribe2 = currentRoomLoaded.subscribe((state) => {
             if (!state) return;
 
             adjustCanMessage();
@@ -275,22 +274,13 @@
                 }
             });
 
-            $typing = [];
-
             $replyingTo = undefined;
             $replyingToId = undefined;
 
             setTimeout(() => {
                 content.onkeyup = (ev) => {
                     if (ev.key == 'Enter' && !ev.shiftKey) {
-                        sendMessage(
-                            $currentRoomId,
-                            $sendContent,
-                            $replyingTo,
-                            $replyingToId,
-                            $lastSendAt,
-                            $lastSendsIn30
-                        );
+                        sendMsg();
 
                         ev.preventDefault();
 
@@ -300,44 +290,16 @@
             }, 0);
         });
 
-        unsubscribe4 = sendingImage.subscribe(() => {
+        unsubscribe3 = sendingImage.subscribe(() => {
             if (!content) return;
 
             adjustCanMessage();
         });
 
-        unsubscribe5 = disabledIn30.subscribe(() => {
+        unsubscribe4 = disabledIn30.subscribe(() => {
             setTimeout(() => {
                 content && adjustCanMessage();
             }, 0);
-        });
-
-        socket.on('typingStarted', async ({ roomId, profileId }) => {
-            if (roomId == $currentRoomId) {
-                if (profileId == $ourData.profileId) return;
-
-                $typing.push(
-                    (await findCachedAccount(profileId, $cachedAccountData))
-                        .username
-                );
-                $typing = $typing;
-            }
-        });
-
-        socket.on('typingEnded', async ({ roomId, profileId }) => {
-            if (roomId == $currentRoomId) {
-                if (profileId == $ourData.profileId) return;
-
-                const username = (
-                    await findCachedAccount(profileId, $cachedAccountData)
-                ).username;
-
-                // Might have missed the start event
-                if ($typing.includes(username)) {
-                    $typing.splice($typing.indexOf(username), 1);
-                    $typing = $typing;
-                }
-            }
         });
     });
 
@@ -346,16 +308,11 @@
         unsubscribe2();
         unsubscribe3();
         unsubscribe4();
-        unsubscribe5();
     });
 </script>
 
 {#if $currentRoomLoaded}
     <div class="send-container">
-        {#if $showScrollBottom}
-            <RoomScrollBottom />
-        {/if}
-
         <div class="wrapper">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -394,7 +351,11 @@
 
             <textarea
                 bind:this={content}
-                placeholder={`Message #${$currentRoomData.name}`}
+                placeholder={`Message ${
+                    !$isInServer
+                        ? '@' + $currentRoomData?.dmUser.username
+                        : '#' + $currentChannel?.name
+                }`}
                 id="textarea-content"
                 bind:value={$sendContent}
                 maxlength={500}
@@ -402,6 +363,8 @@
                 lang="en"
             />
 
+            <!-- Reenable once we fix UI -->
+            <!-- 
             <svg
                 id="gif"
                 xmlns="http://www.w3.org/2000/svg"
@@ -418,7 +381,7 @@
                         d="M9.358 7.613a2.497 2.497 0 0 1 1.892 2.422v1.215h-1.215a2.497 2.497 0 0 1-2.422-1.892a1.44 1.44 0 0 1 1.745-1.745Zm3.392 2.422v1.215h1.215c1.145 0 2.144-.78 2.422-1.892a1.44 1.44 0 0 0-1.746-1.745a2.497 2.497 0 0 0-1.891 2.422Z"
                     /></g
                 ></svg
-            >
+            > -->
 
             {#if $sendContent.trim().length > 0}
                 <svg
@@ -426,24 +389,8 @@
                     width="32"
                     height="32"
                     viewBox="0 0 24 24"
-                    on:click={() =>
-                        sendMessage(
-                            $currentRoomId,
-                            $sendContent,
-                            $replyingTo,
-                            $replyingToId,
-                            $lastSendAt,
-                            $lastSendsIn30
-                        )}
-                    on:keydown={() =>
-                        sendMessage(
-                            $currentRoomId,
-                            $sendContent,
-                            $replyingTo,
-                            $replyingToId,
-                            $lastSendAt,
-                            $lastSendsIn30
-                        )}
+                    on:click={sendMsg}
+                    on:keydown={sendMsg}
                     transition:slide={{
                         axis: 'x',
                         duration: 250,
@@ -481,11 +428,11 @@
         user-select: none;
         height: 42px;
         margin: 10px;
-        margin-bottom: 20px;
+        margin-top: 0;
         padding-left: 10px;
         padding-right: 10px;
         border-radius: 7px;
-        background: var(--secondary);
+        background: var(--primary);
     }
 
     .wrapper {
@@ -502,10 +449,8 @@
         margin-top: 2px;
         height: 34px;
         flex: 1;
-    }
-
-    textarea::placeholder {
-        opacity: 0.5;
+        font-weight: 500;
+        color: white;
     }
 
     textarea:disabled {
@@ -522,6 +467,6 @@
     }
 
     svg:hover {
-        fill: var(--gray_hover);
+        fill: white;
     }
 </style>

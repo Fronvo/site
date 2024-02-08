@@ -3,7 +3,6 @@
     import ModalTemplate from '../ModalTemplate.svelte';
     import { ModalTypes, type ModalData, modalLoading } from 'stores/modals';
     import { socket } from 'stores/main';
-    import InfoHeader from '$lib/app/reusables/all/InfoHeader.svelte';
     import { onMount } from 'svelte';
     import ErrorHeader from '$lib/app/reusables/all/ErrorHeader.svelte';
 
@@ -89,11 +88,6 @@
             maxlength={20}
         />
     </div>
-
-    <InfoHeader
-        marginLeft={'50px'}
-        text={'The other user will have to accept you in order to chat'}
-    />
 </ModalTemplate>
 
 <style>
@@ -108,12 +102,13 @@
     }
 
     input {
-        font-weight: 600;
+        background: var(--primary);
         border: 2px solid transparent;
         transition: 150ms;
+        font-weight: 500;
     }
 
     input:focus {
-        border: 2px solid var(--branding);
+        border: 2px solid var(--secondary);
     }
 </style>

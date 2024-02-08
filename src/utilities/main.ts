@@ -10,9 +10,7 @@ import { io } from 'socket.io-client';
 import {
     currentDropdownId,
     dropdownAnimationFinished,
-    dropdownForAccountInfo,
     dropdownPosition,
-    dropdownProfileData,
     DropdownTypes,
     dropdownVisible,
 } from 'stores/dropdowns';
@@ -35,12 +33,6 @@ import {
 import { loadRoomsData, loadServersData } from './rooms';
 import { getKey, setKey } from './global';
 import { loadProfile } from './profile';
-import {
-    currentRoomData,
-    currentRoomId,
-    currentRoomLoaded,
-    currentRoomMessages,
-} from 'stores/rooms';
 import { loadHomePosts, loadOurPosts } from './dashboard';
 
 // Preserve modal state
@@ -80,14 +72,9 @@ export function initSocket(callback?: () => void): void {
 
     // Disconnect logic
     socket.on('disconnect', () => {
-        currentRoomLoaded.set(false);
-        currentRoomId.set(undefined);
-        currentRoomData.set(undefined);
-        currentRoomMessages.set([]);
-
         loginSucceeded.set(undefined);
 
-        setTitle('Fronvo');
+        setTitle('');
 
         socket.off('connect');
 
@@ -122,45 +109,49 @@ export async function performLogin(
 ): Promise<void> {
     return new Promise((resolve) => {
         async function loadAccountData(): Promise<void> {
-            let profileData: FronvoAccount;
-            let rooms: Room[];
-            let serversList: Server[];
-            let dashboardPosts: Post[];
-            let ourPosts: Post[];
+            return new Promise((resolve) => {
+                let profileData: FronvoAccount;
+                let rooms: Room[];
+                let serversList: Server[];
+                let dashboardPosts: Post[];
+                let ourPosts: Post[];
 
-            loadProfile(cachedAccountData).then((data) => {
-                profileData = data;
+                loadProfile(cachedAccountData).then((data) => {
+                    profileData = data;
 
-                loadOurPosts(profileData.profileId).then((posts) => {
-                    ourPosts = posts;
+                    loadOurPosts(profileData.profileId).then((posts) => {
+                        ourPosts = posts;
+                    });
                 });
-            });
 
-            loadRoomsData().then((convos) => {
-                rooms = convos;
-            });
+                loadRoomsData().then((convos) => {
+                    rooms = convos;
+                });
 
-            loadServersData().then((servers) => {
-                serversList = servers;
-            });
+                loadServersData().then((servers) => {
+                    serversList = servers;
+                });
 
-            loadHomePosts().then((posts) => {
-                dashboardPosts = posts;
-            });
+                loadHomePosts().then((posts) => {
+                    dashboardPosts = posts;
+                });
 
-            // instead of just using callbacks, login is very fast either way
-            const interval = setInterval(() => {
-                if (
-                    profileData &&
-                    rooms &&
-                    serversList &&
-                    dashboardPosts &&
-                    ourPosts
-                ) {
-                    loginSucceeded.set(true);
-                    clearInterval(interval);
-                }
-            }, 10);
+                // instead of just using callbacks, login is very fast either way
+                const interval = setInterval(() => {
+                    if (
+                        profileData &&
+                        rooms &&
+                        serversList &&
+                        dashboardPosts &&
+                        ourPosts
+                    ) {
+                        resolve();
+
+                        loginSucceeded.set(true);
+                        clearInterval(interval);
+                    }
+                }, 10);
+            });
         }
 
         socket.emit('isLoggedIn', async ({ loggedIn }) => {
@@ -235,9 +226,6 @@ export function showModal(newModal: ModalTypes): void {
 
 export function dismissModal(callback?: Function): void {
     // Pending operations
-
-    dropdownProfileData.set(undefined);
-
     if (!modalStateVisible) {
         if (callback) callback();
     } else {
@@ -264,8 +252,6 @@ export function showDropdown(
     customLeft?: number,
     customTop?: number
 ): void {
-    dropdownForAccountInfo.set(false);
-
     dismissDropdown(() => {
         const tempPos = targetElement.getBoundingClientRect();
         if (!customLeft) customLeft = 0;
@@ -305,6 +291,25 @@ export function showDropdown(
     });
 }
 
+export function showDropdownMouse(
+    newPopup: DropdownTypes,
+    mousePos: number[]
+): void {
+    dismissDropdown(() => {
+        dropdownPosition.set([mousePos[0], mousePos[1]]);
+
+        // Set the modal dynamically
+        currentDropdownId.set(newPopup);
+
+        // Helpful variable
+        dropdownVisible.set(true);
+
+        setTimeout(() => {
+            dropdownAnimationFinished.set(true);
+        }, 150);
+    });
+}
+
 export function dismissDropdown(callback?: Function): void {
     if (!dropdownStateVisible) {
         if (callback) callback();
@@ -318,8 +323,12 @@ export function dismissDropdown(callback?: Function): void {
     dropdownAnimationFinished.set(false);
 }
 
-export function setTitle(title: string): void {
-    fronvoTitle.set(title);
+export function setTitle(title: string, removePrefix?: boolean): void {
+    fronvoTitle.set(
+        `${!removePrefix ? 'Fronvo' : ''}${
+            title.length > 0 && !removePrefix ? ' | ' : ''
+        }${title}`
+    );
 }
 
 export async function findCachedAccount(

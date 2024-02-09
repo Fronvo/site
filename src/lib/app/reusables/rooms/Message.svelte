@@ -141,7 +141,7 @@
                 <img
                     src={profileData.avatar
                         ? `${profileData.avatar}/tr:w-40:h-40`
-                        : '/images/avatar.svg'}
+                        : '/images/avatar.png'}
                     draggable={false}
                     alt={`${profileData.profileId}\'s avatar'`}
                 />
@@ -160,7 +160,7 @@
                 id="avatar"
                 src={profileData.avatar
                     ? `${profileData.avatar}/tr:w-80:h-80`
-                    : '/images/avatar.svg'}
+                    : '/images/avatar.png'}
                 draggable={false}
                 alt={`${profileData.profileId}\'s avatar'`}
             />

@@ -92,7 +92,7 @@
                 <img
                     src={avatar
                         ? `${avatar}/tr:w-32:h-32`
-                        : '/images/avatar.svg'}
+                        : '/images/avatar.png'}
                     draggable={false}
                     alt={`${profileId}\'s avatar'`}
                 />

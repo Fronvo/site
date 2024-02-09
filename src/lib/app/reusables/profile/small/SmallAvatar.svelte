@@ -34,7 +34,7 @@
         <img
             on:click={viewProfile}
             on:keydown={viewProfile}
-            src="/images/avatar.svg"
+            src="/images/avatar.png"
             draggable={false}
             alt="Avatar"
             id="avatar"

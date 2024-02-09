@@ -33,7 +33,7 @@
 <div class="switch-container">
     <img
         id="avatar"
-        src={avatar ? avatar : '/images/avatar.svg'}
+        src={avatar ? avatar : '/images/avatar.png'}
         alt={`${profileId}'s avatar`}
         draggable={false}
     />

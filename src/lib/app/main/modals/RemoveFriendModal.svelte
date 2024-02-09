@@ -37,7 +37,7 @@
     <img
         src={$targetFriendModal.avatar
             ? $targetFriendModal.avatar
-            : '/images/avatar.svg'}
+            : '/images/avatar.png'}
         alt={`${$targetFriendModal.profileId}\'s avatar'`}
         draggable={false}
     />

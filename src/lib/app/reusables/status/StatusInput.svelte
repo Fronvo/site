@@ -27,7 +27,7 @@
             draggable={false}
         />
     {:else}
-        <img src="/images/avatar.svg" draggable={false} alt="Avatar" />
+        <img src="/images/avatar.png" draggable={false} alt="Avatar" />
     {/if}
 
     <div class="secondary-container">

@@ -58,7 +58,7 @@
         id="avatar"
         src={$ourData.avatar
             ? `${$ourData.avatar}/tr:w-512:h-512`
-            : '/images/avatar.svg'}
+            : '/images/avatar.png'}
         draggable={false}
         alt={`${$ourData.profileId}\'s avatar'`}
     />

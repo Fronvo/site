@@ -35,7 +35,7 @@
                     id="icon"
                     src={$currentRoomData?.dmUser.avatar
                         ? `${$currentRoomData.dmUser.avatar}/tr:w-56:h-56`
-                        : '/images/avatar.svg'}
+                        : '/images/avatar.png'}
                     draggable={false}
                     alt="Avatar"
                 />

@@ -25,7 +25,7 @@
 <div class={`invite-container ${isInServer ? 'hide' : ''}`}>
     <img
         id="avatar"
-        src={avatar ? avatar : '/images/avatar.svg'}
+        src={avatar ? avatar : '/images/avatar.png'}
         alt={`${profileId}'s avatar`}
         draggable={false}
     />

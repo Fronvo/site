@@ -173,7 +173,7 @@
                     id="avatar"
                     src={dmUser?.avatar
                         ? `${dmUser?.avatar}/tr:w-64:h-64`
-                        : '/images/avatar.svg'}
+                        : '/images/avatar.png'}
                     alt={`${dmUser?.username}\'s avatar'`}
                     draggable={false}
                 />

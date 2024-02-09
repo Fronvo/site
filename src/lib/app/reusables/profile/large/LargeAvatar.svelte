@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import type { Room } from 'interfaces/all';
     import { socket } from 'stores/main';
     import {
@@ -35,6 +36,8 @@
 
             if ($currentRoomData?.roomId == dm.roomId) return;
 
+            dm.unreadCount = 0;
+
             $currentRoomData = dm;
             $currentRoomLoaded = false;
             $currentRoomLoaded = true;
@@ -46,6 +49,7 @@
             $isInServer = false;
 
             setTitle(`@${dm.dmUser.profileId}`);
+            goto(`/@${dm.dmUser.profileId}`);
         }
     }
 
@@ -127,7 +131,7 @@
 <div class="top-container">
     <img
         id="avatar"
-        src={avatar ? avatar : '/images/avatar.svg'}
+        src={avatar ? avatar : '/images/avatar.png'}
         alt={`Avatar`}
         draggable={false}
     />

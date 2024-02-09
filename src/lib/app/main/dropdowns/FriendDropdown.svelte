@@ -14,6 +14,7 @@
         isInServer,
     } from 'stores/rooms';
     import type { Room } from 'interfaces/all';
+    import { goto } from '$app/navigation';
 
     async function attemptEnterRoom(): Promise<void> {
         for (const dmIndex in $dmsList) {
@@ -22,6 +23,8 @@
             if (dm.dmUser.profileId != $targetFriendModal.profileId) continue;
 
             if ($currentRoomData?.roomId == dm.roomId) return;
+
+            dm.unreadCount = 0;
 
             $currentRoomData = dm;
             $currentRoomLoaded = false;
@@ -34,6 +37,7 @@
             $isInServer = false;
 
             setTitle(`@${dm.dmUser.profileId}`);
+            goto(`/@${dm.dmUser.profileId}`);
         }
     }
 

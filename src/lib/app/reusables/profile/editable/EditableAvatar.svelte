@@ -66,7 +66,7 @@
         <img
             on:click={changeAvatar}
             on:keydown={changeAvatar}
-            src="/images/avatar.svg"
+            src="/images/avatar.png"
             draggable={false}
             alt="Avatar"
             id="avatar"

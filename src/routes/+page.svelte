@@ -19,20 +19,11 @@
 </script>
 
 {#if mountReady && $indexVisible}
-    <div class="index-container">
+    <div
+        class="w-full h-screen flex flex-col overflow-y-scroll overflow-h-hidden"
+    >
         {#if $indexVisible}
             <IndexMain />
         {/if}
     </div>
 {/if}
-
-<style>
-    .index-container {
-        display: flex;
-        flex-direction: column;
-        width: 100%;
-        height: 100vh;
-        overflow-y: scroll;
-        overflow-x: hidden;
-    }
-</style>

@@ -16,6 +16,10 @@ export default {
                     max: '600px',
                 },
             },
+
+            backgroundImage: {
+                main: "url('/images/bg.jpg')",
+            },
         },
     },
     plugins: [],

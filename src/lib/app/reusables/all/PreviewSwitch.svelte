@@ -15,7 +15,7 @@
                 // Then, update localStorage and refresh fronvo
                 setKey('token', token);
 
-                location.href = '/app';
+                location.href = '/profile';
             } else {
                 // Token is invalid, remove
                 remove();

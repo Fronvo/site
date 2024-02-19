@@ -45,9 +45,10 @@
 
 <div
     class={`post-container ${
-        $targetPostModal?.post == postData &&
-        $dropdownVisible &&
-        $currentDropdownId == DropdownTypes.Post
+        ($targetPostModal?.post == postData &&
+            $dropdownVisible &&
+            $currentDropdownId == DropdownTypes.Post) ||
+        ($dropdownVisible && $currentDropdownId == DropdownTypes.Account)
             ? 'active'
             : ''
     }`}
@@ -107,7 +108,7 @@
         height: 100%;
         transition: 125ms;
         opacity: 0;
-        backdrop-filter: brightness(150%);
+        backdrop-filter: brightness(50%);
     }
 
     .post-container:hover .wrapper {
@@ -119,7 +120,7 @@
     }
 
     .active {
-        filter: brightness(120%);
+        filter: brightness(50%);
     }
 
     svg {

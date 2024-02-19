@@ -25,8 +25,8 @@ export const defaultTheme: ThemingOptions = {
     primary: 'rgb(255, 255, 255, 0.075)',
     secondary: 'rgb(255, 255, 255, 0.1)',
     tertiary: 'rgb(255, 255, 255, 0.15)',
-    red: 'rgb(231, 2, 2, 0.25)',
-    red_hover: 'rgb(231, 2, 2, 0.5)',
+    red: 'rgb(231, 2, 2, 0.5)',
+    red_hover: 'rgb(231, 2, 2, 0.75)',
 
     gray: 'rgb(207, 215, 230)',
 

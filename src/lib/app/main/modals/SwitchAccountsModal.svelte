@@ -1,16 +1,11 @@
 <script lang="ts">
-    import {
-        dismissModal,
-        initSecondarySocket,
-        showModal,
-    } from 'utilities/main';
+    import { initSecondarySocket, showModal } from 'utilities/main';
     import ModalTemplate from '../ModalTemplate.svelte';
     import { ModalTypes, type ModalData } from 'stores/modals';
     import ProfilePreviewSwitch from '$lib/app/reusables/all/PreviewSwitch.svelte';
     import type { SwitchedAccount } from 'interfaces/all';
     import { getKey } from 'utilities/global';
     import { currentToken, setSecondarySocket } from 'stores/main';
-    import InfoHeader from '$lib/app/reusables/all/InfoHeader.svelte';
     import { onDestroy, onMount } from 'svelte';
     import { ourData } from 'stores/profile';
 

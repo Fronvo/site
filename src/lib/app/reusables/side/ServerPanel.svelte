@@ -79,8 +79,8 @@
         padding-right: 15px;
         transition: 125ms;
         border-bottom: 1px solid var(--primary);
-        padding-top: 5px;
-        padding-bottom: 5px;
+        padding-top: 12px;
+        padding-bottom: 12px;
         cursor: pointer;
     }
 

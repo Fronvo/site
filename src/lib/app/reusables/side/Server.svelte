@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Server } from 'interfaces/all';
-    import { mousePos, socket } from 'stores/main';
+    import { mousePos } from 'stores/main';
     import {
         currentChannel,
         currentRoomData,
@@ -10,9 +10,6 @@
         isInServer,
         tempCurrentServer,
     } from 'stores/rooms';
-    import { onMount } from 'svelte';
-    import type { Unsubscriber } from 'svelte/store';
-    import { onDestroy } from 'svelte';
     import { setTitle, showDropdownMouse } from 'utilities/main';
     import {
         DropdownTypes,
@@ -21,8 +18,6 @@
     } from 'stores/dropdowns';
 
     export let serverData: Server;
-
-    let unsubscribe: Unsubscriber;
 
     async function enterServer(): Promise<void> {
         if ($currentServer?.serverId == serverData.serverId) return;
@@ -44,19 +39,6 @@
 
         showDropdownMouse(DropdownTypes.ServerTempSettings, $mousePos);
     }
-
-    onMount(() => {
-        socket.on('roomDataUpdated', ({ roomId, name, icon }) => {
-            if (serverData.serverId == roomId) {
-                serverData.name = name;
-                serverData.icon = icon;
-            }
-        });
-    });
-
-    onDestroy(() => {
-        if (unsubscribe) unsubscribe();
-    });
 </script>
 
 {#if serverData.icon}

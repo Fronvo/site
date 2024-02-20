@@ -9,7 +9,6 @@
     let uploading = false;
 
     export let avatar: Writable<string>;
-    export let online: boolean;
 
     function changeAvatar(): void {
         if (uploading) return;

@@ -11,16 +11,11 @@ import type {
     FetchProfileDataResult,
 } from './account/fetchProfileData';
 import type { FetchProfileIdResult } from './account/fetchProfileId';
-import type { JoinRoomParams, JoinRoomResult } from './account/joinRoom';
 import type { LogoutResult } from './account/logout';
 import type {
     SendMessageParams,
     SendMessageResult,
 } from './account/sendMessage';
-import type {
-    UpdateRoomDataParams,
-    UpdateRoomDataResult,
-} from './account/updateRoomData';
 import type {
     UpdateProfileDataParams,
     UpdateProfileDataResult,
@@ -44,7 +39,6 @@ import type {
     ResetPasswordVerifyParams,
     ResetPasswordVerifyResult,
 } from './noAccount/resetPasswordVerify';
-import type { KickMemberParams, KickMemberResult } from './account/kickMember';
 import type {
     UpdateProfileStatusParams,
     UpdateProfileStatusResult,

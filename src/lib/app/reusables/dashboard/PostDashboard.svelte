@@ -345,13 +345,4 @@
         flex: 1;
         letter-spacing: 0.1px;
     }
-
-    #send {
-        fill: none;
-        stroke: white;
-    }
-
-    #send:hover {
-        stroke: var(--gray);
-    }
 </style>

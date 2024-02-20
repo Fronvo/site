@@ -13,7 +13,7 @@
 
 <div class="profile-container">
     <EditableBanner {updateCallback} />
-    <EditableAvatar {avatar} online={true} />
+    <EditableAvatar {avatar} />
 
     <div class="secondary-container">
         <EditableIdentifier {username} />

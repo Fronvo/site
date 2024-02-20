@@ -43,6 +43,7 @@
         height: max-content;
         width: 120px;
         height: 120px;
+        cursor: default;
     }
 
     h1 {

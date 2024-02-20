@@ -3,28 +3,13 @@
         currentChannel,
         currentRoomData,
         currentRoomId,
-        currentServer,
         dmsShowProfile,
         isInServer,
-        currentRoomData as roomData,
     } from 'stores/rooms';
-    import { onMount } from 'svelte';
-    import { socket } from 'stores/main';
-    import { setTitle } from 'utilities/main';
 
     function toggleProfileview(): void {
         $dmsShowProfile = !$dmsShowProfile;
     }
-
-    onMount(() => {
-        socket.on('roomDataUpdated', ({ roomId, name }) => {
-            if (roomId == $roomData.roomId) {
-                $currentChannel.name = name;
-
-                setTitle(`${$currentServer.name} | #${name}`);
-            }
-        });
-    });
 </script>
 
 <div class="placeholder">

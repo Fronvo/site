@@ -71,6 +71,10 @@
 {/if}
 
 <style>
+    a {
+        text-decoration: underline;
+    }
+
     .main-container {
         position: fixed;
         width: max-content;

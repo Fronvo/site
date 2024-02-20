@@ -140,7 +140,7 @@ export function sendMessage(
             creationDate: new Date().toString(),
             isImage: false,
             isReply: replyingToP ? true : false,
-            replyContent: '',
+            replyId: replyingToIdP,
         },
         profileData: ourData,
     });

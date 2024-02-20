@@ -214,6 +214,7 @@
     .single h1 {
         margin: 0;
         margin-bottom: 10px;
+        font-size: 1.8rem;
     }
 
     .single input {

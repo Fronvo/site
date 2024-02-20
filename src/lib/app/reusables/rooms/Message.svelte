@@ -9,7 +9,6 @@
     import { differenceInMinutes } from 'date-fns';
     import {
         findCachedAccount,
-        showDropdown,
         showDropdownMouse,
         showModal,
     } from 'utilities/main';
@@ -37,7 +36,6 @@
     let showTime: boolean;
     let showLinks = false;
 
-    let avatar: Element;
     let image: HTMLImageElement;
 
     $: {
@@ -106,6 +104,21 @@
 
         showDropdownMouse(DropdownTypes.Message, $mousePos);
     }
+
+    function getRepliedMessage(): {
+        message: RoomMessage;
+        profileData: FronvoAccount;
+    } {
+        console.log(messageData.replyId);
+
+        for (const messageIndex in $roomMessages) {
+            const message = $roomMessages[messageIndex];
+
+            if (message.message?.messageId == messageData.replyId) {
+                return message;
+            }
+        }
+    }
 </script>
 
 {#if showTime && !isPreview}
@@ -139,14 +152,27 @@
 
             <div class="wrapper">
                 <img
-                    src={profileData.avatar
-                        ? `${profileData.avatar}/tr:w-40:h-40`
+                    src={getRepliedMessage().profileData.avatar
+                        ? `${
+                              getRepliedMessage().profileData.avatar
+                          }/tr:w-40:h-40`
                         : '/images/avatar.png'}
                     draggable={false}
-                    alt={`${profileData.profileId}\'s avatar'`}
+                    alt={`${
+                        getRepliedMessage().profileData.profileId
+                    }\'s avatar'`}
                 />
-                <h1 id="username">{profileData.username}</h1>
-                <h1 id="reply" class={`reply-${messageData.messageId}`}>hi</h1>
+                <h1 id="username">
+                    {getRepliedMessage().profileData.username}
+                </h1>
+                <h1
+                    id="reply"
+                    class={`reply-${getRepliedMessage().message.messageId}`}
+                >
+                    {getRepliedMessage().message.content
+                        ? getRepliedMessage().message.content
+                        : 'Unknown message'}
+                </h1>
             </div>
         </div>
     {/if}
@@ -154,12 +180,11 @@
     <div class="info-container">
         {#if !skipContext}
             <img
-                bind:this={avatar}
                 on:click={showProfileModal}
                 on:keydown={showProfileModal}
                 id="avatar"
                 src={profileData.avatar
-                    ? `${profileData.avatar}/tr:w-80:h-80`
+                    ? `${profileData.avatar}/tr:w-88:h-88`
                     : '/images/avatar.png'}
                 draggable={false}
                 alt={`${profileData.profileId}\'s avatar'`}
@@ -300,7 +325,7 @@
         display: flex;
         align-items: start;
         flex-direction: column;
-        margin-left: 13px;
+        margin-left: 9px;
     }
 
     .skip .info-container .inner {
@@ -430,10 +455,10 @@
     }
 
     #avatar {
-        width: 40px;
-        min-width: 40px;
-        height: 40px;
-        min-height: 40px;
+        width: 44px;
+        min-width: 44px;
+        height: 44px;
+        min-height: 44px;
         border-radius: 30px;
         -webkit-touch-callout: none;
         -webkit-user-select: none;

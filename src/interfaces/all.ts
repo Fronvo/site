@@ -84,7 +84,7 @@ export interface RoomMessage {
     content: string;
     creationDate: string;
     isReply: boolean;
-    replyContent: string;
+    replyId: string;
     isImage: boolean;
     attachment?: string;
     isSpotify?: boolean;

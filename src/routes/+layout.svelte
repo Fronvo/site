@@ -149,14 +149,6 @@
         socket.on('newMessage', ({ newMessageData, roomId }) => {
             // Not same channel / dm
             if (($currentChannel?.channelId || $currentRoomId) != roomId) {
-                // Not ourselves
-                if (
-                    newMessageData.profileData.profileId != $ourData.profileId
-                ) {
-                    var audio = new Audio('/sounds/ping.mp3');
-                    audio.play();
-                }
-
                 setTimeout(() => {
                     pushCachedMessage(roomId, newMessageData, $cachedRooms);
                 }, 0);

@@ -109,8 +109,6 @@
         message: RoomMessage;
         profileData: FronvoAccount;
     } {
-        console.log(messageData.replyId);
-
         for (const messageIndex in $roomMessages) {
             const message = $roomMessages[messageIndex];
 

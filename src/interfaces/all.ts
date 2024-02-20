@@ -70,6 +70,7 @@ export interface Server {
     members?: string[];
     channels?: Channel[];
     roles?: string[];
+    bannedMembers?: string[];
 }
 
 export interface Channel {

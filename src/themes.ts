@@ -21,6 +21,7 @@ interface ThemingOptions {
     modal_input_size: string;
 }
 
+// TODO: Prob white with acryllic, gradient aint it
 export const defaultTheme: ThemingOptions = {
     primary: 'rgb(255, 255, 255, 0.075)',
     secondary: 'rgb(255, 255, 255, 0.1)',

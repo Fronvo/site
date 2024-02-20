@@ -36,6 +36,8 @@ import type { ServerJoinedResult } from './account/serverJoined';
 import type { ServerInvitesToggledResult } from './account/serverInvitesToggled';
 import type { ServerInviteRegeneratedResult } from './account/serverInviteRegenerated';
 import type { ChannelRenamedResult } from './account/channelRenamed';
+import type { MemberBannedResult } from './account/memberBanned';
+import type { MemberUnbannedResult } from './account/memberUnbanned';
 
 export interface ServerToClientEvents {
     registerVerify: (
@@ -59,6 +61,10 @@ export interface ServerToClientEvents {
     memberJoined: ({}: MemberJoinedResult) => void;
 
     memberLeft: ({}: MemberLeftResult) => void;
+
+    memberBanned: ({}: MemberBannedResult) => void;
+
+    memberUnbanned: ({}: MemberUnbannedResult) => void;
 
     onlineStatusUpdated: ({}: OnlineStatusUpdatedParams) => void;
 

@@ -75,7 +75,7 @@
         socket.off('memberLeft');
 
         socket.on('memberJoined', async ({ roomId, profileId }) => {
-            if (roomId == ($currentServer.serverId || $currentRoomId)) {
+            if (roomId == ($currentServer?.serverId || $currentRoomId)) {
                 $currentServer.members.push(profileId);
                 $roomData = $roomData;
 
@@ -142,7 +142,6 @@
         padding-left: 10px;
         padding-bottom: 10px;
         user-select: none;
-        background: var(--primary);
     }
 
     .members-container::-webkit-scrollbar {

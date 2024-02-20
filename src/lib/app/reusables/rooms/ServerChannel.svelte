@@ -39,7 +39,11 @@
         $currentRoomLoaded = true;
         $currentRoomMessages = [];
 
-        goto(`/${$currentServer.invite}/${channel.name}`);
+        goto(
+            `/${encodeURIComponent($currentServer.invite)}/${encodeURIComponent(
+                channel.name
+            )}`
+        );
 
         setTitle(`#${channel.name} | ${$currentServer.name}`);
     }

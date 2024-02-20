@@ -1,18 +1,27 @@
 <script lang="ts">
     import type { FronvoAccount } from 'interfaces/all';
-    import { ModalTypes, targetProfileModal } from 'stores/modals';
+    import {
+        ModalTypes,
+        targetMemberModal,
+        targetProfileModal,
+    } from 'stores/modals';
     import { ourData } from 'stores/profile';
     import { onMount } from 'svelte';
     import type { Unsubscriber } from 'svelte/store';
     import { onDestroy } from 'svelte';
-    import { showModal } from 'utilities/main';
-    import { dropdownVisible } from 'stores/dropdowns';
+    import { showDropdown, showModal } from 'utilities/main';
     import { socket } from 'stores/main';
     import { currentServer } from 'stores/rooms';
+    import {
+        DropdownTypes,
+        currentDropdownId,
+        dropdownVisible,
+    } from 'stores/dropdowns';
 
     export let profileData: FronvoAccount;
 
     let unsubscribe: Unsubscriber;
+    let memberContainer: HTMLDivElement;
 
     function showProfileModal(): void {
         if (profileData.profileId == $ourData.profileId) {
@@ -22,6 +31,12 @@
         }
 
         showModal(ModalTypes.Profile);
+    }
+
+    function showOptions(): void {
+        $targetMemberModal = profileData;
+
+        showDropdown(DropdownTypes.Member, memberContainer, 'bottom', 25, 10);
     }
 
     onMount(() => {
@@ -67,9 +82,21 @@
 </script>
 
 <div
+    bind:this={memberContainer}
     on:click={showProfileModal}
     on:keydown={showProfileModal}
-    class={`member-container ${!profileData.online ? 'offline' : ''}`}
+    class={`member-container ${!profileData.online ? 'offline' : ''} ${
+        $dropdownVisible &&
+        $currentDropdownId == DropdownTypes.Member &&
+        $targetMemberModal.profileId == profileData.profileId
+            ? 'active'
+            : ''
+    }`}
+    on:contextmenu={(ev) => {
+        showOptions();
+
+        ev.preventDefault();
+    }}
 >
     <div class="badge-container">
         <img
@@ -213,5 +240,18 @@
 
     .offline #status {
         display: none;
+    }
+
+    .active {
+        background: var(--secondary);
+    }
+
+    .active #avatar {
+        opacity: 1;
+    }
+
+    .active #username {
+        opacity: 1;
+        color: white;
     }
 </style>

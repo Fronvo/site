@@ -2,34 +2,34 @@
     import type { FronvoAccount } from 'interfaces/all';
     import { dismissModal, findCachedAccount } from 'utilities/main';
     import { cachedAccountData } from 'stores/main';
-    import { ourData } from 'stores/profile';
     import { onDestroy, onMount } from 'svelte';
-    import FriendPending from '$lib/app/reusables/top/FriendPending.svelte';
     import ModalTemplate from '../ModalTemplate.svelte';
     import type { ModalData } from 'stores/modals';
     import type { Unsubscriber } from 'svelte/motion';
+    import { currentServer, serversList } from 'stores/rooms';
+    import BannedMember from '$lib/app/reusables/rooms/BannedMember.svelte';
 
-    let pendingInfo: FronvoAccount[] = [];
+    let bannedInfo: FronvoAccount[] = [];
     let loadingFinished = false;
     let pending = false;
 
     let unsubscribe: Unsubscriber;
 
-    async function loadPendingFriends(): Promise<void> {
+    async function loadBannedMembers(): Promise<void> {
         if (pending) return;
 
         loadingFinished = false;
         pending = true;
 
-        pendingInfo = [];
+        bannedInfo = [];
 
         // Fetch all room members, notify UI once finished
-        for (const memberIndex in $ourData.pendingFriendRequests) {
+        for (const memberIndex in $currentServer?.bannedMembers) {
             findCachedAccount(
-                $ourData.pendingFriendRequests[memberIndex],
+                $currentServer.bannedMembers[memberIndex],
                 $cachedAccountData
             ).then((data) => {
-                pendingInfo.push(data);
+                bannedInfo.push(data);
 
                 checkLoadingDone();
             });
@@ -37,30 +37,39 @@
 
         function checkLoadingDone(): void {
             // Finish loading
-            if (pendingInfo.length == $ourData.pendingFriendRequests.length) {
+            if (bannedInfo.length == $currentServer?.bannedMembers.length) {
                 loadingFinished = true;
                 pending = false;
 
-                pendingInfo = pendingInfo;
+                bannedInfo = bannedInfo;
             }
         }
     }
 
     onMount(() => {
-        loadPendingFriends();
+        loadBannedMembers();
 
-        unsubscribe = ourData.subscribe((data) => {
-            if (!data) return;
+        unsubscribe = serversList.subscribe((servers) => {
+            if (!servers) return;
 
-            // 0 pending, dismiss
-            if (data.pendingFriendRequests.length == 0) {
-                dismissModal();
-                return;
+            // Loop servers
+            for (const serverIndex in servers) {
+                const server = servers[serverIndex];
+
+                if (server.serverId == $currentServer.serverId) {
+                    // 0 banned, dismiss
+                    if (server.bannedMembers.length == 0) {
+                        dismissModal();
+                        return;
+                    }
+
+                    // Pending changed, update
+                    if (bannedInfo.length != server.bannedMembers.length)
+                        loadBannedMembers();
+
+                    break;
+                }
             }
-
-            // Pending changed, update
-            if (pendingInfo.length != data.pendingFriendRequests.length)
-                loadPendingFriends();
         });
     });
 
@@ -69,7 +78,7 @@
     });
 
     const data: ModalData = {
-        title: 'Pending requests',
+        title: 'Banned members',
         actions: [
             {
                 title: 'Dismiss',
@@ -82,8 +91,8 @@
 <ModalTemplate {data}>
     <div class="members-container">
         {#if loadingFinished}
-            {#each pendingInfo as profileData}
-                <FriendPending {profileData} />
+            {#each bannedInfo as profileData}
+                <BannedMember {profileData} />
             {/each}
         {/if}
     </div>

@@ -33,6 +33,9 @@ import DeleteChannelModal from '$lib/app/main/modals/DeleteChannelModal.svelte';
 import InvitePeopleModal from '$lib/app/main/modals/InvitePeopleModal.svelte';
 import SharePostModal from '$lib/app/main/modals/SharePostModal.svelte';
 import LeaveServerModal from '$lib/app/main/modals/LeaveServerModal.svelte';
+import KickMemberModal from '$lib/app/main/modals/KickMemberModal.svelte';
+import BanMemberModal from '$lib/app/main/modals/BanMemberModal.svelte';
+import BannedMembersModal from '$lib/app/main/modals/BannedMembersModal.svelte';
 
 /****************************** Modals ******************************/
 export const modals = [
@@ -62,6 +65,9 @@ export const modals = [
     InvitePeopleModal,
     SharePostModal,
     LeaveServerModal,
+    KickMemberModal,
+    BanMemberModal,
+    BannedMembersModal,
 ];
 /****************************** Modals ******************************/
 
@@ -93,6 +99,9 @@ export enum ModalTypes {
     InvitePeople,
     SharePost,
     LeaveServer,
+    KickMember,
+    BanMember,
+    BannedMembers,
 }
 
 export interface ModalActions {
@@ -125,6 +134,10 @@ export const targetProfileModal: Writable<FronvoAccount> = writable();
 
 /****************************** FriendDropdown, RemoveFriendModal ******************************/
 export const targetFriendModal: Writable<FronvoAccount> = writable();
+/****************************** FriendDropdown ******************************/
+
+/****************************** KickMemberModal, BanMemberModal ******************************/
+export const targetMemberModal: Writable<FronvoAccount> = writable();
 /****************************** FriendDropdown ******************************/
 
 /****************************** DeleteMessageModal ******************************/

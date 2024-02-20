@@ -473,6 +473,53 @@
                 }
             }
         });
+
+        socket.on('memberBanned', ({ serverId, profileId }) => {
+            for (const serverIndex in $serversList) {
+                const server = $serversList[serverIndex];
+
+                if (server.serverId == serverId) {
+                    // Don't update members, this is only for admins, memberLeft has already been fired
+                    $serversList[serverIndex].bannedMembers.push(profileId);
+
+                    // Update realtime
+                    $serversList = $serversList;
+
+                    // Update current server too
+                    if ($currentServer?.serverId == server.serverId) {
+                        $currentServer = $serversList[serverIndex];
+                    }
+
+                    break;
+                }
+            }
+        });
+
+        socket.on('memberUnbanned', ({ serverId, profileId }) => {
+            for (const serverIndex in $serversList) {
+                const server = $serversList[serverIndex];
+
+                if (server.serverId == serverId) {
+                    // Don't update members, this is only for admins, memberLeft has already been fired
+                    $serversList[serverIndex].bannedMembers.splice(
+                        $serversList[serverIndex].bannedMembers.indexOf(
+                            profileId
+                        ),
+                        1
+                    );
+
+                    // Update realtime
+                    $serversList = $serversList;
+
+                    // Update current server too
+                    if ($currentServer?.serverId == server.serverId) {
+                        $currentServer = $serversList[serverIndex];
+                    }
+
+                    break;
+                }
+            }
+        });
     }
 
     onMount(() => {

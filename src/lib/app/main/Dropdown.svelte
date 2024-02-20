@@ -7,7 +7,6 @@
     } from 'stores/dropdowns';
     import { onDestroy, onMount } from 'svelte';
     import type { Unsubscriber } from 'svelte/store';
-    import { blur, fade, scale, slide } from 'svelte/transition';
 
     let element: HTMLDivElement;
     let unsubscribe: Unsubscriber;
@@ -35,6 +34,8 @@
                 if ($dropdownPosition[1] < -30) {
                     element.style.top = '0px';
                 }
+
+                // TODO: Rather than bounding calc offset left - clientWidth
 
                 element.style.opacity = '1';
             }, 0);

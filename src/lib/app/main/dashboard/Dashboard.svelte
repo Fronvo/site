@@ -8,9 +8,12 @@
     import { onDestroy, onMount } from 'svelte';
     import type { Unsubscriber } from 'svelte/store';
     import DashboardProfileOptions from './DashboardProfileOptions.svelte';
+    import { isInServer } from 'stores/rooms';
+    import { goto } from '$app/navigation';
 
     let dashboardContainer: HTMLDivElement;
     let unsubscribe: Unsubscriber;
+    let unsubscribe2: Unsubscriber;
 
     onMount(() => {
         if (!dashboardContainer) return;
@@ -22,10 +25,23 @@
                 dashboardContainer.scrollTop = 0;
             }, 0);
         });
+
+        unsubscribe2 = isInServer.subscribe((state) => {
+            if (!state) {
+                if ($activeDashboardTab == DashboardOptions.Dashboard) {
+                    goto('/homepage');
+                } else if ($activeDashboardTab == DashboardOptions.Profile) {
+                    goto('/profile');
+                } else if ($activeDashboardTab == DashboardOptions.Friends) {
+                    goto('/friends');
+                }
+            }
+        });
     });
 
     onDestroy(() => {
         unsubscribe();
+        unsubscribe2();
     });
 </script>
 

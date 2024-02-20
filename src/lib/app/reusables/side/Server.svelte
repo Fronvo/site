@@ -16,6 +16,7 @@
         currentDropdownId,
         dropdownVisible,
     } from 'stores/dropdowns';
+    import { goto } from '$app/navigation';
 
     export let serverData: Server;
 
@@ -30,6 +31,8 @@
         $currentServer = serverData;
 
         $currentRoomMessages = [];
+
+        goto(`/${serverData.invite}`);
 
         setTitle(serverData.name);
     }

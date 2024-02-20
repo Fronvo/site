@@ -36,10 +36,12 @@
         dmsList,
         cachedRooms,
         pendingProfileDMId,
+        pendingServerId,
+        pendingChannelId,
     } from 'stores/rooms';
     import { ourPosts } from 'stores/dashboard';
     import { ourData } from 'stores/profile';
-    import { loadHomePosts, loadOurPosts } from 'utilities/dashboard';
+    import { loadOurPosts } from 'utilities/dashboard';
     import { pushCachedMessage } from 'utilities/rooms';
     import TopNav from '$lib/index/TopNav.svelte';
     import Footer from '$lib/index/Footer.svelte';
@@ -117,8 +119,82 @@
                                     setTitle(`@${dm.dmUser.profileId}`);
 
                                     dm.unreadCount = 0;
+
+                                    return;
                                 }
                             }
+                        } else if ($pendingServerId) {
+                            for (const serverIndex in $serversList) {
+                                const server = $serversList[serverIndex];
+
+                                if (server.invite == $pendingServerId) {
+                                    if ($pendingChannelId) {
+                                        for (const channelIndex in server.channels) {
+                                            const channel =
+                                                server.channels[channelIndex];
+
+                                            if (
+                                                channel.name ==
+                                                $pendingChannelId
+                                            ) {
+                                                $currentRoomId = undefined;
+                                                $currentRoomData = undefined;
+
+                                                $isInServer = true;
+                                                $currentServer = server;
+                                                $currentChannel = channel;
+                                                $currentRoomLoaded = false;
+                                                $currentRoomLoaded = true;
+                                                $currentRoomMessages = [];
+
+                                                setTitle(
+                                                    `#${channel.name} | ${server.name}`
+                                                );
+
+                                                return;
+                                            }
+                                        }
+
+                                        // Invalid channel
+                                        $currentChannel = undefined;
+                                        $currentRoomId = undefined;
+                                        $currentRoomData = undefined;
+
+                                        $isInServer = true;
+                                        $currentServer = server;
+
+                                        $currentRoomMessages = [];
+
+                                        goto(`/${server.invite}`, {
+                                            replaceState: true,
+                                        });
+
+                                        setTitle(server.name);
+
+                                        return;
+                                    } else {
+                                        $currentChannel = undefined;
+                                        $currentRoomId = undefined;
+                                        $currentRoomData = undefined;
+
+                                        $isInServer = true;
+                                        $currentServer = server;
+
+                                        $currentRoomMessages = [];
+
+                                        setTitle(server.name);
+
+                                        return;
+                                    }
+                                }
+                            }
+
+                            // Invalid server
+                            goto('/homepage', {
+                                replaceState: true,
+                            });
+
+                            setTitle('');
                         }
                     });
                 });
@@ -383,6 +459,14 @@
                     // Update current server too
                     if ($currentServer?.serverId == server.serverId) {
                         $currentServer = server;
+
+                        if ($currentChannel) {
+                            goto(
+                                `/${$currentServer.invite}/${$currentChannel.name}`
+                            );
+                        } else {
+                            goto(`/${$currentServer.invite}`);
+                        }
                     }
 
                     break;

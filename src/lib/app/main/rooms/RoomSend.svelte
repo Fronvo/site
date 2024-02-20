@@ -22,9 +22,8 @@
         lastSendsIn30,
         socket,
     } from 'stores/main';
-    import { isAcceptedImage, showDropdown } from 'utilities/main';
+    import { isAcceptedImage } from 'utilities/main';
     import { slide } from 'svelte/transition';
-    import { DropdownTypes } from 'stores/dropdowns';
     import { targetTenorCallback } from 'stores/modals';
     import { toast } from 'svelte-sonner';
     import { sineInOut } from 'svelte/easing';

@@ -1,10 +1,11 @@
 <script lang="ts">
     import Dropdown from './Dropdown.svelte';
     import Modal from './Modal.svelte';
-    import { fade, scale, slide } from 'svelte/transition';
+    import { scale } from 'svelte/transition';
     import MessagesList from '../reusables/side/MessagesList.svelte';
     import {
         currentChannel,
+        currentRoomData,
         currentRoomLoaded,
         isInServer,
     } from 'stores/rooms';
@@ -25,7 +26,6 @@
     import RoomMembers from './rooms/RoomMembers.svelte';
     import ServerPanel from '../reusables/side/ServerPanel.svelte';
     import Dashboard from './dashboard/Dashboard.svelte';
-    import ServerNoRoom from '../reusables/rooms/ServerNoRoom.svelte';
     import JoinServerButton from '../reusables/side/JoinServerButton.svelte';
     import RoomTyping from './rooms/RoomTyping.svelte';
 
@@ -155,9 +155,7 @@
 
     <div class="third-container">
         {#if $currentRoomLoaded || $isInServer}
-            {#if $isInServer && !$currentChannel}
-                <ServerNoRoom />
-            {:else}
+            {#if $currentRoomData || $currentChannel}
                 <RoomInfo />
 
                 <RoomChat />

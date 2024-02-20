@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import type { Channel } from 'interfaces/all';
     import {
         DropdownTypes,
@@ -37,6 +38,8 @@
         $currentRoomLoaded = false;
         $currentRoomLoaded = true;
         $currentRoomMessages = [];
+
+        goto(`/${$currentServer.invite}/${channel.name}`);
 
         setTitle(`#${channel.name} | ${$currentServer.name}`);
     }

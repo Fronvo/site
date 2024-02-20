@@ -21,6 +21,7 @@
     let memberInfo: FronvoAccount[] = [];
     let loadingFinished = false;
     let pending = false;
+    let ownerData: FronvoAccount;
 
     let unsubscribe: Unsubscriber;
     let unsubscribe2: Unsubscriber;
@@ -33,12 +34,25 @@
 
         memberInfo = [];
 
+        ownerData = await findCachedAccount(
+            $currentServer?.ownerId,
+            $cachedAccountData
+        );
+
+        if ($currentServer.members.length == 1) {
+            loadingFinished = true;
+            pending = false;
+            return;
+        }
+
         // Fetch all room members, notify UI once finished
         for (const memberIndex in $currentServer.members) {
-            findCachedAccount(
-                $currentServer.members[memberIndex],
-                $cachedAccountData
-            ).then((data) => {
+            const member = $currentServer.members[memberIndex];
+
+            // Dont keep owner in info, seperate
+            if ($currentServer.ownerId == member) continue;
+
+            findCachedAccount(member, $cachedAccountData).then((data) => {
                 memberInfo.push(data);
 
                 checkLoadingDone();
@@ -49,7 +63,8 @@
             if (!$currentServer) return;
 
             // Finish loading
-            if (memberInfo.length == $currentServer.members.length) {
+            // Minus owner
+            if (memberInfo.length == $currentServer.members.length - 1) {
                 loadingFinished = true;
                 pending = false;
 
@@ -122,11 +137,17 @@
 
 <div class="members-container">
     {#if loadingFinished}
-        <h1>Members -- {memberInfo.length}</h1>
+        <h1>Owner</h1>
 
-        {#each memberInfo as profileData}
-            <RoomMember {profileData} />
-        {/each}
+        <RoomMember profileData={ownerData} />
+
+        {#if $currentServer?.members.length != 1}
+            <h1 id="members">Members -- {memberInfo.length}</h1>
+
+            {#each memberInfo as profileData}
+                <RoomMember {profileData} />
+            {/each}
+        {/if}
     {/if}
 </div>
 
@@ -167,5 +188,9 @@
         margin-left: 5px;
         color: var(--gray);
         text-transform: uppercase;
+    }
+
+    #members {
+        margin-top: 10px;
     }
 </style>

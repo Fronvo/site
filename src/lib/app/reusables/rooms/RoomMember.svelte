@@ -145,6 +145,7 @@
         height: 48px;
         padding: 4px;
         border-radius: 5px;
+        margin-left: 2px;
         margin-bottom: 2px;
         transition: 125ms;
     }
@@ -165,6 +166,10 @@
     .member-container:hover #username {
         opacity: 1;
         color: white;
+    }
+
+    .member-container:hover svg {
+        opacity: 1;
     }
 
     div h1 {
@@ -224,7 +229,13 @@
     .top-container svg {
         width: 18px;
         height: 18px;
-        margin-left: 5px;
+        margin-left: 6px;
+        margin-top: 2px;
+        transition: 125ms;
+    }
+
+    .offline svg {
+        opacity: 0.5;
     }
 
     #status {
@@ -253,5 +264,9 @@
     .active #username {
         opacity: 1;
         color: white;
+    }
+
+    .active svg {
+        opacity: 1;
     }
 </style>

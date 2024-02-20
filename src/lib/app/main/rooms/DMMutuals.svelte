@@ -206,6 +206,7 @@
         width: 30px;
         height: 30px;
         margin-left: 2px;
+        margin-bottom: 2px;
     }
 
     .server:hover .placeholder {

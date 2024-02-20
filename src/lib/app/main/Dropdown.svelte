@@ -35,8 +35,6 @@
                     element.style.top = '0px';
                 }
 
-                // TODO: Rather than bounding calc offset left - clientWidth
-
                 element.style.opacity = '1';
             }, 0);
         });

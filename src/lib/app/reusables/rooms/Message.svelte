@@ -88,6 +88,23 @@
         showModal(ModalTypes.Profile);
     }
 
+    async function showReplyProfileModal(): Promise<void> {
+        if (isPreview) return;
+
+        const targetAccount = getRepliedMessage().profileData;
+
+        if (targetAccount.profileId == $ourData.profileId) {
+            $targetProfileModal = $ourData;
+        } else {
+            $targetProfileModal = await findCachedAccount(
+                targetAccount.profileId,
+                $cachedAccountData
+            );
+        }
+
+        showModal(ModalTypes.Profile);
+    }
+
     function showImage(): void {
         if (isPreview) return;
 
@@ -160,7 +177,11 @@
                         getRepliedMessage().profileData.profileId
                     }\'s avatar'`}
                 />
-                <h1 id="username">
+                <h1
+                    on:click={showReplyProfileModal}
+                    on:keydown={showReplyProfileModal}
+                    id="username"
+                >
                     {getRepliedMessage().profileData.username}
                 </h1>
                 <h1
@@ -361,11 +382,11 @@
 
     .reply-container #start {
         width: 2px;
-        height: 16px;
+        height: 14px;
         border: 1px solid var(--tertiary);
         border-radius: 20px;
         overflow: hidden;
-        transform: translateY(6px);
+        transform: translateY(7px);
     }
 
     .reply-container #mid {
@@ -406,6 +427,11 @@
         margin-right: 5px;
         color: var(--gray);
         font-weight: 600;
+    }
+
+    .reply-container .wrapper #username:hover {
+        text-decoration: underline;
+        cursor: pointer;
     }
 
     .reply-container .wrapper #reply {

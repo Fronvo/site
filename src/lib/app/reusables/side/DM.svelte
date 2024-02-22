@@ -290,7 +290,7 @@
     }
 
     .active #status {
-        color: white;
+        color: var(--text);
     }
 
     .mark {

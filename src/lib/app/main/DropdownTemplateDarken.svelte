@@ -8,7 +8,7 @@
         flex-direction: column;
         justify-content: start;
         border-radius: 2px;
-        background: rgb(80, 80, 80, 0.3);
+        background: var(--dropdown);
         backdrop-filter: blur(10px);
         overflow: hidden;
     }

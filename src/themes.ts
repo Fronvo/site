@@ -21,6 +21,9 @@ interface ThemingOptions {
     modal_input_bg: string;
     modal_header_size: string;
     modal_input_size: string;
+
+    // Other
+    dropdown: string;
 }
 
 export const defaultTheme: ThemingOptions = {
@@ -43,14 +46,17 @@ export const defaultTheme: ThemingOptions = {
     modal_input_bg: 'rgba(25, 25, 25, 0.25)',
     modal_header_size: '1.2rem',
     modal_input_size: '1.2rem',
+
+    // Other
+    dropdown: 'rgb(80, 80, 80, 0.25)',
 };
 
 export const whiteTheme: ThemingOptions = {
-    bg: 'rgb(230, 230, 230)',
+    bg: 'rgb(250, 250, 250)',
 
-    primary: 'rgb(220, 220, 220)',
-    secondary: 'rgb(230, 230, 230)',
-    tertiary: 'rgb(245, 245, 245)',
+    primary: 'rgb(240, 240, 240)',
+    secondary: 'rgb(248, 248, 248)',
+    tertiary: 'rgb(255, 255, 255)',
     red: 'rgb(231, 2, 2, 0.75)',
     red_hover: 'rgb(231, 2, 2, 1)',
 
@@ -65,6 +71,9 @@ export const whiteTheme: ThemingOptions = {
     modal_input_bg: 'rgba(180, 180, 180, 0.25)',
     modal_header_size: '1.2rem',
     modal_input_size: '1.2rem',
+
+    // Other
+    dropdown: 'rgb(0, 0, 0, 0.5)',
 };
 
 export const currentTheme: Writable<ThemingOptions> = writable(defaultTheme);

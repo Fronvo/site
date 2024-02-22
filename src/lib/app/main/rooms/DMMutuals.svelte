@@ -135,6 +135,7 @@
         background: var(--secondary);
         border-radius: 10px;
         margin-top: 20px;
+        user-select: none;
     }
 
     .top {
@@ -170,7 +171,7 @@
     }
 
     .servers:hover.servers::-webkit-scrollbar-thumb {
-        background: var(--secondary);
+        background: var(--tertiary);
     }
 
     .server {
@@ -187,7 +188,7 @@
     }
 
     .server:hover {
-        background: var(--secondary);
+        background: var(--tertiary);
     }
 
     #icon {

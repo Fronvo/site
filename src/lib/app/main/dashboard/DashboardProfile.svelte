@@ -129,7 +129,7 @@
         width: 128px;
         height: 128px;
         border-radius: 100px;
-        box-shadow: 0 0 5px black;
+        box-shadow: 0 0 2px var(--gray);
     }
 
     h1 {

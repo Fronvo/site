@@ -26,7 +26,7 @@
     #avatar {
         width: 36px;
         height: 36px;
-        background: var(--tertiary);
+        background: var(--primary);
         border-radius: 30px;
         margin-right: 5px;
     }
@@ -35,14 +35,14 @@
         width: 150px;
         height: 20px;
         border-radius: 30px;
-        background: var(--tertiary);
+        background: var(--primary);
     }
 
     #attachment {
         display: inline-block;
         width: 500px;
         height: 500px;
-        background: var(--tertiary);
+        background: var(--primary);
         border-radius: 10px;
         margin-top: 5px;
     }

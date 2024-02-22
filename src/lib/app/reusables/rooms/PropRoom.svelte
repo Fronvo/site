@@ -20,7 +20,7 @@
     .img {
         width: 32px;
         height: 32px;
-        background: var(--secondary);
+        background: var(--tertiary);
         border-radius: 100px;
         margin-right: 10px;
     }
@@ -28,7 +28,7 @@
     .name {
         width: 150px;
         height: 20px;
-        background: var(--secondary);
+        background: var(--tertiary);
         border-radius: 20px;
     }
 </style>

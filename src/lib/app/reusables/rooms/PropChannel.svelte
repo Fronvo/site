@@ -26,7 +26,7 @@
     #avatar {
         width: 26px;
         height: 26px;
-        background: var(--secondary);
+        background: var(--tertiary);
         border-radius: 10px;
         margin-right: 10px;
     }
@@ -35,7 +35,7 @@
         width: 150px;
         height: 20px;
         border-radius: 30px;
-        background: var(--secondary);
+        background: var(--tertiary);
     }
 
     @keyframes shimmer {

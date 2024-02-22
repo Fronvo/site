@@ -177,11 +177,11 @@
     }
 
     button:hover {
-        background: var(--primary);
+        background: var(--secondary);
     }
 
     .active {
-        background: var(--primary);
+        background: var(--secondary);
     }
 
     button:active {
@@ -195,11 +195,11 @@
     }
 
     button:hover h1 {
-        color: white;
+        color: var(--text);
     }
 
     .active h1 {
-        color: white;
+        color: var(--text);
     }
 
     img {
@@ -227,6 +227,6 @@
     }
 
     #nitro:hover svg {
-        fill: white;
+        fill: var(--text);
     }
 </style>

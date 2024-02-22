@@ -28,6 +28,7 @@
     import Dashboard from './dashboard/Dashboard.svelte';
     import JoinServerButton from '../reusables/side/JoinServerButton.svelte';
     import RoomTyping from './rooms/RoomTyping.svelte';
+    import ToggleThemeButton from '../reusables/side/ToggleThemeButton.svelte';
 
     let ParticlesComponent;
 
@@ -139,6 +140,7 @@
         <ServersList />
         <CreateServerButton />
         <JoinServerButton />
+        <ToggleThemeButton />
     </div>
 
     <div class="second-container">

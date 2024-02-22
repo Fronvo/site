@@ -38,7 +38,7 @@
 
             if (onlineP) {
                 indicator.style.background = 'rgb(56, 212, 42)';
-                indicator.style.border = '2px solid var(--primary)';
+                indicator.style.border = '3px solid var(--bg)';
                 indicator.style.visibility = 'visible';
             } else {
                 indicator.style.visibility = 'hidden';
@@ -172,11 +172,10 @@
     }
 
     .indicator {
-        width: 10px;
-        height: 10px;
+        width: 16px;
+        height: 16px;
         border-radius: 30px;
-        transform: translateX(-10px) translateY(14px);
-        margin-right: 6px;
+        transform: translateX(-12px) translateY(14px);
         margin-bottom: 2px;
     }
 
@@ -186,7 +185,7 @@
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
         font-size: 1.05rem;
-        color: white;
+        color: var(--text);
         height: 23px;
         font-weight: 500;
     }

@@ -153,7 +153,6 @@
         background: transparent;
         box-shadow: none;
         transition: 150ms;
-        color: white;
     }
 
     button:hover {
@@ -172,12 +171,12 @@
     }
 
     .primary {
-        background: var(--primary);
+        background: rgb(125, 125, 125, 0.15);
         color: white;
     }
 
     .primary:hover {
-        background: var(--tertiary);
+        background: rgb(125, 125, 125, 0.3);
         text-decoration: none;
     }
 

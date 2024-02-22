@@ -120,5 +120,6 @@
         margin: 0;
         margin-left: 25px;
         font-size: 1.3rem;
+        color: white;
     }
 </style>

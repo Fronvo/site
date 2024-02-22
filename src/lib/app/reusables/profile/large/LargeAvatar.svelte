@@ -212,6 +212,12 @@
         transition: 125ms;
         margin-right: 5px;
         margin-left: 5px;
+        color: var(--text);
+        background: rgb(125, 125, 125, 0.1);
+    }
+
+    button:hover {
+        color: var(--text);
     }
 
     #pending,
@@ -222,6 +228,7 @@
 
     #danger {
         background: var(--red);
+        color: white;
     }
 
     #danger:hover {

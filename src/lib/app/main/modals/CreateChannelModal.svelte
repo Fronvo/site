@@ -98,18 +98,17 @@
     svg {
         width: 28px;
         height: 28px;
-        fill: var(--gray);
+        fill: white;
         margin-bottom: 10px;
     }
 
     input {
-        background: var(--primary);
         border: 2px solid transparent;
         transition: 150ms;
         font-weight: 500;
     }
 
     input:focus {
-        border: 2px solid var(--secondary);
+        border: 2px solid white;
     }
 </style>

@@ -119,7 +119,7 @@
         font-size: 1rem;
         font-weight: 500;
         padding-left: 5px;
-        color: white;
+        color: var(--text);
         border: 2px solid transparent;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
@@ -149,14 +149,10 @@
         height: 32px;
         padding: 2px;
         cursor: pointer;
-        fill: var(--gray);
-    }
-
-    svg:hover {
-        fill: white;
+        fill: var(--text);
     }
 
     #active {
-        fill: white;
+        fill: var(--text);
     }
 </style>

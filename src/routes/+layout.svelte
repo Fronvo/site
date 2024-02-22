@@ -10,7 +10,7 @@
     } from 'utilities/main';
     import { getKey } from 'utilities/global';
     import '../app.css';
-    import { currentTheme, defaultTheme } from '../themes';
+    import { currentTheme, defaultTheme, whiteTheme } from '../themes';
     import FronvoLoading from '$lib/app/FronvoLoading.svelte';
     import {
         darkTheme,
@@ -46,7 +46,6 @@
     import TopNav from '$lib/index/TopNav.svelte';
     import Footer from '$lib/index/Footer.svelte';
     import BlurredBackground from '$lib/index/BlurredBackground.svelte';
-    import BlurredBackground2 from '$lib/index/BlurredBackground2.svelte';
 
     let mountReady = false;
 
@@ -66,7 +65,13 @@
                 return;
             }
 
-            currentTheme.set(defaultTheme);
+            currentTheme.set(dark ? defaultTheme : whiteTheme);
+
+            // Hacky but works for background color
+            document.documentElement.style.setProperty(
+                '--bg',
+                dark ? defaultTheme.bg : whiteTheme.bg
+            );
         });
     }
 
@@ -539,8 +544,6 @@
 <div use:themingVars={{ ...$currentTheme }}>
     {#if mountReady}
         {#if $showLayout}
-            <BlurredBackground2 />
-
             {#if $loginSucceeded == undefined}
                 <FronvoLoading />
             {:else}
@@ -560,7 +563,7 @@
 
 <style>
     :global(body) {
-        background: rgb(15, 15, 15);
+        background: var(--bg);
     }
 
     /* Elegant theme feature */
@@ -578,7 +581,7 @@
     :global(.link) {
         text-decoration: none;
         /* color: rgb(0, 162, 255); */
-        color: var(--gray);
+        color: var(--text_gray);
     }
 
     :global(.link:hover) {
@@ -588,7 +591,7 @@
 
     /* Modal-related */
     :global(.modal-header) {
-        color: var(--text);
+        color: white;
         margin: 0;
         font-size: var(--modal_header_size);
         -webkit-touch-callout: none;
@@ -611,7 +614,7 @@
         margin: 0 5px 10px 5px;
         width: 400px;
         background: var(--modal_input_bg);
-        color: var(--text);
+        color: white;
     }
 
     :global(.modal-button) {

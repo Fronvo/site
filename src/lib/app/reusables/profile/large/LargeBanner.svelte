@@ -37,7 +37,7 @@
     }
 
     svg {
-        fill: white;
+        fill: var(--text);
         background: var(--primary);
         padding: 7px;
         border-radius: 20px;

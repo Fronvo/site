@@ -87,13 +87,13 @@
     #login {
         color: white;
         margin-right: 10px;
-        background: var(--primary);
+        background: rgb(125, 125, 125, 0.15);
         backdrop-filter: blur(10px);
         font-weight: 600;
     }
 
     #login:hover {
-        background: var(--tertiary);
+        background: rgb(125, 125, 125, 0.3);
     }
 
     #remove {

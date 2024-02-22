@@ -63,7 +63,7 @@
 
             if (onlineP) {
                 indicator.style.background = 'rgb(56, 212, 42)';
-                indicator.style.border = '2px solid var(--primary)';
+                indicator.style.border = '3px solid var(--bg)';
                 indicator.style.visibility = 'visible';
             } else {
                 indicator.style.visibility = 'hidden';
@@ -221,12 +221,12 @@
     }
 
     .dm-container:hover {
-        background: var(--primary);
+        background: var(--secondary);
     }
 
     .dm-container:hover #name,
     .dm-container:hover #status {
-        color: white;
+        color: var(--text);
     }
 
     .active {
@@ -234,7 +234,7 @@
     }
 
     .active:hover {
-        background: var(--primary);
+        background: var(--secondary);
     }
 
     .dm-container:active {
@@ -255,11 +255,10 @@
     }
 
     .indicator {
-        width: 10px;
-        height: 10px;
+        width: 16px;
+        height: 16px;
         border-radius: 30px;
-        transform: translateX(-10px) translateY(12px);
-        margin-right: 6px;
+        transform: translateX(-12px) translateY(12px);
         margin-bottom: 2px;
     }
 
@@ -270,17 +269,17 @@
         overflow: hidden;
         text-overflow: ellipsis;
         letter-spacing: 0.1px;
-        color: var(--gray);
+        color: var(--text_gray);
         transition: 125ms;
         font-weight: 600;
     }
 
     .active #name {
-        color: white;
+        color: var(--text);
     }
 
     .unread #name {
-        color: white;
+        color: var(--text);
     }
 
     #status {

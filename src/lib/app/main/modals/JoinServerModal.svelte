@@ -91,19 +91,18 @@
         margin: 0;
         font-size: 1.1rem;
         font-weight: 600;
-        fill: var(--gray);
+        color: white;
         margin-right: 5px;
         margin-bottom: 10px;
     }
 
     input {
-        background: var(--primary);
         border: 2px solid transparent;
         transition: 150ms;
         font-weight: 500;
     }
 
     input:focus {
-        border: 2px solid var(--secondary);
+        border: 2px solid white;
     }
 </style>

@@ -67,7 +67,7 @@
     svg {
         width: 128px;
         height: 128px;
-        fill: var(--gray);
+        fill: white;
         margin-bottom: 5px;
     }
 

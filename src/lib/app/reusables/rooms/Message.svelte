@@ -322,7 +322,7 @@
     }
 
     .highlight {
-        border-left: 2px solid white;
+        border-left: 2px solid var(--text);
     }
 
     .preview {
@@ -362,7 +362,7 @@
         margin: 0;
         font-size: 0.95rem;
         font-weight: 600;
-        color: white;
+        color: var(--text);
     }
 
     #small-time-2 {
@@ -568,7 +568,7 @@
         min-height: 28px;
         margin: auto;
         margin-left: 5px;
-        fill: rgb(255, 255, 255, 0.5);
+        fill: var(--gray);
         opacity: 0;
         border-radius: 30px;
         padding: 4px;

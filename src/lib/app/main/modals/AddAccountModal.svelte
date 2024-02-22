@@ -127,7 +127,6 @@
         padding: 5px;
         padding-left: 10px;
         padding-right: 10px;
-        background: var(--primary);
         border: 2px solid transparent;
         transition: 150ms;
         border-radius: 5px;

@@ -24,11 +24,14 @@
         font-weight: 800;
         text-transform: uppercase;
         margin-bottom: 3px;
+        color: var(--text);
     }
 
     .since-container #since {
         margin: 0;
         font-size: 0.85rem;
         margin-bottom: 10px;
+        color: var(--text);
+        font-weight: 500;
     }
 </style>

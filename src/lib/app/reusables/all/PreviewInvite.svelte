@@ -76,11 +76,11 @@
     #invite {
         color: white;
         margin-right: 10px;
-        background: var(--primary);
+        background: rgb(125, 125, 125, 0.15);
     }
 
     #invite:hover {
-        background: var(--tertiary);
+        background: rgb(125, 125, 125, 0.3);
     }
 
     #invite:disabled {

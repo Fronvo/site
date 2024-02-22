@@ -237,7 +237,7 @@
         align-items: center;
         padding-top: 50px;
         padding-bottom: 50px;
-        border-bottom: 1px solid rgb(255, 255, 255, 0.05);
+        border-bottom: 1px solid var(--tertiary);
         margin-right: 20px;
         margin-left: 20px;
         background-repeat: no-repeat;
@@ -307,10 +307,9 @@
 
     h1 {
         font-size: 1.5rem;
-        color: white;
+        color: var(--text);
         margin: 0;
         transform: translateY(-2px);
-        text-shadow: 0 0 10px black;
     }
 
     .action {

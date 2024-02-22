@@ -50,7 +50,7 @@
         margin: 0;
         margin-left: 5px;
         margin-right: 5px;
-        color: white;
+        color: var(--text);
         display: -webkit-box;
         overflow: hidden;
         -webkit-line-clamp: 1;
@@ -66,14 +66,14 @@
     #identifier {
         font-size: 1.05rem;
         margin: 0;
-        font-weight: 600;
+        font-weight: 500;
         margin-right: 5px;
         margin-left: 5px;
         display: -webkit-box;
         overflow: hidden;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
-        color: white;
+        color: var(--text);
     }
 
     #status {
@@ -86,6 +86,6 @@
         overflow: hidden;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
-        color: white;
+        color: var(--text);
     }
 </style>

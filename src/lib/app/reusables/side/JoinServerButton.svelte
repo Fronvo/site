@@ -44,13 +44,13 @@
         pointer-events: all;
         z-index: 2;
         transition: 125ms;
-        stroke: white;
+        stroke: var(--text);
         margin-top: 10px;
     }
 
     svg:hover {
         background: var(--tertiary);
-        stroke: white;
+        stroke: var(--text);
         border-radius: 15px;
     }
 

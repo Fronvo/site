@@ -27,10 +27,9 @@
         cursor: default;
         width: 70%;
         padding: 8px;
-        border-radius: 5px;
         margin-bottom: 10px;
-        border: 2px solid var(--primary);
-        border-radius: 10px;
+        border: 2px solid white;
+        border-radius: 5px;
     }
 
     div h1 {
@@ -67,6 +66,6 @@
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
         font-size: 1.1rem;
-        color: var(--text);
+        color: white;
     }
 </style>

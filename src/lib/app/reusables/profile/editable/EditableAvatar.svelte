@@ -96,4 +96,8 @@
         user-select: none;
         cursor: pointer;
     }
+
+    #avatar:hover {
+        opacity: 0.75;
+    }
 </style>

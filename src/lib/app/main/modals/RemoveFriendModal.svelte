@@ -59,5 +59,6 @@
         font-weight: 600;
         text-align: center;
         margin-bottom: 25px;
+        color: white;
     }
 </style>

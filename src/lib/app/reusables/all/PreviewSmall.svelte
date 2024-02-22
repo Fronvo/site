@@ -51,7 +51,7 @@
         padding-top: 10px;
         padding-bottom: 10px;
         border-radius: 10px;
-        background: var(--primary);
+        background: var(--secondary);
     }
 
     .seperator {

@@ -132,7 +132,7 @@
         display: flex;
         flex-direction: column;
         transform: translateY(-30px);
-        background: var(--primary);
+        background: var(--secondary);
         border-radius: 10px;
         margin-top: 20px;
     }
@@ -156,7 +156,7 @@
     .top svg {
         width: 22px;
         height: 22px;
-        fill: white;
+        fill: var(--text);
     }
 
     .servers {
@@ -187,7 +187,7 @@
     }
 
     .server:hover {
-        background: var(--primary);
+        background: var(--secondary);
     }
 
     #icon {
@@ -201,7 +201,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        background: var(--primary);
+        background: var(--secondary);
         border-radius: 15px;
         width: 30px;
         height: 30px;

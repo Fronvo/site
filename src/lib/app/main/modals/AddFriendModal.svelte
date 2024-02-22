@@ -102,7 +102,6 @@
     }
 
     input {
-        background: var(--primary);
         border: 2px solid transparent;
         transition: 150ms;
         font-weight: 500;

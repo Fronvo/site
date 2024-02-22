@@ -171,7 +171,7 @@
     }
 
     .prop-container:hover {
-        background: var(--primary);
+        background: var(--secondary);
     }
 
     .prop-container:active {
@@ -184,7 +184,7 @@
 
     .prop-container:hover #name,
     .active #name {
-        color: white;
+        color: var(--text);
     }
 
     .preview:hover {
@@ -218,6 +218,7 @@
         text-align: start;
         transition: 125ms color;
         margin-left: 5px;
+        color: var(--text_gray);
     }
 
     input {

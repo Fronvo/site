@@ -78,7 +78,7 @@
         padding-left: 20px;
         padding-right: 15px;
         transition: 125ms;
-        border-bottom: 1px solid var(--primary);
+        border-bottom: 1px solid var(--secondary);
         padding-top: 12px;
         padding-bottom: 12px;
         cursor: pointer;
@@ -86,7 +86,7 @@
 
     .top:hover,
     .active {
-        background: var(--primary);
+        background: var(--secondary);
     }
 
     .top h1 {

@@ -129,10 +129,11 @@
         font-size: 1.1rem;
         font-weight: 600;
         transition: 125ms;
+        color: var(--text);
     }
 
     .placeholder:hover h1 {
-        color: white;
+        color: var(--text);
     }
 
     .active {
@@ -145,6 +146,6 @@
     }
 
     .placeholder-active h1 {
-        color: white;
+        color: var(--text);
     }
 </style>

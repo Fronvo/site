@@ -37,8 +37,4 @@
         margin-left: 10px;
         margin-top: 10px;
     }
-
-    h1:hover {
-        color: white;
-    }
 </style>

@@ -126,7 +126,7 @@
         -ms-user-select: none;
         user-select: none;
         padding-right: 150px;
-        color: white;
+        color: var(--text);
     }
 
     .home-container {
@@ -190,7 +190,7 @@
         height: 30px;
         min-width: 30px;
         min-height: 30px;
-        fill: white;
+        fill: var(--text);
         margin-right: 10px;
         cursor: default;
     }

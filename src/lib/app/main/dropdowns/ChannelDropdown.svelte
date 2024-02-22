@@ -63,7 +63,7 @@
     }
 
     button:hover {
-        background: var(--primary);
+        background: rgb(255, 255, 255, 0.15);
     }
 
     h1 {
@@ -71,12 +71,13 @@
         font-weight: 500;
         flex: 1;
         text-align: start;
+        color: white;
     }
 
     hr {
         width: 100%;
         height: 1px;
-        border: 1px solid var(--primary);
+        border: 1px solid rgb(255, 255, 255, 0.1);
         padding: 0;
         margin: 0;
         margin-bottom: 2px;

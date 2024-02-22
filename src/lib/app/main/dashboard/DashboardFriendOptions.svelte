@@ -48,8 +48,14 @@
         font-size: 1rem;
         font-weight: 600;
         transition: 150ms;
-        color: white;
+        color: var(--text);
         margin-left: 10px;
         margin-right: 10px;
+        background: rgb(125, 125, 125, 0.1);
+    }
+
+    button:hover {
+        color: var(--text);
+        background: rgb(125, 125, 125, 0.2);
     }
 </style>

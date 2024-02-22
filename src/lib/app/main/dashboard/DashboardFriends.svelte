@@ -121,14 +121,14 @@
         margin: 0;
         font-size: 1.7rem;
         text-align: center;
-        font-weight: 500;
+        font-weight: 600;
         -webkit-touch-callout: none;
         -webkit-user-select: none;
         -khtml-user-select: none;
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        color: white;
+        color: var(--text);
     }
 
     .main-container {
@@ -204,7 +204,7 @@
     .banner svg {
         width: 32px;
         height: 32px;
-        fill: white;
+        fill: var(--text);
         margin-right: 10px;
     }
 

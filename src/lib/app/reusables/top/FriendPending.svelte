@@ -81,7 +81,7 @@
     }
 
     .pending-container:hover {
-        background: var(--primary);
+        background: rgb(125, 125, 125, 0.15);
     }
 
     div h1 {

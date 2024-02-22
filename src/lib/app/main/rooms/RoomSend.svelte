@@ -466,6 +466,6 @@
     }
 
     svg:hover {
-        fill: white;
+        fill: var(--text);
     }
 </style>

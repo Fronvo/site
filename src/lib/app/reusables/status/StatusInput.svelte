@@ -32,7 +32,12 @@
 
     <div class="secondary-container">
         <h1>{$ourData.username}</h1>
-        <input bind:this={input} bind:value={$status} maxlength={20} />
+        <input
+            class="modal-input"
+            bind:this={input}
+            bind:value={$status}
+            maxlength={20}
+        />
     </div>
 </div>
 
@@ -62,11 +67,11 @@
         font-size: 1.1rem;
         font-weight: 600;
         margin-bottom: 2px;
+        color: white;
     }
 
     input {
         height: 40px;
-        background: var(--primary);
         border: 2px solid transparent;
         font-size: 1.1rem;
         width: 100%;
@@ -74,6 +79,10 @@
         padding-left: 10px;
         transition: 150ms;
         font-weight: 500;
+        padding-bottom: 2px;
+        padding-top: 2px;
+        margin-bottom: 0;
+        margin-left: 2px;
     }
 
     input:focus {

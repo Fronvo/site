@@ -1,15 +1,12 @@
 <script lang="ts">
     import { ourPosts } from 'stores/dashboard';
     import { socket } from 'stores/main';
-    import { ModalTypes } from 'stores/modals';
     import { ourData } from 'stores/profile';
     import { quintInOut } from 'svelte/easing';
     import { fly } from 'svelte/transition';
     import { loadOurPosts } from 'utilities/dashboard';
-    import { isAcceptedImage, showModal } from 'utilities/main';
+    import { isAcceptedImage } from 'utilities/main';
     import { uploadImage } from 'utilities/rooms';
-
-    let btn: HTMLButtonElement;
 
     let attachmentBase64: string | ArrayBuffer;
 
@@ -98,8 +95,14 @@
         font-size: 1rem;
         font-weight: 600;
         transition: 150ms;
-        color: white;
+        color: var(--text);
         margin-left: 10px;
         margin-right: 10px;
+        background: rgb(125, 125, 125, 0.1);
+    }
+
+    button:hover {
+        color: var(--text);
+        background: rgb(125, 125, 125, 0.2);
     }
 </style>

@@ -139,7 +139,7 @@
     #username {
         font-size: 2rem;
         font-weight: 600;
-        color: white;
+        color: var(--text);
     }
 
     .options {
@@ -154,6 +154,12 @@
         width: 200px;
         font-size: 1.2rem;
         font-weight: 500;
+        background: rgb(125, 125, 125, 0.1);
+        color: var(--text);
+    }
+
+    button:hover {
+        background: rgb(125, 125, 125, 0.2);
     }
 
     .options svg {
@@ -162,7 +168,7 @@
         min-width: 32px;
         min-height: 32px;
         margin-left: 5px;
-        fill: rgb(255, 255, 255, 0.6);
+        fill: var(--gray);
         border-radius: 30px;
         padding: 4px;
     }

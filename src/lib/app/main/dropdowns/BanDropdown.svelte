@@ -48,7 +48,7 @@
     }
 
     button:hover {
-        background: var(--primary);
+        background: rgb(255, 255, 255, 0.15);
     }
 
     h1 {
@@ -56,6 +56,7 @@
         font-weight: 500;
         flex: 1;
         text-align: start;
+        color: white;
     }
 
     svg {

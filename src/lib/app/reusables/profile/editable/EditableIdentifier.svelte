@@ -70,14 +70,14 @@
     input {
         width: 200px;
         height: 35px;
-        background: var(--primary);
+        background: var(--secondary);
         border: 2px solid transparent;
         transition: 150ms;
         font-size: 1.5rem;
         margin: 0;
         margin-right: 5px;
         margin-bottom: 5px;
-        color: white;
+        color: var(--text);
         display: -webkit-box;
         overflow: hidden;
         -webkit-line-clamp: 1;
@@ -86,7 +86,7 @@
     }
 
     input:focus {
-        border: 2px solid var(--secondary);
+        border: 2px solid var(--text);
     }
 
     .lock-container span {
@@ -100,7 +100,7 @@
         min-height: 32px;
         margin-right: 5px;
         transform: translateY(-2px);
-        fill: rgb(255, 255, 255, 0.6);
+        fill: var(--gray);
         border-radius: 30px;
         padding: 4px;
     }
@@ -117,14 +117,14 @@
     #identifier {
         font-size: 1.05rem;
         margin: 0;
-        font-weight: 600;
+        font-weight: 500;
         margin-right: 5px;
         margin-left: 5px;
         display: -webkit-box;
         overflow: hidden;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
-        color: white;
+        color: var(--text);
     }
 
     #status {
@@ -137,6 +137,6 @@
         overflow: hidden;
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
-        color: white;
+        color: var(--text);
     }
 </style>

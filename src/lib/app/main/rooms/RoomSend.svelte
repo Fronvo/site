@@ -449,7 +449,7 @@
         height: 34px;
         flex: 1;
         font-weight: 500;
-        color: white;
+        color: var(--text);
     }
 
     textarea:disabled {

@@ -170,7 +170,7 @@
         font-size: 0.9rem;
         margin-right: 3px;
         margin-bottom: 2px;
-        color: white;
+        color: var(--text);
     }
 
     .typing-container #final {

@@ -2,7 +2,7 @@
     import { dismissModal, showModal } from 'utilities/main';
     import ModalTemplate from '../ModalTemplate.svelte';
     import { ModalTypes, type ModalData, modalLoading } from 'stores/modals';
-    import { socket } from 'stores/main';
+    import { isMobile, socket } from 'stores/main';
     import { onMount } from 'svelte';
     import ErrorHeader from '$lib/app/reusables/all/ErrorHeader.svelte';
 
@@ -79,7 +79,7 @@
 <ModalTemplate {data}>
     <ErrorHeader size={'1.2rem'} {errorMessage} />
 
-    <div class="friend-container">
+    <div class={`friend-container ${$isMobile ? 'mobile' : ''}`}>
         <h1 class="modal-header">@</h1>
         <input
             bind:this={element}
@@ -108,6 +108,10 @@
     }
 
     input:focus {
-        border: 2px solid var(--secondary);
+        border: 2px solid white;
+    }
+
+    .mobile input {
+        width: 70vw;
     }
 </style>

@@ -2,12 +2,13 @@
     import Dm from './DM.svelte';
     import { dmsList } from 'stores/rooms';
     import PropRoom from '../rooms/PropRoom.svelte';
+    import { isMobile } from 'stores/main';
 </script>
 
-<div class="list-container">
+<div class={`list-container ${$isMobile ? 'mobile' : ''}`}>
     <h1>Messages</h1>
-    {#if $dmsList.length == 0 && $dmsList.length == 0}
-        {#each { length: 15 } as _, i}
+    {#if $dmsList.length == 0}
+        {#each { length: $isMobile ? 5 : 15 } as _, i}
             <PropRoom opacity={1.4 - 1 + (1 - (i + 2) / 10)} />
         {/each}
     {:else}
@@ -25,6 +26,11 @@
         padding-right: 10px;
         padding-bottom: 5px;
         overflow-x: hidden;
+    }
+
+    .mobile {
+        width: 100%;
+        margin: 0;
     }
 
     h1 {

@@ -15,7 +15,7 @@
     >
         <img
             class="smobile:w-7 smobile:h-7 smobile:mr-1 w-9 h-9 mr-2 cursor-pointer"
-            src={'favicon.png'}
+            src={'/favicon.png'}
             on:click={goRoot}
             on:keydown={goRoot}
             alt="Logo"

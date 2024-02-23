@@ -31,7 +31,7 @@
 
     svg {
         fill: var(--text);
-        background: var(--primary);
+        background: var(--tertiary);
         padding: 5px;
         border-radius: 20px;
         transition: 125ms;
@@ -39,7 +39,8 @@
     }
 
     svg:hover {
-        background: var(--tertiary);
+        fill: var(--bg);
+        background: var(--text);
     }
 
     svg:active {

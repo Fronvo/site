@@ -167,10 +167,6 @@
         border-radius: 30px;
     }
 
-    .offline #avatar {
-        opacity: 0.75;
-    }
-
     .indicator {
         width: 16px;
         height: 16px;
@@ -188,10 +184,6 @@
         color: var(--text);
         height: 23px;
         font-weight: 500;
-    }
-
-    .offline #username {
-        opacity: 0.75;
     }
 
     #avatar {
@@ -215,7 +207,23 @@
         height: 20px;
     }
 
-    .offline #status {
-        display: none;
+    @media screen and (max-width: 850px) {
+        #avatar {
+            width: 32px;
+            height: 32px;
+        }
+
+        .indicator {
+            width: 15px;
+            height: 15px;
+        }
+
+        #username {
+            font-size: 0.95rem;
+        }
+
+        #status {
+            font-size: 0.8rem;
+        }
     }
 </style>

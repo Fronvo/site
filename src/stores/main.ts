@@ -28,6 +28,10 @@ export function setSecondarySocket(
 export const fronvoTitle = writable('');
 /****************************** Fronvo title ******************************/
 
+/****************************** Fronvo mobile ******************************/
+export const isMobile = writable(false);
+/****************************** Fronvo mobile ******************************/
+
 /****************************** Fronvo layout ******************************/
 export const showLayout = writable(false);
 /****************************** Fronvo layout ******************************/

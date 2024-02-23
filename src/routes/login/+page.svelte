@@ -5,31 +5,14 @@
     import { cachedAccountData, showLayout } from 'stores/main';
     import { redirectApp } from 'utilities/index';
     import { performLogin } from 'utilities/main';
-    import { goto } from '$app/navigation';
     import AppLoginMain from '$lib/app/index/AppLoginMain.svelte';
 
     let mountReady = false;
 
     onMount(async () => {
-        // No mobile
-        const val = window.navigator.userAgent.toLowerCase();
-
-        // Block access to mobile, get the app
-        if (val.includes('android') || val.includes('iphone')) {
-            goto('/', {
-                replaceState: true,
-            });
-
-            return;
-        }
-
         // Remove for registered users
         if (getKey('token')) {
             redirectApp();
-
-            goto('/', {
-                replaceState: true,
-            });
 
             await performLogin(getKey('token'), $cachedAccountData);
             return;
@@ -41,12 +24,11 @@
         // Default when accessed
         $indexVisible = true;
 
-        // Show the index page
         mountReady = true;
     });
 </script>
 
-{#if mountReady && $indexVisible}
+{#if mountReady}
     <div class="index-container">
         {#if $indexVisible}
             <AppLoginMain />

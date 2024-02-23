@@ -11,15 +11,7 @@
     let mountReady = false;
 
     onMount(async () => {
-        // No mobile
-        const val = window.navigator.userAgent.toLowerCase();
-
-        // Block access to mobile, get the app
-        if (
-            val.includes('android') ||
-            val.includes('iphone') ||
-            !$promotedToRVerify
-        ) {
+        if (!$promotedToRVerify) {
             goto('/', {
                 replaceState: true,
             });

@@ -232,7 +232,7 @@
         max-width: 140px;
         font-size: 0.95rem;
         border-radius: 3px;
-        border: 2px solid var(--secondary);
+        border: 2px solid var(--text);
         text-align: start;
         transition: 125ms;
         font-weight: 500;

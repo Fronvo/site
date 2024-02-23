@@ -8,6 +8,7 @@
         dropdownVisible,
     } from 'stores/dropdowns';
     import ServerChannel from '../rooms/ServerChannel.svelte';
+    import { isMobile } from 'stores/main';
 
     let dropdownElement: HTMLDivElement;
 
@@ -22,7 +23,7 @@
     }
 </script>
 
-<div class="server-container">
+<div class={`server-container ${$isMobile ? 'mobile' : ''}`}>
     <div
         class={`top ${
             $currentDropdownId == DropdownTypes.ServerSettings &&
@@ -111,6 +112,11 @@
         padding-bottom: 5px;
         overflow-y: scroll;
         overflow-x: hidden;
+    }
+
+    .mobile .channels {
+        height: calc(100vh);
+        padding-bottom: 20px;
     }
 
     .channels::-webkit-scrollbar-thumb {

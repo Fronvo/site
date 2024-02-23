@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { socket } from 'stores/main';
+    import { isMobile, socket } from 'stores/main';
     import { dmsList } from 'stores/rooms';
     import { findAccountDMId } from 'utilities/rooms';
 
@@ -22,7 +22,11 @@
     }
 </script>
 
-<div class={`invite-container ${isInServer ? 'hide' : ''}`}>
+<div
+    class={`invite-container ${isInServer ? 'hide' : ''} ${
+        $isMobile ? 'mobile' : ''
+    }`}
+>
     <img
         id="avatar"
         src={avatar ? avatar : '/images/avatar.png'}
@@ -120,5 +124,15 @@
         font-size: 1.1rem;
         text-align: start;
         color: white;
+    }
+
+    @media screen and (max-width: 850px) {
+        #invite {
+            font-size: 0.8rem;
+        }
+
+        #username {
+            font-size: 0.9rem;
+        }
     }
 </style>

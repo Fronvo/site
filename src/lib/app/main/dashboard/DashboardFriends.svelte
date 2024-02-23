@@ -5,7 +5,7 @@
     import Friend from '$lib/app/reusables/top/Friend.svelte';
     import { loadHomePosts } from 'utilities/dashboard';
     import { ourData } from 'stores/profile';
-    import { cachedAccountData, socket } from 'stores/main';
+    import { cachedAccountData, isMobile, socket } from 'stores/main';
     import { onMount } from 'svelte';
     import { findCachedAccount, setTitle } from 'utilities/main';
     import type { FronvoAccount } from 'interfaces/all';
@@ -36,6 +36,11 @@
         function checkLoadingDone(): void {
             // Finish loading
             if (friendsInfo.length == $ourData?.friends.length) {
+                // Alphabetically
+                friendsInfo.sort((a, b) =>
+                    a.username.localeCompare(b.username)
+                );
+
                 friendsLoadingFinished = true;
 
                 friendsInfo = friendsInfo;
@@ -51,7 +56,7 @@
         socket.off('friendAdded');
         socket.off('friendRemoved');
 
-        socket.on('friendAdded', ({ profileId }) => {
+        socket.on('friendAdded', async ({ profileId }) => {
             friendsLoadingFinished = false;
 
             $ourData.friends.push(profileId);
@@ -64,6 +69,14 @@
 
             socket.emit('createDM', {
                 profileId,
+            });
+
+            new Notification(`@${profileId}`, {
+                body: 'Friend added',
+                icon: `${
+                    (await findCachedAccount(profileId, $cachedAccountData))
+                        .avatar
+                }/tr:w-256:h-256:r-max`,
             });
         });
 
@@ -81,7 +94,10 @@
     });
 </script>
 
-<div class="main-container" in:fade={{ duration: 200, easing: sineInOut }}>
+<div
+    class={`main-container ${$isMobile ? 'mobile' : ''}`}
+    in:fade={{ duration: 200, easing: sineInOut }}
+>
     {#if friendsLoadingFinished && friendsInfo.length != 0}
         <h1 id="title">Friends</h1>
 
@@ -108,7 +124,7 @@
             </div>
 
             <div class="props">
-                {#each { length: 10 } as _, i}
+                {#each { length: $isMobile ? 5 : 10 } as _, i}
                     <PropFriend opacity={1 - 0.95 + (1 - (i + 2.5) / 12.5)} />
                 {/each}
             </div>
@@ -214,5 +230,24 @@
         flex-wrap: wrap;
         align-items: center;
         justify-content: center;
+    }
+
+    @media screen and (max-width: 850px) {
+        .main-container {
+            height: 100%;
+        }
+
+        #title {
+            font-size: 1.2rem;
+        }
+
+        .mobile .banner h1 {
+            font-size: 1rem;
+        }
+
+        .mobile .banner svg {
+            width: 28px;
+            height: 28px;
+        }
     }
 </style>

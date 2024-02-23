@@ -14,6 +14,7 @@
     <LargeBanner />
     <LargeAvatar
         avatar={profileData?.avatar}
+        online={profileData.online}
         isSelf={$ourData.profileId == profileData.profileId}
         isFriend={$ourData.friends.includes(profileData.profileId)}
     />
@@ -64,6 +65,6 @@
         height: 2px;
         margin-top: 20px;
         margin-bottom: 20px;
-        background: var(--primary);
+        background: var(--tertiary);
     }
 </style>

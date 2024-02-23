@@ -133,6 +133,6 @@
     }
 
     input:focus {
-        border: 2px solid var(--secondary);
+        border: 2px solid white;
     }
 </style>

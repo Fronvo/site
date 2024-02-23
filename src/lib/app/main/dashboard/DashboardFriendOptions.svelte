@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { isMobile } from 'stores/main';
     import { ModalTypes } from 'stores/modals';
     import { ourData } from 'stores/profile';
     import { quintInOut } from 'svelte/easing';
@@ -15,7 +16,7 @@
 </script>
 
 <div
-    class="options-container"
+    class={`options-container ${$isMobile ? 'mobile' : ''}`}
     in:fly={{
         y: 0,
         duration: 400,
@@ -42,6 +43,10 @@
         margin-bottom: 25px;
     }
 
+    .mobile {
+        margin-bottom: calc(135px + 20px);
+    }
+
     button {
         width: 100%;
         max-width: 250px;
@@ -57,5 +62,12 @@
     button:hover {
         color: var(--text);
         background: rgb(125, 125, 125, 0.2);
+    }
+
+    @media screen and (max-width: 850px) {
+        button {
+            width: 200px;
+            font-size: 0.85rem;
+        }
     }
 </style>

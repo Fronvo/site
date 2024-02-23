@@ -13,4 +13,5 @@ export enum DashboardOptions {
     Dashboard,
     Profile,
     Friends,
+    Messages,
 }

@@ -1,6 +1,6 @@
 <script lang="ts">
     import type { Server } from 'interfaces/all';
-    import { mousePos } from 'stores/main';
+    import { isMobile, mousePos } from 'stores/main';
     import {
         currentChannel,
         currentRoomData,
@@ -53,7 +53,7 @@
                 $currentDropdownId == DropdownTypes.ServerTempSettings)
                 ? 'active'
                 : ''
-        }`}
+        } ${$isMobile ? 'mobile' : ''}`}
         on:click={enterServer}
         on:keydown={enterServer}
         id="icon"
@@ -75,7 +75,7 @@
                 $currentDropdownId == DropdownTypes.ServerTempSettings)
                 ? 'placeholder-active'
                 : ''
-        }`}
+        } ${$isMobile ? 'mobile-placeholder' : ''}`}
         on:click={enterServer}
         on:keydown={enterServer}
         id="icon"
@@ -119,9 +119,10 @@
         justify-content: center;
         background: var(--primary);
         border-radius: 25px;
+        border: 3px solid transparent;
     }
 
-    .placeholder:hover {
+    .mobile-placeholder {
         background: var(--tertiary);
     }
 
@@ -141,8 +142,8 @@
     }
 
     .placeholder-active {
-        background: var(--tertiary);
         border-radius: 15px;
+        border: 3px solid var(--text);
     }
 
     .placeholder-active h1 {

@@ -18,6 +18,7 @@
     import { sendImage, sendMessage } from 'utilities/rooms';
     import {
         disabledIn30,
+        isMobile,
         lastSendAt,
         lastSendsIn30,
         socket,
@@ -311,7 +312,7 @@
 </script>
 
 {#if $currentRoomLoaded}
-    <div class="send-container">
+    <div class={`send-container ${$isMobile ? 'mobile' : ''}`}>
         <div class="wrapper">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -434,6 +435,10 @@
         background: var(--primary);
     }
 
+    .mobile {
+        transform: translateY(-50px);
+    }
+
     .wrapper {
         display: flex;
         align-items: center;
@@ -450,6 +455,16 @@
         flex: 1;
         font-weight: 500;
         color: var(--text);
+    }
+
+    .mobile textarea {
+        font-size: 0.9rem;
+    }
+
+    textarea::placeholder {
+        color: var(--gray);
+        opacity: 0.5;
+        transform: translateY(-1px);
     }
 
     textarea:disabled {

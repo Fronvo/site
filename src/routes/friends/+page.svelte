@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import { activeDashboardTab } from 'stores/dashboard';
     import { indexVisible } from 'stores/index';
     import {
@@ -14,23 +15,20 @@
     import { performLogin } from 'utilities/main';
 
     onMount(async () => {
-        if ($loginSucceeded) return;
+        if ($loginSucceeded) {
+            return;
+        }
 
         // Remove homepage for registered users
         if (getKey('token')) {
-            const val = window.navigator.userAgent.toLowerCase();
+            redirectApp();
 
-            // Block access to mobile, get the app
-            if (!(val.includes('android') || val.includes('iphone'))) {
-                redirectApp();
+            $currentToken = getKey('token');
 
-                $currentToken = getKey('token');
+            $activeDashboardTab = DashboardOptions.Friends;
 
-                $activeDashboardTab = DashboardOptions.Friends;
-
-                await performLogin(getKey('token'), $cachedAccountData);
-                return;
-            }
+            await performLogin(getKey('token'), $cachedAccountData);
+            return;
         }
 
         // Disable __layout in index
@@ -38,5 +36,9 @@
 
         // Default when accessed
         $indexVisible = true;
+
+        goto('/', {
+            replaceState: true,
+        });
     });
 </script>

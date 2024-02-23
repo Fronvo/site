@@ -8,19 +8,19 @@
     let mountReady = false;
 
     onMount(async () => {
-        // if (!$currentToken) {
-        //     goto('/', {
-        //         replaceState: true,
-        //     });
-        // }
+        if (!$currentToken) {
+            goto('/', {
+                replaceState: true,
+            });
+        }
 
         const val = window.navigator.userAgent.toLowerCase();
 
-        // if (!(val.includes('android') || val.includes('iphone'))) {
-        //     goto('/', {
-        //         replaceState: true,
-        //     });
-        // }
+        if (!(val.includes('android') || val.includes('iphone'))) {
+            goto('/', {
+                replaceState: true,
+            });
+        }
 
         $showLayout = false;
         $indexVisible = true;

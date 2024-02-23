@@ -16,22 +16,16 @@
     onMount(async () => {
         if ($loginSucceeded) return;
 
-        // Remove homepage for registered users
         if (getKey('token')) {
-            const val = window.navigator.userAgent.toLowerCase();
+            redirectApp();
 
-            // Block access to mobile, get the app
-            if (!(val.includes('android') || val.includes('iphone'))) {
-                redirectApp();
+            $currentToken = getKey('token');
 
-                $currentToken = getKey('token');
+            $pendingProfileDMId = $page.params.profileId;
 
-                $pendingProfileDMId = $page.params.profileId;
+            await performLogin(getKey('token'), $cachedAccountData);
 
-                await performLogin(getKey('token'), $cachedAccountData);
-
-                return;
-            }
+            return;
         } else {
             // Disable __layout in index
             $showLayout = false;

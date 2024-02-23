@@ -1,11 +1,20 @@
 <script lang="ts">
+    import { isMobile } from 'stores/main';
     import {
         currentChannel,
         currentRoomData,
         currentRoomId,
+        currentRoomLoaded,
         dmsShowProfile,
         isInServer,
     } from 'stores/rooms';
+
+    function goBack(): void {
+        $currentRoomId = undefined;
+        $currentRoomData = undefined;
+        $currentRoomLoaded = false;
+        $currentChannel = undefined;
+    }
 
     function toggleProfileview(): void {
         $dmsShowProfile = !$dmsShowProfile;
@@ -13,8 +22,32 @@
 </script>
 
 <div class="placeholder">
-    <div class={`info-container ${!$currentRoomId ? 'empty' : ''}`}>
+    <div
+        class={`info-container ${!$currentRoomId ? 'empty' : ''} ${
+            $isMobile ? 'mobile' : ''
+        }`}
+    >
         <div class="data-container">
+            {#if $isMobile}
+                <svg
+                    on:click={goBack}
+                    on:keydown={goBack}
+                    id="back"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    ><path
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.5"
+                        d="m15 5l-6 7l6 7"
+                    /></svg
+                >
+            {/if}
+
             {#if !$isInServer}
                 <img
                     id="icon"
@@ -49,7 +82,7 @@
 
             <div class="spacer" />
 
-            {#if !$isInServer}
+            {#if !$isInServer && !$isMobile}
                 <svg
                     on:click={toggleProfileview}
                     on:keydown={toggleProfileview}
@@ -82,6 +115,10 @@
         user-select: none;
     }
 
+    .mobile {
+        background: var(--bg);
+    }
+
     .empty {
         border: none;
     }
@@ -96,7 +133,7 @@
     .placeholder {
         width: 100%;
         min-width: 100%;
-        z-index: 1;
+        z-index: 2;
     }
 
     #icon {
@@ -154,5 +191,14 @@
 
     #active {
         fill: var(--text);
+    }
+
+    #back {
+        stroke: var(--text);
+        transition: 125ms;
+    }
+
+    #back:active {
+        opacity: 0.75;
     }
 </style>

@@ -5,9 +5,18 @@
     import {
         cachedAccountData,
         currentToken,
+        isMobile,
         loginSucceeded,
         showLayout,
     } from 'stores/main';
+    import {
+        currentChannel,
+        currentRoomData,
+        currentRoomId,
+        currentRoomLoaded,
+        currentServer,
+        isInServer,
+    } from 'stores/rooms';
     import { onMount } from 'svelte';
     import { DashboardOptions } from 'types/all';
     import { getKey } from 'utilities/global';
@@ -16,16 +25,23 @@
 
     onMount(async () => {
         if ($loginSucceeded) {
+            $currentRoomId = undefined;
+            $currentRoomData = undefined;
+            $currentRoomLoaded = false;
+            $isInServer = false;
+            $currentServer = undefined;
+            $currentChannel = undefined;
+
             return;
         }
 
         // Remove homepage for registered users
-        if (getKey('token')) {
+        if ($isMobile && getKey('token')) {
             redirectApp();
 
             $currentToken = getKey('token');
 
-            $activeDashboardTab = DashboardOptions.Profile;
+            $activeDashboardTab = DashboardOptions.Messages;
 
             await performLogin(getKey('token'), $cachedAccountData);
             return;

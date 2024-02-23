@@ -2,7 +2,7 @@
     import { dismissModal } from 'utilities/main';
     import ModalTemplate from '../ModalTemplate.svelte';
     import { type ModalData, modalLoading } from 'stores/modals';
-    import { socket } from 'stores/main';
+    import { isMobile, socket } from 'stores/main';
     import { onMount } from 'svelte';
     import ErrorHeader from '$lib/app/reusables/all/ErrorHeader.svelte';
 
@@ -65,7 +65,7 @@
 <ModalTemplate {data}>
     <ErrorHeader size={'1.2rem'} {errorMessage} />
 
-    <div class="single">
+    <div class={`single ${$isMobile ? 'mobile' : ''}`}>
         <h1>/invite/</h1>
 
         <input
@@ -104,5 +104,9 @@
 
     input:focus {
         border: 2px solid white;
+    }
+
+    .mobile input {
+        width: 60vw;
     }
 </style>

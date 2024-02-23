@@ -1,0 +1,33 @@
+<script lang="ts">
+    import { fade } from 'svelte/transition';
+    import { sineInOut } from 'svelte/easing';
+    import MessagesList from '$lib/app/reusables/side/MessagesList.svelte';
+    import ServersList from '$lib/app/reusables/side/ServersList.svelte';
+    import { isInServer } from 'stores/rooms';
+    import ServerPanel from '$lib/app/reusables/side/ServerPanel.svelte';
+</script>
+
+<div class="main-container" in:fade={{ duration: 200, easing: sineInOut }}>
+    <ServersList />
+
+    {#if !$isInServer}
+        <MessagesList />
+    {:else}
+        <ServerPanel />
+    {/if}
+</div>
+
+<style>
+    .main-container {
+        display: flex;
+        flex-direction: row;
+        align-items: start;
+        justify-content: start;
+        margin: auto;
+        width: 100%;
+        height: calc(100% - 175px);
+        overflow-x: hidden;
+        overflow-y: hidden;
+        margin-top: 0;
+    }
+</style>

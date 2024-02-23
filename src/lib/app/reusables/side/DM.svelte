@@ -7,10 +7,11 @@
         dropdownDMRoom,
         dropdownVisible,
     } from 'stores/dropdowns';
-    import { mousePos, socket } from 'stores/main';
+    import { isMobile, mousePos, socket } from 'stores/main';
     import { targetProfileModal } from 'stores/modals';
     import { ourData } from 'stores/profile';
     import {
+        currentChannel,
         currentRoomData,
         currentRoomId,
         currentRoomLoaded,
@@ -110,13 +111,24 @@
 
         socket.on('newMessage', ({ roomId, newMessageData }) => {
             // Dont add unreads if were in already
-            if ($currentRoomId == roomId) return;
+            if (
+                $currentRoomId == roomId ||
+                $currentChannel?.channelId == roomId
+            )
+                return;
 
             if (roomId == dmData.roomId) {
                 if (
                     newMessageData.profileData.profileId != $ourData.profileId
                 ) {
                     dmData.unreadCount += 1;
+
+                    new Notification(`${newMessageData.profileData.username}`, {
+                        body: newMessageData.message.content,
+                        icon: newMessageData.profileData.avatar
+                            ? `${newMessageData.profileData.avatar}/tr:w-256:h-256:r-max`
+                            : '/favicon.png',
+                    });
                 }
 
                 dmData = dmData;
@@ -159,7 +171,9 @@
                 $currentRoomId == dmData.roomId
                     ? 'active'
                     : ''
-            } ${dmData.unreadCount != 0 ? 'unread' : ''}`}
+            } ${dmData.unreadCount != 0 ? 'unread' : ''} ${
+                $isMobile ? 'mobile' : ''
+            }`}
             on:click={enterRoom}
             on:keydown={enterRoom}
             on:contextmenu={(ev) => {
@@ -220,6 +234,10 @@
         transition: 125ms;
     }
 
+    .mobile {
+        border-radius: 0;
+    }
+
     .dm-container:hover {
         background: var(--secondary);
     }
@@ -266,12 +284,18 @@
         max-width: 130px;
         font-size: 0.95rem;
         margin: 0;
+        margin-top: 2px;
         overflow: hidden;
         text-overflow: ellipsis;
+        white-space: nowrap;
         letter-spacing: 0.1px;
         color: var(--text_gray);
         transition: 125ms;
         font-weight: 600;
+    }
+
+    .mobile #name {
+        max-width: 100%;
     }
 
     .active #name {

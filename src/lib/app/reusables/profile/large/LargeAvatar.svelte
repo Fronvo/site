@@ -1,7 +1,7 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
     import type { Room } from 'interfaces/all';
-    import { socket } from 'stores/main';
+    import { isMobile, socket } from 'stores/main';
     import {
         ModalTypes,
         targetFriendModal,
@@ -22,11 +22,14 @@
     import { dismissModal, setTitle, showModal } from 'utilities/main';
 
     export let avatar: string;
+    export let online: boolean;
     export let isSelf: boolean;
     export let isFriend: boolean;
 
     let pending = false;
     let processing = false;
+
+    let indicator: HTMLDivElement;
 
     async function attemptEnterRoom(): Promise<void> {
         for (const dmIndex in $dmsList) {
@@ -123,18 +126,36 @@
         );
     }
 
+    function updateIndicator(): void {
+        setTimeout(() => {
+            if (!indicator) return;
+
+            if (online) {
+                indicator.style.background = 'rgb(56, 212, 42)';
+                indicator.style.border = '3px solid var(--bg)';
+                indicator.style.visibility = 'visible';
+            } else {
+                indicator.style.visibility = 'hidden';
+            }
+        }, 0);
+    }
+
     onMount(() => {
+        updateIndicator();
+
         pending = false;
     });
 </script>
 
-<div class="top-container">
+<div class={`top-container ${$isMobile ? 'mobile' : ''}`}>
     <img
         id="avatar"
         src={avatar ? avatar : '/images/avatar.png'}
         alt={`Avatar`}
         draggable={false}
     />
+
+    <div bind:this={indicator} class="indicator" />
 
     <span class="placeholder" />
 
@@ -195,6 +216,15 @@
         user-select: none;
     }
 
+    .indicator {
+        width: 32px;
+        height: 32px;
+        border-radius: 30px;
+        transform: translateX(-36px) translateY(-32px);
+        margin-bottom: 2px;
+        margin-right: 7px;
+    }
+
     .placeholder {
         flex: 1;
     }
@@ -233,5 +263,27 @@
 
     #danger:hover {
         background: var(--red_hover);
+    }
+
+    @media screen and (max-width: 850px) {
+        .mobile button {
+            width: 100px;
+            font-size: 0.7rem;
+        }
+
+        .mobile #avatar {
+            width: 80px;
+            min-width: 80px;
+            height: 80px;
+            min-height: 80px;
+        }
+
+        .mobile .indicator {
+            width: 24px;
+            min-width: 24px;
+            height: 24px;
+            min-height: 24px;
+            transform: translateX(-24px) translateY(-46px);
+        }
     }
 </style>

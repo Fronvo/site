@@ -1,8 +1,13 @@
 <script lang="ts">
+    import { isMobile } from 'stores/main';
+
     export let opacity: number;
 </script>
 
-<div class="prop-container" style={`opacity: ${opacity}`}>
+<div
+    class={`prop-container ${$isMobile ? 'mobile' : ''}`}
+    style={`opacity: ${opacity}`}
+>
     <div class="top">
         <span id="avatar" />
         <span id="name" />
@@ -31,11 +36,19 @@
         margin-right: 5px;
     }
 
+    .mobile #avatar {
+        background: var(--tertiary);
+    }
+
     #name {
         width: 150px;
         height: 20px;
         border-radius: 30px;
         background: var(--primary);
+    }
+
+    .mobile #name {
+        background: var(--tertiary);
     }
 
     #attachment {
@@ -45,6 +58,17 @@
         background: var(--primary);
         border-radius: 10px;
         margin-top: 5px;
+    }
+
+    .mobile #attachment {
+        background: var(--tertiary);
+    }
+
+    @media screen and (max-width: 850px) {
+        .mobile #attachment {
+            width: 300px;
+            height: 300px;
+        }
     }
 
     @keyframes shimmer {

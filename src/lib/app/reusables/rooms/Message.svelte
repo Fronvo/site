@@ -21,7 +21,7 @@
     } from 'stores/modals';
     import { DropdownTypes } from 'stores/dropdowns';
     import linkifyHtml from 'linkify-html';
-    import { cachedAccountData, mousePos } from 'stores/main';
+    import { cachedAccountData, isMobile, mousePos } from 'stores/main';
 
     export let i = -1;
     export let profileData: FronvoAccount;
@@ -153,7 +153,7 @@
         $replyingToId == messageData.messageId && !isPreview ? 'highlight' : ''
     } ${!skipContext ? 'spaced' : 'skip'} ${hideCondition ? 'hide' : ''} ${
         isPending ? 'pending' : ''
-    }`}
+    } ${$isMobile ? 'mobile' : '0'}`}
     on:contextmenu={(ev) => {
         showOptions();
 
@@ -167,14 +167,14 @@
 
             <div class="wrapper">
                 <img
-                    src={getRepliedMessage().profileData.avatar
+                    src={getRepliedMessage()?.profileData.avatar
                         ? `${
-                              getRepliedMessage().profileData.avatar
+                              getRepliedMessage()?.profileData.avatar
                           }/tr:w-40:h-40`
                         : '/images/avatar.png'}
                     draggable={false}
                     alt={`${
-                        getRepliedMessage().profileData.profileId
+                        getRepliedMessage()?.profileData.profileId
                     }\'s avatar'`}
                 />
                 <h1
@@ -182,14 +182,14 @@
                     on:keydown={showReplyProfileModal}
                     id="username"
                 >
-                    {getRepliedMessage().profileData.username}
+                    {getRepliedMessage()?.profileData.username}
                 </h1>
                 <h1
                     id="reply"
-                    class={`reply-${getRepliedMessage().message.messageId}`}
+                    class={`reply-${getRepliedMessage()?.message.messageId}`}
                 >
-                    {getRepliedMessage().message.content
-                        ? getRepliedMessage().message.content
+                    {getRepliedMessage()?.message.content
+                        ? getRepliedMessage()?.message.content
                         : 'Unknown message'}
                 </h1>
             </div>
@@ -383,7 +383,7 @@
     .reply-container #start {
         width: 2px;
         height: 14px;
-        border: 1px solid var(--tertiary);
+        border: 1px solid var(--primary);
         border-radius: 20px;
         overflow: hidden;
         transform: translateY(7px);
@@ -392,7 +392,7 @@
     .reply-container #mid {
         width: 30px;
         height: 2px;
-        border: 1px solid var(--tertiary);
+        border: 1px solid var(--primary);
         border-radius: 20px;
         overflow: hidden;
         margin-bottom: 10px;
@@ -415,7 +415,9 @@
 
     .reply-container .wrapper img {
         width: 20px;
+        min-width: 20px;
         height: 20px;
+        min-height: 20px;
         border-radius: 30px;
         margin-right: 3px;
         filter: brightness(75%);
@@ -438,6 +440,9 @@
         color: var(--gray);
         margin: 0;
         font-size: 0.8rem;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        max-width: 100%;
     }
 
     .time-container {
@@ -540,6 +545,10 @@
         opacity: 0.5;
     }
 
+    .mobile #content {
+        background: var(--tertiary);
+    }
+
     #attachment {
         max-width: 100%;
         max-height: 200px;
@@ -549,7 +558,7 @@
     }
 
     .skip #attachment {
-        margin-left: 4px;
+        margin-left: 6px;
     }
 
     .preview #attachment {
@@ -580,5 +589,30 @@
 
     .message-container:hover #menu {
         opacity: 1;
+    }
+
+    @media screen and (max-width: 850px) {
+        .mobile #name {
+            font-size: 0.8rem;
+        }
+
+        .mobile #small-time-2 {
+            font-size: 0.6rem;
+        }
+
+        .mobile #avatar {
+            width: 38px;
+            min-width: 38px;
+            height: 38px;
+            min-height: 38px;
+        }
+
+        .mobile #content {
+            font-size: 0.75rem;
+        }
+
+        .skip #content {
+            margin-left: 0;
+        }
     }
 </style>

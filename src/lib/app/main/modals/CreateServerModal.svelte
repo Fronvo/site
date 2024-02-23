@@ -2,7 +2,7 @@
     import { dismissModal, showModal } from 'utilities/main';
     import ModalTemplate from '../ModalTemplate.svelte';
     import { ModalTypes, type ModalData, modalLoading } from 'stores/modals';
-    import { socket } from 'stores/main';
+    import { isMobile, socket } from 'stores/main';
     import { onMount } from 'svelte';
     import ErrorHeader from '$lib/app/reusables/all/ErrorHeader.svelte';
 
@@ -70,7 +70,7 @@
 <ModalTemplate {data}>
     <ErrorHeader size={'1.2rem'} {errorMessage} />
 
-    <div class="friend-container">
+    <div class={`create-container ${$isMobile ? 'mobile' : ''}`}>
         <span class="placeholder">
             <h1>
                 {Array.from(name)[0] || '?'}{Array.from(name)[1] || ''}
@@ -86,7 +86,7 @@
 </ModalTemplate>
 
 <style>
-    .friend-container {
+    .create-container {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -121,5 +121,9 @@
     .placeholder h1 {
         font-size: 1.3rem;
         font-weight: 600;
+    }
+
+    .mobile input {
+        width: 70vw;
     }
 </style>

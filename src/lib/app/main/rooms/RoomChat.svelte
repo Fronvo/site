@@ -26,7 +26,7 @@
     import { isAcceptedImage, setTitle } from 'utilities/main';
     import { ourData } from 'stores/profile';
     import Message from '$lib/app/reusables/rooms/Message.svelte';
-    import { fronvoTitle, lastSendsIn30, socket } from 'stores/main';
+    import { fronvoTitle, isMobile, lastSendsIn30, socket } from 'stores/main';
     import InfiniteLoading from 'svelte-infinite-loading';
     import type { Unsubscriber } from 'svelte/store';
     import type { NewMessageResult } from 'interfaces/account/newMessage';
@@ -343,7 +343,7 @@
 {#if $messages}
     <div
         bind:this={chat}
-        class="chat-container"
+        class={`chat-container ${$isMobile ? 'mobile' : ''}`}
         transition:scale={{ duration: 1000, start: 0.975 }}
     >
         {#if $messages.length == 0 && !previousEmpty}
@@ -411,5 +411,9 @@
 
     .placeholder {
         flex: 1;
+    }
+
+    .mobile {
+        transform: translateY(-50px);
     }
 </style>

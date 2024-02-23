@@ -10,19 +10,13 @@
     let mountReady = false;
 
     onMount(async () => {
-        // Remove homepage for registered users
         if (getKey('token')) {
-            const val = window.navigator.userAgent.toLowerCase();
+            redirectApp();
 
-            // Block access to mobile, get the app
-            if (!(val.includes('android') || val.includes('iphone'))) {
-                redirectApp();
+            $currentToken = getKey('token');
 
-                $currentToken = getKey('token');
-
-                await performLogin(getKey('token'), $cachedAccountData);
-                return;
-            }
+            await performLogin(getKey('token'), $cachedAccountData);
+            return;
         }
 
         // Disable __layout in index
@@ -36,7 +30,7 @@
     });
 </script>
 
-{#if mountReady && $indexVisible}
+{#if mountReady}
     <div class="index-container">
         {#if $indexVisible}
             <AppRegisterMain />

@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { goto } from '$app/navigation';
     import { page } from '$app/stores';
     import { indexVisible } from 'stores/index';
     import {
@@ -18,27 +19,26 @@
 
         // Remove homepage for registered users
         if (getKey('token')) {
-            const val = window.navigator.userAgent.toLowerCase();
+            redirectApp();
 
-            // Block access to mobile, get the app
-            if (!(val.includes('android') || val.includes('iphone'))) {
-                redirectApp();
+            $currentToken = getKey('token');
 
-                $currentToken = getKey('token');
+            $pendingServerId = $page.params.serverId;
+            $pendingChannelId = $page.params.channelId;
 
-                $pendingServerId = $page.params.serverId;
-                $pendingChannelId = $page.params.channelId;
+            await performLogin(getKey('token'), $cachedAccountData);
 
-                await performLogin(getKey('token'), $cachedAccountData);
-
-                return;
-            }
-        } else {
-            // Disable __layout in index
-            $showLayout = false;
-
-            // Default when accessed
-            $indexVisible = true;
+            return;
         }
+
+        // Disable __layout in index
+        $showLayout = false;
+
+        // Default when accessed
+        $indexVisible = true;
+
+        goto('/', {
+            replaceState: true,
+        });
     });
 </script>

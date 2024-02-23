@@ -9,7 +9,7 @@
         currentRoomLoaded,
         isInServer,
     } from 'stores/rooms';
-    import { disabledIn30, lastSendsIn30 } from 'stores/main';
+    import { disabledIn30, isMobile, lastSendsIn30 } from 'stores/main';
     import { onMount } from 'svelte';
     import { differenceInMinutes } from 'date-fns';
     import { getKey } from 'utilities/global';
@@ -29,6 +29,7 @@
     import JoinServerButton from '../reusables/side/JoinServerButton.svelte';
     import RoomTyping from './rooms/RoomTyping.svelte';
     import ToggleThemeButton from '../reusables/side/ToggleThemeButton.svelte';
+    import SecondaryOptionsMobile from '../reusables/top/SecondaryOptionsMobile.svelte';
 
     let ParticlesComponent;
 
@@ -132,52 +133,70 @@
 />
 
 <div
-    class="main-container"
+    class={`main-container ${$isMobile ? 'mobile' : ''}`}
     in:scale={{ duration: 750, easing: quintInOut, opacity: 0, start: 1.25 }}
 >
-    <div class="first-container">
-        <HomeButton />
-        <ServersList />
-        <CreateServerButton />
-        <JoinServerButton />
-        <ToggleThemeButton />
-    </div>
+    {#if !$isMobile}
+        <div class="first-container">
+            <HomeButton />
+            <ServersList />
+            <CreateServerButton />
+            <JoinServerButton />
+            <ToggleThemeButton />
+        </div>
 
-    <div class="second-container">
-        {#if !$isInServer}
-            <div class="wrapper">
-                <SecondaryOptions />
+        <div class="second-container">
+            {#if !$isInServer}
+                <div class="wrapper">
+                    <SecondaryOptions />
 
-                <MessagesList />
-            </div>
-        {:else}
-            <ServerPanel />
-        {/if}
-    </div>
+                    <MessagesList />
+                </div>
+            {:else}
+                <ServerPanel />
+            {/if}
+        </div>
+    {:else if !$currentChannel && !$currentRoomData}
+        <SecondaryOptionsMobile />
+    {/if}
 
     <div class="third-container">
-        {#if $currentRoomLoaded || $isInServer}
-            {#if $currentRoomData || $currentChannel}
-                <RoomInfo />
+        {#if !$isMobile}
+            {#if $currentRoomLoaded || $isInServer}
+                {#if $currentRoomData || $currentChannel}
+                    <RoomInfo />
 
-                <RoomChat />
+                    <RoomChat />
 
-                <RoomSend />
+                    <RoomSend />
 
-                <RoomTyping />
+                    <RoomTyping />
+                {/if}
+            {:else}
+                <Dashboard />
             {/if}
+        {:else if $currentRoomLoaded || $currentChannel}
+            <RoomInfo />
+
+            <RoomChat />
+
+            <RoomSend />
+
+            <RoomTyping />
         {:else}
             <Dashboard />
         {/if}
     </div>
 
-    <div class="fourth-container">
-        {#if $isInServer}
-            <RoomMembers />
-        {:else}
-            <DmMembers />
-        {/if}
-    </div>
+    {#if !$isMobile}
+        <div class="fourth-container">
+            {#if $isInServer}
+                <RoomMembers />
+            {:else}
+                <DmMembers />
+            {/if}
+        </div>
+    {/if}
 </div>
 
 <style>
@@ -186,6 +205,11 @@
         flex-direction: row;
         min-width: 955px;
         z-index: 1;
+        overflow: hidden;
+    }
+
+    .mobile {
+        min-width: 0;
     }
 
     .first-container {

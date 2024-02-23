@@ -39,7 +39,7 @@
             $cachedAccountData
         );
 
-        if ($currentServer.members.length == 1) {
+        if ($currentServer?.members.length == 1) {
             loadingFinished = true;
             pending = false;
             return;
@@ -65,6 +65,9 @@
             // Finish loading
             // Minus owner
             if (memberInfo.length == $currentServer.members.length - 1) {
+                // Alphabetically
+                memberInfo.sort((a, b) => a.username.localeCompare(b.username));
+
                 loadingFinished = true;
                 pending = false;
 

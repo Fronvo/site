@@ -10,6 +10,8 @@
     import DashboardProfileOptions from './DashboardProfileOptions.svelte';
     import { isInServer } from 'stores/rooms';
     import { goto } from '$app/navigation';
+    import { isMobile } from 'stores/main';
+    import DashboardMessages from './DashboardMessages.svelte';
 
     let dashboardContainer: HTMLDivElement;
     let unsubscribe: Unsubscriber;
@@ -48,7 +50,7 @@
 <div
     class={`dashboard-container ${
         $totalDashboardPosts == 0 ? 'overflow-hidden' : ''
-    }`}
+    } ${$isMobile ? 'mobile' : ''}`}
     bind:this={dashboardContainer}
 >
     {#if $activeDashboardTab == DashboardOptions.Dashboard}
@@ -59,6 +61,8 @@
     {:else if $activeDashboardTab == DashboardOptions.Friends}
         <DashboardFriends />
         <DashboardFriendOptions />
+    {:else if $activeDashboardTab == DashboardOptions.Messages}
+        <DashboardMessages />
     {/if}
 </div>
 
@@ -72,6 +76,10 @@
         overflow-x: hidden;
         overflow-y: scroll;
         z-index: 1;
+    }
+
+    .mobile {
+        padding-right: 0;
     }
 
     .overflow-hidden {
@@ -94,6 +102,10 @@
     @media screen and (max-width: 1050px) {
         .dashboard-container {
             padding-right: 10%;
+        }
+
+        .mobile {
+            padding-right: 0;
         }
     }
 </style>

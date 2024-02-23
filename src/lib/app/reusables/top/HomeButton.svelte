@@ -1,11 +1,12 @@
 <script lang="ts">
+    import { isMobile } from 'stores/main';
     import { isInServer } from 'stores/rooms';
     import { goHome } from 'utilities/rooms';
 </script>
 
 <div>
     <svg
-        class={`${!$isInServer ? 'active' : ''}`}
+        class={`${!$isInServer ? 'active' : ''} ${$isMobile ? 'mobile' : ''}`}
         version="1.2"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 512 512"
@@ -59,5 +60,10 @@
         border-radius: 15px;
         background: var(--text);
         fill: var(--bg);
+    }
+
+    .mobile {
+        margin-top: 0;
+        margin-bottom: 10px;
     }
 </style>

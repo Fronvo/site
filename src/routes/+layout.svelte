@@ -7,15 +7,18 @@
         dismissModal,
         initSocket,
         setTitle,
+        findCachedAccount,
     } from 'utilities/main';
     import { getKey } from 'utilities/global';
     import '../app.css';
     import { currentTheme, defaultTheme, whiteTheme } from '../themes';
     import FronvoLoading from '$lib/app/FronvoLoading.svelte';
     import {
+        cachedAccountData,
         darkTheme,
         disabledIn30,
         fronvoTitle,
+        isMobile,
         loginSucceeded,
         mousePos,
         showLayout,
@@ -57,6 +60,11 @@
                 new Date(),
                 new Date(getKey('disabledIn30Time'))
             ) < 15;
+
+        const userAgent = window.navigator.userAgent.toLowerCase();
+
+        $isMobile =
+            userAgent.includes('android') || userAgent.includes('iphone');
     }
 
     function setupTheming(): void {
@@ -82,17 +90,6 @@
             setTitle('');
 
             if (state) {
-                const val = window.navigator.userAgent.toLowerCase();
-
-                // Block access to mobile, get the app
-                if (val.includes('android') || val.includes('iphone')) {
-                    goto('/', {
-                        replaceState: true,
-                    });
-
-                    return;
-                }
-
                 initSocket(() => {
                     $currentRoomLoaded = false;
                     $currentRoomId = undefined;
@@ -107,6 +104,8 @@
 
                     loginSucceeded.subscribe((state) => {
                         if (!state) return;
+
+                        Notification.requestPermission();
 
                         if ($pendingProfileDMId) {
                             for (const dmIndex in $dmsList) {
@@ -280,10 +279,19 @@
             $ourData = $ourData;
         });
 
-        socket.on('newFriendRequest', ({ profileId }) => {
+        socket.on('newFriendRequest', async ({ profileId }) => {
             $ourData.pendingFriendRequests.push(profileId);
 
             $ourData = $ourData;
+
+            const icon = `${
+                (await findCachedAccount(profileId, $cachedAccountData)).avatar
+            }/tr:w-256:h-256:r-max`;
+
+            new Notification(`@${profileId}`, {
+                body: 'New friend request',
+                icon,
+            });
         });
 
         socket.on('serverCreated', ({ serverId, name, invite }) => {

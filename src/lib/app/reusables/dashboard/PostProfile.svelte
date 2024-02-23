@@ -138,4 +138,11 @@
         margin: 0;
         text-shadow: 0 0 5px black;
     }
+
+    @media screen and (max-width: 850px) {
+        .post-container {
+            width: 125px;
+            height: 125px;
+        }
+    }
 </style>

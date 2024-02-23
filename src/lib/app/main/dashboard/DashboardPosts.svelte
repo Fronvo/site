@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { socket } from 'stores/main';
+    import { isMobile, socket } from 'stores/main';
     import {
         dashboardPosts as dashboardPostsStore,
         totalDashboardPosts,
@@ -66,7 +66,10 @@
     });
 </script>
 
-<div class="home-container" in:fade={{ duration: 200, easing: sineInOut }}>
+<div
+    class={`home-container ${$isMobile ? 'mobile' : ''}`}
+    in:fade={{ duration: 200, easing: sineInOut }}
+>
     {#if $dashboardPostsStore.length != 0}
         <h1 id="title">Latest posts</h1>
         <div class="posts-container">
@@ -106,7 +109,7 @@
 
             <div class="props">
                 {#each { length: 2 } as _, i}
-                    <PropPost opacity={1 - i * 0.75} />
+                    <PropPost opacity={1 - i * 0.5} />
                 {/each}
             </div>
         </div>
@@ -142,7 +145,6 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        height: calc(100vh);
         transform: translateY(-20px);
     }
 
@@ -217,12 +219,47 @@
             visibility: hidden;
         }
 
+        .mobile .banner {
+            visibility: visible;
+            margin-left: 80px;
+        }
+
         .props {
             margin-right: 50px;
         }
 
         .banner h1 {
             font-size: 1.1rem;
+        }
+    }
+
+    @media screen and (max-width: 850px) {
+        .home-container {
+            width: 100%;
+            align-items: center;
+            margin-left: 0;
+        }
+
+        .posts-container {
+            align-items: center;
+            transform: translateY(-30px);
+            padding-bottom: 120px;
+        }
+
+        #title {
+            font-size: 1.2rem;
+        }
+
+        .mobile .banner {
+            margin-left: 120px;
+        }
+
+        .mobile .banner h1 {
+            font-size: 0.9rem;
+        }
+
+        .mobile .props {
+            margin-right: 0;
         }
     }
 </style>

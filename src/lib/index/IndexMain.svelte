@@ -16,10 +16,10 @@
 
 {#if mountReady}
     <div
-        class="w-full h-screen flex text-center items-center justify-center flex-col"
+        class="mobile:mb-[50px] w-full h-screen flex text-center items-center justify-center flex-col"
     >
         <h1
-            class="smobile:text-3xl mobile:text-4xl text-5xl font-extrabold mb-6"
+            class="smobile:text-3xl mobile:text-4xl mobile:mr-4 mobile:ml-4 text-5xl font-extrabold mb-6"
             transition:fly={{ y: -50, duration: 500 }}
         >
             All of your social media, in one.

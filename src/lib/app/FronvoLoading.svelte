@@ -41,6 +41,7 @@
         height: 128px;
         cursor: default;
         fill: var(--text);
+        overflow: hidden;
     }
 
     h1 {
@@ -55,6 +56,11 @@
     }
 
     @media screen and (max-width: 850px) {
+        svg {
+            width: 80px;
+            height: 80px;
+        }
+
         h1 {
             font-size: 1.1rem;
         }

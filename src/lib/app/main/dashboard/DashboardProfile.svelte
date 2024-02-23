@@ -3,14 +3,21 @@
     import PropPost from '$lib/app/reusables/dashboard/PropPost.svelte';
     import { ourPosts } from 'stores/dashboard';
     import { DropdownTypes } from 'stores/dropdowns';
-    import { mousePos, socket } from 'stores/main';
+    import { isMobile, mousePos, socket } from 'stores/main';
     import { ModalTypes } from 'stores/modals';
     import { ourData } from 'stores/profile';
     import { onMount } from 'svelte';
     import InfiniteLoading from 'svelte-infinite-loading';
     import { sineInOut } from 'svelte/easing';
     import { fade } from 'svelte/transition';
-    import { setTitle, showDropdownMouse, showModal } from 'utilities/main';
+    import {
+        setTitle,
+        showDropdown,
+        showDropdownMouse,
+        showModal,
+    } from 'utilities/main';
+
+    let menu: SVGElement;
 
     async function loadMore({ detail: { loaded, complete } }): Promise<void> {
         if ($ourData.totalPosts == $ourPosts.length) {
@@ -45,7 +52,11 @@
     }
 
     function showOptions(): void {
-        showDropdownMouse(DropdownTypes.Account, $mousePos);
+        if (!$isMobile) {
+            showDropdownMouse(DropdownTypes.Account, $mousePos);
+        } else {
+            showDropdown(DropdownTypes.Account, menu, 'bottom', -50);
+        }
     }
 
     onMount(() => {
@@ -69,6 +80,7 @@
         <button on:click={editProfile}>Edit profile</button>
 
         <svg
+            bind:this={menu}
             on:click={showOptions}
             on:keydown={showOptions}
             id="menu"
@@ -171,10 +183,12 @@
         fill: var(--gray);
         border-radius: 30px;
         padding: 4px;
+        transition: 125ms;
     }
 
     .options svg:hover {
-        background: var(--primary);
+        fill: var(--bg);
+        background: var(--text);
     }
 
     .posts-container {
@@ -214,6 +228,24 @@
             width: 100%;
             justify-content: center;
             margin-left: 0;
+        }
+    }
+
+    @media screen and (max-width: 850px) {
+        #avatar {
+            min-width: 80px;
+            min-height: 80px;
+            width: 80px;
+            height: 80px;
+        }
+
+        #username {
+            font-size: 1.4rem;
+        }
+
+        button {
+            width: 150px;
+            font-size: 1rem;
         }
     }
 </style>

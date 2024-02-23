@@ -344,4 +344,18 @@
         flex: 1;
         letter-spacing: 0.1px;
     }
+
+    @media screen and (max-width: 850px) {
+        .post-container {
+            width: 275px;
+        }
+
+        #name {
+            font-size: 0.9rem;
+        }
+
+        #time {
+            font-size: 0.75rem;
+        }
+    }
 </style>

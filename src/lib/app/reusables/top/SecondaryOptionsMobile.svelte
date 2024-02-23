@@ -37,6 +37,12 @@
         goto('/profile');
     }
 
+    function changeToMessages(): void {
+        changeTab(DashboardOptions.Messages);
+
+        goto('/messages');
+    }
+
     function changeTab(tab: DashboardOptions): void {
         $activeDashboardTab = tab;
 
@@ -55,6 +61,8 @@
             goto('/friends');
         } else if ($activeDashboardTab == DashboardOptions.Profile) {
             goto('/profile');
+        } else if ($activeDashboardTab == DashboardOptions.Messages) {
+            goto('/messages');
         } else {
             goto('/homepage');
         }
@@ -86,6 +94,48 @@
         >
         <h1>Homepage</h1></button
     >
+
+    <button
+        on:click={changeToMessages}
+        class={`${
+            $activeDashboardTab == DashboardOptions.Messages &&
+            !$currentRoomData
+                ? 'active'
+                : ''
+        }`}
+        ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            ><path
+                d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2S2 6.477 2 12c0 1.6.376 3.112 1.043 4.453c.178.356.237.763.134 1.148l-.595 2.226a1.3 1.3 0 0 0 1.591 1.591l2.226-.595a1.634 1.634 0 0 1 1.149.133A9.958 9.958 0 0 0 12 22Z"
+            /></svg
+        >
+        <h1>Messages</h1></button
+    >
+
+    <button
+        on:click={changeToFriends}
+        class={`${
+            $activeDashboardTab == DashboardOptions.Friends && !$currentRoomData
+                ? 'active'
+                : ''
+        }`}
+        ><svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            ><path
+                d="M15.5 7.5a3.5 3.5 0 1 1-7 0a3.5 3.5 0 0 1 7 0Zm2.5 9c0 1.933-2.686 3.5-6 3.5s-6-1.567-6-3.5S8.686 13 12 13s6 1.567 6 3.5ZM7.122 5c.178 0 .35.017.518.05A4.977 4.977 0 0 0 7 7.5c0 .868.221 1.685.61 2.396c-.158.03-.32.045-.488.045c-1.414 0-2.561-1.106-2.561-2.47C4.561 6.106 5.708 5 7.122 5ZM5.447 18.986C4.88 18.307 4.5 17.474 4.5 16.5c0-.944.357-1.756.896-2.423C3.49 14.225 2 15.267 2 16.529c0 1.275 1.517 2.325 3.447 2.457ZM17 7.5c0 .868-.221 1.685-.61 2.396c.157.03.32.045.488.045c1.414 0 2.56-1.106 2.56-2.47c0-1.365-1.146-2.471-2.56-2.471c-.178 0-.35.017-.518.05c.407.724.64 1.56.64 2.45Zm1.553 11.486c1.93-.132 3.447-1.182 3.447-2.457c0-1.263-1.491-2.304-3.396-2.452c.54.667.896 1.479.896 2.423c0 .974-.38 1.807-.947 2.486Z"
+            /></svg
+        >
+        <h1>Friends</h1></button
+    >
+
     <button
         on:click={changeToProfile}
         class={`${
@@ -115,26 +165,6 @@
         <h1>Profile</h1></button
     >
 
-    <button
-        on:click={changeToFriends}
-        class={`${
-            $activeDashboardTab == DashboardOptions.Friends && !$currentRoomData
-                ? 'active'
-                : ''
-        }`}
-        ><svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="32"
-            height="32"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            ><path
-                d="M15.5 7.5a3.5 3.5 0 1 1-7 0a3.5 3.5 0 0 1 7 0Zm2.5 9c0 1.933-2.686 3.5-6 3.5s-6-1.567-6-3.5S8.686 13 12 13s6 1.567 6 3.5ZM7.122 5c.178 0 .35.017.518.05A4.977 4.977 0 0 0 7 7.5c0 .868.221 1.685.61 2.396c-.158.03-.32.045-.488.045c-1.414 0-2.561-1.106-2.561-2.47C4.561 6.106 5.708 5 7.122 5ZM5.447 18.986C4.88 18.307 4.5 17.474 4.5 16.5c0-.944.357-1.756.896-2.423C3.49 14.225 2 15.267 2 16.529c0 1.275 1.517 2.325 3.447 2.457ZM17 7.5c0 .868-.221 1.685-.61 2.396c.157.03.32.045.488.045c1.414 0 2.56-1.106 2.56-2.47c0-1.365-1.146-2.471-2.56-2.471c-.178 0-.35.017-.518.05c.407.724.64 1.56.64 2.45Zm1.553 11.486c1.93-.132 3.447-1.182 3.447-2.457c0-1.263-1.491-2.304-3.396-2.452c.54.667.896 1.479.896 2.423c0 .974-.38 1.807-.947 2.486Z"
-            /></svg
-        >
-        <h1>Friends</h1></button
-    >
-
     {#if !$ourData.isTurbo}
         <button id="nitro" on:click={showTurbo}
             ><svg
@@ -154,38 +184,36 @@
 
 <style>
     .secondary-container {
+        position: fixed;
+        bottom: 0;
+        right: 0;
+        left: 0;
         width: 100%;
         display: flex;
-        flex-direction: column;
-        padding: 5px;
-        margin-top: 5px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
     }
 
     button {
         display: flex;
+        flex-direction: column;
         align-items: center;
+        justify-content: center;
         width: 100%;
-        height: 45px;
+        height: 75px;
         background: transparent;
         box-shadow: none;
         backdrop-filter: none;
         font-size: 1rem;
         text-align: start;
         transition: 125ms;
-        margin-bottom: 3px;
-        border-radius: 5px;
-    }
-
-    button:hover {
-        background: var(--secondary);
+        border-radius: 0;
     }
 
     button:active {
         opacity: 1;
-    }
-
-    .active {
-        background: var(--secondary);
     }
 
     h1 {
@@ -201,7 +229,6 @@
     img {
         width: 28px;
         height: 28px;
-        margin-right: 10px;
         transition: 125ms;
         border-radius: 5px;
     }
@@ -209,12 +236,21 @@
     svg {
         width: 28px;
         height: 28px;
-        margin-right: 10px;
         fill: var(--gray);
         transition: 125ms;
     }
 
     #nitro:hover svg {
         fill: var(--text);
+    }
+
+    @media screen and (max-width: 850px) {
+        button {
+            height: 60px;
+        }
+
+        h1 {
+            display: none;
+        }
     }
 </style>

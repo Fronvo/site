@@ -23,6 +23,8 @@
     let unsubscribe: Unsubscriber;
     let memberContainer: HTMLDivElement;
 
+    let indicator: HTMLDivElement;
+
     function showProfileModal(): void {
         if (profileData.profileId == $ourData.profileId) {
             $targetProfileModal = $ourData;
@@ -39,7 +41,23 @@
         showDropdown(DropdownTypes.Member, memberContainer, 'bottom', 25, 10);
     }
 
+    function updateIndicator(): void {
+        setTimeout(() => {
+            if (!indicator) return;
+
+            if (profileData.online) {
+                indicator.style.background = 'rgb(56, 212, 42)';
+                indicator.style.border = '3px solid var(--bg)';
+                indicator.style.visibility = 'visible';
+            } else {
+                indicator.style.visibility = 'hidden';
+            }
+        }, 0);
+    }
+
     onMount(() => {
+        updateIndicator();
+
         if (profileData.profileId == $ourData.profileId) {
             unsubscribe = ourData.subscribe((data) => {
                 if (!data) return;
@@ -51,6 +69,8 @@
         socket.on('onlineStatusUpdated', ({ profileId, online }) => {
             if (profileId == profileData.profileId) {
                 profileData.online = online;
+
+                updateIndicator();
             }
         });
 
@@ -107,6 +127,8 @@
             alt={`${profileData.username}'s avatar`}
             draggable={false}
         />
+
+        <div bind:this={indicator} class="indicator" />
     </div>
 
     <div class="bottom-container">
@@ -192,12 +214,20 @@
         width: 32px;
         height: 32px;
         border-radius: 30px;
-        margin-right: 20px;
         transition: 125ms;
     }
 
     .offline #avatar {
         opacity: 0.5;
+    }
+
+    .indicator {
+        width: 16px;
+        height: 16px;
+        border-radius: 30px;
+        transform: translateX(-12px) translateY(12px);
+        margin-bottom: 2px;
+        margin-right: 7px;
     }
 
     .bottom-container {

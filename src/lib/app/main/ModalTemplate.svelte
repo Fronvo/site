@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { isMobile } from 'stores/main';
     import {
         modalAnimDuration,
         modalLoading,
@@ -17,7 +18,7 @@
 <div
     class={`modal-container ${!data.title ? 'title-less' : ''} ${
         data.transparent ? 'transparent' : ''
-    } ${data.noDecoration ? 'no-decoration' : ''}`}
+    } ${data.noDecoration ? 'no-decoration' : ''} ${$isMobile ? 'mobile' : ''}`}
     transition:scale={{
         duration: modalAnimDuration * 0.5,
         start: 0.9,
@@ -96,6 +97,12 @@
 
     .transparent {
         background: transparent;
+    }
+
+    .mobile {
+        width: 90vw;
+        min-width: 0;
+        max-width: none;
     }
 
     #title {
@@ -211,6 +218,16 @@
 
     .loading span:nth-child(3) {
         animation-delay: 100ms;
+    }
+
+    @media screen and (max-width: 850px) {
+        .mobile #title {
+            font-size: 1.2rem;
+        }
+
+        .mobile button {
+            font-size: 0.9rem;
+        }
     }
 
     @keyframes loading {

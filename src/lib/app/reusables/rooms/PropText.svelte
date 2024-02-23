@@ -1,7 +1,8 @@
 <script lang="ts">
+    import { isMobile } from 'stores/main';
 </script>
 
-<div class="prop-container">
+<div class={`prop-container ${$isMobile ? 'mobile' : ''}`}>
     <div class="top">
         <span id="avatar" />
         <span id="name" />
@@ -45,11 +46,19 @@
         margin-right: 5px;
     }
 
+    .mobile #avatar {
+        background: var(--tertiary);
+    }
+
     #name {
         width: 150px;
         height: 20px;
         border-radius: 30px;
         background: var(--primary);
+    }
+
+    .mobile #name {
+        background: var(--tertiary);
     }
 
     .content {
@@ -67,6 +76,10 @@
         margin-right: 5px;
     }
 
+    .mobile #text {
+        background: var(--tertiary);
+    }
+
     #text-2 {
         width: 75px;
         height: 20px;
@@ -76,6 +89,10 @@
         margin-right: 5px;
     }
 
+    .mobile #text-2 {
+        background: var(--tertiary);
+    }
+
     #text-3 {
         width: 50px;
         height: 20px;
@@ -83,6 +100,10 @@
         background: var(--primary);
         margin-top: 5px;
         margin-right: 5px;
+    }
+
+    .mobile #text-3 {
+        background: var(--tertiary);
     }
 
     @keyframes shimmer {

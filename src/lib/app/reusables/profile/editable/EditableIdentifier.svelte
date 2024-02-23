@@ -1,14 +1,20 @@
 <script lang="ts">
     import { DropdownTypes } from 'stores/dropdowns';
-    import { mousePos } from 'stores/main';
+    import { isMobile, mousePos } from 'stores/main';
     import { ourData } from 'stores/profile';
     import type { Writable } from 'svelte/store';
-    import { showDropdownMouse } from 'utilities/main';
+    import { showDropdown, showDropdownMouse } from 'utilities/main';
 
     export let username: Writable<string>;
 
+    let menu: SVGElement;
+
     function showOptions(): void {
-        showDropdownMouse(DropdownTypes.AccountExtras, $mousePos);
+        if (!$isMobile) {
+            showDropdownMouse(DropdownTypes.AccountExtras, $mousePos);
+        } else {
+            showDropdown(DropdownTypes.AccountExtras, menu, 'bottom', -100);
+        }
     }
 </script>
 
@@ -20,6 +26,7 @@
             <span />
 
             <svg
+                bind:this={menu}
                 on:click={showOptions}
                 on:keydown={showOptions}
                 xmlns="http://www.w3.org/2000/svg"
@@ -103,10 +110,12 @@
         fill: var(--gray);
         border-radius: 30px;
         padding: 4px;
+        transition: 125ms;
     }
 
     .lock-container svg:hover {
-        background: var(--primary);
+        fill: var(--bg);
+        background: var(--text);
     }
 
     .secondary-container {

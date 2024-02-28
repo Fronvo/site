@@ -106,7 +106,14 @@
         border: 2px solid white;
     }
 
-    .mobile input {
-        width: 60vw;
+    @media screen and (max-width: 850px) {
+        h1 {
+            font-size: 0.9rem;
+        }
+
+        .mobile input {
+            width: 60vw;
+            font-size: 1rem;
+        }
     }
 </style>

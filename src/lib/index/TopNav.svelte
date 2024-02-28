@@ -21,14 +21,16 @@
             alt="Logo"
             draggable={false}
         />
-        <h1 class="smobile:text-2xl m-0 text-3xl w-1 font-extrabold">Fronvo</h1>
+        <h1 class="smobile:text-2xl m-0 text-3xl text-white w-1 font-extrabold">
+            Fronvo
+        </h1>
 
         <div class="flex items-center justify-end flex-1">
             <a
                 class="text-white hover:underline"
                 href="https://github.com/Fronvo"
                 ><h1
-                    class="smobile:text-base smobile:mr-2 smobile:ml-2 m-0 text-xl font-medium mr-3 ml-3"
+                    class="smobile:text-base smobile:mr-2 smobile:ml-2 m-0 text-xl text-white font-medium mr-3 ml-3"
                 >
                     Source code
                 </h1></a
@@ -37,7 +39,7 @@
                 class="text-white hover:underline"
                 href="https://fronvo.instatus.com"
                 ><h1
-                    class="smobile:text-base smobile:mr-2 smobile:ml-2 m-0 text-xl font-medium mr-3 ml-3"
+                    class="smobile:text-base smobile:mr-2 smobile:ml-2 m-0 text-xl text-white font-medium mr-3 ml-3"
                 >
                     Status
                 </h1></a

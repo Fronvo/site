@@ -229,6 +229,7 @@
         margin: 0;
         font-size: 1.1rem;
         margin-bottom: 15px;
+        color: white;
     }
 
     .choices-container a {

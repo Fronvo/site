@@ -251,6 +251,7 @@
     }
 
     button:hover {
+        background: rgb(125, 125, 125, 0.25);
         color: var(--text);
     }
 

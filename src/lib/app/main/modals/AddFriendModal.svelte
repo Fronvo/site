@@ -28,7 +28,7 @@
 
         socket.emit(
             'addFriend',
-            { profileId: profileId ? profileId : '' },
+            { profileId: profileId ? profileId.toLowerCase() : '' },
             ({ err }) => {
                 if (err) {
                     // Prettify

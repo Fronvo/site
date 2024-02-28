@@ -47,7 +47,7 @@
         }
 
         // Fetch all room members, notify UI once finished
-        for (const memberIndex in $currentServer.members) {
+        for (const memberIndex in $currentServer?.members) {
             const member = $currentServer.members[memberIndex];
 
             // Dont keep owner in info, seperate

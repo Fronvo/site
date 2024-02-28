@@ -17,6 +17,7 @@
         currentServer,
         dmsList,
         isInServer,
+        mobileShowMembers,
     } from 'stores/rooms';
     import { onMount } from 'svelte';
     import { dismissModal, setTitle, showModal } from 'utilities/main';
@@ -50,6 +51,7 @@
             $currentChannel = undefined;
             $currentServer = undefined;
             $isInServer = false;
+            $mobileShowMembers = false;
 
             setTitle(`@${dm.dmUser.profileId}`);
             goto(`/@${dm.dmUser.profileId}`);

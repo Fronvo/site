@@ -39,7 +39,7 @@
             'registerVerify',
             {
                 code: code ? code : '',
-                profileId: identifier ? identifier : '',
+                profileId: identifier ? identifier.toLowerCase() : '',
             },
             async ({ err, token }) => {
                 if (err) {

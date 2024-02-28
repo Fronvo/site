@@ -122,4 +122,19 @@
         font-size: 1.3rem;
         color: white;
     }
+
+    @media screen and (max-width: 850px) {
+        .benefit {
+            width: 60%;
+        }
+
+        .benefit svg {
+            width: 30px;
+            height: 30px;
+        }
+
+        .benefit h1 {
+            font-size: 1rem;
+        }
+    }
 </style>

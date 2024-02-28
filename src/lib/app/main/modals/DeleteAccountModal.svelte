@@ -2,7 +2,6 @@
     import { dismissModal } from 'utilities/main';
     import ModalTemplate from '../ModalTemplate.svelte';
     import { modalLoading, type ModalData } from 'stores/modals';
-    import InfoHeader from '$lib/app/reusables/all/InfoHeader.svelte';
     import { socket } from 'stores/main';
     import ErrorHeader from '$lib/app/reusables/all/ErrorHeader.svelte';
 
@@ -95,5 +94,21 @@
 
     input:focus {
         border: 2px solid white;
+    }
+
+    @media screen and (max-width: 850px) {
+        svg {
+            width: 80px;
+            height: 80px;
+        }
+
+        h1 {
+            font-size: 0.9rem;
+        }
+
+        input {
+            width: 70vw;
+            font-size: 1rem;
+        }
     }
 </style>

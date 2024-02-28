@@ -65,4 +65,15 @@
         text-align: start;
         margin-bottom: 20px;
     }
+
+    @media screen and (max-width: 850px) {
+        svg {
+            width: 80px;
+            height: 80px;
+        }
+
+        h1 {
+            font-size: 1rem;
+        }
+    }
 </style>

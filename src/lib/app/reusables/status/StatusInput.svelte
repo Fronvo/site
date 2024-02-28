@@ -91,6 +91,10 @@
     }
 
     @media screen and (max-width: 850px) {
+        .mobile {
+            width: 90%;
+        }
+
         .mobile img {
             width: 40px;
             height: 40px;

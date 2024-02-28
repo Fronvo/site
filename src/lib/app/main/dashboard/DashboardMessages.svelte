@@ -25,9 +25,7 @@
         justify-content: start;
         margin: auto;
         width: 100%;
-        height: calc(100% - 175px);
-        overflow-x: hidden;
-        overflow-y: hidden;
+        height: calc(100% - 115px);
         margin-top: 0;
     }
 </style>

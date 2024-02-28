@@ -92,7 +92,9 @@
 <style>
     #icon {
         width: 48px;
+        min-width: 48px;
         height: 48px;
+        min-height: 48px;
         cursor: pointer;
         margin: 0;
         padding: 0;

@@ -45,11 +45,12 @@
 
     .mobile .list-container {
         width: max-content;
-        overflow-y: auto;
         padding-left: 10px;
         padding-right: 5px;
         border-right: 1px solid var(--tertiary);
         padding-bottom: 10px;
+        overflow-y: auto;
+        height: calc(100vh - 120px);
     }
 
     .mobile .list-container::-webkit-scrollbar {

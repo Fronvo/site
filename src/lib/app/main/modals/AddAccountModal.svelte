@@ -135,4 +135,15 @@
     input:focus {
         border: 2px solid white;
     }
+
+    @media screen and (max-width: 850px) {
+        h1 {
+            font-size: 0.9rem;
+        }
+
+        input {
+            font-size: 1rem;
+            height: 35px;
+        }
+    }
 </style>

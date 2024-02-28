@@ -12,6 +12,7 @@ import { writable, type Writable } from 'svelte/store';
 export const dmsList: Writable<Room[]> = writable([]);
 export const dmsFilter: Writable<string> = writable('');
 export const dmsShowProfile: Writable<boolean> = writable(true);
+export const mobileShowMembers: Writable<boolean> = writable(false);
 
 export const serversList: Writable<Server[]> = writable([]);
 export const isInServer: Writable<boolean> = writable(false);

@@ -10,9 +10,10 @@
         currentRoomMessages,
         currentServer,
         isInServer,
+        mobileShowMembers,
         currentRoomData as roomData,
     } from 'stores/rooms';
-    import { cachedAccountData, socket } from 'stores/main';
+    import { cachedAccountData, isMobile, socket } from 'stores/main';
     import type { Unsubscriber } from 'svelte/store';
     import RoomMember from '$lib/app/reusables/rooms/RoomMember.svelte';
     import { loadRoomsData } from 'utilities/rooms';
@@ -74,6 +75,10 @@
                 memberInfo = memberInfo;
             }
         }
+    }
+
+    function goBack(): void {
+        $mobileShowMembers = false;
     }
 
     onMount(async () => {
@@ -138,9 +143,31 @@
     });
 </script>
 
-<div class="members-container">
+<div class={`members-container ${$isMobile ? 'mobile' : ''}`}>
     {#if loadingFinished}
-        <h1>Owner</h1>
+        <div class="top-container">
+            {#if $isMobile}
+                <svg
+                    on:click={goBack}
+                    on:keydown={goBack}
+                    id="back"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="32"
+                    height="32"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    ><path
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="1.5"
+                        d="m15 5l-6 7l6 7"
+                    /></svg
+                >
+            {/if}
+
+            <h1>Owner</h1>
+        </div>
 
         <RoomMember profileData={ownerData} />
 
@@ -168,6 +195,10 @@
         user-select: none;
     }
 
+    .mobile {
+        width: 100%;
+    }
+
     .members-container::-webkit-scrollbar {
         width: 12px;
     }
@@ -182,18 +213,41 @@
         width: 6px;
     }
 
+    .top-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .mobile .top-container {
+        margin-bottom: 10px;
+    }
+
     h1 {
         width: 100%;
         font-size: 0.8rem;
         font-weight: 700;
         margin: 0;
-        margin-bottom: 5px;
         margin-left: 5px;
         color: var(--gray);
         text-transform: uppercase;
     }
 
+    svg {
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+        stroke: var(--text);
+    }
+
     #members {
         margin-top: 10px;
+    }
+
+    @media screen and (max-width: 850px) {
+        .mobile svg {
+            width: 26px;
+            height: 26px;
+        }
     }
 </style>

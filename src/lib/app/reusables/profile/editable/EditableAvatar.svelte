@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { socket } from 'stores/main';
+    import { isMobile, socket } from 'stores/main';
     import { ourData } from 'stores/profile';
     import { toast } from 'svelte-sonner';
     import type { Writable } from 'svelte/store';
@@ -51,7 +51,7 @@
     }
 </script>
 
-<div class="top-container">
+<div class={`top-container ${$isMobile ? 'mobile' : ''}`}>
     {#if $ourData.avatar}
         <img
             on:click={changeAvatar}
@@ -99,5 +99,14 @@
 
     #avatar:hover {
         opacity: 0.75;
+    }
+
+    @media screen and (max-width: 850px) {
+        .mobile #avatar {
+            width: 80px;
+            min-width: 80px;
+            height: 80px;
+            min-height: 80px;
+        }
     }
 </style>

@@ -1,10 +1,11 @@
 <script lang="ts">
+    import { isMobile } from 'stores/main';
     import type { Writable } from 'svelte/store';
 
     export let bio: Writable<string>;
 </script>
 
-<div class="since-container">
+<div class={`since-container ${$isMobile ? 'mobile' : ''}`}>
     <h1 id="top">About me</h1>
 
     <textarea bind:value={$bio} maxlength={128} />
@@ -42,5 +43,16 @@
 
     textarea:focus {
         border: 2px solid var(--text);
+    }
+
+    @media screen and (max-width: 850px) {
+        .mobile #top {
+            font-size: 0.7rem;
+        }
+
+        .mobile textarea {
+            min-height: 150px;
+            font-size: 0.75rem;
+        }
     }
 </style>

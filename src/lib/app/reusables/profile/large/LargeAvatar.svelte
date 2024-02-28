@@ -163,11 +163,13 @@
         <div class="options">
             {#if isFriend}
                 {#if $currentRoomData?.dmUser.profileId != $targetProfileModal.profileId}
-                    <button on:click={messageFriend}>Send message</button>
+                    <button on:click={messageFriend}
+                        >{$isMobile ? 'Message' : 'Send message'}</button
+                    >
                 {/if}
 
                 <button id="danger" on:click={removeFriend}
-                    >Remove friend</button
+                    >Remove{!$isMobile ? ' friend' : ''}</button
                 >
             {:else if $ourData.pendingFriendRequests.includes($targetProfileModal.profileId)}
                 <button
@@ -267,8 +269,8 @@
 
     @media screen and (max-width: 850px) {
         .mobile button {
-            width: 100px;
-            font-size: 0.7rem;
+            max-width: 140px;
+            font-size: 0.75rem;
         }
 
         .mobile #avatar {

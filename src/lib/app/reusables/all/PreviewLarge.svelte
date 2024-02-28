@@ -6,11 +6,12 @@
     import LargeBio from '../profile/large/LargeBio.svelte';
     import LargeSince from '../profile/large/LargeSince.svelte';
     import { ourData } from 'stores/profile';
+    import { isMobile } from 'stores/main';
 
     export let profileData: FronvoAccount;
 </script>
 
-<div class="profile-container">
+<div class={`profile-container ${$isMobile ? 'mobile' : ''}`}>
     <LargeBanner />
     <LargeAvatar
         avatar={profileData?.avatar}
@@ -66,5 +67,11 @@
         margin-top: 20px;
         margin-bottom: 20px;
         background: var(--tertiary);
+    }
+
+    @media screen and (max-width: 850px) {
+        .mobile .secondary-container {
+            transform: translateY(-40px);
+        }
     }
 </style>

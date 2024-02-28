@@ -1,10 +1,12 @@
 <script lang="ts">
+    import { isMobile } from 'stores/main';
+
     export let profileId: string;
     export let username: string;
     export let status: string;
 </script>
 
-<div class="identifier-container">
+<div class={`identifier-container ${$isMobile ? 'mobile' : ''}`}>
     <div class="info-container">
         <div class="lock-container">
             <h1 id="username">
@@ -87,5 +89,19 @@
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
         color: var(--text);
+    }
+
+    @media screen and (max-width: 850px) {
+        .mobile #username {
+            font-size: 1.3rem;
+        }
+
+        .mobile #identifier {
+            font-size: 0.95rem;
+        }
+
+        .mobile #status {
+            font-size: 0.8rem;
+        }
     }
 </style>

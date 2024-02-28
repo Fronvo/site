@@ -61,4 +61,15 @@
         margin-bottom: 25px;
         color: white;
     }
+
+    @media screen and (max-width: 850px) {
+        img {
+            width: 84px;
+            height: 84px;
+        }
+
+        h1 {
+            font-size: 1.2rem;
+        }
+    }
 </style>

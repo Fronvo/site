@@ -8,14 +8,18 @@
         loginSucceeded,
         showLayout,
     } from 'stores/main';
-    import { pendingServerId } from 'stores/rooms';
+    import { mobileShowMembers, pendingServerId } from 'stores/rooms';
     import { onMount } from 'svelte';
     import { getKey } from 'utilities/global';
     import { redirectApp } from 'utilities/index';
     import { performLogin } from 'utilities/main';
 
     onMount(async () => {
-        if ($loginSucceeded) return;
+        if ($loginSucceeded) {
+            $mobileShowMembers = false;
+
+            return;
+        }
 
         // Remove homepage for registered users
         if (getKey('token')) {

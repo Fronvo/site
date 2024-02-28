@@ -483,4 +483,16 @@
     svg:hover {
         fill: var(--text);
     }
+
+    @media screen and (max-width: 850px) {
+        .mobile textarea {
+            font-size: 0.8rem;
+            transform: translateY(2px);
+        }
+
+        .mobile svg {
+            width: 30px;
+            height: 30px;
+        }
+    }
 </style>

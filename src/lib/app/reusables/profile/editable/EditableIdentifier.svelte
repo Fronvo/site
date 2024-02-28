@@ -18,7 +18,7 @@
     }
 </script>
 
-<div class="identifier-container">
+<div class={`identifier-container ${$isMobile ? 'mobile' : ''}`}>
     <div class="info-container">
         <div class="lock-container">
             <input bind:value={$username} maxlength={30} />
@@ -147,5 +147,19 @@
         -webkit-line-clamp: 1;
         -webkit-box-orient: vertical;
         color: var(--text);
+    }
+
+    @media screen and (max-width: 850px) {
+        .mobile input {
+            font-size: 1.3rem;
+        }
+
+        .mobile #identifier {
+            font-size: 0.95rem;
+        }
+
+        .mobile #status {
+            font-size: 0.8rem;
+        }
     }
 </style>

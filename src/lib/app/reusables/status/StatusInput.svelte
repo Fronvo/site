@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { isMobile } from 'stores/main';
     import { ourData } from 'stores/profile';
     import { onMount } from 'svelte';
     import type { Writable } from 'svelte/store';
@@ -19,7 +20,7 @@
     });
 </script>
 
-<div class="status-container">
+<div class={`status-container ${$isMobile ? 'mobile' : ''}`}>
     {#if $ourData.avatar}
         <img
             src={$ourData.avatar}
@@ -87,5 +88,21 @@
 
     input:focus {
         border: 2px solid white;
+    }
+
+    @media screen and (max-width: 850px) {
+        .mobile img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .mobile .secondary-container h1 {
+            font-size: 0.9rem;
+        }
+
+        .mobile input {
+            height: 35px;
+            font-size: 0.9rem;
+        }
     }
 </style>

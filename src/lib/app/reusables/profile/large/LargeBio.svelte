@@ -1,11 +1,12 @@
 <script lang="ts">
     import linkifyHtml from 'linkify-html';
+    import { isMobile } from 'stores/main';
 
     export let bio: string;
 </script>
 
 {#if bio}
-    <div class="since-container">
+    <div class={`since-container ${$isMobile ? 'mobile' : ''}`}>
         <h1 id="top">About me</h1>
 
         <h1 id="bio">
@@ -42,5 +43,15 @@
         white-space: pre-wrap;
         color: var(--text);
         font-weight: 500;
+    }
+
+    @media screen and (max-width: 850px) {
+        .mobile #top {
+            font-size: 0.7rem;
+        }
+
+        .mobile #bio {
+            font-size: 0.75rem;
+        }
     }
 </style>

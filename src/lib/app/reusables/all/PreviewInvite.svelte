@@ -127,11 +127,15 @@
     }
 
     @media screen and (max-width: 850px) {
-        #invite {
+        .mobile {
+            width: 85%;
+        }
+
+        .mobile #invite {
             font-size: 0.8rem;
         }
 
-        #username {
+        .mobile #username {
             font-size: 0.9rem;
         }
     }

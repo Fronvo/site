@@ -158,4 +158,20 @@
     .mobile input {
         width: 70vw;
     }
+
+    @media screen and (max-width: 850px) {
+        .mobile .placeholder {
+            width: 80px;
+            height: 80px;
+        }
+
+        .mobile .placeholder h1 {
+            font-size: 1.1rem;
+        }
+
+        .mobile input {
+            font-size: 1rem;
+            width: 70vw;
+        }
+    }
 </style>

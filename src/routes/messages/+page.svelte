@@ -14,8 +14,7 @@
         currentRoomData,
         currentRoomId,
         currentRoomLoaded,
-        currentServer,
-        isInServer,
+        mobileShowMembers,
     } from 'stores/rooms';
     import { onMount } from 'svelte';
     import { DashboardOptions } from 'types/all';
@@ -28,9 +27,8 @@
             $currentRoomId = undefined;
             $currentRoomData = undefined;
             $currentRoomLoaded = false;
-            $isInServer = false;
-            $currentServer = undefined;
             $currentChannel = undefined;
+            $mobileShowMembers = false;
 
             return;
         }

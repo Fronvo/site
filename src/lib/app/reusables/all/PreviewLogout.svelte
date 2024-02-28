@@ -25,10 +25,8 @@
         align-items: center;
         background: transparent;
         cursor: default;
-        width: 70%;
-        padding: 8px;
-        margin-bottom: 10px;
-        border: 2px solid white;
+        width: 45%;
+        padding: 10px;
         border-radius: 5px;
     }
 

@@ -611,5 +611,10 @@
         .mobile #content {
             font-size: 0.75rem;
         }
+
+        .mobile #attachment {
+            max-width: 80%;
+            max-height: 150px;
+        }
     }
 </style>

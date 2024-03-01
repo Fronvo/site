@@ -8,7 +8,12 @@
     import DropdownTemplateDarken from '../DropdownTemplateDarken.svelte';
     import { showModal } from 'utilities/main';
     import { ourData } from 'stores/profile';
-    import { replyingTo, replyingToId } from 'stores/rooms';
+    import {
+        currentServer,
+        isInServer,
+        replyingTo,
+        replyingToId,
+    } from 'stores/rooms';
 
     function playSpotify(): void {
         window.open(
@@ -134,7 +139,7 @@
         >
     {/if}
 
-    {#if $targetMessageModalProfile.profileId == $ourData.profileId}
+    {#if $targetMessageModalProfile.profileId == $ourData.profileId || ($isInServer && $currentServer.ownerId == $ourData.profileId)}
         <hr />
 
         <button on:click={deleteMessage}

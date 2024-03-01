@@ -116,7 +116,7 @@
 
     .mobile .channels {
         height: calc(100vh);
-        padding-bottom: 20px;
+        padding-bottom: 175px;
     }
 
     .channels::-webkit-scrollbar-thumb {

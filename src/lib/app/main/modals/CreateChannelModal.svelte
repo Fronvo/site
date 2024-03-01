@@ -2,7 +2,7 @@
     import { dismissModal } from 'utilities/main';
     import ModalTemplate from '../ModalTemplate.svelte';
     import { type ModalData, modalLoading } from 'stores/modals';
-    import { socket } from 'stores/main';
+    import { isMobile, socket } from 'stores/main';
     import { onMount } from 'svelte';
     import ErrorHeader from '$lib/app/reusables/all/ErrorHeader.svelte';
     import { currentServer } from 'stores/rooms';
@@ -64,7 +64,7 @@
 <ModalTemplate {data}>
     <ErrorHeader size={'1.2rem'} {errorMessage} />
 
-    <div class="single">
+    <div class={`single ${$isMobile ? 'mobile' : ''}`}>
         <svg
             xmlns="http://www.w3.org/2000/svg"
             width="32"
@@ -110,5 +110,12 @@
 
     input:focus {
         border: 2px solid white;
+    }
+
+    @media screen and (max-width: 850px) {
+        .mobile input {
+            width: 60vw;
+            font-size: 1rem;
+        }
     }
 </style>

@@ -194,6 +194,8 @@
         align-items: center;
         justify-content: center;
         z-index: 2;
+        background: var(--tertiary);
+        backdrop-filter: blur(10px);
     }
 
     button {

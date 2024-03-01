@@ -37,6 +37,7 @@ import KickMemberModal from '$lib/app/main/modals/KickMemberModal.svelte';
 import BanMemberModal from '$lib/app/main/modals/BanMemberModal.svelte';
 import BannedMembersModal from '$lib/app/main/modals/BannedMembersModal.svelte';
 import SendImageModal from '$lib/app/main/modals/SendImageModal.svelte';
+import GifModal from '$lib/app/main/modals/GifModal.svelte';
 
 /****************************** Modals ******************************/
 export const modals = [
@@ -70,6 +71,7 @@ export const modals = [
     BanMemberModal,
     BannedMembersModal,
     SendImageModal,
+    GifModal,
 ];
 /****************************** Modals ******************************/
 
@@ -105,6 +107,7 @@ export enum ModalTypes {
     BanMember,
     BannedMembers,
     SendImage,
+    Gif,
 }
 
 export interface ModalActions {

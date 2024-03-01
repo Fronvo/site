@@ -1,6 +1,11 @@
 <script lang="ts">
     import { showModal } from 'utilities/main';
-    import { ModalTypes, targetImageModal } from 'stores/modals';
+    import {
+        ModalTypes,
+        currentModalId,
+        modalVisible,
+        targetImageModal,
+    } from 'stores/modals';
     import DropdownTemplateDarken from '../DropdownTemplateDarken.svelte';
 
     function newTab(): void {
@@ -37,27 +42,31 @@
         ></button
     >
 
-    <button on:click={viewImage}
-        ><h1>View image</h1>
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="32"
-            height="32"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            ><g fill="none" stroke-width="1.5"
-                ><path
-                    d="M2 12c0-4.714 0-7.071 1.464-8.536C4.93 2 7.286 2 12 2c4.714 0 7.071 0 8.535 1.464C22 4.93 22 7.286 22 12c0 4.714 0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12Z"
-                /><circle cx="16" cy="8" r="2" /><path
-                    stroke-linecap="round"
-                    d="m2 10.154l.98-.141C9.96 9.01 15.925 15.03 14.858 22"
-                /><path
-                    stroke-linecap="round"
-                    d="m22 13.385l-.973-.135c-2.844-.394-5.417 1.022-6.742 3.25"
-                /></g
-            ></svg
-        ></button
-    >
+    {#if !$modalVisible}
+        <button on:click={viewImage}
+            ><h1>
+                View {$targetImageModal.includes('tenor') ? 'GIF' : 'image'}
+            </h1>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                ><g fill="none" stroke-width="1.5"
+                    ><path
+                        d="M2 12c0-4.714 0-7.071 1.464-8.536C4.93 2 7.286 2 12 2c4.714 0 7.071 0 8.535 1.464C22 4.93 22 7.286 22 12c0 4.714 0 7.071-1.465 8.535C19.072 22 16.714 22 12 22s-7.071 0-8.536-1.465C2 19.072 2 16.714 2 12Z"
+                    /><circle cx="16" cy="8" r="2" /><path
+                        stroke-linecap="round"
+                        d="m2 10.154l.98-.141C9.96 9.01 15.925 15.03 14.858 22"
+                    /><path
+                        stroke-linecap="round"
+                        d="m22 13.385l-.973-.135c-2.844-.394-5.417 1.022-6.742 3.25"
+                    /></g
+                ></svg
+            ></button
+        >
+    {/if}
 
     <button on:click={copyURL}
         ><h1>Copy URL</h1>
@@ -75,23 +84,25 @@
         ></button
     >
 
-    <hr />
+    {#if !$targetImageModal.includes('tenor')}
+        <hr />
 
-    <button on:click={saveImage}
-        ><h1>Save image</h1>
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="32"
-            height="32"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            ><path
-                d="M12.553 16.506a.75.75 0 0 1-1.107 0l-4-4.375a.75.75 0 0 1 1.108-1.012l2.696 2.95V3a.75.75 0 0 1 1.5 0v11.068l2.697-2.95a.75.75 0 1 1 1.107 1.013l-4 4.375Z"
-            /><path
-                d="M3.75 15a.75.75 0 0 0-1.5 0v.055c0 1.367 0 2.47.117 3.337c.12.9.38 1.658.981 2.26c.602.602 1.36.86 2.26.982c.867.116 1.97.116 3.337.116h6.11c1.367 0 2.47 0 3.337-.116c.9-.122 1.658-.38 2.26-.982c.602-.602.86-1.36.982-2.26c.116-.867.116-1.97.116-3.337V15a.75.75 0 0 0-1.5 0c0 1.435-.002 2.436-.103 3.192c-.099.734-.28 1.122-.556 1.399c-.277.277-.665.457-1.4.556c-.755.101-1.756.103-3.191.103H9c-1.435 0-2.437-.002-3.192-.103c-.734-.099-1.122-.28-1.399-.556c-.277-.277-.457-.665-.556-1.4c-.101-.755-.103-1.756-.103-3.191Z"
-            /></svg
-        >
-    </button>
+        <button on:click={saveImage}
+            ><h1>Save image</h1>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="32"
+                height="32"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                ><path
+                    d="M12.553 16.506a.75.75 0 0 1-1.107 0l-4-4.375a.75.75 0 0 1 1.108-1.012l2.696 2.95V3a.75.75 0 0 1 1.5 0v11.068l2.697-2.95a.75.75 0 1 1 1.107 1.013l-4 4.375Z"
+                /><path
+                    d="M3.75 15a.75.75 0 0 0-1.5 0v.055c0 1.367 0 2.47.117 3.337c.12.9.38 1.658.981 2.26c.602.602 1.36.86 2.26.982c.867.116 1.97.116 3.337.116h6.11c1.367 0 2.47 0 3.337-.116c.9-.122 1.658-.38 2.26-.982c.602-.602.86-1.36.982-2.26c.116-.867.116-1.97.116-3.337V15a.75.75 0 0 0-1.5 0c0 1.435-.002 2.436-.103 3.192c-.099.734-.28 1.122-.556 1.399c-.277.277-.665.457-1.4.556c-.755.101-1.756.103-3.191.103H9c-1.435 0-2.437-.002-3.192-.103c-.734-.099-1.122-.28-1.399-.556c-.277-.277-.457-.665-.556-1.4c-.101-.755-.103-1.756-.103-3.191Z"
+                /></svg
+            >
+        </button>
+    {/if}
 </DropdownTemplateDarken>
 
 <style>

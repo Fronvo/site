@@ -17,7 +17,7 @@
     import { onDestroy, onMount } from 'svelte';
     import { sendImage, sendMessage } from 'utilities/rooms';
     import { isMobile, socket } from 'stores/main';
-    import { isAcceptedImage, showModal } from 'utilities/main';
+    import { isAcceptedImage, showDropdown, showModal } from 'utilities/main';
     import { slide } from 'svelte/transition';
     import {
         ModalTypes,
@@ -28,6 +28,7 @@
     import { toast } from 'svelte-sonner';
     import { sineInOut } from 'svelte/easing';
     import type { Unsubscriber } from 'svelte/motion';
+    import { DropdownTypes } from 'stores/dropdowns';
 
     let content: HTMLTextAreaElement;
     let unsubscribe: Unsubscriber;
@@ -180,20 +181,14 @@
                 });
             } else {
                 socket.emit('sendChannelMessage', {
-                    serverId: $currentServer.serverId,
-                    channelId: $currentChannel.channelId,
+                    serverId: $currentServer?.serverId,
+                    channelId: $currentChannel?.channelId,
                     message: url,
                 });
             }
         };
 
-        // showDropdown(
-        //     DropdownTypes.Gif,
-        //     document.getElementById('gif'),
-        //     'top',
-        //     -425,
-        //     -525
-        // );
+        showModal(ModalTypes.Gif);
     }
 
     onMount(() => {
@@ -340,24 +335,19 @@
             />
 
             <!-- Reenable once we fix UI -->
-            <!-- 
             <svg
                 id="gif"
                 xmlns="http://www.w3.org/2000/svg"
                 width="32"
                 height="32"
-                viewBox="0 0 24 24"
+                viewBox="0 0 16 16"
+                fill="currentColor"
                 on:click={showGifPicker}
                 on:keydown={showGifPicker}
-                fill="currentColor"
-                ><g
-                    ><path
-                        d="M11.25 2c-4.219.004-6.401.08-7.786 1.464C2.08 4.85 2.004 7.031 2 11.25h4.914a3.987 3.987 0 0 1-.757-1.528C5.62 7.57 7.57 5.62 9.722 6.157c.572.143 1.09.406 1.528.757V2ZM2 12.75c.004 4.218.08 6.4 1.464 7.785C4.85 21.92 7.031 21.995 11.25 22v-7.877A4.75 4.75 0 0 1 7 16.75a.75.75 0 0 1 0-1.5a3.251 3.251 0 0 0 3.163-2.5H2ZM12.75 22c4.218-.005 6.4-.08 7.785-1.465c1.385-1.384 1.46-3.567 1.465-7.785h-8.163A3.251 3.251 0 0 0 17 15.25a.75.75 0 0 1 0 1.5a4.75 4.75 0 0 1-4.25-2.627V22ZM22 11.25c-.005-4.219-.08-6.401-1.465-7.786C19.151 2.08 16.968 2.004 12.75 2v4.914a3.988 3.988 0 0 1 1.527-.757c2.153-.538 4.104 1.412 3.565 3.565a3.987 3.987 0 0 1-.756 1.528H22Z"
-                    /><path
-                        d="M9.358 7.613a2.497 2.497 0 0 1 1.892 2.422v1.215h-1.215a2.497 2.497 0 0 1-2.422-1.892a1.44 1.44 0 0 1 1.745-1.745Zm3.392 2.422v1.215h1.215c1.145 0 2.144-.78 2.422-1.892a1.44 1.44 0 0 0-1.746-1.745a2.497 2.497 0 0 0-1.891 2.422Z"
-                    /></g
-                ></svg
-            > -->
+                ><path
+                    d="M1 4.5A2.5 2.5 0 0 1 3.5 2h9A2.5 2.5 0 0 1 15 4.5v7a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 11.5zm4.052 2.206c.481-.05.853.036.986.103a.5.5 0 1 0 .447-.894c-.351-.176-.928-.267-1.537-.203c-.96.1-1.948.934-1.948 2.297c0 1.385 1.054 2.3 2.3 2.3c.58 0 1.1-.273 1.397-.553c.262-.248.303-.578.303-.783v-.964a.5.5 0 0 0-.5-.5h-.807a.5.5 0 0 0 0 1H6v.463a.426.426 0 0 1-.006.072a1.126 1.126 0 0 1-.694.264c-.731 0-1.3-.504-1.3-1.3c0-.817.567-1.251 1.052-1.302M9 6.21a.5.5 0 0 0-1 0v3.6a.5.5 0 0 0 1 0zm1.5-.5a.5.5 0 0 0-.5.5v3.6a.5.5 0 0 0 1 0V8.505l1.003-.006a.5.5 0 0 0-.006-1L11 7.506v-.797h1.5a.5.5 0 0 0 0-1z"
+                /></svg
+            >
 
             {#if $sendContent.trim().length > 0}
                 <svg
@@ -467,8 +457,8 @@
         }
 
         .mobile svg {
-            width: 30px;
-            height: 30px;
+            width: 32px;
+            height: 32px;
         }
     }
 </style>

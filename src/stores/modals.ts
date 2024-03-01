@@ -36,6 +36,7 @@ import LeaveServerModal from '$lib/app/main/modals/LeaveServerModal.svelte';
 import KickMemberModal from '$lib/app/main/modals/KickMemberModal.svelte';
 import BanMemberModal from '$lib/app/main/modals/BanMemberModal.svelte';
 import BannedMembersModal from '$lib/app/main/modals/BannedMembersModal.svelte';
+import SendImageModal from '$lib/app/main/modals/SendImageModal.svelte';
 
 /****************************** Modals ******************************/
 export const modals = [
@@ -68,6 +69,7 @@ export const modals = [
     KickMemberModal,
     BanMemberModal,
     BannedMembersModal,
+    SendImageModal,
 ];
 /****************************** Modals ******************************/
 
@@ -102,6 +104,7 @@ export enum ModalTypes {
     KickMember,
     BanMember,
     BannedMembers,
+    SendImage,
 }
 
 export interface ModalActions {
@@ -155,6 +158,7 @@ export const targetChannelModal: Writable<Channel> = writable();
 
 /****************************** ImageModal ******************************/
 export const targetImageModal: Writable<string> = writable();
+export const sendImageTargetFile: Writable<File> = writable();
 /****************************** ImageModal ******************************/
 
 /****************************** TenorModal ******************************/

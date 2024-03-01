@@ -3,7 +3,6 @@ export type LocalKeys =
     | 'darkTheme'
     | 'revealNav'
     | 'savedAccounts'
-    | 'disabledIn30Time'
     | 'bW'
     | 'bDW'
     | 'bD'

@@ -6,7 +6,7 @@
         currentRoomMessages as roomMessages,
     } from 'stores/rooms';
     import Time from 'svelte-time/src/Time.svelte';
-    import { differenceInMinutes } from 'date-fns';
+    import { differenceInMinutes, isToday, isYesterday } from 'date-fns';
     import {
         findCachedAccount,
         showDropdownMouse,
@@ -216,12 +216,13 @@
                     <h1 id="name">{profileData.username}</h1>
 
                     <h1 id="small-time-2">
-                        {#if new Date().getDay() == new Date(messageData.creationDate).getDay()}
-                            Today at <Time
+                        {#if isToday(new Date(messageData.creationDate))}
+                            Today at
+                            <Time
                                 timestamp={messageData.creationDate}
                                 format={'HH:mm'}
                             />
-                        {:else if new Date().getDay() - 1 == new Date(messageData.creationDate).getDay()}
+                        {:else if isYesterday(new Date(messageData.creationDate))}
                             Yesterday at <Time
                                 timestamp={messageData.creationDate}
                                 format={'HH:mm'}
@@ -609,10 +610,6 @@
 
         .mobile #content {
             font-size: 0.75rem;
-        }
-
-        .skip #content {
-            margin-left: 0;
         }
     }
 </style>

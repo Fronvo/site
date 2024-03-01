@@ -26,7 +26,7 @@
     import { isAcceptedImage, setTitle } from 'utilities/main';
     import { ourData } from 'stores/profile';
     import Message from '$lib/app/reusables/rooms/Message.svelte';
-    import { fronvoTitle, isMobile, lastSendsIn30, socket } from 'stores/main';
+    import { fronvoTitle, isMobile, socket } from 'stores/main';
     import InfiniteLoading from 'svelte-infinite-loading';
     import type { Unsubscriber } from 'svelte/store';
     import type { NewMessageResult } from 'interfaces/account/newMessage';
@@ -38,7 +38,6 @@
     let unsubscribe: Unsubscriber;
     let canShowScroll = false;
     let previousEmpty = false;
-    let isFirstLoad = true;
     let hideMessages = true;
 
     async function loadMore({ detail: { loaded } }): Promise<void> {
@@ -50,28 +49,23 @@
             const roomId = $currentChannel?.channelId || $currentRoomId;
             const serverId = $currentServer?.serverId;
 
-            // Not in cache, try loading
-            if (
-                !isRoomCached(
-                    $currentChannel?.channelId || $currentRoomId,
-                    $cachedRooms
-                ) ||
-                !isFirstLoad
-            ) {
+            // Not cached, load
+            if (!isRoomCached(roomId, $cachedRooms)) {
                 const msgs = await getRoomMessages(
                     roomId,
                     $messages.length,
                     serverId
                 );
 
+                // If empty, cache room and set flag for next load
                 if (msgs.length == 0) {
-                    isFirstLoad = false;
                     previousEmpty = true;
 
                     updateCachedMessages(roomId, msgs, $cachedRooms);
 
                     loaded();
                 } else {
+                    // Otherwise update messages and cache, scroll to bottom
                     $messages = msgs.concat($messages);
 
                     loaded();
@@ -86,23 +80,57 @@
                     }, 0);
                 }
             } else {
-                isFirstLoad = false;
+                // load more
+                if (
+                    getCachedMessages(roomId, $cachedRooms)?.length !=
+                        $messages.length + 50 &&
+                    $messages.length != 0
+                ) {
+                    const msgs = await getRoomMessages(
+                        roomId,
+                        $messages.length,
+                        serverId
+                    );
 
-                // Check cache first
-                const cachedMessages = getCachedMessages(roomId, $cachedRooms);
+                    // If empty, cache room and set flag for next load
+                    if (msgs.length == 0) {
+                        previousEmpty = true;
 
-                // In cache, load in place
-                $messages = cachedMessages;
+                        loaded();
+                    } else {
+                        // Otherwise update messages and cache, scroll to bottom
+                        $messages = msgs.concat($messages);
 
-                if (cachedMessages.length == 0) {
-                    previousEmpty = true;
+                        loaded();
+
+                        // Background update cache
+                        updateCachedMessages(roomId, $messages, $cachedRooms);
+
+                        setTimeout(() => {
+                            chat.scrollTop = chat.scrollHeight;
+
+                            hideMessages = false;
+                        }, 0);
+                    }
+                } else {
+                    const cachedMessages = getCachedMessages(
+                        roomId,
+                        $cachedRooms
+                    );
+
+                    // In cache, load in place
+                    $messages = cachedMessages;
+
+                    if (cachedMessages.length == 0) {
+                        previousEmpty = true;
+                    }
+
+                    setTimeout(() => {
+                        chat.scrollTop = chat.scrollHeight;
+
+                        hideMessages = false;
+                    }, 0);
                 }
-
-                setTimeout(() => {
-                    chat.scrollTop = chat.scrollHeight;
-
-                    hideMessages = false;
-                }, 0);
             }
         }
     }
@@ -160,6 +188,12 @@
             ) {
                 $messages.push(newMessageData);
                 $messages = $messages;
+
+                updateCachedMessages(
+                    $currentChannel?.channelId || $currentRoomId,
+                    $messages,
+                    $cachedRooms
+                );
 
                 setTimeout(() => {
                     chat.scrollTo({
@@ -255,7 +289,6 @@
                             $sendingImage,
                             reader.result,
                             $ourData.isTurbo,
-                            $lastSendsIn30,
                             $isInServer ? $currentServer.serverId : ''
                         );
                     });
@@ -276,7 +309,6 @@
 
             canShowScroll = false;
             previousEmpty = false;
-            isFirstLoad = true;
             hideMessages = true;
 
             if (!chat) return;
@@ -289,7 +321,6 @@
 
             canShowScroll = false;
             previousEmpty = false;
-            isFirstLoad = true;
             hideMessages = true;
 
             if (!chat) return;

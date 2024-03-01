@@ -1,4 +1,4 @@
-import type { FronvoAccount, Room, RoomMessage, Server } from 'interfaces/all';
+import type { FronvoAccount, Room, Server } from 'interfaces/all';
 import {
     sendContent,
     replyingTo,
@@ -16,14 +16,7 @@ import {
     cachedRooms as cachedRoomsStore,
     pendingMessages as pendingMessagesStore,
 } from 'stores/rooms';
-import {
-    socket,
-    lastSendAt as lastSendAtStore,
-    lastSendsIn30 as lastSendsIn30Store,
-    disabledIn30,
-} from 'stores/main';
-import { differenceInSeconds } from 'date-fns';
-import { setKey } from './global';
+import { socket } from 'stores/main';
 import type { FetchedMessage } from 'interfaces/account/fetchMessages';
 
 export async function fetchConvos(): Promise<Room[]> {
@@ -81,36 +74,12 @@ export function sendMessage(
     content: string,
     replyingToP: string,
     replyingToIdP: string,
-    lastSendAt: string,
-    lastSendsIn30: number,
     messages: FetchedMessage[],
     pendingMessages: string[],
     ourData: FronvoAccount,
     serverId?: string
 ): void {
-    if (lastSendsIn30 >= 12) {
-        lastSendsIn30Store.set(-1);
-        sendContent.set('');
-
-        setKey('disabledIn30Time', new Date());
-        disabledIn30.set(true);
-
-        setTimeout(() => {
-            lastSendsIn30Store.set(0);
-            disabledIn30.set(false);
-        }, 60 * 15 * 10);
-
-        return;
-    }
-
     if (content.trim().length == 0) return;
-
-    if (differenceInSeconds(new Date(), new Date(lastSendAt)) < 0.25) {
-        return;
-    }
-
-    lastSendAtStore.set(new Date().toString());
-    lastSendsIn30Store.set(lastSendsIn30 + 1);
 
     if (!serverId) {
         socket.emit('sendMessage', {
@@ -174,12 +143,9 @@ export async function sendImage(
     sendingImage: boolean,
     file: any,
     isPRO: boolean,
-    lastSendsIn30: number,
     serverId?: string
 ): Promise<void> {
     if (sendingImage) return;
-
-    lastSendsIn30Store.set(lastSendsIn30 + 3);
 
     sendingImageStore.set(true);
 

@@ -16,7 +16,6 @@
     import {
         cachedAccountData,
         darkTheme,
-        disabledIn30,
         fronvoTitle,
         isMobile,
         loginSucceeded,
@@ -26,7 +25,6 @@
     } from 'stores/main';
     import { goto } from '$app/navigation';
     import { dropdownAnimationFinished } from 'stores/dropdowns';
-    import { differenceInMinutes } from 'date-fns';
     import {
         currentServer,
         serversList,
@@ -55,11 +53,6 @@
     function setupVars(): void {
         // Try our best to default to dark
         $darkTheme = !getKey('darkTheme') || getKey('darkTheme') == 'true';
-        $disabledIn30 =
-            differenceInMinutes(
-                new Date(),
-                new Date(getKey('disabledIn30Time'))
-            ) < 15;
 
         const userAgent = window.navigator.userAgent.toLowerCase();
 

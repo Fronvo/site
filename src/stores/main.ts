@@ -54,9 +54,3 @@ export const loginSucceeded: Writable<boolean> = writable();
 /****************************** Fronvo caching ******************************/
 export const cachedAccountData: Writable<FronvoAccount[]> = writable([]);
 /****************************** Fronvo caching ******************************/
-
-/****************************** Fronvo other ******************************/
-export const lastSendAt: Writable<string> = writable();
-export const lastSendsIn30: Writable<number> = writable(0);
-export const disabledIn30: Writable<boolean> = writable(false);
-/****************************** Fronvo other ******************************/

@@ -16,16 +16,15 @@
     } from 'stores/rooms';
     import { onDestroy, onMount } from 'svelte';
     import { sendImage, sendMessage } from 'utilities/rooms';
-    import {
-        disabledIn30,
-        isMobile,
-        lastSendAt,
-        lastSendsIn30,
-        socket,
-    } from 'stores/main';
-    import { isAcceptedImage } from 'utilities/main';
+    import { isMobile, socket } from 'stores/main';
+    import { isAcceptedImage, showModal } from 'utilities/main';
     import { slide } from 'svelte/transition';
-    import { targetTenorCallback } from 'stores/modals';
+    import {
+        ModalTypes,
+        sendImageTargetFile,
+        targetImageModal,
+        targetTenorCallback,
+    } from 'stores/modals';
     import { toast } from 'svelte-sonner';
     import { sineInOut } from 'svelte/easing';
     import type { Unsubscriber } from 'svelte/motion';
@@ -34,7 +33,6 @@
     let unsubscribe: Unsubscriber;
     let unsubscribe2: Unsubscriber;
     let unsubscribe3: Unsubscriber;
-    let unsubscribe4: Unsubscriber;
 
     let canMessage: boolean;
     let cantMessageReason: string;
@@ -63,11 +61,6 @@
             } else {
                 canMessage = true;
             }
-        }
-
-        if ($disabledIn30) {
-            canMessage = false;
-            cantMessageReason = 'Too many messages in a short period of time.';
         }
 
         setTimeout(() => {
@@ -104,8 +97,6 @@
             $sendContent,
             $replyingTo,
             $replyingToId,
-            $lastSendAt,
-            $lastSendsIn30,
             $currentRoomMessages,
             $pendingMessages,
             $ourData,
@@ -130,14 +121,10 @@
                         const reader = new FileReader();
 
                         reader.addEventListener('load', async () => {
-                            await sendImage(
-                                $currentChannel?.channelId || $currentRoomId,
-                                $sendingImage,
-                                reader.result,
-                                $ourData.isTurbo,
-                                $lastSendsIn30,
-                                $isInServer ? $currentServer.serverId : ''
-                            );
+                            $targetImageModal = reader.result.toString();
+                            $sendImageTargetFile = file;
+
+                            showModal(ModalTypes.SendImage);
                         });
 
                         reader.readAsDataURL(file);
@@ -167,14 +154,10 @@
                 const reader = new FileReader();
 
                 reader.addEventListener('load', async () => {
-                    await sendImage(
-                        $currentChannel?.channelId || $currentRoomId,
-                        $sendingImage,
-                        reader.result,
-                        $ourData.isTurbo,
-                        $lastSendsIn30,
-                        $isInServer ? $currentServer.serverId : ''
-                    );
+                    $targetImageModal = reader.result.toString();
+                    $sendImageTargetFile = file;
+
+                    showModal(ModalTypes.SendImage);
                 });
 
                 reader.readAsDataURL(file);
@@ -295,19 +278,12 @@
 
             adjustCanMessage();
         });
-
-        unsubscribe4 = disabledIn30.subscribe(() => {
-            setTimeout(() => {
-                content && adjustCanMessage();
-            }, 0);
-        });
     });
 
     onDestroy(() => {
         unsubscribe();
         unsubscribe2();
         unsubscribe3();
-        unsubscribe4();
     });
 </script>
 

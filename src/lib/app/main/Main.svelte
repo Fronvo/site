@@ -10,10 +10,8 @@
         isInServer,
         mobileShowMembers,
     } from 'stores/rooms';
-    import { disabledIn30, isMobile, lastSendsIn30 } from 'stores/main';
+    import { isMobile } from 'stores/main';
     import { onMount } from 'svelte';
-    import { differenceInMinutes } from 'date-fns';
-    import { getKey } from 'utilities/global';
     import { Toaster } from 'svelte-sonner';
     import HomeButton from '../reusables/top/HomeButton.svelte';
     import CreateServerButton from '../reusables/side/CreateServerButton.svelte';
@@ -88,23 +86,6 @@
     };
 
     let particlesInit = async (engine) => {};
-
-    onMount(() => {
-        setInterval(() => {
-            if ($lastSendsIn30 != -1) {
-                $lastSendsIn30 = 0;
-            }
-
-            if (
-                differenceInMinutes(
-                    new Date(),
-                    new Date(getKey('disabledIn30Time'))
-                ) < 15
-            ) {
-                $disabledIn30 = false;
-            }
-        }, 30000);
-    });
 </script>
 
 {#if new Date().getMonth() == 11}
@@ -127,8 +108,7 @@
     richColors
     visibleToasts={5}
     toastOptions={{
-        style: 'background: var(--bg); border-color: var(--secondary); border-radius: 10px; font-family: Manrope; font-size: 0.925rem;',
-        class: 'fronvo-toast',
+        style: 'background: var(--bg); color: var(--text); border-color: var(--primary); border-radius: 10px; font-family: Manrope; font-size: 0.925rem;',
     }}
     offset={'25px'}
 />

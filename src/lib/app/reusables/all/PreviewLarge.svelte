@@ -7,6 +7,7 @@
     import LargeSince from '../profile/large/LargeSince.svelte';
     import { ourData } from 'stores/profile';
     import { isMobile } from 'stores/main';
+    import LargeConnections from '../profile/large/LargeConnections.svelte';
 
     export let profileData: FronvoAccount;
 </script>
@@ -36,6 +37,18 @@
         <span class="seperator" />
 
         <LargeSince since={profileData?.creationDate} />
+
+        {#if profileData.hasSpotify}
+            <span class="seperator" />
+
+            <LargeConnections
+                spotify={{
+                    hasSpotify: profileData.hasSpotify,
+                    spotifyName: profileData.spotifyName,
+                    spotifyUrl: profileData.spotifyURL,
+                }}
+            />
+        {/if}
     </div>
 </div>
 
@@ -66,7 +79,6 @@
         height: 2px;
         margin-top: 20px;
         margin-bottom: 20px;
-        background: var(--tertiary);
     }
 
     @media screen and (max-width: 850px) {

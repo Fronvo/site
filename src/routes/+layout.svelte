@@ -526,6 +526,32 @@
                 }
             }
         });
+
+        socket.on('connectionsUpdated', ({ profileId, spotify }) => {
+            if (profileId == $ourData.profileId) {
+                $ourData = {
+                    ...$ourData,
+                    ...spotify,
+                };
+
+                $ourData = $ourData;
+            } else {
+                for (const cachedAccountIndex in $cachedAccountData) {
+                    const account = $cachedAccountData[cachedAccountIndex];
+
+                    if (account.profileId == profileId) {
+                        $cachedAccountData[cachedAccountIndex] = {
+                            ...$cachedAccountData[cachedAccountIndex],
+                            ...spotify,
+                        };
+
+                        $cachedAccountData = $cachedAccountData;
+
+                        break;
+                    }
+                }
+            }
+        });
     }
 
     onMount(() => {

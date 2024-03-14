@@ -5,8 +5,8 @@ import type { Socket } from 'socket.io-client';
 import { writable, type Writable } from 'svelte/store';
 
 /****************************** Fronvo client ******************************/
-// export let SERVER_URL = 'ws://localhost:3001';
-export let SERVER_URL = 'wss://frv.onrender.com';
+export let SERVER_URL = 'ws://localhost:3001';
+// export let SERVER_URL = 'wss://frv.onrender.com';
 
 export let socket: Socket<ServerToClientEvents, ClientToServerEvents>;
 export let secondarySocket: Socket<ServerToClientEvents, ClientToServerEvents>;

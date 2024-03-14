@@ -42,6 +42,9 @@ export interface FronvoAccount {
     pendingFriendRequests?: string[];
     friends: string[];
     isTurbo?: boolean;
+    hasSpotify?: boolean;
+    spotifyName?: string;
+    spotifyURL?: string;
 }
 
 export interface SwitchedAccount {

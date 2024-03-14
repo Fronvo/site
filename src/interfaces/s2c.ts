@@ -38,6 +38,7 @@ import type { ServerInviteRegeneratedResult } from './account/serverInviteRegene
 import type { ChannelRenamedResult } from './account/channelRenamed';
 import type { MemberBannedResult } from './account/memberBanned';
 import type { MemberUnbannedResult } from './account/memberUnbanned';
+import type { ConnectionsUpdatedResult } from './account/connectionsUpdated';
 
 export interface ServerToClientEvents {
     registerVerify: (
@@ -105,4 +106,6 @@ export interface ServerToClientEvents {
     serverInvitesToggled: ({}: ServerInvitesToggledResult) => void;
 
     serverInviteRegenerated: ({}: ServerInviteRegeneratedResult) => void;
+
+    connectionsUpdated: ({}: ConnectionsUpdatedResult) => void;
 }

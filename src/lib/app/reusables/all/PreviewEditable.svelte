@@ -4,6 +4,8 @@
     import EditableIdentifier from '../profile/editable/EditableIdentifier.svelte';
     import EditableBio from '../profile/editable/EditableBio.svelte';
     import type { Writable } from 'svelte/store';
+    import EditableConnections from '../profile/editable/EditableConnections.svelte';
+    import { darkTheme } from 'stores/main';
 
     export let avatar: Writable<string>;
     export let username: Writable<string>;
@@ -11,7 +13,7 @@
     export let updateCallback: () => void;
 </script>
 
-<div class="profile-container">
+<div class={`profile-container ${$darkTheme ? 'dark' : ''}`}>
     <EditableBanner {updateCallback} />
     <EditableAvatar {avatar} />
 
@@ -21,6 +23,10 @@
         <span class="seperator" />
 
         <EditableBio {bio} />
+
+        <span class="seperator" />
+
+        <EditableConnections />
     </div>
 </div>
 
@@ -39,10 +45,14 @@
         display: flex;
         flex-direction: column;
         transform: translateY(-60px);
-        background: rgb(100, 100, 100, 0.1);
+        background: rgb(225, 225, 225, 1);
         border-radius: 10px;
         padding-top: 10px;
         padding-bottom: 20px;
+    }
+
+    .dark .secondary-container {
+        background: rgb(180, 180, 180, 0.05);
     }
 
     .seperator {
@@ -51,6 +61,5 @@
         height: 2px;
         margin-top: 20px;
         margin-bottom: 20px;
-        background: var(--primary);
     }
 </style>

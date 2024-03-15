@@ -49,7 +49,7 @@
         /></svg
     >
 
-    <h1 class="text-xl mt-5">
+    <h1 class="text-xl text-white mt-5">
         {#if authenticated}
             Successfully linked your Spotify account.
         {:else if errored}

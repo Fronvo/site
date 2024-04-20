@@ -5,7 +5,6 @@
         modalLoading,
         type ModalData,
     } from 'stores/modals';
-    import { bounceInOut } from 'svelte/easing';
     import { scale } from 'svelte/transition';
 
     export let data: ModalData;
@@ -21,8 +20,7 @@
     } ${data.noDecoration ? 'no-decoration' : ''} ${$isMobile ? 'mobile' : ''}`}
     transition:scale={{
         duration: modalAnimDuration * 0.5,
-        start: 0.9,
-        easing: bounceInOut,
+        start: 1.2,
     }}
 >
     {#if data.title}

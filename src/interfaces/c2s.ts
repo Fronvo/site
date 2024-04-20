@@ -155,10 +155,15 @@ import type {
     UnbanMemberResult,
 } from './account/unbanMember';
 import type { RemoveConnectionSpotifyResult } from './account/removeConnectionSpotify';
+import type { RemoveConnectionGithubResult } from './account/removeConnectionGithub';
 import type {
     UpdateConnectionSpotifyParams,
     UpdateConnectionSpotifyResult,
 } from './account/updateConnectionSpotify';
+import type {
+    UpdateConnectionGithubParams,
+    UpdateConnectionGithubResult,
+} from './account/updateConnectionGithub';
 
 export interface ClientToServerEvents {
     register: (
@@ -358,5 +363,12 @@ export interface ClientToServerEvents {
     ) => void;
     removeConnectionSpotify: (
         callback?: ({}: RemoveConnectionSpotifyResult) => void
+    ) => void;
+    removeConnectionGithub: (
+        callback?: ({}: RemoveConnectionGithubResult) => void
+    ) => void;
+    updateConnectionGithub: (
+        {}: UpdateConnectionGithubParams,
+        callback?: ({}: UpdateConnectionGithubResult) => void
     ) => void;
 }

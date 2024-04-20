@@ -10,4 +10,10 @@ export interface ConnectionsUpdatedResult {
         spotifyName: string;
         spotifyURL: string;
     };
+
+    github: {
+        hasGithub: boolean;
+        githubName: string;
+        githubURL: string;
+    };
 }

@@ -45,6 +45,9 @@ export interface FronvoAccount {
     hasSpotify?: boolean;
     spotifyName?: string;
     spotifyURL?: string;
+    hasGithub?: boolean;
+    githubName?: string;
+    githubURL?: string;
 }
 
 export interface SwitchedAccount {

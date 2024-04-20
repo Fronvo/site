@@ -38,7 +38,7 @@
 
         <LargeSince since={profileData?.creationDate} />
 
-        {#if profileData.hasSpotify}
+        {#if profileData.hasSpotify || profileData.hasGithub}
             <span class="seperator" />
 
             <LargeConnections
@@ -46,6 +46,11 @@
                     hasSpotify: profileData.hasSpotify,
                     spotifyName: profileData.spotifyName,
                     spotifyUrl: profileData.spotifyURL,
+                }}
+                github={{
+                    hasGithub: profileData.hasGithub,
+                    githubName: profileData.githubName,
+                    githubUrl: profileData.githubURL,
                 }}
             />
         {/if}

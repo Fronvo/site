@@ -527,11 +527,12 @@
             }
         });
 
-        socket.on('connectionsUpdated', ({ profileId, spotify }) => {
+        socket.on('connectionsUpdated', ({ profileId, spotify, github }) => {
             if (profileId == $ourData.profileId) {
                 $ourData = {
                     ...$ourData,
                     ...spotify,
+                    ...github,
                 };
 
                 $ourData = $ourData;
@@ -543,6 +544,7 @@
                         $cachedAccountData[cachedAccountIndex] = {
                             ...$cachedAccountData[cachedAccountIndex],
                             ...spotify,
+                            ...github,
                         };
 
                         $cachedAccountData = $cachedAccountData;

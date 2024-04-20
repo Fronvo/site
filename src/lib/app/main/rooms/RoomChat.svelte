@@ -74,8 +74,6 @@
                     updateCachedMessages(roomId, $messages, $cachedRooms);
 
                     setTimeout(() => {
-                        chat.scrollTop = chat.scrollHeight;
-
                         hideMessages = false;
                     }, 0);
                 }
@@ -107,8 +105,6 @@
                         updateCachedMessages(roomId, $messages, $cachedRooms);
 
                         setTimeout(() => {
-                            chat.scrollTop = chat.scrollHeight;
-
                             hideMessages = false;
                         }, 0);
                     }
@@ -384,7 +380,7 @@
         {#if $roomData || $currentChannel}
             {#if !previousEmpty && canShowScroll}
                 <InfiniteLoading
-                    distance={1500}
+                    distance={2000}
                     on:infinite={loadMore}
                     direction="top"
                 >

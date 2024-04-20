@@ -98,6 +98,8 @@ export interface RoomMessage {
     spotifyEmbed?: string;
     isTenor?: boolean;
     tenorUrl?: string;
+    width?: number;
+    height?: number;
 }
 
 export interface Theme {

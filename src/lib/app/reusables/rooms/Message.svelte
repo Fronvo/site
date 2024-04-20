@@ -62,15 +62,6 @@
             messageData.content?.includes('https') &&
             !messageData.content?.includes('<img') &&
             !messageData.content?.includes('<svg');
-
-        if (image && !isPreview) {
-            image.onload = () => {
-                const container =
-                    document.getElementsByClassName('chat-container')[0];
-
-                container.scrollTop = container.scrollHeight;
-            };
-        }
     }
 
     async function showProfileModal(): Promise<void> {
@@ -260,11 +251,13 @@
                     <img
                         bind:this={image}
                         id="attachment"
-                        src={`${messageData.attachment}/tr:w-1000:h-1000:pr-true`}
+                        src={`${messageData.attachment}/tr:pr-true`}
                         draggable={false}
                         alt={'Message attachment'}
                         on:click={showImage}
                         on:keydown={showImage}
+                        width={messageData.width}
+                        height={messageData.height}
                     />
                 {:else}
                     <h1 id="content">
@@ -551,11 +544,12 @@
     }
 
     #attachment {
-        max-width: 100%;
-        max-height: 200px;
+        max-width: min(90%, 500px);
+        max-height: min(90%, 500px);
         border-radius: 5px;
         cursor: pointer;
         transition: 150ms;
+        overflow: hidden;
     }
 
     .skip #attachment {
@@ -610,6 +604,10 @@
 
         .mobile #content {
             font-size: 0.75rem;
+        }
+
+        .skip #content {
+            margin-left: 0;
         }
 
         .mobile #attachment {

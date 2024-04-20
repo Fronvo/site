@@ -149,30 +149,47 @@ export async function sendImage(
 
     sendingImageStore.set(true);
 
-    if (!serverId) {
-        socket.emit(
-            'sendImage',
-            {
-                roomId,
-                attachment: await uploadImage(file, isPRO),
-            },
-            () => {
-                sendingImageStore.set(false);
+    const img = new Image();
+
+    img.src = file;
+
+    return new Promise((resolve) => {
+        img.onload = async () => {
+            const dimensions = {
+                width: img.width,
+                height: img.height,
+            };
+
+            if (!serverId) {
+                socket.emit(
+                    'sendImage',
+                    {
+                        roomId,
+                        attachment: await uploadImage(file, isPRO),
+                        ...dimensions,
+                    },
+                    () => {
+                        sendingImageStore.set(false);
+                    }
+                );
+            } else {
+                socket.emit(
+                    'sendChannelImage',
+                    {
+                        serverId,
+                        channelId: roomId,
+                        attachment: await uploadImage(file, isPRO),
+                        ...dimensions,
+                    },
+                    () => {
+                        sendingImageStore.set(false);
+                    }
+                );
             }
-        );
-    } else {
-        socket.emit(
-            'sendChannelImage',
-            {
-                serverId,
-                channelId: roomId,
-                attachment: await uploadImage(file, isPRO),
-            },
-            () => {
-                sendingImageStore.set(false);
-            }
-        );
-    }
+
+            resolve();
+        };
+    });
 }
 
 export function goHome(): void {

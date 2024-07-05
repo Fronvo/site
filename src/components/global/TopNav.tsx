@@ -5,27 +5,17 @@ import ThemeToggle from "./ThemeToggle";
 import {
   ArrowRightIcon,
   BellIcon,
-  ColorWheelIcon,
-  CrossCircledIcon,
-  CursorArrowIcon,
-  DotIcon,
   FileIcon,
-  FilePlusIcon,
   GearIcon,
   GitHubLogoIcon,
   HamburgerMenuIcon,
-  HomeIcon,
   ImageIcon,
   LockOpen1Icon,
   MagnifyingGlassIcon,
   PaperPlaneIcon,
   Pencil1Icon,
   PersonIcon,
-  PlusCircledIcon,
   PlusIcon,
-  ThickArrowLeftIcon,
-  TimerIcon,
-  UploadIcon,
 } from "@radix-ui/react-icons";
 import { Separator } from "../ui/separator";
 import {
@@ -66,10 +56,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import {
-  convertLastStatusToStatus,
-  convertStatusToLastStatus,
-} from "@/lib/utils";
+import { convertLastStatusToStatus } from "@/lib/utils";
 
 interface Props {
   isHomepage?: boolean;
@@ -534,7 +521,14 @@ export default function TopNav({
               <DropdownMenuItem>
                 <LockOpen1Icon className="mr-2" /> Switch accounts
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  Cookies.remove("accessToken");
+                  Cookies.remove("refreshToken");
+
+                  location.href = "/auth";
+                }}
+              >
                 <ArrowRightIcon className="mr-2" /> Log out
               </DropdownMenuItem>
             </DropdownMenuContent>

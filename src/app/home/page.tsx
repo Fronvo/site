@@ -1,7 +1,13 @@
 "use client";
 
-import { useReadable, useWritable } from "react-use-svelte-store";
-import { authenticated, disconnected, messaging, userData } from "@/lib/stores";
+import { useWritable } from "react-use-svelte-store";
+import {
+  authenticated,
+  disconnected,
+  appVersion,
+  messaging,
+  userData,
+} from "@/lib/stores";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
@@ -22,11 +28,12 @@ export default function RouteHome() {
 
   const [$authenticated, setAuthenticated] = useWritable(authenticated);
   const [$disconnected, setDisconnected] = useWritable(disconnected);
-  const $messaging = useReadable(messaging);
+  const [$messaging, setMessaging] = useWritable(messaging);
   const [_, setUserData] = useWritable(userData);
+  const [__, setAppVersion] = useWritable(appVersion);
 
   async function regenerateAccessToken() {
-    const res = await fetch("api/accessToken", {
+    const res = await fetch("api/token", {
       headers: {
         Authorization: Cookies.get("refreshToken") as string,
       },
@@ -72,7 +79,26 @@ export default function RouteHome() {
       return;
     }
 
-    return { ...userData };
+    const extraUserData: Partial<UserData> = {
+      default_tab:
+        (Number(localStorage.getItem("fronvo_defaultTab")) as 0 | 1) || 0,
+    };
+
+    return { ...userData, ...extraUserData };
+  }
+
+  async function fetchExtraData() {
+    const fronvoVersion = (
+      await (
+        await fetch("api/version", {
+          headers: {
+            Authorization: Cookies.get("accessToken") as string,
+          },
+        })
+      ).json()
+    ).version as string;
+
+    return { version: fronvoVersion };
   }
 
   async function initProfilesSocket(data: UserData) {
@@ -87,7 +113,7 @@ export default function RouteHome() {
     });
 
     profilesSocket.on("statusUpdated", ({ status, userId }) => {
-      if (data.profile_id === userId) {
+      if (data.id === userId) {
         setUserData({
           ...data,
           status,
@@ -96,11 +122,17 @@ export default function RouteHome() {
     });
 
     profilesSocket.on("noteUpdated", ({ note, userId }) => {
-      if (data.profile_id === userId) {
+      if (data.id === userId) {
         setUserData({
           ...data,
           note,
         });
+      }
+    });
+
+    profilesSocket.on("postShared", ({ post, userId }) => {
+      if (data.id !== userId) {
+        toast.success(`New post shared by ${userId}`);
       }
     });
 
@@ -121,8 +153,66 @@ export default function RouteHome() {
     });
   }
 
+  async function initDMSSocket(data: UserData) {
+    let hasDisconnected = false;
+
+    const dmsSocket = io(`${process.env.SOCKET_URL}/dms`, {
+      transports: ["websocket", "polling"],
+      parser: binaryParser,
+      query: {
+        authorization: Cookies.get("accessToken") as string,
+      },
+    });
+
+    dmsSocket.on("disconnect", () => {
+      setDisconnected(true);
+      hasDisconnected = true;
+
+      toast("Disconnected from Fronvo, retrying...");
+    });
+
+    dmsSocket.on("connect", () => {
+      if (!hasDisconnected) return;
+
+      setDisconnected(false);
+      hasDisconnected = false;
+
+      toast("Reconnected to Fronvo.");
+    });
+  }
+
+  async function initServersSocket(data: UserData) {
+    let hasDisconnected = false;
+
+    const serversSocket = io(`${process.env.SOCKET_URL}/servers`, {
+      transports: ["websocket", "polling"],
+      parser: binaryParser,
+      query: {
+        authorization: Cookies.get("accessToken") as string,
+      },
+    });
+
+    serversSocket.on("disconnect", () => {
+      setDisconnected(true);
+      hasDisconnected = true;
+
+      toast("Disconnected from Fronvo, retrying...");
+    });
+
+    serversSocket.on("connect", () => {
+      if (!hasDisconnected) return;
+
+      setDisconnected(false);
+      hasDisconnected = false;
+
+      toast("Reconnected to Fronvo.");
+    });
+  }
+
   async function initSockets(data: UserData) {
     initProfilesSocket(data);
+    initDMSSocket(data);
+    initServersSocket(data);
   }
 
   useEffect(() => {
@@ -152,11 +242,16 @@ export default function RouteHome() {
 
         setUserData({ ...(data as UserData) });
 
-        initSockets(data);
+        fetchExtraData().then((version) => {
+          setAppVersion(version.version);
 
-        setAuthenticated(true);
+          initSockets(data);
 
-        toast(`Welcome back to Fronvo, ${data.username}.`);
+          setAuthenticated(true);
+          setMessaging(data.default_tab === 1 || false);
+
+          toast(`Welcome back to Fronvo, ${data.username}.`);
+        });
       });
     });
   }, []);

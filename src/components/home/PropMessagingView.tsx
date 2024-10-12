@@ -6,8 +6,6 @@ export default function PropMessagingView() {
       <Skeleton className="w-[164px] h-[164px] m-auto mb-3" />
 
       <Skeleton className="w-[300px] h-[22px] m-auto mb-6" />
-
-      <Skeleton className="w-[125px] h-[30px] m-auto" />
     </div>
   );
 }

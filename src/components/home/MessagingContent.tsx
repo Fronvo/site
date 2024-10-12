@@ -1,5 +1,5 @@
 import MessagesList from "./MessagesList";
-import PropMessagingView from "./PropMessagingView";
+import MessagingView from "./MessagingView";
 import ServersList from "./ServersList";
 
 export default function MessagingContent() {
@@ -9,7 +9,7 @@ export default function MessagingContent() {
 
       <MessagesList />
 
-      <PropMessagingView />
+      <MessagingView />
     </div>
   );
 }

@@ -10,7 +10,7 @@ export default function MainView() {
   const [hasJWT, setHasJWT] = useState(false);
 
   useEffect(() => {
-    if (Cookies.get("accessToken")) {
+    if (Cookies.get("refreshToken")) {
       setHasJWT(true);
     }
   }, []);

@@ -89,6 +89,7 @@ const config = {
       screens: {
         xs: { max: "800px" },
         mobile: { max: "1075px" },
+        lg: { min: "1075px" },
         "mobile-md": { max: "1500px" },
       },
     },

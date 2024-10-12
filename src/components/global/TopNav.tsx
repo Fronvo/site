@@ -13,7 +13,6 @@ import {
   LockOpen1Icon,
   MagnifyingGlassIcon,
   PaperPlaneIcon,
-  Pencil1Icon,
   PersonIcon,
   PlusIcon,
 } from "@radix-ui/react-icons";
@@ -39,7 +38,11 @@ import {
 } from "../ui/tooltip";
 import {
   authenticated,
+  loggingOut,
   messaging,
+  settingsOpen,
+  sharingPost,
+  switchingAccounts,
   updatingProfileNote,
   userData,
 } from "@/lib/stores";
@@ -57,12 +60,19 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { convertLastStatusToStatus } from "@/lib/utils";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@radix-ui/react-popover";
+import { LastStatus, UserData } from "@/lib/types";
 
 interface Props {
   isHomepage?: boolean;
   notFixed?: boolean;
   forceShowSheet?: boolean;
 }
+
 interface TopNavHeader {
   title: string;
   ref: string;
@@ -85,6 +95,10 @@ export default function TopNav({
   const [$status, setStatus] = useState($userData?.status);
 
   const [_, setUpdatingProfileNote] = useWritable(updatingProfileNote);
+  const [__, setSharingPost] = useWritable(sharingPost);
+  const [___, setSettingsOpen] = useWritable(settingsOpen);
+  const [____, setSwitchingAccounts] = useWritable(switchingAccounts);
+  const [_____, setLoggingOut] = useWritable(loggingOut);
 
   const headers: TopNavHeader[] = [];
 
@@ -106,49 +120,25 @@ export default function TopNav({
     setIsInHome(location.href.endsWith("/home"));
   }, []);
 
-  async function updateStatus() {
-    if ($status === $userData.status) return;
-
-    const tempStatus = $userData.status;
-
-    setUserData({
-      ...$userData,
-      status: $status,
-    });
-
-    const res = await fetch("api/me/updateStatus", {
+  async function updateStatus(status: LastStatus) {
+    await fetch("api/me/status", {
       method: "POST",
-
       body: JSON.stringify({
-        status: $status,
+        status,
       }),
-
       headers: {
         Authorization: Cookies.get("accessToken") as string,
         "content-type": "application/json",
       },
     });
 
-    // Revert if failed
-    if (!res.ok) {
-      setUserData({
-        ...$userData,
-        status: tempStatus,
-      });
-    }
+    setStatus(status);
+
+    setUserData({
+      ...$userData,
+      status,
+    });
   }
-
-  useEffect(() => {
-    if (!$userData) return;
-
-    updateStatus();
-  }, [$status]);
-
-  useEffect(() => {
-    if (!$userData?.status) return;
-
-    setStatus($userData.status);
-  }, [$userData]);
 
   return (
     <div
@@ -388,16 +378,32 @@ export default function TopNav({
               </Tooltip>
             </TooltipProvider>
 
-            <TooltipProvider delayDuration={750} disableHoverableContent>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button variant={"ghost"} size="icon" className="ml-2 mr-2">
-                    <BellIcon width={20} height={20} />
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>Notifications</TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+            <Popover>
+              <PopoverTrigger>
+                <TooltipProvider delayDuration={750} disableHoverableContent>
+                  <Tooltip>
+                    <TooltipTrigger className="mr-2 ml-2" asChild>
+                      <Button variant={"ghost"} size="icon">
+                        <BellIcon width={20} height={20} />
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent>Notifications</TooltipContent>
+                  </Tooltip>
+                </TooltipProvider>
+              </PopoverTrigger>
+              <PopoverContent className="w-64 shadow-lg translate-y-6 bg-popover duration-200 border p-4 rounded-lg data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0  data-[state=closed]:slide-out-to-left-5/6 data-[state=closed]:slide-out-to-top-5/6 data-[state=open]:slide-in-from-left-5/6 data-[state=open]:slide-in-from-top-5/6 ">
+                <div className="flex flex-col items-center justify-center pt-12 pb-12">
+                  <BellIcon
+                    width={64}
+                    height={64}
+                    className="w-[48px] h-[48px]"
+                  />
+                  <h1 className="text-sm font-medium mt-2">
+                    No new notifications
+                  </h1>
+                </div>
+              </PopoverContent>
+            </Popover>
           </>
         )}
 
@@ -459,7 +465,7 @@ export default function TopNav({
                     </Button>
                   </TooltipTrigger>
                   <TooltipContent>
-                    {$userData?.username} ({$userData?.profile_id})
+                    {$userData?.username} ({$userData?.id})
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
@@ -480,7 +486,7 @@ export default function TopNav({
                       // @ts-ignore
                       value={$status}
                       // @ts-ignore
-                      onValueChange={setStatus}
+                      onValueChange={(e) => updateStatus(e)}
                     >
                       {/* @ts-ignore */}
                       <DropdownMenuRadioItem value={0}>
@@ -502,33 +508,23 @@ export default function TopNav({
                   </DropdownMenuSubContent>
                 </DropdownMenuPortal>
               </DropdownMenuSub>
-              <DropdownMenuItem>
-                <Pencil1Icon className="mr-2" /> Edit profile
-              </DropdownMenuItem>
               <DropdownMenuSeparator />
 
               <DropdownMenuItem onClick={() => setUpdatingProfileNote(true)}>
                 <FileIcon className="mr-2" /> Update note
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setSharingPost(true)}>
                 <PlusIcon className="mr-2" /> Share post
               </DropdownMenuItem>
               <DropdownMenuSeparator />
 
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setSettingsOpen(true)}>
                 <GearIcon className="mr-2" /> Settings
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={() => setSwitchingAccounts(true)}>
                 <LockOpen1Icon className="mr-2" /> Switch accounts
               </DropdownMenuItem>
-              <DropdownMenuItem
-                onClick={() => {
-                  Cookies.remove("accessToken");
-                  Cookies.remove("refreshToken");
-
-                  location.href = "/auth";
-                }}
-              >
+              <DropdownMenuItem onClick={() => setLoggingOut(true)}>
                 <ArrowRightIcon className="mr-2" /> Log out
               </DropdownMenuItem>
             </DropdownMenuContent>

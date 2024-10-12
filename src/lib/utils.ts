@@ -23,3 +23,7 @@ export function convertLastStatusToStatus(
   else if (lastStatus === 3) return "Offline";
   return "Online";
 }
+
+export function normaliseDate(date: string) {
+  return date.split("T")[0].replaceAll("-", " ").split(" ").reverse().join("/");
+}

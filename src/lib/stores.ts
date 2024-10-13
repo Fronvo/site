@@ -1,10 +1,12 @@
 import { writable } from "react-use-svelte-store";
-import { Channel, Server, UserData } from "./types";
+import { BannedMember, Channel, Member, Server, UserData } from "./types";
 
 export const hasToken = writable<boolean>(false);
 export const authenticated = writable<boolean>(false);
 export const disconnected = writable<boolean>(false);
 export const userData = writable<UserData>();
+export const memberData = writable<Member>();
+export const bannedMemberData = writable<BannedMember>();
 export const serverData = writable<Server>();
 export const channelData = writable<Channel>();
 export const editingChannelData = writable<Channel>();
@@ -12,6 +14,7 @@ export const deletingChannelData = writable<Channel>();
 export const appVersion = writable<string>();
 export const messaging = writable(false);
 
+// TODO: Separate to corresponding files
 // For Dialogs
 export const updatingProfileNote = writable(false);
 export const sharingPost = writable(false);
@@ -31,3 +34,6 @@ export const editingChannel = writable(false);
 export const deletingChannel = writable(false);
 export const managingMembers = writable(false);
 export const banningMembers = writable(false);
+export const kickingMember = writable(false);
+export const banningMember = writable(false);
+export const unbanningMember = writable(false);

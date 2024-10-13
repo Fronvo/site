@@ -280,7 +280,7 @@ export default function ServerView() {
                           onClick={() => setBanningMembers(true)}
                         >
                           <CircleBackslashIcon className="mr-2" color={"red"} />
-                          Banned members
+                          Bans
                         </DropdownMenuItem>
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>

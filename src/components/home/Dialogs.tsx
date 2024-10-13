@@ -2,6 +2,8 @@
 
 import {
   appVersion,
+  bannedMemberData,
+  banningMember,
   banningMembers,
   changingPassword,
   creatingChannel,
@@ -14,14 +16,17 @@ import {
   editingChannelData,
   editingServer,
   joiningServer,
+  kickingMember,
   leavingServer,
   loggingOut,
   managingMembers,
+  memberData,
   requestingData,
   serverData,
   settingsOpen,
   sharingPost,
   switchingAccounts,
+  unbanningMember,
   updatingProfileNote,
   userData,
 } from "@/lib/stores";
@@ -153,6 +158,12 @@ export default function Dialogs() {
     useWritable(deletingChannelData);
   const [$managingMembers, setManagingMembers] = useWritable(managingMembers);
   const [$banningMembers, setBanningMembers] = useWritable(banningMembers);
+  const [$kickingMember, setKickingMember] = useWritable(kickingMember);
+  const [$banningMember, setBanningMember] = useWritable(banningMember);
+  const [$unbanningMember, setUnbanningMember] = useWritable(unbanningMember);
+  const [$memberData, setMemberData] = useWritable(memberData);
+  const [$bannedMemberData, setBannedMemberData] =
+    useWritable(bannedMemberData);
 
   // Settings
   const settingHeaders: SettingsHeader[] = [
@@ -210,11 +221,21 @@ export default function Dialogs() {
                 <>
                   <DropdownMenuSeparator />
 
-                  <DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      setMemberData(member);
+                      setKickingMember(true);
+                    }}
+                  >
                     <Cross2Icon className="mr-2" color={"red"} /> Kick
                   </DropdownMenuItem>
 
-                  <DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      setMemberData(member);
+                      setBanningMember(true);
+                    }}
+                  >
                     <CircleBackslashIcon className="mr-2" color={"red"} /> Ban
                   </DropdownMenuItem>
 
@@ -278,9 +299,13 @@ export default function Dialogs() {
 
               <DropdownMenuSeparator />
 
-              <DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  setBannedMemberData(member);
+                  setUnbanningMember(true);
+                }}
+              >
                 <CircleBackslashIcon className="mr-2" color={"red"} /> Unban
-                member
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -1122,6 +1147,156 @@ export default function Dialogs() {
     }
   }
 
+  async function kickMember() {
+    setDisabled(true);
+
+    toast.promise(kickMemberPromise, {
+      loading: `Kicking ${$memberData.id}...`,
+      success: () => `${$memberData.id} kicked!`,
+      error: (e) => e,
+    });
+
+    async function kickMemberPromise() {
+      return new Promise(async (resolve, reject) => {
+        const res = await fetch("/api/members/kick", {
+          method: "POST",
+          body: JSON.stringify({
+            id: $serverData.id,
+            memberId: $memberData.id,
+          }),
+          headers: {
+            Authorization: Cookies.get("accessToken") as string,
+            "content-type": "application/json",
+          },
+        });
+
+        if (res.status === 200) {
+          resolve("");
+
+          const userData = (
+            await (
+              await fetch("api/me", {
+                headers: {
+                  Authorization: Cookies.get("accessToken") as string,
+                },
+              })
+            ).json()
+          ).profileData as UserData;
+
+          setUserData(userData);
+          setServerData(
+            userData.servers.filter((v) => v.id === $serverData.id)[0]
+          );
+          setKickingMember(false);
+        } else {
+          reject((await res.json()).errors[0].message);
+        }
+
+        setDisabled(false);
+      });
+    }
+  }
+
+  async function banMember() {
+    setDisabled(true);
+
+    toast.promise(banMemberPromise, {
+      loading: `Banning ${$memberData.id}...`,
+      success: () => `${$memberData.id} banned!`,
+      error: (e) => e,
+    });
+
+    async function banMemberPromise() {
+      return new Promise(async (resolve, reject) => {
+        const res = await fetch("/api/members/ban", {
+          method: "POST",
+          body: JSON.stringify({
+            id: $serverData.id,
+            memberId: $memberData.id,
+          }),
+          headers: {
+            Authorization: Cookies.get("accessToken") as string,
+            "content-type": "application/json",
+          },
+        });
+
+        if (res.status === 200) {
+          resolve("");
+
+          const userData = (
+            await (
+              await fetch("api/me", {
+                headers: {
+                  Authorization: Cookies.get("accessToken") as string,
+                },
+              })
+            ).json()
+          ).profileData as UserData;
+
+          setUserData(userData);
+          setServerData(
+            userData.servers.filter((v) => v.id === $serverData.id)[0]
+          );
+          setBanningMember(false);
+        } else {
+          reject((await res.json()).errors[0].message);
+        }
+
+        setDisabled(false);
+      });
+    }
+  }
+
+  async function unbanMember() {
+    setDisabled(true);
+
+    toast.promise(unbanMemberPromise, {
+      loading: `Unbanning ${$bannedMemberData.id}...`,
+      success: () => `${$bannedMemberData.id} unbanned!`,
+      error: (e) => e,
+    });
+
+    async function unbanMemberPromise() {
+      return new Promise(async (resolve, reject) => {
+        const res = await fetch("/api/members/unban", {
+          method: "POST",
+          body: JSON.stringify({
+            id: $serverData.id,
+            memberId: $bannedMemberData.id,
+          }),
+          headers: {
+            Authorization: Cookies.get("accessToken") as string,
+            "content-type": "application/json",
+          },
+        });
+
+        if (res.status === 200) {
+          resolve("");
+
+          const userData = (
+            await (
+              await fetch("api/me", {
+                headers: {
+                  Authorization: Cookies.get("accessToken") as string,
+                },
+              })
+            ).json()
+          ).profileData as UserData;
+
+          setUserData(userData);
+          setServerData(
+            userData.servers.filter((v) => v.id === $serverData.id)[0]
+          );
+          setUnbanningMember(false);
+        } else {
+          reject((await res.json()).errors[0].message);
+        }
+
+        setDisabled(false);
+      });
+    }
+  }
+
   // Update on theme change
   useEffect(() => {
     setThemeOption(theme === "light" ? 0 : 1);
@@ -1566,7 +1741,11 @@ export default function Dialogs() {
 
           <DialogFooter>
             <DialogClose disabled={disabled}>
-              <Button variant={"outline"} className="mobile:hidden">
+              <Button
+                disabled={disabled}
+                variant={"outline"}
+                className="mobile:hidden"
+              >
                 Cancel
               </Button>
             </DialogClose>
@@ -1596,7 +1775,11 @@ export default function Dialogs() {
 
           <DialogFooter className="mobile:flex mobile:w-max mobile:m-auto">
             <DialogClose disabled={disabled} className="mobile:flex">
-              <Button variant={"outline"} className="mobile:hidden">
+              <Button
+                disabled={disabled}
+                variant={"outline"}
+                className="mobile:hidden"
+              >
                 Cancel
               </Button>
             </DialogClose>
@@ -1656,7 +1839,9 @@ export default function Dialogs() {
 
           <DialogFooter>
             <DialogClose disabled={disabled} className="mobile:hidden">
-              <Button variant={"outline"}>Cancel</Button>
+              <Button disabled={disabled} variant={"outline"}>
+                Cancel
+              </Button>
             </DialogClose>
             <Button
               disabled={
@@ -1714,7 +1899,9 @@ export default function Dialogs() {
 
           <DialogFooter>
             <DialogClose disabled={disabled} className="mobile:hidden">
-              <Button variant={"outline"}>Cancel</Button>
+              <Button disabled={disabled} variant={"outline"}>
+                Cancel
+              </Button>
             </DialogClose>
             <Button
               disabled={
@@ -1739,7 +1926,9 @@ export default function Dialogs() {
 
           <DialogFooter>
             <DialogClose disabled={disabled} className="mobile:hidden">
-              <Button variant={"outline"}>Cancel</Button>
+              <Button disabled={disabled} variant={"outline"}>
+                Cancel
+              </Button>
             </DialogClose>
             <Button disabled={disabled} onClick={requestData}>
               Request data
@@ -2210,7 +2399,9 @@ export default function Dialogs() {
 
           <DialogFooter>
             <DialogClose disabled={disabled} className="mobile:hidden">
-              <Button variant={"outline"}>Cancel</Button>
+              <Button disabled={disabled} variant={"outline"}>
+                Cancel
+              </Button>
             </DialogClose>
             <Button
               disabled={disabled}
@@ -2266,7 +2457,9 @@ export default function Dialogs() {
 
           <DialogFooter>
             <DialogClose disabled={disabled} className="mobile:hidden">
-              <Button variant={"outline"}>Cancel</Button>
+              <Button disabled={disabled} variant={"outline"}>
+                Cancel
+              </Button>
             </DialogClose>
             <Button
               disabled={
@@ -2320,7 +2513,9 @@ export default function Dialogs() {
           </div>
           <DialogFooter className="mobile:flex-col">
             <DialogClose disabled={disabled} className="mobile:hidden">
-              <Button variant={"outline"}>Cancel</Button>
+              <Button disabled={disabled} variant={"outline"}>
+                Cancel
+              </Button>
             </DialogClose>
 
             <Button
@@ -2374,7 +2569,9 @@ export default function Dialogs() {
           </div>
           <DialogFooter className="mobile:flex-col">
             <DialogClose disabled={disabled} className="mobile:hidden">
-              <Button variant={"outline"}>Cancel</Button>
+              <Button disabled={disabled} variant={"outline"}>
+                Cancel
+              </Button>
             </DialogClose>
 
             <Button
@@ -2400,7 +2597,9 @@ export default function Dialogs() {
           </DialogHeader>
           <DialogFooter className="mobile:flex-col">
             <DialogClose disabled={disabled} className="mobile:hidden">
-              <Button variant={"outline"}>Cancel</Button>
+              <Button disabled={disabled} variant={"outline"}>
+                Cancel
+              </Button>
             </DialogClose>
 
             <Button
@@ -2433,7 +2632,9 @@ export default function Dialogs() {
 
           <DialogFooter>
             <DialogClose disabled={disabled}>
-              <Button variant={"outline"}>Close</Button>
+              <Button disabled={disabled} variant={"outline"}>
+                Close
+              </Button>
             </DialogClose>
           </DialogFooter>
         </DialogContent>
@@ -2441,7 +2642,13 @@ export default function Dialogs() {
 
       <Dialog open={$banningMembers} onOpenChange={setBanningMembers}>
         <DialogContent className="flex flex-col w-[90vw] max-w-none h-[90vh]">
-          <DialogTitle>Bans</DialogTitle>
+          <DialogTitle>
+            {$serverData?.banned_members.length > 0
+              ? $serverData?.banned_members.length
+              : "No"}{" "}
+            banned member
+            {$serverData?.banned_members.length !== 1 ? "s" : ""}
+          </DialogTitle>
 
           <DataTable
             viewOptions
@@ -2453,8 +2660,97 @@ export default function Dialogs() {
 
           <DialogFooter>
             <DialogClose disabled={disabled}>
-              <Button variant={"outline"}>Close</Button>
+              <Button disabled={disabled} variant={"outline"}>
+                Close
+              </Button>
             </DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={$kickingMember} onOpenChange={setKickingMember}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Kick member</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to kick{" "}
+              <b className="text-primary">{$memberData?.id}</b>?
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="mobile:flex-col">
+            <DialogClose disabled={disabled} className="mobile:hidden">
+              <Button disabled={disabled} variant={"outline"}>
+                Cancel
+              </Button>
+            </DialogClose>
+
+            <Button
+              disabled={disabled}
+              type="submit"
+              onClick={kickMember}
+              className="mobile:mt-2"
+              variant={"destructive"}
+            >
+              Kick member
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={$banningMember} onOpenChange={setBanningMember}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Ban member</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to ban{" "}
+              <b className="text-primary">{$memberData?.id}</b>?
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="mobile:flex-col">
+            <DialogClose disabled={disabled} className="mobile:hidden">
+              <Button disabled={disabled} variant={"outline"}>
+                Cancel
+              </Button>
+            </DialogClose>
+
+            <Button
+              disabled={disabled}
+              type="submit"
+              onClick={banMember}
+              className="mobile:mt-2"
+              variant={"destructive"}
+            >
+              Ban member
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={$unbanningMember} onOpenChange={setUnbanningMember}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Unban member</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to unban{" "}
+              <b className="text-primary">{$bannedMemberData?.id}</b>?
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="mobile:flex-col">
+            <DialogClose disabled={disabled} className="mobile:hidden">
+              <Button disabled={disabled} variant={"outline"}>
+                Cancel
+              </Button>
+            </DialogClose>
+
+            <Button
+              disabled={disabled}
+              type="submit"
+              onClick={unbanMember}
+              className="mobile:mt-2"
+              variant={"destructive"}
+            >
+              Unban member
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

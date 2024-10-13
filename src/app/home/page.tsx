@@ -248,6 +248,16 @@ export default function RouteHome() {
           initSockets(data);
 
           setAuthenticated(true);
+
+          const initialToken = Cookies.get("refreshToken") as string;
+
+          setInterval(() => {
+            if (initialToken !== Cookies.get("refreshToken")) {
+              // Force re-login
+              location.href = location.href;
+            }
+          }, 5000);
+
           setMessaging(data.default_tab === 1 || false);
 
           toast(`Welcome back to Fronvo, ${data.username}.`);

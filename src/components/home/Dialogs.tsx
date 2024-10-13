@@ -14,6 +14,7 @@ import {
   editingChannelData,
   editingServer,
   joiningServer,
+  leavingServer,
   loggingOut,
   managingMembers,
   requestingData,
@@ -43,15 +44,13 @@ import {
   CircleBackslashIcon,
   Cross1Icon,
   Cross2Icon,
-  CrossCircledIcon,
   DoubleArrowUpIcon,
   GearIcon,
   HamburgerMenuIcon,
   ImageIcon,
   Pencil1Icon,
   PersonIcon,
-  PlusIcon,
-  TrashIcon,
+
 } from "@radix-ui/react-icons";
 import { Input } from "../ui/input";
 import Cookies from "js-cookie";
@@ -61,7 +60,6 @@ import {
   DMOption,
   FilterOption,
   Member,
-  memberColumns,
   Server,
   TabOption,
   ThemeOption,
@@ -145,6 +143,7 @@ export default function Dialogs() {
   const [$joiningServer, setJoiningServer] = useWritable(joiningServer);
   const [$editingServer, setEditingServer] = useWritable(editingServer);
   const [$deletingServer, setDeletingServer] = useWritable(deletingServer);
+  const [$leavingServer, setLeavingServer] = useWritable(leavingServer);
   const [$serverData, setServerData] = useWritable(serverData);
   const [$creatingChannel, setCreatingChannel] = useWritable(creatingChannel);
   const [$editingChannel, setEditingChannel] = useWritable(editingChannel);
@@ -208,22 +207,25 @@ export default function Dialogs() {
                 <PersonIcon className="mr-2" /> View profile
               </DropdownMenuItem>
 
-              <DropdownMenuSeparator />
+              {member.id !== $serverData.owner_id && (
+                <>
+                  <DropdownMenuSeparator />
 
-              <DropdownMenuItem>
-                <Cross2Icon className="mr-2" color={"red"} /> Kick member
-              </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Cross2Icon className="mr-2" color={"red"} /> Kick
+                  </DropdownMenuItem>
 
-              <DropdownMenuItem>
-                <CircleBackslashIcon className="mr-2" color={"red"} /> Ban
-                member
-              </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <CircleBackslashIcon className="mr-2" color={"red"} /> Ban
+                  </DropdownMenuItem>
 
-              <DropdownMenuSeparator />
+                  <DropdownMenuSeparator />
 
-              <DropdownMenuItem>
-                <DoubleArrowUpIcon className="mr-2" /> Transfer server
-              </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <DoubleArrowUpIcon className="mr-2" /> Transfer
+                  </DropdownMenuItem>
+                </>
+              )}
             </DropdownMenuContent>
           </DropdownMenu>
         );
@@ -280,12 +282,6 @@ export default function Dialogs() {
               <DropdownMenuItem>
                 <CircleBackslashIcon className="mr-2" color={"red"} /> Unban
                 member
-              </DropdownMenuItem>
-
-              <DropdownMenuSeparator />
-
-              <DropdownMenuItem>
-                <DoubleArrowUpIcon className="mr-2" /> Transfer server
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -891,6 +887,55 @@ export default function Dialogs() {
           // @ts-ignore
           setServerData(undefined);
           setDeletingServer(false);
+
+          resolve("");
+        } else {
+          reject((await res.json()).errors[0].message);
+        }
+
+        setDisabled(false);
+      });
+    }
+  }
+
+  async function leaveServer() {
+    setDisabled(true);
+
+    toast.promise(leaveServerPromise, {
+      loading: "Leaving server...",
+      success: () => "Left server!",
+      error: (e) => `${e}`,
+    });
+
+    async function leaveServerPromise() {
+      return new Promise(async (resolve, reject) => {
+        const res = await fetch("api/servers/leave", {
+          method: "DELETE",
+          body: JSON.stringify({
+            id: $serverData.id,
+          }),
+          headers: {
+            Authorization: Cookies.get("accessToken") as string,
+            "content-type": "application/json",
+          },
+        });
+
+        if (res.status === 200) {
+          const userData = (
+            await (
+              await fetch("api/me", {
+                headers: {
+                  Authorization: Cookies.get("accessToken") as string,
+                },
+              })
+            ).json()
+          ).profileData as UserData;
+
+          setUserData(userData);
+
+          // @ts-ignore
+          setServerData(undefined);
+          setLeavingServer(false);
 
           resolve("");
         } else {
@@ -1509,7 +1554,7 @@ export default function Dialogs() {
           </DialogHeader>
 
           <DialogFooter>
-            <DialogClose>
+            <DialogClose disabled={disabled}>
               <Button variant={"outline"} className="mobile:hidden">
                 Cancel
               </Button>
@@ -1539,7 +1584,7 @@ export default function Dialogs() {
           </div>
 
           <DialogFooter className="mobile:flex mobile:w-max mobile:m-auto">
-            <DialogClose className="mobile:flex">
+            <DialogClose disabled={disabled} className="mobile:flex">
               <Button variant={"outline"} className="mobile:hidden">
                 Cancel
               </Button>
@@ -1599,7 +1644,7 @@ export default function Dialogs() {
           />
 
           <DialogFooter>
-            <DialogClose className="mobile:hidden">
+            <DialogClose disabled={disabled} className="mobile:hidden">
               <Button variant={"outline"}>Cancel</Button>
             </DialogClose>
             <Button
@@ -1657,7 +1702,7 @@ export default function Dialogs() {
           />
 
           <DialogFooter>
-            <DialogClose className="mobile:hidden">
+            <DialogClose disabled={disabled} className="mobile:hidden">
               <Button variant={"outline"}>Cancel</Button>
             </DialogClose>
             <Button
@@ -1682,7 +1727,7 @@ export default function Dialogs() {
           </DialogHeader>
 
           <DialogFooter>
-            <DialogClose className="mobile:hidden">
+            <DialogClose disabled={disabled} className="mobile:hidden">
               <Button variant={"outline"}>Cancel</Button>
             </DialogClose>
             <Button disabled={disabled} onClick={requestData}>
@@ -1885,7 +1930,7 @@ export default function Dialogs() {
             ></Input>
           </div>
           <DialogFooter className="translate-y-[-52px]">
-            <DialogClose className="mobile:hidden">
+            <DialogClose disabled={disabled} className="mobile:hidden">
               <Button variant={"outline"} disabled={disabled}>
                 Cancel
               </Button>
@@ -1920,7 +1965,7 @@ export default function Dialogs() {
           />
 
           <DialogFooter>
-            <DialogClose className="mobile:hidden">
+            <DialogClose disabled={disabled} className="mobile:hidden">
               <Button variant={"outline"} disabled={disabled}>
                 Cancel
               </Button>
@@ -2128,7 +2173,7 @@ export default function Dialogs() {
             ></Input>
           </div>
           <DialogFooter className="translate-y-[-52px]">
-            <DialogClose className="mobile:hidden">
+            <DialogClose disabled={disabled} className="mobile:hidden">
               <Button variant={"outline"} disabled={disabled}>
                 Cancel
               </Button>
@@ -2138,6 +2183,30 @@ export default function Dialogs() {
               onClick={editServer}
             >
               Update server
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={$leavingServer} onOpenChange={setLeavingServer}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Leave server</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to leave from <b>{$serverData?.name}</b>?
+            </DialogDescription>
+          </DialogHeader>
+
+          <DialogFooter>
+            <DialogClose disabled={disabled} className="mobile:hidden">
+              <Button variant={"outline"}>Cancel</Button>
+            </DialogClose>
+            <Button
+              disabled={disabled}
+              onClick={leaveServer}
+              variant={"destructive"}
+            >
+              Leave server
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -2185,7 +2254,7 @@ export default function Dialogs() {
           />
 
           <DialogFooter>
-            <DialogClose className="mobile:hidden">
+            <DialogClose disabled={disabled} className="mobile:hidden">
               <Button variant={"outline"}>Cancel</Button>
             </DialogClose>
             <Button
@@ -2239,7 +2308,7 @@ export default function Dialogs() {
             </div>
           </div>
           <DialogFooter className="mobile:flex-col">
-            <DialogClose className="mobile:hidden">
+            <DialogClose disabled={disabled} className="mobile:hidden">
               <Button variant={"outline"}>Cancel</Button>
             </DialogClose>
 
@@ -2293,7 +2362,7 @@ export default function Dialogs() {
             </div>
           </div>
           <DialogFooter className="mobile:flex-col">
-            <DialogClose className="mobile:hidden">
+            <DialogClose disabled={disabled} className="mobile:hidden">
               <Button variant={"outline"}>Cancel</Button>
             </DialogClose>
 
@@ -2319,7 +2388,7 @@ export default function Dialogs() {
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="mobile:flex-col">
-            <DialogClose className="mobile:hidden">
+            <DialogClose disabled={disabled} className="mobile:hidden">
               <Button variant={"outline"}>Cancel</Button>
             </DialogClose>
 
@@ -2338,7 +2407,10 @@ export default function Dialogs() {
 
       <Dialog open={$managingMembers} onOpenChange={setManagingMembers}>
         <DialogContent className="flex flex-col w-[90vw] max-w-none h-[90vh]">
-          <DialogTitle>Members</DialogTitle>
+          <DialogTitle>
+            {$serverData?.members.length} member
+            {$serverData?.members.length !== 1 ? "s" : ""}
+          </DialogTitle>
 
           <DataTable
             viewOptions
@@ -2347,7 +2419,7 @@ export default function Dialogs() {
           />
 
           <DialogFooter>
-            <DialogClose>
+            <DialogClose disabled={disabled}>
               <Button variant={"outline"}>Close</Button>
             </DialogClose>
           </DialogFooter>
@@ -2365,7 +2437,7 @@ export default function Dialogs() {
           />
 
           <DialogFooter>
-            <DialogClose>
+            <DialogClose disabled={disabled}>
               <Button variant={"outline"}>Close</Button>
             </DialogClose>
           </DialogFooter>

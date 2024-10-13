@@ -203,22 +203,24 @@ export default function ServerView() {
 
             <DropdownMenuContent className="w-[175px]">
               {isOwner && (
-                <>
-                  <DropdownMenuItem onClick={() => setEditingServer(true)}>
-                    <Pencil1Icon className="mr-2" /> Edit
-                  </DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setEditingServer(true)}>
+                  <Pencil1Icon className="mr-2" /> Edit
+                </DropdownMenuItem>
+              )}
 
-                  <DropdownMenuSub>
-                    <DropdownMenuSubTrigger>
-                      <Link2Icon className="mr-2" /> Invite
-                    </DropdownMenuSubTrigger>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>
+                  <Link2Icon className="mr-2" /> Invite
+                </DropdownMenuSubTrigger>
 
-                    <DropdownMenuPortal>
-                      <DropdownMenuSubContent className="w-[175px]">
-                        <DropdownMenuItem onClick={() => copyInvite(true)}>
-                          <CopyIcon className="mr-2" /> Copy
-                        </DropdownMenuItem>
+                <DropdownMenuPortal>
+                  <DropdownMenuSubContent className="w-[175px]">
+                    <DropdownMenuItem onClick={() => copyInvite(true)}>
+                      <CopyIcon className="mr-2" /> Copy
+                    </DropdownMenuItem>
 
+                    {isOwner && (
+                      <>
                         <DropdownMenuItem onClick={regenerateInvite}>
                           <LoopIcon className="mr-2" /> Regenerate
                         </DropdownMenuItem>
@@ -233,10 +235,14 @@ export default function ServerView() {
                           {$serverData.invites_disabled ? "Enable" : "Disable"}{" "}
                           invite
                         </DropdownMenuItem>
-                      </DropdownMenuSubContent>
-                    </DropdownMenuPortal>
-                  </DropdownMenuSub>
+                      </>
+                    )}
+                  </DropdownMenuSubContent>
+                </DropdownMenuPortal>
+              </DropdownMenuSub>
 
+              {isOwner && (
+                <>
                   <DropdownMenuSub>
                     <DropdownMenuSubTrigger>
                       <ChatBubbleIcon className="mr-2" /> Channels

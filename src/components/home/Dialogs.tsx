@@ -50,7 +50,6 @@ import {
   ImageIcon,
   Pencil1Icon,
   PersonIcon,
-
 } from "@radix-ui/react-icons";
 import { Input } from "../ui/input";
 import Cookies from "js-cookie";
@@ -655,11 +654,20 @@ export default function Dialogs() {
       return;
     }
 
+    const localServer = $userData.servers.find((v) => v.invite === inviteLink);
+
+    if (localServer) {
+      setServerData(localServer);
+      setJoiningServer(false);
+
+      return;
+    }
+
     setDisabled(true);
 
     toast.promise(joinServerPromise, {
       loading: "Joining server...",
-      success: () => "Server joined!",
+      success: () => "Joined server!",
       error: (e) => e,
     });
 
@@ -690,6 +698,9 @@ export default function Dialogs() {
           ).profileData as UserData;
 
           setUserData(userData);
+          setServerData(
+            userData.servers.find((v) => v.invite === inviteLink) as Server
+          );
           setJoiningServer(false);
           setInviteLink("");
         } else {
@@ -854,7 +865,7 @@ export default function Dialogs() {
 
     toast.promise(deleteServerPromise, {
       loading: "Deleting server...",
-      success: () => "Server deleted!",
+      success: () => "Deleted server!",
       error: (e) => `${e}`,
     });
 
@@ -2224,7 +2235,7 @@ export default function Dialogs() {
           <DialogHeader>
             <DialogTitle>Delete server</DialogTitle>
             <DialogDescription>
-              Follow the steps below to delete {$serverData?.name}
+              Follow the steps below to delete <b>{$serverData?.name}</b>
             </DialogDescription>
           </DialogHeader>
 

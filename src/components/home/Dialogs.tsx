@@ -2427,6 +2427,8 @@ export default function Dialogs() {
             viewOptions
             columns={memberColumns}
             data={$serverData?.members}
+            enableFiltering
+            filterPlaceholder="Search for users..."
           />
 
           <DialogFooter>
@@ -2445,6 +2447,8 @@ export default function Dialogs() {
             viewOptions
             columns={bannedColumns}
             data={$serverData?.banned_members}
+            enableFiltering
+            filterPlaceholder="Search for users..."
           />
 
           <DialogFooter>

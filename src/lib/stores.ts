@@ -37,3 +37,4 @@ export const banningMembers = writable(false);
 export const kickingMember = writable(false);
 export const banningMember = writable(false);
 export const unbanningMember = writable(false);
+export const transferringServer = writable(false);

@@ -62,7 +62,7 @@ export function DataTable<TData, TValue>({
   return (
     <div className="flex-1">
       <div className="flex items-center py-4">
-        {data.length > 0 && enableFiltering && (
+        {data?.length > 0 && enableFiltering && (
           <Input
             placeholder={filterPlaceholder || "Filter results..."}
             value={globalFilter ? String(globalFilter) : ""}

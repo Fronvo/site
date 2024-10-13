@@ -26,6 +26,7 @@ import {
   settingsOpen,
   sharingPost,
   switchingAccounts,
+  transferringServer,
   unbanningMember,
   updatingProfileNote,
   userData,
@@ -164,6 +165,8 @@ export default function Dialogs() {
   const [$memberData, setMemberData] = useWritable(memberData);
   const [$bannedMemberData, setBannedMemberData] =
     useWritable(bannedMemberData);
+  const [$transferringServer, setTransferringServer] =
+    useWritable(transferringServer);
 
   // Settings
   const settingHeaders: SettingsHeader[] = [
@@ -217,7 +220,7 @@ export default function Dialogs() {
                 <PersonIcon className="mr-2" /> View profile
               </DropdownMenuItem>
 
-              {member.id !== $serverData.owner_id && (
+              {member.id !== $serverData?.owner_id && (
                 <>
                   <DropdownMenuSeparator />
 
@@ -241,7 +244,12 @@ export default function Dialogs() {
 
                   <DropdownMenuSeparator />
 
-                  <DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={() => {
+                      setMemberData(member);
+                      setTransferringServer(true);
+                    }}
+                  >
                     <DoubleArrowUpIcon className="mr-2" /> Transfer
                   </DropdownMenuItem>
                 </>
@@ -972,6 +980,57 @@ export default function Dialogs() {
           // @ts-ignore
           setServerData(undefined);
           setLeavingServer(false);
+
+          resolve("");
+        } else {
+          reject((await res.json()).errors[0].message);
+        }
+
+        setDisabled(false);
+      });
+    }
+  }
+
+  async function transferServer() {
+    setDisabled(true);
+
+    toast.promise(transferServerPromise, {
+      loading: `Transferring server to ${$memberData.id}...`,
+      success: () => `Transferred server to ${$memberData.id}!`,
+      error: (e) => `${e}`,
+    });
+
+    async function transferServerPromise() {
+      return new Promise(async (resolve, reject) => {
+        const res = await fetch("api/servers/transfer", {
+          method: "POST",
+          body: JSON.stringify({
+            id: $serverData.id,
+            memberId: $memberData.id,
+          }),
+          headers: {
+            Authorization: Cookies.get("accessToken") as string,
+            "content-type": "application/json",
+          },
+        });
+
+        if (res.status === 200) {
+          const userData = (
+            await (
+              await fetch("api/me", {
+                headers: {
+                  Authorization: Cookies.get("accessToken") as string,
+                },
+              })
+            ).json()
+          ).profileData as UserData;
+
+          setUserData(userData);
+
+          // @ts-ignore
+          setServerData(undefined);
+          setTransferringServer(false);
+          setManagingMembers(false);
 
           resolve("");
         } else {
@@ -2476,6 +2535,70 @@ export default function Dialogs() {
         </DialogContent>
       </Dialog>
 
+      <Dialog
+        open={$transferringServer}
+        onOpenChange={() => {
+          setTransferringServer(false);
+          setPasswordInput("");
+          setExtraInput("");
+        }}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Transfer ownership</DialogTitle>
+            <DialogDescription>
+              Follow the steps below to transfer ownership of{" "}
+              <b>{$serverData?.name}</b> to <b>{$memberData?.id}</b>
+            </DialogDescription>
+          </DialogHeader>
+
+          <hr />
+
+          <h1>Type in the server name</h1>
+          <Input
+            onInput={(e) => {
+              // @ts-ignore
+              setServerName(e.target.value.trim());
+            }}
+            type="text"
+            placeholder="Server Name"
+          />
+
+          <h1 className="mt-4">
+            Type{" "}
+            <span className="font-bold select-none">transfer my server</span>{" "}
+            below
+          </h1>
+
+          <Input
+            className="font-bold"
+            onInput={(e) => {
+              // @ts-ignore
+              setExtraInput(e.target.value);
+            }}
+          />
+
+          <DialogFooter>
+            <DialogClose disabled={disabled} className="mobile:hidden">
+              <Button disabled={disabled} variant={"outline"}>
+                Cancel
+              </Button>
+            </DialogClose>
+            <Button
+              disabled={
+                disabled ||
+                extraInput !== "transfer my server" ||
+                serverName !== $serverData?.name
+              }
+              onClick={transferServer}
+              variant={"destructive"}
+            >
+              Transfer ownership
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       <Dialog open={$creatingChannel} onOpenChange={setCreatingChannel}>
         <DialogContent>
           <DialogHeader>
@@ -2625,7 +2748,9 @@ export default function Dialogs() {
           <DataTable
             viewOptions
             columns={memberColumns}
-            data={$serverData?.members}
+            data={
+              $serverData?.owner_id === $userData.id ? $serverData?.members : []
+            }
             enableFiltering
             filterPlaceholder="Search for users..."
           />

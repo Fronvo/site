@@ -16,6 +16,7 @@ import {
   HamburgerMenuIcon,
   Link2Icon,
   LoopIcon,
+  MagicWandIcon,
   Pencil1Icon,
   PersonIcon,
   PlusIcon,
@@ -203,9 +204,27 @@ export default function ServerView() {
 
             <DropdownMenuContent className="w-[175px]">
               {isOwner && (
-                <DropdownMenuItem onClick={() => setEditingServer(true)}>
-                  <Pencil1Icon className="mr-2" /> Edit
-                </DropdownMenuItem>
+                <>
+                  <DropdownMenuItem onClick={() => setEditingServer(true)}>
+                    <Pencil1Icon className="mr-2" /> Edit
+                  </DropdownMenuItem>
+
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
+                      <MagicWandIcon className="mr-2" /> Roles
+                    </DropdownMenuSubTrigger>
+
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent className="w-[175px]">
+                        <DropdownMenuItem
+                          onClick={() => setCreatingChannel(true)}
+                        >
+                          <ViewVerticalIcon className="mr-2" /> Manage
+                        </DropdownMenuItem>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
+                </>
               )}
 
               <DropdownMenuSub>
@@ -318,7 +337,7 @@ export default function ServerView() {
           } flex flex-col space-y-1.5 w-full pt-2 pb-2`}
         >
           {$serverData.channels.map((channel) => (
-            <Channel channel={channel} />
+            <Channel key={channel.id} channel={channel} />
           ))}
         </div>
       )}

@@ -14,7 +14,7 @@ export default function MessagesList() {
       {$userData.dms?.length > 0 &&
         !$serverData &&
         $userData.dms.map((dm) => {
-          return <MessagesDM dm={dm} />;
+          return <MessagesDM key={dm.id} dm={dm} />;
         })}
 
       {/* TODO: Update when dms ready */}

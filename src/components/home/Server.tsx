@@ -47,10 +47,11 @@ export default function Server({ server }: Props) {
                 onClick={selectServer}
               >
                 <h1
-                  className="translate-y-[5px] translate-x-[1px]"
+                  className="translate-y-[5.5px] translate-x-[1.5px]"
                   onClick={selectServer}
                 >
                   {server.name[0]}
+                  {server.name[1] ? server.name[1] : ""}
                 </h1>
               </div>
             )}

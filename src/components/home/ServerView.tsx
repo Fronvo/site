@@ -5,6 +5,7 @@ import {
   editingServer,
   leavingServer,
   managingMembers,
+  managingRoles,
   serverData,
   userData,
 } from "@/lib/stores";
@@ -51,6 +52,7 @@ export default function ServerView() {
   const [____, setCreatingChannel] = useWritable(creatingChannel);
   const [_____, setManagingMembers] = useWritable(managingMembers);
   const [______, setBanningMembers] = useWritable(banningMembers);
+  const [_______, setManagingRoles] = useWritable(managingRoles);
 
   const isOwner = $userData.id === $serverData.owner_id;
 
@@ -217,7 +219,7 @@ export default function ServerView() {
                     <DropdownMenuPortal>
                       <DropdownMenuSubContent className="w-[175px]">
                         <DropdownMenuItem
-                          onClick={() => setCreatingChannel(true)}
+                          onClick={() => setManagingRoles(true)}
                         >
                           <ViewVerticalIcon className="mr-2" /> Manage
                         </DropdownMenuItem>

@@ -20,6 +20,7 @@ import {
   leavingServer,
   loggingOut,
   managingMembers,
+  managingRoles,
   memberData,
   requestingData,
   serverData,
@@ -65,6 +66,7 @@ import {
   DMOption,
   FilterOption,
   Member,
+  Role,
   Server,
   TabOption,
   ThemeOption,
@@ -167,6 +169,7 @@ export default function Dialogs() {
     useWritable(bannedMemberData);
   const [$transferringServer, setTransferringServer] =
     useWritable(transferringServer);
+  const [$managingRoles, setManagingRoles] = useWritable(managingRoles);
 
   // Settings
   const settingHeaders: SettingsHeader[] = [
@@ -310,6 +313,66 @@ export default function Dialogs() {
               <DropdownMenuItem
                 onClick={() => {
                   setBannedMemberData(member);
+                  setUnbanningMember(true);
+                }}
+              >
+                <CircleBackslashIcon className="mr-2" color={"red"} /> Unban
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        );
+      },
+    },
+  ];
+
+  const roleColumns: ColumnDef<Role>[] = [
+    {
+      accessorKey: "id",
+      header: ({ column }) => (
+        <DataTableSortableHeader column={column} title="ID" />
+      ),
+    },
+    {
+      accessorKey: "name",
+      header: ({ column }) => (
+        <DataTableSortableHeader column={column} title="Role name" />
+      ),
+      cell({ getValue }) {
+        return <h1 className="ml-5">{getValue() as string}</h1>;
+      },
+    },
+    {
+      accessorKey: "created_at",
+      header: ({ column }) => (
+        <DataTableSortableHeader column={column} title="Created at" />
+      ),
+      cell({ getValue }) {
+        return normaliseDate(getValue() as string);
+      },
+    },
+    {
+      id: "actions",
+      cell: ({ row }) => {
+        const role = row.original;
+
+        return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <HamburgerMenuIcon className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>{role.id}</DropdownMenuLabel>
+              <DropdownMenuItem>
+                <PersonIcon className="mr-2" /> View profile
+              </DropdownMenuItem>
+
+              <DropdownMenuSeparator />
+
+              <DropdownMenuItem
+                onClick={() => {
                   setUnbanningMember(true);
                 }}
               >
@@ -2780,7 +2843,7 @@ export default function Dialogs() {
             columns={bannedColumns}
             data={$serverData?.banned_members}
             enableFiltering
-            filterPlaceholder="Search for users..."
+            filterPlaceholder="Search for banned users..."
           />
 
           <DialogFooter>
@@ -2876,6 +2939,32 @@ export default function Dialogs() {
             >
               Unban member
             </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={$managingRoles} onOpenChange={setManagingRoles}>
+        <DialogContent className="flex flex-col w-[90vw] max-w-none h-[90vh]">
+          <DialogTitle>
+            {$serverData?.roles.length > 0 ? $serverData?.roles.length : "No"}{" "}
+            role
+            {$serverData?.roles.length !== 1 ? "s" : ""}
+          </DialogTitle>
+
+          <DataTable
+            viewOptions
+            columns={roleColumns}
+            data={$serverData?.roles}
+            enableFiltering
+            filterPlaceholder="Search for roles..."
+          />
+
+          <DialogFooter>
+            <DialogClose disabled={disabled}>
+              <Button disabled={disabled} variant={"outline"}>
+                Close
+              </Button>
+            </DialogClose>
           </DialogFooter>
         </DialogContent>
       </Dialog>

@@ -17,5 +17,5 @@
 ## Preview
 
 <p align='center'>
-    <img width='128' height='128' src='https://github.com/Fronvo/site/blob/v3/.github/assets/preview.png?raw=true' alt='Fronvo homepage preview' />
+    <img src='https://github.com/Fronvo/site/blob/v3/.github/assets/preview.png?raw=true' alt='Fronvo homepage preview' />
 </p>

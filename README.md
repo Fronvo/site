@@ -10,6 +10,12 @@
 
 ## Setup
 
-- `npm i`
+- `pnpm i`
 
-- `npm dev`, starts at port 3001
+- `pnpm dev` starts at port 3001
+
+## Preview
+
+<p align='center'>
+    <img width='128' height='128' src='https://github.com/Fronvo/site/blob/v3/.github/assets/preview.png?raw=true' alt='Fronvo homepage preview' />
+</p>

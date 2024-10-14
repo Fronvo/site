@@ -8,7 +8,8 @@ const font = Manrope({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Fronvo | Private social media",
-  description: "Private social media, reimagined.",
+  description: "Private social media, reimagined",
+  // TODO: Icon, color
 };
 
 export default function RootLayout({

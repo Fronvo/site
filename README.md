@@ -19,3 +19,7 @@
 <p align='center'>
     <img src='https://github.com/Fronvo/site/blob/v3/.github/assets/preview.png?raw=true' alt='Fronvo homepage preview' />
 </p>
+
+## Roadmap
+
+- https://trello.com/b/21K2NFIM/fronvo-v3

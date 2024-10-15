@@ -401,13 +401,16 @@ export default function Dialogs() {
               <TooltipTrigger>
                 <div
                   style={{ background: getValue() as string }}
-                  className="w-8 h-8 ml-3 rounded-md cursor-default"
+                  className="w-8 h-8 ml-3 rounded-sm drop-shadow-xl cursor-pointer"
+                  onClick={() => {
+                    navigator.clipboard.writeText(getValue() as string);
+
+                    toast.success("Color copied to clipboard!");
+                  }}
                 />
               </TooltipTrigger>
 
-              <TooltipContent className="ml-3">
-                {getValue() as string}
-              </TooltipContent>
+              <TooltipContent className="ml-3">Click to copy</TooltipContent>
             </Tooltip>
           </TooltipProvider>
         );

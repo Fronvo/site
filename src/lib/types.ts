@@ -15,6 +15,7 @@ export interface Channel {
 export interface Role {
   id: string;
   name: string;
+  description: string;
   hex_color: string;
   created_at: string;
 }

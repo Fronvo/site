@@ -149,6 +149,7 @@ export default function Dialogs() {
   const [channelDescription, setChannelDescription] = useState("");
 
   const [roleName, setRoleName] = useState("");
+  const [roleDescription, setRoleDescription] = useState("");
   const [roleColor, setRoleColor] = useState("");
 
   // Profile options
@@ -364,6 +365,15 @@ export default function Dialogs() {
       ),
       cell({ getValue }) {
         return <h1 className="ml-4">{getValue() as string}</h1>;
+      },
+    },
+    {
+      accessorKey: "description",
+      header: ({ column }) => (
+        <DataTableSortableHeader column={column} title="Description" />
+      ),
+      cell({ getValue }) {
+        return <h1 className="ml-2">{getValue() as string}</h1>;
       },
     },
     {
@@ -1568,6 +1578,7 @@ export default function Dialogs() {
           body: JSON.stringify({
             id: $serverData.id,
             name: roleName,
+            description: roleDescription,
             color: roleColor || "#ffffff",
           }),
           headers: {
@@ -1622,6 +1633,7 @@ export default function Dialogs() {
             id: $serverData.id,
             roleId: $editingRoleData.id,
             name: roleName || $editingRoleData.name,
+            description: roleDescription,
             color: roleColor || $editingRoleData.hex_color,
           }),
           headers: {
@@ -3239,6 +3251,16 @@ export default function Dialogs() {
                 }}
               />
 
+              <Label className="text-right">Description</Label>
+              <Textarea
+                maxLength={50}
+                className="col-span-3 w-full max-h-40"
+                onInput={(e) => {
+                  // @ts-ignore
+                  setRoleDescription(e.target.value);
+                }}
+              />
+
               <Label className="text-right">Color</Label>
               <Input
                 maxLength={6}
@@ -3286,6 +3308,17 @@ export default function Dialogs() {
                 onInput={(e) => {
                   // @ts-ignore
                   setRoleName(e.target.value);
+                }}
+              />
+
+              <Label className="text-right">Description</Label>
+              <Textarea
+                defaultValue={$editingRoleData.description}
+                maxLength={50}
+                className="col-span-3 w-full max-h-40"
+                onInput={(e) => {
+                  // @ts-ignore
+                  setRoleDescription(e.target.value);
                 }}
               />
 

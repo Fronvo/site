@@ -217,8 +217,21 @@ export default function Dialogs() {
       header: ({ column }) => (
         <DataTableSortableHeader column={column} title="Username" />
       ),
+      cell({ getValue, row }) {
+        return (
+          <h1 className="ml-5">
+            {row.original.server_username || (getValue() as string)}
+          </h1>
+        );
+      },
+    },
+    {
+      accessorKey: "roles",
+      header: ({ column }) => (
+        <DataTableSortableHeader column={column} title="Roles" />
+      ),
       cell({ getValue }) {
-        return <h1 className="ml-5">{getValue() as string}</h1>;
+        return <h1 className="ml-5">{(getValue() as []).join(", ")}</h1>;
       },
     },
     {
@@ -3302,7 +3315,7 @@ export default function Dialogs() {
             <div className="grid grid-cols-4 items-center gap-4 mt-2 mb-2">
               <Label className="text-right">Name</Label>
               <Input
-                defaultValue={$editingRoleData.name}
+                defaultValue={$editingRoleData?.name}
                 maxLength={15}
                 className="col-span-3 w-full"
                 onInput={(e) => {
@@ -3313,7 +3326,7 @@ export default function Dialogs() {
 
               <Label className="text-right">Description</Label>
               <Textarea
-                defaultValue={$editingRoleData.description}
+                defaultValue={$editingRoleData?.description}
                 maxLength={50}
                 className="col-span-3 w-full max-h-40"
                 onInput={(e) => {
@@ -3326,7 +3339,7 @@ export default function Dialogs() {
               <Input
                 maxLength={6}
                 className="col-span-3 w-full"
-                defaultValue={$editingRoleData.hex_color}
+                defaultValue={$editingRoleData?.hex_color}
                 onInput={(e) => {
                   // @ts-ignore
                   setRoleColor(e.target.value);

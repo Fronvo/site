@@ -56,7 +56,7 @@ export interface Member {
   banner: string;
   bio: string;
   server_avatar: string;
-  server_banner: string;
+  server_username: string;
   username: string;
   created_at: string;
   joined_at: string;

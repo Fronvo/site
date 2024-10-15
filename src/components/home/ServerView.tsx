@@ -1,9 +1,13 @@
 import {
   banningMembers,
   creatingChannel,
+  creatingRole,
+  deletingRole,
   deletingServer,
+  editingRole,
   editingServer,
   leavingServer,
+  managingChannels,
   managingMembers,
   managingRoles,
   serverData,
@@ -18,6 +22,7 @@ import {
   Link2Icon,
   LoopIcon,
   MagicWandIcon,
+  MixIcon,
   Pencil1Icon,
   PersonIcon,
   PlusIcon,
@@ -52,7 +57,11 @@ export default function ServerView() {
   const [____, setCreatingChannel] = useWritable(creatingChannel);
   const [_____, setManagingMembers] = useWritable(managingMembers);
   const [______, setBanningMembers] = useWritable(banningMembers);
-  const [_______, setManagingRoles] = useWritable(managingRoles);
+  const [_______, setCreatingRole] = useWritable(creatingRole);
+  const [________, setEditingRole] = useWritable(editingRole);
+  const [_________, setDeletingRole] = useWritable(deletingRole);
+  const [__________, setManagingRoles] = useWritable(managingRoles);
+  const [___________, setManagingChannels] = useWritable(managingChannels);
 
   const isOwner = $userData.id === $serverData.owner_id;
 
@@ -210,22 +219,6 @@ export default function ServerView() {
                   <DropdownMenuItem onClick={() => setEditingServer(true)}>
                     <Pencil1Icon className="mr-2" /> Edit
                   </DropdownMenuItem>
-
-                  <DropdownMenuSub>
-                    <DropdownMenuSubTrigger>
-                      <MagicWandIcon className="mr-2" /> Roles
-                    </DropdownMenuSubTrigger>
-
-                    <DropdownMenuPortal>
-                      <DropdownMenuSubContent className="w-[175px]">
-                        <DropdownMenuItem
-                          onClick={() => setManagingRoles(true)}
-                        >
-                          <ViewVerticalIcon className="mr-2" /> Manage
-                        </DropdownMenuItem>
-                      </DropdownMenuSubContent>
-                    </DropdownMenuPortal>
-                  </DropdownMenuSub>
                 </>
               )}
 
@@ -266,6 +259,26 @@ export default function ServerView() {
                 <>
                   <DropdownMenuSub>
                     <DropdownMenuSubTrigger>
+                      <MagicWandIcon className="mr-2" /> Roles
+                    </DropdownMenuSubTrigger>
+
+                    <DropdownMenuPortal>
+                      <DropdownMenuSubContent className="w-[175px]">
+                        <DropdownMenuItem onClick={() => setCreatingRole(true)}>
+                          <PlusIcon className="mr-2" /> Create
+                        </DropdownMenuItem>
+
+                        <DropdownMenuItem
+                          onClick={() => setManagingRoles(true)}
+                        >
+                          <ViewVerticalIcon className="mr-2" /> Manage
+                        </DropdownMenuItem>
+                      </DropdownMenuSubContent>
+                    </DropdownMenuPortal>
+                  </DropdownMenuSub>
+
+                  <DropdownMenuSub>
+                    <DropdownMenuSubTrigger>
                       <ChatBubbleIcon className="mr-2" /> Channels
                     </DropdownMenuSubTrigger>
 
@@ -276,11 +289,15 @@ export default function ServerView() {
                         >
                           <PlusIcon className="mr-2" /> Create
                         </DropdownMenuItem>
+
+                        <DropdownMenuItem
+                          onClick={() => setManagingChannels(true)}
+                        >
+                          <ViewVerticalIcon className="mr-2" /> Manage
+                        </DropdownMenuItem>
                       </DropdownMenuSubContent>
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
-
-                  <DropdownMenuSeparator />
 
                   <DropdownMenuSub>
                     <DropdownMenuSubTrigger>
@@ -307,6 +324,14 @@ export default function ServerView() {
                     </DropdownMenuPortal>
                   </DropdownMenuSub>
                 </>
+              )}
+
+              <DropdownMenuSeparator />
+
+              {isOwner && (
+                <DropdownMenuItem>
+                  <MixIcon className="mr-2" /> Dashboard
+                </DropdownMenuItem>
               )}
 
               <DropdownMenuItem

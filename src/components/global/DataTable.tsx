@@ -28,6 +28,7 @@ import { Input } from "../ui/input";
 
 interface DataTableProps<TData, TValue> {
   viewOptions?: boolean;
+  hiddenColumns?: string[];
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   enableFiltering?: boolean;
@@ -36,6 +37,7 @@ interface DataTableProps<TData, TValue> {
 
 export function DataTable<TData, TValue>({
   viewOptions,
+  hiddenColumns,
   columns,
   data,
   enableFiltering,
@@ -43,6 +45,12 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState<GlobalFilterTableState>();
+
+  const finalHiddenColumns: { [key: string]: any } = {};
+
+  for (const hiddenCol of hiddenColumns || []) {
+    finalHiddenColumns[hiddenCol] = false;
+  }
 
   const table = useReactTable({
     data,
@@ -56,6 +64,9 @@ export function DataTable<TData, TValue>({
     state: {
       sorting,
       globalFilter,
+    },
+    initialState: {
+      columnVisibility: finalHiddenColumns,
     },
   });
 

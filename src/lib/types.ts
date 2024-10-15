@@ -8,8 +8,8 @@ export interface Channel {
   id: string;
   name: string;
   description: string;
-  channel_order: number;
   created_at: string;
+  server_id: string;
 }
 
 export interface Role {

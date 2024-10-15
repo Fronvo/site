@@ -7,18 +7,24 @@ import {
   banningMembers,
   changingPassword,
   creatingChannel,
+  creatingRole,
   creatingServer,
   deletingAccount,
   deletingChannel,
   deletingChannelData,
+  deletingRole,
+  deletingRoleData,
   deletingServer,
   editingChannel,
   editingChannelData,
+  editingRole,
+  editingRoleData,
   editingServer,
   joiningServer,
   kickingMember,
   leavingServer,
   loggingOut,
+  managingChannels,
   managingMembers,
   managingRoles,
   memberData,
@@ -57,12 +63,14 @@ import {
   ImageIcon,
   Pencil1Icon,
   PersonIcon,
+  TrashIcon,
 } from "@radix-ui/react-icons";
 import { Input } from "../ui/input";
 import Cookies from "js-cookie";
 import Link from "next/link";
 import {
   BannedMember,
+  Channel,
   DMOption,
   FilterOption,
   Member,
@@ -95,6 +103,12 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { normaliseDate } from "@/lib/utils";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "../ui/tooltip";
 
 type SettingsHeader = "Account" | "Privacy" | "Appearance" | "About";
 
@@ -134,6 +148,9 @@ export default function Dialogs() {
   const [channelName, setChannelName] = useState("");
   const [channelDescription, setChannelDescription] = useState("");
 
+  const [roleName, setRoleName] = useState("");
+  const [roleColor, setRoleColor] = useState("");
+
   // Profile options
   const [$updatingProfileNote, setUpdatingProfileNote] =
     useWritable(updatingProfileNote);
@@ -169,7 +186,15 @@ export default function Dialogs() {
     useWritable(bannedMemberData);
   const [$transferringServer, setTransferringServer] =
     useWritable(transferringServer);
+  const [$creatingRole, setCreatingRole] = useWritable(creatingRole);
+  const [$editingRole, setEditingRole] = useWritable(editingRole);
+  const [$editingRoleData, setEditingRoleData] = useWritable(editingRoleData);
+  const [$deletingRole, setDeletingRole] = useWritable(deletingRole);
+  const [$deletingRoleData, setDeletingRoleData] =
+    useWritable(deletingRoleData);
   const [$managingRoles, setManagingRoles] = useWritable(managingRoles);
+  const [$managingChannels, setManagingChannels] =
+    useWritable(managingChannels);
 
   // Settings
   const settingHeaders: SettingsHeader[] = [
@@ -338,7 +363,31 @@ export default function Dialogs() {
         <DataTableSortableHeader column={column} title="Role name" />
       ),
       cell({ getValue }) {
-        return <h1 className="ml-5">{getValue() as string}</h1>;
+        return <h1 className="ml-4">{getValue() as string}</h1>;
+      },
+    },
+    {
+      accessorKey: "hex_color",
+      header: ({ column }) => (
+        <DataTableSortableHeader column={column} title="Color" />
+      ),
+      cell({ getValue }) {
+        return (
+          <TooltipProvider disableHoverableContent delayDuration={0}>
+            <Tooltip>
+              <TooltipTrigger>
+                <div
+                  style={{ background: getValue() as string }}
+                  className="w-8 h-8 ml-3 rounded-md cursor-default"
+                />
+              </TooltipTrigger>
+
+              <TooltipContent className="ml-3">
+                {getValue() as string}
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        );
       },
     },
     {
@@ -347,7 +396,7 @@ export default function Dialogs() {
         <DataTableSortableHeader column={column} title="Created at" />
       ),
       cell({ getValue }) {
-        return normaliseDate(getValue() as string);
+        return <h1 className="ml-2">{normaliseDate(getValue() as string)}</h1>;
       },
     },
     {
@@ -364,19 +413,100 @@ export default function Dialogs() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuLabel>{role.id}</DropdownMenuLabel>
-              <DropdownMenuItem>
-                <PersonIcon className="mr-2" /> View profile
+              <DropdownMenuLabel>{role.name}</DropdownMenuLabel>
+              <DropdownMenuItem
+                onClick={() => {
+                  setEditingRoleData(role);
+                  setEditingRole(true);
+                }}
+              >
+                <Pencil1Icon className="mr-2" /> Edit
               </DropdownMenuItem>
 
               <DropdownMenuSeparator />
 
               <DropdownMenuItem
                 onClick={() => {
-                  setUnbanningMember(true);
+                  setDeletingRoleData(role);
+                  setDeletingRole(true);
                 }}
               >
-                <CircleBackslashIcon className="mr-2" color={"red"} /> Unban
+                <TrashIcon className="mr-2" color={"red"} /> Delete
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        );
+      },
+    },
+  ];
+
+  const channelColumns: ColumnDef<Channel>[] = [
+    {
+      accessorKey: "id",
+      header: ({ column }) => (
+        <DataTableSortableHeader column={column} title="ID" />
+      ),
+    },
+    {
+      accessorKey: "name",
+      header: ({ column }) => (
+        <DataTableSortableHeader column={column} title="Channel name" />
+      ),
+      cell({ getValue }) {
+        return <h1 className="ml-5">{getValue() as string}</h1>;
+      },
+    },
+    {
+      accessorKey: "description",
+      header: ({ column }) => (
+        <DataTableSortableHeader column={column} title="Description" />
+      ),
+      cell({ getValue }) {
+        return <h1 className="ml-2">{getValue() as string}</h1>;
+      },
+    },
+    {
+      accessorKey: "created_at",
+      header: ({ column }) => (
+        <DataTableSortableHeader column={column} title="Created at" />
+      ),
+      cell({ getValue }) {
+        return normaliseDate(getValue() as string);
+      },
+    },
+    {
+      id: "actions",
+      cell: ({ row }) => {
+        const channel = row.original;
+
+        return (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <HamburgerMenuIcon className="h-4 w-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>{channel.name}</DropdownMenuLabel>
+              <DropdownMenuItem
+                onClick={() => {
+                  setEditingChannelData(channel);
+                  setEditingChannel(true);
+                }}
+              >
+                <Pencil1Icon className="mr-2" /> Edit
+              </DropdownMenuItem>
+
+              <DropdownMenuSeparator />
+
+              <DropdownMenuItem
+                onClick={() => {
+                  setDeletingChannelData(channel);
+                  setDeletingChannel(true);
+                }}
+              >
+                <TrashIcon className="mr-2" color={"red"} /> Delete
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -1258,8 +1388,6 @@ export default function Dialogs() {
             userData.servers.filter((v) => v.id === $serverData.id)[0]
           );
           setDeletingChannel(false);
-          setChannelName("");
-          setChannelDescription("");
         } else {
           reject((await res.json()).errors[0].message);
         }
@@ -1419,6 +1547,168 @@ export default function Dialogs() {
     }
   }
 
+  async function createRole() {
+    if (!roleName) {
+      toast.error("Role name is required");
+      return;
+    }
+
+    setDisabled(true);
+
+    toast.promise(createRolePromise, {
+      loading: "Creating role...",
+      success: () => "Role created!",
+      error: (e) => e,
+    });
+
+    async function createRolePromise() {
+      return new Promise(async (resolve, reject) => {
+        const res = await fetch("/api/roles/create", {
+          method: "POST",
+          body: JSON.stringify({
+            id: $serverData.id,
+            name: roleName,
+            color: roleColor || "#ffffff",
+          }),
+          headers: {
+            Authorization: Cookies.get("accessToken") as string,
+            "content-type": "application/json",
+          },
+        });
+
+        if (res.status === 200) {
+          resolve("");
+
+          const userData = (
+            await (
+              await fetch("api/me", {
+                headers: {
+                  Authorization: Cookies.get("accessToken") as string,
+                },
+              })
+            ).json()
+          ).profileData as UserData;
+
+          setUserData(userData);
+          setServerData(
+            userData.servers.filter((v) => v.id === $serverData.id)[0]
+          );
+          setCreatingRole(false);
+          setRoleName("");
+          setRoleColor("");
+        } else {
+          reject((await res.json()).errors[0].message);
+        }
+
+        setDisabled(false);
+      });
+    }
+  }
+
+  async function editRole() {
+    setDisabled(true);
+
+    toast.promise(editRolePromise, {
+      loading: "Updating role...",
+      success: () => "Role updated!",
+      error: (e) => e,
+    });
+
+    async function editRolePromise() {
+      return new Promise(async (resolve, reject) => {
+        const res = await fetch("/api/roles/edit", {
+          method: "POST",
+          body: JSON.stringify({
+            id: $serverData.id,
+            roleId: $editingRoleData.id,
+            name: roleName || $editingRoleData.name,
+            color: roleColor || $editingRoleData.hex_color,
+          }),
+          headers: {
+            Authorization: Cookies.get("accessToken") as string,
+            "content-type": "application/json",
+          },
+        });
+
+        if (res.status === 200) {
+          resolve("");
+
+          const userData = (
+            await (
+              await fetch("api/me", {
+                headers: {
+                  Authorization: Cookies.get("accessToken") as string,
+                },
+              })
+            ).json()
+          ).profileData as UserData;
+
+          setUserData(userData);
+          setServerData(
+            userData.servers.filter((v) => v.id === $serverData.id)[0]
+          );
+          setEditingRole(false);
+          setRoleName("");
+          setRoleColor("");
+        } else {
+          reject((await res.json()).errors[0].message);
+        }
+
+        setDisabled(false);
+      });
+    }
+  }
+
+  async function deleteRole() {
+    setDisabled(true);
+
+    toast.promise(deleteRolePromise, {
+      loading: "Deleting role...",
+      success: () => "Role deleted!",
+      error: (e) => e,
+    });
+
+    async function deleteRolePromise() {
+      return new Promise(async (resolve, reject) => {
+        const res = await fetch("/api/roles/delete", {
+          method: "DELETE",
+          body: JSON.stringify({
+            id: $serverData.id,
+            roleId: $deletingRoleData.id,
+          }),
+          headers: {
+            Authorization: Cookies.get("accessToken") as string,
+            "content-type": "application/json",
+          },
+        });
+
+        if (res.status === 200) {
+          resolve("");
+
+          const userData = (
+            await (
+              await fetch("api/me", {
+                headers: {
+                  Authorization: Cookies.get("accessToken") as string,
+                },
+              })
+            ).json()
+          ).profileData as UserData;
+
+          setUserData(userData);
+          setServerData(
+            userData.servers.filter((v) => v.id === $serverData.id)[0]
+          );
+          setDeletingRole(false);
+        } else {
+          reject((await res.json()).errors[0].message);
+        }
+
+        setDisabled(false);
+      });
+    }
+  }
+
   // Update on theme change
   useEffect(() => {
     setThemeOption(theme === "light" ? 0 : 1);
@@ -1442,9 +1732,7 @@ export default function Dialogs() {
           </DialogHeader>
           <div className="flex">
             <div className="grid grid-cols-4 items-center gap-4 mt-2 mb-2">
-              <Label htmlFor="profile-note" className="text-right">
-                Note
-              </Label>
+              <Label className="text-right">Note</Label>
               <Input
                 defaultValue={$userData.note}
                 maxLength={30}
@@ -2670,9 +2958,7 @@ export default function Dialogs() {
           </DialogHeader>
           <div className="flex-col">
             <div className="grid grid-cols-4 items-center gap-4 mt-2 mb-2">
-              <Label htmlFor="profile-note" className="text-right">
-                Name
-              </Label>
+              <Label className="text-right">Name</Label>
               <Input
                 maxLength={20}
                 className="col-span-3 w-full"
@@ -2684,9 +2970,7 @@ export default function Dialogs() {
             </div>
 
             <div className="grid grid-cols-4 items-center gap-4 mt-2 mb-2">
-              <Label htmlFor="profile-note" className="text-right">
-                Description
-              </Label>
+              <Label className="text-right">Description</Label>
               <Textarea
                 maxLength={500}
                 className="col-span-3 w-full max-h-40"
@@ -2719,14 +3003,11 @@ export default function Dialogs() {
       <Dialog open={$editingChannel} onOpenChange={setEditingChannel}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Create channel</DialogTitle>
-            <DialogDescription>Publicly visible</DialogDescription>
+            <DialogTitle>Edit channel</DialogTitle>
           </DialogHeader>
           <div className="flex-col">
             <div className="grid grid-cols-4 items-center gap-4 mt-2 mb-2">
-              <Label htmlFor="profile-note" className="text-right">
-                Name
-              </Label>
+              <Label className="text-right">Name</Label>
               <Input
                 maxLength={20}
                 className="col-span-3 w-full"
@@ -2739,9 +3020,7 @@ export default function Dialogs() {
             </div>
 
             <div className="grid grid-cols-4 items-center gap-4 mt-2 mb-2">
-              <Label htmlFor="profile-note" className="text-right">
-                Description
-              </Label>
+              <Label className="text-right">Description</Label>
               <Textarea
                 maxLength={500}
                 className="col-span-3 w-full max-h-40"
@@ -2943,6 +3222,134 @@ export default function Dialogs() {
         </DialogContent>
       </Dialog>
 
+      <Dialog open={$creatingRole} onOpenChange={setCreatingRole}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Create role</DialogTitle>
+          </DialogHeader>
+          <div className="flex-col">
+            <div className="grid grid-cols-4 items-center gap-4 mt-2 mb-2">
+              <Label className="text-right">Name</Label>
+              <Input
+                maxLength={15}
+                className="col-span-3 w-full"
+                onInput={(e) => {
+                  // @ts-ignore
+                  setRoleName(e.target.value);
+                }}
+              />
+
+              <Label className="text-right">Color</Label>
+              <Input
+                maxLength={6}
+                className="col-span-3 w-full"
+                defaultValue={"#ffffff"}
+                onInput={(e) => {
+                  // @ts-ignore
+                  setRoleColor(e.target.value);
+                }}
+                type="color"
+              />
+            </div>
+          </div>
+          <DialogFooter className="mobile:flex-col">
+            <DialogClose disabled={disabled} className="mobile:hidden">
+              <Button disabled={disabled} variant={"outline"}>
+                Cancel
+              </Button>
+            </DialogClose>
+
+            <Button
+              disabled={disabled}
+              type="submit"
+              onClick={createRole}
+              className="mobile:mt-2"
+            >
+              Create role
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={$editingRole} onOpenChange={setEditingRole}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Edit role</DialogTitle>
+          </DialogHeader>
+          <div className="flex-col">
+            <div className="grid grid-cols-4 items-center gap-4 mt-2 mb-2">
+              <Label className="text-right">Name</Label>
+              <Input
+                defaultValue={$editingRoleData.name}
+                maxLength={15}
+                className="col-span-3 w-full"
+                onInput={(e) => {
+                  // @ts-ignore
+                  setRoleName(e.target.value);
+                }}
+              />
+
+              <Label className="text-right">Color</Label>
+              <Input
+                maxLength={6}
+                className="col-span-3 w-full"
+                defaultValue={$editingRoleData.hex_color}
+                onInput={(e) => {
+                  // @ts-ignore
+                  setRoleColor(e.target.value);
+                }}
+                type="color"
+              />
+            </div>
+          </div>
+          <DialogFooter className="mobile:flex-col">
+            <DialogClose disabled={disabled} className="mobile:hidden">
+              <Button disabled={disabled} variant={"outline"}>
+                Cancel
+              </Button>
+            </DialogClose>
+
+            <Button
+              disabled={disabled}
+              type="submit"
+              onClick={editRole}
+              className="mobile:mt-2"
+            >
+              Update role
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={$deletingRole} onOpenChange={setDeletingRole}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Delete role</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete the role{" "}
+              <b className="text-primary">{$deletingRoleData?.name}</b>?
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="mobile:flex-col">
+            <DialogClose disabled={disabled} className="mobile:hidden">
+              <Button disabled={disabled} variant={"outline"}>
+                Cancel
+              </Button>
+            </DialogClose>
+
+            <Button
+              disabled={disabled}
+              type="submit"
+              onClick={deleteRole}
+              className="mobile:mt-2"
+              variant={"destructive"}
+            >
+              Delete role
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       <Dialog open={$managingRoles} onOpenChange={setManagingRoles}>
         <DialogContent className="flex flex-col w-[90vw] max-w-none h-[90vh]">
           <DialogTitle>
@@ -2953,10 +3360,40 @@ export default function Dialogs() {
 
           <DataTable
             viewOptions
+            hiddenColumns={["id"]}
             columns={roleColumns}
             data={$serverData?.roles}
             enableFiltering
             filterPlaceholder="Search for roles..."
+          />
+
+          <DialogFooter>
+            <DialogClose disabled={disabled}>
+              <Button disabled={disabled} variant={"outline"}>
+                Close
+              </Button>
+            </DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={$managingChannels} onOpenChange={setManagingChannels}>
+        <DialogContent className="flex flex-col w-[90vw] max-w-none h-[90vh]">
+          <DialogTitle>
+            {$serverData?.channels.length > 0
+              ? $serverData?.channels.length
+              : "No"}{" "}
+            channel
+            {$serverData?.channels.length !== 1 ? "s" : ""}
+          </DialogTitle>
+
+          <DataTable
+            viewOptions
+            hiddenColumns={["id"]}
+            columns={channelColumns}
+            data={$serverData?.channels}
+            enableFiltering
+            filterPlaceholder="Search for channels..."
           />
 
           <DialogFooter>
